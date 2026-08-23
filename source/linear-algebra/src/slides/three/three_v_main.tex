@@ -1,0 +1,761 @@
+% \documentclass[9pt,t]{beamer}
+\usefonttheme{professionalfonts}
+\usefonttheme{serif}
+\PassOptionsToPackage{pdfpagemode=FullScreen}{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color}
+% \DeclareGraphicsRule{*}{mps}{*}{}
+\usepackage{linalgjh}
+\usepackage{present}
+\usepackage{directories}  % Define \mapdir, \mapmpdir, etc
+\usepackage{xr}\externaldocument{\mapdir map5} % read refs from .aux file
+\usepackage{xr}\externaldocument{\mapdir map4} % 
+\usepackage{catchfilebetweentags}
+\usepackage{etoolbox} % from http://tex.stackexchange.com/questions/40699/input-only-part-of-a-file-using-catchfilebetweentags-package
+\makeatletter
+\patchcmd{\CatchFBT@Fin@l}{\endlinechar\m@ne}{}
+  {}{\typeout{Unsuccessful patch!}}
+\makeatother
+
+\mode<presentation>
+{
+  \usetheme{boxes}
+  \setbeamercovered{invisible}
+  \setbeamertemplate{navigation symbols}{} 
+}
+\addheadbox{filler}{\ }  % create extra space at top of slide 
+\hypersetup{colorlinks=true,linkcolor=blue} 
+
+\title[Change of Basis] % (optional, use only with long paper titles)
+{Three.V Change of Basis}
+
+\author{\textit{Linear Algebra} \\ {\small Jim Hef{}feron}}
+\institute{
+  \texttt{https://hefferon.net/linearalgebra}\\[0.25ex]
+  \texttt{http://joshua.smcvt.edu/linearalgebra}
+}
+\date{}
+
+
+\subject{Change of Basis}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% =============================================
+% \begin{frame}{Reduced Echelon Form} 
+% \end{frame}
+
+
+
+% ..... Three.V.1 .....
+\section{Changing representations of vectors}
+%..........
+\begin{frame}{Coordinates vary with the basis}
+Consider this vector $\vec{v}\in\Re^3$ and bases for the space. 
+\begin{equation*}
+  \vec{v}=\colvec{1 \\ 2 \\ 3}
+  \qquad
+  \stdbasis_3=\sequence{\colvec{1 \\ 0 \\ 0}, \colvec{0 \\ 1 \\ 0}, \colvec{0 \\ 0 \\ 1}}
+  \quad
+  B=\sequence{\colvec{1 \\ 1 \\ 0}, \colvec{0 \\ 1 \\ 1}, \colvec{1 \\ 0 \\ 1}}
+\end{equation*}
+With respect to the different bases, the coordinates of $\vec{v}$ are different.
+\begin{equation*}
+  \rep{\vec{v}}{\stdbasis_3}=\colvec{1 \\ 2 \\ 3}
+  \qquad
+  \rep{\vec{v}}{B}=\colvec{0 \\ 2 \\ 1}
+\end{equation*}
+
+In this section we will see how to convert the representation
+of a vector with respect to a first basis to its representation with 
+respect to a second.
+\end{frame}
+
+
+%..........
+\begin{frame}{Change of basis matrix}
+Think of translating from $\rep{\vec{v}}{B}$ to $\rep{\vec{v}}{D}$
+as holding the vector constant. 
+This is the arrow diagram.
+\ExecuteMetaData[\mapdir map5.tex]{ChangeRepresentationOfVectorArrowDiagram}
+
+\pause
+\df[df:ChangeOfBasisMatrix]
+\ExecuteMetaData[\mapdir map5.tex]{df:ChangeOfBasisMatrix}
+\end{frame}
+
+
+
+\begin{frame}
+\lm[le:ChBasisMatDoesChBases]
+\ExecuteMetaData[\mapdir map5.tex]{lm:ChBasisMatDoesChBases}
+
+\iftoggle{showallproofs}{
+  \pf
+  \ExecuteMetaData[\mapdir map5.tex]{pf:ChBasisMatDoesChBases}
+  \qed
+}{
+  \medskip
+  The book has the proof.
+}
+\end{frame}
+
+
+
+\begin{frame}
+\ex To change a representation of a member of $\polyspace_2$ 
+from being with respect to
+$B=\sequence{1,1+x,1+x+x^2}$ to being with respect to
+$D=\sequence{x^2-1,x,x^2+1}$, 
+compute $\rep{id}{B,D}$.
+The identity map acting on the elements of~$B$ has no effect.
+Represent those elements with respect to~$D$. 
+\begin{equation*}
+  \rep{1}{D}=\colvec{-1/2 \\ 0 \\ 1/2}
+  \quad
+  \rep{1+x}{D}=\colvec{-1/2 \\ 1 \\ 1/2}
+  \quad
+  \rep{1+x+x^2}{D}=\colvec{0 \\ 1 \\ 1}
+\end{equation*}
+The change of basis matrix is the concatenation of those.
+\begin{equation*}
+  \rep{id}{B,D}=
+  \begin{mat}
+    -1/2 &-1/2 &0 \\
+     0   &1    &1 \\
+    1/2  &1/2  &1 
+  \end{mat}
+\end{equation*}
+For example, we can translate the representation of $\vec{v}=2-x+3x^2$.
+\begin{equation*}
+  \rep{\vec{v}}{B}=\colvec{3 \\ -4 \\ 3}
+  \qquad
+  \rep{\vec{v}}{D}
+  =\colvec{1/2 \\ -1 \\ 5/2}
+  =\begin{mat}
+    -1/2 &-1/2 &0 \\
+     0   &1    &1 \\
+    1/2  &1/2  &1 
+  \end{mat}
+  \colvec{3 \\ -4 \\ 3}
+\end{equation*}
+\end{frame}
+
+
+
+\begin{frame}
+\lm[le:NonSingIsChBasis]
+\ExecuteMetaData[\mapdir map5.tex]{lm:NonSingIsChBasis}
+\iftoggle{showallproofs}{
+  \pf
+  \ExecuteMetaData[\mapdir map5.tex]{pf:NonSingIsChBasis0}
+
+  \pause
+  \ExecuteMetaData[\mapdir map5.tex]{pf:NonSingIsChBasis1}
+}{
+
+  \medskip
+  The book contains the proof; we will do an example.
+  \medskip
+  \ex
+  Recall that any nonsingular matrix $M$ 
+  decomposes into a product of elementary
+  reduction matrices $M=R_1\cdots R_r$. 
+  We can show that $M$
+  changes bases by showing that each $R_i$ changes bases.
+  Consider this $\nbyn{3}$ case.
+  \begin{equation*}
+    C_{1,3}(-4)\cdot\rep{\vec{v}}{B}
+    =
+    \begin{mat}
+      1 &0 &0 \\
+      0 &1 &0 \\
+     -4 &0 &1
+    \end{mat}
+    \colvec{r_1 \\ r_2 \\ r_3}
+    =
+    \colvec{r_1 \\ r_2 \\ -4r_1+r_3}
+  \end{equation*}
+  Where $B=\sequence{\vec{\beta}_1,\vec{\beta}_2,\vec{\beta}_3}$,
+  the right side represents the same vector~$\vec{v}$ with respect to
+  $\hat{B}=\sequence{\vec{\beta}_1+4\vec{\beta}_3,\vec{\beta}_2,\vec{\beta}_3}$.
+  \begin{equation*}
+    r_1\cdot(\vec{\beta}_1+4\vec{\beta}_3)
+      +r_2\cdot\beta_2
+      +(-4r_1+r_3)\cdot\vec{\beta}_3
+    =r_1\vec{\beta}_1+r_2\beta_2+r_3\vec{\beta}_3
+  \end{equation*}
+  Verifying that $\hat{B}$ is a basis is routine.
+}
+\end{frame}
+\iftoggle{showallproofs}{
+  \begin{frame}
+  \ExecuteMetaData[\mapdir map5.tex]{pf:NonSingIsChBasis2}
+  \begin{equation*}\hspace*{-1.5em}
+    M_{i}(k)
+      \colvec{
+         c_1     \\
+         \vdots  \\
+         c_i    \\
+         \vdots  \\
+         c_n  }
+    =
+      \colvec{
+         c_1     \\
+         \vdots  \\
+         kc_i    \\
+         \vdots  \\
+         c_n  }
+    \quad
+    P_{i,j}
+      \colvec{
+         c_1     \\
+         \vdots  \\
+         c_i    \\
+         \vdots  \\
+         c_j    \\
+         \vdots  \\
+         c_n  }
+    =
+      \colvec{
+         c_1     \\
+         \vdots  \\
+         c_j    \\
+         \vdots  \\
+         c_i    \\
+         \vdots  \\
+         c_n  }
+    \quad
+    C_{i,j}(k)
+      \colvec{
+         c_1     \\
+         \vdots  \\
+         c_i    \\
+         \vdots  \\
+         c_j    \\
+         \vdots  \\
+         c_n  }
+    =
+      \colvec{
+         c_1     \\
+         \vdots  \\
+         c_i    \\
+         \vdots  \\
+         kc_i+c_j    \\
+         \vdots  \\
+         c_n  }
+  \end{equation*}
+  \end{frame}
+  \begin{frame}
+  \ExecuteMetaData[\mapdir map5.tex]{pf:NonSingIsChBasis3}
+  
+  \pause
+  \ExecuteMetaData[\mapdir map5.tex]{pf:NonSingIsChBasis4}
+  \end{frame}
+  \begin{frame}
+  \ExecuteMetaData[\mapdir map5.tex]{pf:NonSingIsChBasis5}
+  \qed
+  \end{frame}
+}{}
+
+
+\begin{frame}
+\co[co:MatrixNonsingularIffChangesBasis]
+\ExecuteMetaData[\mapdir map5.tex]{co:MatrixNonsingularIffChangesBasis}
+\end{frame}
+
+
+
+
+% ..... Three.V.2 .....
+\section{Changing map representations}
+%..........
+\begin{frame}
+The natural next step is to see how to convert $\rep{h}{B,D}$
+to $\rep{h}{\hat{B},\hat{D}}$.
+Here is the arrow diagram.
+
+\ExecuteMetaData[\mapdir map5.tex]{ChangeRepresentationOfMapArrowDiagram}
+
+\th
+\ExecuteMetaData[\mapdir map5.tex]{ChangeRepresentationOfMapTheorem}
+
+\pf
+\ExecuteMetaData[\mapdir map5.tex]{ChangeRepresentationOfMapTheoremPf}
+\qed
+\end{frame}
+
+
+
+
+\begin{frame}\vspace*{-1ex}
+\ex
+Consider the derivative map $\map{d/dx}{\polyspace_2}{\polyspace_2}$
+as well as
+$B=\sequence{1,1+x,1+x+x^2}, D=\sequence{1+x^2,x,1-x^2}$
+and 
+$\hat{B}=\sequence{1,x,x^2}, \hat{D}=\sequence{1+x,x+x^2,1+x^2}$.
+
+\pause
+We can find $H$ and~$\hat{H}$ using the methods we have already seen.
+\begin{equation*}
+  \rep{d/dx}{B,D}
+  =
+  \begin{mat}
+    0 &1/2 &1/2 \\
+    0 &0   &2 \\
+    0 &1/2 &1/2
+  \end{mat}
+  \quad
+  \rep{d/dx}{\hat{B},\hat{D}}
+  =
+  \begin{mat}
+    0 &1/2  &1 \\
+    0 &-1/2 &1 \\
+    0 &1/2  &-1
+  \end{mat}
+\end{equation*}
+These do the base changes.
+\begin{equation*}
+  \rep{id}{\hat{B},B}=
+  \begin{mat}
+    1  &-1  &0 \\
+    0  &1   &-1 \\
+    0  &0   &1
+  \end{mat}
+  \quad
+  \rep{id}{D,\hat{D}}=
+  \begin{mat}
+    0  &1/2    &1  \\
+    0  &1/2    &-1 \\
+    1  &-1/2   &0
+  \end{mat}
+\end{equation*}
+We can check this case of equation~($*$) by multiplying through.
+\begin{align*}
+  \rep{d/dx}{\hat{B},\hat{D}}
+  &=\rep{id}{D,\hat{D}}\cdot \rep{d/dx}{B,D}\cdot \rep{id}{\hat{B},B}     \\
+  &=\begin{mat}
+    0  &1/2    &1  \\
+    0  &1/2    &-1 \\
+    1  &-1/2   &0
+  \end{mat}
+  \begin{mat}
+    0 &1/2 &1/2 \\
+    0 &0   &2 \\
+    0 &1/2 &1/2
+  \end{mat}
+  \begin{mat}
+    1  &-1  &0 \\
+    0  &1   &-1 \\
+    0  &0   &1
+  \end{mat}  
+\end{align*}
+\end{frame}
+
+\begin{frame}
+\ex The map $\map{t_{\pi/6}}{\Re^2}{\Re^2}$
+rotating vectors counterclockwise by $\pi/6$~radians
+has this representation with respect to the standard bases. 
+\begin{equation*}
+  \rep{t_{\pi/6}}{\stdbasis_2,\stdbasis_2}
+  =
+  \begin{mat}
+    \sqrt{3}/2  &-1/2 \\
+    1/2         &\sqrt{3}/2
+  \end{mat}
+\end{equation*}
+We can translate to the representatation with respect to
+\begin{equation*}
+  B=D=\sequence{\colvec{1 \\ 1},
+                \colvec{1 \\ -1}}
+\end{equation*}
+using the change of basis matrices.
+Here is the diagram, specialized for this case.
+\begin{equation*}
+  \begin{CD}
+    \Re^2_{\wrt{\stdbasis_2}}             @>t_{\pi/6}>\rep{t_{\pi/6}}{\stdbasis_2,\stdbasis_2}>  \Re^2_{\wrt{\stdbasis_2}}       \\
+    @V{\text{\scriptsize$\identity$}} VV                @V{\text{\scriptsize$\identity$}} VV \\
+    \Re^2_{\wrt{B}}                   @>t_{\pi/6}>\hat{H}>        \Re^2_{\wrt{D}}      
+  \end{CD}
+\end{equation*}
+To get $\hat{H}$ we move up from the lower left, across, and then down. 
+\end{frame}
+\begin{frame}
+With respect to the standard basis real vectors represent themselves,
+so the matrix representing moving up is easy.
+\begin{equation*}
+  \rep{id}{B,\stdbasis_2}
+  =\begin{mat}
+    1 &1 \\
+    1 &-1
+  \end{mat}
+\end{equation*}
+The matrix for moving down is the inverse of the prior one.
+\begin{equation*}
+  \rep{id}{\stdbasis_2,D}
+  =(\rep{id}{D,\stdbasis_2})^{-1}
+  =
+  \begin{mat}
+    1 &1 \\
+    1 &-1
+  \end{mat}^{-1}
+  =\frac{-1}{2}\cdot
+  \begin{mat}
+    -1 &-1 \\
+   -1  &1
+  \end{mat}
+\end{equation*}
+Thus we have this.
+\begin{align*}
+  \rep{t_{\pi/6}}{B,D}
+  &=\frac{-1}{2}\cdot
+  \begin{mat}
+    -1 &-1 \\
+   -1  &1
+  \end{mat}
+  \begin{mat}
+    \sqrt{3}/2  &-1/2 \\
+    1/2         &\sqrt{3}/2
+  \end{mat}
+  \begin{mat}
+    1 &1 \\
+    1 &-1
+  \end{mat}                         \\
+  &=
+  \begin{mat}
+    \sqrt{3}/2 &1/2 \\
+    -1/2       &\sqrt{3}/2   
+  \end{mat}
+\end{align*}
+\end{frame}
+
+
+
+
+\begin{frame}
+\df[def:MatEquiv]
+\ExecuteMetaData[\mapdir map5.tex]{df:MatEquiv}
+\pause
+\co[le:MatEqIsSameMap]
+\ExecuteMetaData[\mapdir map5.tex]{co:MatEqIsSameMap}
+
+\pause
+\medskip
+\nearbyexercise{exer:MatEqIsEqRel} checks that
+matrix equivalence is an equivalence relation.
+Thus it  partitions\index{partition!matrix equivalence classes} 
+the set of matrices into matrix equivalence classes.
+\begin{center}
+  \raisebox{.4in}{\begin{tabular}{l}
+                    All matrices:
+                  \end{tabular}}
+  \includegraphics{\mapmpdir ch3.23}
+  \raisebox{.4in}{\begin{tabular}{l}
+                     $H$ matrix equivalent \\ to $\hat{H}$
+                  \end{tabular}}
+\end{center}
+\end{frame}
+
+
+
+
+\begin{frame}{Canonical form for matrix equivalence}
+\th[th:CanonFormForMatEquiv]
+\ExecuteMetaData[\mapdir map5.tex]{th:CanonFormForMatEquiv}
+
+\pause
+\medskip
+\ExecuteMetaData[\mapdir map5.tex]{BlockPartialIdentityForm}
+\end{frame}
+
+\begin{frame}
+For an example, 
+recall first that any nonsingular matrix $M$ can be factored into
+a product 
+$M=R_1\cdots R_r$ where each $R_t$ is an
+elementary reduction matrix
+$C_{i,j}(k)$, or $M_i(k)$, or $P_{i,j}$.    
+
+\pause
+Recall also that from the left matrices operate on rows
+\begin{equation*}
+  % C_{1,3}(-4)\cdot
+  % \begin{mat}
+  %   1 &2 &3 \\
+  %   4 &5 &6 \\
+  %   7 &8 &9
+  % \end{mat}
+  % =
+  \begin{mat}
+    1 &0 &0 \\
+    0 &1 &0 \\
+   -4 &0 &1 
+  \end{mat}
+  \begin{mat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    7 &8 &9
+  \end{mat}
+  =
+  \begin{mat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    3 &0 &-3
+  \end{mat}
+\end{equation*}
+while from the right they act on columns: this
+does $-4\cdot\text{col}_3+\text{col}_1$.
+\begin{equation*}
+  \begin{mat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    7 &8 &9
+  \end{mat}
+  \begin{mat}
+    1 &0 &0 \\
+    0 &1 &0 \\
+   -4 &0 &1 
+  \end{mat}
+  =
+  \begin{mat}
+    -11 &2 &3 \\
+    -20 &5 &6 \\
+    -29 &8 &9
+  \end{mat}
+\end{equation*}
+
+\pause
+\ex This matrix has rank~$2$.
+\begin{equation*}
+  \begin{mat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    7 &8 &9
+  \end{mat}
+\end{equation*}
+We will find $P$ and~$Q$ to get the $\nbyn{3}$ canonical matrix of
+rank~$2$.
+\end{frame}
+\begin{frame}
+\noindent Row operations produce echelon form.
+\begin{equation*}
+  \begin{mat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    7 &8 &9
+  \end{mat}
+  \grstep[-7\rho_1+\rho_3]{-4\rho_1+\rho_2}
+  \grstep{-2\rho_2+\rho_3}  
+  \grstep{-(1/3)\rho_2}
+  \begin{mat}
+    1 &2 &3 \\
+    0 &1 &2 \\
+    0 &0 &0
+  \end{mat}
+\end{equation*}
+Multiplying the reduction matrices gives $P$; note the right~to~left
+order.
+\begin{multline*}
+  \begin{mat}
+    1 &0 &0 \\
+    0 &-1/3 &0 \\
+    0 &0 &1
+  \end{mat}
+  \begin{mat}
+    1 &0 &0 \\
+    0 &1 &0 \\
+    0 &-2 &1
+  \end{mat}
+  \begin{mat}
+    1 &0 &0 \\
+    0 &1 &0 \\
+    -7 &0 &1
+  \end{mat}
+  \begin{mat}
+    1 &0 &0 \\
+    -4 &1 &0 \\
+    0 &0 &1
+  \end{mat}                    \\
+  =\begin{mat}
+      1   &0    &0 \\
+      4/3 &-1/3 &0 \\
+      1   &-2   &1
+   \end{mat}
+\end{multline*}
+So far we have this.
+\begin{equation*}
+  PHQ
+  =\begin{mat}
+      1   &0    &0 \\
+      4/3 &-1/3 &0 \\
+      1   &-2   &1
+   \end{mat}
+  \begin{mat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    7 &8 &9
+  \end{mat}
+  Q
+  =
+  \begin{mat}
+    1 &2 &3 \\
+    0 &1 &2 \\
+    0 &0 &0
+  \end{mat}
+  Q
+\end{equation*}
+\end{frame}
+\begin{frame}
+Column operations produce the block partial identity.
+\begin{equation*}
+  \begin{mat}
+    1 &2 &3 \\
+    0 &1 &2 \\
+    0 &0 &0
+  \end{mat}
+  \grstep{-2\text{col}_2+\text{col}_3}
+  \grstep{-2\text{col}_1+\text{col}_2}
+  \grstep{\text{col}_1+\text{col}_3}
+  \begin{mat}
+    1 &0 &0 \\
+    0 &1 &0 \\
+    0 &0 &0
+  \end{mat}    
+\end{equation*}
+Combine the reduction matrices to get $Q$.
+In contrast with the construction of~$P$, here they come
+left to~right.
+\begin{equation*}
+  \begin{mat}
+    1 &0 &0 \\
+    0 &1 &-2 \\
+    0 &0 &1
+  \end{mat}
+  \begin{mat}
+    1 &-2 &0 \\
+    0 &1 &0 \\
+    0 &0 &1
+  \end{mat}
+  \begin{mat}
+    1 &0 &1 \\
+    0 &1 &0 \\
+    0 &0 &1
+  \end{mat}
+  =
+  \begin{mat}
+    1 &-2 &1 \\
+    0 &1 &-2 \\
+    0 &0 &1
+  \end{mat}
+\end{equation*}
+In sum, we have this equation.
+\begin{equation*}
+  PHQ
+  =\begin{mat}
+      1   &0    &0 \\
+      4/3 &-1/3 &0 \\
+      1   &-2   &1
+   \end{mat}
+  \begin{mat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    7 &8 &9
+  \end{mat}
+  \begin{mat}
+    1 &-2 &1 \\
+    0 &1 &-2 \\
+    0 &0 &1
+  \end{mat}
+  =
+  \begin{mat}
+    1 &0 &0 \\
+    0 &1 &0 \\
+    0 &0 &0
+  \end{mat}    
+\end{equation*}  
+\end{frame}
+\iftoggle{showallproofs}{
+  \begin{frame}
+  \pf
+  \ExecuteMetaData[\mapdir map5.tex]{pf:CanonFormForMatEquiv}
+  \qed
+  \end{frame}
+}{}
+\begin{frame}{Action of a canonical form matrix}
+This kind of matrix is has an 
+easy to understand effect.
+\begin{equation*}
+  \begin{mat}
+    1 &0 &0 \\
+    0 &1 &0 \\
+    0 &0 &0
+  \end{mat}
+  \colvec{x \\ y \\ z}
+  =
+  \colvec{x \\ y \\ 0}
+\end{equation*}
+It is a projection\Dash
+the map $\map{t}{\Re^3}{\Re^3}$ represented with respect
+to the standard bases by this block partial identity matrix 
+is projection from three~space to the $xy$~plane.
+\end{frame}
+
+
+\begin{frame}{Matrix equivalence is characterized by rank}
+\co[co:MatrixEquivalentIffSameRank]
+\ExecuteMetaData[\mapdir map5.tex]{co:MatrixEquivalentIffSameRank}
+\pause
+\pf
+\ExecuteMetaData[\mapdir map5.tex]{pf:MatrixEquivalentIffSameRank}
+\qed
+
+% \pause
+% \ex
+% These two matrices are not matrix equivalent 
+% because Gauss's Method shows
+% that the first has rank~$3$ while the second has rank~$2$.
+% \begin{equation*}
+%   \begin{mat}[r]
+%     2  &3  &0 &-1 \\
+%     2  &2  &1 &1  \\
+%     3  &1  &0 &3
+%   \end{mat}
+%   \quad
+%   \begin{mat}[r]
+%     1  &5  &1 &4 \\
+%     2  &0  &5 &1  \\
+%     3  &-5 &9 &-2
+%   \end{mat}
+% \end{equation*}
+% \ex
+% These two are matrix equivalent.
+% \begin{equation*}
+%   \begin{mat}[r]
+%     1  &1  &1  &1  &1  \\
+%    -1  &-1 &-1 &-1 &-1 \\
+%     2  &0  &0  &3  &0 
+%   \end{mat}
+%   \quad
+%   \begin{mat}
+%     1  &0  &0  &0  &0  \\
+%     0  &1  &0  &0  &0  \\
+%     0  &0  &0  &0  &0
+%   \end{mat}
+% \end{equation*}
+\end{frame}
+
+
+
+
+%...........................
+% \begin{frame}
+% \ExecuteMetaData[../gr3.tex]{GaussJordanReduction}
+% \df[def:RedEchForm]
+% 
+% \end{frame}
+\end{document}

@@ -1,0 +1,360 @@
+\chapter{Ruang Vektor}
+
+\Sage{} dapat bekerja dengan ruang vektor, misalnya dengan mencari basis
+suatu ruang.
+
+Dalam bab buku ini tentang ruang vektor, skalar berasal
+dari himpunan bilangan real, $\Re$.
+\Sage{} memungkinkan Anda memilih satu dari dua model bilangan real.
+Yang pertama ialah \Sagecmd{RDF}, model bilangan real titik-mengambang
+bawaan komputer.
+% \footnote{%
+%   The computer used to make this manual has
+%   IEEE~754 double-precision binary floating-point numbers;  
+%   if you have programmed then you may know this number model as binary64.}  
+Yang lainnya ialah \Sagecmd{RR}, yang menyediakan bilangan real 
+dengan presisi sebarang.
+Model pertama berjalan lebih cepat
+dan lebih luas digunakan dalam praktik, jadi itulah yang akan kita gunakan.
+ 
+
+
+
+
+%========================================
+\section{Ruang real}
+
+\Sage{} memungkinkan Anda membuat ruang vektor.
+Berikut ialah $\Re^4$.
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,4)
+sage: V
+\end{sagecommandline}
+Anda juga dapat membuat subruang.
+Berikut ialah subruang berdimensi satu dari $\Re^4$, yang dinyatakan sebagai rentang
+himpunan dengan satu vektor.
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,4)
+sage: V
+sage: v1 = vector(RDF, [1, 1, -3, 0])
+sage: W = V.span([v1])
+sage: W
+\end{sagecommandline}
+
+Anda dapat mengajukan pertanyaan kepada \Sage{} tentang subruang ini, misalnya 
+menguji keanggotaan. 
+\begin{sagecommandline}
+sage: v3 = vector(RDF, [2, 2, -6, 0])
+sage: v3 in W
+sage: v4 = vector(RDF, [1, 0, 0, 5])
+sage: v4 in W
+\end{sagecommandline}
+
+Contoh lain ialah~$\Re^3$.
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,3)
+sage: V
+sage: v1 = vector(RDF, [1, 2, 3])
+sage: v1 in V
+sage: v2 = vector(RDF, [1, 2, 3, 4])
+sage: v2 in V
+\end{sagecommandline}
+
+Kita dapat membuat subruang sebagai rentang beberapa vektor.
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,3)
+sage: v1 = vector(RDF, [1, 0, 3])
+sage: v2 = vector(RDF, [0, 1, 1])
+sage: W = V.span([v1, v2])
+sage: W
+sage: v3 = vector(RDF, [1, 1, 4])
+sage: v3 in W
+\end{sagecommandline}
+
+
+
+\subsection{Basis}
+\Sage{} akan memperoleh basis suatu ruang vektor atau subruang.
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,3)
+sage: V.basis()
+sage: v1 = vector(RDF, [2, -1, -3])
+sage: v2 = vector(RDF, [1, 1, 0])
+sage: W = V.span([v1, v2])     
+sage: W.basis()
+\end{sagecommandline}
+Perhatikan bahwa basis yang dikembalikan oleh \Sage{}  
+tidak sama dengan himpunan dua vektor
+$\set{\vec{v}_1, \vec{v}_2}$ yang kita berikan kepadanya.
+Untuk memperoleh basis baru, \Sage{} menempatkan vektor-vektor dari himpunan perentang 
+sebagai baris-baris suatu matriks,
+mengubah matriks itu ke bentuk eselon baris tereduksi, lalu melaporkan baris-baris 
+taknol sebagai basis.
+Setiap matriks memiliki tepat satu bentuk eselon baris tereduksi, sehingga setiap 
+subruang dari~$V$ memiliki tepat satu basis semacam itu;
+inilah basis kanonis subruang tersebut.
+
+\Sage{} menampilkan basis ini ketika Anda meminta deskripsi
+subruang tersebut.
+\begin{sagecommandline}
+sage: W  
+\end{sagecommandline}
+
+Subruang lain dari $\Re^3$ ialah bidang yang dinyatakan oleh persamaan
+$x-2y+2z=0$.
+\begin{equation*}
+  W=\set{\colvec{x \\ y \\ z}
+    \suchthat x=2y-2z}
+  =\set{\colvec{2 \\ 1 \\ 0}y+\colvec[r]{-2 \\ 0 \\ 1}z
+        \suchthat y,z\in\Re}
+\end{equation*}
+Berikut subruang tersebut.
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,3)               
+sage: v1 = vector(RDF, [2, 1, 0]) 
+sage: v2 = vector(RDF, [-2, 0, 1]) 
+sage: W = V.span([v1, v2])       
+sage: W.basis()
+\end{sagecommandline}
+
+Jika Anda mengambil himpunan~$\set{\vec{v}_1,\vec{v}_2}$ itu dan menambahkan vektor~$\vec{v}_3$ yang
+bebas linear dari kedua vektor tersebut, 
+himpunan itu menghasilkan subruang berdimensi tiga dari $\Re^3$, 
+yaitu seluruh $\Re^3$.
+\begin{sagecommandline}
+sage: v3 = vector(RDF, [2, 3, 0])
+sage: W_prime = V.span([v1, v2, v3])
+sage: W_prime.basis()
+\end{sagecommandline}
+Sebaliknya, jika Anda menambahkan ke himpunan perentang $\set{\vec{v}_1,\vec{v}_2}$ 
+vektor ketiga~$\vec{v}_3$ 
+yang bergantung linear pada kedua vektor lainnya, maka
+rentangnya tidak berubah.
+Artinya, dalam kasus ini subruang yang direntang oleh dua vektor pertama,
+$\spanof{\vec{v}_1,\vec{v}_2}$,
+sama dengan rentang ketiganya,
+$\spanof{\vec{v}_1,\vec{v}_2,\vec{v}_3}$.
+\begin{sagecommandline}
+sage: W = V.span([v1, v2])       
+sage: W.basis()
+sage: v3 = vector(RDF, [0, 1, 1])
+sage: W_prime = V.span([v1, v2, v3])
+sage: W_prime.basis()
+\end{sagecommandline}
+
+Jika Anda ingin menggunakan basis sendiri, \Sage{} juga
+memungkinkan hal itu.
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,3)
+sage: v1 = vector(RDF, [1, 2, 3])
+sage: v2 = vector(RDF, [2, 1, 3])
+sage: W = V.span_of_basis([v1, v2])
+sage: W.basis()
+\end{sagecommandline}
+
+
+
+
+\subsection{Kesamaan}
+
+\Sage{} dapat membandingkan ruang.
+Berikut dua deskripsi bidang-$xy$ di dalam $\Re^4$.
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,4)
+sage: v1 = vector(RDF, [1, 0, 0, 0])
+sage: v2 = vector(RDF, [1, 1, 0, 0])
+sage: W12 = V.span([v1, v2])
+sage: v3 = vector(RDF, [2, 1, 0, 0])
+sage: W13 = V.span([v1, v3])  
+\end{sagecommandline}
+% We could test that the two spaces $W_{1,2}$ and $W_{1,3}$ 
+% are equal by using set membership.
+Jika kedua vektor yang digunakan untuk membentuk himpunan perentang $W_{1,2}$ 
+merupakan anggota $W_{1,3}$, maka $W_{1,2}\subseteq W_{1,3}$.
+Jika, selain itu, vektor-vektor yang digunakan untuk membentuk himpunan perentang $W_{1,3}$ 
+merupakan anggota $W_{1,2}$, maka kedua ruang itu sama.
+\begin{sagecommandline}
+sage: v2 in W13
+sage: v3 in W12
+\end{sagecommandline}
+Karena $\vec{v}_1,\vec{v}_3\in W_{1,2}$ dan 
+$\vec{v}_1,\vec{v}_2\in W_{1,3}$, kedua subruang itu sama.
+
+Namun, cara yang lebih langsung untuk menguji kesamaan ialah dengan menanyakannya saja.
+\begin{sagecommandline}
+sage: W12 == W13
+\end{sagecommandline}
+Penggunaan operator kesamaan, \inlinecode{==}, ini 
+belum lengkap tanpa mencobanya pada dua ruang yang
+tidak sama. 
+\begin{sagecommandline}
+sage: v4 = vector(RDF, [1, 1, 1, 1])
+sage: W14 = V.span([v1, v4])
+sage: v2 in W14
+sage: v4 in W12
+sage: W12 == W14
+sage: W12 != W14
+\end{sagecommandline}
+
+Ada hal penting tentang algoritme di sini.
+\Sage{} dapat memeriksa kesamaan dua rentang dengan sejumlah cara.
+Salah satunya ialah memeriksa apakah setiap anggota himpunan perentang pertama berada di
+ruang kedua, dan apakah setiap anggota himpunan perentang kedua berada di 
+ruang pertama. 
+Namun, \Sage{} melakukan hal yang berbeda.
+Ia memeriksa kesamaan ruang
+hanya dengan memeriksa apakah basis kanonisnya sama.
+\begin{sagecommandline}
+sage: W12.basis()
+sage: W14.basis()
+\end{sagecommandline}
+Kedua algoritme ini 
+memiliki perilaku eksternal yang sama, karena keduanya memutuskan apakah
+dua ruang sama.
+Namun, kedua algoritme itu berbeda secara internal dan yang kedua lebih cepat, 
+sebagian karena \Sage{} dapat menghitung basis kanonis suatu ruang terlebih dahulu
+lalu menggunakannya sebanyak yang diperlukan.
+Menemukan cara tercepat untuk menyelesaikan tugas merupakan bidang penelitian penting dalam komputasi.
+
+
+\subsection{Operasi}
+\Sage{} dapat mencari irisan dua ruang.
+Perhatikan anggota-anggota $\Re^3$ berikut.
+\begin{equation*}
+  \vec{v}_1=\colvec{1 \\ 0 \\ 0}
+  \quad \vec{v}_2=\colvec{0 \\ 1 \\ 0}
+  \quad \vec{v}_3=\colvec{0 \\ 0 \\ 3}
+\end{equation*}
+Bentuklah dua rentang, bidang-$xy$ $W_{1,2}=\spanof{\vec{v}_1, \vec{v}_2}$ 
+dan bidang-$yz$ $W_{2,3}=\spanof{\vec{v}_2, \vec{v}_3}$.
+Irisan keduanya ialah sumbu-$y$. 
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,3)
+sage: v1 = vector(RDF, [1, 0, 0])
+sage: v2 =  vector(RDF, [0, 1, 0])
+sage: W12 = V.span([v1, v2])
+sage: W12.basis()
+sage: v3 = vector(RDF, [0, 0, 3])
+sage: W23 = V.span([v2, v3])
+sage: W23.basis()
+sage: W = W12.intersection(W23)
+sage: W.basis()
+\end{sagecommandline}
+
+Jika Anda mencoba mengiris dua ruang ketika operasi itu tidak bermakna,
+misalnya mencoba mengiris $\Re^3$ dan~$\Re^4$, maka \Sage{}
+memberikan pesan galat yang baris terakhirnya memuat string
+\inlinecode{self and other must have the same ambient space.}
+
+Ingat bahwa ruang trivial $\set{\zero}$ merupakan rentang himpunan kosong.
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,3)
+sage: v1, v2 = vector(RDF, [1, 0, 0]), vector(RDF, [0, 1, 0])
+sage: W12 = V.span([v1, v2])
+sage: v3 = vector(RDF, [1, 1, 1])
+sage: W3 = V.span([v3])
+sage: W3.basis()
+sage: W4 = W12.intersection(W3)
+sage: W4.basis()
+\end{sagecommandline}
+
+\Sage{} juga akan mencari jumlah ruang, yaitu rentang gabungannya.
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,3)
+sage: v1, v2 = vector(RDF, [1, 0, 0]), vector(RDF, [0, 1, 0])
+sage: W12 = V.span([v1, v2])
+sage: v3 = vector(RDF, [1, 1, 1])
+sage: W3 = V.span([v3])
+sage: W5 = W12 + W3
+sage: W5
+sage: W5 == V
+\end{sagecommandline}
+(Buku membahas jumlah subruang dalam sebuah bagian opsional.)
+
+
+
+
+
+%========================================
+\section{Ruang lain}
+
+Di dalam buku terdapat ruang-ruang vektor yang bukan subruang dari suatu $\Re^n$.
+Untuk bekerja dengannya, Anda dapat menggunakan sejumlah cara yang lebih canggih, tetapi
+salah satu cara yang langsung ialah 
+menggunakan ruang real yang serupa dengan ruang yang diinginkan.\footnote{%
+  Bab ketiga buku teks ini, 
+  Pemetaan Antar-Ruang, memberikan makna yang tepat bagi 
+  ``serupa''.}
+Perhatikan subruang dari 
+$\polyspace_2$.
+\begin{equation*}
+  \set{ a_2x^2+a_1x+a_0\suchthat a_2=a_0+a_1}           
+   =\set{ (a_1+a_0)x^2+a_1x+a_0 \suchthat a_1,a_0\in\Re}
+\end{equation*}
+Ruang itu serupa dengan
+subruang dari $\Re^3$ berikut.
+\begin{equation*}
+  \set{\colvec{a_1+a_0 \\ a_1 \\ a_0}\suchthat a_1,a_0\in\Re}
+  =\set{\colvec{1 \\ 1 \\ 0}a_1+\colvec{1 \\ 0 \\ 1}a_0\suchthat a_1,a_0\in\Re}
+\end{equation*}
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,3)
+sage: v1 = vector(RDF, [1, 1, 0])
+sage: v2 = vector(RDF, [1, 0, 1])
+sage: W = V.span([v1, v2])
+sage: W.basis()
+\end{sagecommandline}
+
+Dengan cara serupa, Anda dapat menggunakan \Sage{} untuk 
+melakukan perhitungan pada ruang matriks $\nbyn{2}$ berikut,
+\begin{equation*}
+  \set{\begin{mat}
+         a  &b \\
+         c  &d
+       \end{mat}\suchthat \text{$a-b+c=0$ dan $b+d=0$}}
+\end{equation*}
+dengan melakukan parameterisasi
+\begin{equation*}
+  \set{\begin{mat}
+         a  &b \\
+         c  &d
+       \end{mat}\suchthat \text{$a=-c-d$ dan $b=-d$}}
+  =\set{\begin{mat}
+         -1  &0 \\
+          1  &0
+       \end{mat}c
+       +
+       \begin{mat}
+         -1  &-1 \\
+          0  &1
+       \end{mat}d
+       \suchthat c,d\in\Re}
+\end{equation*}
+lalu memberikan ruang real yang bersesuaian kepada \Sage{}.
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,4)
+sage: v1 = vector(RDF, [-1, 0, 1, 0])
+sage: v2 = vector(RDF, [-1, -1, 0, 1])
+sage: W = V.span([v1, v2])
+sage: W.basis()
+\end{sagecommandline}
+Contoh itu memperoleh vektor dengan membaca sepanjang baris-baris matriks.
+Sebagai gantinya, Anda dapat membaca
+menuruni kolom-kolomnya.  
+\begin{sagecommandline}
+sage: V = VectorSpace(RDF,4)
+sage: v1 = vector(RDF, [-1, 1, 0, 0])
+sage: v2 = vector(RDF, [-1, 0, -1, 1])
+sage: W = V.span([v1, v2])
+sage: W.basis()
+\end{sagecommandline}
+Masih ada cara-cara lain untuk menghasilkan ruang yang bersesuaian.
+Ruang-ruang itu tampak berbeda satu sama lain,
+tetapi sifat-sifat pentingnya, seperti dimensi, 
+tidak dipengaruhi oleh tampilannya.
+Pembahasan yang jauh lebih lengkap tentang hal ini terdapat dalam bab ketiga buku.
+
+\endinput
+
+
+TODO:

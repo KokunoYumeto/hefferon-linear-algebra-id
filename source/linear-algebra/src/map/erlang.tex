@@ -1,0 +1,492 @@
+% Chapter 3, Topic _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\topic{Matriks Ortonormal}
+\index{matriks ortonormal|(}
+\index{matriks!ortonormal|(}
+Dalam \emph{The Elements},\index{Euklides} Euklides menganggap dua bangun
+sama jika keduanya memiliki ukuran dan bentuk yang sama.
+Jadi, meskipun segitiga-segitiga di bawah ini tidak sama karena bukan himpunan
+titik yang sama, untuk keperluan Euklides keduanya pada dasarnya tidak dapat
+dibedakan. Kita dapat membayangkan mengangkat bidangnya, menggeser dan sedikit
+memutarnya tanpa membengkokkan atau meregangkannya, lalu meletakkannya kembali
+sehingga bangun pertama berimpit dengan bangun kedua.
+(Euklides tidak pernah menyatakan asas ini secara eksplisit, tetapi sering
+menggunakannya \cite{Casey}.)
+\begin{center}
+  \includegraphics{map/mp/ch3.61}
+\end{center}
+Dalam istilah modern, ``mengangkat bidang~\ldots'' berarti mengambil pemetaan
+dari bidang ke dirinya sendiri.
+Euklides hanya meninjau transformasi yang dapat menggeser atau memutar bidang,
+tetapi tidak membengkokkan atau meregangkannya.
+Karena itu, pemetaan $\map{f}{\Re^2}{\Re^2}$ disebut
+\definend{pemetaan yang mempertahankan jarak}%
+\index{pemetaan yang mempertahankan jarak}%
+\index{pemetaan!mempertahankan jarak}%
+\index{fungsi!mempertahankan jarak},
+\definend{gerak kaku}\index{gerak kaku}, atau
+\definend{isometri}\index{isometri}, jika untuk semua titik
+$P_1,P_2\in\Re^2$, jarak dari $f(P_1)$ ke $f(P_2)$ sama dengan jarak dari
+$P_1$ ke $P_2$.
+Kita juga mendefinisikan \definend{bangun} bidang\index{bangun bidang} sebagai
+suatu himpunan titik pada bidang dan mengatakan bahwa dua bangun
+\definend{kongruen}\index{bangun bidang!kongruen}%
+\index{kongruensi!bangun bidang} jika terdapat pemetaan yang mempertahankan
+jarak dari bidang ke dirinya sendiri yang membawa satu bangun ke bangun lainnya.
+
+Berbagai pernyataan dalam geometri Euklides mudah mengikuti definisi-definisi
+ini. Beberapa di antaranya adalah: (i)~kekolinearan invarian terhadap sebarang
+pemetaan yang mempertahankan jarak (artinya, jika $P_1$, $P_2$, dan $P_3$
+kolinear, maka $f(P_1)$, $f(P_2)$, dan $f(P_3)$ juga kolinear),
+(ii)~keterantaraan invarian terhadap sebarang pemetaan yang mempertahankan
+jarak (jika $P_2$ berada di antara $P_1$ dan $P_3$, maka $f(P_2)$ berada di
+antara $f(P_1)$ dan $f(P_3)$), (iii)~sifat sebagai segitiga invarian terhadap
+sebarang pemetaan yang mempertahankan jarak (jika suatu bangun merupakan
+segitiga, maka bayangannya juga merupakan segitiga), dan (iv)~sifat sebagai
+lingkaran invarian terhadap sebarang pemetaan yang mempertahankan jarak.
+Pada tahun 1872, F.~Klein\index{Klein, F.} menyarankan agar geometri Euklides
+didefinisikan sebagai kajian sifat-sifat yang invarian terhadap
+pemetaan-pemetaan tersebut.
+(Gagasan ini merupakan bagian dari Program Erlangen Klein
+\index{Program Erlangen}, yang mengusulkan asas pengorganisasian bahwa setiap
+jenis geometri\Dash Euklides, proyektif, dan sebagainya\Dash dapat
+dideskripsikan sebagai kajian sifat-sifat yang invarian terhadap suatu grup
+transformasi. Kata `grup' di sini berarti lebih dari sekadar `kumpulan', tetapi
+hal itu berada di luar cakupan kita.)
+
+Kita dapat menggunakan aljabar linear untuk mencirikan pemetaan-pemetaan bidang
+yang mempertahankan jarak.
+
+Sebagai permulaan, perhatikan bahwa terdapat transformasi bidang yang
+mempertahankan jarak tetapi tidak linear.
+Contoh yang jelas adalah \emph{translasi} berikut.\index{translasi}
+\begin{equation*}
+  \colvec{x \\ y}
+  \quad\mapsto\quad
+  \colvec{x \\ y}+\colvec[r]{1 \\ 0}=\colvec{x+1 \\ y}
+\end{equation*}
+Namun, ternyata contoh ini merupakan satu-satunya pengecualian, dalam arti
+bahwa jika $f$ mempertahankan jarak dan membawa $\zero$ ke $\vec{v}_0$, maka
+pemetaan $\vec{v}\mapsto f(\vec{v})-\vec{v}_0$ bersifat linear.
+Hal ini langsung mengikuti pernyataan berikut:~pemetaan $t$ yang
+mempertahankan jarak dan membawa $\zero$ ke dirinya sendiri bersifat linear.
+Untuk membuktikan pernyataan ekuivalen ini, tinjau basis standar dan andaikan
+\begin{equation*}
+  t(\vec{e}_1)=\colvec{a \\ b}
+  \qquad
+  t(\vec{e}_2)=\colvec{c \\ d}
+\end{equation*}
+untuk suatu $a,b,c,d\in\Re$.
+Untuk menunjukkan bahwa $t$ linear, kita dapat menunjukkan bahwa $t$ dapat
+direpresentasikan oleh matriks; artinya, $t$ bertindak sebagai berikut untuk
+semua $x,y\in\Re$.
+\begin{equation*}
+  \vec{v}=\colvec{x  \\  y}
+  \mapsunder{t}
+  \colvec{ax+cy  \\  bx+dy}
+\tag*{\text{($*$)}}\end{equation*}
+Ingat bahwa jika kita menetapkan tiga titik yang tidak kolinear, sebarang titik
+dapat ditentukan dengan memberikan jaraknya dari ketiga titik tersebut.
+Jadi, kita dapat menentukan sebarang titik $\vec{v}$ dalam domain berdasarkan
+jaraknya dari $\zero$, $\vec{e}_1$, dan $\vec{e}_2$.
+Demikian pula, kita dapat menentukan sebarang titik $t(\vec{v})$ dalam
+kodomain berdasarkan jaraknya dari ketiga titik tetap $t(\zero)$,
+$t(\vec{e}_1)$, dan $t(\vec{e}_2)$ (ketiganya tidak kolinear karena, seperti
+disebutkan di atas, kekolinearan bersifat invarian, sedangkan $\zero$,
+$\vec{e}_1$, dan $\vec{e}_2$ tidak kolinear).
+Karena $t$ mempertahankan jarak, kita dapat menyatakan lebih banyak:~untuk
+titik $\vec{v}$ pada bidang yang ditentukan oleh jarak $d_0$ dari $\zero$,
+jarak $d_1$ dari $\vec{e}_1$, dan jarak $d_2$ dari $\vec{e}_2$, bayangannya
+$t(\vec{v})$ harus merupakan titik tunggal dalam kodomain yang ditentukan oleh
+jarak $d_0$ dari $t(\zero)$, $d_1$ dari $t(\vec{e}_1)$, dan $d_2$ dari
+$t(\vec{e}_2)$.
+Karena ketunggalan tersebut, cukup periksa bahwa tindakan dalam ($*$) berlaku
+untuk kasus $d_0$, $d_1$, dan $d_2$:
+\begin{equation*}
+  \dist(\colvec{x \\ y},\zero) 
+  =\dist(t(\colvec{x \\ y}),t(\zero))
+  =\dist(\colvec{ax+cy \\ bx+dy},\zero)
+\end{equation*}
+(kita mengasumsikan bahwa $t$ memetakan $\zero$ ke dirinya sendiri)
+\begin{equation*}
+  \dist(\colvec{x \\ y},\vec{e}_1)
+  =\dist(t(\colvec{x \\ y}),t(\vec{e}_1))
+  =\dist(\colvec{ax+cy \\ bx+dy},\colvec{a \\ b})  
+\end{equation*}
+dan
+\begin{equation*}
+  \dist(\colvec{x \\ y},\vec{e}_2)
+  =\dist(t(\colvec{x \\ y}),t(\vec{e}_2))
+  =\dist(\colvec{ax+cy \\ bx+dy},\colvec{c \\ d})
+\end{equation*}
+Pemeriksaan-pemeriksaan tersebut menunjukkan bahwa ($*$) mendeskripsikan $t$;
+semuanya bersifat rutin.
+
+Jadi, sebarang $\map{f}{\Re^2}{\Re^2}$ yang mempertahankan jarak merupakan
+pemetaan linear ditambah translasi,
+$f(\vec{v})=t(\vec{v})+\vec{v}_0$, untuk suatu vektor konstan $\vec{v}_0$ dan
+pemetaan linear $t$ yang mempertahankan jarak.
+Karena itu, untuk memahami pemetaan yang mempertahankan jarak, yang tersisa
+adalah memahami pemetaan linear yang mempertahankan jarak.
+
+Tidak setiap pemetaan linear mempertahankan jarak.
+Sebagai contoh, $\vec{v}\mapsto 2\vec{v}$ tidak mempertahankan jarak.
+
+Namun, terdapat pencirian yang rapi:~transformasi linear $t$ pada bidang
+mempertahankan jarak jika dan hanya jika
+$\norm{t(\vec{e}_1)}=\norm{t(\vec{e}_2)}=1$ dan $t(\vec{e}_1)$ ortogonal
+terhadap $t(\vec{e}_2)$.
+Arah `hanya jika' dari pernyataan tersebut mudah\Dash karena $t$
+mempertahankan jarak, $t$ harus mempertahankan panjang vektor; dan menurut
+teorema Pythagoras, $t$ juga harus mempertahankan keortogonalan.
+Untuk menunjukkan arah `jika', kita dapat memeriksa bahwa pemetaan tersebut
+mempertahankan panjang vektor, sebab dengan demikian jarak antara setiap
+$\vec{p}$ dan $\vec{q}$ dipertahankan:
+$\norm{t(\vec{p}-\vec{q}\,)}=\norm{t(\vec{p})-t(\vec{q}\,)}
+=\norm{\vec{p}-\vec{q}\,}$.
+Untuk pemeriksaan tersebut, misalkan
+\begin{equation*}
+  \vec{v}=\colvec{x \\ y} 
+  \quad 
+  t(\vec{e}_1)=\colvec{a \\ b}
+  \quad
+  t(\vec{e}_2)=\colvec{c \\ d}
+\end{equation*}
+dan berdasarkan asumsi arah `jika', yaitu
+$a^2+b^2=c^2+d^2=1$ dan $ac+bd=0$, kita memiliki
+\begin{align*}
+  \norm{t(\vec{v}\,)}^2
+  &= (ax+cy)^2+(bx+dy)^2  \\
+  &= a^2x^2+2acxy+c^2y^2+b^2x^2+2bdxy+d^2y^2 \\
+  &= x^2(a^2+b^2)+y^2(c^2+d^2)+2xy(ac+bd)  \\
+  &= x^2 + y^2 \\
+  &= \norm{\vec{v}\,}^2
+\end{align*}
+
+Salah satu hal menarik dari pencirian ini adalah bahwa kita dapat dengan mudah
+mengenali matriks yang merepresentasikan pemetaan semacam itu terhadap basis
+standar:~kolom-kolomnya memiliki panjang satu dan saling ortogonal.
+Matriks semacam ini disebut \definend{matriks ortonormal}
+\index{matriks ortonormal}\index{matriks!ortonormal} (atau, secara kurang
+formal, \definend{matriks ortogonal}\index{matriks ortogonal}%
+\index{matriks!ortogonal}, karena istilah ini sering digunakan bukan hanya
+untuk menyatakan bahwa kolom-kolomnya ortogonal, tetapi juga bahwa panjangnya
+satu).
+
+Kita dapat memanfaatkan pencirian ini untuk memahami tindakan geometris
+pemetaan-pemetaan yang mempertahankan jarak.
+Karena $\norm{t(\vec{v}\,)}=\norm{\vec{v}\,}$, pemetaan~$t$ membawa sebarang
+$\vec{v}$ ke suatu titik pada lingkaran berpusat di titik asal dengan jari-jari
+yang sama dengan panjang $\vec{v}$.
+Khususnya, $\vec{e}_1$ dan $\vec{e}_2$ dipetakan ke lingkaran satuan.
+Lebih lanjut, %because of the orthogonality restriction,
+setelah kita menetapkan bahwa vektor satuan $\vec{e}_1$ dipetakan ke vektor
+dengan komponen $a$ dan $b$, hanya terdapat dua tempat tujuan $\vec{e}_2$ jika
+bayangannya harus tegak lurus terhadap bayangan vektor pertama:~$\vec{e}_2$
+dapat dipetakan dengan mempertahankan posisinya seperempat lingkaran berlawanan arah
+jarum jam dari $\vec{e}_1$
+\begin{center}
+  \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.62}\end{tabular}
+  \qquad
+  $\rep{t}{\stdbasis_2,\stdbasis_2}=
+  \begin{mat}
+    a  &-b  \\
+    b  &a
+  \end{mat}$ 
+\end{center}
+atau ke posisi seperempat lingkaran searah jarum jam.
+\begin{center}
+  \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.63}\end{tabular}
+  \qquad
+  $\rep{t}{\stdbasis_2,\stdbasis_2}=
+  \begin{mat}
+    a  &b  \\
+    b  &-a
+  \end{mat}$
+\end{center}
+
+Deskripsi geometris kedua kasus ini mudah.
+Misalkan $\theta$ merupakan sudut berlawanan arah jarum jam antara sumbu-$x$
+dan bayangan $\vec{e}_1$.
+Matriks pertama di atas merepresentasikan, terhadap basis standar,
+\definend{rotasi}\index{rotasi}\index{pemetaan linear!rotasi} bidang sebesar
+$\theta$ radian.
+\begin{center}
+  \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.62}\end{tabular}
+  \qquad
+  $\colvec{x \\ y}
+  \mapsunder{t}
+  \colvec{x\cos\theta-y\sin\theta  \\ x\sin\theta+y\cos\theta}$ 
+\end{center}
+Matriks kedua di atas merepresentasikan
+\definend{pencerminan}\index{pencerminan}%
+\index{pemetaan linear!pencerminan} bidang terhadap garis yang membagi dua
+sudut antara $\vec{e}_1$ dan $t(\vec{e}_1)$.
+\begin{center}
+  \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.64}\end{tabular}
+  \qquad
+  $\colvec{x \\ y}\mapsunder{t}
+  \colvec{x\cos\theta+y\sin\theta  \\  x\sin\theta-y\cos\theta}$ 
+\end{center}
+(Gambar ini menunjukkan $\vec{e}_1$ dicerminkan ke atas menuju kuadran pertama
+dan $\vec{e}_2$ dicerminkan ke bawah menuju kuadran keempat.)
+
+Perhatikan:~dalam domain, sudut dari $\vec{e}_1$ ke $\vec{e}_2$ berjalan
+berlawanan arah jarum jam, dan pada pemetaan pertama di atas, sudut dari
+$t(\vec{e}_1)$ ke $t(\vec{e}_2)$ juga berjalan berlawanan arah jarum jam,
+sehingga pemetaan tersebut mempertahankan orientasi sudut.
+Namun, pemetaan kedua membalik orientasinya.
+Pemetaan yang mempertahankan jarak disebut
+\definend{isometri langsung}\index{isometri!langsung}%
+\index{pemetaan!mempertahankan orientasi} jika mempertahankan orientasi, dan
+\definend{isometri berlawanan}\index{isometri!berlawanan}%
+\index{pemetaan!membalik orientasi} jika membalik orientasi.
+
+Dengan demikian, kita telah mencirikan kajian Euklides tentang kongruensi.
+Bagi bangun bidang, kajian tersebut meninjau sifat-sifat yang invarian terhadap
+kombinasi (i)~rotasi yang diikuti translasi, atau (ii)~pencerminan yang diikuti
+translasi (pencerminan yang diikuti translasi nontrivial sejajar dengan sumbu
+pencerminan disebut
+\definend{refleksi geser}\index{pencerminan!refleksi geser}).
+
+Gagasan lain yang dijumpai dalam geometri elementer, selain kongruensi bangun,
+adalah bahwa bangun-bangun disebut
+\definend{sebangun}\index{segitiga sebangun}\index{segitiga!sebangun} jika
+keduanya kongruen setelah perubahan skala.
+Kedua segitiga di bawah ini sebangun karena segitiga kedua memiliki bentuk yang
+sama dengan segitiga pertama, tetapi berukuran $3/2$ kali ukuran segitiga pertama.
+\begin{center}
+  \includegraphics{map/mp/ch3.65}
+\end{center}
+Dari pembahasan di atas, dua bangun sebangun jika terdapat matriks ortonormal
+$T$ sedemikian sehingga titik-titik $\vec{q}$ pada satu bangun merupakan
+bayangan titik-titik $\vec{p}$ pada bangun lainnya melalui
+$\vec{q}=(kT)\vec{p}+\vec{p}_0$, untuk suatu bilangan riil tak nol $k$ dan
+vektor konstan $\vec{p}_0$.
+
+Meskipun gagasan-gagasan ini berasal dari Euklides, matematika tidak lekang
+oleh waktu dan semuanya masih digunakan saat ini.
+Salah satu penerapan pemetaan yang dikaji di atas terdapat dalam grafika
+komputer. Sebagai contoh, kita dapat menganimasikan tampak atas kubus berikut
+dengan menyusun bingkai-bingkai film saat kubus itu berputar; gerakan tersebut
+merupakan gerak kaku.
+\begin{center}
+  \begin{tabular}{ccc}
+    \includegraphics{map/mp/ch3.66}
+    &\includegraphics{map/mp/ch3.67}
+    &\includegraphics{map/mp/ch3.68}                       \\
+    Bingkai 1      &Bingkai 2       &Bingkai 3
+  \end{tabular}
+\end{center}
+Kita juga dapat membuat kubus tampak menjauh dengan menghasilkan
+bingkai-bingkai film yang memperlihatkannya mengecil, sehingga memberikan
+bangun-bangun yang sebangun.
+\begin{center}
+  \begin{tabular}{ccc}
+    \includegraphics{map/mp/ch3.69}
+    &\includegraphics{map/mp/ch3.70}
+    &\includegraphics{map/mp/ch3.71}                       \\
+    Bingkai 1:        &Bingkai 2:       &Bingkai 3:
+  \end{tabular}
+\end{center}
+Grafika komputer memanfaatkan teknik-teknik aljabar linear dalam banyak cara
+lain (lihat \nearbyexercise{exer:HomoCrds}).
+
+% So the analysis above of distance-preserving maps
+% is useful as well as interesting.
+Buku indah yang menjelajahi sebagian bidang ini adalah \cite{Weyl}.
+Pembahasan lebih lanjut tentang grup, baik grup transformasi maupun yang lain,
+terdapat dalam berbagai buku Aljabar Modern, misalnya
+\cite{BirkhoffMaclane}. Pembahasan lebih lanjut tentang Klein dan Program
+Erlangen terdapat dalam \cite{Yaglom}.
+ 
+
+\begin{exercises}
+  \item 
+    Tentukan apakah setiap matriks berikut ortonormal.
+    \begin{exparts}
+      \partsitem $\begin{mat}[r]
+                    1/\sqrt{2} &-1/\sqrt{2}  \\
+                   -1/\sqrt{2} &-1/\sqrt{2}
+                  \end{mat}$
+      \partsitem $\begin{mat}[r]
+                    1/\sqrt{3} &-1/\sqrt{3}  \\
+                   -1/\sqrt{3} &-1/\sqrt{3}
+                  \end{mat}$
+      \partsitem $\begin{mat}[r]
+                    1/\sqrt{3} &-\sqrt{2}/\sqrt{3}  \\
+                   -\sqrt{2}/\sqrt{3} &-1/\sqrt{3}
+                  \end{mat}$
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ya.
+        \partsitem Tidak, panjang kolom-kolomnya bukan satu.
+        \partsitem Ya.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Tuliskan rumus bagi setiap pemetaan yang mempertahankan jarak berikut.
+    \begin{exparts}  
+      \partsitem pemetaan yang merotasi sebesar $\pi/6$ radian, lalu
+        mentranslasi sebesar $\vec{e}_2$
+      \partsitem pemetaan yang mencerminkan terhadap garis $y=2x$
+      \partsitem pemetaan yang mencerminkan terhadap $y=-2x$, lalu
+        mentranslasi satu satuan ke kanan dan satu satuan ke atas
+    \end{exparts}
+    \begin{answer}
+      Beberapa di antaranya tidak linear karena melibatkan translasi
+      nontrivial.
+      \begin{exparts}
+        \partsitem 
+          $\colvec{x \\ y}
+           \mapsto
+           \begin{mat}
+             x\cdot\cos(\pi/6)-y\cdot\sin(\pi/6) \\
+             x\cdot\sin(\pi/6)+y\cdot\cos(\pi/6) 
+           \end{mat}
+           +\colvec[r]{0 \\ 1}
+           =\begin{mat}
+             x\cdot(\sqrt{3}/2)-y\cdot(1/2)+0 \\
+             x\cdot(1/2)+y\cdot(\sqrt{3}/2)+1
+           \end{mat}$
+        \partsitem Garis $y=2x$ membentuk sudut $\alpha=\arctan(2/1)$
+          terhadap sumbu-$x$.
+          Karena matriks pencerminan menggunakan sudut $2\alpha$, kita
+          memperoleh $\cos(2\alpha)=-3/5$ dan $\sin(2\alpha)=4/5$.
+          \begin{equation*}
+          \colvec{x \\ y}
+           \mapsto
+           \begin{mat}
+             -3x/5+4y/5 \\
+             4x/5+3y/5
+           \end{mat}
+           \end{equation*}
+        \partsitem           
+           $\colvec{x \\ y}
+           \mapsto
+           \begin{mat}
+             -3x/5-4y/5 \\
+             -4x/5+3y/5
+           \end{mat}
+           +\colvec[r]{1 \\ 1}
+           =\begin{mat}
+             -3x/5-4y/5+1 \\
+             -4x/5+3y/5+1
+           \end{mat}$
+      \end{exparts}
+    \end{answer}
+  \item \label{exer:IsometryFacts}
+     \begin{exparts}
+       \partsitem Pembuktian bahwa suatu pemetaan yang mempertahankan jarak dan
+         membawa vektor nol ke dirinya sendiri sekaligus menunjukkan bahwa
+         pemetaan tersebut injektif dan surjektif (titik dalam domain yang
+         ditentukan oleh $d_0$, $d_1$, dan $d_2$ berkorespondensi dengan titik
+         dalam kodomain yang ditentukan oleh ketiganya).
+         Karena itu, sebarang pemetaan yang mempertahankan jarak memiliki
+         invers. Tunjukkan bahwa invers tersebut juga mempertahankan jarak.
+       \partsitem Buktikan bahwa kongruensi merupakan relasi ekuivalensi di
+         antara bangun-bangun bidang.
+     \end{exparts}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem Misalkan $f$ mempertahankan jarak dan tinjau $f^{-1}$.
+           Sebarang dua titik dalam kodomain dapat ditulis sebagai $f(P_1)$
+           dan $f(P_2)$. Karena $f$ mempertahankan jarak, jarak dari $f(P_1)$
+           ke $f(P_2)$ sama dengan jarak dari $P_1$ ke $P_2$.
+           Inilah tepatnya syarat agar $f^{-1}$ mempertahankan jarak.
+         \partsitem Sebarang bangun bidang $F$ kongruen dengan dirinya sendiri
+           melalui pemetaan identitas $\map{\identity}{\Re^2}{\Re^2}$, yang
+           jelas mempertahankan jarak.
+           Jika $F_1$ kongruen dengan $F_2$ (melalui suatu $f$), maka $F_2$
+           kongruen dengan $F_1$ melalui $f^{-1}$, yang mempertahankan jarak
+           menurut butir sebelumnya.
+           Terakhir, jika $F_1$ kongruen dengan $F_2$ (melalui suatu $f$) dan
+           $F_2$ kongruen dengan $F_3$ (melalui suatu $g$), maka $F_1$
+           kongruen dengan $F_3$ melalui $\composed{g}{f}$, yang mudah
+           diperiksa mempertahankan jarak.
+       \end{exparts}
+     \end{answer}
+  \item \label{exer:HomoCrds}
+    Dalam praktik, matriks bagi transformasi linear yang mempertahankan jarak
+    dan translasinya sering digabungkan menjadi satu.
+    Periksa bahwa kedua perhitungan berikut menghasilkan dua komponen pertama
+    yang sama.
+        \begin{equation*}
+           \begin{mat}
+             a  &c  \\
+             b  &d
+           \end{mat}
+           \colvec{x  \\ y}
+           +\colvec{e \\ f}
+           \qquad
+           \begin{mat}
+             a  &c  &e \\
+             b  &d  &f \\
+             0  &0  &1
+           \end{mat}
+           \colvec{x  \\ y \\ 1}
+        \end{equation*}
+    (Ini disebut \definend{koordinat homogen}\index{koordinat homogen}; lihat
+     Topik tentang Geometri Proyektif).
+     \begin{answer}
+       Dua komponen pertama masing-masing adalah $ax+cy+e$ dan $bx+dy+f$.
+     \end{answer}
+  \item \label{exer:GeomInvDistPre}
+    \begin{exparts}
+     \partsitem Verifikasi bahwa sifat-sifat yang disebut invarian terhadap
+       pemetaan yang mempertahankan jarak pada paragraf kedua Topik ini memang
+       bersifat demikian.
+     \partsitem Berdasarkan pengalaman Anda mempelajari geometri Euklides,
+       berikan dua sifat menarik lainnya yang juga invarian terhadap pemetaan
+       yang mempertahankan jarak.
+     \partsitem Berikan suatu sifat yang tidak menjadi perhatian dalam
+       geometri Euklides dan tidak invarian terhadap pemetaan yang
+       mempertahankan jarak.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Kasus kesamaan dalam ketaksamaan segitiga menyatakan bahwa
+          tiga titik kolinear jika
+          dan hanya jika (untuk suatu pengurutan menjadi $P_1$, $P_2$, dan
+          $P_3$),
+          $\dist(P_1,P_2)+\dist(P_2,P_3)=\dist(P_1,P_3)$.
+          Tentu saja, jika $f$ mempertahankan jarak, hal ini berlaku jika dan
+          hanya jika
+          $\dist(f(P_1),f(P_2))+\dist(f(P_2),f(P_3))=\dist(f(P_1),f(P_3))$,
+          yang, sekali lagi menurut kasus kesamaan ketaksamaan segitiga, benar
+          jika dan hanya jika
+          $f(P_1)$, $f(P_2)$, dan $f(P_3)$ kolinear.
+        
+          Argumen bagi keterantaraan serupa (di atas, $P_2$ berada di antara
+          $P_1$ dan $P_3$).
+
+          Jika bangun $F$ merupakan segitiga, maka $F$ adalah gabungan tiga
+          ruas garis $P_1P_2$, $P_2P_3$, dan $P_1P_3$.
+          Kedua paragraf sebelumnya bersama-sama menunjukkan bahwa sifat
+          sebagai ruas garis bersifat invarian.
+          Jadi, $f(F)$ merupakan gabungan tiga ruas garis dan karena itu
+          merupakan segitiga.
+
+          Lingkaran $C$ yang berpusat di $P$ dan berjari-jari $r$ merupakan
+          himpunan semua titik $Q$ sedemikian sehingga $\dist(P,Q)=r$.
+          Penerapan pemetaan $f$ yang mempertahankan jarak membuat bayangan
+          $f(C)$ menjadi himpunan semua $f(Q)$ dengan syarat
+          $\dist(P,Q)=r$. Karena $\dist(P,Q)=\dist(f(P),f(Q))$, himpunan
+          $f(C)$ juga merupakan lingkaran, dengan pusat $f(P)$ dan jari-jari
+          $r$.
+        \partsitem Berikut dua sifat yang mudah diverifikasi: (i)~sifat sebagai
+          segitiga siku-siku, dan (ii)~sifat dua garis sebagai garis sejajar.
+        \partsitem Salah satu sifat yang disebut dalam bagian ini adalah
+          `orientasi' suatu bangun.
+          Segitiga yang titik-titik sudutnya terbaca searah jarum jam sebagai
+          $P_1$, $P_2$, $P_3$ dapat dipetakan oleh pemetaan yang mempertahankan
+          jarak ke segitiga yang $P_1$, $P_2$, $P_3$-nya terbaca berlawanan
+          arah jarum jam.
+      \end{exparts}
+    \end{answer}
+\end{exercises}
+\index{matriks!ortonormal|)}
+\index{matriks ortonormal|)}
+\endinput

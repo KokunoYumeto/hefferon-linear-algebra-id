@@ -1,0 +1,459 @@
+% \documentclass[9pt,t]{beamer}
+\usefonttheme{professionalfonts}
+\usefonttheme{serif}
+\PassOptionsToPackage{pdfpagemode=FullScreen}{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color}
+% \DeclareGraphicsRule{*}{mps}{*}{}
+\usepackage{linalgjh}
+\usepackage{present}
+\usepackage{directories}  % Defines \vsdir, \vsmpdir
+\usepackage{xr}\externaldocument{\vsdir vs2} % read refs from .aux file
+\usepackage{xr}\externaldocument{\grdir gr3} % read refs from .aux file
+\usepackage{catchfilebetweentags}
+\usepackage{etoolbox} % from http://tex.stackexchange.com/questions/40699/input-only-part-of-a-file-using-catchfilebetweentags-package
+\makeatletter
+\patchcmd{\CatchFBT@Fin@l}{\endlinechar\m@ne}{}
+  {}{\typeout{Unsuccessful patch!}}
+\makeatother
+
+\mode<presentation>
+{
+  \usetheme{boxes}
+  \setbeamercovered{invisible}
+  \setbeamertemplate{navigation symbols}{} 
+}
+\addheadbox{filler}{\ }  % create extra space at top of slide 
+\hypersetup{colorlinks=true,linkcolor=blue} 
+
+\title[Linear Independence] % (optional, use only with long paper titles)
+{Two.II Linear Independence}
+
+\author{\textit{Linear Algebra}, edition four \\ {\small Jim Hef{}feron}}
+\institute{
+  \texttt{https://hefferon.net/linearalgebra}\\[0.25ex]
+  \texttt{http://joshua.smcvt.edu/linearalgebra}
+}
+\date{}
+
+
+\subject{Linear Independence}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% =============================================
+% \begin{frame}{Reduced Echelon Form} 
+% \end{frame}
+
+
+
+% ..... Two.I.1 .....
+\section{Definition and examples}
+%..........
+\begin{frame}{Linear independence}
+\df[def:LinInd]
+In any vector space, a set of vectors is
+\definend{linearly independent}
+if none of its elements is a linear combination of the 
+others from the set.
+Otherwise the set is \definend{linearly dependent}.
+% Makes footnote: \ExecuteMetaData[\vsdir vs2.tex]{df:LinInd}
+
+\pause\medskip
+\ExecuteMetaData[\vsdir vs2.tex]{LinInd}
+\end{frame}
+
+
+
+%..........
+\begin{frame}
+\lm[le:LDIffANonTrivLinRel]
+\ExecuteMetaData[\vsdir vs2.tex]{lm:LDIffANonTrivLinRel}
+
+\pause
+\pf
+\ExecuteMetaData[\vsdir vs2.tex]{pf:LDIffANonTrivLinRel}
+\qed
+
+\bigskip
+So to decide if a list of vectors 
+$\vec{s}_0, \ldots,\vec{s}_n$
+is linearly independent,
+set up the equation
+$\vec{0}=c_0\vec{s}_0+\cdots+c_n\vec{s}_n$,
+and calculate whether it has any solutions, other than
+the trivial one where all coefficents are zero.
+\end{frame}
+
+
+
+%..........
+\begin{frame}
+\ex 
+This set of vectors in the plane $\Re^2$ is linearly independent.
+\begin{equation*}
+  \set{\colvec{1 \\ 0},
+       \colvec{0 \\ 1}}
+\end{equation*}
+The only solution to this equation
+\begin{equation*}
+  c_1\colvec{1 \\ 0}+c_2\colvec{0 \\ 1}=\colvec{0 \\ 0}
+\end{equation*}
+is trivial $c_1=0$, $c_2=0$.
+\pause
+\ex In the vector space of cubic polynomials 
+$\polyspace_3=\set{a_0+a_1x+a_2x^2+a_3x^3\suchthat a_i\in\Re}$ the set
+$\set{1-x,1+x}$ is linearly independent.
+Setting up the equation
+$c_0(1-x)+c_1(1+x)=0$ and considering the constant term and linear term,
+leads to this system
+\begin{equation*}
+  \begin{linsys}{2}
+    c_0  &+ &c_1 &=  &0 \\
+    -c_0 &+ &c_1 &=  &0 
+  \end{linsys}
+\end{equation*}
+which has only the trivial solution.
+\end{frame}
+
+
+
+%..........
+\begin{frame}
+\ex
+The nonzero rows of this matrix form a linearly independent set.
+\begin{equation*}
+  \begin{mat}[r]
+    2 &0  &1   &-1  \\
+    0 &1  &-3  &1/2  \\
+    0 &0  &0   &5    \\
+    0 &0  &0   &0
+  \end{mat}
+\end{equation*}
+We showed in Lemma~One.III.\ref{le:EchFormNoLinCombo} that in any
+echelon form matrix the nonzero
+rows form a linearly independent set. 
+
+\pause
+\ex
+This subset of $\Re^3$ is linearly dependent.
+\begin{equation*}
+  \set{\colvec[r]{1  \\ 1 \\ 3}, 
+       \colvec[r]{-1 \\ 1 \\ 0},
+       \colvec[r]{1  \\ 3 \\ 6}}
+\end{equation*}
+One way to see that is to spot that the third vector is twice the first plus 
+the second.
+Another way is to solve the linear system
+\begin{equation*}
+  \begin{linsys}{3}
+    c_1  &-  &c_2  &+  &c_3    &=  &0  \\
+    c_1  &+  &c_2  &+  &3c_3   &=  &0  \\
+    3c_1 &   &     &+  &6c_3   &=  &0
+  \end{linsys}
+\end{equation*}
+and note that it has more than just the solution $c_1=c_2=c_3=0$.
+\end{frame}
+
+
+
+
+
+
+%..........
+\begin{frame}
+\lm[lm:AddVecSpanNoGrowIffVecInSpan]
+\ExecuteMetaData[\vsdir vs2.tex]{lm:AddVecSpanNoGrowIffVecInSpan}
+
+\pause
+\iftoggle{showallproofs}{
+  \pf
+  \ExecuteMetaData[\vsdir vs2.tex]{pf:AddVecSpanNoGrowIffVecInSpan0}
+  
+  \pause
+  \ExecuteMetaData[\vsdir vs2.tex]{pf:AddVecSpanNoGrowIffVecInSpan1}
+  \qed
+}{
+  \bigskip
+  \ex The book has the proof; here is an illustration.
+  The span of this set is the $xy$-plane.
+  \begin{equation*}
+    P=\set{\colvec{2 \\ 0 \\ 0},
+           \colvec{0 \\ 2 \\ 0}}\subseteq\Re^3
+  \end{equation*}
+  If we expand that by adding a vector
+  to get $\set{\vec{p}_1,\vec{p}_2,\vec{q}}$ 
+  then there are two possibilities. 
+  \begin{equation*}
+    P_0=\set{\colvec{2 \\ 0 \\ 0},
+                 \colvec{0 \\ 2 \\ 0},
+                 \colvec{3 \\ 2 \\ 0}}
+    \qquad
+    P_1=\set{\colvec{2 \\ 0 \\ 0},
+                 \colvec{0 \\ 2 \\ 0},
+                 \colvec{0 \\ 0 \\ -1}}
+  \end{equation*}
+  If the new vector is already in the starting span, $\vec{q}\in\spanof{P}$,
+  then the span is unchanged, as with $\spanof{P_0}=\spanof{P}$.
+  But if the new vector is outside the starting span, $\vec{q}\notin\spanof{P}$,
+  then the span grows, as in $\spanof{P_1}\supsetneq\spanof{P}$.
+}
+\end{frame}
+
+\begin{frame}
+\co[cor:OmitVecNotShrinkSpanIffVecIsDep]
+\ExecuteMetaData[\vsdir vs2.tex]{cor:OmitVecNotShrinkSpanIffVecIsDep}
+
+\ex
+These two subsets of $\R^3$ have the same span
+\begin{equation*}
+  \set{\colvec{1 \\ 2 \\ 3}, \colvec{4 \\ 5 \\ 6}, \colvec{7 \\ 8 \\ 9}}
+  \qquad
+  \set{\colvec{1 \\ 2 \\ 3}, \colvec{4 \\ 5 \\ 6}}
+\end{equation*}
+because in the first set $\vec{v}_3=2\vec{v}_2-\vec{v}_1$.
+
+\pause
+\co[cor:LiSetMinSpanSet]
+\ExecuteMetaData[\vsdir vs2.tex]{cor:LiSetMinSpanSet}
+\iftoggle{showallproofs}{
+  \pf
+  \ExecuteMetaData[\vsdir vs2.tex]{pf:LiSetMinSpanSet}\qed
+}{
+
+  \ex
+  This is a linearly independent subset of $\polyspace_3$
+  \begin{equation*}
+    S=\set{1+x,1-x,x^2}
+  \end{equation*}
+  Removal of any element, such as if we remove $1-x$ to get 
+  $\hat{S}=\set{1+x,x^2}$, will make the span smaller:
+  $\spanof{\hat{S}}\subsetneq\spanof{S}$.
+}
+\end{frame}
+
+
+%..........
+\begin{frame}
+\lm[lm:AddVecLiSetIsLiIffVecNotInSpan]
+\ExecuteMetaData[\vsdir vs2.tex]{lm:AddVecLiSetIsLiIffVecNotInSpan}
+
+\iftoggle{showallproofs}{
+\pause
+\pf
+\ExecuteMetaData[\vsdir vs2.tex]{pf:AddVecLiSetIsLiIffVecNotInSpan0}
+
+\ExecuteMetaData[\vsdir vs2.tex]{pf:AddVecLiSetIsLiIffVecNotInSpan1}
+\qed}{
+\ex The book has the proof; here is an illustration.
+Consider this linearly independent subset of $\polyspace_2$.
+\begin{equation*}
+  S=\set{1-x,1+x}
+\end{equation*}
+Its span $\spanof{S}$ is the set of
+linear polynomials $\set{a+bx\suchthat a,b\in\Re}$.
+(To check: consider $a+bx=r_1(1-x)+r_2(1+x)$, which gives a linear system
+with equations
+$r_1+r_2=a$ and 
+$-r_1+r_2=b$, having
+the solution 
+$r_2=(1/2)a+(1/2)b$ and 
+$r_1=(1/2)a-(1/2)b$.)  
+
+Here are two supersets.
+\begin{equation*}
+  S_1=S\cup\set{2+2x}
+  \qquad
+  S_2=S\union\set{2+x^2}
+\end{equation*}
+
+\pause
+On the left, adding a linear polynomial just adds ``repeat information''
+so $\spanof{S_1}=\spanof{S}$ and $S_1$ is linearly dependent.
+
+The right, with ``new information,'' enlarges the span 
+$\spanof{S_2}=\polyspace_2\supsetneq \spanof{S}$
+and the new set $S_2$ is also linearly independent.
+(To check this, use  
+$a+bx+cx^2=r_1(1-x)+r_2(1+x)+r_3(2+x^2)$ to get a linear system
+with solution $r_3=c$, $r_2=(1/2)a+(1/2)b$ and $r_1=(1/2)a-(1/2)b-c$.)
+}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\co[th:AlwaysAnLDSubset]
+\ExecuteMetaData[\vsdir vs2.tex]{th:AlwaysAnLDSubset}
+
+\iftoggle{showallproofs}{
+  \pause
+  \pf
+  \ExecuteMetaData[\vsdir vs2.tex]{pf:AlwaysAnLDSubset0}
+
+  \ExecuteMetaData[\vsdir vs2.tex]{pf:AlwaysAnLDSubset1}
+
+  \ExecuteMetaData[\vsdir vs2.tex]{pf:AlwaysAnLDSubset2}
+  \qed
+}{
+  \medskip\par
+  The book has a proof.  
+  Instead, consider the example on the next slide.
+}
+\end{frame}
+\begin{frame}
+\ex
+Consider this subset of $\Re^2$. 
+\begin{equation*}
+  S=\set{\vec{s}_1,\vec{s}_2,\vec{s}_3,\vec{s}_4,\vec{s}_5}
+   =\set{\colvec{2 \\ 2},
+       \colvec{3 \\ 3},
+       \colvec{1 \\ 4},
+       \colvec{0 \\ -1},
+       \colvec{1 \\ -1} }
+\end{equation*}
+The linear relationship
+\begin{equation*}
+       r_1\colvec{2 \\ 2}
+       +r_2\colvec{3 \\ 3}
+       +r_3\colvec{1 \\ 4}
+       +r_4\colvec{0 \\ -1}
+       +r_5\colvec{1 \\ -1}
+       =\colvec{0 \\ 0}
+  % \tag{*}
+\end{equation*}
+gives a system of equations.
+\begin{equation*}
+   \begin{linsys}{5}
+      2r_1 &+ &3r_2 &+ &r_3  &  &    &+ &r_5 &=  &0 \\
+      2r_1 &+ &3r_2 &+ &4r_3 &- &r_4 &- &r_5 &=  &0 
+    \end{linsys}       %                                     \\                 
+    \grstep{-\rho_1+\rho_2}
+    \begin{linsys}{5}
+      2r_1 &+ &3r_2 &+ &r_3   &  &    &+ &r_5  &=  &0 \\
+           &  &     &+ &3r_3 &- &r_4  &- &2r_5 &=  &0 
+    \end{linsys}
+\end{equation*}
+\end{frame}
+\begin{frame}
+\noindent
+Parametrize by expressing the leading variables
+$r_1$ and $r_3$ in terms of the free variables.
+\begin{equation*}
+  \set{\colvec{r_1 \\ r_2 \\ r_3 \\ r_4 \\ r_5}
+       =\colvec{-3/2 \\ 1 \\ 0 \\ 0 \\ 0}r_2
+        +\colvec{-1/6 \\ 0 \\ 1/3 \\ 1 \\ 0}r_4
+        +\colvec{-5/6 \\ 0 \\ 2/3 \\ 0 \\ 1}r_5
+       \suchthat r_2,r_4,r_5\in\Re}
+\end{equation*}
+\pause
+Set $r_5=1$ and $r_2=r_4=0$ to get
+$r_1=-5/6$ and $r_3=2/3$,
+\begin{equation*}
+       -\frac{5}{6}\cdot\colvec{2 \\ 2}
+       +0\cdot\colvec{3 \\ 3}
+       +\frac{2}{3}\cdot\colvec{1 \\ 4}
+       +0\cdot\colvec{0 \\ -1}
+       +1\cdot\colvec{1 \\ -1}
+       =\colvec{0 \\ 0}                          
+\end{equation*}
+showing that  
+$\vec{s}_5$ is in the span of the set $\set{\vec{s}_1,\vec{s}_3}$.
+
+Similarly, setting $r_4=1$ and the other parameters to~$0$ shows
+$\vec{s}_4$ is in the span of the set $\set{\vec{s}_1,\vec{s}_3}$.
+Also, setting $r_2=1$ and the other parameters to~$0$ shows
+$\vec{s}_2$ is in the span of the same set.
+
+So without shrinking the span 
+we can omit the vectors $\vec{s}_2$, $\vec{s}_4$, $\vec{s}_5$
+associated with the free variables.  
+The set of vectors associated with the leading variables,
+$\set{\vec{s}_1,\vec{s}_3}$, is linearly independent
+and so we cannot omit any members without shrinking the span.
+% (In ($*$) note that $\vec{s}_2$ is linearly dependent on $\vec{s}_1$
+% and $r_2$ did not end as a leading variable.)
+\end{frame}
+
+
+
+%..........
+\begin{frame}
+\co[cor:LDMeansLC]
+\ExecuteMetaData[\vsdir vs2.tex]{co:LDMeansLC}
+
+\pause
+\pf
+\ExecuteMetaData[\vsdir vs2.tex]{pf:LDMeansLC}
+\qed
+\end{frame}
+
+
+
+
+%..................
+\begin{frame}{Linear independence and subset}
+\lm[le:SubsetPreserveLI]
+\ExecuteMetaData[\vsdir vs2.tex]{lm:SubsetPreserveLI}
+
+\pf
+\ExecuteMetaData[\vsdir vs2.tex]{pf:SubsetPreserveLI}
+\qed
+
+\pause
+\medskip
+This table summarizes the cases.
+\ExecuteMetaData[\vsdir vs2.tex]{IndependenceAndSubsetTable}
+\medskip
+
+An example of the lower left is that the set $S$ of all vectors in the
+space $\Re^2$ is linearly dependent but the subset $\hat{S}$ consisting of only the 
+unit vector on the $x$-axis is independent.
+By interchanging $\hat{S}$ with $S$ that's also an example of the upper right.
+\end{frame}
+
+
+
+\begin{frame}{Independence versus span}
+The box on the prior slide describes what happens if we start with a linearly
+independent set~$S$ and pass to a new one,~$\hat{S}$.
+If the new set is smaller, $\hat{S}\subset S$, then $\hat{S}$ is sure to be
+linearly independent.
+But if the new set is bigger, $S\subset \hat{S}$, then it may be linearly
+dependent.
+So, speaking informally, linearly independent sets like to have
+fewer elements.
+
+Contrast that with spanning sets.
+Suppose that we start with a spanning set~$S$ and pass to~$\hat{S}$.
+If the new set is bigger, $S\subset \hat{S}$, then it is sure to
+be a spanning set.
+But if the new set is smaller, $\hat{S}\subset S$, then possibly it
+no longer spans the space.
+So, again speaking informally, spanning sets like to have more elements.
+
+\ex This set spans~$\R^3$ and is linearly independent.
+\begin{equation*}
+  S=\set{\colvec{1 \\ 0 \\ 0},
+         \colvec{1 \\ 1 \\ 0},
+         \colvec{1 \\ 1 \\ 1}}
+\end{equation*}
+Omit any member and it no longer spans the space.
+Add any new vector to it and the result is linearly dependent.
+\end{frame}
+
+
+
+%...........................
+% \begin{frame}
+% \ExecuteMetaData[../gr3.tex]{GaussJordanReduction}
+% \df[def:RedEchForm]
+% 
+% \end{frame}
+\end{document}

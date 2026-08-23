@@ -1,0 +1,374 @@
+\chapter{Pemetaan}\label{chapter:maps}
+
+
+Kita telah menggunakan \Sage{} untuk mendefinisikan ruang vektor.
+Selanjutnya, kita akan menjelajahi fungsi antar-ruang vektor.
+
+Seperti sebelumnya, walaupun kita menganggap ruang vektor memiliki skalar
+bilangan riil, di sini kita akan mendefinisikan matriks dengan entri bilangan
+rasional karena entri tersebut sudah cukup untuk menggambarkan gagasannya dan
+lebih mudah dibaca.
+  
+
+%========================================
+\section{Fungsi linear} \label{sec:linearfunctions}
+\Sage{} dapat bekerja dengan fungsi.
+\begin{equation*}
+  t(\colvec{a \\ b})
+  =\colvec{a+2b \\ a+2b}
+\end{equation*}
+\begin{sagecommandline}
+sage: a, b = var('a, b')
+sage: t_symbolic(a, b) = [a+2*b, a+2*b]         
+sage: t_symbolic       
+sage: t_symbolic(1,3)       
+\end{sagecommandline}
+
+\Sage{} dapat mencari kelipatan skalar suatu fungsi atau menjumlahkan dua fungsi.
+\begin{sagecommandline}
+sage: t_symbolic(a, b) = [a+2*b, a+2*b]         
+sage: f_symbolic = 3 * t_symbolic
+sage: f_symbolic
+sage: f_symbolic(4, 2)
+sage: s_symbolic(a,b) = [a+b, a-b]
+sage: g_symbolic = s_symbolic + t_symbolic
+sage: g_symbolic
+sage: g_symbolic(1, 5) 
+\end{sagecommandline}
+\Sage{} juga dapat mencari komposisi dua fungsi.
+\begin{sagecommandline}
+sage: s_symbolic * f_symbolic
+sage: s_symbolic * f_symbolic (1,2)
+\end{sagecommandline}
+
+Kita memakai nama yang tidak biasa,
+\inlinecode{t_symbolic}, \inlinecode{s_symbolic}, dan seterusnya,
+karena objek-objek ini belum merupakan fungsi: kita belum menetapkan domain
+dan kodomainnya. Objek tersebut lebih tepat disebut purwarupa fungsi.
+Kita dapat memakainya untuk menghasilkan fungsi, misalnya fungsi linear
+$\map{t}{\Re^2}{\Re^2}$.
+\begin{sagecommandline} 
+sage: a, b = var('a, b')   
+sage: t_symbolic(a, b) = [a+2*b, a+2*b]         
+sage: t = linear_transformation(QQ^2, QQ^2, t_symbolic)
+\end{sagecommandline}
+\Sage{} memakai istilah `transformasi linear' untuk semua pemetaan linear,
+suatu penggunaan yang lazim, sedangkan buku ini membatasinya pada pemetaan
+yang domain dan kodomainnya sama.
+
+Untuk transformasi~$t$, kita mengharapkan
+\begin{equation*}
+  t(\colvec{1 \\ 3})
+  =\colvec{7 \\ 7}
+\end{equation*}
+dan \Sage{} memberikan hasil tersebut.
+\begin{sagecommandline}
+sage: v = vector(QQ, [1, 3])
+sage: t(v)
+\end{sagecommandline}
+
+
+
+%========================================
+\section{Kiri/kanan} \label{sec:leftright}
+Secara bawaan, \Sage{} merepresentasikan pemetaan linear dengan cara yang
+berbeda dari buku ini.
+Perbedaan tersebut paling mudah dijelaskan melalui contoh.
+Tinjau kembali transformasi $\map{t}{\Re^2}{\Re^2}$.
+\begin{equation*}
+  t(\colvec{a \\ b})
+  =\colvec{a+2b \\ a+2b}
+\end{equation*}
+Untuk merepresentasikannya terhadap $B,D\subset\Re^2$, kita dapat memakai
+basis kanonik $B=\stdbasis_2$ dan $D=\stdbasis_2$.
+Kita mencari pengaruh~$t$ pada unsur-unsur~$B$, lalu merepresentasikan
+hasilnya terhadap~$D$.
+\begin{equation*}
+  \colvec{1 \\ 0}\mapsunder{t}\colvec{1 \\ 1}
+  \text{\ menghasilkan\ }
+  \rep{\colvec{1 \\ 1}}{D}=\colvec{1 \\ 1}
+  \qquad
+  \colvec{0 \\ 1}\mapsunder{t}\colvec{2 \\ 2}
+  \text{\ menghasilkan\ }
+  \rep{\colvec{2 \\ 2}}{D}=\colvec{2 \\ 2}
+\end{equation*}
+Dengan demikian, buku ini memperoleh matriks berikut.
+\begin{equation*}
+  % \hspace*{3em}
+  \rep{t}{B,D}=
+  \begin{mat}
+    1  &2  \\
+    1  &2
+  \end{mat}
+\end{equation*}
+Namun, \Sage{} menampilkan matriks yang berbeda.
+\begin{sagecommandline}
+sage: t_symbolic(a, b) = [a+2*b, a+2*b]         
+sage: t = linear_transformation(QQ^2, QQ^2, t_symbolic)  # lihat pembahasan 'side' di bawah
+sage: t
+\end{sagecommandline}
+Apa yang terjadi?
+
+Ingat bahwa tujuan representasi adalah memakai representasi matriks dari~$t$
+dan representasi vektor dari~$\vec{v}$ untuk menghitung representasi vektor
+dari~$t(\vec{v})$.
+Buku ini menulis
+\begin{equation*}
+  \rep{t}{B,D}\,\rep{\vec{v}}{B}=\rep{t(\vec{v})}{D}
+\end{equation*}
+dengan vektor di sebelah kanan matriks.
+Namun, secara bawaan \Sage{} menempatkan vektor representasi di sebelah kiri.
+Perbedaannya hanya bersifat penulisan\Dash dibandingkan dengan~$T\vec{v}$
+dalam buku, bentuk bawaan \Sage{} adalah
+~$\trans{\vec{v}}\,\trans{T}$\Dash dan itulah sebabnya matriks \Sage{}
+merupakan transpos matriks buku.
+
+Agar \Sage{} mengikuti konvensi buku, kita akan melakukan dua hal:
+mendefinisikan pemetaan dengan opsi \inlinecode{side='right'} dan menampilkan
+matriksnya dengan opsi yang sama.
+% This demonstrates.
+\begin{sagecommandline}
+sage: t_symbolic(a, b) = [a+2*b, a+2*b]         
+sage: t = linear_transformation(QQ^2, QQ^2, t_symbolic, side='right')  
+sage: t.matrix(side='right')
+\end{sagecommandline}
+
+
+  
+
+%========================================
+\section{Mendefinisikan pemetaan linear}
+Kita akan menjelaskan dua cara untuk mendefinisikan pemetaan linear.
+
+\subsection{Secara simbolis}
+Kita telah memperkenalkan cara mendefinisikan pemetaan dengan rumus.
+\begin{sagecommandline}
+sage: a, b = var('a, b')   
+sage: h_symbolic(a, b) = [a+b, a-b, b]         
+sage: h_symbolic       
+sage: h = linear_transformation(QQ^2, QQ^3, h_symbolic, side='right')
+sage: h.matrix(side='right') 
+\end{sagecommandline}
+Mengevaluasi fungsi ini pada suatu anggota domain menghasilkan anggota kodomain.
+\begin{sagecommandline}
+sage: v = vector(QQ, [1, 3])  
+sage: h(v)
+\end{sagecommandline}
+
+Jika vektor tersebut bukan anggota domain,
+\begin{lstlisting}
+sage: v1 = vector(QQ, [1,2,3,4])
+sage: h(v1)
+\end{lstlisting}
+\Sage{} memberikan pesan galat pelacakan balik yang panjang. Seperti biasa,
+baris terakhir paling informatif karena memuat:
+\inlinecode{Type Error:(1, 2, 3, 4) fails to convert into the map's domain}.
+
+\Sage{} dapat mencari ruang nol dan daerah hasil dengan memakai istilah
+`kernel' dan `image'.
+\begin{sagecommandline}
+sage: h.kernel()                                       
+sage: h.image()                                        
+\end{sagecommandline}
+\Sage{} menemukan bahwa ruang nol adalah subruang trivial dari domain,
+$\nullspace{h}=\set{\zero}$.
+Subruang ini berdimensi~$0$, sehingga \Sage{} melaporkan bahwa basisnya kosong.
+\Sage{} juga menemukan bahwa daerah hasil $\rangespace{h}$ berdimensi~$2$
+dan memberikan basisnya.
+
+Karena ruang nol trivial, pemetaan tersebut injektif.
+Karena daerah hasil berdimensi~$2$ sedangkan kodomain berdimensi~$3$,
+pemetaan tersebut tidak surjektif.
+Perhatikan bahwa temuan ini sesuai dengan teorema bahwa jumlah dimensi ruang
+nol dan daerah hasil, yaitu $0$ dan~$2$, sama dengan dimensi domain.
+
+Sebagai contoh lain, tinjau fungsi berikut.
+\begin{sagecommandline}
+sage: t_symbolic(a, b) = [a+2*b, a+2*b]
+sage: t_symbolic
+sage: t = linear_transformation(QQ^2, QQ^2, t_symbolic, side='right')
+\end{sagecommandline}
+Fungsi ini tidak injektif karena terdapat dua masukan yang dipetakan ke
+keluaran yang sama.
+\begin{sagecommandline}
+sage: t(vector(QQ, [2, 0]))
+sage: t(vector(QQ, [0, 1]))
+\end{sagecommandline}
+\noindent
+Cara lain untuk mengetahui bahwa pemetaan tersebut tidak injektif adalah
+menghitung bahwa $\nullspace{t}$ tidak berdimensi~$0$.
+\begin{sagecommandline}
+sage: t.kernel()
+\end{sagecommandline}
+
+Sebelum melihat daerah hasil pemetaan ini, kita telah mengetahui bahwa
+dimensinya harus~$1$, sebab jumlah dimensi ruang nol dan daerah hasil sama
+dengan dimensi domain.
+\Sage{} mengonfirmasinya.
+\begin{sagecommandline}
+sage: t.image()
+\end{sagecommandline}
+
+
+
+\subsection{Melalui matriks}
+Cara lain untuk mendefinisikan pemetaan linear adalah dengan matriks.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 2], [3, 4], [5, 6]])
+sage: M
+sage: m = linear_transformation(M, side='right')
+\end{sagecommandline}
+Karena matriks tersebut memiliki entri rasional, \Sage{} mengambil domain
+dan kodomainnya sebagai $\Q^2$ dan $\Q^3$.
+Sekali lagi, secara bawaan \Sage{} memilih representasi dengan vektor
+mengalikan dari kiri, sehingga kita menetapkan \inlinecode{side='right'}.
+\begin{sagecommandline}
+sage: m 
+\end{sagecommandline}
+Walaupun kita mendefinisikan pemetaan linear~$m$ dengan
+\mbox{\inlinecode{side='right'},} matriks yang ditampilkan \Sage{} secara
+bawaan menggunakan \inlinecode{side='left'}.
+Untuk memperoleh representasi yang sesuai dengan buku, mintalah secara eksplisit.
+\begin{sagecommandline}
+sage: m.matrix(side='right')
+\end{sagecommandline}
+
+Ketika didefinisikan dengan cara ini, \Sage{} menganggap pemetaan linear
+tersebut direpresentasikan oleh matriks terhadap basis standar.
+\begin{sagecommandline}
+sage: m = linear_transformation(M, side='right')
+sage: v = vector(QQ, [7, 8])
+sage: v
+sage: m(v)  
+\end{sagecommandline}
+(Jika \inlinecode{side='right'} dihilangkan dari definisi pemetaan linear,
+lalu Anda mengalikan dengan vektor beranggota dua, Anda akan menerima pesan
+galat yang menyatakan bahwa vektor tersebut tidak berada dalam domain
+berdimensi~$3$ dari pemetaan.)
+
+Walaupun pemetaan berikut didefinisikan dengan dua cara, \Sage{} dapat
+menggabungkannya.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 2], [3, 4], [5, 6]])
+sage: m = linear_transformation(M, side='right')
+sage: n_symbolic(a, b) = [a+2*b, 3*a+4*b, 5*a+6*b]
+sage: n = linear_transformation(QQ^2, QQ^3, n_symbolic, side='right')
+sage: m == n  
+\end{sagecommandline}
+Anda juga dapat mengajukan pertanyaan yang sama pada pemetaan linear yang
+dibuat dari matriks seperti yang diajukan pada pemetaan linear dari fungsi simbolis.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 2], [3, 4], [5, 6]])
+sage: m = linear_transformation(M, side='right')
+sage: m.kernel() 
+\end{sagecommandline}
+
+Anda juga dapat mendefinisikan pemetaan dengan memulai dari matriks yang
+merepresentasikan pemetaan terhadap basis tak standar.
+Di sini kita mendefinisikan basis tak standar bagi domain dan kodomain,
+$B=\sequence{\vec{\beta}_1,\vec{\beta}_2}$ dan
+~$D=\sequence{\vec{\delta}_1,\vec{\delta}_2}$.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 2], [3, 4]])
+sage: beta_1 = vector(QQ, [1, -1])
+sage: beta_2 = vector(QQ, [1, 1])
+sage: domain_basis = [beta_1, beta_2]
+sage: D = (QQ^2).subspace_with_basis(domain_basis)
+sage: delta_1 = vector(QQ, [2, 0])
+sage: delta_2 = vector(QQ, [0, 3])
+sage: codomain_basis = [delta_1, delta_2]
+sage: C = (QQ^2).subspace_with_basis(codomain_basis)
+sage: m = linear_transformation(D, C, M, side='right')
+sage: m.matrix(side='right')
+sage: m(vector(QQ, [1, 0]))
+\end{sagecommandline}
+\Sage{} telah menghitung bahwa
+\begin{equation*}
+  \colvec{1 \\ 0}=(1/2)\colvec{1 \\ -1}+(1/2)\colvec{1 \\ 1}
+  \quad\text{sehingga}\quad
+  \rep{\colvec{1 \\ 0}}{B}=\colvec{1/2 \\ 1/2} 
+\end{equation*}
+dan menggunakannya untuk menghitung vektor citra.
+\begin{equation*}
+  \begin{mat}
+    1 &2 \\
+    3 &4
+  \end{mat}
+  \colvec{1/2 \\ 1/2}
+  =
+  \colvec{3/2 \\ 7/2}
+  =
+  \rep{m(\vec{v})}{D}
+  \quad\text{sehingga}\quad
+  m(\vec{v})=(3/2)\colvec{2 \\ 0}+(7/2)\colvec{0 \\ 3}
+  =\colvec{3 \\ 21/2}
+\end{equation*}
+
+
+
+
+
+%========================================
+\section{Operasi}
+
+Tetapkan suatu ruang vektor domain~$D$ dan kodomain~$C$, lalu tinjau himpunan
+semua transformasi linear di antara keduanya.
+Koleksi ini memiliki beberapa operasi alami, termasuk penjumlahan dan
+perkalian skalar.
+Sebelumnya kita melihat bahwa \Sage{} dapat bekerja dengan operasi-operasi
+tersebut serta komposisi. Kita menutup bagian ini dengan menunjukkan
+pengaruhnya pada representasi.
+
+
+\subsection{Penjumlahan dan perkalian skalar}
+Ingat bahwa penjumlahan matriks didefinisikan sedemikian sehingga representasi
+jumlah dua transformasi linear adalah jumlah matriks dari representasi
+masing-masing. \Sage{} dapat menggambarkannya.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 2], [3, 4]])
+sage: m = linear_transformation(QQ^2, QQ^2, M, side='right')
+sage: N = matrix(QQ, [[5, -1], [0, 7]])
+sage: n = linear_transformation(QQ^2, QQ^2, N, side='right')
+sage: m.matrix(side='right')
+sage: n.matrix(side='right')
+sage: (m+n).matrix(side='right')
+\end{sagecommandline}
+Tanda kurung pada baris terakhir diperlukan karena jika kita memasukkan
+\inlinecode{m+n.matrix(side='right')}, \Sage{} mencoba menggabungkan pemetaan
+linear~\inlinecode{m} dengan matriks \inlinecode{n.matrix(side='right')}.
+
+Demikian pula, perkalian skalar suatu pemetaan linear tercermin dalam
+perkalian skalar matriksnya.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 2], [3, 4]])
+sage: m = linear_transformation(QQ^2, QQ^2, M, side='right')
+sage: (3*m).matrix(side='right')
+sage: (m*3).matrix(side='right')
+\end{sagecommandline}
+
+
+
+\subsection{Komposisi}
+Komposisi pemetaan linear menghasilkan perkalian matriks.
+\Sage{} memakai lambang \inlinecode{*} untuk menyatakan komposisi pemetaan linear.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 2], [3, 4]])
+sage: m = linear_transformation(QQ^2, QQ^2, M, side='right')
+sage: N = matrix(QQ, [[5, -1], [0, 7]])
+sage: n = linear_transformation(QQ^2, QQ^2, N, side='right')
+sage: M*N
+\end{sagecommandline}
+
+Seperti ditekankan dalam buku, tujuan perkalian matriks adalah
+merepresentasikan komposisi pemetaan linear.
+\begin{sagecommandline}
+sage: (m*n).matrix(side='right')
+\end{sagecommandline}
+
+
+
+
+\endinput
+
+
+TODO:

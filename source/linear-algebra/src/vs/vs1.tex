@@ -1,0 +1,3928 @@
+% Chapter 2, Section 1 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-10
+\chapter{Ruang Vektor}
+Pada akhir bab pertama, kita telah cukup memahami cara Metode Gauss
+menyelesaikan suatu sistem linear.
+Metode tersebut secara sistematis membentuk kombinasi linear dari baris-baris.
+Sekarang kita beralih ke kajian umum tentang kombinasi linear.
+
+Kita memerlukan suatu kerangka.
+Dalam bab pertama, kadang-kadang kita mengombinasikan vektor-vektor dari
+$\Re^2$, kadang-kadang dari $\Re^3$, dan pada kesempatan lain dari ruang
+berdimensi lebih tinggi.
+Karena itu, dorongan pertama kita mungkin adalah bekerja di $\Re^n$ tanpa
+menentukan $n$.
+Keuntungannya, setiap hasil akan berlaku sekaligus untuk $\Re^2$, $\Re^3$,
+dan banyak ruang lainnya.
+
+Namun, jika penerapan hasil pada banyak ruang sekaligus merupakan suatu
+keuntungan, membatasi diri hanya pada ruang-ruang $\Re^n$ justru terlalu
+sempit.
+Kita ingin agar hasil-hasil tersebut juga berlaku pada kombinasi vektor baris,
+seperti dalam bagian terakhir bab pertama.
+Kita bahkan telah menjumpai beberapa ruang yang bukan sekadar kumpulan semua
+vektor kolom atau semua vektor baris berukuran sama.
+Sebagai contoh, kita telah melihat bahwa himpunan solusi suatu sistem homogen
+merupakan bidang di dalam $\Re^3$.
+Himpunan itu tertutup dalam arti bahwa kombinasi linear dari solusi-solusinya
+juga merupakan solusi.
+Namun, himpunan tersebut tidak memuat semua vektor kolom bertinggi tiga,
+melainkan hanya sebagian di antaranya.
+
+Kita ingin agar hasil tentang kombinasi linear berlaku di mana pun kombinasi
+linear dapat didefinisikan dengan masuk akal.
+Setiap himpunan semacam itu akan kita sebut \definend{ruang vektor}.
+Alih-alih menyatakan hasil kita sebagai ``Setiap kali kita memiliki suatu
+kumpulan yang unsur-unsurnya dapat dikombinasikan secara linear dengan masuk
+akal \ldots'', kita akan menyatakannya sebagai ``Dalam setiap ruang vektor
+\ldots''
+
+Pernyataan seperti itu sekaligus menggambarkan apa yang terjadi dalam banyak
+ruang.
+Untuk memahami keuntungan beralih dari mempelajari satu ruang ke mempelajari
+suatu kelas ruang, perhatikan analogi berikut.
+Bayangkan pemerintah membuat undang-undang bagi setiap orang secara terpisah:
+``Leslie Jones tidak boleh menyeberang sembarangan.''
+Itu tidak baik; pernyataan menjadi lebih ringkas ketika berlaku sekaligus pada
+banyak kasus.
+Atau, misalkan pemerintah berkata, ``Kim Ke harus berhenti ketika melewati
+sebuah kecelakaan.''
+Bandingkan dengan, ``Setiap dokter harus berhenti ketika melewati sebuah
+kecelakaan.''
+Dalam beberapa hal, pernyataan yang lebih umum justru lebih jelas.
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Definisi Ruang Vektor}
+\index{ruang vektor|(}
+Kita akan mempelajari struktur dengan dua operasi, yaitu penjumlahan dan
+perkalian skalar, yang memenuhi beberapa syarat sederhana.
+Kelak kita akan menelaah syarat-syarat tersebut lebih jauh, tetapi pada
+pembacaan pertama perhatikan bahwa semuanya sangat wajar.
+Sebagai contoh, setiap operasi yang layak disebut penjumlahan (misalnya
+penjumlahan vektor kolom, penjumlahan vektor baris, atau penjumlahan bilangan
+real) tentu memenuhi syarat (1) sampai~(5) di bawah ini.
+
+
+
+\vspace*{1ex}
+\subsection{Definisi dan Contoh}
+
+\begin{definition}
+\label{def:VecSpace}
+%<*df:VectorSpace>
+Suatu \definend{ruang vektor}\index{ruang vektor!definisi}
+(di atas \( \Re \)) terdiri atas suatu himpunan \( V \) beserta dua operasi,
+`+'\index{vektor!jumlah}\index{jumlah!vektor}\index{penjumlahan vektor}
+dan `\( \cdot \)'\index{kelipatan skalar!vektor}\index{vektor!kelipatan skalar},
+yang memenuhi syarat-syarat berikut untuk semua vektor
+\( \vec{v},\vec{w},\vec{u}\in V \) dan semua
+\definend{skalar}\index{skalar} \( r,s\in\Re \):
+% \begin{tfae}
+\begin{compactenum} 
+\item himpunan $V$ tertutup terhadap penjumlahan vektor, yaitu
+  \( \vec{v}+\vec{w}\in V \)
+\item penjumlahan vektor bersifat komutatif,
+  \( \vec{v}+\vec{w}=\vec{w}+\vec{v} \) 
+\item penjumlahan vektor bersifat asosiatif,
+  \( (\vec{v}+\vec{w})+\vec{u}=\vec{v}+(\vec{w}+\vec{u}) \)
+\item terdapat suatu \definend{vektor nol}\index{vektor nol}
+    \( \zero\in V \) sedemikian sehingga
+    \( \vec{v}+\zero=\vec{v}\, \) untuk semua \( \vec{v}\in V\/ \)
+\item setiap \( \vec{v}\in V \) memiliki suatu
+    \definend{invers aditif}\index{invers aditif}\index{invers!aditif}
+    \( \vec{w}\in V \) sedemikian sehingga \( \vec{w}+\vec{v}=\zero \)
+\item himpunan $V$ tertutup terhadap perkalian skalar, yaitu
+   \( r\cdot\vec{v}\in V \)
+\item perkalian skalar distributif terhadap penjumlahan skalar,
+ \( (r+s)\cdot\vec{v}=r\cdot\vec{v}+s\cdot\vec{v} \)
+\item perkalian skalar distributif terhadap penjumlahan vektor,
+  \( r\cdot(\vec{v}+\vec{w})=r\cdot\vec{v}+r\cdot\vec{w} \)
+\item perkalian biasa antarskalar bersifat asosiatif dengan perkalian skalar,
+  \( (rs)\cdot\vec{v} =r\cdot(s\cdot\vec{v}) \)
+\item perkalian dengan skalar~$1$ merupakan operasi identitas,
+  \( 1\cdot\vec{v}=\vec{v} \).
+\end{compactenum}
+% \end{tfae}  
+%</df:VectorSpace>
+\end{definition}
+
+\vspace{-4.5ex}  % why is the extra space there?  Bug in shading code?
+\begin{remark}
+Definisi tersebut melibatkan dua jenis penjumlahan dan dua jenis perkalian,
+sehingga pada awalnya mungkin tampak membingungkan.
+Sebagai contoh, dalam syarat~(7), `$+$' di ruas kiri adalah penjumlahan dua
+bilangan real, sedangkan `$+$' di ruas kanan adalah penjumlahan dua vektor
+dalam \( V\/ \).
+Ungkapan-ungkapan tersebut tidak ambigu karena konteksnya; misalnya,
+\( r \) dan \( s \) adalah bilangan real sehingga `\( r+s \)' hanya mungkin
+berarti penjumlahan bilangan real.
+Demikian pula, `$rs$' di ruas kiri butir~(9) adalah perkalian biasa bilangan
+real, sedangkan `$s\cdot\vec{v}$' di ruas kanannya adalah perkalian skalar
+yang didefinisikan untuk ruang vektor ini.
+\end{remark}
+
+\vspace{-0.5ex}  % why is the extra space there?  Bug in shading code?
+Cara terbaik memahami definisi tersebut adalah menelaah contoh-contoh di
+bawah ini dan memeriksa kesepuluh syarat pada masing-masing contoh.
+Contoh pertama memuat pemeriksaan itu secara terperinci.
+Gunakan contoh tersebut sebagai pola bagi contoh-contoh lainnya.
+Syarat \definend{ketertutupan}\index{ruang vektor!ketertutupan}, yaitu
+(1) dan~(6), sangatlah penting.
+Keduanya menyatakan bahwa operasi penjumlahan dan perkalian skalar selalu
+bermakna\Dash operasi tersebut didefinisikan untuk setiap pasangan vektor
+dan untuk setiap pasangan skalar dan vektor, serta hasil operasinya merupakan
+anggota himpunan itu.
+
+
+\begin{example}  \label{PlaneThruOriginSubsp}
+Subhimpunan \( \Re^2 \) berikut merupakan garis yang melalui titik asal.
+\begin{equation*}
+  L=\set{ \colvec{x \\ y}  \suchthat y=3x}
+\end{equation*}
+Kita akan memverifikasi bahwa himpunan tersebut merupakan ruang vektor dengan
+makna biasa dari `+' dan `\(\cdot\)'.
+\begin{equation*}
+  \colvec{x_1 \\ y_1}
+  +
+  \colvec{x_2 \\ y_2}
+  =
+  \colvec{x_1+x_2 \\ y_1+y_2}
+  \qquad
+  r\cdot
+  \colvec{x \\ y}
+  =
+  \colvec{rx \\ ry}
+\end{equation*}
+Operasi-operasi ini hanyalah operasi biasa yang digunakan kembali pada
+subhimpunan $L$.
+Kita mengatakan bahwa \( L \) \definend{mewarisi\/}\index{operasi yang diwarisi}
+operasi-operasi tersebut dari \( \Re^2 \).
+
+Kita akan memeriksa kesepuluh syarat.
+Lima syarat pertama berkaitan dengan penjumlahan.
+Untuk syarat~(1), yakni ketertutupan terhadap penjumlahan, misalkan kita
+memulai dengan dua vektor dari garis~$L$,
+\begin{equation*}
+  \vec{v}_1=\colvec{x_1 \\ y_1}
+  \quad
+  \vec{v}_2=\colvec{x_2 \\ y_2}
+\end{equation*}
+sehingga keduanya memenuhi syarat $y_1=3x_1$ dan~$y_2=3x_2$.
+Jumlah keduanya,
+\begin{equation*}
+  \vec{v}_1+\vec{v}_2
+  =\colvec{x_1+x_2 \\ y_1+y_2}
+\end{equation*}
+juga merupakan anggota garis $L$ karena komponen keduanya tiga kali komponen
+pertamanya: $y_1+y_2=3(x_1+x_2)$ mengikuti syarat pada $\vec{v}_1$
+dan~$\vec{v}_2$.
+Untuk~(2), yakni komutativitas penjumlahan vektor, bandingkan
+\begin{equation*}
+  \vec{v}_1+\vec{v}_2
+  =\colvec{x_1+x_2 \\ y_1+y_2}
+  \quad
+  \vec{v}_2+\vec{v}_1
+  =\colvec{x_2+x_1 \\ y_2+y_1}
+\end{equation*}
+dan perhatikan bahwa keduanya sama karena entri-entrinya merupakan bilangan
+real dan penjumlahan bilangan real bersifat komutatif.
+(Syarat bahwa vektor-vektor tersebut terletak pada garis tidak relevan bagi
+syarat ini; keduanya dapat dipertukarkan hanya karena penjumlahan semua vektor
+di bidang bersifat komutatif.)
+Syarat~(3), asosiativitas penjumlahan vektor, serupa.
+\begin{align*}
+  (\colvec{x_1 \\ y_1}
+  +\colvec{x_2 \\ y_2})
+  +\colvec{x_3 \\ y_3}
+  &=\colvec{(x_1+x_2)+x_3 \\ (y_1+y_2)+y_3}  \\
+  &=\colvec{x_1+(x_2+x_3) \\ y_1+(y_2+y_3)}  \\
+  &=\colvec{x_1 \\ y_1}
+  +(\colvec{x_2 \\ y_2}
+  +\colvec{x_3 \\ y_3})
+\end{align*}
+Untuk syarat keempat, kita harus memberikan suatu vektor yang berperan sebagai
+unsur nol. Vektor yang semua entrinya nol memenuhi keperluan tersebut.
+\begin{equation*}
+  \colvec{x \\ y}
+  +\colvec{0 \\ 0}
+  =\colvec{x \\ y}
+\end{equation*}
+Perhatikan bahwa $\zero\in L$ karena komponen keduanya tiga kali komponen
+pertamanya.
+Untuk~(5), yakni bahwa bagi setiap~$\vec{v}\in L$ kita dapat memberikan suatu
+invers aditif, kita memiliki
+\begin{equation*}
+  \colvec{-x \\ -y}
+  +\colvec{x \\ y}
+  =\colvec{0 \\ 0}
+\end{equation*}
+sehingga vektor $-\vec{v}$ merupakan invers yang dicari.
+Seperti pada syarat sebelumnya, perhatikan bahwa jika $\vec{v}\in L$, sehingga
+$y=3x$, maka $-\vec{v}\in L$ juga karena $-y=3(-x)$.
+
+Pemeriksaan kelima syarat yang berkaitan dengan perkalian skalar serupa.
+Untuk~(6), yakni ketertutupan terhadap perkalian skalar, misalkan $r\in\R$
+dan $\vec{v}\in L$, yaitu
+\begin{equation*}
+  \vec{v}=\colvec{x \\ y}
+\end{equation*}
+memenuhi~$y=3x$. Maka
+\begin{equation*}
+  r\cdot\vec{v}=r\cdot\colvec{x \\ y}
+  =\colvec{rx \\ ry}
+\end{equation*}
+juga merupakan anggota $L$:~hubungan $ry=3\cdot rx$ berlaku karena $y=3x$.
+Selanjutnya, persamaan berikut memeriksa syarat~(7).
+\begin{equation*}
+  (r+s)\cdot\colvec{x \\ y}
+  =\colvec{(r+s)x \\ (r+s)y}
+  =\colvec{rx+sx \\ ry+sy}
+  =r\cdot\colvec{x \\ y}+s\cdot\colvec{x \\ y}
+\end{equation*}
+Untuk~(8), kita memperoleh
+\begin{equation*}
+  r\cdot(\colvec{x_1 \\ y_1}+\colvec{x_2 \\ y_2})
+  =\colvec{r(x_1+x_2) \\ r(y_1+y_2)}
+  =\colvec{rx_1+rx_2 \\ ry_1+ry_2}
+  =r\cdot\colvec{x_1 \\ y_1}+r\cdot\colvec{x_2 \\ y_2}
+\end{equation*}
+Syarat kesembilan,
+\begin{equation*}
+  (rs)\cdot\colvec{x \\ y}
+  =\colvec{(rs)x \\ (rs)y}
+  =\colvec{r(sx) \\ r(sy)}
+  =r\cdot(s\cdot\colvec{x \\ y})
+\end{equation*}
+dan syarat kesepuluh juga langsung diperoleh.
+\begin{equation*}
+  1\cdot\colvec{x \\ y}
+  =\colvec{1x \\ 1y}
+  =\colvec{x \\ y}
+\end{equation*}
+\end{example}
+
+\begin{example}  \label{ex:RealVecSpaces}
+Seluruh bidang, yakni himpunan \( \Re^2 \), merupakan ruang vektor dengan
+operasi `\( + \)' dan `\( \cdot \)' bermakna seperti biasa.
+\begin{equation*}
+  \colvec{x_1 \\ y_1}
+  +
+  \colvec{x_2 \\ y_2}
+  =
+  \colvec{x_1+x_2 \\ y_1+y_2}
+  \qquad
+  r\cdot
+  \colvec{x \\ y}
+  =
+  \colvec{rx \\ ry}
+\end{equation*}
+Kita hanya akan memeriksa dua syarat, yaitu syarat ketertutupan.
+
+Untuk (1), perhatikan bahwa hasil penjumlahan vektor
+\begin{equation*}
+  \colvec{x_1 \\ y_1}
+  +\colvec{x_2 \\ y_2}
+  =\colvec{x_1+x_2 \\ y_1+y_2}
+\end{equation*}
+merupakan susunan kolom dengan dua entri real sehingga menjadi anggota
+bidang~\( \Re^2 \).
+Berbeda dengan contoh sebelumnya, di sini tidak ada syarat yang membatasi
+komponen pertama dan kedua vektor-vektornya.
+
+Syarat (6) serupa. Vektor
+\begin{equation*}
+  r\cdot\colvec{x \\ y}
+  =\colvec{rx \\ ry}
+\end{equation*}
+memiliki dua entri real sehingga menjadi anggota~\( \Re^2 \).
+\end{example}
+
+Dengan cara yang serupa, setiap \( \Re^n \) merupakan ruang vektor dengan
+operasi penjumlahan vektor dan perkalian skalar yang biasa.
+(Dalam \( \Re^1 \), kita biasanya tidak menuliskan anggotanya sebagai vektor
+kolom; jadi, kita biasanya tidak menulis `\( (\pi) \)', melainkan cukup
+`\( \pi \)'.)
+
+\begin{example} \label{ex:ColsIntEntNotVS}
+\nearbyexample{PlaneThruOriginSubsp} memberikan subhimpunan $\Re^2$ yang
+merupakan ruang vektor.
+% \nearbyexample{ex:RealVecSpaces} shows that the entire
+% set of two-tall vectors with real entries is also a vector space. 
+Sebagai pembanding, perhatikan himpunan kolom bertinggi dua dengan entri-entri
+bilangan bulat, di bawah operasi penjumlahan komponen demi komponen dan
+perkalian skalar yang sama.
+Himpunan ini merupakan subhimpunan $\Re^2$, tetapi bukan ruang vektor: himpunan
+tersebut tidak tertutup terhadap perkalian skalar, sehingga tidak memenuhi
+syarat~(6).
+Sebagai contoh, di ruas kiri berikut terdapat sebuah skalar dan sebuah vektor
+yang entri-entrinya bilangan bulat.
+\begin{equation*}
+  0.5
+  \cdot
+  \colvec[r]{4 \\ 3}
+  =
+  \colvec[r]{2 \\ 1.5}
+\end{equation*}
+Di ruas kanan terdapat vektor kolom yang bukan anggota himpunan tersebut karena
+tidak semua entrinya merupakan bilangan bulat.
+\end{example}
+
+\begin{example}  \label{ex:TrivSbspReFour}
+Himpunan beranggota tunggal
+\begin{equation*}
+  \set{ \colvec[r]{0 \\ 0 \\ 0 \\ 0} }
+\end{equation*}
+merupakan ruang vektor di bawah operasi
+\begin{equation*}
+  \colvec[r]{0 \\ 0 \\ 0 \\ 0}
+  +
+  \colvec[r]{0 \\ 0 \\ 0 \\ 0}
+  =
+  \colvec[r]{0 \\ 0 \\ 0 \\ 0}
+  \qquad
+  r\cdot
+  \colvec[r]{0 \\ 0 \\ 0 \\ 0}
+  =
+  \colvec[r]{0 \\ 0 \\ 0 \\ 0}
+\end{equation*}
+yang diwarisinya dari \( \Re^4 \).
+\end{example}
+
+Suatu ruang vektor harus memiliki sedikitnya satu anggota, yaitu vektor
+nolnya. Karena itu, ruang vektor beranggota tunggal merupakan ruang vektor
+terkecil yang mungkin.
+
+\begin{definition} \label{df:TrivialVectorSpace}
+%<*df:TrivialVectorSpace>
+Ruang vektor beranggota tunggal disebut ruang
+\definend{trivial}\index{ruang vektor!trivial}%
+\index{ruang trivial}.
+%</df:TrivialVectorSpace>
+\end{definition}
+
+Contoh-contoh sejauh ini melibatkan himpunan vektor kolom dengan operasi yang
+biasa. Namun, ruang vektor tidak harus berupa kumpulan vektor kolom, bahkan
+tidak harus berupa kumpulan vektor baris.
+Di bawah ini terdapat beberapa jenis ruang vektor lainnya.
+Istilah `ruang vektor' tidak berarti `kumpulan kolom bilangan real'.
+Maknanya lebih dekat dengan `kumpulan tempat setiap kombinasi linear dapat
+didefinisikan dengan masuk akal'.
+
+\begin{example} \label{ex:PolySpaceThree}
+Perhatikan
+\( \polyspace_3=\set{a_0+a_1x+a_2x^2+a_3x^3\suchthat a_0,\ldots,a_3\in\Re} \),
+yaitu himpunan polinomial berderajat tiga atau kurang
+(dalam buku ini, polinomial konstan, termasuk polinomial nol, kita anggap
+berderajat nol).
+Himpunan tersebut merupakan ruang vektor di bawah operasi
+\begin{multline*}
+   (a_0+a_1x+a_2x^2+a_3x^3)+(b_0+b_1x+b_2x^2+b_3x^3)  \\
+     =(a_0+b_0)+(a_1+b_1)x+(a_2+b_2)x^2+(a_3+b_3)x^3
+\end{multline*}
+dan
+\begin{equation*}
+   r\cdot(a_0+a_1x+a_2x^2+a_3x^3)=
+     (ra_0)+(ra_1)x+(ra_2)x^2+(ra_3)x^3
+\end{equation*}
+(verifikasinya mudah).
+Ruang vektor ini patut diperhatikan karena operasi-operasi tersebut merupakan
+operasi polinomial yang dikenal dari aljabar sekolah menengah.
+Sebagai contoh,
+$
+  3\cdot(1-2x+3x^2-4x^3)-2\cdot(2-3x+x^2-(1/2)x^3)=-1+7x^2-11x^3$.
+
+Walaupun ruang ini bukan subhimpunan dari suatu \( \Re^n \), dalam pengertian
+tertentu kita dapat memandang $\polyspace_3$ sebagai sesuatu yang ``sama''
+dengan \( \Re^4 \).
+Jika kita mengidentifikasi anggota kedua ruang itu dengan cara berikut,
+\begin{equation*}
+  a_0+a_1x+a_2x^2+a_3x^3
+  \quad\text{berkorespondensi dengan}\quad
+  \colvec{a_0 \\ a_1 \\ a_2 \\ a_3}
+\end{equation*}
+maka operasi-operasinya juga saling berkorespondensi.
+Berikut adalah contoh penjumlahan yang saling berkorespondensi.
+\begin{equation*}
+  \mbox{\begin{tabular}{lr}
+       &\(1-2x+0x^2+1x^3\) \\
+     + &\(2+3x+7x^2-4x^3\) \\ \hline
+       &\(3+1x+7x^2-3x^3\)
+  \end{tabular}  }
+  \quad\text{berkorespondensi dengan}\quad
+  \colvec[r]{1 \\ -2 \\ 0 \\ 1}
+  +
+  \colvec[r]{2 \\ 3 \\ 7 \\ -4}
+  =
+  \colvec[r]{3 \\ 1 \\ 7 \\ -3}
+\end{equation*}
+Objek-objek yang kita pandang sebagai sesuatu yang ``sama'' dijumlahkan menjadi
+hasil yang ``sama''.
+Bab Tiga akan menjadikan gagasan korespondensi ruang vektor ini lebih tepat.
+Untuk saat ini, kita cukup mempertahankannya sebagai suatu intuisi.
+\end{example}
+
+Secara umum, kita menulis \( \polyspace_n \) untuk ruang vektor polinomial
+berderajat~$n$ atau kurang,
+\( \set{a_0+a_1x+a_2x^2+\cdots+a_nx^n\suchthat a_0,\ldots,a_n\in\Re} \),
+di bawah operasi penjumlahan polinomial dan perkalian skalar yang biasa.
+\index{ruang vektor!polinomial}
+Kita akan sering menggunakan ruang-ruang ini sebagai contoh.
+
+\begin{example} \label{ex:MatSpaceTwoByTwo}
+Himpunan \( \matspace_{\nbym{2}{2}} \) yang terdiri atas matriks-matriks
+\( \nbym{2}{2} \) dengan entri bilangan real merupakan ruang vektor di bawah
+operasi alami entri demi entri.
+\begin{equation*}
+  \begin{mat}
+    a  &b \\
+    c  &d
+  \end{mat}
+  +
+  \begin{mat}
+    w  &x \\
+    y  &z
+  \end{mat}
+  =
+  \begin{mat}
+    a+w  &b+x \\
+    c+y  &d+z
+  \end{mat}
+  \qquad
+  r\cdot
+  \begin{mat}
+    a  &b \\
+    c  &d
+  \end{mat}
+  =
+  \begin{mat}
+    ra  &rb \\
+    rc  &rd
+  \end{mat}
+\end{equation*}
+Seperti dalam contoh sebelumnya, kita dapat memandang ruang ini sebagai
+sesuatu yang ``sama'' dengan \( \Re^4 \).
+\end{example}
+
+Kita menulis \( \matspace_{\nbym{n}{m}} \) untuk ruang vektor
+matriks-matriks $\nbym{n}{m}$ di bawah operasi alami penjumlahan matriks dan
+perkalian skalar.\index{ruang vektor!matriks}
+Seperti ruang polinomial, ruang-ruang ini akan sering kita gunakan sebagai
+contoh.
+
+\begin{example}   \label{ex:FcnsNToRIsVecSp}
+Himpunan \( \set{f\suchthat \map{f}{\N}{\Re} } \) yang terdiri atas semua
+fungsi bernilai real dari satu variabel bilangan asli merupakan ruang vektor
+di bawah operasi
+\begin{equation*}
+  (f_1+f_2)\,(n)=f_1(n)+f_2(n)
+  \qquad
+  (r\cdot f)\,(n)=r\,f(n)
+\end{equation*}
+sehingga, sebagai contoh, jika \( f_1(n)=n^2+2\sin(n) \) dan
+\( f_2(n)=-\sin(n)+0.5 \), maka \( (f_1+2f_2)\,(n)=n^2+1 \).
+
+Kita dapat memandang ruang ini sebagai perumuman dari
+\nearbyexample{ex:RealVecSpaces}\Dash alih-alih vektor bertinggi~$2$,
+fungsi-fungsi ini menyerupai vektor bertinggi tak hingga.
+\begin{equation*}
+  \text{
+    \begin{tabular}{c|c}
+      \( n \)      &\( f(n)=n^2+1 \)  \\ \hline
+      \( 0      \) &\( 1      \)    \\
+      \( 1      \) &\( 2      \)    \\
+      \( 2      \) &\( 5      \)    \\
+      $3$          &$10$            \\
+      \( \vdots \) &\( \vdots \)    
+    \end{tabular} }
+    \quad\text{berkorespondensi dengan}\quad
+    \colvec[r]{
+           1           \\
+           2           \\
+           5           \\
+           10          \\
+           \vdotswithin{10}      }
+\end{equation*}
+Penjumlahan dan perkalian skalar dilakukan komponen demi komponen, seperti
+dalam \nearbyexample{ex:RealVecSpaces}.
+(Kita dapat memformalkan istilah ``bertinggi tak hingga'' dengan mengatakan
+bahwa objek tersebut merupakan barisan tak hingga, atau fungsi dari $\N$
+ke $\Re$.)
+\end{example}
+
+\begin{example} \label{ex:PolysOfAllFiniteDegrees}
+Himpunan polinomial dengan koefisien real
+\begin{equation*}
+ \set{ a_0+a_1x+\cdots+a_nx^n\suchthat n\in\N
+    \text{ dan } a_0,\ldots,a_n\in\Re}
+\end{equation*}
+menjadi ruang vektor jika dilengkapi dengan operasi alami `$+$',
+\begin{multline*}
+  (a_0+a_1x+\cdots+a_nx^n)+(b_0+b_1x+\cdots+b_nx^n)  \\
+     =(a_0+b_0)+(a_1+b_1)x+\cdots +(a_n+b_n)x^n
+\end{multline*}
+dan `$\cdot$'.
+\begin{equation*}
+  r\cdot (a_0+a_1x+\ldots a_nx^n)
+   =
+  (ra_0)+(ra_1)x+\ldots (ra_n)x^n
+\end{equation*}
+Ruang ini berbeda dari ruang $\polyspace_3$ dalam
+\nearbyexample{ex:PolySpaceThree}.
+Ruang ini tidak hanya memuat polinomial berderajat~tiga, tetapi juga
+polinomial berderajat~tiga puluh dan berderajat~tiga ratus.
+Setiap polinomial tentu berderajat hingga, tetapi tidak ada satu batas yang
+berlaku bagi derajat semua anggota himpunan tersebut.
+
+Seperti pada contoh sebelumnya, kita dapat memikirkan contoh ini melalui tupel
+tak hingga.
+Sebagai contoh, kita dapat memandang \( 1+3x+5x^2 \) sebagai sesuatu yang
+berkorespondensi dengan \( (1,3,5,0,0,\ldots) \).
+Namun, ruang ini berbeda dari ruang dalam
+\nearbyexample{ex:FcnsNToRIsVecSp}.
+Di sini, setiap anggota himpunan berderajat hingga; dengan kata lain, di bawah
+korespondensi tersebut tidak ada anggota ruang ini yang cocok dengan
+\( (1,2,5,10,\,\ldots\,) \).
+Vektor-vektor dalam ruang ini berkorespondensi dengan tupel tak hingga yang
+akhirnya hanya berisi nol.
+\end{example}
+
+\begin{example}  \label{ex:RealValuedFcns}
+Himpunan
+\( \set{f\suchthat \map{f}{\Re}{\Re} } \)
+yang terdiri atas semua fungsi bernilai real dari satu variabel real merupakan
+ruang vektor di bawah operasi berikut.
+\begin{equation*}
+  (f_1+f_2)\,(x)=f_1(x)+f_2(x)
+  \qquad
+  (r\cdot f)\,(x)=r\,f(x)
+\end{equation*}
+Perbedaan antara ruang ini dan \nearbyexample{ex:FcnsNToRIsVecSp} terletak
+pada domain fungsi-fungsinya.
+\end{example}
+
+\begin{example}\label{ex:ACos+BSin}
+Himpunan
+\( F=\{ a\cos\theta+b\sin\theta \suchthat a,b\in\Re\} \)
+yang terdiri atas fungsi-fungsi bernilai real dari variabel real \( \theta \)
+merupakan ruang vektor di bawah operasi
+%\nearbyexample{ex:RealValuedFcns}:
+\begin{equation*}
+  (a_1\cos\theta+b_1\sin\theta)+(a_2\cos\theta+b_2\sin\theta)
+    =(a_1+a_2)\cos\theta+(b_1+b_2)\sin\theta
+\end{equation*}
+dan
+\begin{equation*}
+  r\cdot (a\cos\theta+b\sin\theta)
+   =(ra)\cos\theta+(rb)\sin\theta
+\end{equation*}
+yang diwarisi dari ruang dalam contoh sebelumnya.
+(Kita dapat memandang \( F \) sebagai sesuatu yang ``sama'' dengan \( \Re^2 \)
+karena $a\cos\theta+b\sin\theta$ berkorespondensi dengan vektor yang
+komponen-komponennya $a$ dan $b$.)
+\end{example}
+
+\begin{example}  \label{ex:SpaceSatisfyingDiffQ}
+Himpunan
+\begin{equation*}
+  \set{\map{f}{\Re}{\Re}\suchthat \dfrac{d^2f}{dx^2}+f=0}
+\end{equation*}
+merupakan ruang vektor di bawah penafsiran yang kini sudah terasa alami.
+\begin{equation*}
+  (f+g)\,(x)=f(x)+g(x)
+  \qquad
+  (r\cdot f)\,(x)=r\,f(x)
+\end{equation*}
+Secara khusus, perhatikan bahwa Kalkulus dasar memberikan
+\begin{equation*}
+   \frac{d^2(f+g)}{dx^2}+(f+g)
+   =(\frac{d^2f}{dx^2}+f)+(\frac{d^2g}{dx^2}+g)
+\end{equation*}
+dan
+\begin{equation*}
+   \frac{d^2(rf)}{dx^2}+(rf)
+   =r(\frac{d^2 f}{dx^2}+f)
+\end{equation*}
+sehingga ruang tersebut tertutup terhadap penjumlahan dan perkalian skalar.
+Ruang ini ternyata sama dengan ruang dalam contoh sebelumnya\Dash fungsi yang
+memenuhi persamaan diferensial ini berbentuk
+$a\cos\theta+b\sin\theta$\Dash tetapi deskripsi ini juga mengisyaratkan
+perluasan ke himpunan solusi persamaan diferensial lainnya.
+\end{example}
+
+\begin{example} \label{ex:HomoSlnMakesVS}
+Himpunan solusi suatu sistem linear homogen dalam \( n \) variabel merupakan
+ruang vektor di bawah operasi yang diwarisi dari \( \Re^n \).
+Sebagai contoh, untuk memeriksa ketertutupan terhadap penjumlahan, perhatikan
+suatu persamaan biasa dalam sistem tersebut,
+$c_1x_1+\cdots+c_nx_n=0$, dan misalkan kedua vektor berikut
+\begin{equation*}
+   \vec{v}=\colvec{v_1 \\ \vdotswithin{v_1} \\ v_n}
+   \qquad
+   \vec{w}=\colvec{w_1 \\ \vdotswithin{w_1} \\ w_n}
+\end{equation*}
+memenuhi persamaan itu.
+Maka jumlah keduanya, \( \vec{v}+\vec{w}\/ \), juga memenuhi persamaan tersebut:
+\(
+  c_1(v_1+w_1)+\cdots+c_n(v_n+w_n)
+  =(c_1v_1+\cdots+c_nv_n)+(c_1w_1+\cdots+c_nw_n)
+  =0
+\).
+Pemeriksaan syarat ruang vektor lainnya juga langsung dilakukan.
+\end{example}
+
+Kita sering menghilangkan lambang perkalian `\( \cdot \)' di antara skalar
+dan vektor.
+Kita membedakan perkalian dalam \( c_1v_1 \) dari perkalian dalam
+\( r\vec{v}\, \) berdasarkan konteks: jika kedua faktor merupakan bilangan
+real, operasinya tentu perkalian antarbilangan real; jika salah satunya vektor,
+operasinya tentu perkalian skalar dengan vektor.
+
+\nearbyexample{ex:HomoSlnMakesVS} membawa kita kembali ke titik awal karena
+contoh itu merupakan salah satu motivasi kita.
+Kini, setelah memperoleh gambaran tentang jenis struktur yang memenuhi
+definisi ruang vektor, kita dapat menelaah kembali definisi tersebut.
+Sebagai contoh, mengapa definisi itu secara khusus memuat syarat
+\( 1\cdot\vec{v}=\vec{v} \), tetapi tidak memuat syarat
+\( 0\cdot\vec{v}=\zero \)?
+
+Salah satu jawabannya adalah bahwa ini memang sebuah definisi\Dash definisi
+tersebut memberikan aturan yang harus kita ikuti untuk melanjutkan.
+
+Jawaban lain mungkin lebih memuaskan.
+Para ahli di bidang ini telah berupaya menemukan keseimbangan yang tepat antara
+kekuatan dan keumuman.
+Definisi ini disusun agar memuat syarat-syarat yang diperlukan untuk
+membuktikan semua sifat menarik dan penting dari ruang kombinasi linear.
+Dalam pembahasan selanjutnya, kita akan menurunkan semua sifat yang wajar bagi
+kumpulan kombinasi linear dari syarat-syarat dalam definisi tersebut.
+
+Hasil berikut merupakan suatu contoh.
+Kita tidak perlu memasukkan sifat-sifat ini ke dalam definisi ruang vektor
+karena semuanya mengikuti sifat-sifat yang sudah tercantum di sana.
+
+\begin{lemma} \label{lm:ElementaryPropertiesOfVectorSpaces}
+%<*lm:ElementaryPropertiesOfVectorSpaces>
+Dalam setiap ruang vektor \( V \), untuk setiap \( \vec{v}\in V \) dan
+\( r\in\Re \), berlaku
+(1)~\( 0\cdot\vec{v}=\zero \),
+(2)~\( (-1\cdot\vec{v})+\vec{v}=\zero \), dan
+(3)~\( r\cdot\zero=\zero \).
+%</lm:ElementaryPropertiesOfVectorSpaces>
+\end{lemma}
+
+\begin{proof}
+%<*pf:ElementaryPropertiesOfVectorSpaces0>
+Untuk (1), perhatikan bahwa
+\( \vec{v}=(1+0)\cdot\vec{v}=\vec{v}+(0\cdot\vec{v}) \).
+Tambahkan invers aditif dari \( \vec{v} \) pada kedua ruas, yaitu vektor
+\( \vec{w} \) sedemikian sehingga \( \vec{w}+\vec{v}=\zero \).
+\begin{align*}
+  \vec{w}+\vec{v}
+  &=\vec{w}+\vec{v}+0\cdot\vec{v}  \\
+  \zero
+  &=\zero+0\cdot\vec{v}                   \\
+  \zero
+  &=0\cdot\vec{v}
+\end{align*}
+Butir~(2) mudah:
+\(  (-1\cdot\vec{v})+\vec{v}=(-1+1)\cdot\vec{v}=0\cdot\vec{v}=\zero \).
+Untuk (3),
+\( r\cdot\zero
+  =
+  r\cdot(0\cdot\zero)
+  =
+  (r\cdot 0)\cdot\zero
+  =
+  \zero \)
+memberikan hasil yang diinginkan.
+%</pf:ElementaryPropertiesOfVectorSpaces0>
+\end{proof}
+
+Butir kedua menunjukkan bahwa kita dapat menulis invers aditif dari
+\( \vec{v} \) sebagai `\( -\vec{v}\, \)' tanpa khawatir akan kebingungan
+dengan \( (-1)\cdot\vec{v} \).
+
+\medskip
+Sebagai rangkuman, kajian reduksi Gauss dalam Bab Satu membawa kita untuk
+meninjau kumpulan kombinasi linear.
+Karena itu, dalam bab ini kita mendefinisikan ruang vektor sebagai struktur
+tempat kita dapat membentuk kombinasi semacam itu,
+% expressions of the form \( c_1\cdot\vec{v}_1+\dots+c_n\cdot\vec{v}_n \)
+dengan beberapa syarat sederhana pada operasi penjumlahan dan perkalian
+skalar. Singkatnya:~ruang vektor merupakan konteks yang tepat untuk
+mempelajari linearitas.
+
+% Finally, a comment.
+Karena sistem linear mengisi satu bab penuh, terlebih lagi bab pertama,
+pembaca mungkin menduga bahwa tujuan buku ini adalah mempelajari sistem
+linear. Kenyataannya, kita bukan terutama akan menggunakan ruang vektor untuk
+mempelajari sistem linear; justru sistem linear menjadi titik awal untuk
+mempelajari ruang vektor.
+Beragam contoh dalam subbagian ini menunjukkan bahwa kajian ruang vektor
+menarik dan penting dengan sendirinya.
+Sistem linear tidak akan menghilang dari pembahasan.
+Namun, mulai sekarang objek kajian utama kita adalah ruang vektor.
+
+\begin{exercises}
+  \item 
+    Sebutkan vektor nol untuk setiap ruang vektor berikut.
+    \begin{exparts}
+      \partsitem Ruang polinomial berderajat tiga di bawah operasi alaminya.
+      \partsitem Ruang matriks \( \nbym{2}{4} \).
+      \partsitem Ruang
+        \( \set{\map{f}{[0..1]}{\Re}\suchthat f\text{ kontinu}} \).
+      \partsitem Ruang fungsi bernilai real dari satu variabel bilangan asli.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem \( 0+0x+0x^2+0x^3 \)
+        \partsitem \( \begin{mat}[r]
+                   0  &0  &0  &0  \\
+                   0  &0  &0  &0
+                 \end{mat} \)
+        \partsitem Fungsi konstan \( f(x)=0 \)
+        \partsitem Fungsi konstan \( f(n)=0 \)
+      \end{exparts}  
+    \end{answer}
+  \recommended \item
+    Tentukan invers aditif dari vektor berikut di dalam ruang vektornya.
+    \begin{exparts}
+      \partsitem Dalam \( \polyspace_3 \), vektor \( -3-2x+x^2 \).
+      \partsitem Dalam ruang \( \nbyn{2} \),
+        \begin{equation*}
+          \begin{mat}[r]
+            1  &-1  \\
+            0  &3
+          \end{mat}.
+        \end{equation*}
+     \partsitem Dalam \( \set{ae^x+be^{-x}\suchthat a,b\in\Re} \), yaitu
+       ruang fungsi dari variabel real \( x \) di bawah operasi alaminya,
+       vektor \( 3e^x-2e^{-x} \).
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts*}
+        \partsitem \( 3+2x-x^2 \)
+        \partsitem \( \begin{mat}[r]
+                   -1  &+1  \\
+                    0  &-3
+                 \end{mat} \)
+        \partsitem \( -3e^x+2e^{-x} \)
+      \end{exparts*}  
+    \end{answer}
+  \recommended \item 
+    Untuk masing-masing himpunan, daftarkan tiga anggotanya lalu tunjukkan
+    bahwa himpunan tersebut merupakan ruang vektor.
+    \begin{exparts}
+      \partsitem Himpunan polinomial linear
+        \( \polyspace_1=\set{a_0+a_1x\suchthat a_0,a_1\in\Re} \) di bawah
+        operasi penjumlahan polinomial dan perkalian skalar yang biasa.
+      \partsitem Himpunan polinomial linear
+        \( \set{a_0+a_1x\suchthat a_0-2a_1=0} \), di bawah operasi
+        penjumlahan polinomial dan perkalian skalar yang biasa.
+   \end{exparts}
+   \textit{Petunjuk.} Gunakan \nearbyexample{PlaneThruOriginSubsp} sebagai
+   panduan. Sebagian besar dari kesepuluh syarat hanya memerlukan verifikasi.
+   \begin{answer}
+      \begin{exparts}
+        \partsitem 
+          Tiga anggotanya adalah $1+2x$, $2-1x$, dan $x$.
+          (Tentu saja, banyak jawaban lain juga mungkin.)
+
+          Verifikasinya sama seperti \nearbyexample{ex:RealVecSpaces}.
+          Pertama, kita memeriksa syarat $1$--$5$ dari
+          \nearbydefinition{def:VecSpace}, yang berkaitan dengan penjumlahan.
+          Untuk ketertutupan terhadap penjumlahan, syarat~(1), perhatikan bahwa
+          jika $a+bx,c+dx\in\polyspace_1$, maka
+          $(a+bx)+(c+dx)=(a+c)+(b+d)x$ merupakan polinomial linear dengan
+          koefisien real, sehingga menjadi anggota $\polyspace_1$.
+          Syarat~(2) diperiksa sebagai berikut: jika
+          $a+bx,c+dx\in\polyspace_1$, maka
+          $(a+bx)+(c+dx)=(a+c)+(b+d)x$, sedangkan dalam urutan sebaliknya
+          diperoleh $(c+dx)+(a+bx)=(c+a)+(d+b)x$. Keduanya sama karena
+          $a+c=c+a$ dan $b+d=d+b$ bagi bilangan real tersebut.
+          Syarat~(3) serupa: misalkan
+          $a+bx,c+dx,e+fx\in\polyspace$. Maka
+          $((a+bx)+(c+dx))+(e+fx)=(a+c+e)+(b+d+f)x$, sedangkan
+          $(a+bx)+((c+dx)+(e+fx))=(a+c+e)+(b+d+f)x$, dan keduanya sama
+          (yakni, penjumlahan bilangan real bersifat asosiatif sehingga
+          $(a+c)+e=a+(c+e)$ dan $(b+d)+f=b+(d+f)$).
+          Untuk syarat~(4), perhatikan bahwa polinomial linear
+          $0+0x\in\polyspace_1$ memenuhi
+          $(a+bx)+(0+0x)=a+bx$ dan $(0+0x)+(a+bx)=a+bx$.
+          Untuk syarat terakhir dalam kelompok ini, yakni syarat~(5),
+          perhatikan bahwa bagi setiap $a+bx\in\polyspace_1$, invers aditifnya
+          adalah $-a-bx\in\polyspace_1$ karena
+          $(a+bx)+(-a-bx)=(-a-bx)+(a+bx)=0+0x$.
+         
+          Selanjutnya, kita memeriksa syarat~(6)--(10), yang berkaitan dengan
+          perkalian skalar.
+          Untuk (6), yaitu ketertutupan ruang terhadap perkalian skalar,
+          misalkan $r$ bilangan real dan $a+bx$ anggota $\polyspace_1$.
+          Maka $r(a+bx)=(ra)+(rb)x$ merupakan anggota $\polyspace_1$ karena
+          merupakan polinomial linear dengan koefisien bilangan real.
+          Syarat~(7) berlaku karena
+          $(r+s)(a+bx)=r(a+bx)+s(a+bx)$ mengikuti sifat distributif perkalian
+          bilangan real.
+          Syarat~(8) serupa:
+          $r((a+bx)+(c+dx))=r((a+c)+(b+d)x)=r(a+c)+r(b+d)x=(ra+rc)+(rb+rd)x
+          =r(a+bx)+r(c+dx)$.
+          Untuk~(9), kita memperoleh
+          $(rs)(a+bx)=(rsa)+(rsb)x=r(sa+sbx)=r(s(a+bx))$.
+          Terakhir, syarat~(10) adalah
+          $1(a+bx)=(1a)+(1b)x=a+bx$.
+        \partsitem 
+          Sebut himpunan tersebut $P$.
+          Dalam bagian sebelumnya tidak ada pembatasan pada koefisien, tetapi
+          di sini kita membatasi perhatian pada polinomial linear dengan
+          $a_0-2a_1=0$, yakni suku konstan dikurangi dua kali koefisien suku
+          linear bernilai nol.
+          Jadi, tiga anggota biasa dari $P$ adalah
+          $2+1x$, $6+3x$, dan $-4-2x$.
+
+          Untuk syarat~(1), kita harus menunjukkan bahwa penjumlahan dua
+          polinomial linear yang memenuhi pembatasan menghasilkan polinomial
+          linear yang juga memenuhi pembatasan. Jika $a+bx,c+dx\in P$, maka
+          $(a+bx)+(c+dx)=(a+c)+(b+d)x$ merupakan anggota $P$ karena
+          $(a+c)-2(b+d)=(a-2b)+(c-2d)=0+0=0$.
+          Syarat~(2) dapat diperiksa sebagai berikut: jika
+          $a+bx,c+dx\in\polyspace_1$, maka
+          $(a+bx)+(c+dx)=(a+c)+(b+d)x$, sedangkan dalam urutan sebaliknya
+          diperoleh $(c+dx)+(a+bx)=(c+a)+(d+b)x$. Keduanya sama karena
+          $a+c=c+a$ dan $b+d=d+b$.
+          (Jadi, pembatasan tidak memengaruhi syarat ini dan verifikasinya sama
+          dengan verifikasi pada bagian pertama latihan ini.)
+          Syarat~(3) juga tidak dipengaruhi pembatasan tambahan: jika
+          $a+bx,c+dx,e+fx\in\polyspace$, maka
+          $((a+bx)+(c+dx))+(e+fx)=(a+c+e)+(b+d+f)x$, sedangkan
+          $(a+bx)+((c+dx)+(e+fx))=(a+c+e)+(b+d+f)x$, dan keduanya sama.
+          Untuk syarat~(4), perhatikan bahwa polinomial linear $0+0x\in P$
+          memenuhi pembatasan karena suku konstannya dikurangi dua kali
+          koefisien suku linearnya bernilai nol. Karena itu, verifikasi dari
+          bagian pertama berlaku: $0+0x\in\polyspace_1$ memenuhi
+          $(a+bx)+(0+0x)=a+bx$ dan $(0+0x)+(a+bx)=a+bx$.
+          Untuk memeriksa syarat~(5), perhatikan bahwa bagi setiap $a+bx\in P$,
+          invers aditifnya adalah $-a-bx$ karena vektor itu merupakan anggota
+          $P$ (dari $a+bx\in P$ kita mengetahui $a-2b=0$, dan mengalikan kedua
+          ruas dengan $-1$ menghasilkan $-a+2b=0$). Seperti pada bagian
+          pertama, vektor tersebut berperan sebagai invers aditif:
+          $(a+bx)+(-a-bx)=(-a-bx)+(a+bx)=0+0x$.
+         
+          Kita juga harus memeriksa syarat~(6)--(10), yaitu syarat perkalian
+          skalar. Untuk (6), ketertutupan ruang terhadap perkalian skalar,
+          misalkan $r$ bilangan real dan $a+bx\in P$ (sehingga $a-2b=0$).
+          Maka $r(a+bx)=(ra)+(rb)x$ merupakan anggota $P$ karena merupakan
+          polinomial linear berkoefisien real yang memenuhi
+          $(ra)-2(rb)=r(a-2b)=0$.
+          Syarat~(7) berlaku karena alasan yang sama seperti pada bagian pertama
+          latihan ini: $(r+s)(a+bx)=r(a+bx)+s(a+bx)$ mengikuti sifat distributif
+          perkalian bilangan real.
+          Syarat~(8) juga tidak berubah dari bagian pertama:
+          $r((a+bx)+(c+dx))=r((a+c)+(b+d)x)=r(a+c)+r(b+d)x=(ra+rc)+(rb+rd)x
+          =r(a+bx)+r(c+dx)$.
+          Demikian pula~(9):
+          $(rs)(a+bx)=(rsa)+(rsb)x=r(sa+sbx)=r(s(a+bx))$.
+          Terakhir, demikian pula syarat~(10):
+          $1(a+bx)=(1a)+(1b)x=a+bx$.
+       \end{exparts}
+     \end{answer}
+  \item 
+    Untuk masing-masing himpunan, daftarkan tiga anggotanya lalu tunjukkan
+    bahwa himpunan tersebut merupakan ruang vektor.
+    \begin{exparts}
+      \partsitem Himpunan matriks \( \nbyn{2} \) dengan entri real di bawah
+        operasi matriks yang biasa.
+      \partsitem Himpunan matriks \( \nbyn{2} \) dengan entri real dan entri
+        $2,1$ bernilai nol, di bawah operasi matriks yang biasa.
+    \end{exparts}
+    \begin{answer}
+      Gunakan \nearbyexample{ex:RealVecSpaces} sebagai panduan.
+      (\textit{Catatan.} Karena banyak syarat cukup mudah diperiksa,
+      seseorang kadang-kadang merasa pasti ada sesuatu yang terlewat.
+      Ingatlah bahwa mudah atau rutin dilakukan tidak sama dengan tidak perlu
+      dilakukan.)
+      \begin{exparts}
+        \partsitem 
+          Berikut adalah tiga anggotanya.
+          \begin{equation*}
+            \begin{mat}
+              1  &2  \\
+              3  &4
+            \end{mat},\,
+            \begin{mat}
+              -1  &-2  \\
+              -3  &-4
+            \end{mat},\,
+            \begin{mat}
+              0  &0  \\
+              0  &0
+            \end{mat}
+          \end{equation*}
+
+          Untuk~(1), jumlah dua matriks real $\nbyn{2}$ merupakan matriks real
+          $\nbyn{2}$.
+          Untuk~(2), kita meninjau jumlah dua matriks,
+          \begin{equation*}
+            \begin{mat}
+              a  &b  \\
+              c  &d
+            \end{mat}+
+            \begin{mat}
+              e  &f  \\
+              g  &h
+            \end{mat}
+            =
+            \begin{mat}
+              a+e  &b+f  \\
+              c+g  &d+h
+            \end{mat}
+          \end{equation*}
+          lalu menerapkan komutativitas penjumlahan bilangan real,
+          \begin{equation*}
+            =\begin{mat}
+              e+a  &f+b  \\
+              g+c  &h+d
+            \end{mat}
+            =
+            \begin{mat}
+              e  &f  \\
+              g  &h
+            \end{mat}
+            +
+            \begin{mat}
+              a  &b  \\
+              c  &d
+            \end{mat}
+          \end{equation*}
+          untuk memverifikasi bahwa penjumlahan matriks bersifat komutatif.
+          Verifikasi syarat~(3), yakni asosiativitas penjumlahan matriks,
+          serupa dengan verifikasi sebelumnya:
+          \begin{equation*}
+            \big(
+              \begin{mat}
+                a  &b  \\
+                c  &d  
+              \end{mat}
+              +\begin{mat}
+                e  &f  \\
+                g  &h  
+              \end{mat}
+            \big)
+            +
+            \begin{mat}
+              i  &j  \\
+              k  &l
+            \end{mat}
+            =
+            \begin{mat}
+              (a+e)+i  &(b+f)+j  \\
+              (c+g)+k  &(d+h)+l
+            \end{mat}
+          \end{equation*}
+          sedangkan
+          \begin{equation*}
+            \begin{mat}
+              a  &b  \\
+              c  &d  
+            \end{mat}
+            +
+              \big(
+              \begin{mat}
+                e  &f  \\
+                g  &h  
+              \end{mat}
+              +
+              \begin{mat}
+                i  &j  \\
+                k  &l
+              \end{mat}
+            \big)
+            =
+            \begin{mat}
+              a+(e+i)  &b+(f+j)  \\
+              c+(g+k)  &d+(h+l)
+            \end{mat}
+          \end{equation*}
+          dan keduanya sama entri demi entri karena penjumlahan bilangan real
+          bersifat asosiatif.
+          Untuk~(4), unsur nol ruang ini adalah matriks nol $\nbyn{2}$.
+          Syarat~(5) berlaku karena bagi setiap matriks $\nbyn{2}$~$A$,
+          invers aditifnya adalah matriks yang setiap entrinya merupakan lawan
+          entri $A$, yaitu matriks $-1\cdot A$.
+
+          Syarat~(6) berlaku karena kelipatan skalar suatu matriks $\nbyn{2}$
+          juga merupakan matriks $\nbyn{2}$.
+          Untuk syarat~(7), kita memperoleh
+          \begin{multline*}
+            (r+s)
+            \begin{mat}
+              a  &b  \\
+              c  &d
+            \end{mat}
+            =
+            \begin{mat}
+              (r+s)a  &(r+s)b  \\
+              (r+s)c  &(r+s)d
+            \end{mat}               \\
+            =
+            \begin{mat}
+              ra+sa  &rb+sb  \\
+              rc+sc  &rd+sd
+            \end{mat}
+            =
+            r
+            \begin{mat}
+              a  &b  \\
+              c  &d 
+            \end{mat}
+            +
+            s
+            \begin{mat}
+              a  &b  \\
+              c  &d 
+            \end{mat}
+          \end{multline*}
+          Syarat~(8) diperiksa dengan cara yang sama.
+          \begin{multline*}
+            r
+            \big(
+              \begin{mat}
+                a  &b  \\
+                c  &d
+              \end{mat}
+              +
+              \begin{mat}
+                e  &f  \\
+                g  &h
+              \end{mat}
+            \big)
+            =
+            r
+            \begin{mat}
+              a+e  &b+f  \\
+              c+g  &d+h
+            \end{mat}
+            =
+            \begin{mat}
+              ra+re  &rb+rf  \\
+              rc+rg  &rd+rh
+            \end{mat}              \\
+            =
+            r
+            \begin{mat}
+              a  &b  \\
+              c  &d 
+            \end{mat}
+            +
+            r
+            \begin{mat}
+              e  &f  \\
+              g  &h 
+            \end{mat}
+            =
+            r
+            \big(
+            \begin{mat}
+              a  &b  \\
+              c  &d
+            \end{mat}
+            +
+            \begin{mat}
+              e  &f  \\
+              g  &h
+            \end{mat}
+            \big)
+          \end{multline*}
+          Untuk~(9), kita memperoleh
+          \begin{equation*}
+            (rs)
+            \begin{mat}
+              a  &b  \\
+              c  &d
+            \end{mat}
+            =
+            \begin{mat}
+              rsa  &rsb  \\
+              rsc  &rsd
+            \end{mat}
+            =
+            r
+            \begin{mat}
+              sa  &sb  \\
+              sc  &sd
+            \end{mat}
+            =
+            r\big( s
+            \begin{mat}
+              a  &b  \\
+              c  &d
+            \end{mat}
+            \big)
+          \end{equation*}
+          Syarat~(10) juga sama mudahnya.
+          \begin{equation*}
+            1
+            \begin{mat}
+              a  &b  \\
+              c  &d
+            \end{mat}
+            =
+            \begin{mat}
+              1\cdot a  &1\cdot b  \\
+              1\cdot c  &1\cdot d
+            \end{mat}
+            =
+            \begin{mat}
+              a  &b  \\
+              c  &d
+            \end{mat}
+          \end{equation*}
+        \partsitem 
+          Bagian ini hanya berbeda dari bagian sebelumnya karena kita
+          membatasi diri pada himpunan $T$ yang terdiri atas matriks dengan
+          entri nol pada baris kedua dan kolom pertama.
+          Berikut adalah tiga anggota $T$.
+          \begin{equation*}
+            \begin{mat}
+              1  &2  \\
+              0  &4
+            \end{mat},\,
+            \begin{mat}
+              -1  &-2  \\
+              0  &-4
+            \end{mat},\,
+            \begin{mat}
+              0  &0  \\
+              0  &0
+            \end{mat}
+          \end{equation*}
+          Beberapa verifikasi untuk bagian ini sama dengan verifikasi pada
+          bagian pertama latihan ini; di bawah ini kita hanya mengerjakan yang
+          berbeda.
+
+          Untuk~(1), jumlah dua matriks real $\nbyn{2}$ dengan entri $2,1$
+          bernilai nol juga merupakan matriks real $\nbyn{2}$ dengan entri
+          $2,1$ bernilai nol.
+          \begin{equation*}
+            \begin{mat}
+              a  &b  \\
+              0  &d
+            \end{mat}
+            +
+            \begin{mat}
+              e  &f  \\
+              0  &h
+            \end{mat}
+            =
+            \begin{mat}
+              a+e  &b+f  \\
+              0    &d+h
+            \end{mat}
+          \end{equation*}
+          Verifikasi syarat~(2) yang diberikan pada bagian sebelumnya juga
+          berlaku di sini. Hal yang sama berlaku untuk syarat~(3).
+          Untuk~(4), perhatikan bahwa matriks nol $\nbyn{2}$ merupakan anggota
+          $T$.
+          Syarat~(5) berlaku karena invers aditif dari setiap matriks
+          $\nbyn{2}$~$A$ adalah matriks $-1\cdot A$; jadi, invers aditif suatu
+          matriks yang entri $2,1$-nya nol juga memiliki entri $2,1$ nol.
+
+          Syarat~(6) berlaku karena kelipatan skalar suatu matriks $\nbyn{2}$
+          yang entri $2,1$-nya nol juga merupakan matriks $\nbyn{2}$ dengan
+          entri $2,1$ nol.
+          Verifikasi syarat~(7) sama seperti pada bagian sebelumnya.
+          Demikian pula verifikasi syarat~(8), (9), dan~(10).
+      \end{exparts}        
+    \end{answer}
+  \recommended \item 
+    Untuk masing-masing himpunan, daftarkan tiga anggotanya lalu tunjukkan
+    bahwa himpunan tersebut merupakan ruang vektor.
+    \begin{exparts}
+      \partsitem Himpunan vektor baris tiga komponen dengan operasi yang biasa.
+      \partsitem Himpunan
+        \begin{equation*}
+          \set{\colvec{x \\ y \\ z \\ w}\in\Re^4\suchthat x+y-z+w=0}
+        \end{equation*}
+        di bawah operasi yang diwarisi dari $\Re^4$.
+    \end{exparts}
+    \begin{answer}
+      % Most of the conditions are easy to check; use
+      % \nearbyexample{ex:RealVecSpaces} as a guide.
+      \begin{exparts}
+        \partsitem 
+          Tiga anggotanya adalah $\rowvec{1  &2  &3}$,
+          $\rowvec{2  &1  &3}$, dan $\rowvec{0  &0  &0}$.
+
+          Kita harus memeriksa syarat (1)--(10) dalam
+          \nearbydefinition{def:VecSpace}.
+          Syarat (1)--(5) berkaitan dengan penjumlahan.
+          Untuk syarat~(1), ingat bahwa jumlah dua vektor baris tiga komponen
+          \begin{equation*}
+            \rowvec{a  &b  &c}
+            +\rowvec{d  &e  &f}
+            =\rowvec{a+d  &b+e  &c+f}
+          \end{equation*}
+          juga merupakan vektor baris tiga komponen
+          (semua huruf $a,\ldots,f$ menyatakan bilangan real).
+          Verifikasi~(2) bersifat rutin,
+          \begin{multline*}
+            \rowvec{a  &b  &c}
+            +\rowvec{d  &e  &f}
+            =\rowvec{a+d  &b+e  &c+f}   \\
+            =\rowvec{d+a  &e+b  &f+c}
+            =\rowvec{d  &e  &f}
+            +\rowvec{a  &b  &c}
+          \end{multline*}
+          (kesamaan kedua berlaku karena ketiga entri merupakan bilangan real
+          dan penjumlahan bilangan real bersifat komutatif).
+          Verifikasi syarat~(3) serupa.
+          \begin{multline*}
+            \big(\rowvec{a  &b  &c}
+              +\rowvec{d  &e  &f}
+            \big)
+            +\rowvec{g  &h  &i}
+            =\rowvec{(a+d)+g  &(b+e)+h  &(c+f)+i}    \\
+            =\rowvec{a+(d+g)  &b+(e+h)  &c+(f+i)}
+            =\rowvec{a  &b  &c}
+            +\big(\rowvec{d  &e  &f}
+               +\rowvec{g  &h  &i}
+             \big) 
+          \end{multline*}
+          Untuk (4), perhatikan bahwa vektor baris tiga komponen
+          $\rowvec{0  &0  &0}$ merupakan identitas aditif:
+          $\rowvec{a  &b  &c}+\rowvec{0  &0  &0}=\rowvec{a  &b  &c}$.
+          Untuk memverifikasi syarat~(5), andaikan diberikan anggota
+          $\rowvec{a  &b  &c}$ dari himpunan tersebut. Perhatikan bahwa
+          $\rowvec{-a  &-b  &-c}$ juga berada dalam himpunan dan memiliki
+          sifat yang diinginkan:
+          $\rowvec{a  &b  &c}+\rowvec{-a  &-b  &-c}=\rowvec{0  &0  &0}$.
+
+          Syarat (6)--(10) berkaitan dengan perkalian skalar.
+          Untuk memverifikasi~(6), yakni ketertutupan ruang terhadap operasi
+          perkalian skalar yang diberikan, perhatikan bahwa
+          $r\rowvec{a  &b  &c}=\rowvec{ra  &rb  &rc}$ merupakan vektor baris
+          tiga komponen dengan entri real.
+          Untuk~(7), kita menghitung
+          \begin{multline*}
+            (r+s)\rowvec{a  &b  &c}=\rowvec{(r+s)a  &(r+s)b  &(r+s)c}
+            =\rowvec{ra+sa  &rb+sb  &rc+sc}                             \\
+            =\rowvec{ra  &rb  &rc}+\rowvec{sa  &sb  &sc}
+            =r\rowvec{a  &b  &c}+s\rowvec{a  &b  &c}
+          \end{multline*}
+          Syarat~(8) sangat serupa.
+          \begin{multline*} 
+            r\big(\rowvec{a  &b  &c}+\rowvec{d  &e  &f}\big)  \\
+            \begin{aligned}
+            &=r\rowvec{a+d  &b+e  &c+f}
+            =\rowvec{r(a+d)  &r(b+e)  &r(c+f)}                     \\
+            &=\rowvec{ra+rd  &rb+re  &rc+rf}
+            =\rowvec{ra  &rb  &rc}+\rowvec{rd  &re  &rf}          \\
+            &=r\rowvec{a  &b  &c}+r\rowvec{d  &e  &f}
+            \end{aligned}
+          \end{multline*}
+          Demikian pula perhitungan untuk syarat~(9).
+          \begin{equation*}
+            (rs)\rowvec{a  &b  &c}
+             =\rowvec{rsa  &rsb  &rsc}
+             =r\rowvec{sa  &sb  &sc}
+             =r\big(s\rowvec{a  &b  &c}\big)
+          \end{equation*}
+          Syarat~(10) juga rutin:
+          $1\rowvec{a  &b  &c}
+             =\rowvec{1\cdot a  &1\cdot b  &1\cdot c}
+             =\rowvec{a  &b  &c}$.
+        \partsitem 
+          Sebut himpunan tersebut $L$.
+          Ketertutupan terhadap penjumlahan, syarat~(1), diperiksa dengan
+          memastikan bahwa jika kedua suku merupakan anggota~$L$, maka
+          jumlahnya,
+          \begin{equation*}
+            \colvec{a \\ b \\ c \\ d}
+            +\colvec{e \\ f \\ g \\ h}
+            =
+            \colvec{a+e \\ b+f \\ c+g \\ d+h}
+          \end{equation*}
+          juga merupakan anggota \( L \). Hal ini benar karena jumlah tersebut
+          memenuhi kriteria keanggotaan $L$:
+          \( (a+e)+(b+f)-(c+g)+(d+h)
+          =(a+b-c+d)+(e+f-g+h)=0+0 \).
+          Verifikasi syarat~(2), (3), dan~(5) serupa dengan verifikasi pada
+          bagian pertama latihan ini.
+          Untuk syarat~(4), perhatikan bahwa vektor nol merupakan anggota~$L$
+          karena komponen pertama ditambah komponen kedua, dikurangi komponen
+          ketiga, lalu ditambah komponen keempat bernilai nol.
+
+          Syarat~(6), ketertutupan terhadap perkalian skalar, juga serupa:
+          jika vektor tersebut merupakan anggota~$L$, maka
+          \begin{equation*}
+            r\colvec{a  \\ b \\ c \\ d}
+            =\colvec{ra  \\  rb  \\  rc  \\  rd}
+          \end{equation*}
+          juga merupakan anggota~$L$ karena
+          $ra+rb-rc+rd=r(a+b-c+d)=r\cdot 0=0$.
+          Verifikasi syarat~(7), (8), (9), dan~(10) sama seperti pada bagian
+          sebelumnya dalam latihan ini.
+     \end{exparts}  
+     \end{answer}
+  \recommended \item \label{exer:NotVectorSpaces}
+    Tunjukkan bahwa masing-masing himpunan berikut bukan ruang vektor.
+    (\textit{Petunjuk.} Periksa ketertutupan dengan mendaftarkan dua anggota
+    setiap himpunan dan mencoba beberapa operasi terhadap keduanya.)
+    \begin{exparts}
+      \partsitem Di bawah operasi yang diwarisi dari \( \Re^3 \), himpunan
+        \begin{equation*}
+          \set{\colvec{x \\ y \\ z}\in\Re^3\suchthat x+y+z=1}
+        \end{equation*}
+      \partsitem Di bawah operasi yang diwarisi dari \( \Re^3 \), himpunan
+        \begin{equation*}
+          \set{\colvec{x \\ y \\ z}\in\Re^3\suchthat x^2+y^2+z^2=1}
+        \end{equation*}
+      \partsitem Di bawah operasi matriks yang biasa,
+        \begin{equation*}
+          \set{\begin{mat}
+                 a  &1  \\
+                 b  &c
+               \end{mat} \suchthat a,b,c\in\Re}
+        \end{equation*}
+      \partsitem Di bawah operasi polinomial yang biasa,
+        \begin{equation*}
+          \set{a_0+a_1x+a_2x^2\suchthat a_0,a_1,a_2\in\Re^+}
+        \end{equation*}
+        dengan $\Re^+$ himpunan bilangan real yang lebih besar dari nol
+      \partsitem Di bawah operasi yang diwarisi,
+        \begin{equation*}
+          \set{\colvec{x \\ y}\in\Re^2\suchthat
+               \text{\( x+3y=4 \), \( 2x-y=3 \), dan \( 6x+4y=10 \)} }
+        \end{equation*}
+    \end{exparts}
+    \begin{answer}
+      Dalam setiap bagian, himpunannya disebut \( Q \).
+      Untuk beberapa bagian, terdapat cara benar lain untuk menunjukkan bahwa
+      $Q$ bukan ruang vektor.
+      \begin{exparts}
+        \partsitem Himpunan ini tidak tertutup terhadap penjumlahan; syarat~(1)
+          tidak terpenuhi.
+          \begin{equation*}
+            \colvec[r]{1 \\ 0 \\ 0},
+            \colvec[r]{0 \\ 1 \\ 0}\in Q
+            \qquad
+            \colvec[r]{1 \\ 1 \\ 0}\not\in Q
+          \end{equation*}
+        \partsitem Himpunan ini tidak tertutup terhadap penjumlahan.
+          \begin{equation*}
+            \colvec[r]{1 \\ 0 \\ 0},
+            \colvec[r]{0 \\ 1 \\ 0}\in Q
+            \qquad
+            \colvec[r]{1 \\ 1 \\ 0}\not\in Q
+          \end{equation*}
+        \partsitem Himpunan ini tidak tertutup terhadap penjumlahan.
+          \begin{equation*}
+            \begin{mat}[r]
+              0  &1  \\
+              0  &0
+            \end{mat},
+            \,
+            \begin{mat}[r]
+              1  &1  \\
+              0  &0
+            \end{mat}\in Q
+            \qquad
+            \begin{mat}[r]
+              1  &2  \\
+              0  &0
+            \end{mat}\not\in Q
+          \end{equation*}
+        \partsitem Himpunan ini tidak tertutup terhadap perkalian skalar.
+          \begin{equation*}
+            1+1x+1x^2\in Q
+            \qquad
+            -1\cdot(1+1x+1x^2)\not\in Q
+          \end{equation*}
+        \item Himpunan ini kosong sehingga melanggar syarat~(4).
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Definisikan operasi penjumlahan dan perkalian skalar yang menjadikan
+    bilangan kompleks suatu ruang vektor di atas \( \Re \).
+    \begin{answer}
+      Operasi yang biasa,
+      \( (v_0+v_1i)+(w_0+w_1i)=(v_0+w_0)+(v_1+w_1)i \) dan
+      \( r(v_0+v_1i)=(rv_0)+(rv_1)i \), sudah memadai.
+      Pemeriksaannya mudah.
+    \end{answer}
+  \item
+    Apakah himpunan bilangan rasional merupakan ruang vektor di atas \( \Re \)
+    di bawah operasi penjumlahan dan perkalian skalar yang biasa?
+    \begin{answer}
+       Tidak. Himpunan tersebut tidak tertutup terhadap perkalian skalar karena,
+       misalnya, \( \pi\cdot (1) \) bukan bilangan rasional.
+    \end{answer}
+  \item 
+    Tunjukkan bahwa himpunan kombinasi linear dari variabel \( x,y,z \)
+    merupakan ruang vektor di bawah operasi alami penjumlahan dan perkalian
+    skalar.
+    \begin{answer}
+      Operasi alaminya adalah
+      \( (v_1x+v_2y+v_3z)+(w_1x+w_2y+w_3z)=(v_1+w_1)x+(v_2+w_2)y+(v_3+w_3)z \)
+      dan \( r\cdot(v_1x+v_2y+v_3z)=(rv_1)x+(rv_2)y+(rv_3)z \).
+      Pemeriksaan bahwa ini merupakan ruang vektor mudah; gunakan
+      \nearbyexample{ex:RealVecSpaces} sebagai panduan.
+    \end{answer}
+  \item 
+    Buktikan bahwa himpunan vektor kolom bertinggi dua dengan entri real di
+    bawah operasi berikut bukan ruang vektor.
+    \begin{equation*}
+      \colvec{x_1 \\ y_1}
+      +\colvec{x_2 \\ y_2}
+      =\colvec{x_1-x_2 \\ y_1-y_2}
+      \qquad
+      r\cdot\colvec{x \\ y}
+      =\colvec{rx \\ ry}
+    \end{equation*}
+    \begin{answer}
+      Operasi `\( + \)' tidak komutatif (jadi, syarat~(2) tidak terpenuhi);
+      mudah memberikan dua anggota himpunan yang membuktikan pernyataan ini.
+    \end{answer}
+  \item 
+    Buktikan atau sangkal bahwa \( \Re^3 \) merupakan ruang vektor di bawah
+    operasi-operasi berikut.
+    \begin{exparts}
+      \partsitem \( 
+               \colvec{x_1 \\ y_1 \\ z_1}
+               +\colvec{x_2 \\ y_2 \\ z_2}
+               =\colvec{0 \\ 0 \\ 0}
+               \quad\text{dan}\quad
+               r\colvec{x \\ y \\ z}
+               =\colvec{rx \\ ry \\ rz} \) 
+      \partsitem \( 
+               \colvec{x_1 \\ y_1 \\ z_1}
+               +\colvec{x_2 \\ y_2 \\ z_2}
+               =\colvec{0 \\ 0 \\ 0}   
+               \quad\text{dan}\quad
+               r\colvec{x \\ y \\ z}
+               =\colvec{0 \\ 0 \\ 0} \)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Himpunan ini bukan ruang vektor.
+          \begin{equation*}
+            (1+1)\cdot\colvec[r]{1 \\ 0 \\ 0}\neq
+            \colvec[r]{1 \\ 0 \\ 0}
+            +\colvec[r]{1 \\ 0 \\ 0}
+          \end{equation*}
+        \partsitem Himpunan ini bukan ruang vektor.
+          \begin{equation*}
+            1\cdot\colvec[r]{1 \\ 0 \\ 0}\neq\colvec[r]{1 \\ 0 \\ 0}
+          \end{equation*}
+      \end{exparts}   
+    \end{answer}
+  \recommended \item
+    Untuk masing-masing himpunan, tentukan apakah himpunan tersebut merupakan
+    ruang vektor; operasi yang dimaksud adalah operasi alaminya.
+    \begin{exparts}
+      \partsitem Matriks \( \nbyn{2} \) \definend{diagonal}
+        \begin{equation*}
+          \set{\begin{mat}
+            a  &0  \\
+            0  &b
+          \end{mat}\suchthat a,b\in\Re}
+        \end{equation*}
+      \partsitem Himpunan matriks \( \nbyn{2} \) berikut,
+        \begin{equation*}
+          \set{\begin{mat}
+            x    &x+y  \\
+            x+y  &y
+          \end{mat}\suchthat x,y\in\Re}
+        \end{equation*}
+      \partsitem Himpunan berikut,
+        \begin{equation*}
+          \set{\colvec{x \\ y \\ z \\ w}\in\Re^4
+               \suchthat x+y+z+w=1}
+        \end{equation*}
+      \partsitem Himpunan fungsi
+        \( \set{\map{f}{\Re}{\Re}\suchthat df/dx+2f=0} \)
+      \partsitem Himpunan fungsi
+        \( \set{\map{f}{\Re}{\Re}\suchthat df/dx+2f=1} \)
+    \end{exparts}
+    \begin{answer}
+      Untuk setiap jawaban ``ya'', Anda cukup memeriksa beberapa kombinasi
+      linear dalam ruang tersebut.
+      Untuk setiap jawaban ``tidak'', berikan contoh khusus kegagalan salah
+      satu syarat.
+      \begin{exparts}
+        \partsitem Ya.
+          Salah satu kombinasi linear yang dipilih secara bebas adalah
+          \begin{equation*}
+            2\cdot\begin{mat}
+              3  &0 \\
+              0  &4
+            \end{mat}
+            +5\cdot\begin{mat}
+              6  &0 \\
+              0  &7
+            \end{mat}
+          \end{equation*}
+          Hal kunci yang menjadikan kumpulan tersebut ruang vektor adalah bahwa
+          hasilnya merupakan matriks diagonal.
+          \begin{equation*}
+            =\begin{mat}
+              36 &0 \\
+              0  &43
+            \end{mat}
+          \end{equation*}
+        \partsitem Ya.
+          Berikut adalah suatu kombinasi linear.
+          \begin{equation*}
+            10\cdot\begin{mat}
+              1  &3  \\
+              3  &2
+            \end{mat}
+            +11\cdot\begin{mat}
+              3  &7  \\
+              7  &4
+            \end{mat}
+          \end{equation*}
+          Kita memeriksa bahwa hasilnya tetap memiliki bentuk dengan jumlah
+          entri kiri atas dan kanan bawah sama dengan entri kanan atas serta
+          entri kiri bawah.
+          \begin{equation*}
+            =\begin{mat}
+               43  &107  \\
+              107  &64
+            \end{mat}
+          \end{equation*}
+        \partsitem Tidak. Himpunan ini tidak tertutup terhadap operasi
+          penjumlahan alami. Vektor yang semua komponennya $1/4$ merupakan
+          anggota himpunan, tetapi ketika dijumlahkan dengan dirinya sendiri,
+          hasilnya, yaitu vektor yang semua komponennya $1/2$, bukan anggota.
+        \partsitem Ya.
+        \partsitem Tidak. \( f(x)=e^{-2x}+(1/2) \) berada dalam himpunan,
+          tetapi \( 2\cdot f \) tidak (jadi, syarat~(6) gagal).
+      \end{exparts}  
+    \end{answer}
+  \recommended \item
+    Buktikan atau sangkal bahwa fungsi bernilai real \( f \) dari satu variabel
+    real yang memenuhi \( f(7)=0 \) membentuk ruang vektor.
+    \begin{answer}
+      Himpunan ini merupakan ruang vektor.
+      Sebagian besar syarat dalam definisi ruang vektor bersifat rutin; di sini
+      kita hanya memeriksa ketertutupan.
+      Untuk penjumlahan,
+      \( (f_1+f_2)\,(7)=f_1(7)+f_2(7)=0+0=0 \).
+      Untuk perkalian skalar,
+      \( (r\cdot f)\,(7)=rf(7)=r0=0 \).  
+    \end{answer}
+  \recommended \item
+    Tunjukkan bahwa himpunan \( \Re^+ \) bilangan real positif merupakan ruang
+    vektor jika `\( x+y \)' kita tafsirkan sebagai hasil kali \( x \) dan
+    \( y \) (sehingga \( 2+3 \) berarti \( 6 \)), dan `\( r\cdot x \)'
+    kita tafsirkan sebagai pangkat ke-\( r \) dari \( x \).
+    \begin{answer}
+      Kita memeriksa \nearbydefinition{def:VecSpace}.
+
+      Pertama, ketertutupan terhadap `\( + \)' berlaku karena hasil kali dua
+      bilangan real positif merupakan bilangan real positif.
+      Syarat kedua terpenuhi karena perkalian bilangan real bersifat komutatif.
+      Demikian pula, karena perkalian bilangan real bersifat asosiatif, syarat
+      ketiga terpenuhi.
+      Untuk syarat keempat, perhatikan bahwa mengalikan suatu bilangan dengan
+      \( 1\in\Re^+ \) tidak mengubah bilangan tersebut.
+      Kelima, setiap bilangan real positif memiliki kebalikan yang juga
+      merupakan bilangan real positif.
+
+      Syarat keenam, ketertutupan terhadap `\( \cdot \)', berlaku karena setiap
+      pangkat bilangan real positif merupakan bilangan real positif.
+      Syarat ketujuh hanyalah aturan bahwa \( v^{r+s} \) sama dengan hasil kali
+      \( v^r \) dan \( v^s \).
+      Syarat kedelapan menyatakan \( (vw)^r=v^rw^r \).
+      Syarat kesembilan menyatakan \( (v^r)^s=v^{rs} \).
+      Syarat terakhir menyatakan \( v^1=v \).
+    \end{answer}
+  \item 
+      Apakah \( \set{(x,y)\suchthat x,y\in\Re} \) merupakan ruang vektor di
+      bawah operasi-operasi berikut?
+      \begin{exparts}
+        \partsitem \( (x_1,y_1)+(x_2,y_2)=(x_1+x_2,y_1+y_2) \)
+        dan \( r\cdot (x,y)=(rx,y) \)
+        \partsitem \( (x_1,y_1)+(x_2,y_2)=(x_1+x_2,y_1+y_2) \)
+        dan \( r\cdot (x,y)=(rx,0) \)
+      \end{exparts}
+      \begin{answer}
+        \begin{exparts}
+           \partsitem Tidak: \( 1\cdot(0,1)+1\cdot(0,1)\neq (1+1)\cdot(0,1) \).
+           \partsitem Tidak; perhitungan yang sama seperti pada jawaban
+              sebelumnya menunjukkan satu syarat definisi ruang vektor yang
+              dilanggar. Contoh pelanggaran lain adalah
+              \( 1\cdot (0,1)\neq (0,1) \).
+        \end{exparts}  
+      \end{answer}
+  \item 
+    Buktikan atau sangkal bahwa himpunan polinomial berderajat lebih besar dari
+    atau sama dengan dua, bersama dengan polinomial nol, merupakan ruang vektor.
+    \begin{answer}
+      Himpunan ini bukan ruang vektor karena tidak tertutup terhadap
+      penjumlahan: \( (x^2)+(1+x-x^2) \) bukan anggota himpunan.
+    \end{answer}
+  \item 
+    Pada tahap ini, istilah ``sama'' baru merupakan intuisi. Meskipun demikian,
+    untuk setiap ruang vektor tentukan \( k \) sehingga ruang tersebut ``sama''
+    dengan \( \Re^k \).
+    \begin{exparts}
+      \partsitem Matriks \( \nbym{2}{3} \) di bawah operasi yang biasa
+      \partsitem Matriks \( \nbym{n}{m} \) di bawah operasi yang biasa
+      \partsitem Himpunan matriks \( \nbyn{2} \) berikut,
+        \begin{equation*}
+          \set{\begin{mat}
+            a  &0  \\
+            b  &c
+          \end{mat} \suchthat a,b,c\in\Re}
+        \end{equation*}
+      \partsitem Himpunan matriks \( \nbyn{2} \) berikut,
+        \begin{equation*}
+          \set{\begin{mat}
+            a  &0  \\
+            b  &c
+          \end{mat} \suchthat a+b+c=0}
+        \end{equation*}
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem \( 6 \)
+        \partsitem \( nm \)
+        \partsitem \( 3 \)
+        \partsitem Untuk melihat bahwa jawabannya adalah \( 2 \), tulis ulang
+          himpunan tersebut sebagai
+        \begin{equation*}
+          \set{\begin{mat}
+            a  &0  \\
+            b  &-a-b
+          \end{mat} \suchthat a,b\in\Re}
+        \end{equation*}
+        sehingga terdapat dua parameter.
+      \end{exparts}  
+     \end{answer}
+  \item 
+    Dengan menggunakan \( \vec{+} \) untuk menyatakan penjumlahan vektor dan
+    \( \,\vec{\cdot}\, \) untuk perkalian skalar, nyatakan ulang definisi
+    ruang vektor.
+    \begin{answer}
+      {
+      \def\plus{\mathbin{\vec{+}}}
+      \def\tim{\mathbin{\vec{\cdot}}}
+        Suatu \definend{ruang vektor}\index{ruang vektor!definisi}
+        (di atas \( \Re \)) terdiri atas suatu himpunan \( V \) beserta dua
+        operasi `\( \plus \)' dan `\( \tim \)' yang memenuhi syarat-syarat
+        berikut.
+        Jika \( \vec{v},\vec{w}\in V \), maka
+        (1)~\definend{jumlah vektor} keduanya,
+          \( \vec{v}\plus\vec{w} \), merupakan anggota \( V \).
+        Jika \( \vec{u},\vec{v},\vec{w}\in V \), maka
+        (2)~\( \vec{v}\plus\vec{w}=\vec{w}\plus\vec{v} \) dan
+        (3)~\( (\vec{v}\plus\vec{w})\plus\vec{u}
+                 =\vec{v}\plus(\vec{w}\plus\vec{u}) \).
+        (4)~Terdapat suatu \definend{vektor nol}
+          \( \zero\in V \) sedemikian sehingga
+          \( \vec{v}\plus\zero=\vec{v}\, \) untuk semua \( \vec{v}\in V\).
+        (5)~Setiap \( \vec{v}\in V \) memiliki suatu
+          \definend{invers aditif} \( \vec{w}\in V \) sedemikian sehingga
+          \( \vec{w}\plus\vec{v}=\zero \).
+        Jika \( r,s \) merupakan \definend{skalar\/}, yaitu anggota \( \Re \),
+        dan \( \vec{v},\vec{w}\in V \), maka
+        (6)~setiap \definend{kelipatan skalar}
+           \( r\tim\vec{v} \) berada dalam \( V \).
+        Jika \( r,s\in\Re \) dan \( \vec{v},\vec{w}\in V \), maka
+        (7)~\( (r+s)\tim\vec{v}
+           =(r\tim\vec{v})\plus(s\tim\vec{v}) \),
+        (8)~\( r\tim (\vec{v}\plus\vec{w})
+           =(r\tim\vec{v})\plus(r\tim\vec{w}) \),
+        (9)~\( (rs)\tim \vec{v}=r\tim (s\tim\vec{v}) \), dan
+        (10)~\( 1\tim \vec{v}=\vec{v} \).
+     }
+    \end{answer}
+  \item 
+    Buktikan pernyataan-pernyataan berikut.
+    \begin{exparts}
+      \partsitem Untuk setiap $\vec{v}\in V$, jika $\vec{w}\in V$ merupakan
+        invers aditif dari $\vec{v}$, maka $\vec{v}$ merupakan invers aditif
+        dari $\vec{w}$. Jadi, suatu vektor merupakan invers aditif dari setiap
+        invers aditif dirinya.
+      \partsitem Penjumlahan vektor dapat dicoret dari kiri:~jika
+        \( \vec{v},\vec{s},\vec{t}\in V \), maka
+        \( \vec{v}+\vec{s}=\vec{v}+\vec{t}\, \) mengakibatkan
+        \( \vec{s}=\vec{t} \).
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Misalkan \( V \) suatu ruang vektor, \( \vec{v}\in V \),
+          dan andaikan \( \vec{w}\in V \) merupakan invers aditif dari
+          $\vec{v}$ sehingga \( \vec{w}+\vec{v}=\zero \).
+          Karena penjumlahan komutatif,
+          \( \zero=\vec{w}+\vec{v}=\vec{v}+\vec{w} \),
+          sehingga \( \vec{v} \) juga merupakan invers aditif dari
+          \( \vec{w} \).
+        \partsitem Misalkan \( V \) suatu ruang vektor dan
+          \( \vec{v},\vec{s},\vec{t}\in V \).
+          Invers aditif dari \( \vec{v} \) adalah \( -\vec{v} \), sehingga
+          \( \vec{v}+\vec{s}=\vec{v}+\vec{t} \) memberikan
+          \( -\vec{v}+\vec{v}+\vec{s}=-\vec{v}+\vec{v}+\vec{t} \),
+          yang menyatakan \( \zero+\vec{s}=\zero+\vec{t} \), dan karena itu
+          \( \vec{s}=\vec{t} \).
+      \end{exparts}  
+     \end{answer}
+  \item 
+    Definisi ruang vektor tidak secara eksplisit menyatakan
+    \( \zero+\vec{v}=\vec{v} \) (definisi itu justru menyatakan
+    \( \vec{v}+\zero=\vec{v} \)). Tunjukkan bahwa persamaan pertama tetap
+    harus berlaku dalam setiap ruang vektor.
+    \begin{answer}
+      Penjumlahan bersifat komutatif, sehingga dalam setiap ruang vektor dan
+      untuk setiap vektor \( \vec{v} \), kita memperoleh
+      \( \vec{v}=\vec{v}+\zero=\zero+\vec{v} \).  
+    \end{answer}
+  \recommended \item
+    Buktikan atau sangkal bahwa himpunan semua matriks di bawah operasi yang
+    biasa merupakan ruang vektor.
+    \begin{answer}
+      Himpunan ini bukan ruang vektor karena penjumlahan dua matriks yang
+      ukurannya berbeda tidak didefinisikan, sehingga himpunan tersebut gagal
+      memenuhi syarat ketertutupan.
+    \end{answer}
+  \item 
+    Dalam ruang vektor, setiap anggota memiliki invers aditif.
+    Dapatkah suatu anggota memiliki dua invers aditif atau lebih?
+    \begin{answer}
+      Setiap anggota ruang vektor memiliki tepat satu invers aditif.
+
+      Misalkan \( V \) suatu ruang vektor dan \( \vec{v}\in V \).
+      Jika \( \vec{w}_1,\vec{w}_2\in V \) keduanya merupakan invers aditif
+      dari \( \vec{v} \), tinjau \( \vec{w}_1+\vec{v}+\vec{w}_2 \).
+      Di satu pihak, ungkapan tersebut sama dengan
+      $\vec{w}_1+(\vec{v}+\vec{w}_2)=\vec{w}_1+\zero=\vec{w}_1$.
+      Di pihak lain, ungkapan itu sama dengan
+      $(\vec{w}_1+\vec{v})+\vec{w}_2=\zero+\vec{w}_2=\vec{w}_2$.
+      Oleh karena itu, $\vec{w}_1=\vec{w}_2$.
+    \end{answer}
+  \item 
+    \begin{exparts}
+      \partsitem Buktikan bahwa setiap titik, garis, atau bidang yang melalui
+         titik asal dalam \( \Re^3 \) merupakan ruang vektor di bawah operasi
+         yang diwarisi.
+      \partsitem Bagaimana jika himpunan tersebut tidak memuat titik asal?
+    \end{exparts}
+    \begin{answer}
+     \begin{exparts}
+      \partsitem Setiap himpunan semacam itu berbentuk
+        \( \set{r\cdot\vec{v}+s\cdot\vec{w}\suchthat r,s\in\Re} \)
+        dengan salah satu atau kedua vektor \( \vec{v},\vec{w} \) mungkin
+        bernilai \( \zero \).
+        Di bawah operasi yang diwarisi, ketertutupan terhadap penjumlahan,
+        \( (r_1\vec{v}+s_1\vec{w})+(r_2\vec{v}+s_2\vec{w})
+           =(r_1+r_2)\vec{v}+(s_1+s_2)\vec{w} \)
+        dan perkalian skalar,
+        \( c(r\vec{v}+s\vec{w})=(cr)\vec{v}+(cs)\vec{w} \)
+        mudah diperiksa. Syarat-syarat lainnya juga rutin.
+      \partsitem Himpunan semacam itu tidak dapat menjadi ruang vektor di bawah
+        operasi yang diwarisi karena tidak memiliki unsur nol.
+     \end{exparts}  
+    \end{answer}
+  \item 
+    Dengan gagasan ruang vektor, kita dapat dengan mudah membuktikan kembali
+    bahwa himpunan solusi suatu sistem linear homogen memiliki satu anggota
+    atau tak hingga banyak anggota.
+    Andaikan \( \vec{v}\in V \) bukan \( \zero \).
+    \begin{exparts}
+      \partsitem Buktikan bahwa \( r\cdot\vec{v}=\zero \) jika dan hanya jika
+        \( r=0 \).
+      \partsitem Buktikan bahwa
+        \( r_1\cdot\vec{v}=r_2\cdot\vec{v} \) jika dan hanya jika
+        \( r_1=r_2 \).
+      \partsitem Buktikan bahwa setiap ruang vektor tak trivial bersifat tak
+        hingga.
+      \partsitem Gunakan fakta bahwa himpunan solusi tak kosong suatu sistem
+        linear homogen merupakan ruang vektor untuk menarik kesimpulan.
+    \end{exparts}
+    \begin{answer}
+      Andaikan \( \vec{v}\in V \) bukan \( \zero \).
+      \begin{exparts}
+        \partsitem Salah satu arah pernyataan jika dan hanya jika sudah jelas:
+          jika $r=0$, maka $r\cdot\vec{v}=\zero$.
+          Untuk arah sebaliknya, misalkan \( r \) skalar tak nol.
+          Jika \( r\vec{v}=\zero \), maka
+          \( (1/r)\cdot r\vec{v}=(1/r)\cdot \zero \) menunjukkan bahwa
+          $\vec{v}=\zero$, bertentangan dengan pengandaian.
+        \partsitem Jika \( r_1,r_2 \) skalar, maka
+          \( r_1\vec{v}=r_2\vec{v}\, \) berlaku jika dan hanya jika
+          \( (r_1-r_2)\vec{v}=\zero \).
+          Menurut bagian sebelumnya, hal ini berarti \( r_1-r_2=0 \).
+        \partsitem Ruang tak trivial memiliki suatu vektor
+          \( \vec{v}\neq\zero \). Tinjau himpunan
+          \( \set{k\cdot\vec{v}\suchthat k\in\Re} \).
+          Menurut bagian sebelumnya, himpunan ini tak hingga.
+        \partsitem Himpunan solusi bersifat trivial atau tak trivial.
+          Dalam kasus kedua, himpunan tersebut tak hingga.
+     \end{exparts}  
+    \end{answer}
+  \item 
+    Apakah fungsi bernilai real dari satu variabel real yang terdiferensialkan
+    membentuk ruang vektor di bawah operasi alaminya?
+    \begin{answer}
+      Ya.
+      Suatu teorema Kalkulus semester pertama menyatakan bahwa jumlah fungsi
+      yang terdiferensialkan juga terdiferensialkan dan
+      \( (f+g)^\prime=f^\prime+g^\prime \), serta bahwa kelipatan suatu fungsi
+      yang terdiferensialkan juga terdiferensialkan dan
+      \( (r\cdot f)^\prime=r\,f^\prime \).
+    \end{answer}
+  \item 
+    Suatu \definend{ruang vektor di atas bilangan kompleks}%
+    \index{ruang vektor!skalar kompleks}%
+    \index{bilangan kompleks!ruang vektor di atas}
+    $\C$ memiliki definisi yang sama dengan ruang vektor di atas bilangan real,
+    kecuali bahwa skalar diambil dari \( \C \), bukan \( \Re \).
+    Tunjukkan bahwa masing-masing himpunan berikut merupakan ruang vektor di
+    atas bilangan kompleks.
+    (Ingat cara menjumlahkan dan mengalikan bilangan kompleks:
+    \( (a_0+a_1i)+(b_0+b_1i)=(a_0+b_0)+(a_1+b_1)i \) dan
+    \( (a_0+a_1i)(b_0+b_1i)=(a_0b_0-a_1b_1)+(a_0b_1+a_1b_0)i \).)
+    \begin{exparts}
+      \partsitem Himpunan polinomial berderajat~dua dengan koefisien kompleks
+      \partsitem Himpunan berikut,
+        \begin{equation*}
+          \set{\begin{mat}
+                 0  &a  \\
+                 b  &0
+               \end{mat}\suchthat a,b\in\C\text{ dan }
+                               a+b=0+0i }
+        \end{equation*}
+    \end{exparts}
+    \begin{answer}
+      Pemeriksaannya rutin.
+      Perhatikan bahwa `\( 1 \)' berarti \( 1+0i \), dan unsur-unsur nolnya
+      adalah berikut.
+      \begin{exparts}
+        \partsitem \( (0+0i)+(0+0i)x+(0+0i)x^2 \)
+        \partsitem \( \begin{mat}
+                   0+0i  &0+0i  \\
+                   0+0i  &0+0i
+                 \end{mat} \)
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Sebutkan suatu sifat yang dimiliki semua \( \Re^n \), tetapi tidak
+    dicantumkan sebagai syarat ruang vektor.
+    \begin{answer}
+      Salah satu hal yang tidak terdapat dalam definisi ruang vektor adalah
+      ukuran jarak.
+    \end{answer}
+  \item 
+    \begin{exparts}
+      \partsitem Buktikan bahwa untuk empat vektor sembarang
+        \( \vec{v}_1,\ldots,\vec{v}_4\in V \), kita dapat menempatkan tanda
+        kurung dalam jumlahnya dengan cara apa pun tanpa mengubah hasil.
+        \begin{multline*}
+          ((\vec{v}_1+\vec{v}_2)+\vec{v}_3)+\vec{v}_4
+          =(\vec{v}_1+(\vec{v}_2+\vec{v}_3))+\vec{v}_4  
+          =(\vec{v}_1+\vec{v}_2)+(\vec{v}_3+\vec{v}_4)  \\
+          =\vec{v}_1+((\vec{v}_2+\vec{v}_3)+\vec{v}_4)  
+          =\vec{v}_1+(\vec{v}_2+(\vec{v}_3+\vec{v}_4))
+        \end{multline*}
+        Hal ini memungkinkan kita menulis
+        `\( \vec{v}_1+\vec{v}_2+\vec{v}_3+\vec{v}_4 \)'
+        tanpa ambiguitas.
+      \partsitem Buktikan bahwa dua cara apa pun untuk menempatkan tanda kurung
+        dalam jumlah berapa pun banyaknya vektor memberikan hasil yang sama.
+        (\textit{Petunjuk.} Gunakan induksi pada banyaknya vektor.)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Sedikit penataan ulang memberikan hasil yang diinginkan.
+          \begin{align*}
+            (\vec{v}_1+(\vec{v}_2+\vec{v}_3))+\vec{v}_4
+            &=((\vec{v}_1+\vec{v}_2)+\vec{v}_3)+\vec{v}_4  \\
+            &=(\vec{v}_1+\vec{v}_2)+(\vec{v}_3+\vec{v}_4)  \\
+            &=\vec{v}_1+(\vec{v}_2+(\vec{v}_3+\vec{v}_4))  \\
+            &=\vec{v}_1+((\vec{v}_2+\vec{v}_3)+\vec{v}_4)
+          \end{align*}
+          Setiap kesamaan di atas mengikuti asosiativitas tiga vektor yang
+          diberikan sebagai salah satu syarat dalam definisi ruang vektor.
+          Sebagai contoh, tanda `$=$' kedua menerapkan aturan
+          $(\vec{w}_1+\vec{w}_2)+\vec{w}_3=\vec{w}_1+(\vec{w}_2+\vec{w}_3)$
+          dengan mengambil $\vec{w}_1=\vec{v}_1+\vec{v}_2$,
+          $\vec{w}_2=\vec{v}_3$, dan $\vec{w}_3=\vec{v}_4$.
+        \partsitem Kasus dasar induksi adalah kasus tiga vektor.
+          Persamaan
+          \( \vec{v}_1+(\vec{v}_2+\vec{v}_3)
+          =(\vec{v}_1+\vec{v}_2)+\vec{v}_3 \) merupakan salah satu syarat
+          dalam definisi ruang vektor.
+
+          Untuk langkah induksi, andaikan setiap dua jumlah tiga vektor,
+          setiap dua jumlah empat vektor, \ldots, dan setiap dua jumlah
+          $k$ vektor bernilai sama, apa pun penempatan tanda kurungnya.
+          Kita akan menunjukkan bahwa setiap jumlah \( k+1 \) vektor sama
+          dengan jumlah berikut,
+          \( ((\cdots((\vec{v}_1+\vec{v}_2)+\vec{v}_3)+\cdots)+\vec{v}_k)
+              +\vec{v}_{k+1} \).
+
+          Setiap jumlah bertanda kurung memiliki `\( + \)' terluar.
+          Andaikan tanda tersebut berada di antara \( \vec{v}_m \) dan
+          \( \vec{v}_{m+1} \), sehingga jumlahnya berbentuk berikut.
+          \begin{equation*}
+            (\cdots\,\vec{v}_1\cdots\vec{v}_m\,\cdots)
+           +(\cdots\,\vec{v}_{m+1}\cdots\vec{v}_{k+1}\,\cdots)
+          \end{equation*}
+          Paruh kedua melibatkan kurang dari $k+1$ penjumlahan, sehingga
+          menurut hipotesis induksi kita dapat menempatkan ulang tanda
+          kurungnya agar dibaca dari kiri ke kanan, dari bagian dalam ke luar.
+          Secara khusus, `$+$' terluarnya dapat ditempatkan tepat sebelum
+          $\vec{v}_{k+1}$.
+          \begin{equation*}
+            =(\cdots\,\vec{v}_1\,\cdots\,\vec{v}_m\,\cdots)
+             +((\cdots(\vec{v}_{m+1}+\vec{v}_{m+2})+\cdots+\vec{v}_{k})
+                 +\vec{v}_{k+1})
+          \end{equation*}
+          Terapkan asosiativitas jumlah tiga objek,
+          \begin{equation*}
+            =((\,\cdots\, \vec{v}_1\,\cdots\,\vec{v}_m\,\cdots\,)
+             +(\,\cdots\,(\vec{v}_{m+1}+\vec{v}_{m+2})+\cdots\,\vec{v}_k))
+             +\vec{v}_{k+1}
+          \end{equation*}
+          lalu selesaikan dengan menerapkan hipotesis induksi di dalam tanda
+          kurung terluar tersebut.
+      \end{exparts}  
+    \end{answer}
+  \item \nearbyexample{ex:ColsIntEntNotVS} memberikan subhimpunan $\Re^2$
+   yang bukan ruang vektor di bawah operasi
+   yang wajar karena, walaupun tertutup terhadap penjumlahan, himpunan itu
+   tidak tertutup terhadap perkalian skalar.
+   Tinjau himpunan vektor di bidang yang kedua komponennya bertanda sama atau
+   bernilai~$0$.
+   Tunjukkan bahwa himpunan ini tertutup terhadap perkalian skalar, tetapi tidak
+   terhadap penjumlahan.
+   \begin{answer}
+     Misalkan $\vec{v}$ anggota $\Re^2$ dengan komponen $v_1$ dan $v_2$.
+     Syarat bahwa kedua komponen bertanda sama atau bernilai~$0$ dapat kita
+     singkat sebagai $v_1v_2\geq 0$.
+
+     Untuk menunjukkan bahwa himpunan tertutup terhadap perkalian skalar,
+     perhatikan bahwa komponen-komponen $r\vec{v}$ memenuhi
+     $(rv_1)(rv_2)=r^2(v_1v_2)$, dan $r^2\geq 0$, sehingga
+     $r^2v_1v_2\geq 0$.
+
+     Untuk menunjukkan bahwa himpunan tidak tertutup terhadap penjumlahan,
+     kita cukup memberikan satu contoh.
+     Vektor dengan komponen $-1$ dan~$0$, ketika dijumlahkan dengan vektor
+     berkomponen $0$ dan~$1$, menghasilkan vektor dengan komponen berbeda
+     tanda, yaitu $-1$ dan~$1$.
+   \end{answer}
+  % \item 
+  %   For any vector space, a subset that is itself a vector space
+  %   under the inherited operations
+  %   (e.g., a plane through the origin inside of \( \Re^3 \))
+  %   is a \definend{subspace}.
+  %   \begin{exparts}
+  %     \partsitem Show that \( \set{a_0+a_1x+a_2x^2\suchthat a_0+a_1+a_2=0} \)
+  %       is a subspace of the vector space of degree~two polynomials.
+  %     \partsitem Show that this is a subspace of the \( \nbyn{2} \) matrices.
+  %       \begin{equation*}
+  %         \set{\begin{mat}
+  %                a  &b  \\
+  %                c  &0
+  %              \end{mat} \suchthat a+b=0}
+  %       \end{equation*}
+  %     \partsitem Show that a nonempty subset \( S \) of a real vector
+  %       space is a
+  %       subspace if and only if it is closed under linear combinations of
+  %       pairs of vectors: whenever \( c_1,c_2\in\Re \) and
+  %       \( \vec{s}_1,\vec{s}_2\in S \) then the combination
+  %       \( c_1\vec{v}_1+c_2\vec{v}_2 \) is in \( S \).
+  %   \end{exparts}
+  %   \begin{answer}
+  %     \begin{exparts}
+  %       \partsitem We outline the check of the conditions from
+  %         \nearbydefinition{def:VecSpace}.
+
+  %         Additive closure holds because if \( a_0+a_1+a_2=0 \)
+  %         and \( b_0+b_1+b_2=0 \) then
+  %         \begin{equation*}
+  %           (a_0+a_1x+a_2x^2)+(b_0+b_1x+b_2x^2)=
+  %           (a_0+b_0)+(a_1+b_1)x+(a_2+b_2)x^2
+  %         \end{equation*}
+  %         is in the set since
+  %         \( (a_0+b_0)+(a_1+b_1)+(a_2+b_2)=(a_0+a_1+a_2)+(b_0+b_1+b_2) \)
+  %         is zero.
+  %         The second through fifth conditions are easy.
+
+  %         Closure under scalar multiplication holds because
+  %         if \( a_0+a_1+a_2=0 \) then
+  %         \begin{equation*}
+  %           r\cdot(a_0+a_1x+a_2x^2)=
+  %           (ra_0)+(ra_1)x+(ra_2)x^2
+  %         \end{equation*}
+  %         is in the set as \( ra_0+ra_1+ra_2=r(a_0+a_1+a_2) \) is zero.
+  %         The remaining conditions here are also easy.
+  %       \partsitem This is similar to the prior answer.
+  %       \partsitem Call the vector space \( V \).
+  %         We have two implications: left to right, if \( S \) is a subspace
+  %         then it is closed under linear combinations of pairs of vectors and,
+  %         right to left, if a nonempty subset is closed under linear
+  %         combinations of pairs of vectors then it is a subspace.
+  %         The left to right implication is easy; we here sketch the
+  %         other one by
+  %         assuming \( S \) is nonempty and closed, and checking the conditions
+  %         of \nearbydefinition{def:VecSpace}.
+
+  %         First, to show closure under addition, if
+  %         \( \vec{s}_1,\vec{s}_2\in S \) then \( \vec{s}_1+\vec{s}_2\in S \)
+  %         as \( \vec{s}_1+\vec{s}_2=1\cdot\vec{s}_1+1\cdot\vec{s}_2 \).
+  %         Second, for any \( \vec{s}_1,\vec{s}_2\in S \), because addition
+  %         is inherited from \( V \), the sum \( \vec{s}_1+\vec{s}_2 \)
+  %         in \( S \) equals the sum \( \vec{s}_1+\vec{s}_2 \)
+  %         in \( V \) and that equals the sum \( \vec{s}_2+\vec{s}_1 \) in
+  %         \( V \) and that in turn equals the sum \( \vec{s}_2+\vec{s}_1 \) in
+  %         \( S \).
+  %         The argument for the third condition is similar to that for the
+  %         second.
+  %         For the fourth, suppose that 
+  %         \( \vec{s} \) is in the nonempty set \( S \)
+  %         and note that \( 0\cdot\vec{s}=\zero\in S \); showing that 
+  %         the \( \zero \) of
+  %         \( V \) acts under the inherited operations as the additive identity
+  %         of \( S \) is easy.
+  %         The fifth condition is satisfied because for any \( \vec{s}\in S \)
+  %         closure under linear combinations shows that the vector
+  %         \( 0\cdot\zero+(-1)\cdot\vec{s} \) is in \( S \); showing 
+  %         that it is the
+  %         additive inverse of \( \vec{s} \) under the inherited operations is
+  %         routine.
+
+  %         The proofs for the remaining conditions are similar.
+  %     \end{exparts}  
+  %   \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+\subsection{Subruang dan Himpunan Perentang}
+\index{subruang|(}
+Dalam \nearbyexample{PlaneThruOriginSubsp}, kita melihat suatu ruang vektor
+yang merupakan subhimpunan $\Re^2$, yakni garis yang melalui titik asal.
+Di sana, ruang vektor $\Re^2$ memuat ruang vektor lain, yaitu garis tersebut.
+
+\begin{definition} \label{df:Subspace}
+%<*df:Subspace>
+Untuk setiap ruang vektor, suatu \definend{subruang}%
+\index{ruang vektor!subruang}\index{subruang!definisi}
+adalah subhimpunan yang dengan sendirinya merupakan ruang vektor di bawah
+operasi yang diwarisi.
+%</df:Subspace>
+\end{definition}
+
+\begin{example}  \label{ex:PlaneSubspRThree}
+Bidang yang melalui titik asal ini,
+\begin{equation*}
+  P=\set{\colvec{x \\ y \\ z}\suchthat x+y+z=0}
+\end{equation*}
+merupakan subruang dari \( \Re^3 \).
+Sebagaimana disyaratkan definisi, operasi pada bidang tersebut diwarisi dari
+ruang yang lebih besar; jadi, vektor-vektor dijumlahkan dalam $P$ sebagaimana
+dalam $\Re^3$,
+\begin{equation*}
+   \colvec{x_1 \\ y_1 \\ z_1}+\colvec{x_2 \\ y_2 \\ z_2}
+   =\colvec{x_1+x_2 \\ y_1+y_2 \\ z_1+z_2}
+\end{equation*}
+dan perkalian skalarnya juga sama seperti dalam $\Re^3$.
+Untuk menunjukkan bahwa $P$ merupakan subruang, kita hanya perlu memperhatikan
+bahwa $P$ adalah subhimpunan lalu memverifikasi bahwa $P$ merupakan ruang.
+Kita tidak akan memeriksa kesepuluh syarat, melainkan hanya dua syarat
+ketertutupan.
+Untuk ketertutupan terhadap penjumlahan, perhatikan bahwa jika kedua suku
+memenuhi $x_1+y_1+z_1=0$ dan $x_2+y_2+z_2=0$, maka jumlahnya memenuhi
+$(x_1+x_2)+(y_1+y_2)+(z_1+z_2)=(x_1+y_1+z_1)+(x_2+y_2+z_2)=0$.
+Untuk ketertutupan terhadap perkalian skalar, jika $x+y+z=0$, maka kelipatan
+skalarnya memenuhi
+$rx+ry+rz=r(x+y+z)=0$.
+\end{example}
+
+\begin{example}   \label{ex:SubspacesRTwo}
+Sumbu \( x \) dalam \( \Re^2 \) merupakan subruang dengan operasi penjumlahan
+dan perkalian skalar yang diwarisi.
+\begin{equation*}
+  \colvec{x_1 \\ 0}
+    +
+  \colvec{x_2 \\ 0}
+    =
+  \colvec{x_1+x_2 \\ 0}
+  \qquad
+  r\cdot\colvec{x \\ 0}
+  =\colvec{rx \\ 0}
+\end{equation*}
+Seperti dalam contoh sebelumnya, untuk memverifikasi langsung dari definisi
+bahwa himpunan ini merupakan subruang, kita cukup mencatat bahwa himpunan ini
+merupakan subhimpunan lalu memeriksa bahwa syarat-syarat definisi ruang vektor
+terpenuhi.
+Sebagai contoh, kedua syarat ketertutupan terpenuhi: menjumlahkan dua vektor
+dengan komponen kedua nol menghasilkan vektor dengan komponen kedua nol, dan
+mengalikan vektor semacam itu dengan skalar juga menghasilkan vektor dengan
+komponen kedua nol.
+\end{example}
+
+\begin{example}
+Subruang lain dari $\Re^2$ adalah subruang trivialnya.
+\begin{equation*}
+  \set{\colvec[r]{0 \\ 0}}
+\end{equation*}
+\end{example}
+
+%<*ProperSubspace>
+Setiap ruang vektor memiliki subruang trivial
+\( \set{\zero\,} \).\index{subruang!trivial}%
+\index{subruang trivial}
+Pada ekstrem sebaliknya, setiap ruang vektor memuat dirinya sendiri sebagai
+subruang. Subruang yang bukan seluruh ruang disebut
+subruang \definend{sejati}.\index{subruang!sejati}%
+\index{subruang sejati}
+%</ProperSubspace>
+
+\begin{example}  \label{ex:LinSubspPolyThree}
+Ruang vektor yang bukan $\Re^n$ juga memiliki subruang.
+Ruang polinomial kubik,
+\( \set{a+bx+cx^2+dx^3\suchthat a,b,c,d\in\Re} \) 
+memiliki subruang yang terdiri atas semua polinomial linear,
+\( \set{m+nx\suchthat m,n\in\Re} \).
+\end{example}
+
+\begin{example}
+Contoh lain subruang yang bukan subhimpunan suatu $\Re^n$ muncul setelah
+definisi ruang vektor.
+Ruang semua fungsi bernilai real dari satu variabel real dalam
+\nearbyexample{ex:RealValuedFcns},
+\( \set{f\suchthat \map{f}{\Re}{\Re} } \), memiliki subruang dalam
+\nearbyexample{ex:SpaceSatisfyingDiffQ}, yaitu fungsi-fungsi yang memenuhi
+syarat $(d^2\,f/dx^2)+f=0$.
+\end{example}
+
+\begin{example} \label{ex:OperNotInherit}
+Definisi mensyaratkan bahwa operasi penjumlahan dan perkalian skalar harus
+merupakan operasi yang diwarisi dari ruang yang lebih besar.
+Himpunan \( S=\set{1} \) merupakan subhimpunan \( \Re^1 \).
+Di bawah operasi $1+1=1$ dan $r\cdot 1=1$, himpunan $S$ merupakan ruang
+vektor, khususnya ruang trivial.
+Namun, $S$ bukan subruang dari \( \Re^1 \) karena operasi-operasi tersebut
+bukan operasi yang diwarisi; tentu saja, dalam \( \Re^1 \) berlaku
+\( 1+1=2 \).
+\end{example}
+
+\begin{example}  \label{cex:RPlusNotSubSp}
+Karena subruang sendiri merupakan ruang vektor, subruang harus memenuhi syarat
+ketertutupan.
+Himpunan \( \Re^+ \) bukan subruang dari ruang vektor \( \Re^1 \) karena di
+bawah operasi yang diwarisi, himpunan tersebut tidak tertutup terhadap
+perkalian skalar: jika \( \vec{v}=1 \), maka
+\( -1\cdot\vec{v}\not\in\Re^+ \).
+\end{example}
+
+Hasil berikut menyatakan bahwa \nearbyexample{cex:RPlusNotSubSp} merupakan
+contoh prototipe. Jika suatu subhimpunan tak kosong menggunakan operasi yang
+diwarisi, satu-satunya alasan subhimpunan itu gagal menjadi subruang adalah
+karena tidak tertutup.
+
+\begin{lemma}     \label{th:SubspIffClosed} \index{subruang!tertutup}
+%<*lm:SubspIffClosed>
+Untuk subhimpunan tak kosong \( S \) dari suatu ruang vektor, di bawah operasi
+yang diwarisi, pernyataan-pernyataan berikut ekuivalen.
+\appendrefs{ekuivalensi pernyataan}   %\spacefactor=1000
+\begin{tfae}
+  \item \( S \) merupakan subruang dari ruang vektor tersebut
+  \item \( S \) tertutup terhadap kombinasi linear pasangan vektor: untuk
+    sebarang vektor \( \vec{s}_1,\vec{s}_2\in S \) dan skalar \( r_1,r_2 \),
+    vektor \( r_1\vec{s}_1+r_2\vec{s}_2 \) berada dalam \( S \)
+  \item \( S \) tertutup terhadap kombinasi linear berapa pun banyaknya
+    vektor: untuk sebarang vektor \( \vec{s}_1,\ldots,\vec{s}_n\in S \) dan
+    skalar \( r_1, \ldots,r_n \), vektor
+    \( r_1\vec{s}_1+\cdots+r_n\vec{s}_n \) merupakan anggota \( S \).
+\end{tfae}
+%</lm:SubspIffClosed>
+\end{lemma}
+\noindent Singkatnya, suatu subhimpunan merupakan subruang jika dan hanya jika
+subhimpunan tersebut tertutup terhadap kombinasi linear.
+
+\begin{proof}
+%<*pf:SubspIffClosed0>
+`Pernyataan-pernyataan berikut ekuivalen' berarti bahwa setiap pasangan
+pernyataan saling ekuivalen.
+\begin{equation*}
+  (1)\!\iff\!(2)
+  \qquad
+  (2)\!\iff\!(3)
+  \qquad
+  (3)\!\iff\!(1)
+\end{equation*}
+Kita akan membuktikan ekuivalensi dengan menunjukkan
+\( (1)\implies (3)\implies (2)\implies (1)\).
+Strategi ini disarankan oleh pengamatan bahwa implikasi
+\( (1)\implies (3) \) dan \( (3)\implies (2) \) mudah, sehingga kita hanya
+perlu membuktikan \( (2)\implies (1) \).
+%</pf:SubspIffClosed0>
+
+%<*pf:SubspIffClosed1>
+Andaikan \( S \) subhimpunan tak kosong dari suatu ruang vektor $V$ yang
+tertutup terhadap kombinasi pasangan vektor.
+Kita akan menunjukkan bahwa $S$ merupakan ruang vektor dengan memeriksa
+syarat-syaratnya.
+
+Definisi ruang vektor memiliki lima syarat mengenai penjumlahan.
+Pertama, untuk ketertutupan terhadap penjumlahan, jika
+\( \vec{s}_1,\vec{s}_2\in S \), maka \( \vec{s}_1+\vec{s}_2\in S \) karena
+jumlah tersebut merupakan kombinasi sepasang vektor dan kita mengandaikan
+bahwa~\( S \) tertutup terhadap kombinasi semacam itu.
+Kedua, untuk sebarang \( \vec{s}_1,\vec{s}_2\in S \), karena penjumlahan
+diwarisi dari \( V \), jumlah \( \vec{s}_1+\vec{s}_2 \) dalam \( S \) sama
+dengan jumlah \( \vec{s}_1+\vec{s}_2 \) dalam \( V \). Jumlah itu sama dengan
+\( \vec{s}_2+\vec{s}_1 \) dalam \( V \) (karena $V$ merupakan ruang vektor,
+penjumlahannya komutatif), yang pada gilirannya sama dengan jumlah
+\( \vec{s}_2+\vec{s}_1 \) dalam \( S \).
+Argumen untuk syarat ketiga serupa dengan argumen untuk syarat kedua.
+Untuk syarat keempat, tinjau vektor nol dari \( V \) dan perhatikan bahwa
+ketertutupan $S$ terhadap kombinasi linear pasangan vektor memberikan
+\( 0\cdot\vec{s}+0\cdot\vec{s}=\zero \) sebagai anggota \( S\)
+(dengan \( \vec{s} \) anggota sembarang dari himpunan tak kosong \( S \)).
+Mudah diperiksa bahwa \( \zero \) berperan sebagai identitas aditif \( S \)
+di bawah operasi yang diwarisi.
+Syarat kelima terpenuhi karena, untuk setiap \( \vec{s}\in S \), ketertutupan
+terhadap kombinasi linear pasangan vektor menunjukkan bahwa
+\( 0\cdot\zero+(-1)\cdot\vec{s} \) merupakan anggota~\( S \), dan jelas
+merupakan invers aditif dari \( \vec{s} \) di bawah operasi yang diwarisi.
+%</pf:SubspIffClosed1>
+Verifikasi syarat-syarat perkalian skalar serupa; lihat
+\nearbyexercise{exer:SubspIffClosed}.
+\end{proof}
+
+Biasanya kita akan memverifikasi bahwa suatu subhimpunan merupakan subruang
+dengan memeriksa bahwa subhimpunan tersebut memenuhi pernyataan~(2).
+
+\begin{remark}
+Pada awal bab ini, kita memperkenalkan ruang vektor sebagai kumpulan tempat
+kombinasi linear ``bermakna.''
+% The vector space definition has ten conditions but eight of them, the
+% conditions not about closure, simply ensure that referring to the
+% operations by the names `addition' and `scalar multiplication' is sensible.
+% For instance, calling an operation `$+$' would not
+% be odd unless it is commutative, as in condition~(2). 
+% The proof above checks that the subspace satisfies these 
+% eight non-closure conditions because they hold in the
+% surrounding vector space, provided that the nonempty set $S$ satisfies
+% \nearbylemma{th:SubspIffClosed}'s statement~(2) 
+% (e.g., commutativity of addition in $S$ follows right from
+% commutativity of addition in $V$).
+% There is a second way in which we can regard vector spaces as structures in 
+% which linear combinations are ``sensible.''
+% It has to do with the closure conditions.
+Pernyataan (1)--(3) dalam \nearbylemma{th:SubspIffClosed} menyatakan bahwa
+kita selalu dapat memaknai ungkapan seperti
+$r_1\vec{s}_1+r_2\vec{s}_2$, dalam arti bahwa vektor yang dideskripsikan
+berada dalam himpunan~$S$.
+
+Sebagai pembanding, tinjau himpunan $T$ yang terdiri atas vektor bertinggi dua
+dengan jumlah entri lebih besar dari atau sama dengan nol.
+Di sini kita tidak dapat begitu saja menulis kombinasi linear sembarang seperti
+$2\vec{t}_1-3\vec{t}_2$ dan yakin bahwa hasilnya merupakan anggota $T$.
+\end{remark}
+
+\nearbylemma{th:SubspIffClosed} menunjukkan bahwa cara yang baik untuk
+memikirkan ruang vektor adalah sebagai kumpulan kombinasi linear tanpa
+pembatasan. Dua contoh berikut mengambil beberapa ruang dan menyusun ulang
+deskripsinya ke dalam bentuk tersebut.
+
+\begin{example}
+Kita dapat menunjukkan bahwa bidang melalui titik asal berikut, yang merupakan
+subhimpunan $\Re^3$,
+\begin{equation*}
+  S=\set{\colvec{x \\ y \\ z}\suchthat x-2y+z=0}
+\end{equation*}
+merupakan subruang di bawah operasi biasa penjumlahan dan perkalian skalar
+vektor kolom dengan memeriksa bahwa himpunan tersebut tak kosong dan tertutup
+terhadap kombinasi linear dua vektor.
+Namun, ada cara lain.
+Pandang $x-2y+z=0$ sebagai sistem linear satu persamaan dan parametrisasi
+sistem itu dengan menyatakan variabel utama dalam bentuk variabel-variabel
+bebas, $x=2y-z$.
+\begin{equation*}
+     S
+     =\set{\colvec{2y-z \\ y \\ z}\suchthat y,z\in\Re}
+     =\set{y\colvec[r]{2 \\ 1 \\ 0}+
+            z\colvec[r]{-1 \\ 0 \\ 1}\suchthat y,z\in\Re}
+    \tag{$*$}
+\end{equation*}
+Sekarang, untuk menunjukkan bahwa himpunan ini merupakan subruang, tinjau
+$r_1\vec{s}_1+r_2\vec{s}_2$.
+Setiap $\vec{s}_i$ merupakan kombinasi linear dari dua vektor dalam ($*$),
+sehingga ungkapan tersebut merupakan kombinasi linear dari kombinasi linear.
+\begin{equation*}
+  r_1\cdot(y_1\colvec[r]{2 \\ 1 \\ 0}+
+            z_1\colvec[r]{-1 \\ 0 \\ 1})
+  +
+  r_2\cdot(y_2\colvec[r]{2 \\ 1 \\ 0}+
+            z_2\colvec[r]{-1 \\ 0 \\ 1})
+\end{equation*}
+Lema Kombinasi Linear, Lema~I.\ref{lm:LinearCombinationLemma}, menunjukkan
+bahwa hasil keseluruhannya merupakan kombinasi linear dari kedua vektor itu,
+sehingga pernyataan~(2) dalam \nearbylemma{th:SubspIffClosed} terpenuhi.
+\end{example}
+
+\begin{example} \label{ex:ParamSubspace}
+Himpunan berikut merupakan subruang dari ruang matriks \( \nbyn{2} \),
+$\matspace_{\nbyn{2}}$.
+\begin{equation*}
+  L=\set{\begin{mat}
+         a  &0  \\
+         b  &c
+       \end{mat}
+       \suchthat a+b+c=0}
+\end{equation*}
+Untuk melakukan parametrisasi, nyatakan syarat tersebut sebagai $a=-b-c$.
+\begin{equation*}
+  L
+  =\set{\begin{mat}
+         -b-c  &0  \\
+         b     &c
+       \end{mat}
+       \suchthat b,c\in\Re}
+  =\set{b\begin{mat}[r]
+         -1    &0  \\
+         1     &0
+       \end{mat}
+       +c\begin{mat}[r]
+         -1    &0  \\
+         0     &1
+       \end{mat}
+       \suchthat b,c\in\Re}
+\end{equation*}
+Seperti di atas, kita telah mendeskripsikan subruang sebagai kumpulan kombinasi
+linear tanpa pembatasan.
+Untuk menunjukkan bahwa himpunan tersebut merupakan subruang, perhatikan bahwa
+kombinasi linear vektor-vektor dari $L$ merupakan kombinasi linear dari
+kombinasi-kombinasi linear, sehingga pernyataan~(2) benar.
+\end{example}
+
+% Parametrization is easy, but important.
+% We shall use it often.
+
+\begin{definition} \label{df:Span}
+%<*df:Span>
+\definend{Rentang}\index{rentang}\index{himpunan!rentang}\index{ketertutupan}
+(atau \definend{penutupan linear}) dari suatu subhimpunan tak kosong \( S \)
+dalam ruang vektor adalah himpunan semua kombinasi linear vektor-vektor dari
+\( S \).
+\begin{equation*}
+  \spanof{S} =\{ c_1\vec{s}_1+\cdots+c_n\vec{s}_n
+            \suchthat c_1,\ldots, c_n\in\Re
+            \text{ dan } \vec{s}_1,\ldots,\vec{s}_n\in S \}
+\end{equation*}
+Rentang subhimpunan kosong suatu ruang vektor adalah subruang trivialnya.
+%</df:Span>
+\end{definition}
+
+%<*NotationForSpan>
+\noindent Tidak ada notasi rentang yang sepenuhnya baku.
+Kurung siku yang digunakan di sini lazim, tetapi demikian pula
+`$\mbox{span}(S)$' dan `$\mbox{sp}(S)$'.
+%</NotationForSpan>
+
+\begin{remark}
+Dalam Bab Satu, setelah menunjukkan bahwa kita dapat menulis himpunan solusi
+suatu sistem linear homogen sebagai
+$\set{c_1\vec{\beta}_1+\cdots+c_k\vec{\beta}_k\suchthat
+  c_1,\ldots,c_k\in\Re}$,
+kita mendeskripsikannya sebagai himpunan yang `dihasilkan' oleh
+vektor-vektor $\smash{\vec{\beta}}$.
+Sekarang kita menyebutnya rentang dari
+$\set{\vec{\beta}_1,\ldots,\vec{\beta}_k}$.
+
+Ingat pula dari pembuktian tersebut bahwa rentang himpunan kosong didefinisikan
+sebagai \( \set{\zero} \), mengikuti konvensi bahwa kombinasi linear trivial,
+yakni kombinasi tanpa vektor, berjumlah~\( \zero \).
+Selain itu, mendefinisikan rentang himpunan kosong sebagai subruang trivial
+memudahkan kita karena hasil seperti yang berikut tidak memerlukan pengecualian
+untuk himpunan kosong.
+\end{remark}
+
+\begin{lemma}   \label{le:SpanIsASubsp}
+%<*lm:SpanIsASubsp>
+Dalam suatu ruang vektor, rentang setiap subhimpunan merupakan subruang.
+%</lm:SpanIsASubsp>
+\end{lemma}
+
+\begin{proof}
+%<*pf:SpanIsASubsp>
+Jika subhimpunan \( S \) kosong, berdasarkan definisi rentangnya merupakan
+subruang trivial.
+Jika \( S\) tak kosong, menurut \nearbylemma{th:SubspIffClosed} kita hanya
+perlu memeriksa bahwa rentang \( \spanof{S} \) tertutup terhadap kombinasi
+linear pasangan anggotanya.
+Untuk sepasang vektor dari rentang tersebut,
+\( \vec{v}=c_1\vec{s}_1+\cdots+c_n\vec{s}_n \) dan
+\( \vec{w}=c_{n+1}\vec{s}_{n+1}+\cdots+c_m\vec{s}_m \),
+suatu kombinasi linear
+\begin{multline*}
+  p\cdot(c_1\vec{s}_1+\cdots+c_n\vec{s}_n)+
+       r\cdot(c_{n+1}\vec{s}_{n+1}+\cdots+c_m\vec{s}_m)  \\
+  =
+  pc_1\vec{s}_1+\cdots+pc_n\vec{s}_n
+    +rc_{n+1}\vec{s}_{n+1}+\cdots+rc_m\vec{s}_m
+\end{multline*}
+merupakan kombinasi linear anggota-anggota~\( S \), sehingga menjadi anggota
+\( \spanof{S} \)
+(mungkin beberapa $\vec{s}_i$ dari $\vec{v}$ sama dengan beberapa
+$\vec{s}_j$ dari $\vec{w}$, tetapi hal itu tidak menjadi masalah).
+%</pf:SpanIsASubsp>
+\end{proof}
+
+Kebalikan lema tersebut juga berlaku: setiap subruang merupakan rentang suatu
+himpunan karena suatu subruang jelas merupakan rentang dirinya sendiri, yaitu
+himpunan semua anggotanya.
+Jadi, suatu subhimpunan ruang vektor merupakan subruang jika dan hanya jika
+subhimpunan tersebut merupakan suatu rentang.
+Hal ini sesuai dengan intuisi bahwa ruang vektor sebaiknya dipandang sebagai
+kumpulan tempat kombinasi linear dapat dibentuk dengan masuk akal.
+
+Secara bersama-sama, \nearbylemma{th:SubspIffClosed} dan
+\nearbylemma{le:SpanIsASubsp} menunjukkan bahwa rentang subhimpunan $S$ dari
+suatu ruang vektor adalah subruang terkecil yang memuat semua anggota $S$.
+
+\begin{example}   \label{ex:SpanSingVec}
+Dalam setiap ruang vektor \( V \), bagi setiap vektor \( \vec{v}\in V \),
+himpunan \( \set{r\cdot\vec{v} \suchthat r\in\Re} \) merupakan subruang
+dari \( V \).
+Sebagai contoh, untuk setiap vektor \( \vec{v}\in\Re^3 \), garis yang melalui
+titik asal dan memuat vektor tersebut,
+\( \set{k\vec{v}\suchthat k\in\Re } \), merupakan subruang dari \( \Re^3 \).
+Hal ini tetap benar jika $\vec{v}$ adalah vektor nol; dalam kasus tersebut,
+garisnya merosot menjadi subruang trivial.
+\end{example}
+
+\begin{example}
+Rentang himpunan berikut adalah seluruh $\Re^2$.
+\begin{equation*}
+  \set{\colvec[r]{1 \\ 1},\colvec[r]{1 \\ -1}}
+\end{equation*}
+Kita mengetahui bahwa rentang tersebut merupakan suatu subruang dari~$\Re^2$.
+Untuk memeriksa bahwa rentangnya adalah seluruh~$\Re^2$, kita harus
+menunjukkan bahwa setiap anggota $\Re^2$ merupakan kombinasi linear kedua
+vektor tersebut.
+Jadi, kita bertanya:~bagi vektor mana dengan komponen real $x$ dan~$y$ terdapat
+skalar $c_1$ dan $c_2$ yang memenuhi persamaan berikut?
+\begin{equation*}
+   c_1\colvec[r]{1 \\ 1}+c_2\colvec[r]{1 \\ -1}=\colvec{x \\ y}
+  \tag{$*$}
+\end{equation*} 
+Metode Gauss,
+\begin{equation*}
+  \begin{linsys}{2}
+    c_1  &+  &c_2  &=  &x  \\
+    c_1  &-  &c_2  &=  &y
+  \end{linsys}
+  \grstep{-\rho_1+\rho_2}
+  \begin{linsys}{2}
+    c_1  &+  &c_2    &=  &x\hfill  \\
+         &   &-2c_2  &=  &-x+y
+  \end{linsys}
+\end{equation*}
+bersama dengan substitusi balik, memberikan $c_2=(x-y)/2$ dan $c_1=(x+y)/2$.
+Hal ini menunjukkan bahwa bagi setiap $x,y$ terdapat koefisien yang sesuai,
+$c_1,c_2$, sehingga~($*$) berlaku\Dash kita dapat menulis setiap anggota
+$\Re^2$ sebagai kombinasi linear kedua vektor yang diberikan.
+Sebagai contoh, untuk $x=1$ dan $y=2$, koefisien $c_2=-1/2$ dan $c_1=3/2$
+memenuhi persamaan tersebut.
+\end{example}
+
+Karena rentang merupakan subruang, dan kita mengetahui bahwa cara yang baik
+untuk memahami subruang adalah melakukan parametrisasi pada deskripsinya, kita
+dapat mencoba memahami rentang suatu himpunan dengan cara tersebut.
+
+\begin{example}
+Dalam ruang vektor polinomial kuadrat~\( \polyspace_2 \), tinjau rentang
+himpunan \( S=\set{3x-x^2, 2x} \).
+Berdasarkan definisi rentang, rentang itu adalah himpunan kombinasi linear
+tanpa pembatasan dari keduanya,
+$\set{c_1(3x-x^2)+c_2(2x)\suchthat c_1,c_2\in\Re}$.
+Jelas bahwa polinomial dalam rentang ini harus memiliki suku konstan nol.
+Apakah syarat perlu tersebut juga memadai?
+
+Kita bertanya:~bagi anggota $a_2x^2+a_1x+a_0$ mana dari $\polyspace_2$
+terdapat $c_1$ dan $c_2$ sedemikian sehingga
+$a_2x^2+a_1x+a_0=c_1(3x-x^2)+c_2(2x)$?
+Dua polinomial sama jika koefisiennya sama, sehingga kita menginginkan syarat
+pada $a_2$, $a_1$, dan $a_0$ yang menjadikan tripel tersebut solusi sistem
+berikut.
+\begin{equation*}
+  \begin{linsys}{2}
+    -c_1  &   &     &=  &a_2   \\
+    3c_1  &+  &2c_2 &=  &a_1   \\
+          &   &0    &=  &a_0                                   
+  \end{linsys}
+\end{equation*} 
+Metode Gauss dan substitusi balik memberikan $c_1=-a_2$,
+$c_2=(3/2)a_2+(1/2)a_1$, dan $0=a_0$.
+Jadi,
+%the only condition on elements  $a_0+a_1x+a_2x^2$ of the span
+%is the condition that we knew: 
+selama suku konstannya tidak ada, $a_0=0$, kita dapat memberikan koefisien
+$c_1$ dan $c_2$ yang mendeskripsikan polinomial tersebut sebagai anggota
+rentang.
+Sebagai contoh, untuk polinomial $0-4x+3x^2$, koefisien $c_1=-3$ dan
+$c_2=5/2$ memenuhi persamaan.
+Jadi, rentang himpunan yang diberikan adalah
+$\spanof{S}=\set{a_1x+a_2x^2\suchthat a_1,a_2\in\Re}$. 
+
+Kebetulan, hal ini menunjukkan bahwa himpunan \( \set{x,x^2} \) merentang
+subruang yang sama.
+Suatu ruang dapat memiliki lebih dari satu himpunan perentang.
+Dua himpunan lain yang merentang subruang ini adalah
+\( \set{x,x^2,-x+2x^2} \) dan
+\( \set{x,x+x^2,x+2x^2,\ldots\,} \).
+% (Usually we prefer to work with spanning sets that have only
+% a small number of members.)
+\end{example}
+
+\begin{example}  \label{ex:SubspRThree}
+Gambar di bawah ini menunjukkan subruang-subruang \( \Re^3 \) yang kini kita
+ketahui: subruang trivial, garis-garis yang melalui titik asal, bidang-bidang
+yang melalui titik asal, dan seluruh ruang.
+(Tentu saja, gambar tersebut hanya menampilkan beberapa dari tak hingga banyak
+kasus. Ruas garis menghubungkan subhimpunan dengan superhimpunannya.)
+Dalam bagian berikutnya, kita akan membuktikan bahwa $\Re^3$ tidak memiliki
+jenis subruang lain, sehingga daftar ini sebenarnya lengkap.
+
+Di sini, setiap subruang dideskripsikan sebagai rentang suatu himpunan dengan
+jumlah anggota minimal.
+Dengan demikian, subruang-subruang tersebut secara alami tersusun dalam
+tingkatan\Dash bidang pada satu tingkat, garis pada tingkat lain, dan
+seterusnya.
+\begin{center}
+  \setlength{\unitlength}{4pt}
+  \begin{picture}(75,38)(0,-2) %subspaces of R-three
+      \thinlines
+      \put(45,31){\makebox(0,0)[bl]{
+                        \scriptsize \( %\Re^3=
+                                   \set{x\colvec[r]{1 \\ 0 \\ 0}
+                                              +y\colvec[r]{0 \\ 1 \\ 0}
+                                              +z\colvec[r]{0 \\ 0 \\ 1}} \)} }
+    %Next the dimension two subspaces
+      \put(43,31){\line(-4,-1){25} } % connects R3 to 2,a
+      %set 2,a:
+      \put(0,22){\makebox(0,0)[l]{\scriptsize\( \set{x\colvec[r]{1 \\ 0 \\ 0}
+                                                 +y\colvec[r]{0 \\ 1 \\ 0} }\) }}
+      \put(48,29){\line(-3,-1){12} } % connects R3 to 2,b
+      %set 2,b:
+      \put(20,22){\makebox(0,0)[l]{\scriptsize\( \set{x\colvec[r]{1 \\ 0 \\ 0}
+                                                 +z\colvec[r]{0 \\ 0 \\ 1} }\) }}
+      \put(53,29){\line(-1,-1){3}} % connects R3 to 2,c
+      %set 2,c:
+      \put(40,22){\makebox(0,0)[l]{\scriptsize\( \set{x\colvec[r]{1 \\ 1 \\ 0}
+                                                 +z\colvec[r]{0 \\ 0 \\ 1} }\) }}
+      \put(60,22){\makebox(0,0)[l]{$\cdots$} }
+    %Next the dimension one subspaces
+      \put(7,18){\line(-1,-4){1} } % connects 2,a to 1,a
+      \put(22,18){\line(-3,-1){13} } % connects 2,c to 1,a
+      %set 1,a:
+      \put(0,10){\makebox(0,0)[l]{\scriptsize\( \set{x\colvec[r]{1 \\ 0 \\ 0}} \)} }
+      \put(12,18){\line(1,-2){2} } % connects 2,a to 1,b
+      %set 1,b:
+      \put(12,10){\makebox(0,0)[l]{\scriptsize\( \set{y\colvec[r]{0 \\ 1 \\ 0}} \)} }
+      \put(14,18){\line(2,-1){10} } % connects 2,a to 1,c
+      %set 1,c:
+      \put(24,10){\makebox(0,0)[l]{\scriptsize\( \set{y\colvec[r]{2 \\ 1 \\ 0}} \)} }
+      \put(46,18){\line(-1,-1){3.25} } %connects 2,c to 1,d
+      %set 1,d:
+      \put(36,10){\makebox(0,0)[l]{\scriptsize\( \set{y\colvec[r]{1 \\ 1 \\ 1}} \)} }
+      \put(48,10){\makebox(0,0)[l]{$\cdots$} }
+    %Finally, the trivial subspace.
+      \put(9,7.5){\line(4,-1){30} } %connects 1,a to trivial
+      \put(18.9,7.7){\line(3,-1){20} } %connects 1,b to trivial
+      \put(30.4,6.8){\line(2,-1){10} } %connects 1,c to trivial
+      \put(41,6){\line(1,-2){1.5} } %connects 1,d to trivial
+      \put(45,0){\makebox(0,0){\scriptsize\( \set{\colvec[r]{0 \\ 0 \\ 0} } \)} }
+  \end{picture}
+\end{center}
+\end{example}
+
+Sejauh ini dalam bab ini kita telah melihat bahwa kerangka yang tepat untuk
+mempelajari sifat kombinasi linear adalah kumpulan yang tertutup terhadap
+kombinasi tersebut.
+Dalam subbagian pertama, kita memperkenalkan kumpulan semacam itu, yaitu ruang
+vektor, dan melihat beraneka ragam contoh.
+Dalam subbagian ini, kita melihat lebih banyak ruang, yakni ruang yang menjadi
+subruang dari ruang lain.
+Di balik keragaman itu terdapat suatu kesamaan.
+\nearbyexample{ex:SubspRThree} di atas menampakkannya:~ruang vektor dan subruang
+paling baik dipahami sebagai rentang, khususnya rentang dari sejumlah kecil
+vektor. Bagian berikutnya mempelajari himpunan perentang yang minimal.
+
+
+
+
+
+\begin{exercises}
+  \recommended \item
+    Manakah dari subhimpunan ruang vektor matriks \( \nbyn{2} \) berikut yang
+    merupakan subruang di bawah operasi yang diwarisi?
+    Untuk setiap subruang, lakukan parametrisasi pada deskripsinya.
+    Untuk setiap himpunan yang bukan subruang, berikan satu syarat yang gagal.
+    \begin{exparts}
+      \partsitem \( \set{\begin{mat}
+                      a  &0  \\
+                      0  &b
+                    \end{mat}  \suchthat a,b\in\Re}  \)
+      \partsitem \( \set{\begin{mat}
+                      a  &0  \\
+                      0  &b
+                    \end{mat}  \suchthat a+b=0} \)
+      \partsitem \( \set{\begin{mat}
+                      a  &0  \\
+                      0  &b
+                    \end{mat}  \suchthat a+b=5} \)
+      \partsitem \( \set{\begin{mat}
+                      a  &c  \\
+                      0  &b
+                    \end{mat}  \suchthat a+b=0, c\in\Re} \)
+    \end{exparts}
+    \begin{answer}
+      Menurut \nearbylemma{th:SubspIffClosed}, untuk menentukan apakah setiap
+      subhimpunan $\matspace_{\nbyn{2}}$ merupakan subruang, kita hanya perlu
+      memeriksa apakah subhimpunan tersebut tak kosong dan tertutup.
+      \begin{exparts}
+        \partsitem Ya, kita dapat dengan mudah memeriksa bahwa himpunan tersebut
+          tak kosong dan tertutup. Berikut adalah parametrisasi.
+          \begin{equation*}
+            \set{a\begin{mat}[r]
+                    1  &0  \\
+                    0  &0
+                  \end{mat}
+                 +b\begin{mat}[r]
+                    0  &0  \\
+                    0  &1  
+                   \end{mat}
+                 \suchthat a,b\in\Re}
+          \end{equation*}
+          Parametrisasi tersebut sekaligus menunjukkan bahwa himpunan ini
+          merupakan subruang karena dinyatakan sebagai rentang himpunan dua
+          matriks, dan setiap rentang merupakan subruang.
+        \partsitem Ya; mudah diperiksa bahwa himpunan ini tak kosong dan
+          tertutup. Sebagai alternatif, seperti disebutkan dalam jawaban
+          sebelumnya, adanya parametrisasi menunjukkan bahwa himpunan ini
+          merupakan subruang. Untuk parametrisasi, syarat $a+b=0$ dapat ditulis
+          ulang sebagai $a=-b$. Maka kita memperoleh
+          \begin{equation*}
+            \set{\begin{mat}
+                    -b  &0  \\
+                    0   &b
+                  \end{mat}
+                 \suchthat b\in\Re}
+            =\set{b\begin{mat}[r]
+                    -1  &0  \\
+                    0   &1
+                  \end{mat}
+                 \suchthat b\in\Re}
+          \end{equation*}
+        \partsitem Tidak. Himpunan ini tidak tertutup terhadap penjumlahan.
+          Sebagai contoh,
+          \begin{equation*}
+            \begin{mat}[r]
+              5  &0  \\
+              0  &0
+            \end{mat}
+            +\begin{mat}[r]
+              5  &0  \\
+              0  &0
+            \end{mat}
+            =\begin{mat}[r]
+              10  &0  \\
+              0  &0
+            \end{mat}
+          \end{equation*}
+          bukan anggota himpunan.
+          (Himpunan ini juga tidak tertutup terhadap perkalian skalar; misalnya,
+          himpunan tersebut tidak memuat matriks nol.)
+        \partsitem Ya.
+          \begin{equation*}
+            \set{b\begin{mat}[r]
+                    -1  &0  \\
+                    0   &1
+                  \end{mat}
+                 +c\begin{mat}[r]
+                    0  &1  \\
+                    0  &0  
+                   \end{mat}
+                 \suchthat b,c\in\Re}
+          \end{equation*}
+      \end{exparts}  
+     \end{answer}
+  \recommended \item 
+    Apakah himpunan berikut merupakan subruang dari \( \polyspace_2 \):
+    \( \set{a_0+a_1x+a_2x^2\suchthat a_0+2a_1+a_2=4} \)?
+    Jika ya, lakukan parametrisasi pada deskripsinya.
+    \begin{answer}
+      Tidak, himpunan ini tidak tertutup.
+      Secara khusus, himpunan ini tidak tertutup terhadap perkalian skalar
+      karena tidak memuat polinomial nol.
+    \end{answer}
+  \item Apakah vektor berikut berada dalam rentang himpunan yang diberikan?
+    \begin{equation*}
+      \colvec{1 \\ 0 \\ 3}
+      \quad
+      \set{\colvec{2 \\ 1 \\ -1},
+           \colvec{1 \\ -1 \\ 1}}
+    \end{equation*}
+    \begin{answer}
+      Persamaan
+      \begin{equation*}
+        \colvec{1 \\ 0 \\ 3} = 
+                 c_1\colvec{2 \\ 1 \\ -1}
+                 +c_2\colvec{1 \\ -1 \\ 1}
+      \end{equation*}
+      menghasilkan sistem linear
+      \begin{equation*}
+        \begin{amat}{2}
+          2  &1  &1  \\
+          1  &-1 &0  \\
+          -1 &1  &3
+        \end{amat}
+        \grstep[(1/2)\rho_1+\rho_3]{(-1/2)\rho_1+\rho_2}
+        \begin{amat}{2}
+          2  &1    &1  \\
+          0  &-3/2 &-1/2  \\
+          0  &0  &3
+        \end{amat}
+      \end{equation*}
+      yang tidak memiliki solusi, sehingga vektor tersebut tidak berada dalam
+      rentang.
+    \end{answer}
+  \recommended \item 
+    Tentukan apakah vektor tersebut berada dalam rentang himpunan yang
+    diberikan di dalam ruangnya.
+    \begin{exparts}
+      \partsitem \( \colvec[r]{2 \\ 0 \\ 1} \),
+        \( \set{\colvec[r]{1 \\ 0 \\ 0},
+                \colvec[r]{0 \\ 0 \\ 1}  } \),
+        dalam \( \Re^3 \)
+      \partsitem \( x-x^3 \),
+        \( \set{x^2,2x+x^2,x+x^3} \),
+        dalam \( \polyspace_3 \)
+      \partsitem \( \begin{mat}[r]
+                 0  &1  \\
+                 4  &2
+               \end{mat}  \),
+        \( \set{\begin{mat}[r]
+                  1  &0  \\
+                  1  &1
+                \end{mat},
+                \begin{mat}[r]
+                  2  &0  \\
+                  2  &3
+                \end{mat}  } \),
+        dalam \( \matspace_{\nbyn{2}} \)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+         \partsitem Ya. Menyelesaikan sistem linear yang berasal dari
+           \begin{equation*}
+             r_1\colvec[r]{1 \\ 0 \\ 0}+r_2\colvec[r]{0 \\ 0 \\ 1}
+               =\colvec[r]{2 \\ 0 \\ 1}
+           \end{equation*}
+           memberikan \( r_1=2 \) dan \( r_2=1 \).
+         \partsitem Ya; sistem linear yang berasal dari
+           \( r_1(x^2)+r_2(2x+x^2)+r_3(x+x^3)=x-x^3 \)
+           \begin{equation*}
+             \begin{linsys}{3}
+                   &  &2r_2 &+ &r_3 &= &1  \\
+               r_1 &+ &r_2  &  &    &= &0  \\
+                   &  &     &  &r_3 &= &-1   
+             \end{linsys}
+           \end{equation*}
+           memberikan \( -1(x^2)+1(2x+x^2)-1(x+x^3)=x-x^3 \).
+        \partsitem Tidak; setiap kombinasi kedua matriks yang diberikan
+          memiliki entri kanan atas nol.
+      \end{exparts}  
+    \end{answer}
+  \item % \cite{Cleary} credit removed at request Cleary 2022-Sep-13
+    Seorang pahlawan super berada di titik asal suatu bidang dua dimensi.
+    Pahlawan super itu memiliki dua alat: papan luncur yang dapat bergerak
+    sejauh apa pun dalam arah $\binom{3}{1}$ dan karpet ajaib yang dapat
+    bergerak sejauh apa pun dalam arah $\binom{1}{2}$.
+    \begin{exparts}  
+      \partsitem Seorang penjahat bersembunyi di bidang pada titik $(-5,7)$.
+        Berapa satuan dengan papan luncur dan karpet ajaib yang harus ditempuh
+        pahlawan super untuk mencapai penjahat tersebut?
+     \partsitem Adakah tempat di bidang tempat penjahat dapat bersembunyi dengan
+        aman tanpa dapat dijangkau?
+        Jika ada, berikan satu lokasi semacam itu. Jika tidak, jelaskan
+        alasannya.
+     \partsitem Pahlawan super dan penjahat dipindahkan ke ruang tiga dimensi,
+        dan kini pahlawan super memiliki tiga alat.
+        \begin{equation*}
+          \text{papan luncur: }\colvec{-1 \\ 0 \\ 3}
+          \quad
+          \text{karpet ajaib: }\colvec{2 \\ 1 \\ 0}
+          \quad
+          \text{skuter: }\colvec{5 \\ 4 \\ -9}
+        \end{equation*}
+        Adakah tempat yang aman bagi penjahat untuk bersembunyi?
+        Jika ada, berikan satu lokasi semacam itu; jika tidak, jelaskan
+        alasannya.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Hubungan
+          \begin{equation*}
+            \colvec{-5 \\ 7}=a\colvec{3 \\ 1}+b\colvec{1 \\ 2}
+          \end{equation*}
+          memberikan sistem persamaan berikut.
+          \begin{equation*}
+            \begin{linsys}{2}
+              3a &+ &b  &= &-5 \\
+               a &+ &2b &= &7
+            \end{linsys}
+            \grstep{-(1/3)\rho_1+\rho_2}
+            \begin{linsys}{2}
+              3a &+ &b      &= &-5 \\
+                 &  &(5/3)b &= &26/3
+            \end{linsys}
+          \end{equation*}
+          Jadi, $b=26/5$.
+          Menyubstitusikan $3a+(26/5)=-5$ memberikan $a=-17/5$.
+          Dalam istilah bagian ini, vektor $\binom{-5}{7}$ berada dalam
+          rentang himpunan dua vektor lainnya.
+        \partsitem Tidak ada tempat untuk bersembunyi.
+          Reduksi Metode Gauss berikut,
+          \begin{equation*}
+            \begin{linsys}{2}
+              3a &+ &b  &= &x \\
+               a &+ &2b &= &y
+            \end{linsys}
+            \grstep{-(1/3)\rho_1+\rho_2}
+            \begin{linsys}{2}
+              3a &+ &b      &= &x\hfill\hbox{} \\
+                 &  &(5/3)b &= &-(1/3)x+y
+            \end{linsys}
+          \end{equation*}
+          menunjukkan bahwa bagi setiap $x,y\in\R$ terdapat pasangan
+          $a,b\in\R$.
+          Dalam istilah bagian ini, rentang kedua vektor adalah seluruh bidang.
+        \partsitem Tidak ada tempat untuk bersembunyi.
+          Tinjau sistem berikut.
+          \begin{equation*}
+            a\colvec{-1 \\ 0 \\ 3}+b\colvec{2 \\ 1 \\ 0}+c\colvec{5 \\ 4 \\ -9}
+                = \colvec{x \\ y \\ z}
+          \end{equation*}
+          Setelah reduksi,
+          \begin{align*}
+            \begin{linsys}{3}
+              -a &+ &2b &+ &5c &= &x \\
+                 &  &b  &+ &4c &= &y \\
+              3a &  &   &- &9c &= &z \\
+            \end{linsys}
+            & \grstep{3\rho_1+\rho_3}
+            \begin{linsys}{3}
+              -a &+ &2b  &+ &5c &= &x\hfill\hbox{} \\
+                 &  &b   &+ &4c &= &y\hfill\hbox{} \\
+                 &  &6b  &+ &6c &= &3x+z \\
+            \end{linsys}                                  \\
+            & \grstep{-6\rho_2+\rho_3}
+            \begin{linsys}{3}
+              -a &+ &2b  &+ &5c  &= &x\hfill\hbox{} \\
+                 &  &b   &+ &4c  &= &y\hfill\hbox{} \\
+                 &  &    & &-18c &= &3x-6y+z \\
+            \end{linsys}
+          \end{align*}
+          terlihat bahwa bagi setiap $x,y,z\in\R$ terdapat $a$, $b$, dan~$c$
+          yang diperlukan.
+          Ketiga alat pahlawan super merentang seluruh ruang tiga dimensi.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Manakah dari fungsi-fungsi berikut yang menjadi anggota rentang
+    \( \spanof{\set{\cos^2x,\sin^2x} } \)
+    dalam ruang vektor fungsi bernilai real dari satu variabel real?
+    \begin{exparts*}
+      \partsitem \( f(x)=1 \)
+      \partsitem \( f(x)=3+x^2 \)
+      \partsitem \( f(x)=\sin x \)
+      \partsitem \( f(x)=\cos (2x) \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ya; fungsi tersebut berada dalam rentang karena
+          \( 1\cdot\cos^2x+1\cdot\sin^2x=f(x) \).
+        \partsitem Tidak, karena
+          \( r_1\cos^2x+r_2\sin^2x=3+x^2 \) tidak memiliki solusi skalar yang
+          berlaku bagi semua \( x \).
+          Sebagai contoh, menetapkan $x=0$ dan $x=\pi$ memberikan dua persamaan
+          $r_1\cdot 1+r_2\cdot 0=3$ dan
+          $r_1\cdot 1+r_2\cdot 0=3+\pi^2$, yang saling tak konsisten.
+        \partsitem Tidak; perhatikan apa yang terjadi ketika $x=\pi/2$ dan
+          $x=3\pi/2$.
+        \partsitem Ya, \( \cos (2x)=1\cdot\cos^2(x)-1\cdot\sin^2(x) \).
+      \end{exparts}  
+     \end{answer}
+  \recommended \item 
+    Manakah dari himpunan-himpunan berikut yang merentang \( \Re^3 \)?
+    Dengan kata lain, himpunan mana yang memiliki sifat bahwa setiap vektor
+    bertinggi tiga dapat dinyatakan sebagai kombinasi linear yang sesuai dari
+    anggota-anggotanya?
+    \begin{exparts*}
+      \partsitem \( \set{ \colvec[r]{1 \\ 0 \\ 0},
+               \colvec[r]{0 \\ 2 \\ 0},
+               \colvec[r]{0 \\ 0 \\ 3}  } \)
+      \partsitem \( \set{ \colvec[r]{2 \\ 0 \\ 1},
+               \colvec[r]{1 \\ 1 \\ 0},
+               \colvec[r]{0 \\ 0 \\ 1}  } \)
+      \partsitem \( \set{ \colvec[r]{1 \\ 1 \\ 0},
+               \colvec[r]{3 \\ 0 \\ 0}  } \)
+      \partsitem \( \set{ \colvec[r]{1 \\ 0 \\ 1},
+               \colvec[r]{3 \\ 1 \\ 0},
+               \colvec[r]{-1 \\ 0 \\ 0},
+               \colvec[r]{2 \\ 1 \\ 5}  } \)
+      \partsitem \( \set{ \colvec[r]{2 \\ 1 \\ 1},
+               \colvec[r]{3 \\ 0 \\ 1},
+               \colvec[r]{5 \\ 1 \\ 2},
+               \colvec[r]{6 \\ 0 \\ 2}  } \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+         \partsitem Ya, bagi setiap \( x,y,z\in\Re \), persamaan
+           \begin{equation*}
+              r_1\colvec[r]{1 \\ 0 \\ 0}
+              +r_2\colvec[r]{0 \\ 2 \\ 0}
+              +r_3\colvec[r]{0 \\ 0 \\ 3}
+              =\colvec{x \\ y \\ z}
+           \end{equation*}
+           memiliki solusi \( r_1=x \), \( r_2=y/2 \), dan
+           \( r_3=z/3 \).
+         \partsitem Ya, persamaan
+           \begin{equation*}
+             r_1\colvec[r]{2 \\ 0 \\ 1}
+             +r_2\colvec[r]{1 \\ 1 \\ 0}
+             +r_3\colvec[r]{0 \\ 0 \\ 1}
+             =\colvec{x \\ y \\ z}
+           \end{equation*}
+           menghasilkan sistem berikut.
+           \begin{equation*}
+             \begin{linsys}{3}
+               2r_1 &+  &r_2  &  &    &=  &x \\
+                    &   &r_2  &  &    &=  &y \\
+                r_1 &   &     &+ &r_3 &=  &z \\
+             \end{linsys}
+             \grstep{-(1/2)\rho_1+\rho_3}\repeatedgrstep{(1/2)\rho_2+\rho_3}
+             \begin{linsys}{3}
+               2r_1 &+  &r_2  &  &    &=  &x\hfill\hbox{} \\
+                    &   &r_2  &  &    &=  &y\hfill\hbox{} \\
+                    &   &     &  &r_3 &=  &-(1/2)x+(1/2)y+z \\
+             \end{linsys}
+           \end{equation*}
+           Dengan demikian, bagi setiap $x$, $y$, dan $z$, kita dapat
+           menghitung \( r_3=(-1/2)x+(1/2)y+z \), \( r_2=y \), dan
+           \( r_1=(1/2)x-(1/2)y \).
+        \partsitem Tidak. Secara khusus, kita tidak dapat memperoleh vektor
+           \begin{equation*}
+             \colvec[r]{0 \\ 0 \\ 1}
+           \end{equation*}
+           sebagai kombinasi linear karena kedua vektor yang diberikan
+           memiliki komponen ketiga nol.
+       \partsitem Ya. Persamaan
+         \begin{equation*}
+           r_1\colvec[r]{1 \\ 0 \\ 1}
+           +r_2\colvec[r]{3 \\ 1 \\ 0}
+           +r_3\colvec[r]{-1\\ 0 \\ 0}
+           +r_4\colvec[r]{2 \\ 1 \\ 5}
+           =\colvec{x \\ y \\ z}
+         \end{equation*}
+         menghasilkan reduksi berikut.
+         \begin{equation*}
+           \begin{amat}{4}
+             1  &3  &-1  &2  &x  \\
+             0  &1  &0   &1  &y  \\
+             1  &0  &0   &5  &z  
+           \end{amat}                                              
+           \grstep{-\rho_1+\rho_3}\repeatedgrstep{3\rho_2+\rho_3}
+           \begin{amat}{4}
+             1  &3  &-1  &2  &x \\
+             0  &1  &0   &1  &y  \\
+             0  &0  &1   &6  &-x+3y+z
+           \end{amat}
+         \end{equation*}
+         Kita memiliki tak hingga banyak solusi.
+         Sebagai contoh, kita dapat menetapkan $r_4=0$ lalu menyelesaikan
+         $r_3$, $r_2$, dan $r_1$ dalam bentuk $x$, $y$, dan $z$ menggunakan
+         metode substitusi balik yang biasa.
+       \partsitem Tidak. Persamaan
+         \begin{equation*}
+           r_1\colvec[r]{2 \\ 1 \\ 1}
+           +r_2\colvec[r]{3 \\ 0 \\ 1}
+           +r_3\colvec[r]{5 \\ 1 \\ 2}
+           +r_4\colvec[r]{6 \\ 0 \\ 2}
+           =\colvec{x \\ y \\ z}
+         \end{equation*}
+         menghasilkan reduksi berikut.
+         \begin{multline*}
+           \begin{amat}{4}
+             2  &3  &5   &6  &x  \\
+             1  &0  &1   &0  &y  \\
+             1  &1  &2   &2  &z  
+           \end{amat}                                             \\
+           \grstep[-(1/2)\rho_1+\rho_3]{-(1/2)\rho_1+\rho_2}
+           \repeatedgrstep{-(1/3)\rho_2+\rho_3}
+           \begin{amat}{4}
+             2  &3     &5     &6  &x \\
+             0  &-3/2  &-3/2  &-3 &-(1/2)x+y  \\
+             0  &0     &0     &0  &-(1/3)x-(1/3)y+z
+           \end{amat}
+         \end{multline*}
+         Hal ini menunjukkan bahwa tidak setiap vektor bertinggi tiga dapat
+         dinyatakan demikian.
+         Hanya vektor yang memenuhi syarat $-(1/3)x-(1/3)y+z=0$ yang berada
+         dalam rentang.
+         (Untuk melihat bahwa setiap vektor semacam itu memang dapat
+         dinyatakan, tetapkan $r_3=r_4=0$ lalu selesaikan $r_1$ dan $r_2$ dalam
+         bentuk $x$, $y$, dan $z$ dengan substitusi balik.)
+      \end{exparts}  
+    \end{answer}
+  \recommended \item 
+    Parametrisasikan deskripsi setiap subruang.
+    Kemudian nyatakan setiap subruang sebagai suatu rentang.
+    \begin{exparts}
+      \partsitem  Subhimpunan \( \set{\rowvec{a &b &c}\suchthat a-c=0}   \)
+        dari vektor baris berlebar tiga
+      \partsitem Subhimpunan dari \( \matspace_{\nbyn{2}} \) berikut
+        \begin{equation*}
+          \set{\begin{mat}
+                 a  &b  \\
+                 c  &d
+               \end{mat}  \suchthat a+d=0}
+        \end{equation*}
+      \partsitem Subhimpunan dari \( \matspace_{\nbyn{2}} \) berikut
+        \begin{equation*}
+          \set{\begin{mat}
+                 a  &b  \\
+                 c  &d
+               \end{mat}  \suchthat \text{\( 2a-c-d=0 \) 
+                                                 dan \( a+3b=0 \)} }
+        \end{equation*}
+      \partsitem Subhimpunan \( \set{a+bx+cx^3\suchthat a-2b+c=0} \) dari
+        \( \polyspace_3 \)
+      \partsitem Subhimpunan dari \( \polyspace_2 \) yang terdiri atas
+        polinomial kuadratik \( p \) sedemikian sehingga \( p(7)=0 \)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem \( \set{\rowvec{c &b &c}\suchthat b,c\in\Re}
+                      =\set{b\rowvec{0 &1 &0}+c\rowvec{1 &0 &1}
+                        \suchthat b,c\in\Re} \)
+           Pilihan yang langsung terlihat untuk himpunan perentangnya ialah
+           $\set{\rowvec{0 &1 &0},\rowvec{1 &0 &1}}$.
+        \partsitem \( \set{\begin{mat}
+                       -d &b  \\
+                       c  &d
+                      \end{mat} \suchthat b,c,d\in\Re}
+                     =\set{b\begin{mat}[r]
+                       0  &1  \\
+                       0  &0
+                      \end{mat}
+                     +c\begin{mat}[r]
+                       0  &0  \\
+                       1  &0
+                      \end{mat}
+                     +d\begin{mat}[r]
+                       -1  &0  \\
+                       0  &1
+                      \end{mat}  \suchthat b,c,d\in\Re} \)
+            Salah satu himpunan yang merentang ruang ini terdiri atas ketiga
+            matriks tersebut.
+        \partsitem Sistem
+          \begin{equation*}
+            \begin{linsys}{4}
+              a  &+  &3b  &   &   &  &  &=  &0  \\
+             2a  &   &    &   &-c &- &d &=  &0  
+            \end{linsys}
+          \end{equation*}
+          menghasilkan \( b=-(c+d)/6 \) dan \( a=(c+d)/2 \).
+          Jadi, salah satu deskripsinya adalah sebagai berikut.
+          \begin{equation*}
+            \set{c\begin{mat}[r]
+                       1/2  &-1/6  \\
+                       1    &0
+                      \end{mat}
+                     +d\begin{mat}[r]
+                       1/2  &-1/6  \\
+                       0    &1
+                      \end{mat}  \suchthat c,d\in\Re}
+           \end{equation*}
+          Hal ini menunjukkan bahwa suatu himpunan perentang bagi subruang ini
+          terdiri atas kedua matriks tersebut.
+        \partsitem Persamaan $a=2b-c$ menunjukkan bahwa himpunan
+           \( \set{(2b-c)+bx+cx^3 \suchthat b,c\in\Re} \)
+           sama dengan himpunan
+           \( \set{b(2+x)+c(-1+x^3) \suchthat b,c\in\Re}  \).
+           Jadi, subruang tersebut merupakan rentang dari himpunan
+           $\set{2+x, -1+x^3}$.
+        \partsitem Himpunan
+          \( \set{a+bx+cx^2\suchthat a+7b+49c=0} \)
+          dapat diparametrisasikan sebagai
+          \begin{equation*}
+            \set{b(-7+x)+c(-49+x^2)\suchthat b,c\in\Re} 
+          \end{equation*}
+          sehingga memiliki himpunan perentang $\set{-7+x,-49+x^2}$.
+      \end{exparts}  
+    \end{answer}
+  \recommended \item 
+    Carilah suatu himpunan yang merentang subruang yang diberikan dari ruang
+    yang diberikan.
+    (\textit{Petunjuk.}   Parametrisasikan masing-masing.)
+    \begin{exparts}
+      \partsitem  bidang \( xz \) di \( \Re^3 \)
+      \partsitem \( \set{\colvec{x \\ y \\ z}\suchthat 3x+2y+z=0} \)
+            di \( \Re^3 \)
+      \partsitem \( \set{\colvec{x \\ y \\ z \\ w}\suchthat
+                       2x+y+w=0 \text{\ dan\ } y+2z=0} \)
+            di \( \Re^4 \)
+      \partsitem \( \set{a_0+a_1x+a_2x^2+a_3x^3\suchthat
+                        a_0+a_1=0 \text{\ dan\ } a_2-a_3=0} \)
+            di \( \polyspace_3 \)
+      \partsitem Himpunan \( \polyspace_4 \) di dalam ruang \( \polyspace_4 \)
+      \partsitem \( \matspace_{\nbyn{2}} \) di dalam \( \matspace_{\nbyn{2}} \)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Kita dapat membuat parametrisasi berikut.
+          \begin{equation*}
+             \set{\colvec{x \\ 0 \\ z}\suchthat x,z\in\Re}
+             =\set{x\colvec[r]{1 \\ 0 \\ 0}
+                  +z\colvec[r]{0 \\ 0 \\ 1}\suchthat x,z\in\Re}
+          \end{equation*}
+          Dengan demikian, diperoleh himpunan perentang berikut.
+          \begin{equation*}
+             \set{\colvec[r]{1 \\ 0 \\ 0},\colvec[r]{0 \\ 0 \\ 1}} 
+          \end{equation*}
+        \item Berikut adalah suatu parametrisasi beserta himpunan perentang
+          yang bersesuaian.
+          \begin{equation*}
+             \set{y\colvec[r]{-2/3 \\ 1 \\ 0}+z\colvec[r]{-1/3 \\ 0 \\ 1}
+                 \suchthat y,z\in\Re }
+             \qquad
+             \set{\colvec[r]{-2/3 \\ 1 \\ 0},\colvec[r]{-1/3 \\ 0 \\ 1} } 
+          \end{equation*}
+        \partsitem \( \set{\colvec[r]{1 \\ -2 \\ 1 \\ 0},
+                      \colvec[r]{-1/2 \\ 0 \\ 0 \\ 1} } \)
+        \partsitem Parametrisasikan deskripsinya sebagai
+          \( \set{-a_1+a_1x+a_3x^2+a_3x^3\suchthat a_1,a_3\in\Re } \)
+          untuk memperoleh \( \set{-1+x,x^2+x^3}. \)
+        \partsitem \( \set{1,x,x^2,x^3,x^4} \)
+        \partsitem \( \set{ \begin{mat}[r]
+                   1  &0  \\
+                   0  &0
+                 \end{mat},
+                 \begin{mat}[r]
+                   0  &1  \\
+                   0  &0
+                 \end{mat},
+                 \begin{mat}[r]
+                   0  &0  \\
+                   1  &0
+                 \end{mat},
+                 \begin{mat}[r]
+                   0  &0  \\
+                   0  &1
+                 \end{mat} } \)
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Apakah \( \Re^2 \) merupakan subruang dari \( \Re^3 \)?
+    \begin{answer}
+      Secara teknis, tidak.
+      Subruang dari \( \Re^3 \) merupakan himpunan vektor dengan tiga
+      komponen, sedangkan \( \Re^2 \) merupakan himpunan vektor dengan dua
+      komponen.
+      Namun, jelas bahwa \( \Re^2 \) ``sama saja dengan'' subruang berikut dari
+      \( \Re^3 \).
+      \begin{equation*}
+        \set{\colvec{x \\ y \\ 0}\suchthat x,y\in\Re}
+      \end{equation*}  
+    \end{answer}
+  \recommended \item 
+    Tentukan apakah masing-masing himpunan berikut merupakan subruang dari
+    ruang vektor fungsi bernilai real dengan satu variabel real.
+    \begin{exparts}
+      \partsitem Fungsi-fungsi
+        \definend{genap}\index{fungsi!genap}\index{fungsi genap}
+        \( \set{\map{f}{\Re}{\Re} \suchthat f(-x)=f(x) \text{ untuk setiap } x} \).
+        Sebagai contoh, dua anggota himpunan ini adalah $f_1(x)=x^2$
+        dan $f_2(x)=\cos (x)$.
+      \partsitem Fungsi-fungsi
+        \definend{ganjil}\index{fungsi!ganjil}\index{fungsi ganjil}
+        \( \set{\map{f}{\Re}{\Re} \suchthat f(-x)=-f(x) \text{ untuk setiap } x} \).
+        Dua anggotanya adalah $f_3(x)=x^3$ dan $f_4(x)=\sin(x)$.
+    \end{exparts}
+    \begin{answer}
+      Tentu saja, operasi penjumlahan dan perkalian skalarnya diwarisi dari
+      ruang yang memuatnya.
+      \begin{exparts}
+        \partsitem Himpunan ini merupakan subruang.
+          Himpunan ini tidak kosong karena memuat sekurang-kurangnya dua fungsi
+          contoh yang diberikan.
+          Himpunan ini tertutup karena jika \( f_1,f_2 \) genap dan
+          \( c_1,c_2 \) adalah skalar, maka berlaku
+          \begin{equation*}
+            (c_1f_1+c_2f_2)\,(-x)
+            =c_1\,f_1(-x)+c_2\,f_2(-x)
+            =c_1\,f_1(x)+c_2\,f_2(x)
+            =(c_1f_1+c_2f_2)\,(x)
+          \end{equation*}
+        \partsitem Himpunan ini juga merupakan subruang; pemeriksaannya serupa
+          dengan pemeriksaan sebelumnya.
+      \end{exparts}  
+    \end{answer}
+  \item 
+    \nearbyexample{ex:SpanSingVec} menyatakan bahwa untuk setiap vektor
+    $\vec{v}$ yang merupakan anggota suatu ruang vektor $V$, himpunan
+    $\set{r\cdot\vec{v}\suchthat r\in\Re}$ merupakan subruang dari $V$.
+    (Himpunan ini hanyalah rentang\index{rentang!himpunan tunggal}
+    dari himpunan tunggal $\set{\vec{v}}$.)
+    Apakah setiap subruang semacam itu harus merupakan subruang sejati?
+    \begin{answer}
+      Tidak; subruang itu dapat tidak sejati.
+      Sebagai contoh, jika ruang vektornya adalah \( \Re^1 \) dan
+      \( \vec{v}\neq\zero\, \), maka subruang
+      $\set{r\cdot\vec{v}\suchthat r\in\Re}$ sama dengan seluruh $\Re^1$.
+    \end{answer}
+  \item 
+    Sebuah contoh setelah definisi ruang vektor menunjukkan bahwa himpunan
+    solusi suatu sistem linear homogen merupakan ruang vektor.
+    Dalam istilah subbagian ini, himpunan tersebut merupakan subruang dari
+    $\Re^n$ apabila sistemnya memiliki $n$ variabel.
+    Bagaimana dengan sistem linear tak homogen; apakah solusi-solusinya
+    membentuk subruang (di bawah operasi yang diwarisi)?
+    \begin{answer}
+      Tidak, himpunan semacam itu tidak tertutup.
+      Salah satu alasannya, himpunan itu tidak memuat vektor nol.
+    \end{answer}
+  \item \cite{Cleary} 
+   Berikan contoh untuk setiap hal berikut atau jelaskan mengapa hal itu
+   mustahil dilakukan.
+   \begin{exparts}
+     \item Subhimpunan tak kosong dari $\matspace_{\nbyn{2}}$ yang bukan
+       merupakan subruang.
+     \item Himpunan dua vektor di $\Re^2$ yang tidak merentang ruang tersebut.
+   \end{exparts}
+   \begin{answer}
+     \begin{exparts}
+       \item Subhimpunan tak kosong dari $\matspace_{\nbyn{2}}$ berikut bukan
+         merupakan subruang.
+         \begin{equation*}
+           A=\set{
+             \begin{mat}[r]
+               1 &2 \\
+               3 &4
+             \end{mat},
+             \begin{mat}[r]
+               5 &6 \\
+               7 &8
+             \end{mat}}
+         \end{equation*}
+         Salah satu alasan bahwa himpunan ini bukan subruang dari
+         $\matspace_{\nbyn{2}}$ adalah karena himpunan ini tidak memuat matriks
+         nol.
+         (Alasan lainnya adalah bahwa himpunan ini tidak tertutup terhadap
+         penjumlahan, karena jumlah kedua matriks itu bukan anggota $A$.
+         Himpunan ini juga tidak tertutup terhadap perkalian skalar.)
+        \item Himpunan dua vektor berikut tidak merentang $\Re^2$.
+          \begin{equation*}
+            \set{\colvec[r]{1 \\ 1},\colvec[r]{3 \\ 3}}
+          \end{equation*}
+          Tidak ada kombinasi linear dari kedua vektor ini yang dapat
+          menghasilkan vektor dengan komponen kedua yang tidak sama dengan
+          komponen pertamanya.
+      \end{exparts}
+   \end{answer}
+  \item 
+    \nearbyexample{ex:SubspRThree} menunjukkan bahwa
+    $\Re^3$ memiliki tak hingga banyak subruang.
+    Apakah setiap ruang nontrivial memiliki tak hingga banyak subruang?
+    \begin{answer}
+      Tidak.
+      Satu-satunya subruang dari \( \Re^1 \) adalah ruang itu sendiri dan
+      subruang trivialnya.
+      Setiap subruang $S$ dari $\Re$ yang memuat anggota tak nol $\vec{v}$
+      harus memuat himpunan semua kelipatan skalarnya,
+      $\set{r\cdot\vec{v}\suchthat r\in\Re}$.
+      Akan tetapi, himpunan ini sama dengan seluruh $\Re$.
+    \end{answer}
+  \item \label{exer:SubspIffClosed}
+    Selesaikan bukti \nearbylemma{th:SubspIffClosed}.
+    \begin{answer}
+      Butir~(1) diperiksa dalam teks.
+
+      Butir~(2) memiliki lima syarat.
+      Pertama, untuk ketertutupan, jika \( c\in\Re \) dan \( \vec{s}\in S \),
+      maka \( c\cdot\vec{s}\in S \) karena
+      \( c\cdot\vec{s}=c\cdot\vec{s}+0\cdot\zero \).
+      Kedua, karena operasi pada \( S \) diwarisi dari \( V \), untuk
+      \( c,d\in\Re \) dan \( \vec{s}\in S \), hasil kali skalar
+      \( (c+d)\cdot\vec{s}\, \) di \( S \) sama dengan hasil kali
+      \( (c+d)\cdot\vec{s}\, \) di \( V \), dan hasil itu sama dengan
+      \( c\cdot\vec{s}+d\cdot\vec{s}\, \) di \( V \), yang sama dengan
+      \( c\cdot\vec{s}+d\cdot\vec{s}\, \) di \( S \).
+
+      Pemeriksaan syarat ketiga, keempat, dan kelima serupa dengan pemeriksaan
+      syarat kedua yang baru saja diberikan.
+    \end{answer}
+  \item 
+    Tunjukkan bahwa setiap ruang vektor hanya memiliki satu subruang trivial.
+    \begin{answer}
+      Sebuah latihan pada subbagian sebelumnya menunjukkan bahwa setiap ruang
+      vektor hanya memiliki satu vektor nol (yakni, hanya ada satu vektor yang
+      menjadi unsur identitas aditif ruang tersebut).
+      Akan tetapi, ruang trivial hanya memiliki satu unsur dan unsur itu harus
+      merupakan vektor nol (tunggal) ini.
+    \end{answer}
+  \item 
+    Tunjukkan bahwa untuk setiap subhimpunan \( S \) dari suatu ruang vektor,
+    rentang dari rentang sama dengan rentang itu sendiri,
+    \( \spanof{ \spanof{S} }=\spanof{S} \).
+    (\textit{Petunjuk.}
+    Anggota $\spanof{S}$ adalah kombinasi linear dari anggota $S$.
+    Anggota $\spanof{\spanof{S}}$ adalah kombinasi linear dari kombinasi
+    linear anggota $S$.)
+    \begin{answer}
+      Seperti yang disarankan oleh petunjuk, alasan dasarnya adalah Lema
+      Kombinasi Linear dari bab pertama.
+      Untuk bukti lengkap, kita akan menunjukkan bahwa kedua himpunan saling
+      memuat.
+
+      Pemuatan pertama, \( \spanof{ \spanof{S} }\supseteq\spanof{S}  \),
+      merupakan contoh dari fakta yang lebih umum dan jelas bahwa untuk setiap
+      subhimpunan \( T \) dari suatu ruang vektor, \( \spanof{T}\supseteq T \).
+
+      Untuk pemuatan sebaliknya, yaitu
+      \( \spanof{ \spanof{S} }\subseteq\spanof{S} \), ambil $m$ vektor dari
+      \( \spanof{S} \), yakni
+      \( c_{1,1}\vec{s}_{1,1}+\cdots+c_{1,n_1}\vec{s}_{1,n_1} \), \ldots,
+      \( c_{m,1}\vec{s}_{m,1}+\cdots+c_{m,n_m}\vec{s}_{m,n_m} \),
+      dan perhatikan bahwa setiap kombinasi linear dari vektor-vektor tersebut,
+      \begin{equation*}
+         r_1(c_{1,1}\vec{s}_{1,1}+\cdots+c_{1,n_1}\vec{s}_{1,n_1})+\cdots
+        +r_m(c_{m,1}\vec{s}_{m,1}+\cdots+c_{m,n_m}\vec{s}_{m,n_m})
+      \end{equation*}
+      merupakan kombinasi linear dari unsur-unsur \( S \),
+      \begin{equation*}
+        = (r_1c_{1,1})\vec{s}_{1,1}+\cdots+(r_1c_{1,n_1})\vec{s}_{1,n_1}+\cdots
+        +(r_mc_{m,1})\vec{s}_{m,1}+\cdots+(r_mc_{m,n_m})\vec{s}_{m,n_m}
+      \end{equation*}
+      sehingga berada dalam \( \spanof{S} \).
+      Dengan kata lain, cukup ingat bahwa suatu kombinasi linear dari
+      kombinasi-kombinasi linear (anggota $S$) merupakan kombinasi linear
+      (sekali lagi, dari anggota $S$).
+    \end{answer}
+  \item 
+    Semua subruang yang telah kita lihat menggunakan nol dalam deskripsinya
+    dengan satu atau lain cara.
+    Sebagai contoh, subruang dalam \nearbyexample{ex:SubspacesRTwo} terdiri
+    atas semua vektor dari $\Re^2$ yang komponen keduanya nol.
+    Sebaliknya, kumpulan vektor dari $\Re^2$ yang komponen keduanya satu tidak
+    membentuk subruang (kumpulan itu tidak tertutup terhadap perkalian skalar).
+    Contoh lainnya adalah \nearbyexample{ex:PlaneSubspRThree}, yang syarat pada
+    vektornya adalah bahwa jumlah ketiga komponennya nol.
+    Jika syarat di sana menyatakan bahwa jumlah ketiga komponennya satu, maka
+    himpunan itu bukan subruang (sekali lagi, ketertutupan tidak terpenuhi).
+    Namun, ketergantungan pada nol tidak mutlak diperlukan.
+    Pertimbangkan himpunan
+    \begin{equation*}
+       \set{\colvec{x \\ y \\ z}\suchthat x+y+z=1}
+    \end{equation*}
+    dengan operasi-operasi berikut.
+    \begin{equation*}
+       \colvec{x_1 \\ y_1 \\ z_1}+\colvec{x_2 \\ y_2 \\ z_2}
+       =\colvec{x_1+x_2-1 \\ y_1+y_2 \\ z_1+z_2}
+       \qquad
+       r\colvec{x \\ y \\ z}=\colvec{rx-r+1 \\ ry \\ rz}
+    \end{equation*}
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa himpunan itu bukan subruang dari $\Re^3$.
+         (\textit{Petunjuk.} Lihat \nearbyexample{ex:OperNotInherit}).
+      \partsitem Tunjukkan bahwa himpunan itu merupakan ruang vektor.
+         Perhatikan bahwa, berdasarkan butir sebelumnya,
+         \nearbylemma{th:SubspIffClosed} tidak dapat diterapkan.
+      \partsitem Tunjukkan bahwa setiap subruang dari $\Re^3$ harus melalui
+         titik asal, sehingga setiap subruang dari $\Re^3$ harus melibatkan nol
+         dalam deskripsinya.
+         Apakah kebalikannya berlaku?
+          Apakah setiap subhimpunan dari $\Re^3$ yang memuat titik asal menjadi
+          subruang jika diberi operasi yang diwarisi?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+         \partsitem Himpunan itu bukan subruang karena operasi-operasi ini bukan
+           operasi yang diwarisi.
+           Salah satu alasannya, di ruang ini,
+           \begin{equation*}
+             0\cdot\colvec{x \\ y \\ z}=\colvec[r]{1 \\ 0 \\ 0}
+           \end{equation*}
+           sedangkan hal ini tentu saja tidak berlaku di $\Re^3$.
+         \partsitem Kita dapat menggabungkan argumen yang menunjukkan
+           ketertutupan terhadap penjumlahan dengan argumen yang menunjukkan
+           ketertutupan terhadap perkalian skalar menjadi satu argumen yang
+           menunjukkan ketertutupan terhadap kombinasi linear dua vektor.
+           Jika $r_1,r_2,x_1,x_2,y_1,y_2,z_1,z_2$ berada di $\Re$, maka
+           \begin{multline*}
+              r_1\colvec{x_1 \\ y_1 \\ z_1}
+              +r_2\colvec{x_2 \\ y_2 \\ z_2}
+              =\colvec{r_1x_1-r_1+1 \\ r_1y_1 \\ r_1z_1}
+               +\colvec{r_2x_2-r_2+1 \\ r_2y_2 \\ r_2z_2}                 \\
+            =\colvec{r_1x_1-r_1+r_2x_2-r_2+1 \\ r_1y_1+r_2y_2 \\ r_1z_1+r_2z_2}
+           \end{multline*} 
+           (perhatikan bahwa definisi penjumlahan di ruang ini menggabungkan
+           komponen pertama sebagai $(r_1x_1-r_1+1)+(r_2x_2-r_2+1)-1$,
+           sehingga komponen pertama vektor terakhir tidak berakhir dengan
+           `$\hbox{}+2$').
+           Menjumlahkan ketiga komponen vektor terakhir menghasilkan
+           $r_1(x_1-1+y_1+z_1)+r_2(x_2-1+y_2+z_2)+1=r_1\cdot0+r_2\cdot0+1=1$.
+
+           Sebagian besar pemeriksaan syarat lainnya mudah (meskipun
+           ketidaklaziman operasinya membuat pemeriksaan itu tidak rutin).
+           Komutativitas penjumlahan diperiksa sebagai berikut.
+           \begin{equation*}
+             \colvec{x_1 \\ y_1 \\ z_1}+\colvec{x_2 \\ y_2 \\ z_2}
+             =\colvec{x_1+x_2-1 \\ y_1+y_2 \\ z_1+z_2}
+             =\colvec{x_2+x_1-1 \\ y_2+y_1 \\ z_2+z_1}
+             =\colvec{x_2 \\ y_2 \\ z_2}+\colvec{x_1 \\ y_1 \\ z_1}
+           \end{equation*}
+           Untuk asosiativitas penjumlahan, kita memiliki
+           \begin{equation*}
+             (\colvec{x_1 \\ y_1 \\ z_1}+\colvec{x_2 \\ y_2 \\ z_2})
+              +\colvec{x_3 \\ y_3 \\ z_3}
+             =\colvec{(x_1+x_2-1)+x_3-1 \\ (y_1+y_2)+y_3 \\ (z_1+z_2)+z_3}
+           \end{equation*}
+           sedangkan
+           \begin{equation*}
+             \colvec{x_1 \\ y_1 \\ z_1}
+             +(\colvec{x_2 \\ y_2 \\ z_2}+\colvec{x_3 \\ y_3 \\ z_3})
+             =\colvec{x_1+(x_2+x_3-1)-1 \\ y_1+(y_2+y_3) \\ z_1+(z_2+z_3)}
+           \end{equation*}
+           dan keduanya sama.
+           Unsur identitas terhadap operasi penjumlahan ini bekerja sebagai
+           berikut:
+           \begin{equation*}
+             \colvec{x \\ y \\ z}+\colvec[r]{1 \\ 0 \\ 0}
+             =\colvec{x+1-1 \\ y+0 \\ z+0}
+             =\colvec{x \\ y \\ z}
+           \end{equation*}
+           dan invers aditifnya diperiksa dengan cara serupa.
+           \begin{equation*}
+             \colvec{x \\ y \\ z}+\colvec{-x+2 \\ -y \\ -z}
+             =\colvec{x+(-x+2)-1 \\ y-y \\ z-z}
+             =\colvec[r]{1 \\ 0 \\ 0}
+           \end{equation*}
+
+           Syarat-syarat perkalian skalar juga mudah diperiksa.
+           Untuk syarat pertama,
+           \begin{equation*}
+             (r+s)\colvec{x \\ y \\ z}
+             =\colvec{(r+s)x-(r+s)+1 \\ (r+s)y \\ (r+s)z}
+           \end{equation*}
+           sedangkan
+           \begin{multline*}
+             r\colvec{x \\ y \\ z}+s\colvec{x \\ y \\ z}
+             =\colvec{rx-r+1 \\ ry \\ rz}+\colvec{sx-s+1 \\ sy \\ sz}  \\
+             =\colvec{(rx-r+1)+(sx-s+1)-1 \\ ry+sy \\ rz+sz}
+           \end{multline*}
+           dan keduanya sama.
+           Syarat kedua membandingkan
+           \begin{equation*}
+             r\cdot(\colvec{x_1 \\ y_1 \\ z_1}+\colvec{x_2 \\ y_2 \\ z_2})
+             =r\cdot\colvec{x_1+x_2-1 \\ y_1+y_2 \\ z_1+z_2}
+             =\colvec{r(x_1+x_2-1)-r+1 \\ r(y_1+y_2) \\ r(z_1+z_2)}
+           \end{equation*}
+           dengan
+           \begin{multline*}
+             r\colvec{x_1 \\ y_1 \\ z_1}+r\colvec{x_2 \\ y_2 \\ z_2}
+             =\colvec{rx_1-r+1 \\ ry_1 \\ rz_1}
+                     +\colvec{rx_2-r+1 \\ ry_2 \\ rz_2}                  \\
+             =\colvec{(rx_1-r+1)+(rx_2-r+1)-1 \\ ry_1+ry_2 \\ rz_1+rz_2}
+           \end{multline*}
+           dan keduanya sama.
+           Untuk syarat ketiga,
+           \begin{equation*}
+             (rs)\colvec{x \\ y \\ z}
+             =\colvec{rsx-rs+1 \\ rsy \\ rsz}
+           \end{equation*}
+           sedangkan
+           \begin{equation*}
+             r(s\colvec{x \\ y \\ z})
+             =r(\colvec{sx-s+1 \\ sy \\ sz})
+             =\colvec{r(sx-s+1)-r+1 \\ rsy \\ rsz}
+           \end{equation*}
+           dan keduanya sama.
+           Untuk perkalian skalar dengan $1$, kita memperoleh
+           \begin{equation*}
+             1\cdot\colvec{x \\ y \\ z}
+             =\colvec{1x-1+1 \\ 1y \\ 1z}
+             =\colvec{x \\ y \\ z}
+           \end{equation*}
+           Dengan demikian, kedua operasi ini memenuhi semua syarat ruang
+           vektor.
+
+           \textit{Catatan.}
+           Salah satu cara memahami ruang vektor ini adalah memandangnya
+           sebagai bidang di $\Re^3$
+           \begin{equation*}
+             P=\set{\colvec{x \\ y \\ z}\suchthat x+y+z=0}
+           \end{equation*}
+           yang digeser sejauh $1$ dari titik asal sepanjang sumbu-$x$.
+           Dengan demikian, penjumlahannya menjadi sebagai berikut: untuk
+           menjumlahkan dua anggota ruang ini,
+           \begin{equation*}
+             \colvec{x_1 \\ y_1 \\ z_1},\;\colvec{x_2 \\ y_2 \\ z_2}
+           \end{equation*}
+           (dengan $x_1+y_1+z_1=1$ dan $x_2+y_2+z_2=1$), geser keduanya kembali
+           sejauh $1$ agar berada di $P$, lalu jumlahkan seperti biasa,
+           \begin{equation*}
+             \colvec{x_1-1 \\ y_1 \\ z_1}+\colvec{x_2-1 \\ y_2 \\ z_2}
+             =\colvec{x_1+x_2-2 \\ y_1+y_2 \\ z_1+z_2}
+             \qquad\text{(di $P$)}
+           \end{equation*}
+           kemudian geser hasilnya kembali sejauh $1$ sepanjang sumbu-$x$.
+           \begin{equation*}
+             \colvec{x_1+x_2-1 \\ y_1+y_2 \\ z_1+z_2}.
+           \end{equation*}
+           Perkalian skalarnya serupa.
+         \partsitem Agar subruang itu tertutup terhadap perkalian skalar yang
+           diwarisi, untuk setiap anggota $\vec{v}$ dari subruang tersebut,
+           \begin{equation*}
+             0\cdot\vec{v}=\colvec[r]{0 \\ 0 \\ 0}
+           \end{equation*}
+           juga harus menjadi anggotanya.
+
+           Kebalikannya tidak berlaku.
+           Berikut adalah subhimpunan dari $\Re^3$ yang memuat titik asal,
+           \begin{equation*}
+             \set{\colvec[r]{0 \\ 0 \\ 0},\colvec[r]{1 \\ 0 \\ 0}}
+           \end{equation*}
+           (subhimpunan ini hanya memiliki dua unsur) tetapi bukan merupakan
+           subruang.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Kita dapat memberikan pembenaran bagi konvensi bahwa jumlah nol buah
+    vektor sama dengan vektor nol.
+    Pertimbangkan jumlah tiga vektor
+    $\vec{v}_1+\vec{v}_2+\vec{v}_3$ berikut.
+    \begin{exparts}
+      \partsitem Berapakah selisih antara jumlah tiga vektor ini dan jumlah dua
+        vektor pertama di antaranya?
+      \partsitem Berapakah selisih antara jumlah sebelumnya dan jumlah yang
+        hanya terdiri atas vektor pertama?
+      \partsitem Berapakah seharusnya selisih antara jumlah satu vektor
+        sebelumnya dan jumlah nol buah vektor?
+      \partsitem Jadi, bagaimana seharusnya jumlah nol buah vektor didefinisikan?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \item $(\vec{v}_1+\vec{v}_2+\vec{v}_3)-(\vec{v}_1+\vec{v}_2)
+                 =\vec{v}_3$
+        \item $(\vec{v}_1+\vec{v}_2)-(\vec{v}_1)
+                 =\vec{v}_2$
+        \item Tentunya, $\vec{v}_1$.
+        \item Mengambil jumlah satu vektor itu lalu mengurangkan menghasilkan
+          ($\vec{v}_1)-\vec{v}_1=\zero$.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Apakah suatu ruang ditentukan oleh subruang-subruangnya?
+    Artinya, jika dua ruang vektor memiliki subruang-subruang yang sama, apakah
+    kedua ruang itu harus sama?
+    \begin{answer}
+      Ya; setiap ruang merupakan subruang dari dirinya sendiri, sehingga
+      masing-masing ruang memuat ruang yang lain.
+    \end{answer}
+  \item 
+     \begin{exparts}
+      \partsitem Berikan himpunan yang tertutup terhadap perkalian skalar tetapi
+        tidak terhadap penjumlahan.
+      \partsitem Berikan himpunan yang tertutup terhadap penjumlahan tetapi tidak
+        terhadap perkalian skalar.
+      \partsitem Berikan himpunan yang tidak tertutup terhadap keduanya.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Gabungan sumbu-\( x \) dan sumbu-\( y \) di \( \Re^2 \) merupakan
+          salah satu contohnya.
+        \partsitem Himpunan bilangan bulat, sebagai subhimpunan dari
+          \( \Re^1 \), merupakan salah satu contohnya.
+        \partsitem Subhimpunan \( \set{\vec{v}} \) dari \( \Re^2 \) merupakan
+          salah satu contohnya, dengan $\vec{v}$ sebarang vektor tak nol.
+      \end{exparts}  
+     \end{answer}
+  \item 
+    Tunjukkan bahwa rentang suatu himpunan vektor tidak bergantung pada urutan
+    vektor-vektor tersebut dicantumkan dalam himpunan itu.
+    \begin{answer}
+      Karena penjumlahan ruang vektor bersifat komutatif, pengurutan ulang
+      suku-suku jumlah tidak mengubah suatu kombinasi linear.
+    \end{answer}
+  \item  
+    Subruang trivial manakah yang merupakan rentang dari himpunan kosong?
+    Apakah subruang itu
+    \begin{equation*}
+      \set{\colvec[r]{0 \\ 0 \\ 0}}\subseteq \Re^3,
+      \quad\text{atau}\quad
+      \set{0+0x}\subseteq \polyspace_1,
+    \end{equation*}
+    atau suatu subruang lain?
+    \begin{answer}
+      Kita selalu mempertimbangkan rentang tersebut dalam konteks suatu ruang
+      yang memuatnya.
+    \end{answer}
+  \item   
+    Tunjukkan bahwa jika suatu vektor berada dalam rentang sebuah himpunan,
+    maka menambahkan vektor tersebut ke himpunan itu tidak akan memperbesar
+    rentangnya.
+    Apakah pernyataan tersebut juga berlaku ``hanya jika''?
+    \begin{answer}
+      Pernyataan itu berlaku dalam kedua arah, ``jika'' dan ``hanya jika''.
+
+      Untuk arah ``jika'', misalkan \( S \) adalah subhimpunan suatu ruang
+      vektor \( V \) dan andaikan \( \vec{v}\in\spanof{S} \), sehingga
+      \( \vec{v}=c_1\vec{s}_1+\dots+c_n\vec{s}_n \), dengan
+      \( c_1,\ldots,c_n \) adalah skalar dan
+      \( \vec{s}_1,\ldots,\vec{s}_n\in S \).
+      Kita harus menunjukkan bahwa
+      \( \spanof{S\union\set{\vec{v}} }=\spanof{S} \).
+
+      Pemuatan dalam satu arah,
+      \( \spanof{S}\subseteq\spanof{S\union\set{\vec{v}} } \), sudah jelas.
+      Untuk arah sebaliknya,
+      \( \spanof{S\union\set{\vec{v}} }\subseteq\spanof{S} \), perhatikan
+      bahwa jika suatu vektor berada dalam himpunan di ruas kiri, maka vektor
+      itu berbentuk
+      \( d_0\vec{v}+d_1\vec{t}_1+\dots+d_m\vec{t}_m \), dengan semua \( d \)
+      merupakan skalar dan semua \( \vec{t}\, \) berada dalam \( S \).
+      Tulis ulang bentuk tersebut sebagai
+      \( d_0(c_1\vec{s}_1+\dots+c_n\vec{s}_n)
+      +d_1\vec{t}_1+\cdots+d_m\vec{t}_m \), lalu perhatikan bahwa hasilnya
+      merupakan anggota rentang \( S \).
+
+      Untuk arah ``hanya jika'', \( \vec{v}\in
+      \spanof{S\union\set{\vec{v}}} \). Jadi, jika penambahan \( \vec{v} \)
+      tidak mengubah rentang, maka \( \vec{v}\in\spanof{S} \).
+    \end{answer}
+  \recommended \item
+    Subruang merupakan subhimpunan, sehingga wajar jika kita mempertimbangkan
+    bagaimana hubungan ``merupakan subruang dari'' berinteraksi dengan operasi
+    himpunan yang biasa.
+    \begin{exparts}
+      \partsitem Jika \( A,B \) merupakan subruang dari suatu ruang vektor,
+        apakah irisan keduanya, \( A\intersection B \), harus merupakan
+        subruang?
+        Selalu? Kadang-kadang? Tidak pernah?
+      \partsitem Apakah gabungan \( A\union B \) harus merupakan subruang?
+      \partsitem Jika \( A \) merupakan subruang dari suatu~$V$, apakah
+        komplemen himpunannya, $V-A$, harus merupakan subruang?
+    \end{exparts}
+    (\textit{Petunjuk.} Cobalah beberapa subruang uji dari
+    \nearbyexample{ex:SubspRThree}.)
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Selalu.
+
+          Andaikan \( A,B \) merupakan subruang dari \( V \).
+          Perhatikan bahwa irisannya tidak kosong karena keduanya memuat vektor
+          nol.
+          Jika \( \vec{v},\vec{w}\in A\intersection B \) dan \( r,s \) adalah
+          skalar, maka \( r\vec{v}+s\vec{w}\in A \) karena kedua vektor tersebut
+          berada dalam \( A \), sehingga kombinasi linearnya berada dalam \( A \), dan
+          \(r\vec{v}+s\vec{w}\in B \) karena alasan yang sama.
+          Dengan demikian, irisan tersebut tertutup.
+          Sekarang \nearbylemma{th:SubspIffClosed} dapat diterapkan.
+        \partsitem Kadang-kadang (lebih tepatnya, hanya jika
+          \( A\subseteq B \) atau \( B\subseteq A \)).
+
+          Untuk melihat bahwa jawabannya bukan ``selalu'', ambil
+          \( V \) sebagai \( \Re^3 \), ambil \( A \) sebagai sumbu-$x$, dan
+          \( B \) sebagai sumbu-\( y \).
+          Perhatikan bahwa
+          \begin{equation*}
+            \colvec[r]{1 \\ 0 \\ 0}\in A \text{ dan }\colvec[r]{0 \\ 1 \\ 0}\in B
+            \quad\text{tetapi}\quad
+            \colvec[r]{1 \\ 0 \\ 0}+\colvec[r]{0 \\ 1 \\ 0}\not\in A\union B
+          \end{equation*}
+          karena jumlahnya tidak berada dalam \( A \) maupun \( B \).
+
+          Jawabannya bukan ``tidak pernah'' karena jika \( A\subseteq B \) atau
+          \( B\subseteq A \), maka jelas bahwa \( A\union B \) merupakan
+          subruang.
+
+          Untuk menunjukkan bahwa \( A\union B \) merupakan subruang hanya jika
+          salah satu subruang memuat subruang lainnya, andaikan
+          \( A\not\subseteq B \) dan \( B\not\subseteq A \), lalu buktikan bahwa
+          gabungannya bukan subruang.
+          Asumsi bahwa \( A \) bukan subhimpunan dari \( B \) berarti ada
+          \( \vec{a}\in A \) dengan \( \vec{a}\not\in B \).
+          Asumsi lainnya memberikan \( \vec{b}\in B \) dengan
+          \( \vec{b}\not\in A \).
+          Pertimbangkan \( \vec{a}+\vec{b} \).
+          Perhatikan bahwa jumlah ini bukan anggota \( A \); sebab jika
+          sebaliknya, maka \( (\vec{a}+\vec{b})-\vec{a} \) akan berada dalam
+          \( A \), padahal tidak demikian.
+          Demikian pula, jumlah tersebut bukan anggota \( B \).
+          Jadi, jumlah itu bukan anggota \( A\union B \), sehingga gabungannya
+          bukan subruang.
+        \partsitem Tidak pernah.
+          Karena \( A \) merupakan subruang, subruang itu memuat vektor nol;
+          akibatnya, komplemen $A$, yaitu $V-A$, tidak memuat vektor nol.
+          Tanpa vektor nol, komplemen tersebut tidak dapat menjadi ruang vektor.
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Apakah rentang suatu himpunan bergantung pada ruang yang memuatnya?
+    Artinya, jika \( W \) merupakan subruang dari \( V \) dan \( S \) adalah
+    subhimpunan dari \( W \) (sehingga juga merupakan subhimpunan dari
+    \( V \)), mungkinkah rentang \( S \) dalam \( W \) berbeda dari rentang
+    \( S \) dalam \( V \)?
+    \begin{answer}
+      Rentang suatu himpunan tidak bergantung pada ruang yang memuatnya.
+      Kombinasi linear vektor-vektor dari \( S \) menghasilkan jumlah yang sama,
+      baik kita menganggap operasinya sebagai operasi \( W \) maupun sebagai
+      operasi \( V \), karena operasi \( W \) diwarisi dari \( V \).
+    \end{answer}
+  \item 
+    Apakah relasi ``merupakan subruang dari'' bersifat transitif?
+    Artinya, jika $V$ merupakan subruang dari $W$ dan $W$ merupakan subruang
+    dari $X$, apakah $V$ harus merupakan subruang dari $X$?
+    \begin{answer}
+      Ya; terapkan \nearbylemma{th:SubspIffClosed}.
+      (Anda perlu mempertimbangkan hal berikut.
+      Misalkan \( B \) merupakan subruang dari suatu ruang vektor \( V \) dan
+      misalkan \( A\subseteq B\subseteq V \) merupakan subruang.
+      Dari ruang manakah \( A \) mewarisi operasinya?
+      Jawabannya tidak menjadi masalah\Dash \( A \) akan mewarisi operasi yang
+      sama dalam kedua kasus.)
+    \end{answer}
+  \item
+    Karena ``rentang dari'' merupakan operasi pada himpunan, wajar jika kita
+    mempertimbangkan bagaimana operasi itu berinteraksi dengan operasi himpunan
+    yang biasa.
+    \begin{exparts}
+      \partsitem Jika \( S\subseteq T \) merupakan subhimpunan suatu ruang
+        vektor, apakah
+        \( \spanof{S}\subseteq\spanof{T} \)?
+        Selalu? Kadang-kadang? Tidak pernah?
+      \partsitem Jika \( S,T \) merupakan subhimpunan suatu ruang vektor, apakah
+        \( \spanof{S\union T}=\spanof{S}\union\spanof{T} \)?
+      \partsitem Jika \( S,T \) merupakan subhimpunan suatu ruang vektor, apakah
+        \( \spanof{S\intersection T}=\spanof{S}\intersection\spanof{T} \)?
+      \partsitem Apakah rentang komplemen sama dengan komplemen rentang?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+         \partsitem Selalu;
+           jika \( S\subseteq T \), maka kombinasi linear unsur-unsur \( S \)
+           juga merupakan kombinasi linear unsur-unsur \( T \).
+         \partsitem Kadang-kadang (lebih tepatnya, jika dan hanya jika
+           \( \spanof{S}\subseteq\spanof{T} \) atau
+           \( \spanof{T}\subseteq\spanof{S} \)).
+
+           Jawabannya bukan ``selalu'', seperti ditunjukkan oleh contoh berikut
+           dari \( \Re^3 \):
+           \begin{equation*}
+             S=\set{\colvec[r]{1 \\ 0 \\ 0},\colvec[r]{0 \\ 1 \\ 0}},\quad
+             T=\set{\colvec[r]{1 \\ 0 \\ 0},\colvec[r]{0 \\ 0 \\ 1}}
+           \end{equation*}
+           karena
+           \begin{equation*}
+             \colvec[r]{1 \\ 1 \\ 1}\in\spanof{S\union T}
+             \qquad
+             \colvec[r]{1 \\ 1 \\ 1}\not\in\spanof{S}\union \spanof{T}
+           \end{equation*}
+
+           Jawabannya bukan ``tidak pernah'' karena jika rentang salah satu
+           himpunan memuat rentang himpunan lainnya, kesamaannya jelas.
+           Untuk membuktikan bahwa syarat tersebut juga perlu, andaikan
+           \( \spanof{S}\not\subseteq\spanof{T} \) dan
+           \( \spanof{T}\not\subseteq\spanof{S} \). Dengan demikian, terdapat
+           \( \vec{s}\in S \) dengan \( \vec{s}\notin\spanof{T} \), serta
+           \( \vec{t}\in T \) dengan \( \vec{t}\notin\spanof{S} \).
+           Vektor \( \vec{s}+\vec{t}\in\spanof{S\union T} \), tetapi tidak
+           berada dalam \( \spanof{S} \), sebab jika berada di sana maka
+           \( \vec{t}=(\vec{s}+\vec{t})-\vec{s}\in\spanof{S} \). Dengan
+           alasan yang sama, vektor itu tidak berada dalam \( \spanof{T} \).
+           Jadi \( \vec{s}+\vec{t}\notin\spanof{S}\union\spanof{T} \).
+         \partsitem Kadang-kadang.
+
+           Jelas bahwa
+           \( \spanof{S\intersection T}
+              \subseteq\spanof{S}\intersection\spanof{T} \)
+           karena setiap kombinasi linear vektor-vektor dari
+           \( S\intersection T \) merupakan kombinasi vektor-vektor dari
+           \( S \) dan juga kombinasi vektor-vektor dari \( T \).
+
+           Pemuatan dalam arah sebaliknya tidak selalu berlaku.
+           Sebagai contoh, di \( \Re^2 \), ambil
+           \begin{equation*}
+             S=\set{\colvec[r]{1 \\ 0},\colvec[r]{0 \\ 1}},\quad
+             T=\set{\colvec[r]{2 \\ 0}}
+           \end{equation*}
+           sehingga \( \spanof{S}\intersection\spanof{T} \) merupakan
+           sumbu-\( x \), sedangkan \( \spanof{S\intersection T} \) merupakan
+           subruang trivial.
+
+           Mencirikan dengan tepat kapan kesamaan berlaku tidaklah mudah.
+           Jelas bahwa kesamaan berlaku jika salah satu himpunan memuat himpunan
+           lainnya, tetapi hal itu bukan syarat ``hanya jika'', sebagaimana
+           ditunjukkan oleh contoh berikut di \( \Re^3 \).
+           \begin{equation*}
+             S=\set{\colvec[r]{1 \\ 0 \\ 0},\colvec[r]{0 \\ 1 \\ 0}},
+             \quad
+             T=\set{\colvec[r]{1 \\ 0 \\ 0},\colvec[r]{0 \\ 0 \\ 1}}
+           \end{equation*}
+         \partsitem Tidak pernah, karena rentang komplemen merupakan subruang,
+           sedangkan komplemen rentang bukan merupakan subruang (komplemen itu
+           tidak memuat vektor nol).
+      \end{exparts}  
+     \end{answer}
+  % \item 
+  %   Reprove \nearbylemma{le:SpanIsASubsp} without doing the
+  %   empty set separately.
+  %   \begin{answer}
+  %     Call the subset \( S \).
+  %     By \nearbylemma{th:SubspIffClosed},
+  %     we need to check that 
+  %     \( \spanof{S} \) is closed under linear combinations.
+  %     If \( c_1\vec{s}_1+\dots+c_n\vec{s}_n,
+  %       c_{n+1}\vec{s}_{n+1}+\dots+c_m\vec{s}_m\in\spanof{S} \) then
+  %     for any \( p,r\in\Re \) we have
+  %     \begin{multline*}
+  %       p\cdot(c_1\vec{s}_1+\cdots+c_n\vec{s}_n)+
+  %            r\cdot(c_{n+1}\vec{s}_{n+1}+\cdots+c_m\vec{s}_m)        \\
+  %       =
+  %       pc_1\vec{s}_1+\cdots+pc_n\vec{s}_n
+  %         +rc_{n+1}\vec{s}_{n+1}+\cdots+rc_m\vec{s}_m
+  %     \end{multline*}
+  %     which is an element of \( \spanof{S} \).
+  %     % (\textit{Remark.}
+  %     % If the set $S$ is empty, then that
+  %     % `if \ldots\ then \ldots' statement is vacuously true.)  
+  %   \end{answer}
+  \item Temukan suatu struktur yang tertutup terhadap kombinasi linear, tetapi
+    bukan merupakan ruang vektor.
+    % (\textit{Remark.} 
+    % This is a bit of a trick question.)
+    \begin{answer}
+      Agar hal ini terjadi, salah satu syarat yang membuat operasi penjumlahan
+      dan perkalian skalar berperilaku sebagaimana mestinya harus dilanggar.
+      Pertimbangkan \( \Re^2 \) dengan operasi-operasi berikut.
+      \begin{equation*}
+        \colvec{x_1 \\ y_1}
+        +\colvec{x_2 \\ y_2}
+        =\colvec[r]{0 \\ 0}
+        \qquad
+        r\colvec{x \\ y}
+        =\colvec[r]{0 \\ 0}
+      \end{equation*}
+      Himpunan $\Re^2$ tertutup terhadap operasi-operasi ini.
+      Akan tetapi, himpunan tersebut bukan ruang vektor.
+      \begin{equation*}
+        1\cdot\colvec[r]{1 \\ 1}
+        \neq\colvec[r]{1 \\ 1}
+      \end{equation*}  
+    \end{answer}
+\index{subruang|)}
+\index{ruang vektor|)}
+\end{exercises}

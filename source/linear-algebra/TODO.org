@@ -1,0 +1,22 @@
+TODO list for Linear Algebra http://joshua.smcvt.edu/linearalgebra 
+
+
+* Look through bug reports
+
+** Make theorems come out shaded in print book.  Perhaps I must provided a grey-shaded area, instead of yellow-shaded, since the yellow does not produce any shade in the print editions.
+
+* New material
+
+** Include handwritten versions of lower case Greek letters on flyleaf?
+
+** Topic on Principle Components
+** Get source for four_minute_mile.pdf, moneyball.pdf
+* Refactor some code 
+** Add determinant to Lab Manual.
+* Give it a less-flat format
+* e-book format?
+  Tried breqn but changing the equation* environment on line 1938 of gr1.tex
+  to dmath* did not result in a break.  Puzzled.
+
+** Convert to ebook, using the newly-available options through tex4ht
+** See if can document them whil I do it.

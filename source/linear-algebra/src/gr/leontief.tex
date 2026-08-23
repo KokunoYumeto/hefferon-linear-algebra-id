@@ -1,0 +1,647 @@
+% Chapter 1, Topic from _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linalg.html
+%  2001-Jun-09
+\topic{Analisis Masukan-Keluaran}
+\index{Analisis Masukan-Keluaran|(}
+Perekonomian adalah jejaring kesalingbergantungan yang luar biasa rumit.
+Perubahan di satu bagian dapat merambat dan memengaruhi bagian-bagian lain.
+Para ekonom telah lama berupaya agar dapat menggambarkan dan membuat
+prediksi tentang objek serumit itu.
+Model matematika yang menggunakan sistem persamaan linear
+merupakan salah satu perangkat utama.
+Salah satu contohnya adalah Analisis Masukan-Keluaran, yang dirintis oleh
+W.~Leontief,\index{Leontief, W.}
+peraih Penghargaan Nobel Ekonomi tahun 1973.
+
+Perhatikan suatu perekonomian yang terdiri atas banyak bagian, dua di antaranya
+adalah industri baja dan industri otomotif.
+Keduanya saling berinteraksi erat
+ketika berusaha memenuhi permintaan atas produk mereka
+dari bagian-bagian lain perekonomian, yakni pengguna di luar sektor baja dan
+otomotif.
+Sebagai contoh, jika permintaan eksternal terhadap mobil meningkat, hal itu
+akan meningkatkan penggunaan baja oleh industri otomotif.
+Atau, jika permintaan eksternal terhadap baja menurun, industri baja akan
+mengurangi pembelian truk.
+Model yang
+kita bahas di sini menerima permintaan eksternal sebagai masukan
+dan memprediksi cara kedua industri itu berinteraksi untuk memenuhinya.
+
+Kita mulai dengan statistik produksi dan konsumsi.
+(Angka-angka ini, yang menyatakan nilai dalam jutaan
+dolar, berasal dari
+\cite{Leontief1965} yang menggambarkan perekonomian A.S.\ tahun 1958.
+Statistik masa kini akan berbeda karena
+inflasi dan perubahan teknologi di kedua industri tersebut.)
+\begin{center}
+  \begin{tabular}{r|rrrr}
+         \multicolumn{1}{c}{\ }  %put the | in the right place
+         &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                \textit{digunakan oleh} \\[-.65ex] \textit{baja}
+                             \end{tabular}}
+         &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                \textit{digunakan oleh} \\[-.65ex] \textit{otomotif}
+                             \end{tabular}}
+         &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                \textit{digunakan oleh} \\[-.65ex] \textit{lainnya}
+                              \end{tabular}}
+         &\textit{total}                                                \\
+         \cline{2-5}
+    \begin{tabular}{r} \textit{nilai} \\[-.65ex] \textit{baja} \end{tabular}
+         &$5\,395$  &$2\,664$  &     &$25\,448$                          \\
+    \begin{tabular}{r} \textit{nilai} \\[-.65ex] \textit{mobil} \end{tabular}
+         &$48$      &$9\,030$  &     &$30\,346$
+  \end{tabular}
+\end{center}
+Sebagai contoh, nilai dolar baja yang digunakan oleh industri otomotif pada
+tahun ini adalah $2,664$ juta.
+Perhatikan bahwa suatu industri dapat mengonsumsi sebagian hasil produksinya sendiri.
+
+Kita dapat melengkapi permintaan eksternalnya.
+Nilai baja yang digunakan pihak lain tahun ini adalah $17,389$,
+sedangkan permintaan eksternal terhadap mobil adalah $21,268$.
+Dengan demikian, kita memperoleh gambaran lengkap mengenai
+cara industri otomotif dan baja berinteraksi untuk memenuhi permintaan mereka.
+
+Sekarang bayangkan bahwa permintaan eksternal terhadap baja belakangan ini
+meningkat sebesar $200$ per tahun, sehingga kita memperkirakan nilainya tahun
+depan akan menjadi $17,589$.
+Kita juga memperkirakan bahwa permintaan eksternal terhadap mobil tahun depan
+akan turun sebesar $25$ menjadi $21,243$.
+Kita ingin memprediksi keluaran total tahun depan.
+
+Prediksi tersebut tidak sesederhana menambahkan $200$ pada total baja tahun ini
+dan mengurangkan $25$ dari total mobil tahun ini.
+Salah satu alasannya, kenaikan produksi baja akan membuat
+industri tersebut meningkatkan permintaannya terhadap mobil, sehingga
+meredam penurunan permintaan eksternal terhadap mobil.
+Di sisi lain, turunnya permintaan eksternal terhadap mobil akan membuat
+industri otomotif menggunakan lebih sedikit baja sehingga sedikit mengurangi
+peningkatan kegiatan usaha industri baja.
+Singkatnya, kedua industri ini membentuk sebuah sistem.
+Kita harus memprediksi titik keseimbangan sistem secara keseluruhan.
+
+Berikut persamaannya.
+\begin{align*}
+  \text{produksi baja tahun depan}
+     &=\text{penggunaan baja oleh industri baja tahun depan}   \\[-.8ex]
+     &\quad\hbox{}+\text{penggunaan baja oleh industri otomotif tahun depan}  \\[-.8ex]
+     &\quad\hbox{}+\text{penggunaan baja oleh pihak lain tahun depan} \\
+  \text{produksi mobil tahun depan}
+     &=\text{penggunaan mobil oleh industri baja tahun depan}   \\[-.8ex]
+     &\quad\hbox{}+\text{penggunaan mobil oleh industri otomotif tahun depan}  \\[-.8ex]
+     &\quad\hbox{}+\text{penggunaan mobil oleh pihak lain tahun depan}
+\end{align*}
+Untuk ruas kiri, misalkan
+$s$ adalah produksi total baja tahun depan dan
+$a$ adalah keluaran total mobil tahun depan.
+Untuk ruas kanan, sebagaimana dibahas di atas,
+perkiraan permintaan eksternal kita adalah $17,589$ dan $21,243$.
+
+Untuk penggunaan baja oleh industri baja tahun depan, perhatikan bahwa tahun ini
+industri baja menggunakan $5,395$ unit masukan baja untuk menghasilkan $25,448$
+unit keluaran baja.
+Jadi, tahun depan, ketika industri baja menghasilkan $s$ unit keluaran,
+kita memperkirakan bahwa untuk melakukannya dibutuhkan
+$s\cdot (5\,395)/(25\,448)$
+unit masukan baja\Dash ini semata-mata merupakan asumsi bahwa masukan
+sebanding dengan keluaran.
+(Kita mengasumsikan bahwa rasio masukan terhadap keluaran tetap konstan dari waktu
+ke waktu; dalam praktiknya, model dapat mencoba memperhitungkan kecenderungan
+perubahan rasio tersebut.)
+
+Penggunaan baja oleh industri otomotif tahun depan dihitung dengan cara serupa.
+Tahun ini industri otomotif menggunakan $2,664$ unit masukan baja untuk
+menghasilkan $30,346$ unit keluaran mobil.
+Jadi, tahun depan, ketika keluaran total industri otomotif adalah $a$, kita
+memperkirakan industri itu akan mengonsumsi
+$a\cdot (2\,664)/(30\,346)$ unit baja.
+
+Dengan melengkapi persamaan lainnya menggunakan cara yang sama, kita memperoleh
+sistem persamaan linear berikut.
+\begin{equation*}
+  \begin{linsys}{3}
+    (5\,395/25\,448)\cdot s
+      &+ &(2\,664/30\,346)\cdot a &+ &17\,589
+         &= &s \\
+    (48/25\,448)\cdot s
+      &+ &(9\,030/30\,346)\cdot a &+ &21\,243
+         &= &a
+  \end{linsys}
+\end{equation*}
+Dengan memindahkan variabel ke satu ruas dan konstanta ke ruas lainnya,
+\begin{equation*}
+  \begin{linsys}{2}
+      (20\,053/25\,448)s &- &(2\,664/30\,346)a &= &17\,589 \\
+     -(48/25\,448)s      &+ &(21\,316/30\,346)a &= &21\,243
+  \end{linsys}
+\end{equation*}
+kemudian menerapkan Metode Gauss atau menggunakan \textit{Sage}, seperti berikut,
+\begin{lstlisting}
+sage: var('a,s')
+(a, s)
+sage: eqns=[(20053/25448)*s - (2664/30346)*a == 17589,  
+....:        (-48/25448)*s + (21316/30346)*a == 21243] 
+sage: solve(eqns, s, a)
+[[s == (2745320544312/106830469), a == (6476293881123/213660938)]]
+sage: n(2745320544312/106830469)
+25697.9171767186
+sage: n(6476293881123/213660938)
+30311.0804517904
+\end{lstlisting}
+kita memperoleh prediksi:
+$s=25,698$ dan $a=30,311$.
+
+Di atas telah kita bahas bahwa memprediksi total tahun depan
+tidak sesederhana menambahkan $200$ pada total baja tahun lalu dan
+mengurangkan $25$ dari total mobil tahun lalu.
+Perbandingan prediksi ini
+dengan angka tahun berjalan
+menunjukkan bahwa produksi total industri baja seharusnya naik sebesar~$250$,
+sementara
+total mobil turun sebesar $35$.
+Kenaikan permintaan eksternal terhadap baja menimbulkan kenaikan
+permintaan antarindustri oleh industri baja, yang sedikit diredam oleh
+penurunan mobil, tetapi menghasilkan total yang lebih tinggi daripada
+$200$.
+Demikian pula, total mobil turun lebih dari~$25$ meskipun terbantu oleh
+industri baja.
+
+Salah satu keunggulan model matematika adalah kita dapat
+mengajukan pertanyaan ``Bagaimana jika \ldots?''
+Sebagai contoh, kita dapat bertanya,
+``Bagaimana jika perkiraan permintaan eksternal tahun depan agak meleset?''
+Untuk memahami seberapa besar perubahan prediksi model sebagai
+reaksi terhadap perubahan perkiraan kita, kita dapat merevisi perkiraan
+permintaan eksternal baja tahun depan dari $17,589$ turun menjadi
+$17,489$, sambil mempertahankan asumsi bahwa permintaan eksternal terhadap
+mobil tahun depan tetap sebesar $21,243$.
+Sistem yang dihasilkan
+\begin{equation*}
+  \begin{linsys}{2}
+        (20\,053/25\,448)s &- &(2\,664/30\,346)a &= &17\,489 \\
+      -(48/25\,448)s      &+ &(21\,316/30\,346)a &= &21\,243
+  \end{linsys}
+\end{equation*}
+memberikan $s=25,571$ dan $a=30,311$.
+% sage: var('a,s')                                        
+% (a, s)
+% sage: eqns=[(20053/25448)*s - (2664/30346)*a == 17489, 
+% ....:        (-48/25448)*s + (21316/30346)*a == 21243] 
+% sage: solve(eqns, s, a)                             
+% [[s == (2731759305112/106830469), a == (6476221050723/213660938)]]
+% sage: n(2731759305112/106830469)                    
+% 25570.9754968126
+% sage: n(6476221050723/213660938)
+% 30310.7395827449
+Inilah yang disebut \definend{analisis sensitivitas}.
+Kita sedang melihat seberapa sensitif prediksi model kita terhadap
+ketepatan asumsi.
+
+Tentu saja, kita dapat membahas model yang lebih besar dan merinci interaksi
+di antara lebih banyak sektor perekonomian;
+model semacam itu biasanya diselesaikan dengan komputer.
+Selain itu, satu model tentu tidak cocok untuk setiap kasus, dan
+memastikan bahwa asumsi yang mendasari suatu model
+masuk akal bagi prediksi tertentu memerlukan pertimbangan para ahli.
+Namun, dengan memperhatikan berbagai batasan tersebut,
+model ini terbukti dalam praktik sebagai perangkat yang bermanfaat dan akurat
+untuk analisis ekonomi.
+Untuk bacaan lebih lanjut, lihat \cite{Leontief1951} dan \cite{Leontief1965}.
+
+
+\begin{exercises}
+  \item
+    Dengan menggunakan sistem baja-otomotif di atas, perkirakan
+    produksi total tahun depan untuk kasus-kasus berikut.
+    \begin{exparts}
+      \partsitem Permintaan eksternal baja tahun depan naik $200$ dari
+         tahun ini, sedangkan permintaan eksternal mobil tidak berubah.
+      \partsitem Permintaan eksternal baja tahun depan naik $100$ dan
+         permintaan eksternal mobil naik $200$.
+      \partsitem Permintaan eksternal baja tahun depan naik $200$ dan
+         permintaan eksternal mobil naik $200$.
+    \end{exparts}
+    \begin{answer}
+      Jawaban ini diperoleh dari \textit{Sage}.
+      \begin{exparts}
+        \partsitem \Sage{} memperoleh $s\approx 25\,952$ dan $a\approx 30\,312$.
+\begin{lstlisting}
+sage: var('s,a')
+(s, a)
+sage: system = [(20053/25448)*s -  (2664/30346)*a == 17789,
+....:             -(48/25448)*s + (21316/30346)*a == 21243]
+sage: solve(system, s,a)
+[[s == (2772443022712/106830469), a == (6476439541923/213660938)]]
+sage: n(2772443022712/106830469), n(6476439541923/213660938)
+(25951.8005365305, 30311.7621898814)          
+\end{lstlisting}
+        \partsitem \Sage{} memperoleh $s\approx 25\,857$ dan $a\approx 30\,596$.
+\begin{lstlisting}
+sage: system = [(20053/25448)*s -  (2664/30346)*a == 17689,
+....:             -(48/25448)*s + (21316/30346)*a == 21443]
+sage: solve(system, s,a)
+[[s == (2762271457112/106830469), a == (6537219545323/213660938)]]
+sage: n(2762271457112/106830469), n(6537219545323/213660938)
+(25856.5883213711, 30596.2316112410)
+\end{lstlisting}
+        \partsitem \Sage{} memperoleh $s\approx 25\,984$ dan $a\approx 30\,597$.
+\begin{lstlisting}
+sage: system = [(20053/25448)*s -  (2664/30346)*a == 17789,
+....:             -(48/25448)*s + (21316/30346)*a == 21443]
+sage: solve(system, s,a)
+[[s == (2775832696312/106830469), a == (6537292375723/213660938)]]
+sage: n(2775832696312/106830469), n(6537292375723/213660938)
+(25983.5300012771, 30596.5724802865)          
+\end{lstlisting}
+      \end{exparts}
+    \end{answer}
+  \item
+    Untuk sistem baja-otomotif,
+    dengan perkiraan permintaan eksternal $17,589$ dan $21,243$
+    yang dibahas di atas, berapakah nilai baja yang digunakan oleh industri
+    baja, nilai baja yang digunakan oleh industri otomotif, dan seterusnya?
+    \begin{answer}
+      Sesi \textit{Sage} ini
+\begin{lstlisting}
+sage: var('a,s')
+(a, s)
+sage: eqns=[(20053/25448)*s - (2664/30346)*a == 17589,
+....:       (-48/25448)*s + (21316/30346)*a == 21243] 
+sage: solve(eqns, s, a)
+[[s == (2745320544312/106830469), a == (6476293881123/213660938)]]
+sage: s_by_s = (5395/25448)*2745320544312/106830469
+sage: s_by_s
+582010544505/106830469
+sage: n(s_by_s)
+5447.98267716114
+sage: s_by_a = (2664/30346)*6476293881123/213660938  
+sage: n(s_by_a)
+2660.93449955743
+sage: a_by_s = (48/25448)*2745320544312/106830469
+sage: n(a_by_s)
+48.4713936058822
+sage: a_by_a = (9030/30346)*6476293881123/213660938
+sage: n(a_by_a)
+9019.60905818451        
+\end{lstlisting}
+      menghasilkan tabel berikut.
+      \begin{center}
+        \begin{tabular}{r|rrrr}
+         \multicolumn{1}{c}{\ }  %put the | in the right place
+         &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                \textit{digunakan oleh} \\[-.65ex] \textit{baja}
+                             \end{tabular}}
+         &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                \textit{digunakan oleh} \\[-.65ex] \textit{otomotif}
+                             \end{tabular}}
+         &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                \textit{digunakan oleh} \\[-.65ex] \textit{lainnya}
+                              \end{tabular}}
+         &\textit{total}                                                \\
+         \cline{2-5}
+         \begin{tabular}{r} \textit{nilai} \\[-.65ex] \textit{baja} \end{tabular}
+           &$5\,448$  &$2\,661$  &$17\,589$     &$25\,698$                          \\
+         \begin{tabular}{r} \textit{nilai} \\[-.65ex] \textit{mobil} \end{tabular}
+           &$48$      &$9\,020$  &$21\,243$     &$30\,311$
+        \end{tabular}
+      \end{center}
+      Sebagai pembanding, berikut tabel semula.
+      \begin{center}
+        \begin{tabular}{r|rrrr}
+         \multicolumn{1}{c}{\ }  %put the | in the right place
+         &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                \textit{digunakan oleh} \\[-.65ex] \textit{baja}
+                             \end{tabular}}
+         &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                \textit{digunakan oleh} \\[-.65ex] \textit{otomotif}
+                             \end{tabular}}
+         &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                \textit{digunakan oleh} \\[-.65ex] \textit{lainnya}
+                              \end{tabular}}
+         &\textit{total}                                                \\
+         \cline{2-5}
+         \begin{tabular}{r} \textit{nilai} \\[-.65ex] \textit{baja} \end{tabular}
+           &$5\,395$  &$2\,664$  &$17\,389$     &$25\,448$                          \\
+         \begin{tabular}{r} \textit{nilai} \\[-.65ex] \textit{mobil} \end{tabular}
+           &$48$      &$9\,030$  &$21\,268$     &$30\,346$
+        \end{tabular}
+      \end{center}
+    \end{answer}
+  \item
+    Dalam sistem baja-otomotif, rasio penggunaan baja oleh industri
+    otomotif adalah $2,664/30,346$, yakni sekitar $0.0878$.
+    Bayangkan suatu proses baru untuk membuat mobil mengurangi
+    rasio tersebut menjadi $.0500$.
+    \begin{exparts}
+      \partsitem Bagaimana prediksi produksi total tahun depan akan
+        berubah dibandingkan dengan contoh pertama yang dibahas
+        di atas (yakni, dengan menetapkan permintaan eksternal tahun depan
+        sebesar $17,589$ untuk baja dan $21,243$ untuk mobil)?
+      \partsitem Prediksikan total tahun depan jika, selain itu,
+        permintaan eksternal terhadap
+        mobil naik menjadi $21,500$ karena mobil baru lebih murah.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem \Sage{} memberikan $s=24,244$, $a=30,307$.
+\begin{lstlisting}
+ sage: var('s,a')
+(s, a)
+sage: system = [(20053/25448)*s -  0.0500*a == 17589,
+....:             -(48/25448)*s + (21316/30346)*a == 21243]
+sage: solve(system, s,a)
+[[s == (12951731858499/534221147), a == (32381469405615/1068442294)]]
+sage: n(12951731858499/534221147), n(32381469405615/1068442294)
+(24244.1392131918, 30307.1767071166)         
+\end{lstlisting}
+        \partsitem Sage memberikan $s=24,267$, $a=30,673$.
+\begin{lstlisting}
+sage: system = [(20053/25448)*s -  0.0500*a == 17589,
+....:             -(48/25448)*s + (21316/30346)*a == 21500]
+sage: solve(system, s,a)
+[[s == (12964136043940/534221147), a == (16386224431390/534221147)]]
+sage: n(12964136043940/534221147), n(16386224431390/534221147)
+(24267.3584090448, 30673.1107957993)          
+\end{lstlisting}
+      \end{exparts}
+    \end{answer}
+  \item
+    Tabel ini memberikan angka untuk sistem otomotif-baja dari
+    tahun yang berbeda, yakni 1947 (lihat \cite{Leontief1951}).
+    Satuannya adalah miliaran dolar tahun 1947.
+    \begin{center}
+      \begin{tabular}{r|rrrr}
+             \multicolumn{1}{c}{\ }  % omit the | 
+             &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                   \textit{digunakan oleh} \\[-.65ex] \textit{baja}
+                                 \end{tabular}}
+             &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                   \textit{digunakan oleh} \\[-.65ex] \textit{otomotif}
+                                 \end{tabular}}
+             &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                   \textit{digunakan oleh} \\[-.65ex] \textit{lainnya}
+                                 \end{tabular}}
+             &\multicolumn{1}{r}{\textit{total}}             \\ \cline{2-5}
+        \begin{tabular}{r} \textit{nilai} \\[-.65ex]
+                           \textit{baja}
+            \end{tabular}
+            &$6.90$  &$1.28$  &   &$18.69$                              \\
+        \begin{tabular}{r} \textit{nilai} \\[-.65ex] \textit{mobil}
+            \end{tabular}
+            &$0$     &$4.40$  &   &$14.27$
+      \end{tabular}
+    \end{center}
+    \begin{exparts}
+      \partsitem Hitung keluaran total jika permintaan eksternal
+         tahun depan adalah: permintaan baja naik $10$\% dan permintaan
+         mobil naik $15$\%.
+      \partsitem Bagaimana perbandingan rasio-rasio ini dengan rasio yang
+         diberikan di atas dalam pembahasan perekonomian tahun 1958?
+      \partsitem Selesaikan persamaan tahun 1947 dengan permintaan eksternal
+         tahun 1958 (perhatikan perbedaan satuannya; satu dolar tahun 1947
+         dapat membeli kira-kira sebanyak yang dapat dibeli oleh
+         \$$1.30$ pada tahun 1958).
+         Seberapa jauh prediksi keluaran totalnya meleset?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem
+          Berikut persamaannya.
+	  \begin{equation*}
+	    \begin{linsys}{2}
+	       (11.79/18.69)s   &-   &(1.28/14.27)a &= &10.51 \\
+	       -(0/18.69)s   &+   &(9.87/14.27)a &= &9.87
+	    \end{linsys}
+	  \end{equation*}
+          \textit{Sage} memberikan hasil ini (termasuk pemeriksaan awal).
+\begin{lstlisting}
+sage: var('a,s')
+(a, s)
+sage: eqns=[(11.79/18.69)*s - (1.28/14.27)*a == 10.51,
+....:       (-0)*s         + (9.87/14.27)*a == 9.87]
+sage: solve(eqns,s,a)
+[[s == (1869/100), a == (1427/100)]]
+sage: n(1869/100)
+18.6900000000000
+sage: n(1427/100)
+14.2700000000000
+sage: eqns=[(11.79/18.69)*s - (1.28/14.27)*a == 11.561,
+....:       (-0)*s         + (9.87/14.27)*a == 11.3505]
+sage: solve(eqns,s,a)
+[[s == (8119559/393000), a == (32821/2000)]]
+sage: n(8119559/393000)
+20.6604554707379
+sage: n(32821/2000)
+16.4105000000000            
+\end{lstlisting}
+	\partsitem
+          Berikut rasio tahun 1947, hingga tiga tempat desimal.
+	  \begin{center}
+            \begin{tabular}{r|cc}
+               1947   &\textit{oleh baja}  &\textit{oleh otomotif}  \\ \hline
+               \textit{penggunaan baja}  &$(6.90/18.69)=0.369$ &$(1.28/14.27)=0.090$  \\
+               \textit{penggunaan mobil}  &$(0/18.69)=0.00$ &$(4.40/14.27)=0.308$
+            \end{tabular}
+          \end{center}
+          Berikut rasio tahun 1958.
+          \begin{center}
+            \begin{tabular}{r|cc}
+               1958           &\textit{oleh baja}  &\textit{oleh otomotif}  \\ \hline
+               \textit{penggunaan baja}  &$(5395/25448)=0.212$ &$(2664/30346)=0.088$  \\
+               \textit{penggunaan mobil}  &$(48/25448)=0.002$ &$(9030/30346)=0.298$
+            \end{tabular}
+          \end{center}
+	\partsitem
+          Permintaan eksternal pada tahun 1958 adalah $17.589$ dan~$21.243$,
+          dalam miliaran dolar tahun 1958.
+          Dalam dolar tahun 1947, nilainya adalah $(17.589/1.3)=13.53$ dan
+          $(21.243/1.3)=16.34$.
+          \textit{Sage} memberikan angka-angka berikut.
+\begin{lstlisting}
+sage: eqns=[(11.79/18.69)*s - (1.28/14.27)*a == 13.53,
+....:       (-0)*s         + (9.87/14.27)*a == 16.34]
+sage: solve(eqns,s,a)
+[[s == (137466107/5541300), a == (1165859/49350)]]
+sage: n(137466107/5541300)
+24.8075554472777
+sage: n(1165859/49350)
+23.6242958459980            
+\end{lstlisting}
+      Dengan mengonversi kembali ke dolar tahun 1958 melalui perkalian dengan
+      $1.3$, kita memperoleh $32.25$ dan~$30.71$.
+      Dibandingkan dengan prediksi berdasarkan data tahun 1958, yakni sekitar
+      $25.70$ dan~$30.31$, hasil tersebut lebih tinggi sekitar $6.55$ dan
+      $0.40$, atau masing-masing sekitar $25.5$\% dan $1.3$\%.
+      \end{exparts}
+    \end{answer}
+  \item
+    Prediksikan produksi total setiap sektor pada tahun depan untuk ketiga
+    sektor perekonomian hipotetis yang ditunjukkan di bawah ini
+    \begin{center}
+      \begin{tabular}{r|rrrrr}
+             \multicolumn{1}{c}{\ }  % omit the |
+             &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                     \textit{digunakan oleh} \\[-.65ex] \textit{pertanian}
+                                 \end{tabular}}
+             &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                    \textit{digunakan oleh} \\[-.65ex] \textit{kereta api}
+                                 \end{tabular}}
+             &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                    \textit{digunakan oleh} \\[-.65ex]
+                                    \textit{pelayaran}
+                                 \end{tabular}}
+             &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                   \textit{digunakan oleh} \\[-.65ex] \textit{lainnya}
+                                 \end{tabular}}
+             &\textit{total}                                                \\
+             \cline{2-6}
+        \begin{tabular}{r} \textit{nilai} \\[-.65ex] \textit{pertanian}
+             \end{tabular}
+             &$25$  &$50$  &$100$ &     &$800$             \\
+        \begin{tabular}{r} \textit{nilai} \\[-.65ex] \textit{kereta api}
+             \end{tabular}
+             &$25$  &$50$  &$50$  &     &$300$             \\
+        \begin{tabular}{r} \textit{nilai} \\[-.65ex] \textit{pelayaran}
+             \end{tabular}
+             &$15$  &$10$  &$0$   &     &$500$
+      \end{tabular}
+    \end{center}
+    jika permintaan eksternal tahun depan adalah sebagaimana dinyatakan.
+    \begin{exparts}
+      \partsitem $625$ untuk pertanian, $200$ untuk kereta api, $475$ untuk pelayaran
+      \partsitem $650$ untuk pertanian, $150$ untuk kereta api, $450$ untuk pelayaran
+    \end{exparts}
+    % ID-EDITION-SUPPLIED-ANSWER: not present in the pinned authority source
+    % or in the official jhanswer.pdf; independently derived and verified.
+    \begin{answer}
+      \textit{Catatan edisi Indonesia: buku jawaban resmi tidak memuat
+      jawaban untuk latihan ini.  Penyelesaian berikut diturunkan secara
+      independen dari model di atas.}
+      Misalkan $f$, $r$, dan $p$ berturut-turut menyatakan produksi total
+      pertanian, kereta api, dan pelayaran tahun depan, dan misalkan
+      $d_f$, $d_r$, dan $d_p$ menyatakan permintaan eksternalnya.  Rasio
+      masukan terhadap keluaran memberikan sistem
+      \begin{equation*}
+        \begin{linsys}{3}
+          (31/32)f  &- &(1/6)r  &- &(1/5)p  &= &d_f \\
+          -(1/32)f  &+ &(5/6)r  &- &(1/10)p &= &d_r \\
+          -(3/160)f &- &(1/30)r &+ &p       &= &d_p.
+        \end{linsys}
+      \end{equation*}
+      \begin{exparts}
+        \partsitem Untuk $(d_f,d_r,d_p)=(625,200,475)$, penyelesaiannya
+          adalah
+          \begin{align*}
+            f&=\frac{3\,074\,400}{3\,817}\approx805{,}449, &
+            r&=\frac{1\,260\,900}{3\,817}\approx330{,}338, &
+            p&=\frac{1\,912\,750}{3\,817}\approx501{,}113.
+          \end{align*}
+        \partsitem Untuk $(d_f,d_r,d_p)=(650,150,450)$, penyelesaiannya
+          adalah
+          \begin{align*}
+            f&=\frac{3\,110\,400}{3\,817}\approx814{,}881, &
+            r&=\frac{1\,020\,900}{3\,817}\approx267{,}461, &
+            p&=\frac{1\,810\,000}{3\,817}\approx474{,}194.
+          \end{align*}
+      \end{exparts}
+    \end{answer}
+  \item
+      Tabel ini menunjukkan hubungan di antara tiga segmen suatu
+      perekonomian (lihat \cite{BangorRpt}).
+      \begin{center}
+        \begin{tabular}{r|rrrrr}
+             \multicolumn{1}{c}{\ }  % omit the |
+             &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                    \textit{digunakan oleh} \\[-.65ex] \textit{pangan}
+                                 \end{tabular}}
+             &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                   \textit{digunakan oleh} \\[-.65ex]
+                                   \textit{grosir}
+                                 \end{tabular}}
+             &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                    \textit{digunakan oleh} \\[-.65ex] \textit{eceran}
+                                 \end{tabular}}
+             &\multicolumn{1}{r}{\begin{tabular}[b]{@{}c@{}}
+                                    \textit{digunakan oleh} \\[-.65ex] \textit{lainnya}
+                                 \end{tabular}}
+             &\textit{total}                                             \\
+          \cline{2-6}
+          \begin{tabular}[b]{r} \textit{nilai} \\[-.65ex] \textit{pangan}
+              \end{tabular}
+              &$0$    &$2\,318$   &$4\,679$   &     &$11\,869$   \\
+          \begin{tabular}[b]{r} \textit{nilai} \\[-.65ex] \textit{grosir}
+              \end{tabular}
+              &$393$  &$1\,089$   &$22\,459$  &     &$122\,242$   \\
+          \begin{tabular}[b]{r} \textit{nilai} \\[-.65ex] \textit{eceran}
+              \end{tabular}
+              &$3$    &$53$       &$75$       &     &$116\,041$   \\
+        \end{tabular}
+      \end{center}
+      Kita akan melakukan Analisis Masukan-Keluaran pada
+      sistem ini.
+      \begin{exparts}
+        \partsitem Lengkapi angka permintaan eksternal
+          tahun ini.
+        \partsitem Susun sistem linearnya dengan membiarkan permintaan
+          eksternal tahun depan kosong.
+        \partsitem Selesaikan sistem ketika permintaan eksternal tahun depan
+          diperoleh dengan menaikkan permintaan eksternal tahun ini
+          sebesar $10$\%.
+          Apakah kegiatan usaha total ketiga sektor meningkat sebesar
+          $10$\%?
+          Apakah ketiganya bahkan meningkat dengan laju yang sama?
+        \partsitem Selesaikan sistem ketika permintaan eksternal tahun depan
+          diperoleh dengan menurunkan permintaan eksternal tahun ini
+          sebesar $7$\%.
+          (Studi yang menjadi sumber angka-angka ini menyimpulkan bahwa
+          akibat penutupan fasilitas militer setempat, pendapatan pribadi
+          keseluruhan di wilayah tersebut akan turun $7$\%, sehingga ini
+          dapat menjadi perkiraan awal tentang apa yang sebenarnya akan terjadi.)
+      \end{exparts}
+      % ID-EDITION-SUPPLIED-ANSWER: not present in the pinned authority source
+      % or in the official jhanswer.pdf; independently derived and verified.
+      \begin{answer}
+        \textit{Catatan edisi Indonesia: buku jawaban resmi tidak memuat
+        jawaban untuk latihan ini.  Penyelesaian berikut diturunkan secara
+        independen dari model di atas.}
+        Misalkan $p$, $g$, dan $e$ berturut-turut menyatakan produksi total
+        sektor pangan, grosir, dan eceran tahun depan.
+        \begin{exparts}
+          \partsitem Permintaan eksternal tahun ini adalah
+            \begin{align*}
+              d_p&=11\,869-0-2\,318-4\,679=4\,872,\\
+              d_g&=122\,242-393-1\,089-22\,459=98\,301,\\
+              d_e&=116\,041-3-53-75=115\,910.
+            \end{align*}
+          \partsitem Dengan $d_p$, $d_g$, dan $d_e$ sebagai permintaan
+            eksternal tahun depan, sistem linearnya adalah
+            \begin{equation*}
+              \begin{linsys}{3}
+                p              &- &(2\,318/122\,242)g
+                                  &- &(4\,679/116\,041)e &= &d_p \\
+                -(393/11\,869)p &+ &(121\,153/122\,242)g
+                                  &- &(22\,459/116\,041)e &= &d_g \\
+                -(3/11\,869)p   &- &(53/122\,242)g
+                                  &+ &(115\,966/116\,041)e &= &d_e.
+              \end{linsys}
+            \end{equation*}
+          \partsitem Kenaikan $10\%$ memberikan permintaan eksternal
+            $(5\,359{,}2,\ 108\,131{,}1,\ 127\,501)$ dan penyelesaian
+            \[
+              (p,g,e)=(13\,055{,}9,\ 134\,466{,}2,\ 127\,645{,}1).
+            \]
+            Ya.  Produksi total ketiga sektor meningkat tepat $10\%$;
+            ketiganya meningkat dengan laju yang sama.
+          \partsitem Penurunan $7\%$ memberikan permintaan eksternal
+            $(4\,530{,}96,\ 91\,419{,}93,\ 107\,796{,}30)$ dan penyelesaian
+            \[
+              (p,g,e)=(11\,038{,}17,\ 113\,685{,}06,\ 107\,918{,}13).
+            \]
+            Dalam hal ini produksi total ketiga sektor juga turun tepat
+            $7\%$.
+        \end{exparts}
+      \end{answer}
+\end{exercises}
+\index{Analisis Masukan-Keluaran|)}
+\endinput

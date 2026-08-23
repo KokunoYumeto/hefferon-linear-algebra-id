@@ -1,0 +1,513 @@
+% Chapter 4, Topic _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2020-Apr-08
+\topic{Grafika Komputer}
+\index{grafika komputer|(}
+Topik sebelumnya tentang Geometri Proyektif memberikan model berikut tentang
+cara mata kita, atau sebuah kamera, melihat dunia.
+\begin{center} 
+  \vcenteredhbox{\includegraphics{det/mp/ch4.14}}
+\end{center}
+Semua titik pada suatu garis yang melalui titik asal diproyeksikan ke tempat
+yang sama.
+
+Dalam topik tersebut, kita mendefinisikan bahwa bagi sebarang vektor tak nol
+$\vec{v}\in\Re^3$, \definend{titik $p$ pada bidang proyektif}
+\index{titik!pada bidang proyektif} yang terkait adalah himpunan
+$\set{k\vec{v}\suchthat \text{$k\in\Re$ dan $k\neq 0$}}$.
+Himpunan ini terdiri atas vektor-vektor tak nol yang terletak pada garis yang
+sama melalui titik asal dengan $\vec{v}$.
+
+Untuk mendeskripsikan sebuah titik proyektif, kita dapat memberikan sebarang
+vektor wakil pada garis tersebut.
+Karena itu, setiap vektor berikut merepresentasikan titik proyektif yang sama.
+\begin{equation*}
+  \colvec[r]{1 \\ 2 \\ 3}
+  \qquad
+  \colvec{1/3 \\ 2/3 \\ 1}
+  \qquad
+  \colvec[r]{-2 \\ -4 \\ -6}
+\end{equation*} 
+Masing-masing merupakan \definend{vektor koordinat homogen}
+\index{koordinat!homogen}%
+\index{vektor koordinat homogen}\index{vektor!koordinat homogen}
+bagi titik~$p$.
+Dua vektor koordinat homogen (yang menurut definisi tidak nol)
+\begin{equation*}
+  \tilde{p}_1=\colvec{a_1 \\ b_1 \\ c_1}
+  \qquad
+  \tilde{p}_2=\colvec{a_2 \\ b_2 \\ c_2}
+\end{equation*}
+merepresentasikan titik proyektif yang sama jika terdapat faktor skala
+$s\neq 0$ sedemikian sehingga $s\tilde{p}_1=\tilde{p}_2$.
+
+Dari tak hingga banyak wakil suatu titik dengan $c\neq0$, kita sering
+menggunakan wakil yang komponen ketiganya adalah~$1$.
+Hal ini sama dengan memproyeksikan ke bidang $z=1$.
+Titik dengan $c=0$ terletak pada garis di tak hingga dan tidak memiliki wakil
+pada bagan hingga ini.
+\begin{center} 
+  \vcenteredhbox{\includegraphics{det/mp/ch4.18}}
+\end{center}
+
+Dalam topik ini, kita akan menunjukkan cara menggunakan gagasan-gagasan tersebut
+untuk menghasilkan beberapa efek grafika komputer.
+Untuk itu, kita ambil gambar sebelumnya dan menggambarnya kembali tanpa bola,
+dengan proyektor film di titik asal dan bidang $z=1$ tampak seperti layar
+bioskop.
+\begin{center} 
+  \vcenteredhbox{\includegraphics{det/mp/ch4.60}}
+\end{center}
+Bagi $c\neq0$, hal ini mengaitkan vektor-vektor dalam ruang tiga dimensi pada
+garis abu-abu dengan $p$~pada bidang layar.
+\begin{equation*}
+  \tilde{p}=\colvec{a \\ b \\ c} 
+  \mapsto 
+  p=\colvec{x \\ y}=\colvec{a/c \\ b/c}
+\end{equation*}
+
+Kita dapat menyesuaikan hal-hal yang telah kita pelajari tentang matriks untuk
+melakukan transformasi.
+Rotasi\index{rotasi} merupakan salah satu contohnya.
+Matriks berikut merotasi bidang~$z=1$ terhadap titik asal sejauh sudut~$\theta$.
+\begin{equation*}
+  \begin{mat}
+    \cos\theta  &-\sin\theta  &0  \\
+    \sin\theta  &\cos\theta   &0  \\
+    0           &0            &1  
+  \end{mat}
+  \colvec{x \\ y \\ 1}
+  =
+  \colvec{\cos\theta\cdot x -\sin\theta\cdot y  \\
+         \sin\theta\cdot x +\cos\theta\cdot y  \\ 
+         1}
+\end{equation*}
+Perhatikan bahwa matriks tersebut bekerja pada sebarang vektor koordinat
+homogen. Jika kita menerapkan matriks
+\begin{equation*}
+  \begin{mat}
+    \cos\theta  &-\sin\theta  &0  \\
+    \sin\theta  &\cos\theta   &0  \\
+    0           &0            &1  
+  \end{mat}
+  \colvec{a \\ b \\ c}
+  =
+  \colvec{\cos\theta\cdot a -\sin\theta\cdot b  \\
+         \sin\theta\cdot a +\cos\theta\cdot b  \\ 
+         c}
+\end{equation*}
+dan kemudian berpindah ke bidang~$z=1$,
+\begin{equation*}
+  \colvec{\cos\theta\cdot a -\sin\theta\cdot b  \\
+         \sin\theta\cdot a +\cos\theta\cdot b  \\ 
+         c}
+  \mapsto
+  \colvec{(\cos\theta\cdot a -\sin\theta\cdot b)/c  \\
+         (\sin\theta\cdot a +\cos\theta\cdot b)/c  \\ 
+         1}
+\end{equation*}
+kita memperoleh hasil yang sama seperti jika kita terlebih dahulu berpindah ke
+bidang tersebut lalu menerapkan matriks.
+\begin{equation*}
+  \begin{mat}
+    \cos\theta  &-\sin\theta  &0  \\
+    \sin\theta  &\cos\theta   &0  \\
+    0           &0            &1  
+  \end{mat}
+  \colvec{a/c \\ b/c \\ 1}
+  =
+  \colvec{\cos\theta\cdot a/c -\sin\theta\cdot b/c  \\
+         \sin\theta\cdot a/c +\cos\theta\cdot b/c  \\ 
+         1}
+\end{equation*}
+
+Jadi, bekerja dengan koordinat homogen tidak menimbulkan masalah.
+Namun, apa keuntungannya?
+
+Operasi translasi dalam grafika komputer,\index{translasi} yaitu menggeser
+objek dari satu tempat ke tempat lain, bukan merupakan transformasi linear
+karena tidak mempertahankan titik asal.
+Namun, jika kita bekerja dengan koordinat homogen, kita dapat menggunakan
+matriks.
+Matriks berikut mentranslasikan titik-titik pada bidang yang ditinjau sejauh
+$t_x$ dalam arah~$x$ dan $t_y$ dalam arah~$y$.
+\begin{equation*}
+  \begin{mat}
+    1  &0  &t_x  \\
+    0  &1  &t_y  \\
+    0  &0  &1  
+  \end{mat}
+  \colvec{a \\ b \\ c}
+  =
+  \colvec{a+t_x\cdot c  \\  
+          b+t_y\cdot c  \\ 
+          c}
+  \mapsto
+  \colvec{a/c+t_x  \\  
+          b/c+t_y  \\ 
+          1}
+\end{equation*}
+Artinya, pada bidang yang ditinjau, matriks ini menggeser
+$\binom{a/c}{b/c}$ ke $\binom{a/c+t_x}{b/c+t_y}$.
+Dengan demikian, koordinat homogen memungkinkan kita menggunakan matriks.
+
+Lalu, apa keuntungan menggunakan matriks-matriks ini?
+Apa yang kita peroleh dari koordinat tambahan tersebut?
+Andaikan kita sedang membuat film dengan grafika komputer.
+Pada suatu adegan, kamera bergerak menyamping dan berputar sekaligus.
+Setiap titik dalam adegan harus ditranslasikan sekaligus dirotasikan.
+Alih-alih meminta komputer melakukan dua operasi pada setiap titik, kita dapat
+mengalikan kedua matriks terlebih dahulu. Komputer kemudian hanya menerapkan
+satu operasi pada setiap titik, yaitu mengalikannya dengan matriks hasil.
+Hal ini sangat mempercepat dan menyederhanakan perhitungan.
+
+Berikut beberapa contoh efek yang dapat kita peroleh.
+Kita telah membahas rotasi.
+Gambar berikut menunjukkan rotasi sebesar setengah radian.
+\begin{center} 
+  \vcenteredhbox{\includegraphics{det/mp/ch4.61}}
+  \quad$\mapsto$\quad
+  \vcenteredhbox{\includegraphics{det/mp/ch4.62}}
+\end{center}
+Berikut translasi dengan $t_x=1.5$ dan~$t_y=0.5$.
+\begin{center} 
+  \vcenteredhbox{\includegraphics{det/mp/ch4.61}}
+  \quad$\mapsto$\quad
+  \vcenteredhbox{\includegraphics{det/mp/ch4.67}}
+\end{center}
+
+Berikutnya adalah penskalaan.
+Matriks ini mengubah skala objek pada bidang sasaran dengan faktor~$s$ dalam
+arah~$x$ dan faktor~$t$ dalam arah~$y$.
+\begin{equation*}
+  \begin{mat}
+    s  &0  &0  \\
+    0  &t  &0  \\
+    0  &0  &1  
+  \end{mat}
+  \colvec{a/c \\ b/c \\ 1}
+  =
+  \colvec{s\cdot a/c  \\  
+          t\cdot b/c \\ 
+          1}
+\end{equation*}
+Dalam gambar berikut, kita mengubah skala dalam arah~$x$ dengan faktor $s=2.5$
+dan dalam arah~$y$ dengan faktor~$t=0.75$.
+\begin{center} 
+  \vcenteredhbox{\includegraphics{det/mp/ch4.61}}
+  \quad$\mapsto$\quad
+  \vcenteredhbox{\includegraphics{det/mp/ch4.63}}
+\end{center}
+
+Jika kita mengambil $s=t$, seluruh bentuk berubah skala.
+Sebagai contoh, jika kita merangkai bingkai-bingkai dengan $s=t=1.10$, dalam
+film tersebut objek akan tampak semakin mendekati kita.
+\begin{center} 
+  \vcenteredhbox{\includegraphics{det/mp/ch4.61}}
+  \quad
+  \vcenteredhbox{\includegraphics{det/mp/ch4.68}}
+  \quad
+  \vcenteredhbox{\includegraphics{det/mp/ch4.69}}
+  \quad
+  \vcenteredhbox{\includegraphics{det/mp/ch4.70}}
+\end{center}
+
+Kita dapat mencerminkan objek.
+Matriks berikut mencerminkannya terhadap garis $y=x$.
+\begin{equation*}
+  \begin{mat}
+    0  &1  &0  \\
+    1  &0  &0  \\
+    0  &0  &1  
+  \end{mat}
+  \colvec{a/c \\ b/c \\ 1}
+  =
+  \colvec{b/c  \\  
+          a/c \\ 
+          1}
+\end{equation*}
+Garis putus-putus pada gambar berikut adalah $y=x$.
+\begin{center} 
+  \vcenteredhbox{\includegraphics{det/mp/ch4.61}}
+  \quad$\mapsto$\quad
+  \vcenteredhbox{\includegraphics{det/mp/ch4.64}}
+\end{center}
+
+Matriks berikut mencerminkan objek terhadap $y=-x$.
+\begin{equation*}
+  \begin{mat}
+    0   &-1  &0  \\
+    -1  &0  &0  \\
+    0   &0  &1  
+  \end{mat}
+  \colvec{a/c \\ b/c \\ 1}
+  =
+  \colvec{-b/c  \\  
+          -a/c \\ 
+          1}
+\end{equation*}
+Garis putus-putus di bawah adalah $y=-x$.
+\begin{center} 
+  \vcenteredhbox{\includegraphics{det/mp/ch4.61}}
+  \quad$\mapsto$\quad
+  \vcenteredhbox{\includegraphics{det/mp/ch4.65}}
+\end{center}
+
+Transformasi yang lebih rumit juga dimungkinkan.
+Berikut suatu \definend{geseran}.\index{geseran}
+\begin{equation*}
+  \begin{mat}
+    1   &1  &0  \\
+    0   &1  &0  \\
+    0   &0  &1  
+  \end{mat}
+  \colvec{a/c \\ b/c \\ 1}
+  =
+  \colvec{a/c+b/c  \\  
+          b/c \\ 
+          1}
+\end{equation*}
+Dalam gambar ini, komponen~$y$ titik-titik tidak berubah, sedangkan pada
+komponen~$x$ ditambahkan nilai~$y$.
+\begin{center} 
+  \vcenteredhbox{\includegraphics{det/mp/ch4.61}}
+  \quad$\mapsto$\quad
+  \vcenteredhbox{\includegraphics{det/mp/ch4.66}}
+\end{center}
+
+Keuntungan utama penggunaan matriks untuk semua operasi ini adalah kita dapat
+melakukan hal yang rumit dengan menggabungkan hal-hal sederhana.
+Untuk mencerminkan terhadap garis $y=-x+2$, kita dapat menggunakan tiga matriks
+untuk mentranslasikan bidang sehingga garis cermin itu berimpit dengan
+$y=-x$, mencerminkannya terhadap garis tersebut, lalu mentranslasikannya
+kembali.
+\begin{equation*}
+  \begin{mat}
+    1   &0  &0  \\
+    0   &1  &2  \\
+    0   &0  &1  
+  \end{mat}
+  \begin{mat}
+    0   &-1  &0  \\
+    -1  &0   &0  \\
+    0   &0   &1  
+  \end{mat}
+  \begin{mat}
+    1   &0  &0  \\
+    0   &1  &-2  \\
+    0   &0  &1  
+  \end{mat}
+  \tag{*}
+\end{equation*}
+(Seperti biasa, tindakan yang dilakukan pertama kali dideskripsikan oleh
+matriks paling kanan.
+Artinya, matriks paling kanan menggeser semua titik pada bidang yang ditinjau
+sejauh $-2$ dalam arah~$y$, matriks tengah mencerminkan terhadap $y=-x$, dan
+matriks paling kiri menggeser semua titik kembali.)
+
+Matriks bahkan memungkinkan efek yang lebih rumit.
+Berikut matriks bagi \definend{transformasi afin umum},
+\index{transformasi afin} dan
+\definend{transformasi proyektif umum}.\index{transformasi proyektif}
+\begin{equation*}
+  \begin{mat}
+    d   &e  &f  \\
+    g   &h  &i  \\
+    0   &0  &1  
+  \end{mat}
+  \qquad
+  \begin{mat}
+    d   &e  &f  \\
+    g   &h  &i  \\
+    j   &k  &\ell
+  \end{mat}
+\end{equation*}
+Untuk transformasi proyektif, matriksnya harus nonsingular.
+Namun, deskripsi efek geometris transformasi-transformasi tersebut berada di
+luar cakupan kita.
+
+Terdapat pustaka yang sangat luas mengenai grafika komputer, dan aljabar linear
+memegang peranan penting di dalamnya.
+Salah satu sumber yang sangat baik adalah \cite{Hughes}.
+Bidang ini merupakan perpaduan yang indah antara matematika dan seni; lihat
+\cite{Disney}.
+
+
+
+% ========================================
+\begin{exercises}
+  \item 
+    Hitung hasil kali dalam~($*$).
+    \begin{answer}
+      Perhitungan langsung memberikan hasil kali berikut.
+      \begin{equation*}
+        \begin{mat}
+          1   &0  &0  \\
+          0   &1  &2  \\
+          0   &0  &1  
+        \end{mat}
+        \begin{mat}
+          0   &-1  &0  \\
+          -1  &0   &0  \\
+          0   &0   &1  
+        \end{mat}
+        \begin{mat}
+          1   &0  &0  \\
+          0   &1  &-2  \\
+          0   &0  &1  
+        \end{mat}
+        =
+        \begin{mat}
+         0 &-1 &2 \\
+        -1 &0  &2 \\
+         0 &0  &1
+        \end{mat}
+      \end{equation*}
+    \end{answer}
+% sage: M0 = matrix(QQ, [[1,0,0], [0,1,2], [0,0,1]])
+% sage: M0
+% [1 0 0]
+% [0 1 2]
+% [0 0 1]
+% sage: M1 = matrix(QQ, [[0,-1,0], [-1,0,0], [0,0,1]])
+% sage: M2 = matrix(QQ, [[0,-1,0], [-1,0,0], [0,0,1]])
+% sage: M2 = matrix(QQ, [[1,0,0], [0,1,-2], [0,0,1]])
+% sage: M0*M1*M2
+% [ 0 -1  2]
+% [-1  0  2]
+% [ 0  0  1]
+  \item Cari matriks yang mencerminkan terhadap garis $y=2x$.
+    \begin{answer}
+      Dengan bekerja dalam $\R^2$, misalkan matriks tersebut adalah $M$.
+      Kita memperoleh kedua pemetaan berikut.
+      \begin{equation*}
+        \colvec{1 \\ 2}\mapsto \colvec{1 \\ 2}
+        \qquad
+        \colvec{-2 \\ 1}\mapsto \colvec{2 \\ -1}
+      \end{equation*}
+      (Bagi pemetaan kedua, vektor awal berada pada garis melalui titik asal
+      yang tegak lurus terhadap $y=2x$.)
+      Kita memiliki
+      \begin{equation*}
+        M
+        \begin{mat}
+          1  &-2  \\
+          2  &1
+        \end{mat}
+        =
+        \begin{mat}
+          1  &2  \\
+          2  &-1
+        \end{mat}
+      \end{equation*}
+      Penyelesaian persamaan tersebut memberikan
+      \begin{equation*}
+        M =
+            \begin{mat}
+              1  &2  \\
+              2  &-1
+            \end{mat}
+            \begin{mat}
+              1  &-2  \\
+              2  &1     
+            \end{mat}^{-1}
+          =
+            \begin{mat}
+              -3/5  &4/5 \\
+              4/5   &3/5
+            \end{mat}
+      \end{equation*}
+      sehingga bagi koordinat homogen, matriksnya adalah
+      \begin{equation*}
+      \begin{mat}
+        -3/5  &4/5  &0  \\
+         4/5  &3/5  &0  \\
+           0  &0    &1
+      \end{mat}
+      \end{equation*}
+    \end{answer}
+  \item Cari matriks yang mencerminkan terhadap garis $y=2x-4$.
+    \begin{answer}
+      Geser semua titik ke atas sejauh $4$, cerminkan terhadap garis $y=2x$
+      menggunakan latihan sebelumnya, lalu geser kembali ke bawah sejauh $4$.
+      \begin{equation*}
+      \begin{mat}
+        1  &0  &0  \\
+        0  &1  &-4 \\
+        0  &0  &1
+      \end{mat}
+      \begin{mat}
+        -3/5  &4/5  &0  \\
+         4/5  &3/5  &0  \\
+           0  &0    &1
+      \end{mat}
+      \begin{mat}
+        1  &0  &0  \\
+        0  &1  &4 \\
+        0  &0  &1
+      \end{mat}
+      =
+      \begin{mat}
+        -3/5  &4/5  &16/5  \\
+         4/5  &3/5  &-8/5 \\
+           0  &0    &1
+      \end{mat}
+      \end{equation*}
+    \end{answer}
+% sage: M0 = matrix(QQ, [[1,0,0], [0,1,-4], [0,0,1]])
+% sage: M1 = matrix(QQ, [[-3/5,4/5,0], [4/5,3/5,0], [0,0,1]])
+% sage: M2 = matrix(QQ, [[1,0,0], [0,1,4], [0,0,1]])
+% sage: M0*M1*M2
+% [-3/5  4/5 16/5]
+% [ 4/5  3/5 -8/5]
+% [   0    0    1]
+  \item 
+    Rotasi dan translasi merupakan operasi kaku.
+    Apa matriks untuk rotasi yang diikuti oleh translasi?
+    \begin{answer}
+    \begin{equation*}
+      \begin{mat}
+        1  &0  &t_x  \\
+        0  &1  &t_y  \\
+        0  &0  &1
+      \end{mat}
+      \begin{mat}
+        \cos\theta &-\sin\theta  &0 \\
+        \sin\theta &\cos\theta   &0 \\
+        0          &0            &1
+      \end{mat}
+      =
+      \begin{mat}
+        \cos\theta  &-\sin\theta  &t_x  \\
+        \sin\theta  &\cos\theta   &t_y  \\
+        0           &0            &1
+      \end{mat}
+    \end{equation*}
+    \end{answer}
+  \item Koordinat homogen diperluas ke manipulasi ruang tiga dimensi dengan cara
+    yang wajar:~setiap titik proyektif merupakan himpunan vektor tak nol
+    berkomponen empat yang satu sama lain merupakan kelipatan skalar.
+    Berikan matriks untuk melakukan rotasi terhadap sumbu~$z$ dan matriks untuk
+    rotasi terhadap sumbu~$y$.
+    \begin{answer}
+    Berikut kedua matriks $\nbyn{4}$ tersebut. Matriks kedua menggunakan
+    konvensi bahwa sudut positif memutar sumbu~$x$ menuju sumbu~$z$.
+    \begin{equation*}
+      \begin{mat}
+        \cos\theta  &-\sin\theta  &0  &0  \\
+        \sin\theta  &\cos\theta   &0  &0  \\
+        0           &0            &1  &0  \\
+        0           &0            &0  &1  
+      \end{mat}
+      \qquad
+      \begin{mat}
+        \cos\theta  &0  &-\sin\theta  &0   \\
+        0           &1  &0            &0  \\
+        \sin\theta  &0  &\cos\theta   &0   \\
+        0           &0  &0            &1  
+      \end{mat}
+    \end{equation*}    
+    \end{answer}
+\end{exercises}
+\index{grafika komputer|)}
+\endinput

@@ -1,0 +1,2653 @@
+% Chapter 3, Section 5 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\section{Perubahan Basis}
+\index{perubahan basis|(}
+Representasi berubah mengikuti basisnya.
+Sebagai contoh, terhadap basis $\stdbasis_2$ dan
+\begin{equation*}
+  B=\sequence{\colvec{1 \\ 1},\colvec{1 \\ -1}}
+\end{equation*}
+$\vec{e}_1\in\Re^2$ memiliki representasi-representasi berbeda berikut.
+\begin{equation*}
+  \rep{\vec{e}_1}{\stdbasis_2}=\colvec{1 \\ 0}
+  \qquad
+  \rep{\vec{e}_1}{B}=\colvec{1/2 \\ 1/2}
+\end{equation*}
+Hal yang sama berlaku bagi pemetaan:
+terhadap pasangan basis $\stdbasis_2,\stdbasis_2$ dan $\stdbasis_2,B$,
+pemetaan identitas memiliki representasi berikut.
+\begin{equation*}
+  \rep{\text{id}}{\stdbasis_2,\stdbasis_2}=
+   \begin{mat}[r]
+     1  &0  \\
+     0  &1
+   \end{mat}
+   \qquad
+  \rep{\text{id}}{\stdbasis_2,B}=
+   \begin{mat}[r]
+     1/2  &1/2  \\
+     1/2  &-1/2
+   \end{mat}
+\end{equation*}
+Bagian ini menunjukkan cara menerjemahkan di antara representasi-representasi.
+Artinya, kita akan menghitung bagaimana representasi berubah ketika basisnya
+berubah.
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Mengubah Representasi Vektor}
+Ketika mengubah
+$\rep{\vec{v}}{B}$ menjadi $\rep{\vec{v}}{D}$
+vektor yang mendasarinya, $\vec{v}$, tidak berubah.
+Jadi, penerjemahan antara kedua cara menyatakan vektor ini dilakukan oleh
+pemetaan identitas pada ruang tersebut, yang dideskripsikan sedemikian sehingga
+vektor-vektor ruang domain direpresentasikan terhadap $B$ dan vektor-vektor
+ruang kodomain direpresentasikan terhadap $D$.
+\index{diagram panah}
+%<*ChangeRepresentationOfVectorArrowDiagram>
+\begin{equation*}
+  \begin{CD}
+    V_{\wrt{B}}                      \\
+    @V{\text{\scriptsize$\identity$}} VV   \\
+    V_{\wrt{D}}
+  \end{CD}
+\end{equation*}
+(Diagram ini vertikal agar sesuai dengan diagram-diagram dalam subbagian
+berikutnya.)
+%</ChangeRepresentationOfVectorArrowDiagram>
+
+\begin{definition}  \label{df:ChangeOfBasisMatrix}
+%<*df:ChangeOfBasisMatrix>
+\definend{Matriks perubahan basis}\index{vektor!representasi}%
+\index{matriks!perubahan basis}\index{basis!perubahan}
+untuk basis \( B,D\subset V \) adalah representasi pemetaan identitas
+\( \map{\identity}{V}{V} \) terhadap kedua basis tersebut.
+\begin{equation*}
+  \rep{\identity}{B,D}=
+  \begin{pmat}{c@{\hspace{1em}}c@{\hspace{1em}}c}
+     \vdots                  &             &\vdots                  \\
+     \rep{\vec{\beta}_1}{D}  &\;\cdots\;   &\rep{\vec{\beta}_n}{D}  \\
+     \vdots                  &             &\vdots
+  \end{pmat}
+\end{equation*}
+%\( B=\basis{\beta}{n} \).
+%</df:ChangeOfBasisMatrix>
+\end{definition}
+
+\begin{remark}
+Nama yang lebih tepat adalah `matriks perubahan representasi', tetapi nama di
+atas merupakan nama standar.
+\end{remark}
+
+Hasil berikut mendukung definisi tersebut.
+
+\begin{lemma}  \label{le:ChBasisMatDoesChBases}
+%<*lm:ChBasisMatDoesChBases>
+Untuk mengubah representasi vektor~$\vec{v}$ terhadap \( B \) menjadi
+representasinya terhadap \( D \), gunakan matriks perubahan basis.
+\begin{equation*}
+  \rep{\identity}{B,D}\,\rep{\vec{v}}{B}=\rep{\vec{v}}{D}
+\end{equation*}
+Sebaliknya, jika perkalian kiri dengan suatu matriks mengubah basis,
+$M\cdot\rep{\vec{v}}{B}=\rep{\vec{v}}{D}$
+maka $M$ merupakan matriks perubahan basis.
+%</lm:ChBasisMatDoesChBases>
+\end{lemma}
+
+\begin{proof}
+%<*pf:ChBasisMatDoesChBases>
+Kalimat pertama berlaku karena perkalian matriks-vektor merepresentasikan
+penerapan pemetaan, sehingga
+\( \rep{\identity}{B,D}\cdot\rep{\vec{v}}{B}=\rep{\,\identity(\vec{v})\,}{D}
+  =\rep{\vec{v}}{D} \) bagi setiap \( \vec{v} \).
+Untuk kalimat kedua, terhadap $B,D$, matriks $M$ merepresentasikan pemetaan
+linear yang tindakannya memetakan setiap vektor ke dirinya sendiri, sehingga
+merupakan pemetaan identitas.
+%</pf:ChBasisMatDoesChBases>
+\end{proof}
+
+\begin{example}
+Dengan basis-basis berikut bagi \( \Re^2 \),
+\begin{equation*}
+  B=
+  \sequence{
+            \colvec[r]{2 \\ 1},
+            \colvec[r]{1 \\ 0} }
+  \qquad
+  D=
+  \sequence{
+            \colvec[r]{-1 \\ 1},
+            \colvec[r]{1 \\ 1} }
+\end{equation*}
+karena
+\begin{equation*}
+  \rep{\,\identity(\colvec[r]{2 \\ 1})}{D}
+  =\colvec[r]{-1/2 \\ 3/2}_D
+  \qquad
+  \rep{\,\identity(\colvec[r]{1 \\ 0})}{D}
+  =\colvec[r]{-1/2 \\ 1/2}_D
+\end{equation*}
+matriks perubahan basisnya adalah sebagai berikut.
+\begin{equation*}
+  \rep{\rm id}{B,D}
+  =
+    \begin{mat}[r]
+       -1/2  &-1/2  \\
+        3/2  &1/2
+    \end{mat}
+\end{equation*}
+Sebagai contoh, berikut adalah representasi $\vec{e}_2$
+\begin{equation*}
+  \rep{\colvec[r]{0 \\ 1} }{B}
+  =\colvec[r]{1 \\ -2}
+  % \qquad
+  % \rep{\colvec[r]{0 \\ 1} }{D}
+  % =\colvec[r]{1/2 \\ 1/2}
+\end{equation*}
+dan matriks tersebut melakukan pengubahannya.
+\begin{equation*}
+    \begin{mat}[r]
+       -1/2  &-1/2  \\
+        3/2  &1/2
+    \end{mat}
+  \colvec[r]{1 \\ -2}
+  =
+  \colvec[r]{1/2 \\ 1/2}
+\end{equation*}
+Pemeriksaan bahwa vektor di sebelah kanan adalah $\rep{\vec{e}_2 }{D}$
+mudah dilakukan.
+\end{example}
+
+Kita menutup subbagian ini dengan mengenali matriks-matriks perubahan basis
+sebagai suatu himpunan yang telah dikenal.
+
+\begin{lemma}    \label{le:NonSingIsChBasis}
+%<*lm:NonSingIsChBasis>
+Suatu matriks mengubah basis jika dan hanya jika matriks tersebut nonsingular.
+%</lm:NonSingIsChBasis>
+\end{lemma}
+
+\begin{proof}
+%<*pf:NonSingIsChBasis0>
+Untuk arah `hanya jika', jika perkalian kiri dengan suatu matriks mengubah
+basis, maka matriks tersebut merepresentasikan fungsi yang dapat diinvers,
+karena kita dapat menginvers fungsi itu dengan mengubah basisnya kembali.
+Karena merepresentasikan fungsi yang dapat diinvers, matriks itu sendiri dapat
+diinvers sehingga nonsingular.
+%</pf:NonSingIsChBasis0>
+
+%<*pf:NonSingIsChBasis1>
+Untuk arah `jika', kita akan menunjukkan bahwa sebarang matriks nonsingular
+$M$ melakukan operasi perubahan basis dari sebarang basis awal $B$
+(yang memiliki~$n$ vektor, dengan matriks berukuran $\nbyn{n}$) ke suatu
+basis akhir.
+
+% The matrix is nonsingular so it will Gauss-Jordan reduce to the
+% identity.
+Jika matriksnya adalah identitas~$I$, pernyataan tersebut jelas.
+Jika tidak, karena matriksnya nonsingular,
+Korolari~IV.\ref{cor:ReducViaMatrices} menyatakan bahwa terdapat matriks-matriks
+reduksi elementer sedemikian sehingga $R_r\cdots R_1\cdot M=I$ dengan
+$r\geq 1$.
+Matriks elementer dapat diinvers dan inversnya juga elementer, sehingga
+mengalikan kedua ruas persamaan tersebut dari kiri dengan ${R_r}^{-1}$,
+lalu ${R_{r-1}}^{-1}$, dan seterusnya, menyatakan $M$ sebagai hasil kali
+matriks-matriks elementer $M={R_1}^{-1}\cdots {R_r}^{-1}$.
+% (We've combined ${R_r}^{-1}I$ to make ${R_r}^{-1}$; 
+% because $r\geq 1$ we can always have the $I$ disappear in this way.)
+%</pf:NonSingIsChBasis1>
+
+%<*pf:NonSingIsChBasis2>
+Pembuktian selesai jika kita menunjukkan bahwa matriks-matriks elementer
+mengubah suatu basis menjadi basis lain, sebab kemudian ${R_r}^{-1}$ mengubah
+$B$ menjadi suatu basis lain $B_r$, ${R_{r-1}}^{-1}$ mengubah $B_r$ menjadi
+suatu $B_{r-1}$, dan seterusnya.
+Kita akan membahas ketiga jenis matriks elementer secara terpisah; ingat kembali
+notasi untuk ketiganya.
+%</pf:NonSingIsChBasis2>
+% This equation doesn't fit well on slide, so I copied it over an tweaked it.
+\begin{equation*}
+  M_{i}(k)
+    \colvec{
+       c_1     \\
+       \vdots  \\
+       c_i    \\
+       \vdots  \\
+       c_n  }
+  =
+    \colvec{
+       c_1     \\
+       \vdots  \\
+       kc_i    \\
+       \vdots  \\
+       c_n  }
+  \quad
+  P_{i,j}
+    \colvec{
+       c_1     \\
+       \vdots  \\
+       c_i    \\
+       \vdots  \\
+       c_j    \\
+       \vdots  \\
+       c_n  }
+  =
+    \colvec{
+       c_1     \\
+       \vdots  \\
+       c_j    \\
+       \vdots  \\
+       c_i    \\
+       \vdots  \\
+       c_n  }
+  \quad
+  C_{i,j}(k)
+    \colvec{
+       c_1     \\
+       \vdots  \\
+       c_i    \\
+       \vdots  \\
+       c_j    \\
+       \vdots  \\
+       c_n  }
+  =
+    \colvec{
+       c_1     \\
+       \vdots  \\
+       c_i    \\
+       \vdots  \\
+       kc_i+c_j    \\
+       \vdots  \\
+       c_n  }
+\end{equation*}
+%<*pf:NonSingIsChBasis3>
+Menerapkan matriks perkalian baris~$M_{i}(k)$ mengubah representasi terhadap
+\( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_i,\dots,\vec{\beta}_n } \)
+menjadi representasi terhadap
+\( \sequence{\vec{\beta}_1,\dots,(1/k)\vec{\beta}_i,\dots,\vec{\beta}_n } \).
+\begin{multline*}
+   \vec{v}= c_1\cdot\vec{\beta}_1+\dots+c_i\cdot\vec{\beta}_i
+                                   +\dots+c_n\cdot\vec{\beta}_n  
+   \\  \mapsto\;                                                       
+    c_1\cdot\vec{\beta}_1+\dots+kc_i\cdot(1/k)\vec{\beta}_i+\dots
+                                  +c_n\cdot\vec{\beta}_n=\vec{v}     
+\end{multline*}
+Barisan kedua merupakan basis karena barisan pertama merupakan basis dan karena
+pembatasan $k\neq 0$ dalam definisi matriks perkalian baris.
+%</pf:NonSingIsChBasis3>
+%<*pf:NonSingIsChBasis4>
+Demikian pula, perkalian kiri dengan matriks pertukaran baris $P_{i,j}$
+mengubah representasi terhadap basis
+\( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_i,\dots,\vec{\beta}_j,
+  \dots,\vec{\beta}_n } \)
+menjadi representasi terhadap basis berikut
+\( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_j,\dots,\vec{\beta}_i,
+  \dots,\vec{\beta}_n } \).
+\begin{multline*}
+   \vec{v}= c_1\cdot\vec{\beta}_1+\dots+c_i\cdot\vec{\beta}_i
+                   +\dots+c_j\vec{\beta}_j+\dots+c_n\cdot\vec{\beta}_n  
+   \\  \mapsto\;                                                       
+    c_1\cdot\vec{\beta}_1+\dots+c_j\cdot\vec{\beta}_j+\dots
+               +c_i\cdot\vec{\beta}_i+\dots+c_n\cdot\vec{\beta}_n=\vec{v}     
+\end{multline*}
+%</pf:NonSingIsChBasis4>
+%<*pf:NonSingIsChBasis5>
+Selanjutnya, representasi terhadap
+\( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_i,\dots,\vec{\beta}_j,
+  \dots,\vec{\beta}_n } \)
+berubah melalui perkalian kiri dengan matriks kombinasi baris
+$C_{i,j}(k)$ menjadi representasi terhadap
+\( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_i-k\vec{\beta}_j,
+  \dots,\vec{\beta}_j,\dots,\vec{\beta}_n } \)
+\begin{multline*}
+   \vec{v}= c_1\cdot\vec{\beta}_1+\dots+c_i\cdot\vec{\beta}_i
+                       +c_j\vec{\beta}_j+\dots+c_n\cdot\vec{\beta}_n  
+   \\  \mapsto\;                                                       
+    c_1\cdot\vec{\beta}_1+\dots+c_i\cdot(\vec{\beta}_i-k\vec{\beta}_j)+\dots
+          +(kc_i+c_j)\cdot\vec{\beta}_j+\dots+c_n\cdot\vec{\beta}_n=\vec{v} 
+\end{multline*}
+(definisi $C_{i,j}(k)$ menetapkan bahwa \( i\neq j \) dan
+\( k\neq 0 \)).
+%</pf:NonSingIsChBasis5>
+\end{proof}
+
+\begin{corollary}  \label{co:MatrixNonsingularIffChangesBasis}
+%<*co:MatrixNonsingularIffChangesBasis>
+Suatu matriks nonsingular jika dan hanya jika matriks tersebut merepresentasikan
+pemetaan identitas terhadap suatu pasangan basis.
+%</co:MatrixNonsingularIffChangesBasis>
+\end{corollary}
+
+% Just as this subsection shows how to translate among representations of
+% vectors 
+% the next subsection will
+% show how to translate among representations of 
+% maps, that is, how to change
+% $\rep{h}{B,D}$ to $\rep{h}{\hat{B},\hat{D}}$.
+% The above corollary is a special case of this, where the domain and range are
+% the same space and where the map is the identity map.
+
+
+\begin{exercises}
+  \recommended \item 
+    Dalam \( \Re^2 \), dengan
+    \begin{equation*}
+      D=\sequence{\colvec[r]{2 \\ 1},\colvec[r]{-2 \\ 4}}
+    \end{equation*}
+    temukan matriks perubahan basis dari \( D \) ke \( \stdbasis_2 \) dan
+    dari \( \stdbasis_2 \) ke \( D \).
+    Kalikan kedua matriks tersebut.
+    \begin{answer}
+      Agar matriks mengubah basis dari $D$ ke $\stdbasis_2$, kita memerlukan
+      $\rep{\identity(\vec{\delta}_1)}{\stdbasis_2}
+        =\rep{\vec{\delta}_1}{\stdbasis_2}$ 
+      dan
+      $\rep{\identity(\vec{\delta}_2)}{\stdbasis_2}
+        =\rep{\vec{\delta}_2}{\stdbasis_2}$.
+      Tentu saja, representasi suatu vektor dalam $\Re^2$ terhadap basis
+      standar mudah diperoleh.
+      \begin{equation*}
+        \rep{\vec{\delta}_1}{\stdbasis_2}=\colvec[r]{2 \\ 1}
+        \qquad
+        \rep{\vec{\delta}_2}{\stdbasis_2}=\colvec[r]{-2 \\ 4}
+      \end{equation*}
+      Menyusun kedua vektor itu sebagai kolom-kolom matriks perubahan basis
+      menghasilkan
+      \begin{equation*}
+        \rep{\identity}{D,\stdbasis_2}
+        =\begin{mat}[r]
+          2     &-2    \\
+          1     &4
+        \end{mat}
+      \end{equation*}
+      Untuk matriks perubahan basis dalam arah sebaliknya, kita dapat
+      menghitung $\rep{\identity(\vec{e}_1)}{D}=\rep{\vec{e}_1}{D}$ dan
+      $\rep{\identity(\vec{e}_2)}{D}=\rep{\vec{e}_2}{D}$ (perhitungan ini
+      rutin), atau mengambil invers matriks di atas.
+      Rumus invers matriks $\nbyn{2}$ membuat perhitungan ini mudah.
+      \begin{equation*}
+        \rep{\identity}{\stdbasis_2,D}=
+        \frac{1}{10}\cdot\begin{mat}[r]
+          4  &2  \\
+         -1  &2
+        \end{mat}
+        =\begin{mat}[r]
+          4/10  &2/10  \\
+         -1/10  &2/10
+        \end{mat}
+      \end{equation*}
+    \end{answer}
+ \item Manakah di antara matriks-matriks berikut yang dapat digunakan untuk
+   mengubah basis?
+   \begin{exparts*}
+     \partsitem 
+       $\begin{mat}
+          1 &2 \\
+          3 &4 
+        \end{mat}$
+     \partsitem 
+       $\begin{mat}
+          0 &-1  \\
+          1 &-1
+        \end{mat}$
+     \partsitem 
+       $\begin{mat}
+          2 &3 &-1 \\
+          0 &1 &0
+        \end{mat}$
+     \partsitem 
+       $\begin{mat}
+          2 &3 &-1 \\
+          0 &1 &0  \\
+          4 &7 &-2
+        \end{mat}$
+     \partsitem 
+       $\begin{mat}
+          0 &2 &0 \\
+          0 &0 &6 \\
+          1 &0 &0
+        \end{mat}$
+   \end{exparts*}
+   \begin{answer}
+     Jika suatu matriks nonsingular, matriks tersebut dapat menjadi matriks
+     perubahan basis. Untuk semua matriks ini, kita dapat memeriksanya secara
+     langsung.
+     \begin{exparts}
+       \partsitem Matriks ini nonsingular karena baris kedua bukan kelipatan
+          baris pertama.
+       \partsitem Matriks ini nonsingular.
+       \partsitem Matriks ini singular, sebab suatu matriks harus persegi agar
+          dapat bersifat nonsingular.
+       \partsitem Matriks ini singular karena dua kali baris pertama ditambah
+          baris kedua sama dengan baris ketiga.
+       \partsitem Nonsingular.
+     \end{exparts}
+   \end{answer}
+  \recommended \item \label{exer:ChngeBasMatsRTwo}
+    Temukan matriks perubahan basis untuk \( B,D\subseteq\Re^2 \).
+    \begin{exparts*}
+      \partsitem \( B=\stdbasis_2 \),
+        \( D=\sequence{\vec{e}_2,\vec{e}_1} \)
+      \partsitem \( B=\stdbasis_2 \),
+        \( D=\sequence{\colvec[r]{1 \\ 2},\colvec[r]{1 \\ 4}} \)
+      \partsitem  \( B=\sequence{\colvec[r]{1 \\ 2},\colvec[r]{1 \\ 4}} \),
+        \( D=\stdbasis_2 \)
+      \partsitem  \( B=\sequence{\colvec[r]{-1 \\ 1},\colvec[r]{2 \\ 2}} \),
+        \( D=\sequence{\colvec[r]{0 \\ 4},\colvec[r]{1 \\ 3}} \)
+    \end{exparts*}
+    \begin{answer}
+      Susun
+      $\rep{\identity(\vec{\beta}_1)}{D}=\rep{\vec{\beta}_1}{D}$
+      dan $\rep{\identity(\vec{\beta}_2)}{D}=\rep{\vec{\beta}_2}{D}$
+      sebagai kolom-kolom untuk membentuk matriks perubahan basis
+      $\rep{\identity}{B,D}$.
+      \begin{exparts*}
+        \partsitem \( \begin{mat}[r]
+                   0  &1  \\
+                   1  &0
+                 \end{mat} \)
+        \partsitem \( \begin{mat}[r]
+                   2  &-1/2  \\
+                   -1 &1/2
+                 \end{mat} \)
+        \partsitem \( \begin{mat}[r]
+                   1  &1     \\
+                   2  &4
+                 \end{mat} \)
+        \partsitem \( \begin{mat}[r]
+                   1  &-1    \\
+                  -1  &2
+                 \end{mat} \)
+      \end{exparts*}  
+    \end{answer}
+  \recommended \item
+    Temukan matriks perubahan basis untuk setiap
+    \( B,D\subseteq\polyspace_2 \).
+    \begin{exparts*}
+      \partsitem \( B=\sequence{1,x,x^2},
+               D=\sequence{x^2,1,x} \)
+      \partsitem \( B=\sequence{1,x,x^2},
+               D=\sequence{1,1+x,1+x+x^2} \)
+      \partsitem \( B=\sequence{2,2x,x^2},
+               D=\sequence{1+x^2,1-x^2,x+x^2} \)
+    \end{exparts*}
+    \begin{answer}
+      Vektor-vektor
+      $\rep{\identity(\vec{\beta}_1)}{D}=\rep{\vec{\beta}_1}{D}$,
+      $\rep{\identity(\vec{\beta}_2)}{D}=\rep{\vec{\beta}_2}{D}$,
+      dan $\rep{\identity(\vec{\beta}_3)}{D}=\rep{\vec{\beta}_3}{D}$
+      membentuk kolom-kolom matriks perubahan basis
+      $\rep{\identity}{B,D}$.
+      \begin{exparts*}
+        \partsitem \( \begin{mat}[r]
+                   0  &0  &1  \\
+                   1  &0  &0  \\
+                   0  &1  &0
+                 \end{mat} \)
+        \partsitem \( \begin{mat}[r]
+                   1  &-1 &0  \\
+                   0  &1  &-1 \\
+                   0  &0  &1
+                 \end{mat} \)
+        \partsitem \( \begin{mat}[r]
+                   1  &-1 &1/2  \\
+                   1  &1  &-1/2 \\
+                   0  &2  &0
+                 \end{mat} \)
+      \end{exparts*}  
+      Sebagai contoh, untuk kolom pertama dari matriks pertama,
+      $1=0\cdot x^2+1\cdot 1+0\cdot x$.
+     \end{answer}
+  \item 
+    Untuk basis-basis dalam \nearbyexercise{exer:ChngeBasMatsRTwo},
+    temukan matriks perubahan basis dalam arah sebaliknya, dari $D$ ke $B$.
+    \begin{answer}
+       Salah satu caranya adalah menemukan
+       $\rep{\vec{\delta}_1}{B}$ dan $\rep{\vec{\delta}_2}{B}$,
+       lalu menyusunnya sebagai kolom-kolom matriks perubahan basis yang
+       diinginkan.
+       Cara lain adalah mencari invers matriks-matriks yang menjawab
+       \nearbyexercise{exer:ChngeBasMatsRTwo}. 
+       \begin{exparts*}
+        \partsitem
+          $\begin{mat}[r]
+            0  &1  \\
+            1  &0
+          \end{mat}$
+        \partsitem \( \begin{mat}[r]
+            1  &1  \\
+            2  &4
+          \end{mat} \)
+        \partsitem \( \begin{mat}[r]
+            2  &-1/2  \\
+            -1 &1/2
+          \end{mat} \)
+        \partsitem \( \begin{mat}[r]
+            2  &1  \\
+            1  &1
+          \end{mat} \)
+      \end{exparts*} 
+    \end{answer}
+  \recommended \item 
+    Tentukan apakah setiap matriks berikut mengubah basis pada \( \Re^2 \).
+    Menjadi basis apakah \( \stdbasis_2 \) diubah?
+    \begin{exparts*}
+      \partsitem \( \begin{mat}[r]
+                 5  &0  \\
+                 0  &4
+               \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+                 2  &1  \\
+                 3  &1
+               \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+                -1  &4  \\
+                 2  &-8
+               \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+                 1  &-1 \\
+                 1  &1
+               \end{mat}  \)
+    \end{exparts*}
+    \begin{answer}
+       Suatu matriks mengubah basis jika dan hanya jika matriks tersebut
+       nonsingular.
+       \begin{exparts}
+        \partsitem Matriks ini nonsingular sehingga mengubah basis.
+          Menentukan menjadi basis apakah \( \stdbasis_2 \) diubah berarti
+          mencari $D$ sedemikian sehingga
+          \begin{equation*}
+            \rep{\identity}{\stdbasis_2,D}=
+            \begin{mat}[r]
+                 5  &0  \\
+                 0  &4
+            \end{mat}
+          \end{equation*}
+          dan berdasarkan definisi representasi matriks bagi suatu pemetaan
+          linear, kita memperoleh
+          \begin{equation*}
+            \rep{\identity(\vec{e}_1)}{D}=\rep{\vec{e}_1}{D}=\colvec[r]{5 \\ 0}
+            \qquad
+            \rep{\identity(\vec{e}_2)}{D}=\rep{\vec{e}_2}{D}=\colvec[r]{0 \\ 4}
+          \end{equation*}
+          Dengan
+          \begin{equation*}
+            D=\sequence{\colvec{x_1 \\ y_1},\colvec{x_2 \\ y_2}}
+          \end{equation*}
+          kita dapat menyelesaikan sistem
+          \begin{equation*}
+            \colvec[r]{1 \\ 0}
+            =5\colvec{x_1 \\ y_1}+0\colvec{x_2 \\ y_2}
+            \qquad
+            \colvec[r]{0 \\ 1}
+            =0\colvec{x_1 \\ y_1}+4\colvec{x_2 \\ y_2}
+          \end{equation*}
+          atau langsung mengenali jawabannya
+          (dengan mengingat pembuktian \nearbylemma{le:NonSingIsChBasis}).
+          \begin{equation*}
+            D=\sequence{\colvec[r]{1/5 \\ 0},
+                        \colvec[r]{0 \\ 1/4}}
+          \end{equation*}
+        \partsitem Ya, matriks ini nonsingular sehingga mengubah basis.
+          Untuk menghitung $D$, kita melanjutkan seperti di atas dengan
+          \begin{equation*}
+            D=\sequence{\colvec{x_1 \\ y_1},
+                        \colvec{x_2 \\ y_2}}
+          \end{equation*}
+          untuk menyelesaikan
+          \begin{equation*}
+            \colvec[r]{1 \\ 0}
+            =2\colvec{x_1 \\ y_1}+3\colvec{x_2 \\ y_2}
+            \quad\text{dan}\quad
+            \colvec[r]{0 \\ 1}
+            =1\colvec{x_1 \\ y_1}+1\colvec{x_2 \\ y_2}
+          \end{equation*}
+          dan memperoleh
+          \begin{equation*}
+            D=\sequence{\colvec[r]{-1 \\ 3},
+                        \colvec[r]{1 \\ -2}}
+          \end{equation*}
+        \partsitem Tidak, matriks ini tidak mengubah basis karena singular.
+        \partsitem Ya, matriks ini mengubah basis karena nonsingular.
+          Perhitungan basis hasil perubahannya sama seperti di atas.
+          \begin{equation*}
+            D=\sequence{\colvec[r]{1/2 \\ -1/2},
+                        \colvec[r]{1/2 \\ 1/2}}
+          \end{equation*}
+      \end{exparts}  
+    \end{answer}
+  \item Untuk setiap ruang, temukan matriks yang mengubah representasi vektor
+    terhadap $B$ menjadi representasi terhadap~$D$.
+    \begin{exparts}
+      \partsitem $V=\Re^3$, $B=\stdbasis_3$, 
+          $D=\sequence{\colvec{1 \\ 2 \\ 3},
+                   \colvec{1 \\ 1 \\ 1},
+                   \colvec{0 \\ 1 \\ -1}}$
+      \partsitem $V=\Re^3$,  
+        $B=\sequence{\colvec{1 \\ 2 \\ 3},
+                     \colvec{1 \\ 1 \\ 1},
+                     \colvec{0 \\ 1 \\ -1}}$,
+        $D=\stdbasis_3$
+      \partsitem $V=\polyspace_2$,
+        $B=\sequence{x^2, x^2+x, x^2+x+1}$,
+        $D=\sequence{2, -x, x^2}$
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem 
+          Mulailah dengan menghitung pengaruh fungsi identitas pada setiap
+          unsur basis awal~$B$. Jelas hasilnya adalah
+          \begin{equation*}
+            \colvec{1 \\ 0 \\ 0}\mapsunder{\identity}\colvec{1 \\ 0 \\ 0}
+            \quad
+            \colvec{0 \\ 1 \\ 0}\mapsunder{\identity}\colvec{0 \\ 1 \\ 0}
+            \quad
+            \colvec{0 \\ 0 \\ 1}\mapsunder{\identity}\colvec{0 \\ 0 \\ 1}
+          \end{equation*}
+          Sekarang representasikan ketiga keluaran itu terhadap basis akhir.
+          \begin{equation*}
+            \rep{\colvec{1 \\ 0 \\ 0}}{D}=\colvec{-2/3 \\ 5/3 \\ -1/3}
+            \quad
+            \rep{\colvec{0 \\ 1 \\ 0}}{D}=\colvec{1/3 \\ -1/3 \\ 2/3}
+            \quad
+            \rep{\colvec{0 \\ 0 \\ 1}}{D}=\colvec{1/3 \\ -1/3 \\ -1/3}
+          \end{equation*}
+          Susun ketiganya sebagai kolom-kolom matriks.
+          \begin{equation*}
+            \rep{\identity}{B,D}=
+            \begin{mat}
+              -2/3 &1/3  &1/3  \\
+               5/3 &-1/3 &-1/3 \\
+              -1/3 &2/3  &-1/3
+            \end{mat}
+          \end{equation*}
+        \partsitem
+          Salah satu cara menemukannya adalah mengambil invers matriks
+          sebelumnya, karena matriks tersebut mengubah basis dalam arah
+          sebaliknya. Sebagai alternatif, kita dapat menghitung ketiga
+          representasi berikut:
+          \begin{equation*}
+            \rep{\colvec{1 \\ 2 \\ 3}}{\stdbasis_3}
+              =\colvec{1 \\ 2 \\ 3}
+            \quad
+            \rep{\colvec{1 \\ 1 \\ 1}}{\stdbasis_3}
+              =\colvec{1 \\ 1 \\ 1}
+            \quad
+            \rep{\colvec{0 \\ 1 \\ -1}}{\stdbasis_3}
+               =\colvec{0 \\ 1 \\ -1}
+          \end{equation*}
+          lalu menyusunnya dalam sebuah matriks.
+          \begin{equation*}
+            \rep{\identity}{B,D}=
+            \begin{mat}
+              1 &1 &0 \\
+              2 &1 &1 \\
+              3 &1 &-1
+            \end{mat}
+          \end{equation*}
+        \partsitem
+          Merepresentasikan $\identity(x^2)$, $\identity(x^2+x)$,
+          dan~$\identity(x^2+x+1)$ terhadap basis akhir menghasilkan
+          \begin{equation*}
+            \rep{x^2}{D}=\colvec{0 \\ 0 \\ 1}
+            \quad
+            \rep{x^2+x}{D}=\colvec{0 \\ -1 \\ 1}
+            \quad
+            \rep{x^2+x+1}{D}=\colvec{1/2 \\ -1 \\ 1}
+          \end{equation*}
+          Susun ketiganya menjadi satu matriks.
+          \begin{equation*}
+            \rep{\identity}{B,D}=
+            \begin{mat}
+              0 &0 &1/2 \\
+              0 &-1 &-1 \\
+              1 &1  &1
+            \end{mat}
+          \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \item 
+    Temukan basis-basis sedemikian sehingga matriks berikut merepresentasikan
+    pemetaan identitas terhadap basis-basis tersebut.
+    \begin{equation*}
+      \begin{mat}[r]
+        3  &1  &4  \\
+        2  &-1 &1  \\
+        0  &0  &4
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Pertanyaan ini memiliki banyak penyelesaian berbeda.
+      Salah satu caranya adalah memilih sebarang basis $B$ bagi sebarang ruang,
+      lalu menghitung $D$ yang sesuai (tentu saja bagi ruang yang sama).
+      Cara lain yang lebih mudah adalah menetapkan kodomain sebagai $\Re^3$
+      dan basis kodomain sebagai $\stdbasis_3$.
+      Dengan cara ini (ingat bahwa representasi sebarang vektor terhadap basis
+      standar adalah vektor itu sendiri), kita memperoleh
+      \begin{equation*}
+        B=\sequence{\colvec[r]{3 \\ 2 \\ 0},
+                    \colvec[r]{1 \\ -1 \\ 0},
+                    \colvec[r]{4 \\ 1 \\ 4}  }
+        \qquad
+        D=\stdbasis_3
+      \end{equation*}  
+    \end{answer}
+  \item 
+    Tinjau ruang vektor fungsi-fungsi bernilai riil dengan basis
+    \( \sequence{\sin(x),\cos(x)} \).
+    Tunjukkan bahwa \( \sequence{2\sin(x)+\cos(x),3\cos(x)} \)
+    juga merupakan basis bagi ruang ini.
+    Temukan matriks perubahan basis dalam setiap arah.
+    \begin{answer}
+      Pemeriksaan bahwa
+      \( B=\sequence{2\sin(x)+\cos(x),3\cos(x)} \) merupakan basis adalah
+      rutin. Namai basis alaminya $D$.
+      Untuk menghitung matriks perubahan basis $\rep{\identity}{B,D}$, kita
+      harus menemukan $\rep{2\sin(x)+\cos(x)}{D}$ dan
+      $\rep{3\cos(x)}{D}$; artinya, kita memerlukan $x_1,y_1,x_2,y_2$
+      sedemikian sehingga persamaan-persamaan berikut berlaku.
+      \begin{align*}
+        x_1\cdot \sin(x)+y_1\cdot\cos(x) &= 2\sin(x)+\cos(x) \\
+        x_2\cdot \sin(x)+y_2\cdot\cos(x) &= 3\cos(x) 
+      \end{align*}
+      Jelas jawabannya adalah
+      \begin{equation*}
+        \rep{\identity}{B,D}
+        =\begin{mat}[r]
+          2  &0  \\
+          1  &3
+        \end{mat}
+      \end{equation*}
+      Untuk matriks perubahan basis dalam arah sebaliknya, kita dapat mencari
+      $\rep{\sin(x)}{B}$ dan $\rep{\cos(x)}{B}$ dengan menyelesaikan
+      \begin{align*}
+        w_1\cdot (2\sin(x)+\cos(x))+z_1\cdot(3\cos(x)) &= \sin(x) \\
+        w_2\cdot (2\sin(x)+\cos(x))+z_2\cdot(3\cos(x)) &= \cos(x) 
+      \end{align*}
+      Cara yang lebih mudah adalah mencari invers matriks yang ditemukan di
+      atas.
+      \begin{equation*}
+        \rep{\identity}{D,B}
+        =\begin{mat}[r]
+          2  &0  \\
+          1  &3  
+        \end{mat}^{-1}
+        =\frac{1}{6}\cdot\begin{mat}[r]
+          3  &0  \\
+          -1  &2  
+        \end{mat}
+        =\begin{mat}[r]
+           1/2  &0  \\
+          -1/6  &1/3
+         \end{mat}
+      \end{equation*}
+    \end{answer}
+  \item 
+    Basis standar \( \Re^2 \) dipetakan oleh matriks berikut ke basis yang
+    mana?
+    \begin{equation*}
+        \begin{mat}
+           \cos(2\theta)   &\sin(2\theta)   \\
+           \sin(2\theta)   &-\cos(2\theta)
+        \end{mat}
+    \end{equation*}
+    Bagaimana dengan basis-basis lainnya?
+    \textit{Petunjuk.}
+    Tinjau inversnya.
+    \begin{answer} 
+      Kita mulai dengan mengambil invers matriks tersebut, yaitu dengan
+      menentukan pemetaan yang merupakan invers dari pemetaan yang dikaji.
+      \begin{align*}
+        \rep{\identity}{D,\stdbasis_2}
+        =\rep{\identity}{\stdbasis_2,D}^{-1}
+        &=\frac{1}{-\cos^2(2\theta)-\sin^2(2\theta)}\cdot\begin{mat}
+           -\cos(2\theta)   &-\sin(2\theta)  \\
+           -\sin(2\theta)   &\cos(2\theta)
+        \end{mat}                                         \\
+        &=\begin{mat}
+           \cos(2\theta)   &\sin(2\theta)  \\
+           \sin(2\theta)   &-\cos(2\theta)
+        \end{mat}
+      \end{align*}
+      Representasi ini lebih mudah ditangani daripada representasi dalam arah
+      sebaliknya karena matriks ini tersusun dari kedua vektor kolom berikut:
+      \begin{equation*}
+        \rep{\vec{\delta}_1}{\stdbasis_2}
+           =\colvec{\cos(2\theta) \\ \sin(2\theta)}
+        \qquad 
+        \rep{\vec{\delta}_2}{\stdbasis_2}
+           =\colvec{\sin(2\theta) \\ -\cos(2\theta)}
+      \end{equation*}
+      dan representasi terhadap $\stdbasis_2$ dapat langsung dibaca.
+      \begin{equation*}
+        \vec{\delta}_1=\colvec{\cos(2\theta) \\ \sin(2\theta)}
+        \qquad 
+        \vec{\delta}_2=\colvec{\sin(2\theta) \\ -\cos(2\theta)}
+      \end{equation*}
+      Gambar berikut memperlihatkan tindakan pemetaan yang mengubah $D$ menjadi
+      $\stdbasis_2$ (sekali lagi, ini merupakan invers pemetaan yang menjadi
+      jawaban pertanyaan tersebut).
+      Garisnya membentuk sudut $\theta$ terhadap sumbu~$x$.
+      \begin{center}  \small
+        \includegraphics{map/mp/ch3.81}
+      \end{center}
+      Pemetaan ini mencerminkan vektor-vektor terhadap garis tersebut.
+      Karena pencerminan merupakan invers dirinya sendiri, jawabannya
+      adalah:~pemetaan semula mencerminkan terhadap garis yang melalui titik
+      asal dan memiliki sudut elevasi $\theta$.
+      (Tentu saja, pemetaan ini melakukan hal yang sama terhadap sebarang
+      basis.)
+    \end{answer}
+  \recommended \item
+    Apa matriks perubahan basis terhadap \( B,B \)?
+    \begin{answer}
+       Matriks identitas dengan ukuran yang sesuai.
+     \end{answer}
+  \item 
+    Buktikan bahwa suatu matriks mengubah basis jika dan hanya jika matriks
+    tersebut dapat diinvers.
+    \begin{answer}
+       Kedua sifat tersebut berlaku jika dan hanya jika matriksnya nonsingular.
+    \end{answer}
+  \item 
+    Selesaikan pembuktian \nearbylemma{le:NonSingIsChBasis}.
+    \begin{answer}
+      Yang tersisa adalah menunjukkan bahwa perkalian kiri dengan matriks
+      reduksi merepresentasikan perubahan dari suatu basis lain ke
+      \( B=\basis{\beta}{n} \).
+
+      Penerapan matriks perkalian baris \( M_i(k) \) mengubah representasi
+      terhadap basis
+      \( \sequence{\vec{\beta}_1,\dots,k\vec{\beta}_i,\dots,\vec{\beta}_n} \)
+      menjadi representasi terhadap \( B \), seperti berikut.
+      \begin{equation*}
+         \vec{v}=c_1\cdot\vec{\beta}_1+\dots+c_i\cdot(k\vec{\beta}_i)
+                   +\dots+c_n\cdot\vec{\beta}_n  
+         \;\mapsto\;                                                       
+         c_1\cdot\vec{\beta}_1+\dots
+             +(kc_i)\cdot\vec{\beta}_i+\dots+c_n\cdot\vec{\beta}_n=\vec{v}
+      \end{equation*}
+      Penerapan matriks pertukaran baris \( P_{i,j} \) mengubah representasi
+      terhadap basis
+      \( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_j,\dots,
+        \vec{\beta}_i,\dots,\vec{\beta}_n} \)
+      menjadi representasi terhadap
+            \( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_i,\dots,
+        \vec{\beta}_j,\dots,\vec{\beta}_n} \).
+      Terakhir, penerapan matriks kombinasi baris \( C_{i,j}(k) \) mengubah
+      representasi terhadap
+      \( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_i+k\vec{\beta}_j,\dots,
+        \vec{\beta}_j,\dots,\vec{\beta}_n} \)
+      menjadi representasi terhadap \( B \).
+      \begin{multline*}
+         \vec{v}= c_1\cdot\vec{\beta}_1+\dots
+                     +c_i\cdot(\vec{\beta}_i+k\vec{\beta}_j)
+                       +\dots+c_j\vec{\beta}_j+\dots+c_n\cdot\vec{\beta}_n  
+         \\  \mapsto\;                                                       
+         c_1\cdot\vec{\beta}_1+\dots+c_i\cdot\vec{\beta}_i
+               +\dots+(kc_i+c_j)\cdot\vec{\beta}_j
+               +\dots+c_n\cdot\vec{\beta}_n=\vec{v}     
+      \end{multline*}
+      (Seperti pada bagian pembuktian dalam isi subbagian ini, berbagai syarat
+      pada operasi baris, misalnya bahwa skalar $k$ tak nol, memastikan bahwa
+      semua barisan tersebut benar-benar merupakan basis.)
+    \end{answer}
+  \recommended \item 
+    Misalkan \( H \) suatu matriks nonsingular \( \nbyn{n} \).
+    Basis manakah dari \( \Re^n \) yang diubah oleh \( H \) menjadi basis
+    standar?
+    \begin{answer}
+       Dengan mengambil $H$ sebagai matriks perubahan basis
+       $H=\rep{\identity}{B,\stdbasis_n}$, 
+       kolom-kolomnya adalah
+       \begin{equation*}
+         \colvec{h_{1,i} \\ \vdots \\ h_{n,i}}
+         =\rep{\identity(\vec{\beta}_i)}{\stdbasis_n}
+         =\rep{\vec{\beta}_i}{\stdbasis_n}
+       \end{equation*}
+       dan karena representasi terhadap basis standar dapat langsung dibaca,
+       kita memperoleh
+       \begin{equation*}
+         \colvec{h_{1,i} \\ \vdots \\ h_{n,i}}
+         =\vec{\beta}_i
+       \end{equation*}
+       Jadi, basis tersebut terdiri atas kolom-kolom \( H \).
+    \end{answer}
+  \recommended \item \label{exer:AnyNonZeroRepChgTOAnyOther}
+    \begin{exparts}
+      \partsitem Dalam \( \polyspace_3 \) dengan basis
+        \( B=\sequence{1+x,1-x,x^2+x^3,x^2-x^3} \), kita memiliki
+        representasi berikut.
+        \begin{equation*}
+          \rep{1-x+3x^2-x^3}{B}=
+            \colvec[r]{0 \\ 1 \\ 1 \\ 2}_B
+        \end{equation*}
+        Temukan basis \( D \) yang memberikan representasi berbeda berikut
+        bagi polinomial yang sama.
+        \begin{equation*}
+          \rep{1-x+3x^2-x^3}{D}=
+            \colvec[r]{1 \\ 0 \\ 2 \\ 0}_D
+        \end{equation*}
+      \partsitem Nyatakan dan buktikan bahwa kita dapat mengubah sebarang
+        representasi vektor tak nol menjadi sebarang representasi lainnya.
+    \end{exparts}
+    \noindent\textit{Petunjuk.}
+    Pembuktian \nearbylemma{le:NonSingIsChBasis} bersifat konstruktif\Dash
+    pembuktian itu tidak sekadar menyatakan bahwa basis berubah, tetapi juga
+    memperlihatkan bagaimana basis tersebut berubah.
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Kita dapat mengubah representasi vektor awal menjadi
+          representasi akhir melalui serangkaian operasi baris.
+          Pembuktian tersebut menunjukkan bagaimana basis-basisnya berubah.
+          Kita mulai dengan mempertukarkan baris pertama dan kedua dari
+          representasi terhadap $B$ untuk memperoleh representasi terhadap
+          basis baru $B_1$.
+          \begin{equation*}
+            \rep{1-x+3x^2-x^3}{B_1}=
+              \colvec[r]{1 \\ 0 \\ 1 \\ 2}_{B_1}
+            \qquad
+            B_1=\sequence{1-x,1+x,x^2+x^3,x^2-x^3}
+          \end{equation*}
+          Selanjutnya, kita menambahkan \( -2 \) kali baris ketiga
+          representasi vektor ke baris keempat.
+          \begin{equation*}
+            \rep{1-x+3x^2-x^3}{B_2}=
+              \colvec[r]{1 \\ 0 \\ 1 \\ 0}_{B_2}
+            \qquad
+            B_2=\sequence{1-x,1+x,3x^2-x^3,x^2-x^3}
+          \end{equation*}
+          (Unsur ketiga \( B_2 \) adalah unsur ketiga \( B_1 \) dikurangi
+          \( -2 \) kali unsur keempat $B_1$.)
+          Sekarang kita dapat menyelesaikannya dengan menggandakan baris ketiga.
+          \begin{equation*}
+            \rep{1-x+3x^2-x^3}{D}=
+              \colvec[r]{1 \\ 0 \\ 2 \\ 0}_{D}
+            \qquad
+            D=\sequence{1-x,1+x,(3x^2-x^3)/2,x^2-x^3}
+          \end{equation*}
+        \partsitem 
+          Berikut tiga cara berbeda untuk menyatakan hasil semacam itu.
+          Pernyataan pertama adalah:~jika $V$ merupakan ruang vektor dengan
+          basis $B$ dan $\vec{v}\in V$ tak nol, maka untuk setiap vektor kolom
+          tak nol $\vec{z}$ (yang banyak komponennya sama dengan dimensi $V$),
+          terdapat matriks perubahan basis $M$ sedemikian sehingga
+          $M\cdot \rep{\vec{v}}{B}=\vec{z}$. 
+          Pernyataan kedua yang mungkin adalah:~untuk sebarang ruang vektor
+          $V$ berdimensi $n$ dan sebarang vektor tak nol \( \vec{v}\in V \),
+          jika \( \vec{z}_1, \vec{z}_2\in\Re^n \) tak nol, maka terdapat basis
+          \( B,D\subset V \) sedemikian sehingga
+          \( \rep{\vec{v}}{B}=\vec{z}_1 \) dan
+          \( \rep{\vec{v}}{D}=\vec{z}_2 \).
+          Pernyataan ketiga adalah:~untuk sebarang anggota tak nol $\vec{v}$
+          dari sebarang ruang vektor berdimensi~$n$ dan sebarang vektor kolom
+          tak nol dengan $n$ komponen, terdapat basis sedemikian sehingga
+          $\vec{v}$ direpresentasikan terhadap basis tersebut oleh vektor
+          kolom itu.
+
+          Pernyataan pertama dan kedua mudah mengikuti pernyataan ketiga.
+          Pernyataan pertama mengikuti karena pernyataan ketiga memberikan
+          basis $D$ sedemikian sehingga $\rep{\vec{v}}{D}=\vec{z}$, lalu
+          $\rep{\identity}{B,D}$ merupakan~$M$ yang diinginkan.
+          Pernyataan kedua mengikuti pernyataan ketiga karena hanya merupakan
+          penerapannya sebanyak dua kali.
+
+          Salah satu cara membuktikan pernyataan ketiga sama seperti jawaban
+          bagian pertama pertanyaan ini. Berikut sketsanya.
+          Representasikan $\vec{v}$ terhadap sebarang basis $B$ dengan vektor
+          kolom $\vec{z}_1$.
+          Vektor kolom ini harus memiliki suatu komponen tak nol karena
+          $\vec{v}$ merupakan vektor tak nol.
+          Gunakan komponen tersebut dalam serangkaian operasi baris untuk
+          mengubah $\vec{z}_1$ menjadi $\vec{z}$.
+          (Sketsa ini dapat kita lengkapi menjadi argumen induksi pada dimensi
+          $V$.)
+       \end{exparts}  
+     \end{answer}
+  \item 
+    Misalkan \( V,W \) ruang-ruang vektor, \( B,\hat{B} \) basis-basis bagi
+    \( V \), dan \( D,\hat{D} \) basis-basis bagi \( W \).
+    Jika \( \map{h}{V}{W} \) linear, temukan rumus yang menghubungkan
+    \( \rep{h}{B,D} \) dengan \( \rep{h}{\hat{B},\hat{D}} \).
+    \begin{answer}
+      Inilah topik subbagian berikutnya.
+    \end{answer}
+  \recommended \item
+    Tunjukkan bahwa kolom-kolom matriks perubahan basis \( \nbyn{n} \)
+    membentuk basis bagi \( \Re^n \).
+    Apakah semua basis muncul dengan cara itu:~dapatkah vektor-vektor dari
+    sebarang basis $\Re^n$ menjadi kolom-kolom suatu matriks perubahan basis?
+    \begin{answer}
+      Matriks perubahan basis bersifat nonsingular sehingga ranknya sama dengan
+      banyak kolomnya. Oleh karena itu, himpunan kolomnya merupakan subhimpunan
+      bebas linear berukuran $n$ dalam $\Re^n$, sehingga merupakan basis.
+      Jawaban bagi bagian kedua juga `ya'; semua implikasi dalam kalimat
+      sebelumnya berlaku dalam arah sebaliknya (artinya, semua bagian
+      `jika \ldots maka~\ldots' pada kalimat sebelumnya berubah menjadi
+      `jika dan hanya jika').
+    \end{answer}
+  \recommended \item 
+    Temukan suatu matriks yang memiliki pengaruh berikut.
+    \begin{equation*}
+      \colvec[r]{1 \\ 3}
+      \;\mapsto\;
+      \colvec[r]{4 \\ -1}
+    \end{equation*}
+    Artinya, temukan $M$ yang melalui perkalian kiri mengubah vektor awal
+    menjadi vektor akhir.
+    Adakah matriks yang memiliki kedua pengaruh berikut?
+    \begin{exparts*}
+      \partsitem
+        $
+          \colvec[r]{1 \\ 3}\mapsto\colvec[r]{1 \\ 1}
+          \quad
+          \colvec[r]{2 \\ -1}\mapsto\colvec[r]{-1 \\ -1}
+        $
+      \partsitem $
+          \colvec[r]{1 \\ 3}\mapsto\colvec[r]{1 \\ 1}
+          \quad
+          \colvec[r]{2 \\ 6}\mapsto\colvec[r]{-1 \\ -1}
+        $
+   \end{exparts*}
+   Berikan syarat perlu dan cukup agar terdapat matriks sedemikian sehingga
+   $\vec{v}_1\mapsto\vec{w}_1$ dan $\vec{v}_2\mapsto\vec{w}_2$.
+    \begin{answer}
+      Untuk bagian pertama pertanyaan, terdapat tak hingga banyak matriks
+      semacam itu. Salah satunya merepresentasikan terhadap \( \stdbasis_2 \)
+      transformasi pada \( \Re^2 \) dengan tindakan berikut.
+      \begin{equation*}
+        \colvec[r]{1 \\ 0}\mapsto\colvec[r]{4 \\ 0}
+        \qquad
+        \colvec[r]{0 \\ 1}\mapsto\colvec[r]{0 \\ -1/3}
+      \end{equation*}  
+     Persoalan menetapkan dua pasangan masukan/keluaran berbeda sedikit lebih
+     rumit. Fakta bahwa matriks bertindak secara linear meniadakan beberapa
+     kemungkinan.
+     \begin{exparts}
+       \partsitem Ya, terdapat matriks semacam itu. Syarat-syarat berikut
+         \begin{equation*}
+           \begin{mat}
+             a  &b  \\
+             c  &d
+           \end{mat}
+           \colvec[r]{1 \\ 3}
+           =
+           \colvec[r]{1 \\ 1}
+           \qquad
+           \begin{mat}
+             a  &b  \\
+             c  &d
+           \end{mat}
+           \colvec[r]{2 \\ -1}
+           =
+           \colvec[r]{-1 \\ -1}
+         \end{equation*}
+         dapat diselesaikan
+         \begin{equation*}
+           \begin{linsys}{4}
+             a  &+  &3b  &   &   &   &   &=  &1  \\
+                &   &    &   &c  &+  &3d &=  &1  \\
+            2a  &-  &b   &   &   &   &   &=  &-1 \\
+                &   &    &   &2c &-  &d  &=  &-1 
+           \end{linsys}
+         \end{equation*}
+         untuk menghasilkan matriks berikut.
+         \begin{equation*}
+           \begin{mat}[r]
+             -2/7  &3/7 \\
+             -2/7  &3/7 
+           \end{mat}
+         \end{equation*}
+       \partsitem Tidak, karena
+         \begin{equation*}
+           2\cdot\colvec[r]{1 \\ 3}=\colvec[r]{2 \\ 6}
+           \quad\text{tetapi}\quad
+           2\cdot\colvec[r]{1 \\ 1}\neq\colvec[r]{-1 \\ -1}
+         \end{equation*}
+         sehingga tidak ada tindakan linear yang dapat menghasilkan pengaruh
+         ini.
+       \partsitem Salah satu syarat cukup adalah bahwa
+         \( \set{\vec{v}_1,\vec{v}_2} \) bebas linear, tetapi syarat ini tidak
+         perlu. Syarat perlu dan cukupnya adalah bahwa setiap kebergantungan
+         linear di antara vektor-vektor awal juga muncul di antara
+         vektor-vektor akhir. Artinya,
+         \begin{equation*}
+           c_1\vec{v}_1+c_2\vec{v}_2=\zero
+           \quad\text{menyiratkan}\quad
+           c_1\vec{w}_1+c_2\vec{w}_2=\zero.
+         \end{equation*}
+         Pembuktian syarat ini bersifat rutin.
+     \end{exparts} 
+   \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Mengubah Representasi Pemetaan}
+\index{ekuivalensi matriks|(}
+Subbagian pertama menunjukkan cara mengubah representasi suatu vektor terhadap
+satu basis menjadi representasi vektor yang sama terhadap basis lain.
+Selanjutnya, kita mengubah representasi suatu pemetaan terhadap satu pasangan
+basis menjadi representasi terhadap pasangan lain\Dash kita mengubah
+$\rep{h}{B,D}$ menjadi $\rep{h}{\hat{B},\hat{D}}$.
+Berikut diagram panahnya.\index{diagram panah}
+%<*ChangeRepresentationOfMapArrowDiagram>
+\begin{equation*}
+  \begin{CD}
+    V_{\wrt{B}}                   @>h>H>        W_{\wrt{D}}       \\
+    @V{\text{\scriptsize$\identity$}} VV                @V{\text{\scriptsize$\identity$}} VV \\
+    V_{\wrt{\hat{B}}}             @>h>\hat{H}>  W_{\wrt{\hat{D}}}
+  \end{CD}
+\end{equation*}
+Untuk bergerak dari kiri bawah ke kanan bawah, kita dapat langsung bergerak
+mendatar, atau naik ke $V_B$, bergerak mendatar ke $W_D$, lalu turun.
+Jadi, kita dapat menghitung $\hat{H}=\rep{h}{\hat{B},\hat{D}}$ secara langsung
+dengan menggunakan $\hat{B}$ dan $\hat{D}$, atau terlebih dahulu mengubah basis
+dengan $\rep{\identity}{\hat{B},B}$, kemudian mengalikan dengan
+\( H=\rep{h}{B,D} \), lalu mengubah basis dengan
+$\rep{\identity}{D,\hat{D}}$.
+%</ChangeRepresentationOfMapArrowDiagram>
+
+\begin{theorem}
+%<*ChangeRepresentationOfMapTheorem>
+Untuk mengubah matriks~$H$ yang merepresentasikan pemetaan~$h$ terhadap $B,D$
+menjadi matriks~$\hat{H}$ yang merepresentasikannya terhadap
+$\hat{B},\hat{D}$, gunakan rumus berikut.
+\begin{equation*}
+   \hat{H}=
+   \rep{\identity}{D,\hat{D}}\cdot H\cdot \rep{\identity}{\hat{B},B}
+   \tag*{\text{($*$})}
+\end{equation*}
+%</ChangeRepresentationOfMapTheorem>
+\end{theorem}
+
+\begin{proof}
+%<*ChangeRepresentationOfMapTheoremPf>
+Hal ini langsung tampak dari diagram tersebut.
+%</ChangeRepresentationOfMapTheoremPf>
+\end{proof}
+
+% (To compare the equation with the sentence before it
+% remember to read its right hand side
+% from right to left, because we read
+% function composition from right to left and matrix multiplication 
+% represents composition).
+
+\begin{example}
+Matriks
+\begin{equation*}
+  T=\begin{mat}[r]
+     \cos(\pi/6)  &-\sin(\pi/6)  \\
+     \sin(\pi/6)  &\cos(\pi/6)
+  \end{mat}
+  =
+  \begin{mat}[r]
+     \sqrt{3}/2  &-1/2  \\
+     1/2         &\sqrt{3}/2
+  \end{mat}
+\end{equation*}
+merepresentasikan, terhadap \( \stdbasis_2,\stdbasis_2 \), transformasi
+\( \map{t}{\Re^2}{\Re^2} \) yang memutar vektor-vektor berlawanan arah jarum
+jam sebesar sudut \( \pi/6 \) radian.
+\begin{center}
+  \includegraphics{map/mp/ch3.22}
+\end{center}
+Kita dapat mengubah $T$ menjadi representasi terhadap basis-basis berikut:
+\begin{equation*}
+  \hat{B}=\sequence{
+              \colvec[r]{1 \\ 1},
+              \colvec[r]{0 \\ 2} }
+  \qquad
+  \hat{D}=\sequence{
+              \colvec[r]{-1 \\ 0},
+              \colvec[r]{2 \\ 3} }
+\end{equation*}
+dengan menggunakan diagram panah di atas.
+\begin{equation*}
+  \begin{CD}
+    \Re^2_{\wrt{\stdbasis_2}}              @>t>T>        \Re^2_{\wrt{\stdbasis_2}}     \\
+    @V\text{\scriptsize$\identity$} VV                @V\text{\scriptsize$\identity$} VV \\
+    \Re^2_{\wrt{\hat{B}}}          @>t>\hat{T}>  \Re^2_{\wrt{\hat{D}}}
+  \end{CD}
+\end{equation*}
+Gambar tersebut memperlihatkan bahwa kita dapat menghitung~$\hat{T}$ secara
+langsung dengan bergerak sepanjang sisi bawah persegi, atau seperti dalam
+rumus~($*$), dengan naik pada sisi kiri, bergerak sepanjang sisi atas, lalu
+turun pada sisi kanan, dengan
+$\hat{T}=
+   \rep{\identity}{\stdbasis_2,\hat{D}}\cdot T\cdot \rep{\identity}{\hat{B},\stdbasis_2}$.
+(Perhatikan sekali lagi bahwa perkalian matriks dibaca dari kanan ke kiri,
+karena ketiga fungsi dikomposisikan dan komposisi fungsi dibaca dari kanan ke
+kiri.)
+
+Temukan matriks untuk sisi kiri diagram,
+$\rep{\identity}{\hat{B},\stdbasis_2}$, dengan cara biasa:~temukan pengaruh
+pemetaan identitas pada basis awal~$\hat{B}$\Dash yakni sama sekali tidak ada
+perubahan\Dash lalu representasikan unsur-unsur basis tersebut terhadap basis
+akhir~$\stdbasis_2$.
+\begin{equation*}
+  \rep{\identity}{\hat{B},\stdbasis_2}
+  =
+  \begin{mat}
+    1 &0 \\
+    1 &2
+  \end{mat}
+\end{equation*}
+Perhitungan ini mudah jika basis akhirnya merupakan basis standar.
+
+Terdapat dua cara untuk menghitung matriks bagi gerak turun pada sisi kanan
+persegi, $\rep{\identity}{\stdbasis_2,\hat{D}}$.
+Kita dapat menghitungnya secara langsung seperti pada matriks perubahan basis
+lainnya. Sebagai alternatif, kita dapat menghitungnya sebagai invers matriks
+bagi gerak naik, $\rep{\identity}{\hat{D},\stdbasis_2}$.
+Matriks tersebut mudah ditemukan dan kita memiliki rumus invers $\nbyn{2}$,
+sehingga itulah yang digunakan dalam persamaan berikut.
+\begin{align*}
+   \rep{t}{\hat{B},\hat{D}}
+  &=\begin{mat}[r]
+     -1     &2   \\
+     0      &3
+  \end{mat}^{-1}
+  \begin{mat}[r]
+     \sqrt{3}/2  &-1/2  \\
+     1/2         &\sqrt{3}/2
+  \end{mat}
+  \begin{mat}[r]
+     1      &0   \\
+     1      &2
+  \end{mat}                              \\                            
+  &=\begin{mat}[r]
+     (5-\sqrt{3})/6   &(3+2\sqrt{3})/3 \\
+     (1+\sqrt{3})/6  &\sqrt{3}/3
+  \end{mat}
+\end{align*}
+
+Matriksnya lebih rumit, tetapi pemetaan yang direpresentasikannya tetap sama.
+Sebagai contoh, untuk menghasilkan kembali pengaruh $t$ pada gambar, mulailah
+dengan $\hat{B}$,
+\begin{equation*}
+  \rep{\colvec[r]{1 \\ 3}}{\hat{B}}=\colvec[r]{1 \\ 1}_{\hat{B}}
+\end{equation*}
+terapkan $\hat{T}$,
+\begin{equation*}
+  \begin{mat}[r]
+     (5-\sqrt{3})/6   &(3+2\sqrt{3})/3 \\
+     (1+\sqrt{3})/6  &\sqrt{3}/3
+  \end{mat}_{\hat{B},\hat{D}}
+  \colvec[r]{1 \\ 1}_{\hat{B}}
+  =
+  \colvec[r]{(11+3\sqrt{3})/6 \\ (1+3\sqrt{3})/6}_{\hat{D}}
+\end{equation*}
+dan periksa hasilnya terhadap $\hat{D}$.
+\begin{equation*}
+  \frac{11+3\sqrt{3}}{6}\cdot\colvec[r]{-1 \\ 0}
+  +\frac{1+3\sqrt{3}}{6}\cdot\colvec[r]{2 \\ 3}
+  =\colvec[r]{(-3+\sqrt{3})/2 \\ (1+3\sqrt{3})/2}
+\end{equation*}
+\end{example}
+
+\begin{example} \label{ex:DiagizedMat}
+Mengubah basis dapat menyederhanakan matriks.
+Pada \( \Re^3 \), pemetaan
+\begin{equation*}
+  \colvec{x \\ y \\ z}\mapsunder{t}\colvec{y+z \\ x+z \\ x+y}
+\end{equation*}
+direpresentasikan terhadap basis standar sebagai berikut.
+\begin{equation*}
+  \rep{t}{\stdbasis_3,\stdbasis_3}=
+  \begin{mat}[r]
+    0  &1  &1  \\
+    1  &0  &1  \\
+    1  &1  &0
+  \end{mat}
+\end{equation*}
+Merepresentasikannya terhadap
+\begin{equation*}
+  B=\sequence{\colvec[r]{1 \\ -1 \\ 0},
+                             \colvec[r]{1 \\ 1 \\ -2},
+                             \colvec[r]{1 \\ 1 \\ 1}}
+\end{equation*} 
+menghasilkan matriks diagonal.
+\begin{equation*} 
+  \rep{t}{B,B}=
+  \begin{mat}[r]
+   -1  &0  &0  \\
+    0  &-1 &0  \\
+    0  &0  &2
+  \end{mat}
+\end{equation*}
+\end{example}
+
+Tentu saja, biasanya kita lebih menyukai representasi yang lebih mudah
+dipahami. Kita mengatakan bahwa suatu pemetaan atau matriks telah
+\definend{didiagonalkan}\index{matriks!didiagonalkan} jika kita menemukan
+basis~$B$ sedemikian sehingga representasinya diagonal terhadap $B,B$,
+yakni terhadap basis awal dan basis akhir yang sama.
+Bab Lima menentukan pemetaan dan matriks mana yang dapat didiagonalkan.
+
+Sisa subbagian ini mengembangkan kasus yang lebih mudah, yaitu menemukan dua
+basis $B,D$ sedemikian sehingga suatu representasi menjadi sederhana.
+Ingat bahwa subbagian sebelumnya menunjukkan bahwa suatu matriks merupakan
+matriks perubahan basis jika dan hanya jika matriks tersebut nonsingular.
+% That gives us another version of the above  arrow diagram
+% and equation~($*$) from the start of this subsection.
+
+\begin{definition}  \label{def:MatEquiv}
+%<*df:MatEquiv>
+Matriks-matriks berukuran sama \( H \) dan \( \hat{H} \) disebut
+\definend{ekuivalen secara matriks\/}\index{ekuivalensi matriks!definisi}%
+\index{matriks!ekuivalen}\index{relasi ekuivalensi!ekuivalensi matriks}
+jika terdapat matriks-matriks nonsingular \( P \) dan \( Q \) sedemikian
+sehingga
+$\hat{H}=PHQ$.
+%</df:MatEquiv>
+\end{definition}
+
+\begin{corollary} \label{le:MatEqIsSameMap}
+%<*co:MatEqIsSameMap>
+Matriks-matriks yang ekuivalen secara matriks merepresentasikan pemetaan yang
+sama terhadap pasangan basis yang sesuai.
+%</co:MatEqIsSameMap>
+\end{corollary}
+
+\begin{proof}
+Hal ini langsung mengikuti persamaan~($*$) di atas.
+\end{proof}
+
+\nearbyexercise{exer:MatEqIsEqRel} memeriksa bahwa ekuivalensi matriks
+merupakan relasi ekuivalensi.
+Dengan demikian, relasi ini mempartisi
+\index{partisi!kelas ekuivalensi matriks} himpunan matriks menjadi
+kelas-kelas ekuivalensi matriks.
+\begin{center}
+  \raisebox{.5in}{\begin{tabular}{l}
+                    Semua matriks:
+                  \end{tabular}}
+  \includegraphics{map/mp/ch3.23}
+  \raisebox{.3in}{\begin{tabular}{l}
+                     $H$ ekuivalen secara matriks \\ dengan $\hat{H}$
+                  \end{tabular}}
+\end{center}
+Kita dapat memahami kelas-kelas tersebut dengan membandingkan ekuivalensi
+matriks dengan ekuivalensi baris (ingat bahwa dua matriks ekuivalen baris jika
+keduanya dapat direduksi satu sama lain melalui operasi baris).
+Dalam $\hat{H}=PHQ$, matriks $P$ dan $Q$ nonsingular sehingga, menurut
+Lema~IV.\ref{lem:ComputeInvMat}, masing-masing merupakan hasil kali
+matriks-matriks reduksi elementer.
+Perkalian kiri dengan matriks-matriks reduksi yang membentuk $P$ menjalankan
+operasi baris. Perkalian kanan dengan matriks-matriks reduksi yang membentuk
+$Q$ menjalankan operasi kolom.
+Jadi, ekuivalensi matriks merupakan perumuman ekuivalensi baris\Dash dua
+matriks ekuivalen baris jika salah satunya dapat diubah menjadi yang lain
+melalui serangkaian langkah reduksi baris, sedangkan dua matriks ekuivalen
+secara matriks jika salah satunya dapat diubah menjadi yang lain melalui
+serangkaian langkah reduksi baris yang diikuti serangkaian langkah reduksi
+kolom.
+
+Akibatnya, jika dua matriks ekuivalen baris, keduanya juga ekuivalen secara
+matriks karena kita dapat mengambil $Q$ sebagai matriks identitas.
+Namun, kebalikannya tidak berlaku:~dua matriks dapat ekuivalen secara matriks
+tanpa ekuivalen baris.
+
+\begin{example}
+Kedua matriks berikut ekuivalen secara matriks
+\begin{equation*} 
+  \begin{mat}[r]
+    1  &0  \\
+    0  &0
+  \end{mat}
+  \qquad
+  \begin{mat}[r]
+    1  &1  \\
+    0  &0
+  \end{mat}
+\end{equation*}
+karena matriks kedua tereduksi menjadi matriks pertama melalui operasi kolom
+yang menambahkan $-1$ kali kolom pertama ke kolom kedua.
+Keduanya tidak ekuivalen baris karena memiliki bentuk eselon tereduksi yang
+berbeda (keduanya sudah berada dalam bentuk tereduksi).
+\end{example}
+
+Kita menutup bagian ini dengan memberikan suatu himpunan wakil bagi
+kelas-kelas ekuivalensi matriks. % \appendrefs{class representatives}%
+\index{wakil!kelas ekuivalensi matriks}
+
+\begin{theorem}  \label{th:CanonFormForMatEquiv}
+\index{ekuivalensi matriks!bentuk kanonik}
+\index{bentuk kanonik!ekuivalensi matriks}
+%<*th:CanonFormForMatEquiv>
+Sebarang matriks \( \nbym{m}{n} \) berank \( k \) ekuivalen secara matriks
+dengan matriks \( \nbym{m}{n} \) yang semua entrinya nol kecuali \( k \)
+entri diagonal pertamanya yang bernilai satu.
+\begin{equation*}
+    \begin{mat}
+      1  &0      &\ldots &0  &0  &\ldots  &0  \\
+      0  &1      &\ldots &0  &0  &\ldots  &0  \\
+         &\vdots                              \\
+      0  &0      &\ldots &1  &0  &\ldots  &0  \\
+      0  &0      &\ldots &0  &0  &\ldots  &0  \\
+         &\vdots                              \\
+      0  &0      &\ldots &0  &0  &\ldots  &0
+    \end{mat}
+\end{equation*}
+%</th:CanonFormForMatEquiv>
+\end{theorem}
+
+%<*BlockPartialIdentityForm>
+\noindent Ini merupakan bentuk
+\definend{blok identitas parsial}\index{matriks!blok}.
+\begin{equation*}
+    \begin{pmat}{c|c}
+      I  &Z  \\  \hline
+      Z  &Z
+    \end{pmat}
+\end{equation*}
+%</BlockPartialIdentityForm>
+
+\begin{proof}
+%<*pf:CanonFormForMatEquiv>
+Reduksi matriks yang diberikan dengan metode Gauss--Jordan dan gabungkan semua
+matriks reduksi baris untuk membentuk \( P \).
+Kemudian gunakan entri-entri utama untuk melakukan reduksi kolom dan akhiri
+dengan mempertukarkan kolom-kolom agar satu-satu utama berada pada diagonal.
+Gabungkan matriks-matriks reduksi kolom menjadi \( Q \).
+%</pf:CanonFormForMatEquiv>
+\end{proof}
+
+\begin{example}
+Kita mengilustrasikan pembuktian dengan menemukan $P$ dan $Q$ bagi matriks
+berikut.
+\begin{equation*}
+    \begin{mat}[r]
+       1  &2  &1  &-1  \\
+       0  &0  &1  &-1  \\
+       2  &4  &2  &-2
+    \end{mat}
+\end{equation*}
+Pertama, lakukan reduksi baris Gauss--Jordan.
+\begin{equation*}
+    \begin{mat}[r]
+       1  &-1 &0    \\
+       0  &1  &0    \\
+       0  &0  &1
+    \end{mat}
+    \begin{mat}[r]
+       1  &0  &0    \\
+       0  &1  &0    \\
+       -2 &0  &1
+    \end{mat}
+    \begin{mat}[r]
+       1  &2  &1  &-1  \\
+       0  &0  &1  &-1  \\
+       2  &4  &2  &-2
+    \end{mat}
+  =
+    \begin{mat}[r]
+       1  &2  &0  &0   \\
+       0  &0  &1  &-1  \\
+       0  &0  &0  &0
+    \end{mat}
+\end{equation*}
+Kemudian lakukan reduksi kolom, yang melibatkan perkalian kanan.
+\begin{equation*}
+    \begin{mat}[r]
+       1  &2  &0  &0   \\
+       0  &0  &1  &-1  \\
+       0  &0  &0  &0
+    \end{mat}
+    \begin{mat}[r]
+       1  &-2 &0  &0   \\
+       0  &1  &0  &0   \\
+       0  &0  &1  &0   \\
+       0  &0  &0  &1
+    \end{mat}
+    \begin{mat}[r]
+       1  &0  &0  &0   \\
+       0  &1  &0  &0   \\
+       0  &0  &1  &1   \\
+       0  &0  &0  &1
+    \end{mat}
+  =
+    \begin{mat}[r]
+       1  &0  &0  &0   \\
+       0  &0  &1  &0  \\
+       0  &0  &0  &0
+    \end{mat}
+\end{equation*}
+Akhiri dengan mempertukarkan kolom.
+\begin{equation*}
+    \begin{mat}[r]
+       1  &0  &0  &0   \\
+       0  &0  &1  &0  \\
+       0  &0  &0  &0
+    \end{mat}
+    \begin{mat}[r]
+       1  &0  &0  &0   \\
+       0  &0  &1  &0   \\
+       0  &1  &0  &0   \\
+       0  &0  &0  &1
+    \end{mat}
+  =
+    \begin{mat}[r]
+       1  &0  &0  &0   \\
+       0  &1  &0  &0  \\
+       0  &0  &0  &0
+    \end{mat}
+\end{equation*}
+Terakhir, gabungkan semua pengali kiri menjadi $P$ dan semua pengali kanan
+menjadi $Q$ untuk memperoleh $PHQ$.
+\begin{equation*}
+    \begin{mat}[r]
+       1  &-1 &0    \\
+       0  &1  &0    \\
+       -2 &0  &1
+    \end{mat}
+    \begin{mat}[r]
+       1  &2  &1  &-1  \\
+       0  &0  &1  &-1  \\
+       2  &4  &2  &-2
+    \end{mat}
+    \begin{mat}[r]
+       1  &0  &-2  &0   \\
+       0  &0  &1  &0   \\
+       0  &1  &0  &1   \\
+       0  &0  &0  &1
+    \end{mat}
+    =
+    \begin{mat}[r]
+       1  &0  &0  &0   \\
+       0  &1  &0  &0  \\
+       0  &0  &0  &0
+    \end{mat}
+\end{equation*}
+\end{example}
+
+\begin{corollary}  \label{co:MatrixEquivalentIffSameRank}
+%<*co:MatrixEquivalentIffSameRank>
+Kelas-kelas ekuivalensi matriks dicirikan\index{mencirikan} oleh rank:~dua
+matriks berukuran sama ekuivalen secara matriks jika dan hanya jika keduanya
+memiliki rank yang sama.
+%</co:MatrixEquivalentIffSameRank>
+\end{corollary}
+
+\begin{proof}
+%<*pf:MatrixEquivalentIffSameRank>
+Dua matriks berukuran sama dengan rank yang sama ekuivalen dengan matriks blok
+identitas parsial yang sama.
+%</pf:MatrixEquivalentIffSameRank>
+\end{proof}
+
+\begin{example}
+Matriks-matriks $\nbyn{2}$ hanya memiliki tiga kemungkinan rank:~nol, satu,
+atau~dua. Jadi, terdapat tiga kelas ekuivalensi matriks.
+\index{partisi!kelas ekuivalensi matriks}
+\begin{center} % make an exercise comparing these classes with the ones for row-equivalence?
+  \raisebox{.5in}{\begin{tabular}{l}
+                    Semua matriks $\nbyn{2}$:
+                  \end{tabular}}
+  \includegraphics{map/mp/ch3.24}
+  \raisebox{.3in}{\begin{tabular}{l}
+                    Tiga kelas \\ ekuivalensi
+                  \end{tabular}}
+\end{center}
+Setiap kelas terdiri atas semua matriks $\nbyn{2}$ dengan rank yang sama.
+Hanya terdapat satu matriks berank~nol.
+Kedua kelas lainnya memiliki tak hingga banyak anggota; kita hanya
+memperlihatkan wakil kanoniknya.
+\end{example}
+
+Salah satu keunggulan wakil dalam
+\nearbytheorem{th:CanonFormForMatEquiv} adalah bahwa kita dapat memahami
+pemetaan linear sepenuhnya ketika dinyatakan dengan cara berikut.
+Jika basis-basisnya adalah
+\( B=\sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \)
+dan
+\( D=\sequence{\vec{\delta}_1,\dots,\vec{\delta}_m} \)
+maka tindakan pemetaannya adalah
+\begin{equation*}
+  c_1\vec{\beta}_1+\dots+c_k\vec{\beta}_k+c_{k+1}\vec{\beta}_{k+1}+\dots
+     +c_n\vec{\beta}_n
+  \;\mapsto\;
+  c_1\vec{\delta}_1+\dots+c_k\vec{\delta}_k+\zero+\cdots+\zero
+\end{equation*}
+dengan \( k \) sebagai ranknya.
+Jadi, kita dapat memandang sebarang pemetaan linear sebagai proyeksi.
+\begin{equation*}
+  \colvec{c_1 \\ \vdots \\ c_k \\ c_{k+1} \\ \vdots \\ c_n}_B
+  \quad\longmapsto\quad
+  \colvec{c_1 \\ \vdots \\ c_k \\ 0 \\ \vdots \\ 0}_D
+\end{equation*}
+% Of course, ``understanding'' a map expressed in this way 
+% requires that we understand the relationship between \( B \) and \( D \).
+% Nonetheless,
+% this is a good classification of linear maps.
+
+\begin{exercises}
+  \recommended \item 
+    Tentukan apakah pasangan-pasangan berikut ekuivalen secara matriks.
+    \begin{exparts}
+      \partsitem \( \begin{mat}[r]
+                 1  &3  &0  \\
+                 2  &3  &0
+               \end{mat} \),
+            \( \begin{mat}[r]
+                 2  &2  &1  \\
+                 0  &5  &-1
+               \end{mat} \)
+      \partsitem \( \begin{mat}[r]
+                 0  &3  \\
+                 1  &1
+               \end{mat} \),
+            \( \begin{mat}[r]
+                 4  &0  \\
+                 0  &5
+               \end{mat} \)
+      \partsitem \( \begin{mat}[r]
+                 1  &3  \\
+                 2  &6
+               \end{mat} \),
+            \( \begin{mat}[r]
+                 1  &3  \\
+                 2  &-6
+               \end{mat} \)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ya, masing-masing memiliki rank dua.
+        \partsitem Ya, keduanya memiliki rank yang sama.
+        \partsitem Tidak, keduanya memiliki rank berbeda.
+      \end{exparts}  
+    \end{answer}
+  \item Manakah di antara matriks-matriks berikut yang ekuivalen secara matriks
+    satu sama lain?
+    \begin{exparts*}
+      \partsitem 
+         $\begin{mat}
+            1 &2 &3 \\
+            4 &5 &6 \\
+            7 &8 &9
+         \end{mat}$
+      \partsitem 
+         $\begin{mat}
+           1 &3 \\
+          -1 &-3
+         \end{mat}$
+      \partsitem 
+         $\begin{mat}
+            -5 &1 &0 \\
+            -1 &0 &1
+         \end{mat}$
+      \partsitem 
+         $\begin{mat}
+            0 &-1 \\
+            0 &5
+         \end{mat}$
+      \partsitem 
+         $\begin{mat}
+            1 &0 &1 \\
+            2 &0 &2 \\
+            1 &3 &1
+         \end{mat}$
+      \partsitem 
+         $\begin{mat}
+            3  &1   &0 \\
+            9  &3   &0 \\
+            -3 &-1  &0
+         \end{mat}$
+    \end{exparts*}
+    \begin{answer}
+      Kelompokkan matriks-matriks itu ke dalam kelas-kelas yang dicirikan oleh
+      syarat bahwa semua matriks dalam kelas yang sama memiliki ukuran dan rank
+      yang sama.
+      \begin{exparts}
+        \partsitem $\nbyn{3}$, rank~$2$
+        \partsitem $\nbyn{2}$, rank~$1$
+        \partsitem $\nbym{2}{3}$, rank~$2$
+        \partsitem $\nbyn{3}$, rank~$2$
+        \partsitem $\nbyn{3}$, rank~$1$
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+    Temukan wakil kanonik kelas ekuivalensi matriks bagi setiap matriks.
+    \begin{exparts*}
+      \partsitem \( \begin{mat}[r]
+                 2  &1  &0  \\
+                 4  &2  &0
+               \end{mat} \)
+      \partsitem \( \begin{mat}[r]
+                 0  &1  &0  &2  \\
+                 1  &1  &0  &4  \\
+                 3  &3  &3  &-1
+               \end{mat} \)
+    \end{exparts*}
+    \begin{answer}
+      Kita hanya perlu menghitung rank masing-masing.
+      \begin{exparts*}
+        \partsitem \( \begin{mat}[r]
+                   1  &0  &0  \\
+                   0  &0  &0
+                 \end{mat} \)
+        \partsitem \( \begin{mat}[r]
+                   1  &0  &0  &0  \\
+                   0  &1  &0  &0  \\
+                   0  &0  &1  &0
+                 \end{mat} \)
+      \end{exparts*}  
+    \end{answer}
+  \item 
+    Andaikan bahwa terhadap
+    \begin{equation*}
+      B=\stdbasis_2
+      \qquad
+      D=\sequence{\colvec[r]{1 \\ 1},\colvec[r]{1 \\ -1}}
+    \end{equation*}
+    transformasi \( \map{t}{\Re^2}{\Re^2} \) direpresentasikan oleh matriks
+    berikut.
+    \begin{equation*}
+      \begin{mat}[r]
+        1  &2  \\
+        3  &4
+      \end{mat}
+    \end{equation*}
+    Gunakan matriks-matriks perubahan basis untuk merepresentasikan \( t \)
+    terhadap setiap pasangan berikut.
+    \begin{exparts}
+      \partsitem \( \hat{B}=\sequence{\colvec[r]{0 \\ 1},\colvec[r]{1 \\ 1}} \),
+        \( \hat{D}=\sequence{\colvec[r]{-1 \\ 0},\colvec[r]{2 \\ 1}} \)
+      \partsitem \( \hat{B}=\sequence{\colvec[r]{1 \\ 2},\colvec[r]{1 \\ 0}} \),
+        \( \hat{D}=\sequence{\colvec[r]{1 \\ 2},\colvec[r]{2 \\ 1}} \)
+    \end{exparts}
+    \begin{answer}
+      Ingat kembali diagram dan rumus berikut.
+      \begin{equation*}
+        \begin{CD}
+          \Re^2_{\wrt{B}}                   @>t>T>        \Re^2_{\wrt{D}}       \\
+          @V\text{\scriptsize$\identity$} VV   @V\text{\scriptsize$\identity$} VV \\
+          \Re^2_{\wrt{\hat{B}}}             @>t>\hat{T}>  \Re^2_{\wrt{\hat{D}}}
+        \end{CD}
+        \qquad \hat{T}=
+         \rep{\identity}{D,\hat{D}}\cdot T\cdot \rep{\identity}{\hat{B},B}
+      \end{equation*}
+      \begin{exparts}
+        \partsitem Kedua persamaan berikut
+          \begin{equation*}
+            \colvec[r]{1 \\ 1}=1\cdot\colvec[r]{-1 \\ 0}
+                            +1\cdot\colvec[r]{2 \\ 1}
+            \qquad
+            \colvec[r]{1 \\ -1}=(-3)\cdot\colvec[r]{-1 \\ 0}
+                            +(-1)\cdot\colvec[r]{2 \\ 1}
+          \end{equation*}
+          menunjukkan bahwa
+          \begin{equation*}
+            \rep{\identity}{D,\hat{D}}=\begin{mat}[r]
+              1  &-3  \\
+              1  &-1
+            \end{mat}
+          \end{equation*}
+          dan kedua persamaan berikut juga
+          \begin{equation*}
+            \colvec[r]{0 \\ 1}=0\cdot\colvec[r]{1 \\ 0}
+                            +1\cdot\colvec[r]{0 \\ 1}
+            \qquad
+            \colvec[r]{1 \\  1}=1\cdot\colvec[r]{1 \\ 0}
+                            +1\cdot\colvec[r]{0 \\ 1}
+          \end{equation*}
+          memberikan matriks nonsingular lainnya.
+          \begin{equation*}
+            \rep{\identity}{\hat{B},B}=\begin{mat}[r]
+              0  &1  \\
+              1  &1
+            \end{mat}
+          \end{equation*}
+          Dengan demikian, jawabannya adalah
+          \begin{equation*}
+            \hat{T}=
+            \begin{mat}[r]
+              1  &-3  \\
+              1  &-1
+            \end{mat}
+            \begin{mat}[r]
+              1  &2  \\
+              3  &4
+            \end{mat}
+            \begin{mat}[r]
+              0  &1  \\
+              1  &1
+            \end{mat}
+            =\begin{mat}[r]
+              -10  &-18  \\
+              -2   &-4 
+            \end{mat}
+          \end{equation*}
+          Meskipun tidak mutlak diperlukan, pemeriksaan dapat meyakinkan kita.
+          Tetapkan secara sebarang
+          \begin{equation*}
+            \vec{v}=\colvec[r]{3 \\ 2}
+          \end{equation*}
+kita memperoleh
+          \begin{equation*}
+            \rep{\vec{v}}{B}=\colvec[r]{3 \\ 2}_B
+            \qquad
+            \begin{mat}[r]
+              1  &2  \\
+              3  &4
+            \end{mat}_{B,D}
+            \colvec[r]{3 \\ 2}_B
+            =\colvec[r]{7 \\ 17}_D
+          \end{equation*}
+          sehingga $t(\vec{v})$ adalah
+          \begin{equation*}
+            7\cdot\colvec[r]{1 \\ 1}+17\cdot\colvec[r]{1 \\ -1}=\colvec[r]{24 \\ -10}
+          \end{equation*}
+          Perhitungan terhadap $\hat{B},\hat{D}$ dimulai dengan
+          \begin{equation*}
+            \rep{\vec{v}}{\hat{B}}=\colvec[r]{-1 \\ 3}_{\hat{B}}
+            \qquad
+            \begin{mat}[r]
+              -10  &-18  \\
+               -2  &-4
+            \end{mat}_{\hat{B},\hat{D}}
+            \colvec[r]{-1 \\ 3}_{\hat{B}}
+            =\colvec[r]{-44 \\ -10}_{\hat{D}}
+          \end{equation*}
+          lalu pemeriksaan berikut menunjukkan bahwa hasilnya sama.
+          \begin{equation*}
+            -44\cdot\colvec[r]{-1 \\ 0}-10\cdot\colvec[r]{2 \\ 1}=\colvec[r]{24 \\ -10}
+          \end{equation*}
+    \partsitem Kedua persamaan berikut
+      \begin{equation*}
+        \colvec[r]{1 \\ 1}=\frac{1}{3}\cdot\colvec[r]{1 \\ 2}
+                  +\frac{1}{3}\cdot\colvec[r]{2 \\ 1}
+        \qquad
+        \colvec[r]{1 \\ -1}=-1\cdot\colvec[r]{1 \\ 2}
+                  +1\cdot\colvec[r]{2 \\ 1}
+      \end{equation*}
+      menunjukkan bahwa
+      \begin{equation*}
+        \rep{\identity}{D,\hat{D}}=\begin{mat}[r]
+          1/3  &-1  \\
+          1/3  &1
+        \end{mat}
+      \end{equation*}
+      dan kedua persamaan berikut
+      \begin{equation*}
+        \colvec[r]{1 \\ 2}=1\cdot\colvec[r]{1 \\ 0}
+                  +2\cdot\colvec[r]{0 \\ 1}
+        \qquad
+        \colvec[r]{1 \\ 0}=1\cdot\colvec[r]{1 \\ 0}
+                  +0\cdot\colvec[r]{0 \\ 1}
+      \end{equation*}
+      menunjukkan hasil berikut.
+      \begin{equation*}
+        \rep{\identity}{\hat{B},B}=\begin{mat}[r]
+          1  &1  \\
+          2  &0
+        \end{mat}
+      \end{equation*}
+      Dengan kedua matriks tersebut, perubahannya berlangsung sebagai berikut.
+      \begin{equation*}
+        \hat{T}=\begin{mat}[r]
+          1/3  &-1  \\
+          1/3  &1
+        \end{mat}
+        \begin{mat}[r]
+          1  &2  \\
+          3  &4
+        \end{mat}
+        \begin{mat}[r]
+          1  &1  \\
+          2  &0
+        \end{mat}
+        =\begin{mat}[r]
+          -28/3  &-8/3  \\
+          38/3   &10/3
+        \end{mat}
+      \end{equation*}
+      Seperti pada butir sebelumnya, pemeriksaan membantu memastikan bahwa
+      perhitungan ini bebas dari kesalahan.
+      Sebagai contoh, kita dapat menetapkan vektor
+      \begin{equation*}
+        \vec{v}=\colvec[r]{-1 \\ 2}
+      \end{equation*}
+      (vektor ini dipilih secara sebarang).
+      Sekarang kita memiliki
+      \begin{equation*}
+        \rep{\vec{v}}{B}=\colvec[r]{-1 \\ 2}
+        \qquad
+        \begin{mat}[r]
+          1  &2  \\
+          3  &4
+        \end{mat}_{B,D}
+        \colvec[r]{-1  \\ 2}_{B}
+        =\colvec[r]{3  \\ 5}_D
+      \end{equation*}
+      sehingga $t(\vec{v})$ adalah vektor berikut.
+      \begin{equation*}
+        3\cdot\colvec[r]{1 \\ 1}+5\cdot\colvec[r]{1 \\ -1}=\colvec[r]{8 \\ -2}
+      \end{equation*}
+      Terhadap $\hat{B},\hat{D}$, pertama-tama kita menghitung
+      \begin{equation*}
+        \rep{\vec{v}}{\hat{B}}=\colvec[r]{1 \\ -2}
+        \qquad
+        \begin{mat}[r]
+          -28/3  &-8/3  \\
+          38/3   &10/3
+        \end{mat}_{\hat{B},\hat{D}}
+        \colvec[r]{1 \\ -2}_{\hat{B}}
+        =\colvec[r]{-4 \\ 6}_{\hat{D}}
+      \end{equation*}
+      dan, sebagaimana diharapkan, hasil $t(\vec{v})$ tetap sama.
+      \begin{equation*}
+        -4\cdot\colvec[r]{1 \\ 2}+6\cdot\colvec[r]{2 \\ 1}=\colvec[r]{8 \\ -2}
+      \end{equation*}
+      \end{exparts} 
+    \end{answer}
+  \item 
+    Berapakah ukuran \( P \) dan \( Q \) dalam persamaan $\hat{H}=PHQ$?
+    \begin{answer}
+      Jika \( H \) dan \( \hat{H} \) berukuran \( \nbym{m}{n} \), maka
+      matriks \( P \) berukuran \( \nbyn{m} \), sedangkan \( Q \) berukuran
+      \( \nbyn{n} \).
+    \end{answer}
+  \recommended \item
+    Tinjau ruang $V=\polyspace_2$ dan~$W=\matspace_{\nbyn{2}}$ dengan
+    basis-basis berikut.
+    \begin{gather*}
+      B=\sequence{1, 1+x, 1+x^2}
+      \qquad
+      D=\sequence{
+        \begin{mat}
+          0 &0 \\
+          0 &1
+        \end{mat},
+        \begin{mat}
+          0 &0 \\
+          1 &1
+        \end{mat},
+        \begin{mat}
+          0 &1 \\
+          1 &1
+        \end{mat},
+        \begin{mat}
+          1 &1 \\
+          1 &1
+        \end{mat}
+         }                        \\
+      \hat{B}=\sequence{1, x, x^2}
+      \qquad
+      \hat{D}=\sequence{
+        \begin{mat}
+          -1 &0 \\
+          0 &0
+        \end{mat},
+        \begin{mat}
+          0 &-1 \\
+          0 &0
+        \end{mat},
+        \begin{mat}
+          0 &0 \\
+          1 &0
+        \end{mat},
+        \begin{mat}
+          0 &0 \\
+          0 &1
+        \end{mat}
+         }
+    \end{gather*}
+    Kita akan menemukan $P$ dan~$Q$ untuk mengubah representasi suatu pemetaan
+    terhadap $B,D$ menjadi representasi terhadap $\hat{B},\hat{D}$.
+    \begin{exparts}
+      \partsitem Gambarkan diagram panah yang sesuai.
+      \partsitem Hitung $P$ dan~$Q$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem
+          Berikut diagram panahnya.
+          \begin{equation*}
+            \begin{CD}
+              V_{\wrt{B}}                   @>h>H>        W_{\wrt{D}}       \\
+              @V{\text{\scriptsize$\identity$}} VV      @V{\text{\scriptsize$\identity$}} VV \\
+              V_{\wrt{\hat{B}}}             @>h>\hat{H}>   W_{\wrt{\hat{D}}}
+            \end{CD}
+          \end{equation*}
+          Diagram tersebut memberikan $\hat{H}=PHQ$, dengan
+           $Q=\rep{\identity}{\hat{B},B}$ dan $P=\rep{\identity}{D,\hat{D}}$
+            (ingat bahwa operasi yang dilakukan lebih dahulu ditulis di sebelah
+            kanan).
+        \partsitem
+          Kita menginginkan $Q=\rep{\identity}{\hat{B},B}$ dan
+          $P=\rep{\identity}{D,\hat{D}}$.
+          Untuk $Q$, kita melakukan perhitungan berikut (di sini dilakukan
+          secara langsung).
+          \begin{equation*}
+            \rep{\identity(1)}{B}=\colvec{1 \\ 0 \\ 0}
+            \quad
+            \rep{\identity(x)}{B}=\colvec{-1 \\ 1 \\ 0}
+            \quad
+            \rep{\identity(x^2)}{B}=\colvec{-1 \\ 0 \\ 1}
+          \end{equation*}
+          Perhitungan berikut memberikan $P$.
+          \begin{multline*}
+            \rep{\identity(
+              \begin{mat}
+                0 &0 \\
+                0 &1
+              \end{mat})}{\hat{D}}=\colvec{0 \\ 0 \\ 0 \\ 1} 
+            \quad
+            \rep{\identity(    
+              \begin{mat}
+                0 &0 \\
+                1 &1
+              \end{mat})}{\hat{D}}=\colvec{0 \\ 0 \\ 1 \\ 1} 
+            \\
+            \rep{\identity(    
+              \begin{mat}
+                0 &1 \\
+                1 &1
+              \end{mat})}{\hat{D}}=\colvec{0 \\ -1 \\ 1 \\ 1}
+            \quad
+            \rep{\identity(    
+              \begin{mat}
+                1 &1 \\
+                1 &1
+              \end{mat})}{\hat{D}}=\colvec{-1 \\ -1 \\ 1 \\ 1} 
+          \end{multline*}
+          Jadi, jawabannya adalah
+          \begin{equation*}
+            P=
+            \begin{mat}
+              0 &0 &0  &-1 \\
+              0 &0 &-1 &-1  \\
+              0 &1 &1  &1  \\
+              1 &1 &1  &1
+            \end{mat}
+            \qquad
+            Q=\begin{mat}
+              1 &-1 &-1 \\
+              0 &1  &0  \\
+              0 &0  &1
+            \end{mat}
+          \end{equation*}      
+      \end{exparts}
+    \end{answer}
+  \recommended \item Temukan matriks perubahan basis $Q$ dan~$P$ yang akan
+   mengubah representasi suatu $\map{t}{\Re^2}{\Re^2}$ terhadap $B,D$
+   menjadi representasi terhadap $\hat{B},\hat{D}$.
+   \begin{equation*}
+     B=\sequence{\colvec{1 \\ 0}, \colvec{1 \\ 1}}\quad
+     D=\sequence{\colvec{0 \\ 1}, \colvec{-1 \\ 0}}\quad
+     \hat{B}=\stdbasis_2\quad
+     \hat{D}=\sequence{\colvec{1 \\ -1}, \colvec{0 \\ 1}}
+   \end{equation*}
+    \begin{answer}
+          Berikut diagram panahnya.
+          \begin{equation*}
+            \begin{CD}
+              V_{\wrt{B}}                   @>t>T>        W_{\wrt{D}}       \\
+              @V{\text{\scriptsize$\identity$}} VV      @V{\text{\scriptsize$\identity$}} VV \\
+              V_{\wrt{\hat{B}}}             @>t>\hat{T}>   W_{\wrt{\hat{D}}}
+            \end{CD}
+          \end{equation*}
+          Dengan $Q=\rep{\identity}{\hat{B},B}$ dan
+          $P=\rep{\identity}{D,\hat{D}}$
+          persamaannya adalah $\hat{T}=PTQ$.
+ 
+          Berikut perhitungan untuk $Q=\rep{\identity}{\hat{B},B}$
+          (dilakukan secara langsung).
+          \begin{equation*}
+            \rep{\identity(\colvec{1 \\ 0})}{B}=\colvec{1 \\ 0}
+            \quad
+            \rep{\identity(\colvec{0 \\ 1})}{B}=\colvec{-1 \\ 1}
+          \end{equation*}
+          Jadi, kita memperoleh
+          \begin{equation*}
+            Q=\begin{mat}
+              1 &-1 \\
+              0 &1  
+             \end{mat}
+          \end{equation*}
+          Perhitungan berikut memberikan
+          $P=\rep{\identity}{D,\hat{D}}$.
+          \begin{equation*}
+            \rep{\identity(\colvec{0 \\ 1})}{\hat{D}}=\colvec{0 \\ 1}
+            \quad
+            \rep{\identity(\colvec{-1 \\ 0})}{\hat{D}}=\colvec{-1 \\ -1}
+          \end{equation*}
+          Susun keduanya sebagai kolom-kolom matriks lainnya.
+          \begin{equation*}
+            P=\begin{mat}
+              0 &-1 \\
+              1 &-1  
+             \end{mat}
+          \end{equation*}
+    \end{answer}
+  \recommended \item Temukan $P$ dan~$Q$ untuk menyatakan $H$ melalui $PHQ$
+    sebagai matriks blok identitas parsial.
+    \begin{equation*}
+      H=
+      \begin{mat}
+        2 &1  &1  \\
+        3 &-1 &0  \\
+        1 &3  &2 
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Metode Gauss menghasilkan
+      \begin{equation*}
+          \begin{mat}
+            2 &1  &1  \\
+            3 &-1 &0  \\
+            1 &3  &2 
+          \end{mat}
+          \grstep[-(1/2)\rho_1+\rho_3]{-(3/2)\rho_1+\rho_2}
+          \grstep{\rho_2+\rho_3}
+          \grstep[-(2/5)\rho_2]{(1/2)\rho_1}
+          \begin{mat}
+            1 &1/2  &1/2  \\
+            0 &1    &3/5  \\
+            0 &0    &0 
+          \end{mat}
+      \end{equation*}
+      Operasi kolom menyelesaikan proses mencapai bentuk kanonik bagi
+      ekuivalensi matriks.
+      \begin{equation*}
+        \grstep{-(3/5)\text{kol}_2+\text{kol}_3}
+        \grstep[-(1/5)\text{kol}_1+\text{kol}_3]{-(1/2)\text{kol}_1+\text{kol}_2}
+          \begin{mat}
+            1 &0    &0  \\
+            0 &1 &0  \\
+            0 &0  &0 
+          \end{mat}
+      \end{equation*}
+      Dengan demikian, kedua matriksnya adalah
+      \begin{align*}
+        P&=
+        \begin{mat}
+          1 &0 &0 \\
+          0 &-2/5 &0 \\
+          0 &0 &1
+         \end{mat}
+        \begin{mat}
+          1/2 &0 &0 \\
+          0 &1 &0 \\
+          0 &0 &1
+         \end{mat}
+        \begin{mat}
+          1 &0 &0 \\
+          0 &1 &0 \\
+          0 &1 &1
+         \end{mat}
+        \begin{mat}
+          1    &0 &0 \\
+          0    &1 &0 \\
+          -1/2 &0 &1
+         \end{mat}
+        \begin{mat}
+          1    &0 &0 \\
+          -3/2 &1 &0 \\
+          0    &0 &1
+         \end{mat}                                 \\ 
+         &=
+         \begin{mat}
+           1/2   &0     &0 \\
+           3/5   &-2/5  &0 \\
+           -2    &1     &1
+         \end{mat}                              \\
+        Q&=
+        \begin{mat}
+          1 &0 &0 \\
+          0 &1 &-3/5 \\
+          0 &0 &1
+        \end{mat}
+        \begin{mat}
+          1 &-1/2 &0 \\
+          0 &1    &0 \\
+          0 &0    &1
+        \end{mat}
+        \begin{mat}
+          1 &0 &-1/5 \\
+          0 &1 &0 \\
+          0 &0 &1
+        \end{mat}
+        =
+        \begin{mat}
+          1 &-1/2 &-1/5 \\
+          0 &1    &-3/5 \\
+          0 &0    &1
+        \end{mat}
+      \end{align*}      
+    \end{answer}
+  \recommended \item
+    Gunakan \nearbytheorem{th:CanonFormForMatEquiv} untuk menunjukkan bahwa
+    suatu matriks persegi nonsingular jika dan hanya jika ekuivalen dengan
+    matriks identitas.
+    \begin{answer}
+        Sebarang matriks \( \nbyn{n} \) nonsingular jika dan hanya jika
+        memiliki rank \( n \); menurut
+        \nearbytheorem{th:CanonFormForMatEquiv}, hal ini berlaku jika dan hanya
+        jika matriks tersebut ekuivalen secara matriks dengan matriks
+        $\nbyn{n}$ yang semua entri diagonalnya bernilai satu.
+    \end{answer}
+  \item
+    Tunjukkan bahwa jika \( A \) merupakan matriks persegi nonsingular dan
+    \( P \) serta \( Q \) merupakan matriks-matriks persegi nonsingular
+    sedemikian sehingga \( PAQ=I \), maka \( QP=A^{-1} \).
+    \begin{answer}
+      Jika \( PAQ=I \), maka \( QPAQ=Q \), sehingga \( QPA=I \), dan karena
+      itu \( QP=A^{-1} \).
+    \end{answer}
+  \item
+    Mengapa \nearbytheorem{th:CanonFormForMatEquiv} tidak menunjukkan bahwa
+    setiap matriks dapat didiagonalkan (lihat
+    \nearbyexample{ex:DiagizedMat})?
+    \begin{answer}
+      Menurut definisi setelah \nearbyexample{ex:DiagizedMat}, suatu matriks
+      $M=\rep{t}{B,D}$ dapat didiagonalkan jika matriks tersebut
+      merepresentasikan transformasi dengan sifat bahwa terdapat basis
+      $\hat{B}$ sedemikian sehingga $\rep{t}{\hat{B},\hat{B}}$ merupakan
+      matriks diagonal\Dash basis awal dan akhirnya harus sama.
+      Namun, \nearbytheorem{th:CanonFormForMatEquiv} hanya menyatakan bahwa
+      terdapat $\hat{B}$ dan $\hat{D}$ sedemikian sehingga kita dapat beralih
+      ke representasi $\rep{t}{\hat{B},\hat{D}}$ dan memperoleh matriks
+      diagonal. Tidak ada alasan untuk menganggap bahwa kita dapat memilih
+      $\hat{B}$ dan $\hat{D}$ agar keduanya sama.
+    \end{answer}
+  \item 
+    Apakah transpos dari matriks-matriks yang ekuivalen secara matriks juga
+    harus ekuivalen secara matriks?
+    \begin{answer}
+      Ya. Rank baris sama dengan rank kolom, sehingga rank transpos sama dengan
+      rank matriksnya. Matriks-matriks berukuran sama dengan rank yang sama
+      ekuivalen secara matriks.
+    \end{answer}
+  \item 
+    Apa yang terjadi dalam \nearbytheorem{th:CanonFormForMatEquiv} jika
+    \( k=0 \)?
+    \begin{answer}
+      Hanya matriks nol yang memiliki rank nol.
+    \end{answer}
+  \item \label{exer:MatEqIsEqRel}
+    Tunjukkan bahwa ekuivalensi matriks merupakan relasi ekuivalensi.
+    \begin{answer}
+      Untuk refleksivitas, guna menunjukkan bahwa sebarang matriks ekuivalen
+      secara matriks dengan dirinya sendiri, ambil \( P \) dan \( Q \) sebagai
+      matriks identitas. Untuk simetri, jika \( H_1=PH_2Q \), maka
+      \( H_2=P^{-1}H_1Q^{-1} \) (inversnya ada karena $P$ dan $Q$
+      nonsingular). Terakhir, untuk transitivitas, andaikan
+      \( H_1=P_2H_2Q_2 \) dan \( H_2=P_3H_3Q_3 \).
+      Substitusi kemudian memberikan
+      \( H_1=P_2(P_3H_3Q_3)Q_2=(P_2P_3)H_3(Q_3Q_2) \).
+      Hasil kali matriks-matriks nonsingular bersifat nonsingular (kita telah
+      menunjukkan bahwa hasil kali matriks-matriks yang dapat diinvers juga
+      dapat diinvers;~bahkan kita telah menunjukkan cara menghitung inversnya),
+      sehingga \( H_1 \) ekuivalen secara matriks dengan \( H_3 \).
+     \end{answer}
+  \recommended \item 
+    Tunjukkan bahwa matriks nol merupakan satu-satunya anggota kelas
+    ekuivalensi matriksnya. Adakah matriks lain dengan sifat tersebut?
+    \begin{answer}
+      Menurut \nearbytheorem{th:CanonFormForMatEquiv}, matriks nol merupakan
+      satu-satunya anggota kelasnya karena merupakan satu-satunya matriks
+      \( \nbym{m}{n} \) berank nol.
+      Tidak ada matriks lain yang menjadi satu-satunya anggota kelasnya;
+      sebarang kelipatan skalar tak nol dari suatu matriks memiliki rank yang
+      sama dengan matriks tersebut.
+    \end{answer}
+  \item 
+    Apa saja kelas ekuivalensi matriks bagi matriks transformasi pada
+    \( \Re^1 \)?
+    \( \Re^3 \)?
+    \begin{answer}
+      Terdapat dua kelas ekuivalensi matriks bagi matriks \( \nbyn{1} \)\Dash
+      kelas matriks berank nol dan kelas matriks berank satu.
+      Matriks-matriks \( \nbyn{3} \) terbagi ke dalam empat kelas ekuivalensi
+      matriks.
+    \end{answer}
+  \item 
+    Berapa banyak kelas ekuivalensi matriks yang ada?
+    \begin{answer}
+      Bagi matriks \( \nbym{m}{n} \), terdapat satu kelas untuk setiap rank
+      yang mungkin:~jika \( k \) merupakan nilai minimum dari \( m \) dan
+      \( n \), terdapat kelas bagi matriks berank \( 0 \), \( 1 \), \ldots,
+      \( k \). Jadi, terdapat \( k+1 \) kelas.
+      (Tentu saja, jika semua ukuran matriks digabungkan, kita memperoleh tak
+      hingga banyak kelas.)
+    \end{answer}
+  \item 
+    Apakah kelas-kelas ekuivalensi matriks tertutup terhadap perkalian skalar?
+    Terhadap penjumlahan?
+    \begin{answer}
+      Kelas-kelas tersebut tertutup terhadap perkalian skalar tak nol karena
+      kelipatan skalar tak nol dari suatu matriks memiliki rank yang sama
+      dengan matriks tersebut. Kelas-kelas itu tidak tertutup terhadap
+      penjumlahan; sebagai contoh, \( H+(-H) \) memiliki rank nol.
+    \end{answer}
+  \item 
+    Misalkan \( \map{t}{\Re^n}{\Re^n} \) direpresentasikan oleh \( T \)
+    terhadap \( \stdbasis_n,\stdbasis_n \).
+    \begin{exparts}
+      \partsitem Temukan $\rep{t}{B,B}$ dalam kasus khusus berikut.
+        \begin{equation*}
+          T=\begin{mat}[r]
+            1  &1  \\
+            3  &-1
+          \end{mat}
+          \qquad
+          B=\sequence{\colvec[r]{1  \\ 2},
+                      \colvec[r]{-1 \\ -1}}
+        \end{equation*}
+      \partsitem Deskripsikan $\rep{t}{B,B}$ dalam kasus umum dengan
+        \( B=\basis{\beta}{n} \).
+    \end{exparts}
+    \begin{answer}
+        Berikut diagramnya.
+        \begin{equation*}
+          \begin{CD}
+            \Re^2_{\wrt{\stdbasis_2}}         @>t>T>     \Re^2_{\wrt{\stdbasis_2}}    \\
+            @V\text{\scriptsize$\identity$} VV   @V\text{\scriptsize$\identity$} VV \\
+           \Re^2_{\wrt{B}}        @>t>\hat{T}>  \Re^2_{\wrt{B}}
+          \end{CD}
+        \end{equation*}
+        Terdapat dua cara untuk bergerak dari kiri bawah ke kanan bawah.
+        Cara pertama adalah secara langsung dengan menggunakan
+        $\hat{T}=\rep{t}{B,B}$.
+        Cara kedua bergerak naik, lalu mendatar, kemudian turun, dengan
+        $\rep{\identity}{\stdbasis_2,B}
+                          \cdot T
+                          \cdot \rep{\identity}{B,\stdbasis_2}$
+        (ingat bahwa matriks-matriks tersebut ditulis dari kanan ke kiri,
+        sehingga matriks untuk gerak ``naik'' berada di sebelah kanan; dengan
+        demikian, ketika diterapkan pada $\rep{\vec{v}}{B}$, matriks yang
+        diterapkan pertama kali adalah $\rep{\identity}{B,\stdbasis_2}$).
+        Kita menulis $S$ untuk $\rep{\identity}{B,\stdbasis_2}$; di antara
+        kedua matriks perubahan basis, kita memilih matriks ini karena lebih
+        mudah dihitung. Jadi, kita memiliki $\hat{T}=S^{-1}TS$.
+      \begin{exparts}
+        \partsitem Kita memiliki
+          \begin{equation*}
+            \rep{\identity}{B,\stdbasis_2}=S=
+            \begin{mat}[r]
+              1  &-1  \\
+              2  &-1
+            \end{mat}
+          \end{equation*}
+          dan
+          \begin{equation*}
+            \rep{\identity}{\stdbasis_2,B}
+            =\rep{\identity}{B,\stdbasis_2}^{-1}=S^{-1}=
+            \begin{mat}[r]
+              1  &-1  \\
+              2  &-1
+            \end{mat}^{-1}
+            =\begin{mat}[r]
+              -1  &1  \\
+              -2  &1 
+            \end{mat}
+          \end{equation*}
+          sehingga jawabannya adalah
+          \begin{equation*}
+            \rep{t}{B,B}
+            =
+            \begin{mat}[r]
+              -1  &1  \\
+              -2  &1 
+            \end{mat}
+            \begin{mat}[r]
+              1  &1  \\
+              3  &-1   
+            \end{mat}
+            \begin{mat}[r]
+              1  &-1  \\
+              2  &-1
+            \end{mat}
+            =\begin{mat}[r]
+              -2  &0   \\
+              -5  &2 
+            \end{mat}
+          \end{equation*}
+          Sebagai pemeriksaan singkat, kita dapat mengambil vektor secara acak
+          \begin{equation*}
+            \vec{v}=\colvec[r]{4  \\  5}
+          \end{equation*}
+          yang memberikan
+          \begin{equation*}
+            \rep{\vec{v}}{\stdbasis_2}=\colvec[r]{4 \\ 5}
+            \qquad
+            \begin{mat}[r]
+              1  &1  \\
+              3  &-1   
+            \end{mat}
+            \colvec[r]{4 \\ 5}
+            =\colvec[r]{9 \\ 7}=t(\vec{v})
+          \end{equation*}
+          sedangkan perhitungan terhadap $B,B$
+          \begin{equation*}
+            \rep{\vec{v}}{B}=\colvec[r]{1 \\ -3}
+            \qquad
+            \begin{mat}[r]
+              -2  &0   \\
+              -5  &2 
+            \end{mat}_{B,B}
+            \colvec[r]{1 \\ -3}_B
+            =\colvec[r]{-2 \\ -11}_B
+          \end{equation*}
+          menghasilkan jawaban yang sama.
+          \begin{equation*}
+            -2\cdot\colvec[r]{1 \\ 2}-11\cdot\colvec[r]{-1 \\ -1}
+               =\colvec[r]{9 \\ 7}
+          \end{equation*}
+       \partsitem Seperti pada butir pertama pertanyaan ini,
+          \begin{equation*}
+            S=\rep{\identity}{B,\stdbasis_2}
+            =\begin{pmat}{c|c|c}
+              \vec{\beta}_1 &\;\cdots\; &\vec{\beta}_n
+            \end{pmat}
+            \qquad
+            \rep{\identity}{\stdbasis_2,B}=S^{-1}=
+             \rep{\identity}{B,\stdbasis_2}^{-1}
+          \end{equation*}
+          sehingga, dengan menulis $S$ untuk matriks yang kolom-kolomnya
+          merupakan vektor-vektor basis, kita memiliki
+          $\rep{t}{B,B}=\hat{T}=S^{-1}TS$.
+      \end{exparts}
+    \end{answer}
+  \item 
+    \begin{exparts}
+       \partsitem Misalkan \( V \) memiliki basis \( B_1 \) dan \( B_2 \),
+         sedangkan \( W \) memiliki basis \( D \).
+         Untuk \( \map{h}{V}{W} \), temukan rumus yang menghitung
+         \( \rep{h}{B_2,D} \) dari \( \rep{h}{B_1,D} \).
+       \partsitem Ulangi pertanyaan sebelumnya dengan satu basis bagi \( V \)
+         dan dua basis bagi \( W \).
+     \end{exparts}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem Bentuk diagram panah yang disesuaikan adalah
+           \begin{equation*}
+             \begin{CD}
+               V_{\wrt{B_1}}                   @>h>H>        W_{\wrt{D}}       \\
+               @V\text{\scriptsize$\identity$} VQV      @V\text{\scriptsize$\identity$} VPV \\
+               V_{\wrt{B_2}}             @>h>\hat{H}>  W_{\wrt{D}}
+             \end{CD}
+           \end{equation*}
+           Karena tidak perlu mengubah basis dalam \( W \) (atau kita dapat
+           mengatakan bahwa matriks perubahan basis $P$ merupakan identitas),
+           kita memiliki
+           \( \rep{h}{B_2,D}=\rep{h}{B_1,D}\cdot Q \), dengan
+           \( Q=\rep{\identity}{B_2,B_1} \).
+         \partsitem Dalam kasus ini, diagram panahnya adalah
+           \begin{equation*}
+             \begin{CD}
+               V_{\wrt{B}}                   @>h>H>   W_{\wrt{D_1}}       \\
+               @V\text{\scriptsize$\identity$} VQV  @V\text{\scriptsize$\identity$} VPV \\
+               V_{\wrt{B}}             @>h>\hat{H}>  W_{\wrt{D_2}}
+             \end{CD}
+           \end{equation*}
+           Kita memiliki \( \rep{h}{B,D_2}=P\cdot \rep{h}{B,D_1} \), dengan
+           \( P=\rep{\identity}{D_1,D_2} \).
+       \end{exparts}  
+      \end{answer}
+  \item 
+    \begin{exparts}
+      \partsitem Jika dua matriks ekuivalen secara matriks dan dapat diinvers,
+        apakah invers keduanya harus ekuivalen secara matriks?
+      \partsitem Jika dua matriks memiliki invers yang ekuivalen secara matriks,
+        apakah kedua matriks tersebut harus ekuivalen secara matriks?
+      \partsitem Jika dua matriks persegi ekuivalen secara matriks, apakah
+        kuadrat keduanya harus ekuivalen secara matriks?
+      \partsitem Jika dua matriks persegi memiliki kuadrat yang ekuivalen secara
+        matriks, apakah kedua matriks itu harus ekuivalen secara matriks?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Berikut diagram panahnya beserta versi diagram tersebut bagi
+          fungsi invers.
+          \begin{equation*}
+           \begin{CD}
+             V_{\wrt{B}}                   @>h>H>      W_{\wrt{D}}       \\
+             @V\text{\scriptsize$\identity$} VQV  @V\text{\scriptsize$\identity$} VPV \\
+             V_{\wrt{\hat{B}}}             @>h>\hat{H}> W_{\wrt{\hat{D}}}
+            \end{CD}
+            \hspace*{4em}\qquad
+           \begin{CD}
+             V_{\wrt{B}}              @<h^{-1}<H^{-1}<    W_{\wrt{D}}       \\
+             @V\text{\scriptsize$\identity$} VQV  @V\text{\scriptsize$\identity$} VPV \\
+             V_{\wrt{\hat{B}}}        @<h^{-1}<\hat{H}^{-1}< W_{\wrt{\hat{D}}}
+            \end{CD}
+           \end{equation*}
+           Ya, invers matriks-matriks tersebut merepresentasikan invers
+           pemetaan-pemetaannya. Artinya, kita dapat bergerak dari kanan bawah
+           ke kiri bawah dengan bergerak naik, lalu ke kiri, kemudian turun.
+           Dengan kata lain, jika \( \hat{H}=PHQ \) (dengan \( P,Q \) dapat
+           diinvers) serta \( H,\hat{H} \) dapat diinvers, maka
+           \( \hat{H}^{-1}=Q^{-1}H^{-1}P^{-1} \).
+        \partsitem Ya; ini merupakan bagian sebelumnya yang dinyatakan dengan
+          istilah berbeda.
+        \partsitem Tidak, kita memerlukan asumsi tambahan:~jika \( H \)
+          merepresentasikan \( h \) terhadap basis awal dan akhir yang sama,
+          yaitu \( B,B \), bagi suatu \( B \), maka \( H^2 \)
+          merepresentasikan \( \composed{h}{h} \).
+          Sebagai contoh khusus, kedua matriks berikut sama-sama berank satu
+          sehingga ekuivalen secara matriks
+          \begin{equation*}
+             \begin{mat}[r]
+               1  &0  \\
+               0  &0
+             \end{mat}
+             \qquad
+             \begin{mat}[r]
+               0  &0  \\
+               1  &0
+             \end{mat}
+          \end{equation*}
+          tetapi kuadrat keduanya tidak ekuivalen secara matriks\Dash kuadrat
+          matriks pertama berank satu, sedangkan kuadrat matriks kedua berank
+          nol.
+        \partsitem Tidak. Kedua matriks berikut tidak ekuivalen secara matriks,
+          tetapi memiliki kuadrat yang ekuivalen secara matriks.
+          \begin{equation*}
+             \begin{mat}[r]
+               0  &0  \\
+               0  &0
+             \end{mat}
+             \qquad
+             \begin{mat}[r]
+               0  &0  \\
+               1  &0
+             \end{mat} 
+          \end{equation*}
+      \end{exparts}  
+    \end{answer}
+  \item
+    Matriks-matriks persegi disebut \definend{serupa} jika merepresentasikan
+    transformasi yang sama, tetapi masing-masing terhadap basis akhir dan awal
+    yang sama. Artinya, \( \rep{t}{B_1,B_1} \) serupa dengan
+    \( \rep{t}{B_2,B_2} \).
+    \begin{exparts}
+      \partsitem Berikan definisi keserupaan matriks seperti definisi dalam
+        \nearbydefinition{def:MatEquiv}.
+      \partsitem Buktikan bahwa matriks-matriks serupa ekuivalen secara matriks.
+      \partsitem Tunjukkan bahwa keserupaan merupakan relasi ekuivalensi.
+      \partsitem Tunjukkan bahwa jika \( T \) serupa dengan \( \hat{T} \),
+        maka \( T^2 \) serupa dengan \( \hat{T}^2 \), kubiknya serupa, dan
+        seterusnya.
+        % \textit{Contrast with the prior exercise.}
+      \partsitem Buktikan bahwa terdapat matriks-matriks yang ekuivalen secara
+        matriks tetapi tidak serupa.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Diagram panah berikut menyarankan definisinya.
+          \begin{equation*}
+            \begin{CD}
+              V_{\wrt{B_1}}                   @>t>T>        V_{\wrt{B_1}}       \\
+              @V\text{\scriptsize$\identity$} VV  @V\text{\scriptsize$\identity$} VV \\
+              V_{\wrt{B_2}}             @>t>\hat{T}>  V_{\wrt{B_2}}
+            \end{CD}
+          \end{equation*}
+          Matriks \( T, \hat{T} \) disebut \definend{serupa} jika terdapat
+          matriks nonsingular \( P \) sedemikian sehingga
+          \( \hat{T}=P^{-1}TP \).
+        \partsitem Dalam definisi ekuivalensi matriks, ambil pengali kiri
+          sebagai \( P^{-1} \) dan pengali kanan sebagai \( P \).
+        \partsitem \textit{Argumennya sama seperti dalam
+          \nearbyexercise{exer:MatEqIsEqRel}.}
+          Refleksivitas jelas: \( T=I^{-1}TI \).
+          Simetri juga mudah: \( \hat{T}=P^{-1}TP \) menyiratkan
+          \( T=P\hat{T}P^{-1} \) (kalikan persamaan pertama dari kanan dengan
+          $P^{-1}$ dan dari kiri dengan $P$).
+          Untuk transitivitas, andaikan \( T_1={P_2}^{-1}T_2P_2 \) dan
+          \( T_2={P_3}^{-1}T_3P_3 \).
+          Maka \( T_1={P_2}^{-1}({P_3}^{-1}T_3P_3)P_2
+                     =({P_2}^{-1}{P_3}^{-1})T_3(P_3P_2) \), dan pembuktian
+          selesai setelah memperhatikan bahwa \( P_3P_2 \) merupakan matriks
+          yang dapat diinvers dengan invers \( {P_2}^{-1}{P_3}^{-1} \).
+        \partsitem Andaikan \( \hat{T}=P^{-1}TP \). Untuk kuadrat,
+          \( \hat{T}^2=(P^{-1}TP)(P^{-1}TP)
+                      =P^{-1}T(PP^{-1})TP=P^{-1}T^2P \).
+          Pangkat-pangkat yang lebih tinggi mengikuti melalui induksi.
+        \partsitem Kedua matriks berikut ekuivalen secara matriks, tetapi
+          kuadrat keduanya tidak ekuivalen secara matriks.
+          \begin{equation*}
+             \begin{mat}[r]
+               1  &0  \\
+               0  &0
+             \end{mat}
+             \qquad
+             \begin{mat}[r]
+               0  &0  \\
+               1  &0
+             \end{mat}
+          \end{equation*}
+          Menurut butir sebelumnya, keserupaan matriks dan ekuivalensi matriks
+          dengan demikian merupakan dua hal berbeda.
+      \end{exparts}  
+   \end{answer}
+\index{ekuivalensi matriks|)}
+\index{perubahan basis|)}
+\end{exercises}

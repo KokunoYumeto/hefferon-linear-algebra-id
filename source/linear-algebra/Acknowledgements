@@ -1,0 +1,278 @@
+Acknowledgements for _Linear Algebra_ by Jim Hefferon
+
+This document was started 2001-Oct-08, in response to the help
+I've been offered by various people from the web.
+
+To everyone who wrote and contributed, Thank you!
+
+======================================================
+
+General:
+  I'd like to thank Saint Michael's College, the Math Department at
+  Saint Michael's College, including George Ashline, Rick Cleary,
+  and Lloyd Simons for using drafts of this book in class.  Their 
+  feedback was very helpful.  In particular, GA pointed out many
+  typos. 
+
+2001-Oct-08 
+  Guillaume Belanger, typo
+  Gabriel Gellen, some typos
+  Ken Yocom and John Iverson, typos, corrections
+
+2002-Dec-31
+  Clarke Stone, typo
+  Javed Iqbal, PDF misbehavior
+
+2003-Feb-26
+  Bob Hayden, many corrections in the Leontief topic  
+  Brandon Barker, typo
+  Hynek Hanke, typo
+  Jon Thurmond, typo
+  Sheldon Robinson, typo
+  Jack Moffitt, typo
+
+2003-May-13
+  Jack Moffitt, typos
+
+2008-July-20
+  Harry (ypsilonj at domain gmail.com), typos
+  Einar Bjarki Gunnarsson, corrections to answers 
+  Clint Ward, correction to exercise
+  Yufei Chen, corrections to exercises
+  Bernd Losert, many corrections and clarifications of exercises.
+  Dinko Tenev, correction to an exercise
+  Tom Fitzhenry, correction to an exercise
+  Oliver Ferrari, correction to an exercise
+  Dan Boswel, correction to an exercise
+  Pedro Arias Castanedo, correction to preface
+  Ali Ghodsi, several very helpful corrections to text body
+
+2011-Jan-01
+  Christopher Kirkos  Suggestion to date PDF's 
+  Romain Iehl  answer to exercise correction
+  Goran Topic  exercise suggestion
+  Raphaele Herbin  misplaced reference
+  Keith Russell  correction to discussion in Method of Powers
+  David Garcia Quintas  corrections to exercise and text body
+  Lennon Conson  correction to exercise answer
+  Ali Ghodsi  corrections to two diagrams
+  Wlodek Bryc  correction to exercise answer, misspelling of Schwarz
+  Jacob Schlather  suggestions about linear recurrences 
+  Jim Schmitz  corrections to exercise answers
+  Gideon Mann  correction to formula
+  Pavel Dudrenov  correction to computer code
+  Mike Bibby  comment about an example
+  Adrian Suarez  comment about the presentation
+  Fred Maranhao  correction of exercise
+  Barrett Walls  for a review with many helpful comments and corrections
+  Barbara Glass  for a review also with many helpful comments and corrections
+  Iason Irusodimos for the review also with helpful comments and corrections
+  Stephen Solomon of Eleven Learning  arrangement of the reviews
+
+2011-Dec-06
+  Arthur A Nardiello  correction of discussion of determinant function
+  Gurpreet Sidhu  clarification of linear independence example 
+  Brian Scholl  correction to exercise answers, and examples in Jordan Form
+    chapter
+  Naveen Goswamy  correction to example of CAS
+  Allen Rogers  correction to a subtle point in an exercise on 
+    linear independence 
+  Todd Iverson  pointer to a fine proof of the uniqueness of 
+    reduced echelon form
+  Robert H Lewis  remarks about the definition of determinant
+  Rick Cleary  slick answer to an exercise
+  Jane Holsapple Long  correction to populations topic
+  Colin Fraizer  typos in appendix
+
+2012-Jan-31
+  Marco Daniel for help with an mdframed issue.
+  CJ Fearnley corrections for projective geometry topic
+
+2012-Mar-28
+  George Ashline  for schedule of sections covered
+  Lindsay Meyer for help with soem exercises in the Vector Spaces chapter
+
+2012-Apr-11
+  Dan Velleman  several suggestions, including about using multisets in 
+     defn of linear independence
+
+2012-Jun-13
+  David Guichard  corrections and some helpful discussions
+
+2012-Oct-01
+  DG formatting of some links in jhanswers not right
+
+2012-Oct-20 
+  Ken Shrirriff addition to introduction of determinant function.
+
+2013-Jan-01
+  Itamar Stein  hole in proof of Jordan form
+  David Guichard  several corrections throughout text 
+  Troy J. Jasso  hyperref'ed links in index wrong (I couldn't figure out
+     how to correct; dropped links)
+
+2013-Dec-13
+  J Alacqua  Change - to + in introduction to Triangle Inequality
+  Jeff Haag, and student  Error in answer to eigenspace exercise
+  Felix Bier  Error in Matrix Representation answer
+  Joakim Fremstad  typo in example of representation of vector wrt basis
+  Vinícius dos Santos Oliveira  Typo in slide def of std basis
+  Diego Alexander Huerfano Villalba  Correction to exercise on representation
+    wrt a basis, correction to exercise on sum of entires of each row
+  Mike Brown  Suggestion about describing US coins "pennies", etc., for 
+    non-US audiences
+  Mana Borwornpadungkitti  Missing case in answer to Reduced Echelon Form
+    exercise
+  Jad Nohra, Tom Lahore, Lopatin Vladimir  Many corrections, large and small.
+
+2014-Jan-08
+  Mana Borwornpadungkitti  Correction to exercise answer.
+
+2014-Feb-21
+  Mana Borwornpadungkitti Number of corrections to homogeom.
+
+2014-Apr-16 
+  Fred Richman  Number of suggestions and corrections, including terminology.
+
+2014-Nov-24
+  Mana Borwornpadungkitti Number of careful typo corrections.
+  Ronald Herr Correction to answers of Networks, question 2.
+  Chris Thron  Large number of corrections and substantial comments.  Fixed
+     subtle error in Three.II.2.31.
+  Chris Atkinson  Correction to partition example in appendix, typo in 
+     Three.3.2.6.
+  Dan Drake  Very helpful discussion of a better example of the need for
+     the set/multiset distinction in the definition of linear independence.
+  Darren Wick  Many corrections to slides.
+
+2015-Jan-06
+  Gario Gjorgjevski  Typo in Schur's Triangularization Lemma.
+
+2015-Jan-14
+  Arthur Kock  Unclear exercise in Isomorphism section.
+
+2016-May-31
+  Dave Hein  Clarify question and answer for exercise 1.28 in One.I.
+  Maria H  Misspelling after definition of Vector Space
+  Deann Leoni  Corrected answer to exercise in vs2.
+  Vinícius dos Santos Oliveira  Typo.
+  Jeff Herlitz  Correction to answer in One.III.
+  Eric P. Morrill  Comment on Exercise in One.I.
+  Karl-Dieter Crisman  Large number of corrections, including to mathematical 
+    material, not only typos, and a number of very helpful suggestions.
+  Joe Zyburt  Two errors in nullspace chains in Nilpotence section.
+  Darij Grinberg  Corrections around Cayley-Hamilton.
+  Fred Davis, via David Joyner, many questions with answers for question bank.
+  William Karstens for much help with the Topic on Coupled Pendula.
+
+2016-Aug-20
+  Christelle Vincent  Add slides that use handout option.
+
+2016-Nov-23
+  Darij Grinberg  Many typos.  Thoughtful suggestions on a couple of items. 
+  David Guichard  Many typos and suggestions.
+  Mitch Rothstein  Exercise error, and proof suggestion.
+  James Moore  Typo.
+  Richard Satterfield  Thought-provoking report about free variables.
+  Christopher Thron  Incorrect exercise in voting Topic.  Poorly worded 
+     exercises.
+  David Joyner, David Ruth  Exercise answer.  
+
+2016-Dec-30
+  Dylan Frese  Matrix column incorrect in example.
+  Andrew Misseldine  Number of corrections from students, many answers.
+
+2019-Jul-02
+  Steve Nicholson (GitLab)  Typo in preface.
+  Darij Grinberg (GitLab)  Improvements to proof of Chio's Theorem.
+
+2019-Aug-05
+  Mitch Rothstein Prove all bases have same size by calculation on coords
+     (Changed slides to do this but book retains Exchange Lemma.)
+  Darij Grinberg  More typos, and a number of thoughtful suggestions.
+    Improvement in discussion of linear relationships.
+  Andrew Misseldine  A number of corrections to solutions.
+  Marcus Christie  Correct an exercise on the Geometry of Determinants.
+  Pooya Taherkhani  Suggestion about format for printed books.
+  M. Andoor  Correction in Changing Map Representations section.
+  Arun Sagar  Many helpful comments, and corrections to a number of map
+     solutions.
+  Joe Laszlo  Exercise answer, One.I.
+  Clayton Cafiero  Missing \vec's in Two.II.
+  John Calabrese  Exercise statement correction in Three.I.
+  Yair Kubi  Wording correction in One.I. 
+  Vincent Porras  Answer correction, One.III.
+  Maximiliano Redigonda  Correction to answer Three.VI.
+  Phillip Lestmann  Correction to exercises in Stable Populations.
+  Clayton Cafiero  Exercise answer correction in Five.II.
+  Maximiliano Redigonda  Many helpful corrections to exercise answers.
+  Emmanuel Charpentier  Improve answer in One.I.
+  William Gore  Correct an example in Five.IV.
+  Michal Ramos  Improve an exercise answer in Two.III, and correction to
+    development of matrix multiplication.
+  Teresa Mabbutt  Correction to exercise answer in Three.IV.
+  Pooya Taherkhani  Correction to Two.I.
+  Andrew Stimpson  Correction to definition of t-string.
+  Brian Lee  Correction in Three.VI.
+  Bill Norton  Answer correction in One.I.
+  Rick Cleary  Question on span.
+  Park Young Ho  Prompt to modify wording in Four.I.
+  Tim Zhi, Mild Thamparanon  Alter misleading wording of answer in Three.IV.
+  Leigh Noble  Correction to answers in Three.V and Four.II.
+  Rick Cleary  Correction to page rank description.
+  Andrew Peak  Comments on Diagonalizability example.
+  Larry Dodd  Typo in Vector Space introduction.
+  Chris Harding  Corrections to homework exercise in Chapter One.  A number
+     of other well-spotted points.
+  Evan Wallace  Correction to figure in One.II.
+  Nathaniel Schenker A large number of excellent comments and corrections.
+  Wolf Holzmann  Write-up of proof of Jordan form existence.
+  Elmir Jagudin Typo in exercise.
+  Wlodek Bryc  Extensive an helpful comments on compiling under Windows (this
+    is pre-latexmk; I switched to try to make things better).
+  Shishir Agrawal (and Michael Bennett)  Several corrections in Two and Three.
+  Joseph O'Brien  Correction to t-string basis definition.
+  Bradley J Ballinger   Comment about wording of vector space definition.
+  Brett Presnell  Typo in slide five_i.
+  John W. Hoggard  Slide compilation.
+
+2020-Mar-09
+  Tirthankar Mazumder  Couple of typos.
+
+2020-Jun-08
+  Luis Lozano  Change superscript in lab.
+
+2020-Sep-30
+  Keon Moradi  Typo in vector entry.
+
+2021-Oct-04
+  John Hoggard  Slides not coming out in three versions.
+  Joseph O'Brien  Add comment in jc3 about maximality of strings in basis.
+  Christopher A Ibarra  Exercise answer error.
+  Tirthankar Mazumder  For lab, Python3 has no sys.maxint.
+  Rick Cleary  Correction to exercise wording, correction to another's answer.
+  Mervyn Brumbach  Correction to exercise wording, and to another's answer.
+  Carson Hesterman  Correction to exercise answer.
+  Chris Pil  Correction to exercise answer.
+  Clint Givens  Correction to exercise wording.
+  Sasha Lopoukhine  Correction to wording in representation of a vector.
+  Stefan Landau  Typo in exercise.
+  Alexander M Pappas-McAllister  Correction to exercise answer.
+  Tyrone Yan  Correction to one of the ugly results about linear independence.
+  Vineeth Thota  Error in exercise answer.
+  Jan W B Baltussen  Typos on Jordan form section.
+  Jan W B Baltussen  More typos, and correction to example.
+  Logan MacNeil  Correction to linear independence example.
+  Kaung Thu  Excellent correction to a tricky point in the proof that every
+    nilpotent transformation has an associated t-string basis.
+  Lance Decker  Correction to exercise answer.
+  Paolo Carlini  Typo on home page.
+  Dennis Suratna  Typo on Gram-Scmidt diagram.
+  Elliot Roynon  Correction to exercise answer, where that same error was
+    in a number of nearby exercises.
+  Andrzej Fiolek  Suggestion about induction argument that Gauss's method
+    works.
+  Samuel Wilson and Ashton Lorne  Correction to exercise answer.
+
+2021-November-09
+  Mark Mills  Link error on hefferon.net.

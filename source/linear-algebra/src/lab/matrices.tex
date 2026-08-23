@@ -1,0 +1,641 @@
+\chapter{Matriks}
+
+Operasi matriks seperti penjumlahan dan perkalian
+bersifat mekanis sehingga sangat cocok dikerjakan oleh
+komputer.
+
+
+
+%========================================
+\section{Membentuk matriks}
+Definisikan matriks dengan fungsi milik \Sage, yaitu \inlinecode{matrix}.
+Ingat dari bagian tentang Metode Gauss bahwa fungsi ini menerima dua masukan.
+Masukan pertama adalah himpunan bilangan yang menentukan skalar apa saja
+yang dapat menjadi entri, sedangkan masukan kedua adalah entri-entri tersebut,
+yang ditulis sebagai daftar baris.
+Di sini, untuk masukan pertama kita akan menggunakan \Sagecmd{RDF} bagi
+entri bilangan titik mengambang,
+atau \Sagecmd{CDF} bagi entri bilangan kompleks $a+bi$ dengan
+$a$ dan~$b$ berupa bilangan titik mengambang,
+atau kita dapat menggunakan bilangan rasional, \Sagecmd{QQ}.
+\begin{sagecommandline}
+sage: A = matrix(RDF, [[1, 2], [3, 4]])
+sage: A
+sage: i = CDF(i)
+sage: A = matrix(CDF, [[1+2*i, 3+4*i], [5+6*i, 7+8*i]])
+sage: A
+sage: A = matrix(QQ, [[1, 2], [3, 4]])
+sage: A                           
+\end{sagecommandline}
+Simbol bawaan \Sage{} untuk akar kuadrat dari $-1$ adalah $i$.
+Karena~$i$ digunakan untuk banyak hal dalam pemrograman,
+sebelum menggunakannya untuk bilangan kompleks Anda perlu
+mengaturnya ulang dengan \inlinecode{CDF(i)}.
+
+Dalam bab ini, kecuali ada alasan untuk memilih yang lain,
+kita akan menggunakan bilangan rasional, \inlinecode{QQ}, sebagai skalar,
+karena bilangan rasional lebih mudah dibaca\Dash $1$ lebih mudah daripada
+$1.0$\Dash dan karena matriks-matriks dalam buku biasanya mempunyai entri rasional.
+
+Konstruktor \inlinecode{matrix} memungkinkan Anda menentukan banyaknya
+baris dan kolom.
+\begin{sagecommandline}
+sage: B = matrix(QQ, 2, 3, [[1, 1, 1], [2, 2, 2]])  
+sage: B
+\end{sagecommandline}
+Salah satu alasan untuk melakukannya adalah memeriksa masukan Anda.
+Di sini ukuran yang ditentukan tidak cocok dengan entri karena
+matriks yang diberikan hanya mempunyai dua baris.
+\begin{lstlisting}[style=python]
+sage: B = matrix(QQ, 3, 3, [[1, 1, 1], [2, 2, 2]])  
+\end{lstlisting}
+Pesan galat \Sage{} berbunyi
+\inlinecode{Number of rows does not match up with specified number}.
+
+Keadaan lain ketika Anda perlu mencantumkan
+banyaknya baris dan kolom adalah saat memakai pintasan berikut
+untuk memperoleh matriks identitas, yakni dengan menaruh $1$
+di tempat daftar baris.
+\begin{sagecommandline}
+sage: I = matrix(QQ, 3, 3, 1)                     
+sage: I
+\end{sagecommandline}
+Pintasan serupa menghasilkan matriks nol.
+\begin{sagecommandline}
+sage: Z = matrix(QQ, 2, 2, 0)
+sage: Z
+\end{sagecommandline}
+Perbedaan antara pintasan ini dan pintasan sebelumnya adalah bahwa
+\inlinecode{matrix(QQ, 3, 2, 1)} menghasilkan galat karena
+matriks identitas harus berbentuk persegi.
+\Sage{} mempunyai perintah untuk membuat matriks identitas
+yang tidak mungkin menimbulkan galat ini.
+\begin{sagecommandline}
+sage: I = identity_matrix(3)
+sage: I
+\end{sagecommandline}
+
+\Sage{} mempunyai banyak metode lain untuk matriks.
+Misalnya, Anda dapat mentransposisi baris menjadi kolom atau menguji apakah
+suatu matriks simetris, yaitu tidak berubah oleh transposisi.
+\begin{sagecommandline}
+sage: A = matrix(QQ, [[1, 2], [3, 4]])
+sage: A.transpose()
+sage: A.is_symmetric()
+\end{sagecommandline}
+Contoh lainnya, Anda dapat membuat matriks dengan memberikan pola
+bagi entri-entrinya.
+Dalam matriks yang terbentuk di sini, entri $a_{i,j}$ sama dengan jumlah
+$i+j$.
+\begin{sagecommandline}
+sage: A = matrix(QQ, 2, 3, lambda x, y: x+y)
+sage: A
+\end{sagecommandline}
+Satu contoh terakhir:
+\Sage{} akan membuat matriks dengan entri acak, di sini berupa
+bilangan titik mengambang dari 0 sampai 1.
+\begin{sagecommandline}
+sage: random_matrix(RDF, 3, min=0, max=1)
+\end{sagecommandline}
+(Perhatikan \inlinecode{RDF}.
+Pilihan ini lebih sesuai bagi kita karena \Sage{} menyediakan
+\inlinecode{random_matrix} yang lebih langsung digunakan dengan entri titik mengambang daripada
+dengan entri rasional.
+Rinciannya tersedia dalam referensi \Sage.)
+
+
+
+
+%========================================
+\section{Kombinasi linear}
+Penjumlahan dan pengurangan matriks merupakan operasi yang wajar.
+\begin{sagecommandline}
+sage: A = matrix(QQ, [[1, 2], [3, 4]])
+sage: B = matrix(QQ, [[1, 1], [2, -2]])
+sage: A+B
+sage: A-B
+\end{sagecommandline}
+
+\Sage{} mengetahui bahwa penjumlahan matriks dengan ukuran berbeda tidak terdefinisi.
+\begin{lstlisting}
+sage: A = matrix(QQ, [[1, 2], [3, 4]])
+sage: C = matrix(QQ, [[0, 0, 2], [3, 2, 1]])
+sage: A+C
+\end{lstlisting}
+Anda memperoleh galat yang baris terakhirnya memuat
+\inlinecode{unsupported operand parent(s) for +}.
+Singkatnya, \inlinecode{+} tidak terdefinisi antara sebuah matriks
+$\nbyn{2}$ dan sebuah matriks $\nbym{2}{3}$.
+
+Perkalian skalar juga merupakan operasi yang wajar,
+sehingga Anda dapat membentuk kombinasi linear.
+\begin{sagecommandline}[d,0,2]
+sage: A = matrix(QQ, [[1, 2], [3, 4]])
+sage: B = matrix(QQ, [[1, 1], [2, -2]])
+sage: 3*A
+sage: 3*A-4*B
+\end{sagecommandline}
+
+
+
+%========================================
+\section{Perkalian}
+
+\subsection{Perkalian matriks-vektor}
+Perkalian matriks-vektor bekerja seperti yang Anda duga.
+\begin{sagecommandline}
+sage: A = matrix(QQ, [[1, 3, 5, 9], [0, 2, 4, 6]])
+sage: v = vector(QQ, [1, 2, 3, 4])
+sage: A, v
+sage: A*v
+\end{sagecommandline}
+Matriks $\nbym{2}{4}$, $A$, mengalikan vektor kolom
+$\nbym{4}{1}$, $\vec{v}$, yang diletakkan di sebelah kanan,
+seperti pada $A\vec{v}$.
+Mencoba menaruh vektor ini di sebelah kiri, seperti di bawah,
+menghasilkan
+\inlinecode{unsupported operand parent(s) for *}.
+\begin{lstlisting}
+sage: v*A
+\end{lstlisting}
+
+Tentu saja, Anda dapat mengalikan dengan vektor di sebelah kiri
+jika ukuran vektor itu sesuai dengan matriksnya.
+Di sini, matriks~$A$ yang mempunyai dua baris dapat dikalikan dengan
+vektor berentri dua.
+\begin{sagecommandline}
+sage: w = vector(QQ, [3, 5])
+sage: w*A
+\end{sagecommandline}
+
+
+
+
+\subsection{Perkalian matriks-matriks}
+\Sage{} dapat mengalikan matriks.
+\begin{sagecommandline}
+sage: A = matrix(QQ, [[2, 1], [4, 3]])
+sage: B = matrix(QQ, [[5, 6, 7], [8, 9, 10]]) 
+sage: A*B
+\end{sagecommandline}
+Mencoba $\inlinecode{B*A}$ menghasilkan
+\inlinecode{unsupported operand parent(s) for '*'} karena $BA$ tidak terdefinisi.
+% \begin{sagecommandline}
+% sage: A = matrix(QQ, [[2, 1], [4, 3]])
+% sage: B = matrix(QQ, [[5, 6, 7], [8, 9, 10]]) 
+% sage: B*A
+% \end{sagecommandline}
+
+Untuk matriks persegi berukuran sama, perkalian terdefinisi dalam kedua urutan.
+\begin{sagecommandline}
+sage: A = matrix(QQ, [[1, 2], [3, 4]])
+sage: B = matrix(QQ, [[4, 5], [6, 7]])
+sage: A*B
+sage: B*A
+\end{sagecommandline}
+Perhatikan bahwa kedua hasil tersebut berbeda;
+perkalian matriks tidak komutatif.
+\begin{sagecommandline}[d,0,2]
+sage: A*B == B*A
+\end{sagecommandline}
+
+Faktanya, perkalian matriks sangat tidak komutatif dalam arti bahwa
+jika Anda membuat dua matriks $\nbyn{n}$ secara acak,
+keduanya hampir pasti tidak komutatif.
+Di sini kita mengalikan seribu pasang matriks acak untuk melihat
+apakah ada pasangan yang komutatif.
+\begin{sagecommandline}
+sage: number_commuting = 0 
+sage: for n in range(1000):                                       
+....:     A = random_matrix(RDF, 2, min=-1, max=1)
+....:     B = random_matrix(RDF, 2, min=-1, max=1)
+....:     if (A*B == B*A):
+....:         number_commuting = number_commuting + 1 
+\end{sagecommandline}
+Berikut hasilnya.
+\begin{sagecommandline}
+sage: number_commuting
+\end{sagecommandline}
+
+% Plug a square matrix into a polynomial.
+ 
+
+
+\subsection{Balikan}
+Jika $A$ adalah matriks taksingular $\nbyn{n}$, maka balikannya $A^{-1}$
+adalah matriks $\nbyn{n}$ sedemikian sehingga $A^{-1}A=AA^{-1}$ merupakan
+matriks identitas $\nbyn{n}$.
+% For $\nbyn{2}$ matrix inverses we have a formula.
+Dalam buku, kita memakai rumus untuk mencari balikan matriks $\nbyn{2}$,
+sedangkan untuk mencari balikan yang lebih besar,
+kita menuliskan matriks asal di sebelah matriks identitas
+lalu melakukan reduksi Gauss--Jordan.
+\begin{sagecommandline}
+sage: A = matrix(QQ, [[1, 3, 1], [2, 1, 0], [4, -1, 0]])
+sage: A.is_singular()
+sage: I = identity_matrix(3)
+sage: B = A.augment(I, subdivide=True)
+sage: B
+sage: C = B.rref()
+sage: C
+\end{sagecommandline}
+Balikannya berada di sebelah kanan.
+Untuk mengambil balikan tersebut,
+\Sage{} mempunyai metode \inlinecode{matrix_from_columns}
+pada suatu instans matriks yang menerima daftar kolom,
+mengekstraknya, lalu mengembalikan matriks yang tersusun dari kolom-kolom itu.
+\begin{sagecommandline}
+sage: A_inv = C.matrix_from_columns([3, 4, 5])
+sage: A_inv
+sage: A_inv*A
+sage: A*A_inv == identity_matrix(3)
+\end{sagecommandline}
+
+Semua langkah ini sangat merepotkan, sehingga tentu tersedia
+perintah tersendiri.
+\begin{sagecommandline}[d,0,1]
+sage: A = matrix(QQ, [[1, 3, 1], [2, 1, 0], [4, -1, 0]])
+sage: A_inv = A.inverse()
+sage: A_inv
+\end{sagecommandline}
+
+Salah satu alasan mencari balikan adalah untuk mempermudah penyelesaian
+sistem linear.
+Ketiga sistem berikut
+\begin{equation*}
+  \begin{linsys}{3}
+    x  &+ &3y &+ &z &= &4 \\
+    2x &+ &y  &  &  &= &4 \\
+    4x &- &y  &  &  &= &4 
+  \end{linsys}
+  \qquad\qquad
+  \begin{linsys}{3}
+    x  &+ &3y &+ &z &= &2 \\
+    2x &+ &y  &  &  &= &-1 \\
+    4x &- &y  &  &  &= &5 
+  \end{linsys}
+  \qquad\qquad
+  \begin{linsys}{3}
+    x  &+ &3y &+ &z &= &1/2 \\
+    2x &+ &y  &  &  &= &0 \\
+    4x &- &y  &  &  &= &12 
+  \end{linsys}
+\end{equation*}
+mempunyai matriks koefisien yang sama di ruas kiri,
+tetapi ruas kanannya berbeda.
+Jika Anda menghitung balikan matriks tersebut,
+maka penyelesaian setiap sistem hanya memerlukan satu perkalian matriks-vektor.
+\begin{sagecommandline}
+sage: A = matrix(QQ, [[1, 3, 1], [2, 1, 0], [4, -1, 0]])
+sage: A_inv = A.inverse()
+sage: v1 = vector(QQ, [4, 4, 4])
+sage: v2 = vector(QQ, [2, -1, 5])
+sage: v3 = vector(QQ, [1/2, 0, 12])
+sage: A_inv*v1
+sage: A_inv*v2
+sage: A_inv*v3
+\end{sagecommandline}
+
+
+
+\section{Bilangan kondisi}
+Untuk sistem linear yang dikerjakan dengan tangan dalam buku, kita mencari
+solusi eksak.
+Namun, dalam penerapan kita menggunakan bilangan titik mengambang sehingga
+perhitungan dapat kehilangan presisi akibat persoalan numerik.
+
+Sebagian sistem lebih rentan terhadap kehilangan ini daripada sistem lainnya.
+Kerentanan matriks koefisien suatu sistem terhadap persoalan ini
+diukur dengan \textit{bilangan kondisi}.
+Bilangan ini merupakan bilangan real positif yang
+memperkirakan kehilangan presisi dalam kasus terburuk.\footnote{%
+  Logaritma basis~$10$ dari bilangan kondisi merupakan perkiraan kasus terburuk
+  untuk banyaknya digit yang hilang ketika menyelesaikan sistem linear dengan
+  matriks koefisien tersebut.
+  Jadi, bilangan kondisi tergolong besar apabila logaritma basis~$10$-nya
+  lebih besar daripada atau sama dengan banyaknya digit signifikan
+  pada entri-entri matriks.}
+
+Secara lebih tepat, kita mulai dengan sistem linear
+$A\vec{v}=\vec{d}$,
+lalu menanyakan seberapa besar ketidakakuratan pada~$\vec{d}$ (mungkin akibat
+persoalan titik mengambang atau batas pengukuran pada entri-entri vektor)
+dapat memengaruhi solusi~$\vec{v}$.
+Artinya, kita meninjau
+$A(\vec{v}+\vec{\Delta v})=\vec{d}+\vec{\Delta d}$
+dan menanyakan hubungan antara $\vec{\Delta d}$ dan $\vec{\Delta v}$.
+Linearitas memberikan $A\vec{\Delta v}=\vec{\Delta d}$, sehingga pertanyaan kita
+adalah:~seberapa besar $\vec{\Delta v}$ dipengaruhi oleh $\vec{\Delta d}$
+melalui matriks~$A$?
+
+Definisikan \textit{norma-$2$} suatu vektor sebagai panjangnya,
+  $\norm{\vec{v}}=\sqrt{v_1^2+\cdots+v_n^2}$
+(terdapat banyak norma, tetapi inilah yang paling umum).
+\begin{sagecommandline}
+sage: v = vector(RDF, [1, 2, 3])
+sage: v.norm(2)
+\end{sagecommandline}
+Ada suatu vektor masukan yang direntangkan paling besar oleh $A$, yaitu
+vektor $\vec{v}_{\text{max}}$ yang membuat bilangan
+$M=\norm{A\vec{v}_{\text{max}}}/\norm{\vec{v}_{\text{max}}}$
+maksimal.
+Ada pula vektor yang diciutkan paling besar oleh $A$, yaitu
+vektor $\vec{v}_{\text{min}}$ yang membuat bilangan
+$m=\norm{A\vec{v}_{\text{min}}}/\norm{\vec{v}_{\text{min}}}$ minimal
+(dengan anggapan $\vec{v}_{\text{min}}\neq\zero$).\footnote{%
+  Faktor-faktor ini akan dibahas lebih lanjut dalam bab berikutnya.}
+Bilangan kondisi adalah rasio keduanya,
+$\kappa(A)=M/m$, kecuali bahwa matriks singular memetakan beberapa vektor
+taknol ke nol sehingga mempunyai $m=0$; dalam hal ini kita menetapkan
+$\kappa(A)=\infty$.
+
+Definisi~$M$ memberikan $\norm{\vec{d}}\leq M\norm{\vec{v}}$, sedangkan
+definisi~$m$ memberikan $\norm{\vec{\Delta d}}\geq m\norm{\vec{\Delta v}}$.
+Dengan demikian, perubahan relatif pada solusi sistem yang dihitung
+dan perubahan relatif pada ruas kanan sistem memenuhi perbandingan berikut.
+\begin{equation*}
+  \frac{\norm{\vec{\Delta v}}}{\norm{\vec{v}}}
+   \leq \kappa(A)\cdot \frac{\norm{\vec{\Delta d}}}{\norm{\vec{d}}}
+\end{equation*}
+Dengan kata lain, bilangan kondisi adalah faktor kasus terburuk yang
+memperbesar galat relatif.
+Perubahan pada ruas kanan dapat menimbulkan perubahan pada solusi yang dihitung
+hingga $\kappa(A)$ kali lebih besar.
+\begin{sagecommandline}
+sage: A = matrix(RDF, 3, [[1, 2, 3], [4, 5, 6], [7, 8, 9.001]])
+sage: A.condition(2)
+\end{sagecommandline}
+Matriks yang hampir singular mempunyai bilangan kondisi lebih besar daripada
+matriks yang jauh dari singular.
+\begin{sagecommandline}
+sage: v = []                                                                    
+sage: for i in range(300): 
+....:     A = random_matrix(RDF, 3, min=0, max=100) 
+....:     v.append(A.condition(2))                                                                           
+\end{sagecommandline}
+Kini kita dapat memperoleh gambaran tentang nilai yang lazim.
+\begin{sagecommandline}
+sage: mean(v), std(v)
+\end{sagecommandline}
+Jika bilangan kondisinya besar, kita mengatakan bahwa
+sistem untuk persoalan tersebut `berkondisi buruk';
+jika tidak, kita mengatakan bahwa sistem itu `berkondisi baik'.
+
+
+
+
+
+\section{Waktu eksekusi}
+Persoalan aljabar linear berukuran besar sering dijumpai dalam sains dan
+rekayasa.
+Karena komputer bekerja cepat dan akurat,
+komputer memungkinkan kita menyelesaikan persoalan
+yang mustahil kita kerjakan dengan tangan.
+
+Namun, komputer pun mempunyai keterbatasan.
+Salah satu batas ukuran persoalan yang dapat kita tangani ditentukan oleh
+seberapa cepat mesin dapat menemukan jawabannya.
+Wajarnya, persoalan dengan matriks lebih besar cenderung memerlukan waktu
+lebih lama untuk diselesaikan.
+Membandingkan ukuran persoalan dengan waktu yang diperlukan suatu algoritma
+untuk menyelesaikannya merupakan cara penting untuk menilai kegunaan
+algoritma tersebut.
+
+Operasi balikan matriks merupakan ilustrasi yang baik.
+% This is an important operation; for instance, if we could do large matrix 
+% inverses
+% quickly then as show above we could quickly solve large linear systems.
+(Entri-entri matriks ini berupa bilangan titik mengambang
+karena jenis inilah yang paling umum dalam penerapan.)
+% Timing gives bad output.  It has extra mu's in there.  I don't
+% know how to fix it; I suspect it is a bug in sagemath.sty or listings.sty's
+% inability to do non-ASCII.
+% \begin{sagecommandline}
+% sage: A = matrix(RDF, [[1, 3, 1], [2, 1, 0], [4, -1, 0]])
+% sage: A
+% sage: A.is_singular()
+% sage: timeit('A.inverse()')
+% \end{sagecommandline}
+\begin{lstlisting}
+sage: A = matrix(RDF, [[1, 3, 1], [2, 1, 0], [4, -1, 0]])
+sage: A
+[ 1.0  3.0  1.0]
+[ 2.0  1.0  0.0]
+[ 4.0 -1.0  0.0]
+sage: A.is_singular()
+False
+sage: timeit('A.inverse()')
+625 loops, best of 3: 62.7 micro-s per loop
+\end{lstlisting}
+% was: 625 loops, best of 3: 62.7 μs per loop
+Dalam \Sage, \inlinecode{timeit} memberi tahu berapa lama
+suatu operasi berlangsung.
+Perintah ini tidak hanya melaporkan waktu yang dipakai CPU,
+melainkan lama operasi sebagaimana diukur oleh jam sebenarnya.
+Perintah tersebut menjalankan operasi berkali-kali untuk mengurangi
+dampak perlambatan komputer akibat penulisan ke cakram atau gangguan lain.
+Baris terakhir menyatakan bahwa perintah dijalankan dalam tiga kelompok,
+masing-masing sebanyak $625$ kali, dan waktu rata-rata dalam kelompok
+tercepat adalah $62.7$~mikrodetik.\footnote{% from cat /proc/cpuinfo
+  Mesin ini mengidentifikasi dirinya sebagai:
+  Intel(R) Core(TM) i7-6820HQ CPU @ 2.70GHz.}
+Itu cepat, tetapi $A$ memang hanya berukuran $\nbyn{3}$.
+
+Terlebih lagi, $A$ adalah satu matriks $\nbyn{3}$ tertentu.
+Untuk memperkirakan waktu yang biasanya diperlukan,
+Anda dapat mencoba mencari balikan matriks acak.
+% \begin{sagecommandline}
+% sage: timeit('random_matrix(RDF, 3, min=-1, max=1).inverse()')
+% sage: timeit('random_matrix(RDF, 3, min=-1, max=1).inverse()')
+% sage: timeit('random_matrix(RDF, 3, min=-1, max=1).inverse()')
+% \end{sagecommandline}
+\begin{lstlisting}
+sage: timeit('random_matrix(RDF, 3, min=-1, max=1).inverse()')
+625 loops, best of 3: 86 micro-s per loop
+sage: timeit('random_matrix(RDF, 3, min=-1, max=1).inverse()')
+625 loops, best of 3: 85.8 micro-s per loop
+sage: timeit('random_matrix(RDF, 3, min=-1, max=1).inverse()')
+625 loops, best of 3: 86.6 micro-s per loop
+\end{lstlisting}
+% was: 
+%% sage: timeit('random_matrix(RDF, 3, min=-1, max=1).inverse()')
+%% 625 loops, best of 3: 86 μs per loop
+%% sage: timeit('random_matrix(RDF, 3, min=-1, max=1).inverse()')
+%% 625 loops, best of 3: 85.8 μs per loop
+%% sage: timeit('random_matrix(RDF, 3, min=-1, max=1).inverse()')
+%% 625 loops, best of 3: 86.6 μs per loop
+
+Salah satu masalah pada data kinerja ini adalah bahwa
+kita tidak dapat mengetahui berapa banyak waktu yang dipakai untuk membuat
+matriks acak dan berapa banyak yang dipakai untuk mencari balikannya.
+Kode di bawah mengambil beberapa ukuran, $\nbyn{3}$, $\nbyn{10}$, dan seterusnya,
+membuat satu matriks acak, lalu mengukur waktu untuk menghitung
+balikan matriks tersebut.
+\begin{lstlisting}
+sage: for size in [3, 10, 25, 50, 75, 100, 150, 200]:
+....:     print("ukuran = "+str(size))
+....:     M = random_matrix(RR, size, min=-1, max=1)
+....:     timeit('M.inverse()')
+....:     
+ukuran = 3
+625 loops, best of 3: 55 micro-s per loop
+ukuran = 10
+625 loops, best of 3: 548 micro-s per loop
+ukuran = 25
+125 loops, best of 3: 6.79 ms per loop
+ukuran = 50
+5 loops, best of 3: 53 ms per loop
+ukuran = 75
+5 loops, best of 3: 177 ms per loop
+ukuran = 100
+5 loops, best of 3: 419 ms per loop
+ukuran = 150
+5 loops, best of 3: 1.41 s per loop
+ukuran = 200
+5 loops, best of 3: 3.4 s per loop
+\end{lstlisting}
+% was:
+%% size = 3
+%% 625 loops, best of 3: 55 μs per loop
+%% size = 10
+%% 625 loops, best of 3: 548 μs per loop
+%% size = 25
+%% 125 loops, best of 3: 6.79 ms per loop
+%% size = 50
+%% 5 loops, best of 3: 53 ms per loop
+%% size = 75
+%% 5 loops, best of 3: 177 ms per loop
+%% size = 100
+%% 5 loops, best of 3: 419 ms per loop
+%% size = 150
+%% 5 loops, best of 3: 1.41 s per loop
+%% size = 200
+%% 5 loops, best of 3: 3.4 s per loop
+Sebagian waktu tersebut dinyatakan dalam mikrodetik, sebagian dalam
+milidetik, dan sebagian dalam detik.
+Satu mikrodetik adalah sepersejuta detik,
+$0.000\,001$~detik.
+Satu milidetik adalah seperseribu detik,
+$0.001$~detik.
+Tabel berikut menyatakan semuanya dalam detik.
+\begin{center}
+  \begin{tabular}{r|r@{.}l}
+    \multicolumn{1}{r}{\textit{ukuran}}     &\multicolumn{2}{c}{\textit{detik}}  \\  \hline
+    $3$      &$0$ &$000\,055$ \\
+    $10$     &$0$ &$000\,548$ \\
+    $25$     &$0$ &$006\,79$ \\
+    $50$     &$0$ &$053$ \\
+    $75$     &$0$ &$177$ \\
+    $100$    &$0$ &$419$ \\
+    $150$    &$1$ &$41$ \\
+    $200$    &$3$ &$4$ 
+  \end{tabular}
+\end{center}
+Waktu bertambah lebih cepat daripada ukuran.
+Misalnya, menggandakan ukuran dari~$25$ menjadi~$50$ meningkatkan waktu
+lebih dari dua kali lipat: $0.053/0.00679$ kira-kira $7.8$.
+Demikian pula, memperbesar ukuran empat kali lipat dari $50$ menjadi~$200$
+membuat waktu meningkat jauh lebih dari empat kali lipat:
+$3.4/0.053\approx 64.15$.
+Perubahan ukuran persoalan dari~$10$ menjadi~$100$ meningkatkan waktu yang
+diperlukan dengan faktor $0.419/0.000\,548\approx 764.60$.
+
+Peroleh grafik dengan memberikan data kepada \Sage{} sebagai daftar pasangan.\footnote{% 
+  Grafik dalam panduan ini dibuat dengan menggunakan lebih banyak opsi
+  penggambaran daripada yang tampak pada blok keluaran.
+  Misalnya, diagram pencar di sini dibuat dengan
+  \protect\inlinecode{g = scatter_plot(d, markersize=10, facecolor='#b9b9ff')}
+  dan disimpan ke dalam berkas dengan
+  \protect\inlinecode{g.save("graphics/mat001.pdf", figsize=[2.25,1.5], axes_pad=0.05, fontsize=7)}.
+  Sebagian besar kode penghias ini akan kita hilangkan agar tidak mengganggu.}
+\begin{sagecommandline}
+sage: d = [(3, 0.000055), (10, 0.000548), (25, 0.00679),  
+....:      (50, 0.053), (75, 0.177), (100, 0.419), 
+....:      (150, 1.41), (200, 3.4)]
+sage: g = scatter_plot(d)  
+sage: g.save("graphics/mat001.pdf")            
+\end{sagecommandline}
+\begin{sagesilent}
+g = scatter_plot(d, markersize=10, facecolor='#b9b9ff')
+g.save("graphics/mat001.pdf", figsize=[2.25,1.5], axes_pad=0.05, fontsize=7)
+\end{sagesilent}
+(Jika Anda memasukkan \inlinecode{scatter_plot(d)} pada prompt, yaitu
+tanpa menyimpannya sebagai~$g$, maka \Sage{} akan membuka jendela yang
+menampilkan grafik.)
+\begin{center}
+  \includegraphics{graphics/mat001.pdf}
+\end{center}
+Grafik tersebut memperjelas bahwa rasio $\text{waktu}/\text{ukuran}$
+tidak konstan karena data jelas tidak terletak pada satu garis lurus.
+
+Berikut beberapa data tambahan.
+Perlu diingat jika Anda mencobanya sendiri:~untuk menghasilkan data ini,
+\inlinecode{timeit} memerlukan waktu begitu lama sehingga komputer harus
+dibiarkan berjalan semalaman.
+\begin{lstlisting}
+sage: for size in [500, 750, 1000]:                             
+....:     print("ukuran=", size)
+....:     M = random_matrix(RR, size, min=-1, max=1)
+....:     timeit('M.inverse()')
+....: 
+ukuran= 500
+5 loops, best of 3: 51.4 s per loop
+ukuran= 750
+5 loops, best of 3: 172 s per loop
+ukuran= 1000
+5 loops, best of 3: 406 s per loop
+\end{lstlisting}
+Sekali lagi, tabel merupakan cara yang lebih rapi untuk menyajikan data.
+\begin{center}
+  \begin{tabular}{r|r@{.}l}
+    \multicolumn{1}{r}{\textit{ukuran}}     &\multicolumn{2}{c}{\textit{detik}}  \\  \hline
+    $500$       &$51$ &$4$ \\
+    $750$       &$172$ &   \\
+    $1000$      &$406$ &   
+  \end{tabular}
+\end{center}
+Buat grafik dengan menambahkan data baru ke data yang sudah ada.
+\begin{sagecommandline}
+sage: d = [(3, 0.000055), (10, 0.000548), (25, 0.00679),  
+....:      (50, 0.053), (75, 0.177), (100, 0.419), 
+....:      (150, 1.41), (200, 3.4)]
+sage: d = d + [(500, 51.4), (750, 172), (1000, 406)]
+sage: g = scatter_plot(d)                           
+sage: g.save("graphics/mat002.pdf")                      
+\end{sagecommandline}
+\begin{sagesilent}
+# d = [(3, 0.000055),    
+#      (10, 0.000548), 
+#      (25, 0.00679),  
+#      (50, 0.053), 
+#      (75, 0.177), 
+#      (100, 0.419), 
+#      (150, 1.41), 
+#      (200, 3.4)]
+# d = d + [(500, 51.4), (750, 172), (1000, 406)]
+g = scatter_plot(d, markersize=10, facecolor='#b9b9ff')
+g.save("graphics/mat002.pdf", figsize=[2.25,2.25], axes_pad=0.05, fontsize=7)              
+\end{sagesilent}
+% The result is this image.
+\begin{center}
+  \includegraphics{graphics/mat002.pdf}
+\end{center}
+(Perhatikan bahwa kedua grafik mempunyai skala yang berbeda;
+jika grafik pada halaman ini memakai skala vertikal yang sama dengan grafik
+pada halaman sebelumnya, grafik ini akan menjulur jauh melewati bagian atas
+kertas.)
+Jadi, batas praktis ukuran persoalan yang dapat kita selesaikan dengan
+operasi balikan matriks timbul dari kenyataan bahwa grafik di atas bukan
+garis lurus\Dash waktu yang diperlukan bertambah jauh lebih cepat daripada
+ukurannya.
+
+Salah satu upaya utama dalam Ilmu Komputer adalah menemukan algoritma cepat
+untuk mengerjakan tugas praktis.
+Banyak orang secara khusus mengerjakan persoalan Aljabar Linear,
+seperti mencari balikan matriks, karena persoalan semacam itu sangat umum
+dalam penerapan.
+
+\endinput
+
+
+TODO:

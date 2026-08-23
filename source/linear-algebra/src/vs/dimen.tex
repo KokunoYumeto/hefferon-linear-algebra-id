@@ -1,0 +1,753 @@
+% Chapter 2, Topic _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-11
+\topic{Analisis Dimensi}
+``Anda tidak dapat menjumlahkan apel dan jeruk,'' demikian bunyi pepatah lama.
+Pepatah itu mencerminkan pengalaman kita bahwa dalam penerapan, besaran-besaran
+memiliki satuan dan pencatatan satuan tersebut dapat membantu.
+Semua orang pernah melakukan perhitungan seperti berikut ini,
+yang menggunakan satuan untuk memeriksa hasilnya.
+\begin{equation*}
+  60\,\frac{\text{detik}}{\text{menit}}
+  \cdot 60\,\frac{\text{menit}}{\text{jam}}
+  \cdot 24\,\frac{\text{jam}}{\text{hari}}
+  \cdot 365\,\frac{\text{hari}}{\text{tahun}}
+  = 31\,536\,000\,\frac{\text{detik}}{\text{tahun}}
+\end{equation*}
+Kita dapat mengembangkan gagasan mencantumkan satuan melampaui sekadar pencatatan.
+Kita dapat menggunakan satuan untuk menarik kesimpulan
+tentang hubungan apa saja yang mungkin di antara besaran-besaran fisik.
+
+Sebagai permulaan, perhatikan persamaan benda jatuh
+$\text{jarak}=16\cdot(\text{waktu})^2$.
+Jika jarak dinyatakan dalam kaki dan waktu dalam detik, maka pernyataan ini
+benar.
+Namun, persamaan itu tidak benar dalam sistem satuan lain, seperti meter dan detik,
+karena~$16$ bukan konstanta yang
+tepat dalam sistem tersebut.
+Kita dapat memperbaikinya dengan menambahkan satuan pada $16$, sehingga menjadi
+\definend{konstanta berdimensi}\index{dimensi!konstanta}.
+\begin{equation*}
+  \text{jarak}=16\,\frac{\text{kaki}}{\text{detik}^2}\cdot (\text{waktu})^2
+\end{equation*}  
+Sekarang persamaan itu juga berlaku dalam sistem meter-detik
+karena ketika kita menyelaraskan satuannya (satu kaki kira-kira $0.30$ meter),
+\begin{equation*}
+  \text{jarak dalam meter}=16\,\frac{0.30\,\text{m}}{\text{detik}^2}
+                    \cdot (\text{waktu dalam detik})^2
+                   =4.8\,\frac{\text{m}}{\text{detik}^2}
+                    \cdot (\text{waktu dalam detik})^2
+\end{equation*}
+konstantanya ikut disesuaikan.
+Jadi, agar memperoleh persamaan yang benar dalam berbagai sistem satuan,
+kita membatasi perhatian
+pada persamaan yang menggunakan konstanta berdimensi.
+Persamaan semacam itu disebut \definend{lengkap}.\index{persamaan lengkap}
+
+Dengan melepaskan diri dari suatu sistem satuan tertentu, kita cukup
+mengukur besaran sebagai kombinasi
+satuan panjang~$L$, massa~$M$, dan waktu~$T$.
+Ketiganya merupakan
+\definend{dimensi fisik}\index{dimensi!fisik} kita.
+Sebagai contoh, kita dapat mengukur kecepatan
+dalam $\text{kaki}/\text{detik}$
+atau $\text{depa}/\text{jam}$, tetapi bagaimanapun juga besaran itu melibatkan
+satuan panjang dibagi satuan waktu,
+sehingga \definend{rumus dimensi}\index{dimensi!rumus}
+kecepatan adalah $L/T$.
+Demikian pula, rumus dimensi massa jenis adalah $M/L^3$.
+
+Untuk menuliskan rumus dimensi,
+kita akan menggunakan eksponen negatif sebagai pengganti
+pecahan, dan akan mencantumkan dimensi yang memiliki
+eksponen nol.
+Dengan demikian, kita akan menuliskan rumus dimensi
+kecepatan sebagai $L^1M^0T^{-1}$ dan rumus dimensi massa jenis
+sebagai $L^{-3}M^1T^0$.
+
+Dengan itu, ``Anda tidak dapat menjumlahkan apel dan jeruk'' menjadi
+anjuran untuk memeriksa bahwa semua suku dalam suatu persamaan memiliki
+rumus dimensi yang sama.
+Salah satu contohnya adalah bentuk persamaan benda jatuh berikut,~$d-gt^2=0$.
+Rumus dimensi suku $d$ adalah $L^1M^0T^0$.
+Untuk suku lainnya, rumus dimensi $g$ adalah $L^1M^0T^{-2}$
+($g$ di atas diberikan sebagai $16\,\text{kaki}/\text{detik}^2$),
+dan rumus dimensi $t$ adalah $L^0M^0T^1$, sehingga rumus dimensi
+seluruh suku $gt^2$ adalah
+$L^1M^0T^{-2}(L^0M^0T^1)^2=L^1M^0T^0$. 
+Jadi, kedua suku tersebut memiliki rumus dimensi yang sama.
+Persamaan dengan sifat ini disebut \definend{homogen secara dimensi}.
+
+Besaran dengan rumus dimensi $L^0M^0T^0$ disebut \definend{tak berdimensi}.
+Sebagai contoh, kita mengukur sebuah sudut dengan mengambil
+rasio panjang busur yang dibentuk oleh sudut tersebut terhadap jari-jari,
+\begin{center}
+  \includegraphics{vs/mp/ch2.22}
+\end{center}
+yang merupakan rasio suatu panjang terhadap suatu panjang,
+$(L^1M^0T^0)(L^1M^0T^0)^{-1}$, sehingga sudut memiliki rumus dimensi
+$L^0M^0T^0$.
+%(Of course, to measure the angle in degrees instead we would 
+%multiply by a scalar, which would leave the dimensional formula unchanged.)
+
+Contoh klasik penggunaan satuan untuk lebih dari sekadar pencatatan, yakni
+untuk menarik kesimpulan, meninjau rumus periode sebuah pendulum.
+\begin{equation*}
+  p=\text{--suatu bentuk yang melibatkan panjang tali, dan sebagainya--}
+\end{equation*}
+Periode dinyatakan dalam satuan waktu $L^0M^0T^1$.
+Jadi, besaran-besaran pada
+ruas lain persamaan harus memiliki rumus dimensi yang berpadu
+sedemikian rupa sehingga faktor $L$ dan $M$ saling menghilangkan dan hanya
+satu faktor $T$ yang tersisa.
+Tabel pada halaman~\pageref{table:Dimen} memuat besaran-besaran yang
+oleh seorang peneliti berpengalaman mungkin dianggap relevan terhadap periode
+sebuah pendulum.
+Satu-satunya rumus dimensi yang melibatkan $L$ adalah rumus untuk
+panjang tali dan percepatan gravitasi.
+Agar faktor $L$ dari keduanya saling menghilangkan ketika muncul
+dalam persamaan, keduanya harus berbentuk rasio,
+misalnya sebagai $(\ell/g)^2$, sebagai $\cos(\ell/g)$,
+atau sebagai $(\ell/g)^{-1}$.
+Oleh karena itu, periode merupakan fungsi dari $\ell/g$.
+
+Ini merupakan hasil yang luar biasa:~hanya dengan analisis menggunakan
+pensil dan kertas, sebelum kita mengeluarkan pendulum dan melakukan pengukuran,
+kita telah menentukan sesuatu tentang faktor-faktor penyusun periodenya.
+
+Untuk melakukan analisis dimensi secara sistematis, kita memerlukan dua fakta
+(argumen bagi kedua fakta ini terdapat dalam \cite{Bridgman}, Bab~II dan~IV).
+Fakta pertama adalah bahwa setiap persamaan yang menghubungkan besaran-besaran
+fisik yang akan kita jumpai melibatkan jumlah sejumlah suku,
+dengan setiap suku berbentuk
+\begin{equation*}
+  m_1^{p_1}m_2^{p_2}\cdots m_k^{p_k}
+\end{equation*}
+untuk bilangan $m_1$, \ldots, $m_k$ yang mengukur besaran-besaran tersebut.
+
+Untuk fakta kedua, perhatikan bahwa cara mudah untuk menyusun ekspresi yang
+homogen secara dimensi adalah dengan mengambil hasil kali besaran-besaran tak
+berdimensi atau menjumlahkan suku-suku tak berdimensi tersebut.
+Teorema Buckingham menyatakan bahwa setiap
+hubungan lengkap di antara besaran-besaran yang memiliki
+rumus dimensi dapat dimanipulasi secara aljabar menjadi bentuk yang memuat
+suatu fungsi $f$ sedemikian sehingga
+\begin{equation*}
+  f(\Pi_1,\ldots,\Pi_n)=0
+\end{equation*}
+untuk suatu himpunan lengkap $\set{\Pi_1,\ldots,\Pi_n}$ yang terdiri atas
+hasil kali tak berdimensi.
+(Contoh pertama di bawah menjelaskan apa yang membuat suatu himpunan hasil kali
+tak berdimensi disebut `lengkap'.)
+Biasanya kita ingin menyatakan salah satu besaran,
+misalnya $m_1$, dalam besaran-besaran lainnya.
+Untuk itu, kita akan mengasumsikan bahwa persamaan di atas dapat ditulis ulang
+\begin{equation*}
+  m_1=m_2^{-p_2}\cdots m_k^{-p_k}\cdot \hat{f}(\Pi_2,\ldots,\Pi_n)
+\end{equation*}
+dengan $\Pi_1=m_1m_2^{p_2}\cdots m_k^{p_k}$ tak berdimensi
+dan hasil kali $\Pi_2$, \ldots, $\Pi_n$ tidak melibatkan $m_1$
+(seperti $f$, di sini $\hat{f}$ adalah fungsi sembarang, kali ini
+dengan $n-1$ argumen).
+Jadi, untuk melakukan analisis dimensi, kita harus
+menemukan hasil kali tak berdimensi apa saja yang mungkin.
+%For that we will use vector spaces.
+
+Sebagai contoh, perhatikan kembali
+rumus periode sebuah pendulum.
+\begin{center}
+  \begin{tabular}{c}
+    \includegraphics{vs/mp/ch2.23}
+  \end{tabular}
+ \qquad\quad
+ \label{table:Dimen}
+  \begin{tabular}{r|l} 
+    \multicolumn{1}{r}{\textit{besaran}}
+    &\multicolumn{1}{l}{\begin{tabular}[b]{@{}l} 
+                           \textit{rumus} \\[-.3ex]
+                           \textit{dimensi}
+                         \end{tabular}}                   \\ \hline
+    periode $p$                      &$L^0M^0T^1$          \\
+    panjang tali $\ell$              &$L^1M^0T^0$          \\
+    massa bandul $m$                 &$L^0M^1T^0$          \\
+    percepatan gravitasi $g$         &$L^1M^0T^{-2}$    \\
+    sudut ayunan $\theta$            &$L^0M^0T^0$
+  \end{tabular}
+\end{center} 
+Menurut fakta pertama yang dikutip di atas, kita mengharapkan rumus tersebut
+memiliki bentuk berikut (atau mungkin berupa jumlah suku-suku berbentuk berikut):
+$p^{p_1}\ell^{p_2}m^{p_3}g^{p_4}\theta^{p_5}$.
+Untuk menggunakan fakta kedua, yakni menemukan kombinasi pangkat
+$p_1$, \ldots, $p_5$ yang
+menghasilkan hasil kali tak berdimensi, perhatikan persamaan berikut.
+\begin{equation*}
+  (L^0M^0T^1)^{p_1}(L^1M^0T^0)^{p_2}(L^0M^1T^0)^{p_3}
+     (L^1M^0T^{-2})^{p_4}(L^0M^0T^0)^{p_5}
+  =L^0M^0T^0 
+\end{equation*}
+Persamaan itu memberikan tiga syarat bagi pangkat-pangkat tersebut.
+\begin{equation*}
+  \begin{linsys}{5}
+       &\   &p_2  &\   &    &+  &p_4   &  &  &=  &0  \\
+       &    &     &    &p_3 &   &      &  &  &=  &0  \\
+    p_1&    &     &    &    &-  &2p_4  &  &  &=  &0  
+  \end{linsys}  
+\end{equation*}
+Perhatikan bahwa $p_3=0$, sehingga massa bandul tidak memengaruhi periode.
+Reduksi Gauss dan parametrisasi sistem tersebut memberikan
+\begin{equation*}
+  \set{\colvec{p_1 \\ p_2 \\ p_3 \\ p_4 \\ p_5}=
+       \colvec[r]{1 \\  -1/2  \\  0  \\  1/2  \\  0}p_1+
+       \colvec[r]{0   \\  0   \\  0  \\  0  \\  1}p_5
+       \suchthat p_1,p_5\in\Re}
+\end{equation*}
+(kita mengambil $p_1$ sebagai salah satu parameter agar dapat menyatakan
+periode dalam besaran-besaran lainnya).
+
+Himpunan hasil kali tak berdimensi
+memuat semua suku $p^{p_1}\ell^{p_2}m^{p_3}g^{p_4}\theta^{p_5}$ yang memenuhi
+syarat-syarat di atas.
+Himpunan ini membentuk ruang vektor dengan operasi
+`$+$' berupa perkalian dua hasil kali semacam itu
+dan operasi `$\cdot$' berupa pemangkatan
+hasil kali tersebut dengan skalar
+(lihat \nearbyexercise{exer:DimLessProdsVecSp}).
+Istilah `himpunan lengkap hasil kali tak berdimensi'
+dalam Teorema Buckingham berarti basis bagi ruang vektor ini.
+
+Kita dapat memperoleh suatu basis
+dengan mula-mula mengambil $p_1=1$, $p_5=0$, lalu mengambil $p_1=0$, $p_5=1$.
+Hasil kali tak berdimensi yang bersesuaian
+adalah $\Pi_1=p\ell^{-1/2}g^{1/2}$ dan $\Pi_2=\theta$.
+Karena himpunan $\set{\Pi_1,\Pi_2}$ lengkap,
+Teorema Buckingham menyatakan bahwa
+\begin{equation*}
+  p = \ell^{1/2}g^{-1/2}\cdot\hat{f}(\theta) 
+    = \sqrt{\ell/g}\cdot\hat{f}(\theta)
+\end{equation*}
+dengan $\hat{f}$ suatu fungsi yang tidak dapat kita tentukan dari analisis ini
+(buku teks fisika tahun pertama akan menunjukkan dengan cara lain
+bahwa untuk sudut kecil, fungsi tersebut kira-kira merupakan fungsi konstan
+$\hat{f}(\theta)=2\pi$).
+
+Dengan demikian, analisis terhadap hubungan-hubungan yang mungkin di antara
+besaran-besaran dengan rumus dimensi yang diberikan
+telah memberi kita cukup banyak informasi:~periode pendulum tidak
+bergantung pada massa bandul,
+dan bertambah sebanding dengan akar kuadrat panjang tali.
+
+Untuk contoh berikutnya, kita mencoba menentukan periode revolusi
+dua benda di ruang angkasa yang saling mengorbit akibat tarik-menarik gravitasi.
+Seorang peneliti berpengalaman dapat memperkirakan bahwa besaran-besaran
+berikutlah yang relevan.
+\begin{center}
+  \begin{tabular}{@{}c@{}}
+    \includegraphics{vs/mp/ch2.24}
+  \end{tabular}
+  \qquad\quad
+  \begin{tabular}{r|l} 
+    \multicolumn{1}{r}{\textit{besaran}}
+    &\multicolumn{1}{l}{\begin{tabular}[b]{@{}l@{}} 
+                          \textit{rumus} \\[-.3ex]
+                          \textit{dimensi}
+                         \end{tabular}} \\ \hline
+    periode $p$                  &$L^0M^0T^1$         \\
+    jarak rata-rata $r$          &$L^1M^0T^0$          \\
+    massa pertama $m_1$          &$L^0M^1T^0$          \\
+    massa kedua $m_2$            &$L^0M^1T^0$          \\
+    konstanta gravitasi $G$       &$L^3M^{-1}T^{-2}$
+  \end{tabular}
+\end{center} 
+%(\cite{Bridgman} discusses why the investigator needs experience).
+Untuk memperoleh himpunan lengkap hasil kali tak berdimensi, kita meninjau
+persamaan
+\begin{equation*}
+  (L^0M^0T^1)^{p_1}(L^1M^0T^0)^{p_2}(L^0M^1T^0)^{p_3}(L^0M^1T^0)^{p_4}
+        (L^3M^{-1}T^{-2})^{p_5}=L^0M^0T^0
+\end{equation*}
+yang menghasilkan sistem
+\begin{equation*}
+  \begin{linsys}{5}
+          &  &p_2  &   &     &   &      &+  &3p_5 &=  &0  \\
+          &  &     &   &p_3  &+  &p_4   &-  &p_5  &=  &0  \\
+      p_1 &  &     &   &     &   &      &-  &2p_5 &=  &0  
+  \end{linsys}
+\end{equation*}
+dengan solusi berikut.
+\begin{equation*}
+  \set{\colvec[r]{1 \\ -3/2  \\ 1/2 \\ 0 \\ 1/2}p_1
+       +\colvec[r]{0 \\ 0    \\  -1 \\ 1 \\ 0}p_4
+    \suchthat p_1,p_4\in\Re}
+\end{equation*}
+
+Seperti sebelumnya,
+himpunan hasil kali tak berdimensi dari besaran-besaran ini membentuk ruang vektor,
+dan kita ingin menghasilkan suatu basis bagi ruang tersebut,
+yakni himpunan `lengkap' hasil kali tak berdimensi.
+Salah satu himpunan demikian, yang diperoleh dengan menetapkan $p_1=1$ dan $p_4=0$
+serta menetapkan $p_1=0$ dan $p_4=1$, adalah
+$\set{\Pi_1=pr^{-3/2}m_1^{1/2}G^{1/2},\,\Pi_2=m_1^{-1}m_2}$.
+Dengan itu, Teorema Buckingham menyatakan bahwa
+setiap hubungan lengkap di antara besaran-besaran ini dapat dinyatakan dalam bentuk berikut.
+\begin{equation*}
+  p = r^{3/2}m_1^{-1/2}G^{-1/2}\cdot\hat{f}(m_1^{-1}m_2)  
+    = \frac{r^{3/2}}{\sqrt{Gm_1}}\cdot\hat{f}(m_2/m_1)
+\end{equation*}
+
+\textit{Catatan.}
+Salah satu penerapan penting dari rumus sebelumnya adalah
+ketika $m_1$ merupakan massa Matahari dan $m_2$ merupakan massa
+sebuah planet.
+Karena $m_1$ jauh lebih besar daripada $m_2$,
+argumen bagi $\hat{f}$ kira-kira sama dengan $0$,
+dan kita dapat bertanya apakah
+bagian rumus ini tetap kira-kira konstan ketika $m_2$ berubah.
+Salah satu cara untuk melihat bahwa memang demikian adalah sebagai berikut.
+Matahari jauh lebih besar daripada planet,
+sehingga rotasi timbal balik itu berlangsung kira-kira mengelilingi pusat Matahari.
+Jika kita mengubah massa planet $m_2$ dengan faktor $x$
+(misalnya, massa Venus adalah
+$x=0.815$ kali massa Bumi),
+maka gaya tarik dikalikan dengan $x$,
+dan gaya sebesar $x$ kali yang bekerja pada massa sebesar $x$ kali,
+karena $F=ma$, menghasilkan percepatan yang sama terhadap pusat yang sama
+(secara hampiran).
+Karena itu,
+orbitnya akan sama sehingga periodenya juga sama,
+dan dengan demikian ruas kanan persamaan di atas juga tetap tidak berubah
+(secara hampiran).
+Oleh karena itu,
+$\hat{f}(m_2/m_1)$ kira-kira konstan ketika $m_2$ berubah.
+Inilah Hukum Ketiga Kepler:~kuadrat
+periode sebuah planet sebanding dengan pangkat tiga jari-jari rata-rata orbitnya
+mengelilingi Matahari.
+
+Contoh terakhir merupakan salah satu penerapan eksplisit pertama
+analisis dimensi.
+Lord Rayleigh meninjau kecepatan gelombang di air dalam dan
+mengusulkan besaran-besaran berikut sebagai besaran yang relevan.
+\begin{center}
+  \begin{tabular}{r|l} 
+    \multicolumn{1}{r}{\textit{besaran}}
+    &\multicolumn{1}{l}{\begin{tabular}[b]{@{}l} 
+                          \textit{rumus} \\[-.3ex]
+                          \textit{dimensi}
+                         \end{tabular}} \\ \hline
+    kecepatan gelombang $v$             &$L^1M^0T^{-1}$         \\
+    massa jenis air $d$                 &$L^{-3}M^1T^0$         \\
+    percepatan gravitasi $g$            &$L^1M^0T^{-2}$         \\
+    panjang gelombang $\lambda$         &$L^1M^0T^0$
+  \end{tabular}
+\end{center} 
+Persamaan
+\begin{equation*}
+  (L^1M^0T^{-1})^{p_1}(L^{-3}M^1T^0)^{p_2}
+      (L^1M^0T^{-2})^{p_3}(L^1M^0T^0)^{p_4}=L^0M^0T^0
+\end{equation*}
+menghasilkan sistem berikut,
+\begin{equation*}
+  \begin{linsys}{4}
+    p_1  &-  &3p_2 &+  &p_3  &+  &p_4  &=  &0  \\
+         &   &p_2  &   &     &   &     &=  &0  \\
+    -p_1 &   &     &-  &2p_3 &   &     &=  &0  
+  \end{linsys}
+\end{equation*}
+dengan ruang solusi berikut.
+\begin{equation*}
+  \set{\colvec[r]{1 \\ 0 \\ -1/2  \\ -1/2}p_1
+       \suchthat p_1\in \Re}
+\end{equation*}
+Terdapat satu hasil kali tak berdimensi, $\Pi_1=vg^{-1/2}\lambda^{-1/2}$,
+sehingga $v$ sama dengan $\sqrt{\lambda g}$ dikalikan suatu konstanta;
+$\hat{f}$ konstan karena merupakan fungsi tanpa argumen.
+Besaran $d$
+tidak terlibat dalam hubungan tersebut.
+
+Ketiga contoh di atas menunjukkan bahwa analisis dimensi
+dapat membawa kita jauh dalam menyatakan hubungan di antara besaran-besaran.
+Untuk bacaan lebih lanjut,
+rujukan klasiknya adalah \cite{Bridgman}\Dash buku singkat ini sangat menyenangkan.
+Sumber lainnya adalah \cite{Giordano83}.
+Uraian mengenai kedudukan analisis dimensi dalam
+pemodelan terdapat dalam \cite{Giordano82}.
+
+\begin{exercises}
+  \item 
+    \cite{deMestre}
+    Perhatikan sebuah proyektil yang diluncurkan dengan kecepatan awal $v_0$
+    pada sudut $\theta$.
+    Untuk mempelajari geraknya, kita dapat
+    menduga bahwa besaran-besaran berikutlah yang relevan.
+    \begin{center}
+      \begin{tabular}{r|l} 
+        \multicolumn{1}{r}{\textit{besaran}}
+        &\multicolumn{1}{l}{\begin{tabular}[b]{@{}l} 
+                               \textit{rumus} \\[-.3ex]
+                               \textit{dimensi}
+                             \end{tabular}} \\ \hline
+        posisi horizontal $x$            &$L^1M^0T^0$         \\
+        posisi vertikal $y$              &$L^1M^0T^0$         \\
+        kelajuan awal $v_0$              &$L^1M^0T^{-1}$      \\
+        sudut peluncuran $\theta$         &$L^0M^0T^0$         \\
+        percepatan gravitasi $g$          &$L^1M^0T^{-2}$      \\
+        waktu $t$                         &$L^0M^0T^1$
+      \end{tabular}
+    \end{center} 
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa $\set{gt/v_0,gx/v_0^2,gy/v_0^2,\theta}$
+        merupakan himpunan lengkap hasil kali tak berdimensi.
+        (\textit{Petunjuk.}
+        Salah satu caranya adalah menemukan variabel bebas yang sesuai
+        dalam sistem linear yang muncul, tetapi ada jalan pintas yang
+        menggunakan sifat-sifat basis.)
+      \partsitem Kedua persamaan gerak proyektil berikut sudah dikenal:
+        $x=v_0\cos(\theta) t$ dan $y=v_0\sin(\theta) t- (g/2)t^2$.
+        Manipulasilah masing-masing persamaan untuk menuliskannya ulang sebagai
+        hubungan di antara hasil kali tak berdimensi pada butir sebelumnya.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Dengan mengasumsikan bahwa
+          \begin{equation*}
+            (L^1M^0T^0)^{p_1}(L^1M^0T^0)^{p_2}(L^1M^0T^{-1})^{p_3}
+             (L^0M^0T^0)^{p_4}(L^1M^0T^{-2})^{p_5}(L^0M^0T^1)^{p_6}
+          \end{equation*}
+          sama dengan $L^0M^0T^0$, kita memperoleh sistem linear berikut,
+          \begin{equation*}
+            \begin{linsys}{5}
+              p_1  &+  &p_2  &+  &p_3  &+  &p_5  &   &    &=  &0  \\
+              %      &   &     &   &     &   &     &   &0   &=  &0  \\
+                   &   &     &   &-p_3 &-  &2p_5 &+  &p_6 &=  &0  
+            \end{linsys}
+          \end{equation*}
+          (tidak ada pembatasan pada $p_4$).
+          Parametrisasi yang alami menggunakan variabel bebas untuk memberikan
+          $p_3=-2p_5+p_6$ dan $p_1=-p_2+p_5-p_6$.
+          Uraian himpunan solusi yang dihasilkan,
+          \begin{equation*}
+            \set{\colvec{p_1 \\ p_2 \\ p_3 \\ p_4 \\ p_5 \\ p_6}
+                =p_2\colvec[r]{-1 \\ 1 \\ 0 \\ 0  \\ 0 \\ 0} 
+                +p_4\colvec[r]{0 \\ 0 \\ 0 \\ 1 \\ 0 \\ 0} 
+                +p_5\colvec[r]{1 \\ 0 \\ -2 \\ 0 \\ 1 \\ 0} 
+                +p_6\colvec[r]{-1 \\ 0 \\ 1 \\ 0 \\ 0 \\ 1} 
+                \suchthat p_2, p_4, p_5, p_6\in\Re  }
+          \end{equation*}
+          memberikan $\set{y/x,\theta,xt/{v_0}^2,v_0t/x}$
+          sebagai himpunan lengkap hasil kali tak berdimensi
+          (ingat bahwa ``lengkap'' dalam konteks ini tidak berarti
+          tidak ada hasil kali tak berdimensi lainnya;
+          istilah itu hanya berarti bahwa himpunan tersebut adalah basis).
+          Namun, ini bukan himpunan hasil kali tak berdimensi yang
+          diminta dalam soal.
+
+          Ada dua cara untuk melanjutkan.
+          Cara pertama adalah mengutak-atik pilihan parameter dengan harapan
+          memperoleh himpunan yang tepat.
+          Untuk itu, kita dapat menjalankan langkah pada paragraf sebelumnya secara terbalik.
+          Mengubah hasil kali tak berdimensi yang diberikan, yaitu $gt/v_0$,
+          $gx/v_0^2$, $gy/v_0^2$, dan $\theta$
+          menjadi vektor memberikan uraian berikut (perhatikan tanda \textit{?}
+          pada tempat parameter akan diletakkan).
+          \begin{equation*}
+            \set{\colvec{p_1 \\ p_2 \\ p_3 \\ p_4 \\ p_5 \\ p_6}
+                =\underline{\ \text{\textit{?}}\ }
+                      \colvec[r]{0  \\ 0 \\ -1 \\ 0  \\ 1 \\ 1} 
+                +\underline{\ \text{\textit{?}}\ }
+                   \colvec[r]{1 \\ 0 \\ -2 \\ 0 \\ 1 \\ 0} 
+                +\underline{\ \text{\textit{?}}\ }
+                   \colvec[r]{0 \\ 1 \\ -2 \\ 0 \\ 1 \\ 0} 
+                +p_4\colvec[r]{0  \\ 0 \\ 0 \\ 1 \\ 0 \\ 0} 
+                \suchthat p_2, p_4, p_5, p_6\in\Re  }
+          \end{equation*}
+          $p_4$ sudah berada pada tempatnya.
+          Pemeriksaan terhadap baris-baris menunjukkan bahwa kita juga dapat
+          menempatkan $p_6$, $p_1$, dan $p_2$.
+
+          Cara kedua, dengan mengikuti petunjuk, adalah memperhatikan bahwa
+          himpunan yang diberikan berukuran empat dalam ruang vektor berdimensi empat,
+          sehingga kita hanya perlu menunjukkan bahwa himpunan itu bebas linear.
+          Hal ini mudah dilakukan melalui pemeriksaan, dengan meninjau
+          komponen keenam, pertama, kedua, dan keempat dari vektor-vektor tersebut.
+        \item Persamaan pertama dapat ditulis ulang sebagai
+          \begin{equation*}
+            \frac{gx}{{v_0}^2}=\frac{gt}{v_0}\cos\theta
+          \end{equation*}
+          sehingga fungsi Buckingham adalah
+          $f_1(\Pi_1,\Pi_2,\Pi_3,\Pi_4)=\Pi_2-\Pi_1\cos(\Pi_4)$.
+          Persamaan kedua dapat ditulis ulang sebagai
+          \begin{equation*}
+            \frac{gy}{{v_0}^2}=\frac{gt}{v_0}\sin\theta
+              -\frac{1}{2}\left(\frac{gt}{v_0}\right)^2
+          \end{equation*}
+          dan fungsi Buckingham di sini adalah
+          $f_2(\Pi_1,\Pi_2,\Pi_3,\Pi_4)
+             =\Pi_3-\Pi_1\sin(\Pi_4)+(1/2){\Pi_1}^2$.
+      \end{exparts}
+    \end{answer}
+  \item \cite{Einstein1911}
+    menduga bahwa frekuensi karakteristik inframerah suatu benda padat
+    mungkin ditentukan oleh gaya antaratom yang sama dengan gaya yang menentukan
+    perilaku elastis biasa benda padat tersebut.
+    Besaran-besaran yang relevan adalah sebagai berikut.
+    \begin{center}
+      \begin{tabular}{r|l} 
+        \multicolumn{1}{r}{\textit{besaran}}
+        &\multicolumn{1}{l}{\begin{tabular}[b]{@{}l} 
+                              \textit{rumus} \\[-.3ex]
+                              \textit{dimensi}
+                             \end{tabular}} \\ \hline
+        frekuensi karakteristik $\nu$         &$L^0M^0T^{-1}$         \\
+        kompresibilitas $k$                   &$L^1M^{-1}T^2$          \\
+        jumlah atom per cm kubik $N$          &$L^{-3}M^0T^0$          \\
+        massa sebuah atom $m$                 &$L^0M^1T^0$
+      \end{tabular}
+    \end{center} 
+    Tunjukkan bahwa terdapat satu hasil kali tak berdimensi.
+    Simpulkan bahwa dalam setiap hubungan lengkap di antara besaran-besaran
+    dengan rumus dimensi tersebut, $k$ sama dengan suatu konstanta dikalikan
+    $\nu^{-2}N^{-1/3}m^{-1}$.
+    Kesimpulan ini memainkan peran penting dalam kajian awal
+    fenomena kuantum.
+    \begin{answer}
+      Perhatikan
+      \begin{equation*}
+        (L^0M^0T^{-1})^{p_1}(L^1M^{-1}T^2)^{p_2}
+          (L^{-3}M^0T^0)^{p_3}(L^0M^1T^0)^{p_4}=(L^0M^0T^0)
+      \end{equation*}
+      yang memberikan hubungan-hubungan berikut di antara pangkat-pangkat tersebut.
+      \begin{equation*}
+        \begin{linsys}{4}
+               &    &p_2   &-  &3p_3  &   &    &=  &0  \\
+               &    &-p_2  &   &      &+  &p_4 &=  &0  \\
+         -p_1  &+   &2p_2  &   &      &   &    &=  &0  
+        \end{linsys}
+        \grstep{\rho_1\leftrightarrow\rho_3}
+        \repeatedgrstep{\rho_2+\rho_3}
+        \begin{linsys}{4}
+         -p_1  &+   &2p_2  &   &      &   &    &=  &0  \\
+               &    &-p_2  &   &      &+  &p_4 &=  &0  \\
+               &    &      &\  &-3p_3 &+  &p_4 &=  &0  
+        \end{linsys}
+      \end{equation*}
+      Berikut adalah ruang solusinya
+      (karena kita ingin menyatakan $k$ sebagai fungsi besaran-besaran lainnya,
+      kita mengambil $p_2$ sebagai parameter).
+      \begin{equation*}
+        \set{\colvec[r]{2 \\ 1 \\ 1/3 \\ 1}p_2
+             \suchthat p_2\in\Re}
+      \end{equation*}
+      Dengan demikian, $\Pi_1=\nu^2kN^{1/3}m$ merupakan kombinasi tak berdimensi,
+      dan kita memperoleh bahwa $k$ sama dengan
+      $\nu^{-2}N^{-1/3}m^{-1}$ dikalikan suatu konstanta
+      (fungsi $\hat{f}$ konstan karena tidak memiliki argumen).
+    \end{answer}
+  \item 
+    \cite{Giordano83}
+    Torsi yang dihasilkan oleh sebuah mesin
+    memiliki rumus dimensi $L^2M^1T^{-2}$.
+    Mula-mula kita dapat menduga bahwa torsi tersebut bergantung pada
+    laju putaran mesin (dengan rumus dimensi
+    $L^0M^0T^{-1}$) dan volume udara yang dipindahkan (dengan rumus
+    dimensi $L^3M^0T^0$).
+    \begin{exparts}
+      \partsitem Cobalah mencari himpunan lengkap hasil kali tak berdimensi.
+        Apa yang tidak berjalan semestinya?
+      \partsitem Sesuaikan dugaan tersebut dengan menambahkan massa jenis udara
+        (dengan rumus dimensi $L^{-3}M^1T^0$).
+        Sekarang carilah himpunan lengkap hasil kali tak berdimensi.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Menetapkan
+          \begin{equation*}
+            (L^2M^1T^{-2})^{p_1}(L^0M^0T^{-1})^{p_2}(L^{3}M^0T^0)^{p_3}
+              =(L^0M^0T^0)
+          \end{equation*}
+          menghasilkan
+          \begin{equation*}
+            \begin{linsys}{3}
+              2p_1  &   &    &+  &3p_3  &=  &0  \\
+              p_1   &   &    &   &      &=  &0  \\
+              -2p_1 &-  &p_2 &   &      &=  &0  
+            \end{linsys}
+          \end{equation*}
+          yang menyiratkan bahwa $p_1=p_2=p_3=0$.
+          Artinya, di antara besaran-besaran dengan rumus dimensi ini, satu-satunya
+          hasil kali tak berdimensi adalah hasil kali trivial.
+        \partsitem Menetapkan
+          \begin{equation*}
+            (L^2M^1T^{-2})^{p_1}(L^0M^0T^{-1})^{p_2}(L^{3}M^0T^0)^{p_3}
+              (L^{-3}M^1T^0)^{p_4}=(L^0M^0T^0)
+          \end{equation*}
+          menghasilkan sistem berikut.
+          \begin{multline*}
+            \begin{linsys}{4}
+              2p_1  &   &    &+  &3p_3  &-  &3p_4 &=  &0  \\
+              p_1   &   &    &   &      &+  &p_4  &=  &0  \\
+              -2p_1 &-  &p_2 &   &      &   &     &=  &0  
+            \end{linsys}                                         \\
+            \grstep[\rho_1+\rho_3]{(-1/2)\rho_1+\rho_2}
+            \repeatedgrstep{\rho_2\leftrightarrow\rho_3}
+            \begin{linsys}{4}
+              2p_1  &   &      &+  &3p_3       &-   &3p_4      &=  &0  \\
+                    &   &-p_2  &+  &3p_3       &-   &3p_4      &=  &0  \\
+                    &  &      &   &(-3/2)p_3  &+   &(5/2)p_4  &=  &0  
+            \end{linsys}
+          \end{multline*}
+          Mengambil $p_1$ sebagai parameter untuk menyatakan torsi memberikan
+          uraian himpunan solusi berikut.
+          \begin{equation*}
+            \set{\colvec[r]{1 \\ -2 \\ -5/3 \\ -1}p_1
+                 \suchthat p_1\in\Re}
+          \end{equation*}
+          Dengan menyatakan torsi sebagai $\tau$, laju putaran sebagai $r$, volume
+          udara sebagai $V$, dan massa jenis udara sebagai $d$, kita memperoleh
+          $\Pi_1=\tau r^{-2} V^{-5/3} d^{-1}$, sehingga
+          torsi sama dengan $r^2V^{5/3}d$ dikalikan suatu konstanta.
+      \end{exparts}
+    \end{answer}
+  \item 
+    \cite{Tilley} 
+    Domino-domino yang jatuh membentuk gelombang.
+    Kita dapat menduga bahwa kecepatan gelombang $v$ bergantung pada
+    jarak $d$ di antara domino-domino tersebut,
+    tinggi $h$ setiap domino,
+    dan percepatan gravitasi $g$.
+    \begin{exparts}
+      \partsitem Carilah rumus dimensi untuk masing-masing dari keempat besaran.
+      \partsitem Tunjukkan bahwa $\set{\Pi_1=h/d,\Pi_2=dg/v^2}$
+        merupakan himpunan lengkap hasil kali tak berdimensi.
+      \partsitem Tunjukkan bahwa jika $h/d$ dibuat tetap, maka
+        kecepatan rambat sebanding dengan akar kuadrat
+        dari $d$.
+    \end{exparts}
+    \begin{answer}
+          \begin{exparts}
+            \partsitem Berikut adalah rumus-rumus dimensinya.
+              \begin{center}
+                \begin{tabular}{r|l} 
+                  \multicolumn{1}{r}{\textit{besaran}}
+                    &\multicolumn{1}{l}{\begin{tabular}[b]{@{}l} 
+                                           \textit{rumus} \\[-.3ex]
+                                           \textit{dimensi}
+                                       \end{tabular}} \\ \hline
+                        kecepatan gelombang $v$             &$L^1M^0T^{-1}$ \\
+                        jarak antar-domino $d$               &$L^1M^0T^0$   \\
+                        tinggi domino $h$                    &$L^1M^0T^0$ \\
+                        percepatan gravitasi $g$             &$L^1M^0T^{-2}$
+                \end{tabular}
+              \end{center}     
+            \partsitem Hubungan
+              \begin{equation*}
+                (L^1M^0T^{-1})^{p_1}(L^1M^0T^0)^{p_2}(L^1M^0T^0)^{p_3}
+                  (L^1M^0T^{-2})^{p_4}=(L^0M^0T^0)
+              \end{equation*}
+              menghasilkan sistem linear berikut.
+              \begin{equation*}
+                \begin{linsys}{4}
+                  p_1  &+  &p_2  &+  &p_3  &+  &p_4  &=  &0  \\
+                       &   &     &   &     &   &0    &=  &0  \\
+                 -p_1  &   &     &   &     &-  &2p_4 &=  &0  
+                \end{linsys}
+                \grstep{\rho_1+\rho_4}
+                \begin{linsys}{4}
+                  p_1  &+  &p_2  &+  &p_3  &+  &p_4  &=  &0  \\
+                       &   &p_2  &+  &p_3  &-  &p_4  &=  &0  
+                \end{linsys}
+              \end{equation*}
+              Dengan mengambil $p_3$ dan $p_4$ sebagai parameter, kita dapat
+              menguraikan himpunan solusi sebagai berikut.
+              \begin{equation*}
+                \set{\colvec[r]{0 \\ -1 \\ 1 \\ 0}p_3
+                     +\colvec[r]{-2 \\ 1 \\ 0 \\ 1}p_4
+                     \suchthat p_3,p_4\in\Re}
+              \end{equation*}
+              Hasilnya memberikan $\set{\Pi_1=h/d,\Pi_2=dg/v^2}$ sebagai
+              suatu himpunan lengkap.
+            \partsitem Teorema Buckingham menyatakan bahwa
+              $v^2=dg\cdot\hat{f}(h/d)$, sehingga karena $g$ adalah konstanta,
+              jika $h/d$ dibuat tetap, maka $v$ sebanding dengan $\sqrt{d\,}$.
+          \end{exparts}
+        \end{answer}
+   \item \label{exer:DimLessProdsVecSp}
+      Buktikan bahwa hasil kali tak berdimensi membentuk ruang vektor
+      dengan operasi $\vec{+}$ berupa perkalian dua hasil kali semacam itu
+      dan operasi $\vec{\cdot}$ berupa pemangkatan
+      hasil kali tersebut dengan skalar.
+      (Panah vektor digunakan untuk mencegah kerancuan.)
+      Artinya, buktikan bahwa untuk setiap sistem homogen tertentu,
+      himpunan hasil kali pangkat-pangkat $m_1$, \ldots, $m_k$ berikut,
+      \begin{equation*}
+        \set{m_1^{p_1}\dots m_k^{p_k}
+             \suchthat 
+              \text{$p_1$, \ldots, $p_k$ memenuhi sistem tersebut}}
+      \end{equation*}
+      merupakan ruang vektor dengan operasi berikut:
+      \begin{equation*}
+        m_1^{p_1}\dots m_k^{p_k}
+        \vec{+}
+        m_1^{q_1}\dots m_k^{q_k}
+        =
+        m_1^{p_1+q_1}\dots m_k^{p_k+q_k}
+      \end{equation*}
+      dan
+      \begin{equation*}
+        r\vec{\cdot} (m_1^{p_1}\dots m_k^{p_k})
+        =
+        m_1^{rp_1}\dots m_k^{rp_k}
+      \end{equation*}
+      (asumsikan bahwa semua variabel menyatakan bilangan real).
+      \begin{answer}
+        Pemeriksaan syarat-syarat dalam definisi ruang vektor bersifat
+        rutin.
+      \end{answer}
+%  \item Buckingham's Theorem says there exists a complete set such that
+%    the relationship can be stated in that way.
+%    Why do we not have to worry that the particular complete set
+%    we have produced might not be the right one?
+%    (\textit{Hint.} 
+%    Consider the prior exercise.)
+%    \begin{answer}
+%      Any `complete' set (any basis for the vector space under consideration)
+%      can be expressed in terms of any other one.
+%      So any function that is correct when given the members of a particular
+%      complete set as arguments can
+%      be rewritten to be correct for the  members of any other complete set.
+%    \end{answer}
+  \item \label{exer:AppsAndOranges}
+    Nasihat tentang apel dan jeruk itu tidak sepenuhnya benar.
+    Perhatikan persamaan lingkaran yang sudah dikenal, $C=2\pi r$ dan $A=\pi r^2$.
+    \begin{exparts}
+      \partsitem Periksa bahwa $C$ dan $A$ memiliki rumus dimensi yang berbeda.
+      \partsitem Susunlah sebuah persamaan yang tidak
+        homogen secara dimensi (yakni,
+        menjumlahkan apel dan jeruk), tetapi tetap benar untuk setiap lingkaran.
+      \partsitem Butir sebelumnya meminta persamaan yang lengkap tetapi
+        tidak homogen secara dimensi.
+        Susunlah persamaan yang homogen secara dimensi tetapi tidak lengkap.
+    \end{exparts}
+    (Walaupun pepatah lama itu tidak sepenuhnya benar, pepatah tersebut tetap
+    memberikan strategi yang berguna.
+    Kehomogenan dimensi sering digunakan untuk memeriksa kewajaran
+    persamaan yang digunakan dalam model.
+    Untuk argumen bahwa setiap persamaan lengkap dapat dengan mudah dibuat
+    homogen secara dimensi, lihat \cite{Bridgman}, Bab~I,
+    khususnya halaman~15.)
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Rumus dimensi keliling adalah $L$,
+          yakni $L^1M^0T^0$.
+          Rumus dimensi luas adalah $L^2$.
+        \partsitem Salah satunya adalah $C+A=2\pi r + \pi r^2$.
+        \partsitem Salah satu contohnya adalah rumus berikut yang menghubungkan
+           panjang busur yang dibentuk oleh suatu sudut dengan jari-jari dan
+           ukuran sudut dalam radian:~$\ell-r\theta=0$.
+           Kedua suku dalam rumus tersebut memiliki
+           rumus dimensi $L^1$.
+           Hubungan itu berlaku untuk beberapa
+           sistem satuan (misalnya inci dan radian), tetapi tidak untuk semua
+           sistem satuan (misalnya inci dan derajat).
+      \end{exparts}
+    \end{answer}
+\end{exercises}
+\endinput

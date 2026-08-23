@@ -1,0 +1,109 @@
+src/lab/INSTALL
+
+Notes on getting the lab to compile.  These are under Linux, with TeX Live.
+I have Ubuntu 20, and TeX Live 2021 (downloaded online, not installed
+using apt).
+
+0) Install the font used for listings.  The file ProggyCleanSage.zip contains
+the font and style files.  To find the directory to install, run this.
+
+  $ kpsewhich --var-value TEXMFLOCAL
+  /usr/local/share/texmf
+
+Go there, and unzip the file.
+
+  $ cd /usr/local/share/texmf
+  $ sudo unzip ProggyClean.zip
+
+Now you must register the .map file
+
+  $ cd fonts/map/dvips/ProggyCleanSage
+  $ sudo updmap-sys --force --enable Map=ProggyCleanSage.map
+
+Also install the font used for titles.  From
+  https://ctan.org/tex-archive/fotns/bera
+get bera.zip.  Again go to the local directory and unzip.
+
+  $ cd /usr/local/share/texmf
+  $ sudo unzip bera.zip
+
+Again you must register its .map file.
+
+  $ cd fonts/map/dvips
+  $ sudo updmap-sys --force --enable Map=bera.map
+
+Now, put all that in the file name database.
+
+  $ sudo texhash
+
+1) Next, Sage.  The main technical problem in the lab document is
+getting the console information from Sage.  Fortunately, a recent
+update to sagetex.sty has provided a means that is much better than I
+used in the past.  So, you must have at least the 2019 version.
+
+I installed Sage using my distribution's package manager. (Note that
+on Ubuntu 20 you want to install "sagemath", not "sage" and not
+"sagemath-common".)  If I run this 
+
+  $ sage -version
+
+then it says Sage version 9.0 with a release of 2020-01-01.
+
+There are two relevant files.  There is sagetex.sty, which goes into
+the TeX directory tree, and there is sagetex.py, which goes into the
+Sage directory tree.  They need to be the same version.
+
+I checked sagetex.sty as here
+
+  $ kpsewhich sagetex.sty
+  /usr/share/texmf/tex/latex/sagetex/sagetex.sty
+  $ less /usr/share/texmf/tex/latex/sagetex/sagetex.sty
+
+(to get out of less, use 'q' to quit).  It shows a version date of
+2019/11/14 (v3.4).  I checked sagetex.py as here.
+
+  $ find /usr -name sagetex.py -print
+  /usr/lib/python3/dist-packages/sagetex.py
+  $ less /usr/lib/python3/dist-packages/sagetex.py
+
+It has the same date, 2019/11/14 v3.4.  So I am good.
+
+(If they did not agree, I would have gotten sagetex from CTAN, unzipped
+it into TEXMFLOCAL, and run 'pdflatex sagetex.ins' and 'pdflatex sagetex.dtx'.
+Then I would run 'sudo texhash' to make the TeX system aware of sagetex.sty,
+and I would copy sagetex.py to /usr/lib/python3/dist-packages to make Sage
+aware of sagetex.py)
+
+2) There is one 3D graphic produced with Asymptote.
+     cd asy
+     asy ellipsoid1
+     cd ..
+
+3) Edit runlab.sh and adjust the paths.  This script sets up TEXINPUTS,
+calls LaTeX, then runs the PythonTeX script, then runs the Sage python
+script, then runs LaTeX again.
+
+Try running it.
+  runlab.sh
+This script actually runs the doc twice.  The first time, you get a
+bunch of missing graphics files.  That's fine; Sage has not made them
+yet.  Enter "R" at the prompt.  The second time they will be there
+(if all goes well).
+
+a) Warning: there is a point where the compilation seems to stall (about
+page 75).  On my computer it is perhaps 15 seconds.  Don't lose heart,
+it is just thinking.
+
+b) If you get a LaTeX prompt of "?", you want to enter "R", or else
+pythontex will think its external file lab.pytxcode is out of format.
+
+c) If there is a snag, to speed up getting through the sage stuff, you
+can run this.
+
+  sage lab.sagetex.sage
+  
+d) For debugging of the script, this will capture the output.
+  ./runlab.sh 2>&1 | tee runlab.out
+
+
+

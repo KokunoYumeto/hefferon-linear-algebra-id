@@ -1,0 +1,206 @@
+\topic{Geometri Vektor Eigen}
+\index{geometri vektor eigen|(}
+--Lihat Topik tentang Geometri Transformasi Linear---
+
+Karakterisasi transformasi linear dalam operasi-operasi elementer berguna dalam
+beberapa hal (misalnya, kita dapat dengan mudah melihat bahwa garis dipetakan ke
+garis karena proyeksi, dilatasi, refleksi, dan geseran masing-masing memetakan
+garis ke garis). Namun, ketika suatu pemetaan dinyatakan sebagai komposisi dari
+banyak operasi kecil---betapapun sederhananya---deskripsi itu kurang ideal.
+Kita mengakhiri pembahasan dengan cara lain yang lebih menyeluruh untuk
+menggambarkan pengaruh geometris transformasi pada $\Re^2$.
+
+Gambar-gambar dalam pembahasan itu hanya memperlihatkan aksi pemetaan pada satu
+atau dua anggota domain. Kita mengetahui bahwa suatu transformasi dideskripsikan
+sepenuhnya oleh aksinya pada suatu basis. Jadi, secara ketat, untuk
+mendeskripsikan transformasi pada $\Re^2$ cukup dijelaskan ke mana kedua vektor
+dari sebarang basis dipetakan. Meskipun demikian, gambar-gambar itu tampaknya
+belum menyampaikan banyak intuisi geometris. Dapatkah kita memperjelas geometri
+suatu pemetaan linear dengan menambahkan informasi, tetapi tidak sedemikian
+banyak hingga gambarnya menjadi membingungkan?
+
+Suatu transformasi pada $\Re^2$ mengirimkan garis yang melalui titik asal ke
+garis yang melalui titik asal. Jadi, dua titik pada garis $y=k_1x$ sama-sama
+akan dikirimkan ke suatu garis, misalnya $y=k_2x$. Tinjau dua titik demikian.
+Salah satunya merupakan kelipatan yang lain, sehingga titik kedua dapat ditulis
+sebagai $r$ kali titik pertama untuk suatu skalar $r$.
+\begin{equation*}
+  \colvec{x \\ k_1x}\quad\mbox{dan}\quad\colvec{(rx) \\ k_1(rx)}
+\end{equation*}
+Bandingkan bayangan keduanya.
+\begin{equation*}
+  \begin{pmatrix}
+    a  &c  \\
+    b  &d
+  \end{pmatrix}
+  \colvec{x \\ k_1x}
+  =
+  \colvec{ax+ck_1x \\ bx+dk_1x}
+  \qquad
+  \begin{pmatrix}
+    a  &c  \\
+    b  &d
+  \end{pmatrix}
+  \colvec{(rx) \\ k_1(rx)}
+  =
+  \colvec{a(rx)+ck_1(rx) \\ b(rx)+dk_1(rx)}
+\end{equation*}
+Vektor kedua adalah $r$ kali vektor pertama, dan bayangan vektor kedua adalah
+$r$ kali bayangan vektor pertama. Transformasi tersebut tidak hanya
+mempertahankan kolinearitas kedua vektor, tetapi juga mempertahankan skala
+relatif keduanya. Dengan kata lain, suatu transformasi memperlakukan titik-titik
+pada garis yang melalui titik asal secara seragam. Untuk mendeskripsikan pengaruh
+pemetaan pada seluruh garis, kita hanya perlu mendeskripsikan pengaruhnya pada
+satu titik tak nol di garis itu.
+
+Karena setiap titik dalam ruang terletak pada suatu garis yang melalui titik
+asal, untuk memahami aksi transformasi linear pada $\Re^2$ cukup dipilih satu
+titik dari setiap garis yang melalui titik asal (misalnya titik yang terletak
+pada setengah lingkaran satuan bagian atas), lalu diperlihatkan pengaruh pemetaan
+pada himpunan titik tersebut.
+
+Berikut gambar demikian untuk suatu dilatasi sederhana.
+\begin{center}
+  \psset{xunit=8pt,yunit=8pt,linewidth=.4pt,arrowsize=.5pt 2.5,arrowinset=.1,
+         arrowlength=1.75}
+  \pspicture(-3,-1)(3,2)
+    \psaxes[labels=none,linecolor=weakgray,tickstyle=bottom,
+        ticks=all,ticksize=1.5pt]{<->}(0,0)(-2.75,-.75)(2.75,1.75)
+     \parametricplot[plotstyle=curve,linewidth=.6pt]%
+       {0}{180}{t cos t sin}
+  \endpspicture
+  \qquad\raisebox{12pt}{\begin{tabular}[t]{c}
+                         $\longrightarrow$ \\
+                         {\scriptsize
+                          $\colvec{x \\ y} \mapsto \colvec{2x \\ y}$}
+                       \end{tabular}}\qquad
+  \pspicture(-3,-1)(3,2)
+    \psaxes[labels=none,linecolor=weakgray,tickstyle=bottom,
+        ticks=all,ticksize=1.5pt]{<->}(0,0)(-2.75,-.75)(2.75,1.75)
+     \parametricplot[plotstyle=curve,linewidth=.6pt]%
+       {0}{180}{2 t cos mul t sin}
+  \endpspicture
+\end{center}
+Di bawah ini, pemetaan yang sama ditampilkan dengan lingkaran dan bayangannya
+yang ditumpangtindihkan.
+\begin{center}
+  \psset{xunit=12pt,yunit=12pt,linewidth=.4pt,arrowsize=.5pt 2.5,arrowinset=.1,
+         arrowlength=1.75}
+  \pspicture(-3,-1)(3,2)
+    \psaxes[labels=none,linecolor=weakgray,tickstyle=bottom,
+        ticks=all,ticksize=1.5pt]{<->}(0,0)(-2.75,-.75)(2.75,1.75)
+     \parametricplot[plotstyle=curve,linecolor=preimagegray,linewidth=.6pt]%
+       {0}{180}{t cos t sin}
+        \psline[linecolor=preimagegray]{->}(-1,0)(-2,0)
+        \psline[linecolor=preimagegray]{->}(-.707,.707)(-1.414,.707)
+        \psline[linecolor=preimagegray]{->}(.707,.707)(1.414,.707)
+        \psline[linecolor=preimagegray]{->}(1,0)(2,0)
+     \parametricplot[plotstyle=curve,linewidth=.6pt]%
+       {0}{180}{2 t cos mul t sin}
+  \endpspicture
+\end{center}
+Geometrinya kini tentu lebih jelas. Sebagai contoh, kita dapat melihat bahwa
+beberapa garis yang melalui titik asal dipetakan ke dirinya sendiri:~sumbu-$x$
+dipetakan ke sumbu-$x$, dan sumbu-$y$ dipetakan ke sumbu-$y$.
+
+Berikut adalah pembalikan yang ditampilkan sebelumnya, kini dengan lingkaran
+dan bayangannya ditumpangtindihkan.
+\begin{center}
+  \psset{xunit=12pt,yunit=12pt,linewidth=.4pt,arrowsize=.5pt 2.5,arrowinset=.1,
+         arrowlength=1.75}
+  \pspicture(-3,-2)(3,2)
+    \psaxes[labels=none,linecolor=weakgray,tickstyle=bottom,
+        ticks=all,ticksize=1.5pt]{<->}(0,0)(-2.75,-1.75)(2.75,1.75)
+     \parametricplot[plotstyle=curve,linecolor=preimagegray,linewidth=.6pt]%
+       {0}{180}{t cos t sin}
+        \psline[linecolor=preimagegray]{->}(-1,0)(0,-1)
+        \psline[linecolor=preimagegray]{->}(-.707,.707)(.707,-.707)
+        \psline[linecolor=preimagegray]{->}(0,1)(1,0)
+%        \psline[linecolor=preimagegray]{->}(.707,.707)(.707,.707)
+        \psline[linecolor=preimagegray]{->}(1,0)(0,1)
+     \parametricplot[plotstyle=curve,linewidth=.6pt]%
+       {0}{180}{t sin t cos}
+  \endpspicture
+  \qquad
+  \raisebox{16pt}{$\colvec{x \\ y}\mapsto\colvec{y \\ x}$}
+\end{center}
+Berikut adalah geseran yang ditampilkan sebelumnya.
+\begin{center}
+  \psset{xunit=12pt,yunit=12pt,linewidth=.4pt,arrowsize=.5pt 2.5,arrowinset=.1,
+         arrowlength=1.75}
+  \pspicture(-3,-2)(3,3)
+    \psaxes[labels=none,linecolor=axisgray,tickstyle=bottom,
+        ticks=all,ticksize=1.5pt]{<->}(0,0)(-2.75,-1.75)(2.75,2.75)
+     \parametricplot[plotstyle=curve,linecolor=preimagegray,linewidth=.6pt]%
+       {0}{180}{t cos t sin}
+        \psline[linecolor=preimagegray]{->}(-1,0)(-1,-2)
+        \psline[linecolor=preimagegray]{->}(-.707,.707)(-.707,-.707)
+%        \psline[linecolor=preimagegray]{->}(0,1)(0,1)
+        \psline[linecolor=preimagegray]{->}(.707,.707)(.707,2.121)
+        \psline[linecolor=preimagegray]{->}(1,0)(1,2)
+     \parametricplot[plotstyle=curve,linewidth=.6pt]%
+       {0}{180}{t cos 2 t cos mul t sin add}
+  \endpspicture
+  \qquad
+  \raisebox{14pt}{$\colvec{x \\ y}\mapsto\colvec{x \\ 2x+y}$}
+\end{center}
+Bandingkan gambar pengaruh pemetaan ini pada persegi satuan dengan gambar ini.
+
+Berikut pemetaan yang agak lebih rumit (fungsi koordinat keduanya sama dengan
+pemetaan pada gambar sebelumnya, tetapi fungsi koordinat pertamanya berbeda).
+\begin{center}
+  \psset{xunit=12pt,yunit=12pt,linewidth=.4pt,arrowsize=.5pt 2.5,arrowinset=.1,
+         arrowlength=1.75}
+  \pspicture(-3,-2)(3,3)
+    \psaxes[labels=none,linecolor=axisgray,tickstyle=bottom,
+        ticks=all,ticksize=1.5pt]{<->}(0,0)(-2.75,-1.75)(2.75,2.75)
+     \parametricplot[plotstyle=curve,linecolor=preimagegray,linewidth=.6pt]%
+       {0}{180}{t cos t sin}
+        \psline[linecolor=preimagegray]{->}(-1,0)(-1,-2)
+        \psline[linecolor=preimagegray]{->}(-.707,.707)(0,-.707)
+        \psline[linecolor=preimagegray]{->}(0,1)(1,1)
+        \psline[linecolor=preimagegray]{->}(.707,.707)(1.414,2.121)
+        \psline[linecolor=preimagegray]{->}(1,0)(1,2)
+     \parametricplot[plotstyle=curve,linewidth=.6pt]%
+       {0}{180}{t cos t sin add 2 t cos mul t sin add}
+  \endpspicture
+  \qquad
+  \raisebox{14pt}{$\colvec{x \\ y}\mapsto\colvec{x+y \\ 2x+y}$}
+\end{center}
+Perhatikan bahwa beberapa vektor mengalami dilatasi sekaligus rotasi sebesar
+suatu sudut,
+\begin{equation*}
+  \colvec{x \\ 2x}\mapsto\colvec{3x \\ 4x},
+\end{equation*}
+sedangkan vektor-vektor lain hanya mengalami dilatasi tanpa rotasi sama sekali.
+\begin{equation*}
+  \colvec{x \\ \sqrt{2}x}
+  \mapsto
+  (1+\sqrt{2})\colvec{x \\ \sqrt{2}x}
+\end{equation*}
+
+\begin{exercises}
+  \item Tunjukkan pengaruh setiap matriks pada setengah lingkaran satuan bagian
+    atas.
+    \begin{exparts*}
+       \partsitem
+         $\begin{pmatrix}
+            1  &1    \\
+            2  &2
+          \end{pmatrix}$
+       \partsitem
+         $\begin{pmatrix}
+            2  &3    \\
+            1  &1
+          \end{pmatrix}$
+       \partsitem
+         $\begin{pmatrix}
+            2  &3    \\
+            1  &-1
+          \end{pmatrix}$
+     \end{exparts*}
+     Vektor-vektor manakah yang tetap berada pada garis yang sama melalui titik
+     asal?
+\end{exercises}
+\index{geometri vektor eigen|)}
+\end{input}

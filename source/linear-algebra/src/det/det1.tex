@@ -1,0 +1,4721 @@
+% Chapter 4, Section 1 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\chapter{Determinan} 
+Dalam bab pertama kita  
+menyoroti kasus khusus sistem linear
+yang memiliki jumlah persamaan sama dengan jumlah variabel tak diketahui, 
+yaitu yang berbentuk \( T\vec{x}=\vec{b} \), dengan $T$ suatu matriks persegi.
+Kita mencatat bahwa hanya ada dua jenis $T$.
+Jika $T$ berkaitan dengan solusi tunggal
+untuk suatu $\vec{b}$, 
+seperti pada sistem homogen $T\vec{x}=\zero$, maka
+$T$ berkaitan dengan solusi tunggal untuk setiap $\vec{b}$ tersebut.
+Matriks seperti itu kita sebut nonsingular.
+Jenis $T$ lainnya, yakni yang setiap sistem linearnya---dengan matriks tersebut sebagai
+matriks koefisien---tidak memiliki solusi atau memiliki tak hingga banyak solusi,
+kita sebut singular.  
+
+Dalam pembahasan selanjutnya, pembedaan ini terus menjadi tema utama.
+Sebagai contoh, kini kita mengetahui bahwa matriks 
+\( \nbyn{n} \) \( T \) bersifat nonsingular jika dan hanya jika
+semua pernyataan berikut berlaku:
+%<*EquivalentOfNonsingular>
+\begin{itemize}
+   \item setiap sistem \( T\vec{x}=\vec{b} \) memiliki solusi 
+          dan solusi itu tunggal;
+   \item reduksi Gauss--Jordan terhadap $T$ menghasilkan matriks identitas;
+   \item baris-baris $T$ membentuk himpunan bebas linear;
+   \item kolom-kolom \( T \) membentuk himpunan bebas linear, 
+         yakni suatu basis bagi \( \Re^n \);
+   \item setiap pemetaan yang direpresentasikan oleh \( T \) merupakan isomorfisme;
+   \item terdapat matriks invers \( T^{-1} \).
+\end{itemize}
+%</EquivalentOfNonsingular>
+Karena itu, ketika mengamati sebuah matriks persegi, salah satu hal pertama
+yang kita tanyakan adalah apakah matriks tersebut  
+nonsingular.
+
+Bab ini mengembangkan suatu rumus untuk menentukan apakah $T$ nonsingular.
+Lebih tepatnya, kita akan mengembangkan suatu rumus 
+untuk matriks $\nbyn{1}$, suatu rumus untuk matriks $\nbyn{2}$, dan seterusnya.
+Rumus-rumus ini saling berkaitan secara alami; dengan kata lain, 
+kita akan mengembangkan suatu keluarga
+rumus, yaitu suatu skema yang menjelaskan rumus untuk setiap ukuran.
+
+Karena pembahasan kita akan dibatasi pada matriks persegi, dalam bab ini
+kita akan sering cukup mengatakan `matriks' sebagai pengganti `matriks persegi'.
+
+
+
+
+
+\section{Def{}inisi}
+%<*DeterminantIntro>
+Menentukan kenonsingularan
+sangat mudah untuk matriks \( \nbyn{1} \).
+\begin{equation*}
+  \begin{mat}
+       a
+  \end{mat} 
+  \quad\text{nonsingular jika dan hanya jika}\quad
+  a \neq 0
+\end{equation*} 
+Korolari~Tiga.IV.\ref{cor:TwoByTwoInv} memberikan rumus untuk ukuran $\nbyn{2}$. 
+\begin{equation*}
+     \begin{mat}
+           a  &b  \\
+           c  &d
+      \end{mat}  
+   \quad\text{nonsingular jika dan hanya jika}\quad
+   ad-bc \neq 0
+\end{equation*}
+Kita dapat memperoleh rumus untuk ukuran $\nbyn{3}$ seperti memperoleh rumus sebelumnya,  
+meskipun perhitungannya rumit
+% \typeout{DET1 ThreeByThreeDetForm cleveref expmt!}
+% (see \cref{exer:ThreeByThreeDetForm}).
+(see \nearbyexercise{exer:ThreeByThreeDetForm}).
+\begin{equation*}
+     \begin{mat}
+           a  &b  &c  \\
+           d  &e  &f  \\
+           g  &h  &i
+     \end{mat}
+  \quad\text{nonsingular jika dan hanya jika}\quad
+    aei+bfg+cdh-hfa-idb-gec \neq 0
+\end{equation*}
+Dengan mengingat kasus-kasus ini, kita mengajukan suatu keluarga 
+rumus: $a$, $ad-bc$, dan seterusnya. 
+Untuk setiap $n$, rumus tersebut mendefinisikan suatu 
+\definend{determinan}\index{determinan}\index{matriks!determinan} 
+fungsi
+$\map{\det_{\nbyn{n}}}{\matspace_{\nbyn{n}}}{\Re}$ 
+sedemikian sehingga matriks $\nbyn{n}$ $T$ nonsingular jika dan
+hanya jika $\det_{\nbyn{n}}(T)\neq 0$.
+%</DeterminantIntro>
+(Biasanya kita menghilangkan subskrip \( \nbyn{n} \) karena 
+ukuran \( T \) menunjukkan fungsi determinan mana yang dimaksud.)
+
+
+
+
+
+
+\subsectionoptional{Eksplorasi}
+\textit{Subbagian ini merupakan motivasi dan pengembangan opsional
+untuk definisi umum.
+Definisi tersebut terdapat dalam subbagian berikutnya.}
+
+Di atas, pada setiap kasus matriks bersifat nonsingular jika dan hanya 
+jika suatu rumus bernilai tak nol.
+Namun, ketiga rumus tersebut tidak 
+memperlihatkan pola yang jelas. 
+Kita mungkin memperhatikan bahwa suku \(\nbyn{1}\)
+\( a \) memiliki satu huruf, suku-suku \(\nbyn{2}\)
+\(ad\) dan \(bc\) memiliki dua huruf, dan setiap suku \(\nbyn{3}\)
+memiliki tiga huruf.
+Kita bahkan mungkin memperhatikan bahwa di dalam suku-suku tersebut
+terdapat satu huruf dari setiap baris dan setiap kolom matriks; misalnya, 
+dalam suku \(cdh\), masing-masing satu huruf 
+berasal dari setiap baris dan setiap kolom.
+\begin{equation*}
+   \begin{mat}
+          &    &c \\
+      d           \\
+          &h
+   \end{mat} 
+\end{equation*}
+Namun, pengamatan ini mungkin lebih membingungkan daripada
+mencerahkan.
+Sebagai contoh, kita mungkin bertanya-tanya mengapa 
+sebagian suku dijumlahkan, sedangkan sebagian lainnya dikurangkan.
+
+Strategi yang baik untuk menyelesaikan masalah ialah
+menyelidiki sifat apa saja yang harus dimiliki solusinya, lalu
+mencari sesuatu yang memiliki sifat-sifat tersebut.
+Karena itu, kita akan mulai dengan menanyakan sifat apa yang kita inginkan
+dimiliki oleh rumus-rumus determinan.
+
+Pada tahap ini, cara utama kita
+untuk menentukan apakah suatu matriks singular atau tidak
+ialah melakukan reduksi 
+Gauss, lalu memeriksa apakah 
+diagonal matriks bentuk eselon memuat nol,
+yakni apakah hasil kali entri-entri diagonalnya bernilai~nol.
+Jadi, apa pun rumus determinan yang kita temukan, kita dapat menduga bahwa bukti 
+kebenarannya mungkin melibatkan penerapan Metode Gauss pada matriks tersebut
+untuk menunjukkan bahwa pada akhirnya hasil kali entri-entri diagonal bernilai nol jika dan hanya jika
+rumus kita memberikan nol. 
+
+Hal ini menyarankan suatu rencana:~kita akan mencari keluarga rumus
+determinan yang 
+tidak berubah oleh operasi baris dan sedemikian sehingga determinan suatu
+matriks bentuk eselon merupakan hasil kali entri-entri diagonalnya.
+% Under this plan, a proof that the functions determine singularity would go, 
+% ``Where $T\rightarrow\cdots\rightarrow\hat{T}$ is the Gaussian
+% reduction, the determinant of $T$ equals the
+% determinant of $\hat{T}$ (because the determinant is unchanged by row
+% operations), which is the product down the diagonal, which is
+% zero if and only if the matrix is singular''.
+Dalam sisa subbagian ini, kita akan menguji rencana tersebut terhadap 
+rumus $\nbyn{2}$ dan $\nbyn{3}$.
+Pada akhirnya kita perlu mengubah bagian ``tidak berubah oleh operasi baris'', 
+tetapi perubahannya tidak banyak.
+
+Pertama-tama kita memeriksa apakah   
+rumus $\nbyn{2}$ dan $\nbyn{3}$ tidak berubah oleh 
+operasi kombinasi baris:~jika 
+\begin{equation*}
+   T \grstep{k\rho_i+\rho_j} \hat{T}
+\end{equation*}
+apakah kemudian \( \det(\hat{T})=\det(T) \)? 
+Pemeriksaan determinan $\nbyn{2}$ setelah operasi $k\rho_1+\rho_2$
+\begin{equation*}
+   \det(
+       \begin{mat}
+         a     &b       \\
+         ka+c  &kb+d    \\
+      \end{mat}
+   )
+   = a(kb+d)-(ka+c)b = ad-bc
+\end{equation*}
+menunjukkan bahwa nilainya memang tidak berubah, dan
+kombinasi $\nbyn{2}$ lainnya, $k\rho_2+\rho_1$, memberikan hasil yang sama.
+Demikian pula, 
+kombinasi $\nbyn{3}$ $k\rho_3+\rho_2$ tidak mengubah determinan
+  \begin{align*}
+    \det(
+      \begin{mat}
+         a    &b    &c    \\
+         kg+d &kh+e &ki+f \\
+         g    &h    &i
+      \end{mat}
+    )
+    &=\begin{array}[t]{@{}l@{}}
+         a(kh+e)i+b(ki+f)g+c(kg+d)h \\
+         \ \hbox{}-h(ki+f)a-i(kg+d)b-g(kh+e)c  
+    \end{array}                                 \\
+     &=aei + bfg + cdh - hfa - idb - gec
+  \end{align*}
+sebagaimana juga operasi kombinasi baris $\nbyn{3}$ lainnya.
+
+Jadi, rencana tersebut tampaknya menjanjikan.
+Tentu saja, seandainya kita telah memperoleh 
+rumus determinan $\nbyn{4}$ dan mengujinya, mungkin saja kita menemukan
+bahwa rumus itu berubah oleh kombinasi baris.
+Ini merupakan sebuah eksplorasi dan kita belum memiliki semua faktanya.
+Meskipun demikian, sejauh ini hasilnya baik.
+
+Selanjutnya kita membandingkan \( \det(\hat{T}) \) dengan 
+\( \det(T) \) untuk pertukaran baris.
+% \begin{equation*}
+%    T \grstep{ {\rho}_i \leftrightarrow {\rho}_j } \hat{T}
+% \end{equation*}
+Di sini kita menemui kendala:
+pertukaran baris \(\nbyn{2}\) $\rho_1\leftrightarrow\rho_2$
+tidak menghasilkan \( ad-bc \).
+  \begin{equation*}
+     \det(
+       \begin{mat}
+         c  &d \\
+         a  &b
+       \end{mat}
+     )
+     = bc - ad
+  \end{equation*}
+Pertukaran $\rho_1\leftrightarrow\rho_3$ di dalam matriks \(\nbyn{3}\) ini
+\begin{equation*}
+   \det(
+     \begin{mat}
+        g  &h  &i \\
+        d  &e  &f \\
+        a  &b  &c
+     \end{mat}
+   )
+   = gec + hfa + idb - bfg - cdh - aei
+\end{equation*}
+juga tidak memberikan determinan yang sama seperti sebelum pertukaran karena sekali lagi 
+terjadi perubahan tanda.
+Mencoba pertukaran \(\nbyn{3}\) lain, $\rho_1\leftrightarrow\rho_2$, 
+\begin{equation*}
+   \det(
+     \begin{mat}
+        d  &e  &f \\
+        a  &b  &c \\
+        g  &h  &i
+     \end{mat}
+   )
+   = dbi + ecg + fah - hcd - iae - gbf
+\end{equation*}
+juga menghasilkan perubahan tanda.
+
+Jadi, dalam percobaan ini pertukaran baris tampaknya  
+mengubah tanda determinan.
+Hal ini tidak sepenuhnya merusak rencana kita.
+Kita berharap dapat menentukan kenonsingularan hanya dengan mempertimbangkan
+apakah rumus tersebut memberikan nol, bukan dengan mempertimbangkan tandanya.
+Karena itu, alih-alih mengharapkan rumus determinan sama sekali
+tidak berubah oleh operasi baris, kita mengubah rencana agar rumus tersebut
+berganti tanda ketika terjadi pertukaran.
+
+Sebagai langkah terakhir, tentu saja
+kita membandingkan \( \det(\hat{T}) \) dengan \( \det(T) \) 
+untuk operasi
+% \begin{equation*}
+%    T \grstep{ k{\rho}_i } \hat{T}
+% \end{equation*}
+perkalian suatu baris dengan skalar. 
+Perhitungan ini
+\begin{equation*}
+  \det(
+    \begin{mat}
+      a   &b   \\
+      kc  &kd
+    \end{mat}
+  )
+  = a(kd) - (kc)b
+  =k\cdot (ad-bc)
+\end{equation*}
+menghasilkan seluruh determinan dikalikan dengan~$k$,
+dan kasus $\nbyn{2}$ lainnya memberikan hasil yang sama.
+Kasus \(\nbyn{3}\) ini berakhir dengan cara yang sama
+\begin{align*}
+  \det(
+  \begin{mat}
+    a    &b    &c   \\
+    d    &e    &f   \\
+    kg   &kh   &ki
+  \end{mat}
+  )
+   &= \begin{array}[t]{@{}l@{}}
+         ae(ki) + bf(kg) + cd(kh)                \\
+         \>- (kh)fa - (ki)db - (kg)ec  
+      \end{array}                                      \\
+   &= k\cdot(aei + bfg + cdh - hfa - idb - gec)
+\end{align*}
+sebagaimana juga dua kasus $\nbyn{3}$ lainnya.
+Perhitungan-perhitungan ini membuat kita menduga bahwa mengalikan suatu baris dengan~$k$
+akan mengalikan determinannya dengan~$k$.
+Seperti sebelumnya, hal ini mengubah rencana kita, tetapi tidak merusaknya.
+Kita hanya mensyaratkan agar
+sifat bernilai nol dari rumus determinan tidak berubah, tanpa berfokus pada
+tanda atau besarnya.
+
+Jadi, dalam eksplorasi ini rencana kita 
+mengalami beberapa perubahan yang tidak mendasar dan sekarang berbunyi:~kita akan mencari 
+fungsi determinan $\nbyn{n}$
+yang tetap tidak berubah
+di bawah operasi kombinasi baris, yang berganti tanda ketika
+dua baris dipertukarkan, yang ikut terskala ketika suatu baris diskalakan,
+dan sedemikian sehingga determinan suatu matriks bentuk eselon merupakan
+hasil kali entri-entri diagonalnya.
+Dalam dua subbagian berikutnya kita akan melihat bahwa untuk setiap~$n$
+terdapat tepat satu fungsi semacam itu.
+
+Terakhir, untuk subbagian berikutnya, perhatikan bahwa mengeluarkan faktor skalar merupakan 
+operasi per baris:
+di sini
+\begin{equation*}
+    \det(
+      \begin{mat}[r]
+        3  &3  &9  \\
+        2  &1  &1  \\
+        5  &11 &-5
+     \end{mat}
+    )
+    =3 \cdot \det(
+               \begin{mat}[r]
+                 1  &1  &3  \\
+                 2  &1  &1  \\
+                 5  &11 &-5
+               \end{mat}
+             )                                  
+\end{equation*}
+faktor $3$ hanya dikeluarkan dari baris teratas, sehingga baris-baris lainnya tidak berubah.
+Akibatnya, dalam definisi determinan kita akan
+menuliskannya sebagai fungsi dari baris-baris
+\( \det (\vec{\rho}_1,\vec{\rho}_2,\dots\vec{\rho}_n) \), bukan sebagai 
+\( \det(T) \) atau sebagai fungsi entri-entri
+\( \det(t_{1,1},\dots,t_{n,n}) \).
+
+\begin{exercises}
+  \recommended \item 
+     Hitung determinan masing-masing matriks berikut.
+     \begin{exparts*}
+       \partsitem \(
+            \begin{mat}[r]
+                3    &1   \\
+               -1    &1
+            \end{mat}    \)
+       \partsitem \(
+            \begin{mat}[r]
+                2    &0   &1  \\
+                3    &1   &1 \\
+               -1    &0   &1
+            \end{mat}    \)
+       \partsitem \(
+            \begin{mat}[r]
+                4    &0   &1  \\
+                0    &0   &1 \\
+                1    &3   &-1
+            \end{mat}    \)
+     \end{exparts*}
+     \begin{answer}
+       \begin{exparts*}
+         \partsitem \( 4 \)
+         \partsitem \( 3 \)
+         \partsitem \( -12 \)
+       \end{exparts*}  
+     \end{answer}
+  \item 
+     Hitung determinan masing-masing matriks berikut.
+     \begin{exparts*}
+        \partsitem \( \begin{mat}[r]
+                    2  &0  \\
+                   -1  &3
+                 \end{mat} \)
+        \partsitem \( \begin{mat}[r]
+                    2  &1  &1  \\
+                    0  &5  &-2 \\
+                    1  &-3 &4
+                 \end{mat} \)
+        \partsitem \( \begin{mat}[r]
+                    2  &3  &4  \\
+                    5  &6  &7  \\
+                    8  &9  &1
+                 \end{mat} \)
+     \end{exparts*}
+    \begin{answer}
+      \begin{exparts*}
+        \partsitem \( 6 \)
+        \partsitem \( 21 \)
+        \partsitem \( 27 \)
+      \end{exparts*}  
+    \end{answer}
+  \recommended \item  
+    Verifikasikan bahwa determinan matriks segitiga atas
+    $\nbyn{3}$ merupakan hasil kali entri-entri diagonalnya. 
+    \begin{equation*}
+       \det(
+       \begin{mat}
+           a    &b   &c    \\
+           0    &e   &f    \\
+           0    &0   &i
+       \end{mat}
+       )
+       =aei
+    \end{equation*}
+    Apakah matriks segitiga bawah berlaku dengan cara yang sama?
+    \begin{answer}
+      Untuk yang pertama, terapkan rumus dalam bagian ini, perhatikan bahwa setiap
+      suku yang memuat \( d \), \( g \), atau \( h \) bernilai nol, lalu sederhanakan.
+      Matriks segitiga bawah berlaku dengan cara yang sama.  
+    \end{answer}
+  \recommended \item 
+     Gunakan determinan untuk menentukan apakah masing-masing matriks singular atau
+     nonsingular.
+     \begin{exparts*}
+       \partsitem \(
+            \begin{mat}[r]
+                2    &1   \\
+                3    &1
+            \end{mat}    \)
+       \partsitem \(
+            \begin{mat}[r]
+                0    &1   \\
+                1    &-1
+            \end{mat}    \)
+       \partsitem \(
+            \begin{mat}[r]
+                4    &2   \\
+                2    &1
+            \end{mat}    \)
+     \end{exparts*}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem Nonsingular, determinannya adalah \( -1 \).
+         \partsitem Nonsingular, determinannya adalah \( -1 \).
+         \partsitem Singular, determinannya adalah \( 0 \).
+       \end{exparts}  
+     \end{answer}
+  \item 
+     Singular atau nonsingular?
+     Gunakan determinan untuk menentukannya.
+     \begin{exparts*}
+       \partsitem \(
+            \begin{mat}[r]
+                2    &1   &1  \\
+                3    &2   &2 \\
+                0    &1   &4
+            \end{mat}    \)
+       \partsitem \(
+            \begin{mat}[r]
+                1    &0   &1  \\
+                2    &1   &1 \\
+                4    &1   &3
+            \end{mat}    \)
+       \partsitem \(
+            \begin{mat}[r]
+                2    &1   &0  \\
+                3    &-2  &0 \\
+                1    &0   &0
+            \end{mat}    \)
+     \end{exparts*}
+     \begin{answer}
+      \begin{exparts}
+         \partsitem Nonsingular, determinannya adalah \( 3 \).
+         \partsitem Singular, determinannya adalah \( 0 \).
+         \partsitem Singular, determinannya adalah \( 0 \).
+       \end{exparts}  
+     \end{answer}
+  \recommended \item
+    Setiap pasangan matriks berbeda oleh satu operasi baris.
+    Gunakan operasi tersebut untuk
+    membandingkan \( \det(A) \) dengan \( \det(B) \).
+     \begin{exparts}
+        \partsitem \( A=\begin{mat}[r]
+                      1  &2  \\
+                      2  &3
+                   \end{mat} \), 
+               \(  B=\begin{mat}[r]
+                      1  &2  \\
+                      0  &-1
+                   \end{mat}  \)
+        \partsitem \( A=\begin{mat}[r]
+                      3  &1  &0  \\
+                      0  &0  &1  \\
+                      0  &1  &2
+                   \end{mat} \),
+              \(   B=\begin{mat}[r]
+                      3  &1  &0  \\
+                      0  &1  &2  \\
+                      0  &0  &1
+                   \end{mat}  \)
+        \partsitem \( A=\begin{mat}[r]
+                      1  &-1 &3  \\
+                      2  &2  &-6 \\
+                      1  &0  &4
+                   \end{mat} \),
+              \(   B=\begin{mat}[r]
+                      1  &-1 &3  \\
+                      1  &1  &-3 \\
+                      1  &0  &4
+                   \end{mat}  \)
+     \end{exparts}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem \( \det(B)=\det(A) \) melalui \( -2\rho_1+\rho_2 \)
+         \partsitem \( \det(B)=-\det(A) \) melalui 
+             \( \rho_2\leftrightarrow\rho_3 \)
+         \partsitem \( \det(B)=(1/2)\cdot \det(A) \) melalui \( (1/2)\rho_2 \)
+       \end{exparts}   
+     \end{answer}
+  \recommended \item Tentukan determinan matriks $\nbyn{4}$ berikut 
+    dengan mengikuti rencana ini:~lakukan Metode Gauss dan 
+    perhatikan bahwa determinan tetap tidak berubah
+    pada kombinasi baris, berganti tanda pada
+    pertukaran baris, ikut terskala ketika suatu baris diskalakan,
+    dan bahwa determinan matriks bentuk eselon merupakan
+    hasil kali entri-entri diagonalnya.
+    \begin{equation*}
+      \begin{mat}
+        1 &2 &0  &2 \\
+        2 &4 &1  &0 \\
+        0 &0 &-1 &3 \\
+        3 &-1 &1 &4
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Metode Gauss memberikan hasil berikut.
+      % sage: m = matrix(QQ, [[1,2,0,2], [2,4,1,0], [0,0,-1,3], [3,-1,1,4]])
+      % sage: gauss_method(m)
+      % [ 1  2  0  2]
+      % [ 2  4  1  0]
+      % [ 0  0 -1  3]
+      % [ 3 -1  1  4]
+      %  take -2 times row 1 plus row 2
+      %  take -3 times row 1 plus row 4
+      % [ 1  2  0  2]
+      % [ 0  0  1 -4]
+      % [ 0  0 -1  3]
+      % [ 0 -7  1 -2]
+      %  swap row 2 with row 4
+      % [ 1  2  0  2]
+      % [ 0 -7  1 -2]
+      % [ 0  0 -1  3]
+      % [ 0  0  1 -4]
+      %  take 1 times row 3 plus row 4
+      % [ 1  2  0  2]
+      % [ 0 -7  1 -2]
+      % [ 0  0 -1  3]
+      % [ 0  0  0 -1]
+      \begin{equation*}
+        \begin{mat}
+          1 &2 &0  &2 \\
+          2 &4 &1  &0 \\
+          0 &0 &-1 &3 \\
+          3 &-1 &1 &4
+        \end{mat}
+        \grstep[-3\rho_1+\rho_4]{-2\rho_1+\rho_2}
+        \grstep{\rho_2\leftrightarrow\rho_4}
+        \grstep{\rho_3+\rho_4}      
+        \begin{mat}
+          1 &2 &0  &2 \\
+          0 &-7 &1  &-2 \\
+          0 &0 &-1 &3 \\
+          0 &0 &0 &-1
+        \end{mat}
+      \end{equation*}
+      Hasil kali entri-entri diagonal matriks bentuk eselon adalah 
+       $1\cdot(-7)\cdot(-1)\cdot(-1)=-7$.
+      Selama Metode Gauss tidak ada baris yang diskalakan, tetapi terjadi 
+      satu pertukaran baris. Karena itu, untuk memperoleh determinan kita mengganti tandanya,
+      sehingga diperoleh $+7$.
+    \end{answer}
+  \item 
+     Tunjukkan pernyataan berikut.
+      \begin{equation*}
+         \det(
+         \begin{mat}
+             1    &1   &1    \\
+             a    &b   &c    \\
+             a^2  &b^2 &c^2
+         \end{mat}
+         )
+         =(b-a)(c-a)(c-b)
+      \end{equation*}
+     \begin{answer}
+       Dengan menggunakan rumus determinan matriks $\nbyn{3}$,
+       kita uraikan ruas kiri
+       \begin{equation*}
+         1\cdot b\cdot c^2+1\cdot c\cdot a^2+1\cdot a\cdot b^2
+          -b^2\cdot c\cdot 1 -c^2\cdot a\cdot 1-a^2\cdot b\cdot 1
+       \end{equation*}
+       dan dengan menggunakan sifat distributif kita uraikan ruas kanan.
+       \begin{equation*}
+         (bc-ba-ac+a^2)\cdot(c-b)
+         =c^2b-b^2c-bac+b^2a-ac^2+acb+a^2c-a^2b
+       \end{equation*}
+       Sekarang kita tinggal memeriksa bahwa keduanya sama.
+       (\textit{Catatan}.
+       Ini merupakan kasus \( \nbyn{3} \) dari
+       \definend{determinan Vandermonde}\index{Vandermonde!determinan}%
+       \index{determinan!Vandermonde} yang muncul dalam berbagai penerapan).
+     \end{answer}
+   \recommended \item 
+      Bilangan real \( x \) mana yang membuat matriks ini singular?
+      \begin{equation*}
+         \begin{mat}
+            12-x  &4  \\
+            8    &8-x
+         \end{mat}
+      \end{equation*}
+      \begin{answer}
+         Persamaan
+         \begin{equation*}
+           0=
+           \det(
+             \begin{mat}
+                12-x  &4  \\
+                8    &8-x
+             \end{mat}
+           )
+           =64-20x+x^2
+           =(x-16)(x-4) 
+       \end{equation*}
+       memiliki akar \( x=16 \) dan \( x=4 \).  
+     \end{answer}
+  \item \label{exer:ThreeByThreeDetForm} 
+    Lakukan reduksi Gauss untuk memeriksa
+    rumus matriks $\nbyn{3}$ yang dinyatakan dalam pendahuluan
+    bagian ini.
+    \begin{center}
+      \( \begin{mat}
+               a  &b  &c  \\
+               d  &e  &f  \\
+               g  &h  &i
+         \end{mat} \)
+      nonsingular jika dan hanya jika
+      \( aei+bfg+cdh-hfa-idb-gec \neq 0 \)
+    \end{center}
+    \begin{answer}
+      Pertama-tama kita mereduksi matriks tersebut ke bentuk eselon.
+      Sebagai permulaan, anggap bahwa \( a\neq 0 \) dan \( ae-bd\neq 0 \).
+      \begin{multline*}
+        \grstep{(1/a)\rho_1}
+        \begin{mat}
+           1   &b/a   &c/a   \\
+           d   &e     &f     \\
+           g   &h     &i
+         \end{mat}                                           
+        \grstep[-g\rho_1+\rho_3]{-d\rho_1+\rho_2}
+        \begin{mat}
+           1   &b/a           &c/a           \\
+           0   &(ae-bd)/a     &(af-cd)/a     \\
+           0   &(ah-bg)/a     &(ai-cg)/a
+         \end{mat}                                            \\
+        \grstep{(a/(ae-bd))\rho_2}
+        \begin{mat}
+           1   &b/a           &c/a             \\
+           0   &1             &(af-cd)/(ae-bd) \\
+           0   &(ah-bg)/a     &(ai-cg)/a
+         \end{mat}
+      \end{multline*}
+      Langkah berikut menyelesaikan perhitungannya.
+      \begin{equation*}
+        \grstep{((ah-bg)/a)\rho_2+\rho_3}
+        \begin{mat}
+           1   &b/a    &c/a             \\
+           0   &1      &(af-cd)/(ae-bd)      \\
+           0   &0      &(aei+bgf+cdh-hfa-idb-gec)/(ae-bd)
+         \end{mat}
+      \end{equation*}
+      Sekarang, dengan menganggap bahwa $a\neq 0$ dan \( ae-bd\neq 0 \), 
+      matriks semula bersifat nonsingular
+      jika dan hanya jika entri \( 3,3 \) di atas bernilai tak nol.
+      Dengan kata lain, di bawah anggapan tersebut, matriks semula
+      nonsingular jika dan hanya jika $aei+bgf+cdh-hfa-idb-gec\neq 0$,
+      sebagaimana yang dikehendaki.
+
+      Kita menutup pembahasan dengan menelusuri apa yang terjadi jika anggapan yang
+      digunakan demi kemudahan dalam paragraf sebelumnya tidak berlaku.
+      Pertama, jika \( a\neq 0 \), tetapi \( ae-bd=0 \), kita dapat melakukan pertukaran
+      \begin{equation*}
+        \begin{mat}
+           1   &b/a           &c/a           \\
+           0   &0             &(af-cd)/a     \\
+           0   &(ah-bg)/a     &(ai-cg)/a
+         \end{mat}                                  
+        \grstep{\rho_2\leftrightarrow\rho_3}
+        \begin{mat}
+           1   &b/a           &c/a           \\
+           0   &(ah-bg)/a     &(ai-cg)/a     \\
+           0   &0             &(af-cd)/a
+         \end{mat}
+      \end{equation*}
+      dan menyimpulkan bahwa matriks tersebut nonsingular jika dan hanya jika
+      \( ah-bg\neq 0 \) dan \( af-cd\neq 0 \).
+      Kondisi `\( ah-bg\neq 0 \) dan \( af-cd\neq 0 \)' ekuivalen dengan
+      kondisi `\( (ah-bg)(af-cd)\neq 0 \)'.
+      Dengan mengalikan dan menggunakan anggapan kasus $ae-bd=0$
+      untuk menyubstitusikan $ae$ menggantikan $bd$, kita memperoleh hasil berikut.
+      \begin{multline*}
+         0\neq ahaf-ahcd-bgaf+bgcd
+          =ahaf-ahcd-bgaf+aegc            \\
+          =a(haf-hcd-bgf+egc)
+      \end{multline*}
+      Karena \( a\neq 0 \), matriks tersebut
+      nonsingular jika dan hanya jika \( haf-hcd-bgf+egc\neq 0 \).
+      Jadi, dalam kasus \( a\neq 0 \) dan \( ae-bd=0 \) ini, 
+      matriks tersebut nonsingular ketika
+      \( haf-hcd-bgf+egc-i(ae-bd)\neq 0 \).
+
+      Kasus-kasus sisanya bersifat rutin.
+      Kerjakan kasus \( a=0 \), tetapi \( d\neq 0 \), serta kasus \( a=0 \) dan \( d=0 \),
+      tetapi \( g\neq 0 \), dengan terlebih dahulu mempertukarkan baris, lalu melanjutkan seperti
+      di atas.
+      Kasus \( a=0 \), \( d=0 \), dan \( g=0 \) mudah\Dash matriks itu
+      singular karena kolom-kolomnya membentuk himpunan bergantung linear, dan
+      determinannya bernilai nol.  
+    \end{answer}
+  \item 
+     Tunjukkan bahwa persamaan garis dalam \( \Re^2 \) yang melalui \( (x_1,y_1) \)
+     dan \( (x_2,y_2) \) diberikan oleh determinan berikut.
+     \begin{equation*}
+        \det(
+        \begin{mat}
+           x   &y   &1  \\
+           x_1 &y_1 &1  \\
+           x_2 &y_2 &1
+        \end{mat})=0 \qquad x_1\neq x_2
+     \end{equation*}
+     \begin{answer}
+       Menghitung determinan dan melakukan sedikit manipulasi aljabar memberikan hasil berikut.
+       \begin{align*}
+          0
+          &=y_1x+x_2y+x_1y_2-y_2x-x_1y-x_2y_1     \\
+          (x_2-x_1)\cdot y
+          &=(y_2-y_1)\cdot x+x_2y_1-x_1y_2              \\
+          y
+          &=\frac{y_2-y_1}{x_2-x_1}\cdot x+\frac{x_2y_1-x_1y_2}{x_2-x_1}
+       \end{align*}
+       Perhatikan bahwa ini merupakan persamaan suatu garis (khususnya,
+       persamaan ini memuat bentuk kemiringan yang sudah dikenal), 
+       dan perhatikan bahwa \( (x_1,y_1) \) serta \( (x_2,y_2) \) memenuhinya. 
+     \end{answer}
+  \item
+    Banyak orang telah mempelajari
+    jembatan keledai berikut untuk determinan matriks \( \nbyn{3} \):~salin dua kolom pertama ke sebelah kanan matriks, 
+    lalu ambil hasil kali sepanjang diagonal turun ke kanan dan jumlahkan,
+    lalu ambil hasil kali sepanjang diagonal turun ke kiri dan kurangkan.
+    Dengan kata lain, tuliskan terlebih dahulu
+    \begin{equation*}
+        \begin{pmat}{ccc|cc}
+          h_{1,1} &h_{1,2} &h_{1,3} &h_{1,1} &h_{1,2} \\
+          h_{2,1} &h_{2,2} &h_{2,3} &h_{2,1} &h_{2,2} \\
+          h_{3,1} &h_{3,2} &h_{3,3} &h_{3,1} &h_{3,2}
+        \end{pmat}
+     \end{equation*}
+     lalu hitung bentuk berikut.
+     \begin{equation*}
+      \begin{array}{l}
+      h_{1,1}h_{2,2}h_{3,3}+h_{1,2}h_{2,3}h_{3,1}+h_{1,3}h_{2,1}h_{3,2} \\
+      \>-h_{3,1}h_{2,2}h_{1,3}-h_{3,2}h_{2,3}h_{1,1}
+        -h_{3,3}h_{2,1}h_{1,2}
+      \end{array}
+    \end{equation*}
+    \begin{exparts}
+      \partsitem Periksa bahwa hasil ini sesuai dengan rumus yang diberikan dalam 
+        pendahuluan bagian ini.
+      \partsitem Apakah cara tersebut dapat diperluas ke determinan berukuran lain?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Perbandingan dengan rumus yang diberikan dalam pendahuluan
+          bagian ini mudah dilakukan.
+        \partsitem Meskipun cara tersebut berlaku untuk matriks \( \nbyn{2} \),
+          \begin{align*}
+            \begin{pmat}{cc|c}
+              h_{1,1} &h_{1,2} &h_{1,1} \\
+              h_{2,1} &h_{2,2} &h_{2,1}
+            \end{pmat}
+            &=\begin{array}[t]{@{}l@{}}
+              h_{1,1}h_{2,2}+h_{1,2}h_{2,1}  \\
+              \>-h_{2,1}h_{1,2}-h_{2,2}h_{1,1}
+            \end{array}                                     \\
+            &=h_{1,1}h_{2,2}-h_{1,2}h_{2,1}
+          \end{align*}
+          cara itu tidak berlaku untuk matriks \( \nbyn{4} \).
+          Sebagai contoh, matriks berikut
+          singular karena baris kedua dan ketiganya sama, 
+          \begin{equation*}
+            \begin{mat}[r]  
+              1  &0  &0  &1   \\
+              0  &1  &1  &0   \\
+              0  &1  &1  &0   \\
+             -1  &0  &0  &1  
+            \end{mat}
+          \end{equation*}
+          tetapi mengikuti skema jembatan keledai tersebut tidak memberikan nol.
+          \begin{equation*}
+            \begin{pmat}{rrrr|rrr}
+                       1  &0  &0  &1  &1  &0  &0  \\
+                       0  &1  &1  &0  &0  &1  &1  \\
+                       0  &1  &1  &0  &0  &1  &1  \\
+                      -1  &0  &0  &1  &-1 &0  &0
+            \end{pmat}
+            =\begin{array}[t]{@{}l@{}}
+               1+0+0+0 \\
+               \>-(-1)-0-0-0
+              \end{array}
+           \end{equation*}
+      \end{exparts}  
+     \end{answer}
+  \item 
+    \definend{Hasil kali silang}\index{hasil kali silang}\index{vektor!hasil kali silang} 
+dari vektor-vektor
+    \begin{equation*}
+      \vec{x}=\colvec{x_1 \\ x_2 \\ x_3}
+      \qquad
+      \vec{y}=\colvec{y_1 \\ y_2 \\ y_3}
+    \end{equation*}
+    adalah vektor yang dihitung sebagai determinan berikut.
+    \begin{equation*}
+      \vec{x}\times\vec{y}=
+      \det(\begin{mat}
+        \vec{e}_1  &\vec{e}_2  &\vec{e}_3  \\
+        x_1        &x_2        &x_3        \\
+        y_1        &y_2        &y_3
+      \end{mat})
+    \end{equation*}
+    Perhatikan bahwa entri-entri baris pertama merupakan vektor, yakni vektor-vektor dari
+    basis standar untuk $\Re^3$.
+    Tunjukkan bahwa hasil kali silang dua vektor tegak lurus terhadap masing-masing vektor tersebut.
+    \begin{answer}
+      Determinannya adalah 
+      $
+        (x_2y_3-x_3y_2)\vec{e}_1
+          +(x_3y_1-x_1y_3)\vec{e}_2
+          +(x_1y_2-x_2y_1)\vec{e}_3
+      $.
+      Untuk memeriksa ketegaklurusan, kita periksa bahwa hasil kali titik
+      dengan vektor pertama bernilai nol
+      \begin{equation*}
+        \colvec{x_1 \\ x_2 \\ x_3}
+        \dotprod
+        \colvec{x_2y_3-x_3y_2 \\ x_3y_1-x_1y_3 \\ x_1y_2-x_2y_1}
+        =x_1x_2y_3-x_1x_3y_2+x_2x_3y_1-x_1x_2y_3+x_1x_3y_2-x_2x_3y_1=0
+      \end{equation*}
+      dan hasil kali titik dengan vektor kedua juga bernilai nol.
+      \begin{equation*}
+        \colvec{y_1 \\ y_2 \\ y_3}
+        \dotprod
+        \colvec{x_2y_3-x_3y_2 \\ x_3y_1-x_1y_3 \\ x_1y_2-x_2y_1}
+        =x_2y_1y_3-x_3y_1y_2+x_3y_1y_2-x_1y_2y_3+x_1y_2y_3-x_2y_1y_3=0
+      \end{equation*}  
+    \end{answer}
+  \item 
+    Buktikan bahwa setiap pernyataan berikut berlaku untuk matriks $\nbyn{2}$.  
+    \begin{exparts}
+      \partsitem Determinan suatu hasil kali
+        merupakan hasil kali determinan-determinannya,
+        $\det(ST)=\det(S)\cdot\det(T)$.
+      \partsitem Jika \( T \) invertibel, maka
+        determinan invers merupakan invers dari determinannya,
+        \( \det(T^{-1})=(\,\det(T)\,)^{-1} \).
+    \end{exparts}
+    Matriks $T$ dan $T^\prime$ disebut 
+    \definend{serupa}\index{serupa} jika terdapat matriks 
+    nonsingular $P$ sedemikian sehingga $T^\prime=PTP^{-1}$.
+    (Kita akan meninjau hubungan ini dalam Bab Lima.)
+    Tunjukkan bahwa matriks-matriks \( \nbyn{2} \) yang serupa memiliki
+    determinan yang sama.
+    \begin{answer}
+       \begin{exparts}
+        \partsitem Substitusikan dan hitung:
+          determinan hasil kalinya adalah
+          \begin{align*}
+             \det(\begin{mat}
+                       a  &b  \\
+                       c  &d
+                    \end{mat}
+                    \begin{mat}
+                       w  &x  \\
+                       y  &z
+                    \end{mat}  )
+             &=
+             \det(\begin{mat}
+                 aw+by  &ax+bz  \\
+                 cw+dy  &cx+dz
+              \end{mat} )                 \\
+             &=
+             \begin{array}[t]{@{}l@{}} 
+                 acwx+adwz+bcxy+bdyz  \\
+                 \> -acwx-bcwz-adxy-bdyz
+              \end{array}
+          \end{align*}
+          sedangkan hasil kali determinannya adalah sebagai berikut.
+          \begin{equation*}
+             \det(\begin{mat}
+                a  &b  \\
+                c  &d
+             \end{mat})
+             \cdot\det(\begin{mat}
+                w  &x  \\
+                y  &z
+             \end{mat})
+             =
+             (ad-bc)\cdot (wz-xy)
+          \end{equation*}
+          Mudah untuk memverifikasi bahwa keduanya sama.
+        \partsitem Gunakan butir sebelumnya.
+       \end{exparts}  
+       \noindent Fakta bahwa matriks-matriks serupa memiliki determinan yang sama 
+       langsung diperoleh dari kedua hasil di atas:
+       $
+          \det(PTP^{-1})=\det(P)\cdot\det(T)\cdot\det(P^{-1})
+       $.
+     \end{answer}
+  \recommended \item
+    Buktikan bahwa luas daerah berikut pada bidang
+    \begin{center}
+      \includegraphics{det/mp/ch4.30}
+    \end{center}
+    sama dengan nilai determinan berikut.
+    \begin{equation*}
+       \det(
+       \begin{mat}
+          x_1  &x_2  \\
+          y_1  &y_2
+       \end{mat})
+    \end{equation*}
+    Bandingkan dengan determinan berikut.
+    \begin{equation*}
+       \det(
+       \begin{mat}
+          x_2  &x_1  \\
+          y_2  &y_1
+       \end{mat})
+    \end{equation*}
+    \begin{answer}
+      Salah satu caranya adalah menghitung luas-luas berikut
+      \begin{center}
+        \includegraphics{det/mp/ch4.31}
+      \end{center}
+      dengan mengambil luas seluruh persegi panjang lalu mengurangkan luas
+      $A$, persegi panjang kiri atas; $B$, segitiga tengah atas;
+      $D$, segitiga kanan atas; $C$, segitiga kiri bawah; 
+      $E$, segitiga tengah bawah; dan $F$, persegi panjang kanan bawah,       
+      \( (x_1+x_2)(y_1+y_2)-x_2y_1-(1/2)x_1y_1-(1/2)x_2y_2
+              -(1/2)x_2y_2-(1/2)x_1y_1-x_2y_1 \).
+      Penyederhanaan memberikan rumus determinan tersebut.
+
+      Determinan ini merupakan negatif dari determinan di atas; rumus tersebut
+      membedakan apakah kolom kedua berada berlawanan arah jarum jam terhadap
+      kolom pertama.  
+     \end{answer}
+  \item 
+    Buktikan bahwa untuk matriks \( \nbyn{2} \), determinan suatu matriks
+    sama dengan determinan transposnya.
+    Apakah hal itu juga berlaku untuk matriks \( \nbyn{3} \)?
+    \begin{answer}
+      Perhitungan untuk matriks \( \nbyn{2} \), dengan menggunakan
+      rumus yang dikutip dalam pendahuluan, mudah dilakukan.
+      Hal itu juga berlaku untuk matriks \( \nbyn{3} \); 
+      perhitungannya rutin.  
+    \end{answer}
+  \item 
+    Apakah fungsi determinan linear\Dash yakni, apakah
+    \( \det(x\cdot T+y\cdot S)=x\cdot \det(T)+y\cdot \det(S) \)?
+    \begin{answer}
+      Tidak.
+      Kita menunjukkannya dengan determinan $\nbyn{2}$.
+      Ingat bahwa konstanta dikeluarkan satu baris demi satu baris.
+      \begin{equation*}
+         \det(
+         \begin{mat}[r]
+            2  &4  \\
+            2  &6  \\
+         \end{mat})
+         =
+         2\cdot\det(\begin{mat}[r]
+            1  &2  \\
+            2  &6  \\
+         \end{mat})
+         =
+         2\cdot 2\cdot \det(\begin{mat}[r]
+            1  &2  \\
+            1  &3  \\
+         \end{mat})
+      \end{equation*}
+      Hal ini bertentangan dengan linearitas (di sini kita tidak memerlukan \( S \); dengan kata lain, kita dapat 
+      mengambil $S$ sebagai matriks nol).  
+    \end{answer}
+  \item 
+    Tunjukkan bahwa jika \( A \) berukuran \( \nbyn{3} \), maka
+    \( \det(c\cdot A)=c^3\cdot \det(A) \) untuk setiap skalar \( c \).
+    \begin{answer}
+       Keluarkan faktor-faktor \( c \) satu baris demi satu baris.  
+    \end{answer}
+  \item 
+    Bilangan real \( \theta \) mana yang membuat
+    \begin{equation*}
+       \begin{mat}
+          \cos\theta  &-\sin\theta  \\
+          \sin\theta  &\cos\theta
+       \end{mat}
+    \end{equation*}
+    singular?
+    Jelaskan secara geometris.
+    \begin{answer}
+      Tidak ada bilangan real \( \theta \) yang membuat matriks tersebut singular 
+      karena determinan matriks itu,
+      \( \cos^2\theta+\sin^2\theta \), tidak pernah bernilai $0$; nilainya sama dengan $1$
+      untuk setiap $\theta$.
+      Secara geometris, relatif terhadap basis standar,
+      matriks ini merepresentasikan
+      rotasi bidang sebesar sudut \( \theta \).
+      Setiap pemetaan tersebut bersifat satu-ke-satu\Dash antara lain, pemetaan itu invertibel.  
+    \end{answer}
+  \puzzle \item  
+    \cite{Monthly55p257}
+    Jika suatu determinan orde tiga memiliki elemen-elemen
+    \( 1 \), \( 2 \), \ldots, \( 9 \), berapakah nilai maksimum yang dapat
+    dimilikinya?
+    \begin{answer}
+      \answerasgiven
+      Misalkan \( P \) adalah jumlah tiga suku positif determinan tersebut
+      dan \( -N \) adalah jumlah tiga suku negatifnya.
+      Nilai maksimum \( P \) adalah
+      \begin{equation*}
+        9\cdot 8\cdot 7 +6\cdot 5\cdot 4 +3\cdot 2\cdot 1=630.
+      \end{equation*}
+      Nilai minimum \( N \) yang konsisten dengan \( P \) adalah
+      \begin{equation*}
+        9\cdot 6\cdot 1 +8\cdot 5\cdot 2 +7\cdot 4\cdot 3=218.
+      \end{equation*}
+      Setiap perubahan pada \( P \) akan menurunkan jumlah tersebut lebih dari
+      \( 4 \).
+      Karena itu, \( 412 \) merupakan nilai maksimum determinan, dan salah satu bentuk
+      determinan yang mencapainya adalah
+      \begin{equation*}
+         \begin{vmat}[r]
+            9  &4  &2  \\
+            3  &8  &6  \\
+            5  &1  &7
+         \end{vmat}.
+      \end{equation*}  
+    \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Sifat-Sifat Determinan}
+\index{determinan|(}
+Kita menginginkan suatu rumus
+untuk menentukan apakah matriks $\nbyn{n}$ nonsingular.
+Kita tidak akan memulai dengan menyatakan rumus tersebut.
+Sebaliknya, untuk setiap~$n$, kita akan mulai dengan meninjau
+fungsi yang dihitung oleh rumus semacam itu.
+Kita akan mendefinisikan fungsi tersebut melalui daftar sifat.
+Kemudian kita akan membuktikan bahwa fungsi dengan sifat-sifat tersebut ada dan tunggal,
+serta menjelaskan cara menghitungnya.
+(Karena pada akhirnya kita akan membuktikan hal ini, sejak awal 
+kita cukup mengatakan `\( \det(T) \)' sebagai pengganti
+`jika terdapat fungsi determinan tunggal, maka \( \det(T) \)'.)
+
+\begin{definition}  \label{def:Det}
+%<*df:Det>
+Suatu \( \nbyn{n} \) \definend{determinan\/}\index{determinan!definisi}%
+\index{matriks!determinan} adalah fungsi
+\( \map{\det}{\matspace_{\nbyn{n}}}{\Re} \) sedemikian sehingga
+\begin{enumerate}
+  \item
+    $
+       \det (\vec{\rho}_1,\dots,k\cdot\vec{\rho}_i 
+                                    + \vec{\rho}_j,\dots,\vec{\rho}_n)
+       =\det (\vec{\rho}_1,\dots,\vec{\rho}_j,\dots,\vec{\rho}_n)
+    $ untuk \( i\ne j \)
+  \item 
+    $
+       \det (\vec{\rho}_1,\ldots,\vec{\rho}_j,
+               \dots,\vec{\rho}_i,\dots,\vec{\rho}_n)
+       = -\det (\vec{\rho}_1,\dots,\vec{\rho}_i,\dots,\vec{\rho}_j,
+                \dots,\vec{\rho}_n)
+    $
+    untuk \( i\ne j\)
+  \item
+    $
+       \det (\vec{\rho}_1,\dots,k\vec{\rho}_i,\dots,\vec{\rho}_n)
+       = k\cdot \det (\vec{\rho}_1,\dots,\vec{\rho}_i,\dots,\vec{\rho}_n)
+    $
+    untuk setiap skalar~$k$
+    % for \( k\ne 0\)
+  \item 
+     $
+       \det(I)=1
+     $
+     dengan \( I \) suatu matriks identitas
+\end{enumerate}
+(vektor-vektor $\vec{\rho}\,$ merupakan baris-baris matriks tersebut).
+Kita sering menulis \( \deter{T} \) sebagai pengganti \( \det (T) \).
+%</df:Det>
+\end{definition}
+
+\begin{remark}  \label{rem:SwapRowsRedun}
+%<*re:SwapRowsRedun>
+Syarat~(2) bersifat redundan karena
+ \begin{equation*}
+   T\grstep{\rho_i+\rho_j}
+    \repeatedgrstep{-\rho_j+\rho_i}
+    \repeatedgrstep{\rho_i+\rho_j}
+    \repeatedgrstep{-\rho_i}
+    \hat{T} 
+\end{equation*}
+mempertukarkan baris \( i \) dan~\( j \).
+Kita mencantumkannya agar 
+konsisten dengan penyajian Metode Gauss dalam bab-bab sebelumnya.
+%</re:SwapRowsRedun>
+\end{remark}
+
+\begin{remark}
+Syarat~(3) tidak memiliki pembatasan $k\neq 0$, meskipun
+operasi Metode Gauss yang mengalikan suatu baris dengan~$k$
+memiliki pembatasan tersebut. 
+% \nearbylemma{le:IdenRowsDetZero} below 
+Hasil berikut menunjukkan bahwa pembatasan itu tidak diperlukan di sini.
+\end{remark}
+
+% % \begin{remark}
+% The previous subsection's plan 
+% asks for the determinant of an echelon form matrix to be the product 
+% down the diagonal.
+% The next result shows that in the presence of the other
+% three, condition~(4) gives that.    
+% % \end{remark}
+
+\begin{lemma}   \label{le:IdenRowsDetZero}
+%<*lm:IdenRowsDetZero>
+Matriks dengan dua baris identik memiliki determinan nol.
+Matriks dengan suatu baris nol memiliki determinan nol.
+Suatu matriks nonsingular jika dan hanya jika determinannya tak nol.
+Determinan matriks bentuk eselon merupakan hasil kali entri-entri diagonalnya.
+%</lm:IdenRowsDetZero>
+\end{lemma}
+
+\begin{proof}
+%<*pf:IdenRowsDetZero0>
+Untuk memverifikasi kalimat pertama, pertukarkan kedua baris yang sama.
+Tanda determinan berubah, tetapi matriksnya tetap sama,
+sehingga determinannya juga tetap sama.
+Jadi, determinannya bernilai nol.
+%</pf:IdenRowsDetZero0>
+
+%<*pf:IdenRowsDetZero1>
+Untuk kalimat kedua, 
+kalikan baris nol dengan dua.
+Operasi itu menggandakan determinan, tetapi juga
+membiarkan baris tersebut tidak berubah, sehingga 
+determinannya tidak berubah. 
+Jadi, determinan tersebut harus bernilai nol.
+%</pf:IdenRowsDetZero1>
+
+%<*pf:IdenRowsDetZero2>
+Untuk kalimat ketiga, lakukan reduksi Gauss--Jordan, 
+$T \rightarrow\cdots\rightarrow\hat{T}$. 
+Berdasarkan tiga sifat pertama,
+determinan $T$ bernilai nol jika dan hanya jika
+determinan $\hat{T}$ bernilai nol
+(meskipun keduanya dapat berbeda tanda atau besar).
+Matriks nonsingular $T$ tereduksi melalui Gauss--Jordan menjadi matriks identitas,
+sehingga memiliki determinan tak nol.
+Matriks singular $T$ tereduksi menjadi $\hat{T}$ yang memiliki baris nol;
+berdasarkan kalimat kedua lema ini, determinannya nol.
+%</pf:IdenRowsDetZero2>
+
+%<*pf:IdenRowsDetZero3>
+Kalimat keempat memiliki dua kasus.
+Jika matriks bentuk eselon tersebut singular, maka
+matriks itu memiliki baris nol.
+Jadi, diagonalnya memuat nol dan
+hasil kali entri-entri diagonalnya bernilai nol.
+Berdasarkan kalimat ketiga hasil ini, determinannya nol, sehingga
+determinan matriks tersebut sama dengan
+hasil kali entri-entri diagonalnya.
+%</pf:IdenRowsDetZero3>
+
+%<*pf:IdenRowsDetZero4>
+Jika matriks bentuk eselon tersebut nonsingular, maka tidak satu pun entri diagonalnya
+bernilai nol.
+Ini berarti kita dapat membagi dengan entri-entri tersebut dan 
+menggunakan syarat~(3) untuk memperoleh $1$ pada diagonalnya.
+\begin{equation*}
+  \begin{vmat}
+    t_{1,1}  &t_{1,2}  &     &t_{1,n}  \\
+    0        &t_{2,2}  &     &t_{2,n}  \\
+             &         &\ddots         \\
+    0        &         &     &t_{n,n}
+  \end{vmat}
+  =
+  t_{1,1}\cdot t_{2,2}\cdots t_{n,n}\cdot
+  \begin{vmat}
+    1        &t_{1,2}/t_{1,1}  &     &t_{1,n}/t_{1,1}  \\
+    0        &1                &     &t_{2,n}/t_{2,2}  \\
+             &                 &\ddots         \\
+    0        &                 &     &1
+  \end{vmat}
+\end{equation*}
+Kemudian bagian Jordan dari eliminasi Gauss--Jordan menghasilkan matriks identitas.
+\begin{equation*}
+  =
+  t_{1,1}\cdot t_{2,2}\cdots t_{n,n}\cdot
+  \begin{vmat}
+    1        &0                &     &0                \\
+    0        &1                &     &0                \\
+             &                 &\ddots         \\
+    0        &                 &     &1
+  \end{vmat}
+  =
+  t_{1,1}\cdot t_{2,2}\cdots t_{n,n}\cdot 1
+\end{equation*}
+Jadi, dalam kasus ini pun, determinannya
+merupakan hasil kali entri-entri diagonal. 
+%</pf:IdenRowsDetZero4>
+\end{proof}
+
+Hasil tersebut memberi kita cara untuk menghitung nilai fungsi
+determinan pada suatu matriks:
+lakukan reduksi Gauss sambil mencatat setiap perubahan  
+tanda akibat pertukaran baris dan setiap skalar yang kita keluarkan sebagai faktor, 
+lalu akhiri dengan mengalikan
+entri-entri diagonal hasil berbentuk eselon.
+Algoritma ini sama cepatnya dengan Metode Gauss, sehingga
+praktis digunakan pada semua matriks yang akan 
+kita jumpai.
+
+\begin{example}
+Menghitung determinan \( \nbyn{2} \)
+dengan Metode Gauss 
+\begin{equation*}
+   \begin{vmat}[r]
+      2  &4  \\
+      -1 &3
+   \end{vmat}
+   =
+   \begin{vmat}[r]
+      2  &4  \\
+      0  &5
+   \end{vmat}
+   =10
+\end{equation*}
+tidak banyak menghemat waktu
+karena rumus determinan $\nbyn{2}$ mudah digunakan.
+Namun, determinan \( \nbyn{3} \) sering kali lebih mudah dihitung
+dengan Metode Gauss daripada dengan rumusnya.
+\begin{equation*}
+   \begin{vmat}[r]
+     2  &2  &6  \\
+     4  &4  &3  \\
+     0  &-3 &5
+   \end{vmat}
+   =
+   \begin{vmat}[r]
+     2  &2  &6  \\
+     0  &0  &-9 \\
+     0  &-3 &5
+   \end{vmat}
+   =
+   -\begin{vmat}[r]
+     2  &2  &6  \\
+     0  &-3 &5  \\
+     0  &0  &-9
+   \end{vmat}
+   =-54
+\end{equation*}
+\end{example}
+
+\begin{example}
+Determinan yang lebih besar daripada $\nbyn{3}$ dapat dihitung 
+dengan cepat menggunakan prosedur Metode Gauss.
+\begin{equation*}
+   \begin{vmat}[r]
+      1  &0  &1  &3  \\
+      0  &1  &1  &4  \\
+      0  &0  &0  &5  \\
+      0  &1  &0  &1
+   \end{vmat}
+   =
+   \begin{vmat}[r]
+      1  &0  &1  &3  \\
+      0  &1  &1  &4  \\
+      0  &0  &0  &5  \\
+      0  &0  &-1 &-3
+   \end{vmat}
+   =
+   -\begin{vmat}[r]
+      1  &0  &1  &3  \\
+      0  &1  &1  &4  \\
+      0  &0  &-1 &-3 \\
+      0  &0  &0  &5
+   \end{vmat}
+   =-(-5)=5
+\end{equation*}
+\end{example}
+
+Contoh tersebut mengangkat suatu hal penting.
+Pendahuluan bab ini memberikan rumus untuk determinan $\nbyn{2}$ 
+dan $\nbyn{3}$, sehingga kita mengetahui bahwa keduanya ada,
+tetapi tidak memberikan rumus fungsi determinan untuk matriks $\nbyn{4}$ atau yang lebih besar.
+Sebagai gantinya, \nearbydefinition{def:Det} memberikan sifat-sifat yang 
+harus dimiliki suatu fungsi determinan
+dan mengarahkan kita untuk menghitung determinan dengan Metode Gauss.
+
+Namun, untuk setiap matriks kita dapat mereduksinya ke bentuk eselon dengan Metode Gauss melalui
+berbagai cara.
+Sebagai contoh, jika diberikan suatu reduksi, kita dapat mengubahnya dengan menyisipkan langkah pertama
+yang mengalikan baris teratas dengan~$2$, lalu 
+langkah kedua yang mengalikannya dengan~$1/2$.
+Karena itu, kita perlu memastikan bahwa dua reduksi Metode Gauss yang berbeda tidak
+menghasilkan dua nilai determinan yang berbeda.
+
+Dengan kata lain, kita harus memverifikasi bahwa \nearbydefinition{def:Det} memberikan 
+fungsi yang terdefinisi dengan baik.
+Dua subbagian berikutnya melakukan hal tersebut dengan menunjukkan 
+bahwa terdapat fungsi terdefinisi baik 
+yang memenuhi definisi itu. 
+
+Namun, terlebih dahulu kita tunjukkan bahwa jika fungsi semacam itu ada, 
+maka jumlahnya tidak lebih dari satu.
+Contoh di atas menggambarkan gagasannya:~kita 
+memperoleh~$5$ dengan mengikuti sifat-sifat dalam definisi.
+Jadi, meskipun kita belum membuktikan bahwa $\det_{\nbyn{4}}$ ada,
+yakni bahwa terdapat fungsi yang memiliki sifat (1)\,--\,(4),  
+jika fungsi yang memenuhi sifat-sifat tersebut memang ada, 
+kita mengetahui nilai yang diberikannya pada matriks di atas.
+
+\begin{lemma} \label{lm:DetFcnIsUnique}
+%<*lm:DetFcnIsUnique>
+Untuk setiap $n$, 
+jika terdapat fungsi determinan $\nbyn{n}$, maka fungsi tersebut tunggal.
+%</lm:DetFcnIsUnique>
+\end{lemma}
+
+\begin{proof}
+%<*pf:DetFcnIsUnique>
+Misalkan terdapat dua fungsi 
+$\map{\det_1,\det_2}{\matspace_{\nbyn{n}}}{\Re}$ 
+yang memenuhi sifat-sifat dalam 
+\nearbydefinition{def:Det} beserta konsekuensinya, \nearbylemma{le:IdenRowsDetZero}.
+Untuk suatu matriks persegi~$M$, tetapkan salah satu cara melakukan Metode Gauss
+untuk membawa matriks itu ke bentuk eselon (adanya
+berbagai cara tidak menjadi masalah; cukup tetapkan salah satunya).
+Dengan menggunakan reduksi tetap ini seperti pada
+contoh-contoh di atas\Dash 
+mencatat faktor penskalaan baris dan pergantian tanda pada pertukaran baris, 
+lalu mengalikan entri-entri diagonal hasil berbentuk eselon\Dash
+kita dapat menghitung nilai yang harus dikembalikan kedua fungsi tersebut pada~$M$,
+dan keduanya harus mengembalikan nilai yang sama.
+Karena keduanya memberikan keluaran yang sama untuk setiap masukan, keduanya merupakan fungsi yang sama.
+%</pf:DetFcnIsUnique>
+\end{proof}
+
+Frasa `jika terdapat fungsi determinan $\nbyn{n}$' 
+menekankan bahwa,
+meskipun kita dapat
+menggunakan Metode Gauss untuk menghitung satu-satunya nilai yang mungkin 
+dikembalikan oleh fungsi determinan, 
+kita belum menunjukkan bahwa fungsi semacam itu ada untuk semua $n$.
+Sisa bagian ini akan menunjukkannya.
+
+
+
+\begin{exercises}
+  \item[{\em Untuk soal-soal berikut, anggap bahwa fungsi determinan $\nbyn{n}$
+      ada untuk semua $n$.}]
+  \recommended \item Tentukan setiap determinan dengan melakukan satu operasi baris.
+    \begin{exparts*}
+      \partsitem \( \begin{vmat}[r]
+                 1  &-2  &1  &2 \\
+                 2  &-4  &1  &0 \\
+                 0  &0  &-1  &0 \\
+                 0  &0  &0  &5
+               \end{vmat} \)
+      \partsitem \( \begin{vmat}[r]
+                 1  &1  &-2  \\
+                 0  &0  &4  \\
+                 0  &3  &-6
+               \end{vmat} \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+       \partsitem Lakukan $2\rho_1+\rho_2$ untuk memperoleh bentuk eselon, lalu
+          kalikan entri-entri diagonalnya.
+          Determinannya adalah~$0$.
+          % sage: M = matrix(QQ, [[1,-2,1,2], [2,-4,1,0], [0,0,-1,0], [0,0,0,5]])
+          % sage: M.determinant()
+          % 0
+        \partsitem Mempertukarkan baris kedua dan ketiga membawa sistem ke
+          bentuk eselon (dan mengubah tanda determinan).
+          Mengalikan entri-entri diagonal memberikan~$12$, sehingga determinan 
+          matriks yang diberikan adalah~$-12$.
+          % sage: M = matrix(QQ, [[1,1,-2], [0,0,4], [0,3,-6]])
+          % sage: M.determinant()
+          % -12
+      \end{exparts}
+    \end{answer}
+  \recommended \item 
+    Gunakan Metode Gauss untuk menentukan setiap determinan.
+    \begin{exparts*}
+      \partsitem \( \begin{vmat}[r]
+                 3  &1  &2  \\
+                 3  &1  &0  \\
+                 0  &1  &4
+               \end{vmat} \)
+      \partsitem \( \begin{vmat}[r]
+                 1  &0  &0  &1 \\
+                 2  &1  &1  &0 \\
+                -1  &0  &1  &0 \\
+                 1  &1  &1  &0
+               \end{vmat} \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+      \partsitem \( \begin{vmat}[r]
+                 3  &1  &2  \\
+                 3  &1  &0  \\
+                 0  &1  &4
+               \end{vmat}
+               =
+               \begin{vmat}[r]
+                 3  &1  &2  \\
+                 0  &0  &-2 \\
+                 0  &1  &4
+               \end{vmat}
+               =
+               -\begin{vmat}[r]
+                 3  &1  &2  \\
+                 0  &1  &4  \\
+                 0  &0  &-2
+               \end{vmat}
+               =6  \)
+      \partsitem \( \begin{vmat}[r]
+                 1  &0  &0  &1 \\
+                 2  &1  &1  &0 \\
+                -1  &0  &1  &0 \\
+                 1  &1  &1  &0
+               \end{vmat}
+               =
+               \begin{vmat}[r]
+                 1  &0  &0  &1 \\
+                 0  &1  &1  &-2\\
+                 0  &0  &1  &1 \\
+                 0  &1  &1  &-1
+               \end{vmat}
+               =
+               \begin{vmat}[r]
+                 1  &0  &0  &1 \\
+                 0  &1  &1  &-2\\
+                 0  &0  &1  &1 \\
+                 0  &0  &0  &1
+               \end{vmat}
+               =1    \)
+      \end{exparts} 
+    \end{answer}
+  \item Gunakan Metode Gauss untuk menentukan masing-masing determinan berikut.
+    \begin{exparts*}
+      \partsitem \( \begin{vmat}[r]
+                 2  &-1  \\
+                 -1 &-1
+               \end{vmat}  \)
+      \partsitem \( \begin{vmat}[r]
+                 1  &1  &0  \\
+                 3  &0  &2  \\
+                 5  &2  &2
+               \end{vmat} \)
+    \end{exparts*}
+    \begin{answer}
+     \begin{exparts}
+      \partsitem \(
+        \begin{vmat}[r]
+                 2  &-1  \\
+                 -1 &-1
+               \end{vmat}
+             =\begin{vmat}[r]
+                 2  &-1  \\
+                 0  &-3/2
+               \end{vmat}=-3  \);
+      \partsitem \( \begin{vmat}[r]
+                 1  &1  &0  \\
+                 3  &0  &2  \\
+                 5  &2  &2
+               \end{vmat}
+              =\begin{vmat}[r]
+                 1  &1  &0  \\
+                 0  &-3 &2  \\
+                 0  &-3 &2
+               \end{vmat}
+              =\begin{vmat}[r]
+                 1  &1  &0  \\
+                 0  &-3 &2  \\
+                 0  &0  &0
+               \end{vmat}
+              =0 \)
+     \end{exparts}  
+    \end{answer}
+  \item 
+    Untuk nilai \( k \) yang mana sistem berikut 
+    memiliki solusi tunggal?
+    \begin{equation*}
+       \begin{linsys}{4}
+          x  &  &  &+ &z  &-  &w  &=  &2  \\
+             &  &y &- &2z &   &   &=  &3  \\
+          x  &  &  &+ &kz &   &   &=  &4  \\
+             &  &  &  &z  &-  &w  &=  &2
+        \end{linsys}
+    \end{equation*}
+    \begin{answer}
+      Kapan determinannya bernilai tak nol?
+      \begin{equation*}
+         \begin{vmat}
+           1  &0  &1  &-1  \\
+           0  &1  &-2 &0   \\
+           1  &0  &k  &0   \\
+           0  &0  &1  &-1
+         \end{vmat}
+         =
+         \begin{vmat}
+           1  &0  &1  &-1  \\
+           0  &1  &-2 &0   \\
+           0  &0  &k-1&1   \\
+           0  &0  &1  &-1
+         \end{vmat}           
+      \end{equation*}
+      Jelas bahwa 
+      $k=1$ menghasilkan kenonsingularan, sehingga determinannya tak nol. 
+      Jika $k\neq 1$, maka 
+      kita memperoleh bentuk eselon dengan kombinasi $(-1/(k-1))\rho_3+\rho_4$.
+      \begin{equation*}
+         =
+         \begin{vmat}
+           1  &0  &1  &-1  \\
+           0  &1  &-2 &0   \\
+           0  &0  &k-1&1   \\
+           0  &0  &0  &-1-1/(k-1)
+         \end{vmat}
+      \end{equation*}
+      Mengalikan entri-entri diagonal memberikan $(k-1)(-1-1/(k-1))=-(k-1)-1=-k$.
+      Jadi, matriks tersebut memiliki determinan tak nol, dan dengan demikian sistemnya
+      memiliki solusi tunggal, jika dan hanya jika \( k\neq 0 \).  
+    \end{answer}
+  \recommended \item 
+    Nyatakan masing-masing bentuk berikut dalam \( \deter{H} \).
+    \begin{exparts}
+      \partsitem \( \begin{vmat}
+            h_{3,1}  &h_{3,2} &h_{3,3} \\
+            h_{2,1}  &h_{2,2} &h_{2,3} \\
+            h_{1,1}  &h_{1,2} &h_{1,3}
+          \end{vmat} \)
+      \partsitem \( \begin{vmat}
+           -h_{1,1}   &-h_{1,2}  &-h_{1,3} \\
+           -2h_{2,1}  &-2h_{2,2} &-2h_{2,3} \\
+           -3h_{3,1}  &-3h_{3,2} &-3h_{3,3}
+          \end{vmat} \)
+      \partsitem \( \begin{vmat}
+            h_{1,1}+h_{3,1}  &h_{1,2}+h_{3,2} &h_{1,3}+h_{3,3} \\
+            h_{2,1}          &h_{2,2}         &h_{2,3} \\
+            5h_{3,1}         &5h_{3,2}        &5h_{3,3}
+          \end{vmat} \)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Syarat~(2) dalam definisi determinan
+          berlaku melalui pertukaran $\rho_1\leftrightarrow\rho_3$.
+          \begin{equation*}
+            \begin{vmat}
+              h_{3,1}  &h_{3,2} &h_{3,3} \\
+              h_{2,1}  &h_{2,2} &h_{2,3} \\
+              h_{1,1}  &h_{1,2} &h_{1,3}
+            \end{vmat}
+            =
+            -\begin{vmat}
+              h_{1,1}  &h_{1,2} &h_{1,3} \\
+              h_{2,1}  &h_{2,2} &h_{2,3} \\
+              h_{3,1}  &h_{3,2} &h_{3,3} 
+            \end{vmat}
+          \end{equation*}
+        \partsitem Syarat~(3) berlaku.
+          \begin{multline*}
+            \begin{vmat}
+             -h_{1,1}   &-h_{1,2}  &-h_{1,3} \\
+             -2h_{2,1}  &-2h_{2,2} &-2h_{2,3} \\
+             -3h_{3,1}  &-3h_{3,2} &-3h_{3,3}
+            \end{vmat}
+            =
+            (-1)\cdot(-2)\cdot(-3)\cdot
+            \begin{vmat}
+             h_{1,1}   &h_{1,2}  &h_{1,3} \\
+             h_{2,1}   &h_{2,2}  &h_{2,3} \\
+             h_{3,1}   &h_{3,2}  &h_{3,3}
+            \end{vmat}                                  \\
+            =
+            (-6)\cdot
+            \begin{vmat}
+             h_{1,1}   &h_{1,2}  &h_{1,3} \\
+             h_{2,1}   &h_{2,2}  &h_{2,3} \\
+             h_{3,1}   &h_{3,2}  &h_{3,3}
+            \end{vmat}
+          \end{multline*}
+        \partsitem 
+          \begin{multline*}
+          \begin{vmat}
+            h_{1,1}+h_{3,1}  &h_{1,2}+h_{3,2} &h_{1,3}+h_{3,3} \\
+            h_{2,1}          &h_{2,2}         &h_{2,3} \\
+            5h_{3,1}         &5h_{3,2}        &5h_{3,3}
+          \end{vmat}                                                 \\
+          \begin{aligned}
+          &=
+          5\cdot     
+          \begin{vmat}
+            h_{1,1}+h_{3,1}  &h_{1,2}+h_{3,2} &h_{1,3}+h_{3,3} \\
+            h_{2,1}          &h_{2,2}         &h_{2,3} \\
+            h_{3,1}          &h_{3,2}         &h_{3,3}
+          \end{vmat}                                     \\
+          &=5\cdot
+          \begin{vmat}
+            h_{1,1}          &h_{1,2}         &h_{1,3} \\
+            h_{2,1}          &h_{2,2}         &h_{2,3} \\
+            h_{3,1}          &h_{3,2}         &h_{3,3}
+          \end{vmat}
+          \end{aligned}
+          \end{multline*}
+      \end{exparts}  
+     \end{answer}
+  \recommended \item 
+    Tentukan determinan suatu matriks diagonal.
+    \begin{answer}
+       Matriks diagonal berada dalam bentuk eselon, sehingga
+       determinannya merupakan hasil kali entri-entri diagonalnya.
+    \end{answer}
+  \item 
+    Jelaskan himpunan solusi suatu sistem linear homogen jika
+    determinan matriks koefisiennya tak nol.
+    \begin{answer}
+      Himpunan tersebut adalah subruang trivial.  
+    \end{answer}
+  \recommended \item 
+    Tunjukkan bahwa determinan berikut bernilai nol.
+    \begin{equation*}
+      \begin{vmat}
+        y+z  &x+z  &x+y  \\
+        x    &y    &z    \\
+        1    &1    &1
+      \end{vmat}
+    \end{equation*}
+    \begin{answer} 
+      Menambahkan baris kedua ke baris pertama memberikan matriks yang baris pertamanya
+      sama dengan $x+y+z$ kali baris ketiganya.  
+    \end{answer}
+  \item 
+    \begin{exparts}
+      \partsitem Tentukan matriks $\nbyn{1}$, $\nbyn{2}$, dan $\nbyn{3}$
+        yang entri $i,j$-nya diberikan oleh $(-1)^{i+j}$.  
+      \partsitem Tentukan determinan matriks persegi yang entri \( i,j \)-nya
+        adalah \( (-1)^{i+j} \).
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem 
+          $\begin{mat}[r]
+            1
+          \end{mat}$,
+          $\begin{mat}[r]
+            1  &-1  \\
+            -1  &1
+          \end{mat}$,
+          $\begin{mat}[r]
+            1   &-1  &1   \\
+            -1  &1   &-1  \\
+            1   &-1  &1
+          \end{mat}$
+        \partsitem Determinan pada kasus $\nbyn{1}$ adalah $1$.
+          Pada setiap kasus lainnya, baris kedua merupakan negatif dari baris pertama,
+          sehingga matriks tersebut singular dan determinannya nol. 
+      \end{exparts} 
+    \end{answer}
+  \item 
+    \begin{exparts}
+      \partsitem Tentukan matriks $\nbyn{1}$, $\nbyn{2}$, dan $\nbyn{3}$
+        yang entri $i,j$-nya diberikan oleh $i+j$.  
+      \partsitem Tentukan determinan matriks persegi yang 
+        entri $i,j$-nya adalah $i+j$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem 
+          $\begin{mat}[r]
+            2
+          \end{mat}$,
+          $\begin{mat}[r]
+            2  &3  \\
+            3  &4
+          \end{mat}$,
+          $\begin{mat}[r]
+            2  &3  &4  \\
+            3  &4  &5  \\
+            4  &5  &6
+          \end{mat}$
+        \partsitem Kasus $\nbyn{1}$ dan $\nbyn{2}$ memberikan hasil berikut.
+          \begin{equation*}
+            \begin{vmat}[r]
+              2
+            \end{vmat}
+            =2
+            \qquad
+            \begin{vmat}[r]
+              2  &3  \\
+              3  &4
+            \end{vmat}=-1
+          \end{equation*}
+          Matriks $\nbyn{n}$ dengan $n\geq 3$ bersifat singular; sebagai contoh,
+          \begin{equation*}
+            \begin{vmat}[r]
+              2  &3  &4  \\
+              3  &4  &5  \\
+              4  &5  &6
+            \end{vmat}=0
+          \end{equation*}
+          karena dua kali baris kedua dikurangi baris pertama 
+          sama dengan baris ketiga.
+          Pemeriksaan ini bersifat rutin.
+      \end{exparts} 
+    \end{answer}
+  \recommended \item 
+    Tunjukkan bahwa fungsi determinan tidak linear dengan  
+    memberikan kasus ketika \( \deter{A+B}\neq\deter{A}+\deter{B} \).
+    \begin{answer}
+      Contoh berikut 
+      \begin{equation*}
+         A=B=
+         \begin{mat}[r]
+           1  &2  \\
+           3  &4
+         \end{mat}
+      \end{equation*}
+      mudah diperiksa.
+      \begin{equation*}
+         \deter{A+B}
+         =
+         \begin{vmat}[r]
+           2  &4  \\
+           6  &8
+         \end{vmat}
+         =-8
+         \qquad
+         \deter{A}+\deter{B}
+         =
+         -2-2
+         =-4
+      \end{equation*}
+      Kebetulan, contoh ini juga memberikan kasus ketika perkalian skalar 
+      tidak dipertahankan, 
+      $\deter{2\cdot A}\neq 2\cdot\deter{A}$.  
+     \end{answer}
+  \item 
+    Syarat kedua dalam definisi, yaitu bahwa pertukaran baris mengubah 
+    tanda determinan, agak merepotkan.
+    Artinya, kita harus mencatat banyaknya pertukaran untuk menghitung bagaimana
+    tandanya berganti-ganti.
+    Dapatkah kita menyingkirkannya?
+    Dapatkah kita menggantinya dengan syarat bahwa pertukaran baris membiarkan determinan
+    tidak berubah?
+    (Jika demikian, kita akan memerlukan rumus baru untuk $\nbyn{1}$,
+     $\nbyn{2}$, dan $\nbyn{3}$, tetapi itu hanya persoalan kecil.)
+     \begin{answer}
+       Tidak, kita tidak dapat menggantinya.
+       \nearbyremark{rem:SwapRowsRedun}
+       menunjukkan bahwa keempat syarat setelah penggantian tersebut akan  
+       saling bertentangan\Dash tidak ada fungsi yang memenuhi semuanya.
+     \end{answer}
+  \item 
+    Buktikan bahwa determinan setiap matriks segitiga, baik atas maupun bawah,
+    merupakan hasil kali entri-entri diagonalnya.
+    \begin{answer}
+      Matriks segitiga atas berada dalam bentuk eselon.
+
+      Matriks segitiga bawah bersifat singular atau nonsingular.
+      Jika singular, matriks itu memiliki nol pada diagonalnya, sehingga 
+      determinannya (yakni nol) memang merupakan hasil kali entri-entri diagonal. 
+      Jika nonsingular, matriks itu tidak memiliki nol pada diagonalnya, dan
+      kita dapat mereduksinya dengan Metode Gauss ke
+      bentuk eselon tanpa mengubah diagonalnya.  
+    \end{answer}
+  \item
+    Rujuklah definisi matriks elementer dalam subbagian Mekanika
+    Perkalian Matriks.
+    \begin{exparts}
+      \partsitem Berapakah determinan setiap jenis matriks elementer?
+      \partsitem Buktikan bahwa jika \( E \) adalah suatu matriks elementer, maka
+        \( \deter{ES}=\deter{E}\deter{S} \) untuk setiap \( S \)
+        yang berukuran sesuai.
+      \partsitem \textit{(Pertanyaan ini tidak melibatkan determinan.)}
+        Buktikan bahwa jika \( T \) singular, maka hasil kali \( TS \)
+        juga singular.
+      \partsitem Tunjukkan bahwa \( \deter{TS}=\deter{T}\deter{S} \).
+      \partsitem Tunjukkan bahwa jika \( T \) nonsingular, maka
+          \( \deter{T^{-1}}=\deter{T}^{-1} \).
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Sifat-sifat dalam definisi determinan 
+          menunjukkan bahwa 
+          \( \deter{M_i(k)}=k \),
+          \( \deter{P_{i,j}}=-1 \),
+          dan
+          \( \deter{C_{i,j}(k)}=1 \).
+        \partsitem Ketiga kasus mudah diperiksa dengan mengingat aksi
+          perkalian dari kiri oleh setiap jenis matriks.
+        \partsitem Jika \( TS \) invertibel, \( (TS)M=I \), maka
+          sifat asosiatif perkalian matriks, 
+          \( T(SM)=I \), menunjukkan bahwa \( T \) invertibel.
+          Jadi, jika \( T \) tidak invertibel, \( TS \) juga tidak invertibel.
+        \partsitem Jika \( T \) singular, terapkan jawaban sebelumnya:
+          \( \deter{TS}=0 \) dan
+          \( \deter{T}\cdot\deter{S}=0\cdot\deter{S}=0 \).
+          Jika \( T \) tidak singular, kita dapat menuliskannya sebagai hasil kali
+          matriks-matriks elementer,
+          $
+            \deter{TS}=\deter{E_r\cdots E_1S}=
+            \deter{E_r}\cdots\deter{E_1}\cdot\deter{S}=
+            \deter{E_r\cdots E_1}\deter{S}=\deter{T}\deter{S}
+          $.
+        \partsitem \( 1=\deter{I}=\deter{T\cdot T^{-1}}
+                     =\deter{T}\deter{T^{-1}} \)
+      \end{exparts}  
+     \end{answer} 
+  \item 
+    Buktikan bahwa determinan suatu hasil kali merupakan hasil kali
+    determinannya, \( \deter{TS}=\deter{T}\,\deter{S} \), dengan cara berikut.
+    Tetapkan matriks \( \nbyn{n} \) \( S \), lalu tinjau fungsi
+    \( \map{d}{\matspace_{\nbyn{n}}}{\Re} \) yang diberikan oleh
+    \( T\mapsto \deter{TS}/\deter{S} \).
+    \begin{exparts}
+      \partsitem Periksa bahwa \( d \) memenuhi syarat~(1) dalam definisi
+        fungsi determinan.
+      \partsitem Periksa syarat~(2).
+      \partsitem Periksa syarat~(3).
+      \partsitem Periksa syarat~(4).
+      \partsitem Simpulkan bahwa determinan suatu hasil kali merupakan hasil kali
+        determinannya.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Kita harus menunjukkan bahwa jika
+          \begin{equation*}
+            T\grstep{k\rho_i+\rho_j}\hat{T}
+          \end{equation*}
+          maka $d(T)=\deter{TS}/\deter{S}
+          =\deter{\hat{T}S}/\deter{S}=d(\hat{T})$.
+          Bukti selesai jika kita menunjukkan bahwa terlebih dahulu mengombinasikan baris,
+          lalu mengalikan untuk memperoleh \( \hat{T}S \), memberikan hasil yang sama dengan
+          terlebih dahulu mengalikan untuk memperoleh \( TS \), lalu melakukan kombinasi
+          (karena determinan \( \deter{TS} \) tidak berubah oleh
+          kombinasi tersebut, sehingga kita memperoleh \( \deter{\hat{T}S}=\deter{TS} \), dan
+          dengan demikian \( d(\hat{T})=d(T) \)).
+          Argumennya berjalan sebagai berikut:~setelah menambahkan 
+          \( k \) kali baris~\( i \) dari \( TS \) ke
+          baris~$j$ dari \( TS \), entri \( j,p \)-nya adalah
+          \( (kt_{i,1}+t_{j,1})s_{1,p}+\dots+(kt_{i,r}+t_{j,r})s_{r,p} \),
+          yang merupakan entri \( j,p \) dari \( \hat{T}S \).
+        \partsitem Kita hanya perlu menunjukkan bahwa melakukan pertukaran
+          $
+            T\smash[b]{\grstep{\rho_i\swap\rho_j}}\hat{T}
+          $
+          lalu mengalikan untuk memperoleh \( \hat{T}S \) memberikan hasil yang sama dengan
+          mengalikan \( T \) dengan \( S \), lalu melakukan pertukaran (karena
+          determinan \( \deter{TS} \) berganti tanda pada
+          pertukaran baris, kita kemudian memperoleh \( \deter{\hat{T}S}=-\deter{TS} \),
+          sehingga \( d(\hat{T})=-d(T) \)).
+          Argumen tersebut berjalan persis seperti argumen sebelumnya.
+        \partsitem Kini tidak mengejutkan bahwa kita hanya perlu menunjukkan bahwa 
+          mengalikan suatu baris dengan skalar
+          $
+            T\smash[b]{\grstep{k\rho_i}}\hat{T}
+          $
+          lalu menghitung \( \hat{T}S \) memberikan hasil yang sama dengan
+          terlebih dahulu menghitung \( TS \), lalu mengalikan barisnya dengan \( k \)
+          (karena determinan \( \deter{TS} \) ikut terskala dengan \( k \)
+          akibat perkalian tersebut, kita memperoleh \( \deter{\hat{T}S}=k\deter{TS} \),
+          sehingga \( d(\hat{T})=k\,d(T) \)).
+          Argumennya berjalan persis seperti di atas.
+        \partsitem Jelas.
+        \partsitem Karena kita telah menunjukkan bahwa \( d(T) \) merupakan determinan
+          dan bahwa fungsi determinan (jika ada)
+          bersifat tunggal, kita memperoleh
+          \( \deter{T}=d(T)=\deter{TS}/\deter{S} \).
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Suatu \definend{submatriks}\index{submatriks}\index{matriks!submatriks} 
+dari matriks $A$ adalah matriks yang diperoleh dengan menghapus 
+    beberapa baris dan kolom $A$.
+    Jadi, matriks pertama berikut merupakan submatriks dari matriks kedua.
+    \begin{equation*}
+      \begin{mat}[r]
+        3  &1  \\
+        2  &5
+      \end{mat}
+      \qquad
+      \begin{mat}[r]
+        3  &4  &1  \\
+        0  &9  &-2 \\
+        2  &-1 &5
+      \end{mat}
+    \end{equation*}
+    Buktikan bahwa untuk setiap matriks persegi,
+    rank matriks tersebut adalah $r$ jika dan hanya jika
+    \( r \) merupakan bilangan bulat terbesar
+    sedemikian sehingga terdapat submatriks \( \nbyn{r} \) dengan
+    determinan tak nol.
+    \begin{answer}
+      Pertama-tama kita akan berargumen bahwa matriks berank \( r \) memiliki
+      submatriks \( \nbyn{r} \) dengan determinan tak nol.
+      Matriks berank \( r \) memiliki himpunan \( r \) baris yang bebas linear.
+      Matriks yang dibentuk dari baris-baris tersebut akan memiliki rank baris \( r \), sehingga
+      rank kolomnya juga \( r \).
+      Kesimpulannya: dari \( r \) baris tersebut kita dapat mengambil
+      himpunan \( r \) kolom yang bebas linear, sehingga matriks semula memiliki
+      submatriks \( \nbyn{r} \) berank \( r \).
+
+      Kita menutup dengan menunjukkan bahwa jika \( r \) merupakan bilangan bulat terbesar semacam itu,
+      maka rank matriks tersebut adalah \( r \).
+      Berdasarkan kemaksimalan \( r \), kita hanya perlu menunjukkan
+      bahwa jika suatu matriks memiliki submatriks \( \nbyn{k} \)
+      berdeterminan tak nol, maka rank matriks tersebut sekurang-kurangnya \( k \).
+      Tinjaulah submatriks \( \nbyn{k} \) semacam itu.
+      Baris-barisnya merupakan bagian dari baris-baris matriks semula; jelas bahwa
+      himpunan baris utuh yang bersesuaian bebas linear.
+      Jadi, rank baris matriks semula sekurang-kurangnya \( k \), dan rank
+      baris suatu matriks sama dengan ranknya.  
+   \end{answer}
+  \item
+    Buktikan bahwa matriks dengan entri-entri rasional memiliki determinan rasional.
+    \begin{answer}
+      Matriks yang hanya memiliki entri rasional tereduksi dengan
+      Metode Gauss menjadi matriks bentuk eselon hanya menggunakan aritmetika rasional.
+      Jadi, entri-entri diagonalnya harus rasional, sehingga hasil kali
+      entri-entri diagonal itu rasional.  
+    \end{answer}
+  \puzzle \item 
+     \cite{Monthly53p115}
+     Temukan unsur kesamaan dalam (a)~menyederhanakan pecahan, (b)~membubuhkan bedak
+     pada hidung, (c)~membangun anak tangga baru pada gereja, (d)~mempertahankan profesor
+     emeritus di kampus, dan (e)~menempatkan \( B \), \( C \), \( D \) dalam
+     determinan
+     \begin{equation*}
+       \begin{vmat}
+         1   &a   &a^2  &a^3  \\
+         a^3 &1   &a    &a^2  \\
+         B   &a^3 &1    &a    \\
+         C   &D   &a^3  &1
+       \end{vmat}.
+     \end{equation*}
+     \begin{answer}
+       \answerasgiven
+       Nilai determinan \( (1-a^4)^3 \) tidak bergantung pada
+       nilai \( B \), \( C \), maupun \( D \).
+       Karena itu, operasi~(e) tidak mengubah nilai determinan,
+       melainkan hanya mengubah tampilannya.
+       Jadi, unsur kesamaan dalam (a), (b), (c), (d), dan (e)
+       hanyalah bahwa tampilan entitas utamanya berubah.
+       Unsur yang sama muncul dalam (f)~mengganti label nama sekuntum mawar,
+       (g)~menulis bilangan bulat desimal dalam basis \( 12 \), (h)~menyepuh
+       bunga lili, (i)~memoles citra seorang politikus, dan (j)~menganugerahkan gelar
+       kehormatan.  
+    \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Ekspansi Permutasi}
+Subbagian sebelumnya mendefinisikan suatu fungsi sebagai determinan jika fungsi tersebut
+memenuhi empat syarat dan
+menunjukkan bahwa terdapat paling banyak satu fungsi determinan $\nbyn{n}$ untuk
+setiap $n$.
+Yang tersisa adalah menunjukkan bahwa untuk setiap $n$, fungsi semacam itu ada.
+
+Namun, kita dapat menghitung determinan dengan mudah:
+kita menggunakan Metode Gauss, mencatat perubahan tanda akibat pertukaran baris, 
+lalu mengalikan entri-entri diagonal pada akhir proses.
+Bagaimana mungkin fungsi determinan tidak ada?
+
+Kesulitannya ialah menunjukkan bahwa 
+perhitungan tersebut memberikan hasil yang terdefinisi dengan baik\Dash yakni, tunggal\Dash.
+%<*DifferentGaussMethodReductions>
+Tinjaulah dua reduksi Metode Gauss berikut
+terhadap matriks yang sama; reduksi pertama tidak menggunakan pertukaran baris,
+\begin{equation*}
+  \begin{mat}[r]
+    1  &2  \\
+    3  &4
+  \end{mat}
+  \grstep{-3\rho_1+\rho_2}
+  \begin{mat}[r]
+    1  &2  \\
+    0  &-2
+  \end{mat}
+\end{equation*}
+sedangkan reduksi kedua menggunakannya sekali.
+\begin{equation*}
+  \begin{mat}[r]
+    1  &2  \\
+    3  &4
+  \end{mat}
+  \grstep{\rho_1\leftrightarrow\rho_2}
+  \begin{mat}[r]
+    3  &4  \\
+    1  &2
+  \end{mat}
+  \grstep{-(1/3)\rho_1+\rho_2}
+  \begin{mat}[r]
+    3  &4  \\
+    0  &2/3
+  \end{mat}
+\end{equation*}
+Keduanya menghasilkan determinan $-2$ 
+karena pada reduksi kedua
+kita memperhitungkan bahwa pertukaran baris mengubah tanda hasil
+yang diperoleh dengan mengalikan entri-entri diagonal.
+%</DifferentGaussMethodReductions>
+Fakta bahwa kita dapat melanjutkan melalui dua cara membuka kemungkinan bahwa
+keduanya memberikan jawaban yang berbeda.
+% To illustrate how a computation that is like the ones that we are doing could 
+% fail to be well-defined, 
+% suppose that \nearbydefinition{def:Det} did not include condition~(2). 
+% That is, suppose that we instead tried to define determinants so that
+% the value would not change on a row swap.
+% Then first reduction above would
+% yield $-2$ while the second would yield $+2$.
+% We could still do computations but they wouldn't give consistent outcomes\Dash
+% there is no 
+% function that satisfies conditions (1), (3), (4), and also this
+% altered second condition. 
+% Of course, observing that \nearbydefinition{def:Det} does the right thing
+% with these two reductions of the above matrix is not enough.
+Dengan kata lain, cara yang telah kita berikan untuk menghitung nilai determinan tidak
+serta-merta meniadakan kemungkinan bahwa, misalnya,
+terdapat dua reduksi suatu matriks $\nbyn{7}$ yang menghasilkan 
+nilai determinan berbeda.
+Dalam kasus tersebut kita tidak akan memiliki fungsi, karena menurut definisinya,
+setiap masukan suatu fungsi harus dipasangkan dengan tepat satu keluaran. 
+Sisa bagian ini 
+menunjukkan bahwa definisi~\nearbydefinition{def:Det} 
+tidak pernah menimbulkan konflik.
+
+% \begin{remark}
+% The natural way approach to this would be 
+% to define the determinant function with:~``The value of the
+% function is the result of doing Gauss's Method,
+% keeping track of row swaps, and finishing by multiplying down the diagonal''. 
+% (Since Gauss's Method allows for some variation, as we saw above, 
+% we would have to fix an explicit algorithm.)
+% Then we would be done if we verified that 
+% this way algorithm satisfies the four properties.
+% However, how to verify this is not evident.
+% So the development below will not proceed in this way.
+% \end{remark}
+
+Untuk melakukannya, kita akan mendefinisikan cara alternatif untuk menentukan
+nilai suatu determinan.
+(Dalam praktiknya alternatif ini kurang berguna karena 
+lambat.
+Namun, alternatif ini sangat berguna untuk teori.)
+Gagasan kuncinya ialah bahwa   
+syarat~(3) dari \nearbydefinition{def:Det}
+menunjukkan bahwa fungsi determinan tidak linear.
+
+\begin{example}
+Berdasarkan syarat~(3), skalar dikeluarkan secara terpisah dari setiap baris,
+\begin{equation*}
+   \begin{vmat}[r]
+       4  &2  \\
+      -2  &6
+     \end{vmat}
+  =2\cdot\begin{vmat}[r]
+       2  &1  \\
+      -2  &6
+     \end{vmat}
+  =4\cdot\begin{vmat}[r]
+       2  &1  \\
+      -1  &3
+     \end{vmat}
+\end{equation*}
+bukan dari seluruh matriks sekaligus.
+Jadi, jika
+\begin{equation*}
+   A=\begin{mat}[r]
+       2  &1  \\
+      -1  &3
+     \end{mat}
+\end{equation*} 
+maka \( \det(2A) \neq 2\cdot\det(A) \) 
+(melainkan, \( \det(2A) =  4\cdot\det(A) \)).
+\end{example}
+
+Karena skalar dikeluarkan satu baris demi satu baris, kita mungkin menduga bahwa
+determinan bersifat linear pada setiap baris secara terpisah.
+
+\begin{definition} \label{def:multilinear}
+%<*df:Multilinear>
+Misalkan \( V \) suatu ruang vektor.
+Suatu pemetaan \( \map{f}{V^n}{\Re} \) disebut
+\definend{multilinear}\index{fungsi!multilinear}\index{multilinear}
+jika  
+\begin{enumerate}
+  \item 
+    $
+      f(\vec{\rho}_1,\dots,\vec{v}+\vec{w},
+      \ldots,\vec{\rho}_n)
+      =f(\vec{\rho}_1,\dots,\vec{v},\dots,\vec{\rho}_n)
+      +f(\vec{\rho}_1,\dots,\vec{w},\dots,\vec{\rho}_n)
+    $
+  \item 
+    $
+      f(\vec{\rho}_1,\dots,k\vec{v},\dots,\vec{\rho}_n)
+      =k\cdot f(\vec{\rho}_1,\dots,\vec{v},\dots,\vec{\rho}_n)
+    $
+\end{enumerate}
+untuk \( \vec{v}, \vec{w}\in V \) dan \( k\in\Re \).
+%</df:Multilinear>
+\end{definition}
+
+\begin{lemma}  \label{lem:DetsMultilinear}
+%<*lm:DetsMultilinear>
+Determinan bersifat multilinear.
+%</lm:DetsMultilinear>
+\end{lemma}
+
+\begin{proof}
+%<*pf:DetsMultilinear0>
+Sifat~(2) di sini tepat merupakan syarat~(3) dalam \nearbydefinition{def:Det},
+sehingga kita hanya perlu memverifikasi sifat~(1).
+%</pf:DetsMultilinear0>
+% \begin{equation*}
+%   \det(\vec{\rho}_1,\dots,\vec{v}+\vec{w},
+%       \dots,\vec{\rho}_n)
+%   =\det(\vec{\rho}_1,\dots,\vec{v},\dots,\vec{\rho}_n)
+%   +\det(\vec{\rho}_1,\dots,\vec{w},\dots,\vec{\rho}_n)
+% \end{equation*}
+
+%<*pf:DetsMultilinear1>
+Terdapat dua kasus.
+Jika himpunan baris lainnya
+\(
+  \set{\vec{\rho}_1,\dots,\vec{\rho}_{i-1},\vec{\rho}_{i+1},
+       \dots,\vec{\rho}_n} 
+\)
+bergantung linear, maka ketiga matriks tersebut singular, sehingga ketiga
+determinannya nol dan kesamaannya langsung berlaku.
+%</pf:DetsMultilinear1>
+
+%<*pf:DetsMultilinear2>
+Karena itu, anggap bahwa himpunan baris lainnya bebas linear.
+Kita dapat membentuk basis dengan 
+menambahkan satu vektor lagi,
+$\sequence{\vec{\rho}_1,\dots,\vec{\rho}_{i-1},\vec{\beta},
+               \vec{\rho}_{i+1},\dots,\vec{\rho}_n}$.
+Nyatakan $\vec{v}$ dan $\vec{w}$ relatif terhadap basis ini,
+\begin{align*}
+  \vec{v} &=v_1\vec{\rho}_1+\dots+v_{i-1}\vec{\rho}_{i-1}+v_i\vec{\beta}
+            +v_{i+1}\vec{\rho}_{i+1}+\dots+v_n\vec{\rho}_n                \\
+  \vec{w} &= w_1\vec{\rho}_1+\dots+w_{i-1}\vec{\rho}_{i-1}+w_i\vec{\beta}
+            +w_{i+1}\vec{\rho}_{i+1}+\dots+w_n\vec{\rho}_n
+\end{align*}
+lalu jumlahkan.
+\begin{equation*}
+  \vec{v}+\vec{w}
+  =
+  (v_1+w_1)\vec{\rho}_1+\dots+(v_i+w_i)\vec{\beta}
+            +\dots+(v_n+w_n)\vec{\rho}_n 
+\end{equation*}
+Tinjaulah ruas kiri (1), lalu uraikan $\vec{v}+\vec{w}$.
+% $\det (\vec{\rho}_1,\dots,\vec{v}+\vec{w},\dots,\vec{\rho}_n)$.
+\begin{equation*}
+    \det (\vec{\rho}_1,\dots,\,(v_1+w_1)\vec{\rho}_1+\dots+(v_i+w_i)\vec{\beta}
+            +\dots+(v_n+w_n)\vec{\rho}_n,\,\dots,\vec{\rho}_n) 
+   \tag{$*$}
+\end{equation*}
+% Gauss's Method enables us to eliminate the terms for $\vec{\rho}_1$,
+% $\vec{\rho}_2$, etc., from the expanded expression.
+% the $(v_1+w_1)\vec{\rho}_1+\dots+(v_i+w_i)\vec{\beta}
+%             +\dots+(v_n+w_n)\vec{\rho}_n$ expression.
+Menurut syarat~(1) dalam definisi determinan, nilai 
+($*$) % the determinant
+% $\det(\vec{\rho}_1,\dots,\vec{v}+\vec{w},\dots,\vec{\rho}_n)$
+tidak berubah oleh operasi 
+penambahan $-(v_1+w_1)\vec{\rho}_1$ ke baris ke-$i$, $\vec{v}+\vec{w}$.
+Baris ke-$i$ menjadi sebagai berikut.
+\begin{equation*}
+  \vec{v}+\vec{w}-(v_1+w_1)\vec{\rho}_1
+  =
+  (v_2+w_2)\vec{\rho}_2+\cdots+(v_i+w_i)\vec{\beta}
+            +\dots+(v_n+w_n)\vec{\rho}_n 
+\end{equation*}
+%</pf:DetsMultilinear2>
+%<*pf:DetsMultilinear3>
+Selanjutnya tambahkan $-(v_2+w_2)\vec{\rho}_2$, dan seterusnya, untuk mengeliminasi 
+semua suku dari baris-baris lainnya.
+Terapkan syarat~(3) dari definisi determinan.
+\begin{multline*}
+  \det (\vec{\rho}_1,\dots,\vec{v}+\vec{w},\dots,\vec{\rho}_n)          \\
+  \begin{aligned}
+    &=\det (\vec{\rho}_1,\dots,(v_i+w_i)\cdot\vec{\beta},\dots,\vec{\rho}_n) \\
+    &=(v_i+w_i)\cdot\det (\vec{\rho}_1,\dots,\vec{\beta},\dots,\vec{\rho}_n) \\
+    &=v_i\cdot \det (\vec{\rho}_1,\dots,\vec{\beta},\dots,\vec{\rho}_n)  
+     +w_i\cdot \det (\vec{\rho}_1,\dots,\vec{\beta},\dots,\vec{\rho}_n)
+  \end{aligned}
+\end{multline*}
+Sekarang bentuk ini merupakan jumlah dua determinan.
+Sebagai langkah terakhir, masukkan kembali $v_i$ dan $w_i$ ke depan 
+$\vec{\beta}$,
+lalu gunakan kembali kombinasi baris, 
+kali ini untuk merekonstruksi ekspresi $\vec{v}$
+dan $\vec{w}$ relatif terhadap basis tersebut.
+Dengan kata lain, mulailah dengan operasi
+penambahan $v_1\vec{\rho}_1$ ke $v_i\vec{\beta}$ 
+dan $w_1\vec{\rho}_1$ ke $w_i\vec{\beta}$, dan seterusnya,
+untuk memperoleh uraian $\vec{v}$ dan $\vec{w}$.
+%</pf:DetsMultilinear3>
+\end{proof}
+
+Multilinearitas memungkinkan kita menguraikan suatu determinan menjadi jumlah beberapa
+determinan, yang masing-masing melibatkan matriks sederhana.
+
+\begin{example}
+Gunakan sifat~(1) multilinearitas untuk
+memecah baris pertama,
+\begin{equation*}
+  \begin{vmat}[r]
+     2  &1  \\
+     4  &3
+  \end{vmat}
+  =
+  \begin{vmat}[r]
+     2  &0  \\
+     4  &3
+  \end{vmat}
+  +
+  \begin{vmat}[r]
+     0  &1  \\
+     4  &3
+  \end{vmat}
+\end{equation*}
+lalu gunakan kembali (1) untuk memecah masing-masing berdasarkan baris kedua.
+\begin{equation*}
+  =\begin{vmat}[r]
+     2  &0  \\
+     4  &0
+  \end{vmat}
+  +
+  \begin{vmat}[r]
+     2  &0  \\
+     0  &3
+  \end{vmat}
+  +
+  \begin{vmat}[r]
+     0  &1  \\
+     4  &0
+  \end{vmat}
+  +
+  \begin{vmat}[r]
+     0  &1  \\
+     0  &3
+  \end{vmat}
+\end{equation*}
+Hasilnya adalah empat determinan.
+Pada setiap baris dari keempat determinan tersebut terdapat
+satu entri dari matriks semula.
+\end{example}
+
+\begin{example}
+Dengan cara yang sama,
+determinan \( \nbyn{3} \) terurai menjadi jumlah 
+banyak determinan yang lebih sederhana.
+Pemecahan berdasarkan baris pertama menghasilkan tiga determinan
+(kita menyoroti nol pada posisi $1,3$ agar secara visual dapat dibedakan
+dari nol-nol yang muncul sebagai bagian dari pemecahan).
+\begin{equation*}
+  \begin{vmat}[r]
+     2              &1  &-1  \\
+     4              &3  &\highlight{0}  \\
+     2              &1  &5
+  \end{vmat}
+  =
+  \begin{vmat}[r]
+     2              &0  &0   \\
+     4              &3  &\highlight{0}  \\
+     2              &1  &5
+  \end{vmat}
+  +
+  \begin{vmat}[r]
+     0              &1  &0   \\
+     4              &3  &\highlight{0}   \\
+     2              &1  &5
+  \end{vmat}
+  +
+  \begin{vmat}[r]
+     0              &0  &-1  \\
+     4              &3  &\highlight{0}  \\
+     2  &1  &5
+  \end{vmat}                       
+\end{equation*}
+Selanjutnya, masing-masing determinan di atas terpecah menjadi tiga berdasarkan baris kedua.
+Kemudian masing-masing dari kesembilan determinan itu terpecah menjadi tiga berdasarkan baris ketiga.
+Hasilnya adalah dua puluh tujuh determinan,
+sedemikian sehingga setiap baris memuat satu entri dari matriks awal.
+\begin{equation*}
+  =
+  \begin{vmat}[r]
+     2              &0  &0   \\
+     4              &0  &0   \\
+     2              &0  &0
+  \end{vmat}
+  +
+  \begin{vmat}[r]
+     2  &0  &0   \\
+     4  &0  &0   \\
+     0  &1  &0
+  \end{vmat}
+  +
+  \begin{vmat}[r]
+     2  &0  &0   \\
+     4  &0  &0   \\
+     0  &0  &5
+  \end{vmat}
+  +
+  \begin{vmat}[r]
+     2  &0  &0   \\
+     0  &3  &0   \\
+     2  &0  &0
+  \end{vmat}
+  +\dots+
+  \begin{vmat}[r]
+     0  &0  &-1  \\
+     0  &0  &\highlight{0}  \\
+     0  &0  &5
+  \end{vmat}
+\end{equation*}
+\end{example}
+
+Jadi, multilinearitas akan menguraikan determinan \( \nbyn{n} \) menjadi
+jumlah sebanyak \( n^n \) determinan, dengan
+setiap baris dari setiap determinan memuat satu entri dari
+matriks awal.
+
+Dalam ekspansi ini, meskipun terdapat banyak suku, 
+sebagian besar determinannya bernilai nol.
+
+\begin{example} \label{ex:SamplePermExp}
+Dalam setiap contoh berikut dari ekspansi sebelumnya,
+dua entri dari matriks semula berada pada kolom yang sama.
+\begin{equation*}
+  \begin{vmat}[r]
+     2               &0  &0   \\
+     4               &0  &0  \\
+     0               &1  &0
+  \end{vmat}
+  \qquad
+  \begin{vmat}[r]
+     0               &0  &-1  \\
+     0               &3  &0  \\
+     0               &0  &5
+  \end{vmat}
+  \qquad\
+  \begin{vmat}[r]
+     0               &1  &0   \\
+     0               &0  &\highlight{0}  \\
+     0               &0  &5
+  \end{vmat}
+\end{equation*}
+Sebagai contoh,
+dalam matriks pertama, $2$ dan $4$ sama-sama berasal dari kolom pertama
+matriks semula.
+Dalam matriks kedua, $-1$ dan~$5$ sama-sama berasal dari kolom ketiga.
+Dalam matriks ketiga, $0$ dan~$5$ juga sama-sama berasal dari kolom ketiga.
+Setiap matriks semacam itu singular karena 
+salah satu baris merupakan kelipatan baris lainnya.
+Jadi, berdasarkan \nearbylemma{le:IdenRowsDetZero}, setiap determinan semacam itu bernilai nol.
+
+Berdasarkan pengamatan tersebut, 
+ekspansi determinan \( \nbyn{3} \) di atas menjadi
+jumlah dua puluh tujuh determinan menyederhana menjadi jumlah enam determinan berikut,
+yang entri-entri dari matriks semulanya muncul satu per baris
+dan juga satu per kolom.
+\begin{align*}
+  \begin{vmat}[r]
+     2  &1  &-1  \\
+     4  &3  &\highlight{0}  \\
+     2  &1  &5
+  \end{vmat}
+  &=\begin{vmat}[r]
+     2  &0  &0   \\
+     0  &3  &0   \\
+     0  &0  &5
+  \end{vmat}
+  +
+   \begin{vmat}[r]
+     2  &0  &0   \\
+     0  &0  &\highlight{0}   \\
+     0  &1  &0
+  \end{vmat}                      \\
+  &\quad\hbox{}+\begin{vmat}[r]
+     0  &1  &0   \\
+     4  &0  &0   \\
+     0  &0  &5
+  \end{vmat}
+  +
+   \begin{vmat}[r]
+     0  &1  &0   \\
+     0  &0  &\highlight{0}   \\
+     2  &0  &0
+  \end{vmat}                      \\
+  &\quad\hbox{}+\begin{vmat}[r]
+     0  &0  &-1  \\
+     4  &0  &0   \\
+     0  &1  &0
+  \end{vmat}
+  +
+   \begin{vmat}[r]
+     0  &0  &-1  \\
+     0  &3  &0    \\
+     2  &0  &0
+  \end{vmat}                      
+\end{align*}
+Dalam ekspansi tersebut kita dapat mengeluarkan faktor-faktor skalarnya.
+\begin{align*}
+  &=(2)(3)(5)\begin{vmat}[r]
+               1  &0  &0  \\
+               0  &1  &0  \\
+               0  &0  &1
+            \end{vmat}
+  +(2)(\highlight{0})(1)\begin{vmat}[r]
+               1  &0  &0  \\
+               0  &0  &1  \\
+               0  &1  &0
+            \end{vmat}                     \\
+  &\quad\hbox{}+(1)(4)(5)\begin{vmat}[r]
+               0  &1  &0  \\
+               1  &0  &0  \\
+               0  &0  &1
+            \end{vmat}
+  +(1)(\highlight{0})(2)\begin{vmat}[r]
+               0  &1  &0  \\
+               0  &0  &1  \\
+               1  &0  &0
+            \end{vmat}                       \\
+  &\quad\hbox{}+(-1)(4)(1)\begin{vmat}[r]
+               0  &0  &1  \\
+               1  &0  &0  \\
+               0  &1  &0
+            \end{vmat}
+  +(-1)(3)(2)\begin{vmat}[r]
+               0  &0  &1  \\
+               0  &1  &0  \\
+               1  &0  &0
+            \end{vmat}                       
+\end{align*}
+Sebagai langkah terakhir, hitung keenam determinan tersebut dengan pertukaran baris 
+hingga menjadi matriks identitas
+sambil mencatat perubahan tandanya.
+\begin{align*}
+  &=30\cdot (+1)+0\cdot (-1)  \\
+  &\quad\hbox{}+20\cdot (-1)+0\cdot (+1) \\
+  &\quad \hbox{}-4\cdot (+1)-6\cdot (-1)=12
+\end{align*}
+\end{example}
+
+Contoh tersebut merangkum skema perhitungan baru dalam subbagian ini.
+Multilinearitas menguraikan suatu determinan menjadi 
+banyak determinan terpisah, masing-masing dengan satu entri dari 
+matriks semula pada setiap baris.
+Sebagian besar determinan ini memiliki
+satu baris yang merupakan kelipatan baris lain,
+sehingga kita menghilangkannya.
+Yang tersisa adalah determinan dengan satu entri per baris dan
+per kolom dari matriks semula.
+Mengeluarkan faktor-faktor skalar selanjutnya mereduksi
+determinan yang harus kita hitung menjadi
+matriks dengan satu entri per baris dan per kolom, dengan semua entri tersebut bernilai $1$.
+
+%<*NotationForPermutationMatrices>
+Ingat Definisi~Tiga.IV.\ref{df:PermutationMatrix}, bahwa
+suatu \definend{matriks permutasi}\index{matriks permutasi}%
+\index{matriks!permutasi}
+merupakan matriks persegi dengan entri-entri $0$, kecuali
+satu $1$ pada setiap baris dan kolom.
+Sekarang kita memperkenalkan notasi untuk matriks permutasi.
+%</NotationForPermutationMatrices>
+
+\begin{definition}  \label{df:permutation}
+%<*df:permutation>
+Suatu \definend{permutasi-\( n \)}\index{permutasi}
+adalah fungsi pada~$n$ bilangan bulat positif pertama,
+$\map{\phi}{\set{1,\ldots,n}}{\set{1,\ldots,n}}$
+yang bersifat satu-ke-satu dan pada.
+%</df:permutation>
+\end{definition}
+
+Dalam suatu permutasi, setiap bilangan 
+$1$, \ldots, $n$ muncul sebagai keluaran untuk tepat satu masukan.
+Kita dapat menyatakan permutasi sebagai barisan 
+$\phi=\sequence{\phi(1),\phi(2),\ldots,\phi(n)}$.
+
+\begin{example} \label{ex:AllTwoThreePerms}
+%<*ex:AllTwoPerms>
+Permutasi-$2$ adalah fungsi-fungsi
+$\map{\phi_1}{\set{1,2}}{\set{1,2}}$
+yang diberikan oleh $\phi_1(1)=1$, $\phi_1(2)=2$, 
+dan 
+$\map{\phi_2}{\set{1,2}}{\set{1,2}}$
+yang diberikan oleh $\phi_2(1)=2$, $\phi_2(2)=1$. 
+Notasi barisan lebih singkat:
+\( \phi_1=\sequence{1,2} \) dan \( \phi_2=\sequence{2,1} \).
+%</ex:AllTwoPerms>
+\end{example}
+
+\begin{example} \label{ex:AllThreePerms}
+%<*ex:AllThreePerms>
+Dalam notasi barisan, permutasi-$3$ adalah
+\( \phi_1=\sequence{1,2,3} \),
+\( \phi_2=\sequence{1,3,2} \),
+\( \phi_3=\sequence{2,1,3} \),
+\( \phi_4=\sequence{2,3,1} \),
+\( \phi_5=\sequence{3,1,2} \), dan
+\( \phi_6=\sequence{3,2,1} \).
+%</ex:AllThreePerms>
+\end{example}
+
+%<*AssociatePermutationWithPermutationMatrix>
+Kita menyatakan vektor baris yang semua entrinya $0$, kecuali satu $1$ pada 
+entri $j$, dengan $\iota_j$; jadi, $\iota_2$ berlebar empat 
+adalah~$\rowvec{0 &1 &0 &0}$.
+Sekarang notasi kita untuk matriks permutasi adalah sebagai berikut:
+dengan setiap $\phi=\sequence{\phi(1),\ldots,\phi(n)}$,
+pasangkan matriks yang baris-barisnya adalah $\iota_{\phi(1)}$, \ldots, $\iota_{\phi(n)}$.
+%</AssociatePermutationWithPermutationMatrix>
+Sebagai contoh, matriks yang dipasangkan dengan permutasi-$4$ \( \phi=\sequence{3,2,1,4} \) 
+memiliki baris-baris $\iota$ yang bersesuaian.
+\begin{equation*}
+   P_{\phi}=
+   \begin{mat}
+      \iota_{3} \\
+      \iota_{2} \\
+      \iota_{1} \\
+      \iota_{4} 
+   \end{mat}=
+  \begin{mat}[r]
+     0  &0  &1  &0  \\
+     0  &1  &0  &0  \\
+     1  &0  &0  &0  \\
+     0  &0  &0  &1
+  \end{mat}
+\end{equation*}
+
+\begin{example} \label{ex:TwoThreePermsAndMatrices}
+Berikut adalah matriks permutasi untuk permutasi-$2$ 
+yang dicantumkan dalam \nearbyexample{ex:AllTwoThreePerms}.
+\begin{equation*}
+  P_{\phi_1}
+  =\begin{mat}
+      \iota_1 \\
+      \iota_2 
+   \end{mat}
+  =\begin{mat}[r]
+    1  &0         \\
+    0  &1   
+  \end{mat}
+  \qquad
+  P_{\phi_2}
+   =\begin{mat}
+      \iota_2 \\
+      \iota_1 
+   \end{mat}
+   =\begin{mat}[r]
+    0  &1         \\
+    1  &0   
+  \end{mat}
+\end{equation*}
+Sebagai contoh, baris pertama $P_{\phi_2}$ adalah 
+$\iota_{\phi_2(1)}=\iota_2$ dan baris keduanya adalah $\iota_{\phi_2(2)}=\iota_1$.
+\end{example}
+
+\begin{example}
+Tinjaulah permutasi-$3$
+\( \phi_5=\sequence{3,1,2} \).
+Matriks permutasi  
+$P_{\phi_5}$ memiliki baris-baris $\iota_{\phi_5(1)}=\iota_3$, 
+$\iota_{\phi_5(2)}=\iota_1$, dan $\iota_{\phi_5(3)}=\iota_2$.\begin{equation*}
+  % P_{\phi_2}
+  %  =\begin{mat}
+  %     \iota_1 \\
+  %     \iota_3 \\
+  %     \iota_2 
+  %  \end{mat}
+  % =\begin{mat}[r]
+  %    1      &0        &0        \\
+  %    0      &0        &1        \\
+  %    0      &1        &0
+  % \end{mat}
+  % \qquad
+  P_{\phi_5}
+   % =\begin{mat}
+   %    \iota_3 \\
+   %    \iota_1 \\
+   %    \iota_2 
+   % \end{mat}
+  =\begin{mat}[r]
+     0      &0        &1        \\
+     1      &0        &0        \\
+     0      &1        &0
+  \end{mat}
+\end{equation*}
+\end{example}
+
+\begin{definition} \label{df:PermutationExpansion}
+%<*df:PermutationExpansion>
+\definend{Ekspansi permutasi}\index{determinan!ekspansi permutasi}%
+\index{ekspansi permutasi}
+untuk determinan adalah
+\begin{equation*}
+   \begin{vmat}
+      t_{1,1}  &t_{1,2}  &\ldots  &t_{1,n}  \\
+      t_{2,1}  &t_{2,2}  &\ldots  &t_{2,n}  \\
+               &\vdots                      \\
+      t_{n,1}  &t_{n,2}  &\ldots  &t_{n,n}
+   \end{vmat}
+   =
+   \begin{array}[t]{l}
+      t_{1,\phi_1(1)}t_{2,\phi_1(2)}\cdots
+           t_{n,\phi_1(n)}\deter{P_{\phi_1}}       \\[.5ex]
+      \>\hbox{}+t_{1,\phi_2(1)}t_{2,\phi_2(2)}\cdots
+           t_{n,\phi_2(n)}\deter{P_{\phi_2}}       \\
+      \>\vdotswithin{+}                              \\
+      \>\hbox{}+t_{1,\phi_k(1)}t_{2,\phi_k(2)}\cdots
+           t_{n,\phi_k(n)}\deter{P_{\phi_k}} 
+   \end{array}
+\end{equation*}
+dengan \( \phi_1,\ldots,\phi_k \) semua permutasi-\( n \).
+%</df:PermutationExpansion>
+\end{definition}
+%<*SummationForPermutationExpansion>
+Kita dapat menyatakan kembali rumus tersebut dalam 
+\definend{notasi 
+penjumlahan}\index{notasi penjumlahan, untuk ekspansi permutasi}
+\begin{equation*}
+  \deter{T}=\!\!
+  \sum_{\text{permutasi\ }\phi}\!\!\!\!
+     t_{1,\phi(1)}t_{2,\phi(2)}\cdots t_{n,\phi(n)}
+                                 \deter{P_{\phi}}
+\end{equation*}
+yang dibaca,
+``jumlah, atas semua permutasi \( \phi \), dari suku-suku berbentuk
+\( t_{1,\phi(1)}t_{2,\phi(2)}\cdots t_{n,\phi(n)} \deter{P_{\phi}} \).''
+%</SummationForPermutationExpansion>
+
+
+\begin{example}
+Rumus determinan $\nbyn{2}$ yang sudah dikenal diperoleh dari rumus di atas,
+\begin{align*}
+  \begin{vmat}
+    t_{1,1}  &t_{1,2} \\
+    t_{2,1}  &t_{2,2}
+  \end{vmat}
+  &=
+  t_{1,1}t_{2,2}\cdot\deter{P_{\phi_1}}
+  +
+  t_{1,2}t_{2,1}\cdot\deter{P_{\phi_2}}      \\[-1.5ex]     
+  &=
+  t_{1,1}t_{2,2}\cdot\begin{vmat}[r]
+           1  &0 \\
+           0  &1
+         \end{vmat}
+  +
+  t_{1,2}t_{2,1}\cdot\begin{vmat}[r]
+            0  &1 \\
+            1  &0
+          \end{vmat}               \\
+  &=t_{1,1}t_{2,2}-t_{1,2}t_{2,1}
+\end{align*}
+demikian pula rumus $\nbyn{3}$.
+\begin{align*}
+  \begin{vmat}
+    t_{1,1}  &t_{1,2}  &t_{1,3} \\
+    t_{2,1}  &t_{2,2}  &t_{2,3} \\
+    t_{3,1}  &t_{3,2}  &t_{3,3} 
+  \end{vmat}
+  &=
+  \begin{aligned}[t]
+    &t_{1,1}t_{2,2}t_{3,3}\deter{P_{\phi_1}}
+     +t_{1,1}t_{2,3}t_{3,2}\deter{P_{\phi_2}}
+     +t_{1,2}t_{2,1}t_{3,3}\deter{P_{\phi_3}} \\
+    &\hspace*{0em}
+     +t_{1,2}t_{2,3}t_{3,1}\deter{P_{\phi_4}}
+     +t_{1,3}t_{2,1}t_{3,2}\deter{P_{\phi_5}}
+     +t_{1,3}t_{2,2}t_{3,1}\deter{P_{\phi_6}}
+  \end{aligned}                                      \\
+  &=
+  \begin{aligned}[t]
+    &t_{1,1}t_{2,2}t_{3,3}
+     -t_{1,1}t_{2,3}t_{3,2}
+     -t_{1,2}t_{2,1}t_{3,3}  \\
+    &\hspace*{0em}
+     +t_{1,2}t_{2,3}t_{3,1}
+     +t_{1,3}t_{2,1}t_{3,2}
+     -t_{1,3}t_{2,2}t_{3,1}
+  \end{aligned}
+\end{align*}
+\end{example}
+
+Menghitung determinan dengan ekspansi permutasi biasanya memerlukan 
+waktu lebih lama daripada menggunakan Metode Gauss.
+Namun, kita akan menggunakannya untuk membuktikan bahwa 
+fungsi determinan ada.
+Buktinya panjang, sehingga di sini kita hanya akan menyatakan hasilnya dan 
+menunda buktinya hingga subbagian berikutnya.
+
+\begin{theorem} \label{th:DetsExist}
+\index{determinan!keberadaan} 
+%<*th:DetsExist>
+Untuk setiap $n$, terdapat fungsi determinan $\nbyn{n}$.
+%</th:DetsExist>
+\end{theorem}
+
+Subbagian berikutnya juga memuat bukti hasil
+berikut (keduanya disatukan karena kedua bukti saling bertumpang-tindih).
+
+\begin{theorem}  \label{th:DeterminantOfAMatrixEqualsDeterminantOfTranspose}
+\index{transpos!determinan}
+%<*th:DeterminantOfAMatrixEqualsDeterminantOfTranspose>
+Determinan suatu matriks sama dengan determinan transposnya.
+%</th:DeterminantOfAMatrixEqualsDeterminantOfTranspose>
+\end{theorem}
+
+Berdasarkan teorema ini,
+meskipun sejauh ini kita telah menyatakan hasil-hasil determinan dalam baris,
+semua hasil tersebut juga berlaku dalam kolom.
+
+\begin{corollary} \label{cor:ColSwapChgSign} \label{cor:DetsMultiInCols}
+%<*co:ColSwapChgSign>
+  Matriks dengan dua kolom yang sama bersifat singular.
+  Pertukaran kolom mengubah tanda determinan.
+  Determinan bersifat multilinear pada kolom-kolomnya.
+%</co:ColSwapChgSign>
+\end{corollary}
+
+\begin{proof}
+%<*pf:ColSwapChgSign>
+Untuk pernyataan pertama, 
+mentransposkan matriks menghasilkan matriks dengan determinan yang sama
+dan dengan dua baris yang sama, sehingga determinannya nol.
+Buktikan dua pernyataan lainnya dengan cara yang sama.
+%</pf:ColSwapChgSign>
+\end{proof}
+
+Kita menutup subbagian ini dengan suatu ringkasan:
+fungsi determinan ada, bersifat tunggal, dan kita mengetahui cara menghitungnya.
+Mengenai makna determinan, mungkin bait-bait berikut
+\cite{Kemp} dapat membantu kita mengingatnya.
+\begin{verse} \small
+Determinan nol,         \\*
+\ Solusi: banyak atau nihil.   \\*
+Determinan tak nol,         \\*
+\ Solusi: satu saja.
+\end{verse}
+
+
+
+
+\begin{exercises}
+  \item[]\textit{Berikut merangkum notasi kita  
+    untuk permutasi-$2$\hbox{} dan permutasi-$3$.
+    \begin{center}
+      \begin{tabular}[t]{c|cc}
+        $i$          &$1$      &$2$    \\
+        \hline
+        $\phi_1(i)$  &$1$      &$2$     \\
+        $\phi_2(i)$  &$2$      &$1$     
+      \end{tabular}
+      \qquad
+      \begin{tabular}[t]{c|ccc}
+        $i$          &$1$     &$2$   &$3$    \\
+        \hline
+        $\phi_1(i)$  &$1$     &$2$   &$3$    \\
+        $\phi_2(i)$  &$1$     &$3$   &$2$    \\
+        $\phi_3(i)$  &$2$     &$1$   &$3$    \\
+        $\phi_4(i)$  &$2$     &$3$   &$1$    \\
+        $\phi_5(i)$  &$3$     &$1$   &$2$    \\
+        $\phi_6(i)$  &$3$     &$2$   &$1$    
+      \end{tabular}
+    \end{center}  }
+  \recommended \item Untuk matriks berikut, tentukan suku yang berkaitan dengan 
+    setiap permutasi-$3$.
+    \begin{equation*}
+      M=\begin{mat}
+        1 &2 &3 \\
+        4 &5 &6 \\
+        7 &8 &9
+      \end{mat}
+    \end{equation*}
+    Dengan kata lain, lengkapi tabel berikut.
+      \begin{center} \small
+        \begin{tabular}{r|cccccc}
+          \textit{permutasi} $\phi_i$ 
+            &$\phi_1$ &$\phi_2$ &$\phi_3$ &$\phi_4$ &$\phi_5$ &$\phi_6$  \\
+          \hline
+          \textit{suku} $m_{1,\phi_i(1)}m_{2,\phi_i(2)}m_{3,\phi_i(3)}$
+           &$1\cdot 5\cdot 9$ 
+           & 
+           & 
+           & 
+           & 
+           & 
+        \end{tabular}
+      \end{center}
+    \begin{answer}
+      Sebut matriks tersebut~$M$.
+      \begin{center}
+        \begin{tabular}{r|cccccc}
+          \textit{permutasi} 
+            &$\phi_1$ &$\phi_2$ &$\phi_3$ &$\phi_4$ &$\phi_5$ &$\phi_6$  \\
+          \hline
+          \textit{suku} 
+           &$1\cdot 5\cdot 9$ 
+           &$1\cdot 6\cdot 8$ 
+           &$2\cdot 4\cdot 9$ 
+           &$2\cdot 6\cdot 7$ 
+           &$3\cdot 4\cdot 8$ 
+           &$3\cdot 5\cdot 7$ 
+        \end{tabular}
+      \end{center}
+    \end{answer}
+  \recommended \item Untuk setiap permutasi-$3$~$\phi$, tentukan $|P_\phi|$.
+    \begin{answer}
+      Kita dapat mempertukarkan baris setiap $P_{\phi}$ hingga menjadi matriks identitas.
+      Jika banyaknya pertukaran genap, determinannya adalah~$+1$,
+      sedangkan jika banyaknya pertukaran ganjil, determinannya adalah~$-1$.
+      \begin{center}
+        \begin{tabular}{r|cccccc}
+          \textit{permutasi} 
+            &$\phi_1$ &$\phi_2$ &$\phi_3$ &$\phi_4$ &$\phi_5$ &$\phi_6$  \\
+          \hline
+          \textit{banyaknya pertukaran} &$0$
+                          &$1$
+                          &$1$
+                          &$2$
+                          &$2$
+                          &$1$  \\
+          $|P_{\phi_i}|$      
+           &$+1$ 
+           &$-1$ 
+           &$-1$ 
+           &$+1$ 
+           &$+1$ 
+           &$-1$ 
+        \end{tabular}
+      \end{center}
+      \textit{Catatan.}
+      Dalam tabel tersebut 
+      kita cukup melakukan pertukaran hingga menemukan suatu jumlah yang membawa kita kembali ke 
+      `$1,2,3$'.
+      Namun, mungkinkah banyaknya pertukaran berbeda?
+      Jika seseorang menemukan $2$ pertukaran dan orang lain menemukan
+      $4$, hal itu tidak menjadi masalah karena keduanya memberikan determinan~$+1$.
+      Akan tetapi, jika kita dapat melakukan pertukaran melalui dua cara berbeda, yang satu genap dan yang
+      lain ganjil, hal itu akan menjadi masalah.
+      Bagian berikutnya menunjukkan bahwa campuran genap dan ganjil tidak mungkin terjadi.
+    \end{answer}
+  \item Determinan berikut bernilai~$7$ menurut rumus $\nbyn{2}$.
+    Hitunglah dengan ekspansi permutasi.
+    \begin{equation*}
+      \begin{vmatrix}
+        2 &3 \\
+        1 &5
+      \end{vmatrix}
+    \end{equation*}
+    \begin{answer}
+      \begin{align*}
+        \begin{vmat}
+          2  &3 \\
+          1  &5
+        \end{vmat}
+        &=
+        2\cdot 5\cdot\deter{P_{\phi_1}}
+        +
+        1\cdot 3\cdot\deter{P_{\phi_2}}      \\     
+        &=
+        2\cdot 5\cdot\begin{vmat}[r]
+                           1  &0 \\
+                           0  &1
+                         \end{vmat}
+        +
+        1\cdot 3\cdot\begin{vmat}[r]
+                           0  &1 \\
+                           1  &0
+                         \end{vmat}               \\
+        &=2\cdot 5\cdot 1+1\cdot 3\cdot (-1)=7
+        \end{align*}
+    \end{answer}
+  \item Determinan berikut bernilai $0$ karena jumlah dua baris pertamanya sama dengan baris ketiga.
+    Hitung determinan tersebut menggunakan ekspansi permutasi.
+    \begin{equation*}
+      \begin{vmatrix}
+        -1 &0 &1 \\
+        3  &1 &4 \\
+        2  &1 &5
+      \end{vmatrix}
+    \end{equation*}
+    \begin{answer}
+          \begin{align*}
+            \begin{vmat}[r]
+              -1  &0  &1  \\
+               3  &1  &4  \\
+               2  &1  &5
+            \end{vmat}
+            &=
+            \begin{aligned}[t]
+              &(-1)(1)(5)\deter{P_{\phi_1}}
+              +(-1)(4)(1)\deter{P_{\phi_2}}
+              +(0)(3)(5)\deter{P_{\phi_3}}  \\
+              &\hbox{}\quad\hbox{}
+              +(0)(4)(2)\deter{P_{\phi_4}}
+              +(1)(3)(1)\deter{P_{\phi_5}}
+              +(1)(1)(2)\deter{P_{\phi_6}}
+            \end{aligned}                        \\
+            &=
+            \begin{aligned}[t]
+              &(-1)(1)(5)\cdot 1
+              +(-1)(4)(1)\cdot (-1)
+              +(0)(3)(5)\cdot (-1)  \\
+              &\hbox{}\quad\hbox{}
+              +(0)(4)(2)\cdot 1
+              +(1)(3)(1)\cdot 1
+              +(1)(1)(2)\cdot (-1)
+            \end{aligned}                        \\
+            &=-5+4+0+0+3-2=0
+          \end{align*}      
+    \end{answer}
+  \recommended \item 
+    Hitung determinan dengan menggunakan ekspansi permutasi.
+    \begin{exparts*}
+      \partsitem 
+        $\begin{vmat}[r]
+          1  &2  &3  \\
+          4  &5  &6  \\
+          7  &8  &9
+        \end{vmat}$
+      \partsitem 
+        $\begin{vmat}[r]
+          2  &2  &1  \\
+          3  &-1 &0  \\
+          -2 &0  &5
+        \end{vmat}$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Matriks ini singular. 
+          \begin{align*}
+            \begin{vmat}[r]
+              1  &2  &3  \\
+              4  &5  &6  \\
+              7  &8  &9
+            \end{vmat}
+            &=
+            \begin{aligned}[t]
+              &(1)(5)(9)\deter{P_{\phi_1}}
+              +(1)(6)(8)\deter{P_{\phi_2}}
+              +(2)(4)(9)\deter{P_{\phi_3}}  \\
+              &\hbox{}\quad\hbox{}
+              +(2)(6)(7)\deter{P_{\phi_4}}
+              +(3)(4)(8)\deter{P_{\phi_5}}
+              +(7)(5)(3)\deter{P_{\phi_6}}
+            \end{aligned}                        \\
+            &=0
+          \end{align*}
+        \partsitem Matriks ini nonsingular. 
+          \begin{align*}
+            \begin{vmat}[r]
+              2  &2  &1  \\
+              3  &-1 &0  \\
+              -2 &0  &5
+            \end{vmat}
+            &=
+            \begin{aligned}[t]
+              &(2)(-1)(5)\deter{P_{\phi_1}}
+              +(2)(0)(0)\deter{P_{\phi_2}}
+              +(2)(3)(5)\deter{P_{\phi_3}} \\
+              &\hbox{}\quad\hbox{} 
+              +(2)(0)(-2)\deter{P_{\phi_4}}
+              +(1)(3)(0)\deter{P_{\phi_5}}
+              +(-2)(-1)(1)\deter{P_{\phi_6}}
+            \end{aligned}                      \\
+            &=-42
+        \end{align*}
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+    Hitung keduanya dengan Metode Gauss dan juga dengan rumus
+    ekspansi permutasi.
+    \begin{exparts*}
+      \partsitem \( \begin{vmat}[r]
+                 2  &1  \\
+                 3  &1
+               \end{vmat}   \)
+      \partsitem \( \begin{vmat}[r]
+                  0  &1  &4  \\
+                  0  &2  &3  \\
+                  1  &5  &1
+               \end{vmat}  \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Metode Gauss memberikan hasil berikut.
+          \begin{equation*}
+             \begin{vmat}[r]
+                 2  &1  \\
+                 3  &1
+             \end{vmat}
+             =
+             \begin{vmat}[r]
+                 2  &1  \\
+                 0  &-1/2
+             \end{vmat}
+             =-1
+          \end{equation*}
+          Ekspansi permutasi memberikan hasil berikut.
+          \begin{equation*}
+             \begin{vmat}[r]
+                 2  &1  \\
+                 3  &1
+             \end{vmat}
+             =
+             \begin{vmat}[r]
+                 2  &0  \\
+                 0  &1
+             \end{vmat} +
+             \begin{vmat}[r]
+                 0  &1  \\
+                 3  &0
+             \end{vmat}             
+             =
+             (2)(1)\begin{vmat}[r]
+                 1  &0  \\
+                 0  &1
+             \end{vmat} +
+             (1)(3)\begin{vmat}[r]
+                 0  &1  \\
+                 1  &0
+             \end{vmat}             
+             =
+             -1
+          \end{equation*}
+        \partsitem Metode Gauss memberikan hasil berikut.
+          \begin{equation*}
+            \begin{vmat}[r]
+              0  &1  &4  \\
+              0  &2  &3  \\
+              1  &5  &1
+            \end{vmat}
+            =
+            -\begin{vmat}[r]
+              1  &5  &1  \\
+              0  &2  &3  \\
+              0  &1  &4  
+            \end{vmat}
+            =
+            -\begin{vmat}[r]
+              1  &5  &1  \\
+              0  &2  &3  \\
+              0  &0  &5/2  
+            \end{vmat}
+            =-5
+          \end{equation*}
+          Ekspansi permutasi memberikan hasil berikut.
+          \begin{align*}
+            \begin{vmat}[r]
+              0  &1  &4  \\
+              0  &2  &3  \\
+              1  &5  &1
+            \end{vmat}
+            &=
+            \begin{aligned}[t]
+            &(0)(2)(1)\deter{P_{\phi_1}}
+            +(0)(3)(5)\deter{P_{\phi_2}}
+            +(1)(0)(1)\deter{P_{\phi_3}}  \\
+            &\hbox{}\quad\hbox{}
+            +(1)(3)(1)\deter{P_{\phi_4}}
+            +(4)(0)(5)\deter{P_{\phi_5}}
+            +(4)(2)(1)\deter{P_{\phi_6}}
+            \end{aligned}                         \\
+            &=-5
+          \end{align*}
+      \end{exparts}  
+    \end{answer}
+  \recommended \item 
+    Gunakan rumus ekspansi permutasi untuk menurunkan
+    rumus determinan \( \nbyn{3} \).
+    \begin{answer}
+        Mengikuti \nearbyexample{ex:SamplePermExp} memberikan hasil berikut.
+          \begin{align*}
+             \begin{vmat}
+                t_{1,1}  &t_{1,2}  &t_{1,3}  \\
+                t_{2,1}  &t_{2,2}  &t_{2,3}  \\
+                t_{3,1}  &t_{3,2}  &t_{3,3}
+             \end{vmat}
+             &=\begin{aligned}[t]
+                 &t_{1,1}t_{2,2}t_{3,3}\deter{P_{\phi_1}}
+                   +t_{1,1}t_{2,3}t_{3,2}\deter{P_{\phi_2}} \\
+                 &\hbox{}\quad\hbox{}
+                  +t_{1,2}t_{2,1}t_{3,3}\deter{P_{\phi_3}}
+                             +t_{1,2}t_{2,3}t_{3,1}\deter{P_{\phi_4}} \\
+                 &\hbox{}\quad\hbox{}
+                  +t_{1,3}t_{2,1}t_{3,2}\deter{P_{\phi_5}}
+                             +t_{1,3}t_{2,2}t_{3,1}\deter{P_{\phi_6}}
+               \end{aligned}                                               \\
+             &=\begin{aligned}[t]
+                 & t_{1,1}t_{2,2}t_{3,3}(+1)
+                   +t_{1,1}t_{2,3}t_{3,2}(-1)  \\
+                 &\hbox{}\quad\hbox{}
+                   +t_{1,2}t_{2,1}t_{3,3}(-1)
+                    +t_{1,2}t_{2,3}t_{3,1}(+1) \\
+                 &\hbox{}\quad\hbox{}
+                   +t_{1,3}t_{2,1}t_{3,2}(+1)
+                         +t_{1,3}t_{2,2}t_{3,1}(-1)
+               \end{aligned}                                               
+          \end{align*}  
+     \end{answer}
+  \item 
+    Cantumkan semua permutasi-$4$.
+    \begin{answer}
+      Berikut semua permutasi dengan $\phi(1)=1$,
+      \begin{align*}
+        &\phi_1=\sequence{1,2,3,4}
+        \quad
+        \phi_2=\sequence{1,2,4,3}
+        \quad
+        \phi_3=\sequence{1,3,2,4}  \\
+        &\quad
+        \phi_4=\sequence{1,3,4,2}
+        \quad
+        \phi_5=\sequence{1,4,2,3}
+        \quad
+        \phi_6=\sequence{1,4,3,2}
+      \end{align*}
+      yang berikutnya dengan $\phi(1)=2$,
+      \begin{align*}
+        &\phi_7=\sequence{2,1,3,4}
+        \quad
+        \phi_8=\sequence{2,1,4,3}
+        \quad
+        \phi_9=\sequence{2,3,1,4}    \\
+        &\quad
+        \phi_{10}=\sequence{2,3,4,1}
+        \quad
+        \phi_{11}=\sequence{2,4,1,3}
+        \quad
+        \phi_{12}=\sequence{2,4,3,1}
+      \end{align*}
+      yang berikutnya dengan $\phi(1)=3$,
+      \begin{align*}
+        &\phi_{13}=\sequence{3,1,2,4}
+        \quad
+        \phi_{14}=\sequence{3,1,4,2}
+        \quad
+        \phi_{15}=\sequence{3,2,1,4}  \\
+        &\quad
+        \phi_{16}=\sequence{3,2,4,1}
+        \quad
+        \phi_{17}=\sequence{3,4,1,2}
+        \quad
+        \phi_{18}=\sequence{3,4,2,1}
+      \end{align*}
+      dan yang berikutnya dengan $\phi(1)=4$.
+      \begin{align*}
+        &\phi_{19}=\sequence{4,1,2,3}
+        \quad
+        \phi_{20}=\sequence{4,1,3,2}
+        \quad
+        \phi_{21}=\sequence{4,2,1,3}  \\
+        &\quad
+        \phi_{22}=\sequence{4,2,3,1}
+        \quad
+        \phi_{23}=\sequence{4,3,1,2}
+        \quad
+        \phi_{24}=\sequence{4,3,2,1}
+      \end{align*}
+    \end{answer}
+  \item 
+    Suatu permutasi, dipandang sebagai fungsi dari himpunan
+    $\set{1,..,n}$ ke dirinya sendiri, bersifat satu-ke-satu dan pada.
+    Karena itu, setiap permutasi memiliki invers. 
+    \begin{exparts}
+      \partsitem Tentukan invers setiap permutasi-$2$.
+      \partsitem Tentukan invers setiap permutasi-$3$.
+    \end{exparts}
+    \begin{answer}
+      Masing-masing hasil berikut mudah diperiksa.
+      \begin{exparts}
+        \partsitem 
+          \begin{tabular}[t]{r|cc}
+            \textit{permutasi} &$\phi_1$  &$\phi_2$ \\
+             \hline
+            \textit{invers}     &$\phi_1$  &$\phi_2$ 
+          \end{tabular}
+        \partsitem 
+          \begin{tabular}[t]{r|cccccc}
+            \textit{permutasi} 
+              &$\phi_1$ &$\phi_2$ &$\phi_3$ &$\phi_4$ &$\phi_5$ &$\phi_6$ \\
+            \hline
+            \textit{invers}
+              &$\phi_1$ &$\phi_2$ &$\phi_3$ &$\phi_5$ &$\phi_4$ &$\phi_6$ 
+          \end{tabular}
+      \end{exparts}
+    \end{answer}
+  \item 
+     Buktikan bahwa \( f \) bersifat multilinear jika dan hanya jika untuk semua
+     \( \vec{v},\vec{w}\in V \) dan \( k_1,k_2\in\Re \), pernyataan berikut berlaku.
+      \begin{equation*}
+         f(\vec{\rho}_1,\dots,k_1\vec{v}_1+k_2\vec{v}_2,
+           \dots,\vec{\rho}_n)
+         =
+         k_1f(\vec{\rho}_1,\dots,\vec{v}_1,\dots,\vec{\rho}_n)+
+         k_2f(\vec{\rho}_1,\dots,\vec{v}_2,\dots,\vec{\rho}_n)
+       \end{equation*}
+       \begin{answer}
+         Untuk arah `jika', syarat pertama dari 
+         \nearbydefinition{def:multilinear} diperoleh dengan mengambil $k_1=k_2=1$,
+         sedangkan syarat kedua diperoleh dengan mengambil $k_2=0$.
+
+         Arah `hanya jika' juga rutin.
+         Dari
+         $
+           f(\vec{\rho}_1,\dots,k_1\vec{v}_1+k_2\vec{v}_2,
+             \dots,\vec{\rho}_n)
+         $
+         syarat pertama dari \nearbydefinition{def:multilinear} memberikan
+         $
+           =
+           f(\vec{\rho}_1,\dots,k_1\vec{v}_1,\dots,\vec{\rho}_n)+
+           f(\vec{\rho}_1,\dots,k_2\vec{v}_2,\dots,\vec{\rho}_n)
+         $
+         dan syarat kedua, yang diterapkan dua kali, memberikan 
+         hasil yang dikehendaki. 
+       \end{answer}
+  \item 
+    Bagaimana determinan akan berubah jika kita mengubah sifat~(4) dalam
+    definisi menjadi \( \deter{I}=2 \)?
+    \begin{answer}
+       Semuanya akan menjadi dua kali lipat.
+    \end{answer}
+  \item 
+    Verifikasikan pernyataan kedua dan ketiga 
+    dalam \nearbycorollary{cor:ColSwapChgSign}.
+    \begin{answer}
+      Untuk pernyataan kedua, 
+      transposkan suatu matriks, pertukarkan barisnya, lalu transposkan kembali.
+      Hasilnya adalah kolom-kolom yang dipertukarkan, dan determinannya berubah dengan faktor
+      \( -1 \).
+      Pernyataan ketiga serupa:~untuk suatu 
+      matriks, transposkan matriks itu, terapkan multilinearitas pada bagian yang sekarang menjadi
+      baris, lalu transposkan kembali matriks-matriks hasilnya.
+    \end{answer}
+  \recommended \item
+    Tunjukkan bahwa jika suatu matriks \( \nbyn{n} \) memiliki determinan tak nol,
+    maka kita dapat menyatakan setiap vektor kolom
+    \( \vec{v}\in\Re^n \) sebagai kombinasi linear
+    kolom-kolom matriks tersebut.
+    \begin{answer}
+      Matriks \( \nbyn{n} \) dengan determinan tak nol memiliki rank
+      \( n \), sehingga kolom-kolomnya membentuk basis bagi \( \Re^n \).  
+    \end{answer}
+  \item 
+    \cite{Strang}
+    Benar atau salah: matriks yang entri-entrinya hanya nol
+    atau satu memiliki determinan yang sama dengan nol, satu, atau negatif satu.
+    \begin{answer}
+      Salah.
+      \begin{equation*}
+        \begin{vmat}[r]
+          0 &1  &1  \\
+          1 &0  &1 \\
+          1  &1 &0
+        \end{vmat}
+        =2
+      \end{equation*} 
+     \end{answer}
+  \item 
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa terdapat $120$ suku dalam rumus ekspansi
+         permutasi suatu matriks \( \nbyn{5} \).
+      \partsitem 
+         Berapa banyak suku yang pasti nol jika entri \( 1,2 \) bernilai nol?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Untuk indeks kolom entri pada baris pertama terdapat
+          lima pilihan.
+          Kemudian, untuk indeks kolom entri pada baris kedua terdapat
+          empat pilihan.
+          Dengan melanjutkan, kita memperoleh $5\cdot 4\cdot 3\cdot 2\cdot 1=120$.
+          (Lihat juga pertanyaan berikutnya.)
+        \partsitem Setelah memilih kolom kedua pada baris pertama, 
+          kita dapat memilih entri-entri lainnya melalui \( 4\cdot 3\cdot 2\cdot 1=24 \) 
+          cara.
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Berapa banyak permutasi-\( n \) yang ada?
+    \begin{answer}
+       \( n\cdot(n-1)\cdots 2\cdot 1=n! \) 
+    \end{answer}
+  \item Tunjukkan bahwa invers suatu matriks permutasi adalah transposnya.
+    \begin{answer}
+      \cite{SchmidtSO}
+      Kita akan menunjukkan bahwa $P\trans{P}=I$; argumen untuk $\trans{P}P=I$ serupa.
+      Entri $i,j$ dari $P\trans{P}$ merupakan jumlah suku-suku berbentuk
+      $p_{i,k}q_{k,j}$, dengan entri-entri $\trans{P}$ dinyatakan menggunakan $q$;
+      yakni, $q_{k,j}=p_{j,k}$.
+      Jadi, entri $i,j$ dari $P\trans{P}$ adalah jumlah
+      \(
+        \sum_{k=1}^n p_{i,k}p_{j,k}
+      \).
+      Namun, $p_{i,k}$ biasanya $0$, sehingga $P_{i,k}P_{j,k}$ biasanya $0$. 
+      $P_{i,k}$ hanya bernilai tak nol ketika nilainya $1$, 
+      tetapi saat itu tidak ada $i^\prime\neq i$ lain sedemikian sehingga $P_{i^\prime,k}$ 
+      bernilai tak nol (baris $i$ adalah satu-satunya baris dengan $1$ pada kolom~$k$). 
+      Dengan kata lain,
+      \begin{equation*}
+        \sum_{k=1}^n p_{i,k}p_{j,k}=
+        \begin{cases}
+          1  &i=j  \\
+          0  &\text{jika tidak}
+        \end{cases}
+      \end{equation*}
+      dan ini tepat merupakan rumus entri-entri matriks identitas.
+    \end{answer}
+  \item 
+    Matriks \( A \) disebut 
+    \definend{antisimetris}\index{matriks!antisimetris}%
+    \index{antisimetris} jika \( \trans{A}=-A \),
+    seperti matriks berikut.
+    \begin{equation*}
+      A=\begin{mat}[r]
+          0  &3  \\
+         -3  &0
+        \end{mat}
+    \end{equation*}
+    Tunjukkan bahwa matriks antisimetris \( \nbyn{n} \) dengan determinan
+    tak nol hanya ada untuk \( n \) genap.
+    \begin{answer}
+      Dalam 
+      \( \deter{A}=\deter{\trans{A}}=\deter{-A}=(-1)^n\deter{A} \)
+      eksponen $n$ harus genap. 
+    \end{answer}
+  \recommended \item
+    Berapakah jumlah nol terkecil, beserta penempatan
+    nol-nol tersebut, yang diperlukan untuk memastikan bahwa suatu matriks \( \nbyn{4} \)
+    memiliki determinan nol?
+    \begin{answer}
+      Menunjukkan bahwa tidak ada penempatan tiga nol yang memadai bersifat rutin.
+      Empat nol memang memadai; tempatkan semuanya pada 
+      baris atau kolom yang sama.
+    \end{answer}
+  \item
+    Jika kita memiliki \( n \) titik data
+    \( (x_1,y_1),(x_2,y_2),\dots\,,(x_n,y_n) \) dan ingin mencari
+    polinom \( p(x)=a_{n-1}x^{n-1}+a_{n-2}x^{n-2}+\dots+a_1x+a_0 \)
+    yang melalui titik-titik tersebut,
+    kita dapat menyubstitusikan titik-titik itu untuk memperoleh sistem linear dengan
+    \( n \)~persamaan dan \( n \)~variabel tak diketahui.
+    Matriks koefisien sistem tersebut adalah
+    \definend{matriks Vandermonde}.\index{matriks!Vandermonde}%
+    \index{matriks Vandermonde}
+    Buktikan bahwa determinan transpos matriks koefisien tersebut,
+    \begin{equation*}
+      \begin{vmat}
+         1       &1       &\ldots   &1       \\
+         x_1     &x_2     &\ldots   &x_n     \\
+         {x_1}^2 &{x_2}^2 &\ldots   &{x_n}^2 \\
+                 &\vdots                     \\
+         {x_1}^{n-1} &{x_2}^{n-1}   &\ldots   &{x_n}^{n-1}
+      \end{vmat}
+    \end{equation*}
+    sama dengan hasil kali, atas semua indeks \( i,j\in\set{1,\dots,n} \) dengan
+    \( i<j \), dari suku-suku berbentuk \( x_j-x_i \).
+    (Hal ini menunjukkan bahwa 
+    determinan bernilai nol, dan sistem linear tersebut tidak memiliki solusi tunggal,
+    jika dan hanya jika nilai-nilai \( x_i \) dalam data tidak semuanya berbeda.)
+    \begin{answer}
+      Kasus $n=3$ menunjukkan apa yang perlu dilakukan.
+      Operasi kombinasi baris 
+      $-x_1\rho_2+\rho_3$ dan $-x_1\rho_1+\rho_2$
+      memberikan hasil berikut.
+      \begin{multline*}
+        \begin{vmat}
+          1     &1     &1     \\
+          x_1   &x_2   &x_3   \\
+          x_1^2 &x_2^2 &x_3^2 
+        \end{vmat}
+        =
+        \begin{vmat}
+          1     &1             &1             \\
+          x_1   &x_2           &x_3           \\
+          0     &(-x_1+x_2)x_2 &(-x_1+x_3)x_3 
+        \end{vmat}                                           \\
+        =
+        \begin{vmat}
+          1     &1             &1             \\
+          0     &-x_1+x_2      &-x_1+x_3      \\
+          0     &(-x_1+x_2)x_2 &(-x_1+x_3)x_3 
+        \end{vmat}
+      \end{multline*}
+      Kemudian operasi kombinasi baris $x_2\rho_2+\rho_3$ memberikan
+      hasil yang dikehendaki.
+      \begin{equation*}
+        =
+        \begin{vmat}
+          1     &1             &1                     \\
+          0     &-x_1+x_2      &-x_1+x_3              \\
+          0     &0             &(-x_1+x_3)(-x_2+x_3) 
+        \end{vmat}
+        =(x_2-x_1)(x_3-x_1)(x_3-x_2)
+      \end{equation*}
+    \end{answer}
+  \item 
+    Kita dapat membagi suatu matriks menjadi  
+    \definend{blok-blok},\index{matriks blok}\index{matriks!blok} %
+    seperti berikut,
+    \begin{equation*} 
+      \begin{pmat}{rr|r}
+          1  &2   &0  \\
+          3  &4   &0  \\  \cline{1-3}
+          0  &0   &-2 
+       \end{pmat}
+    \end{equation*}
+    yang memperlihatkan empat blok: blok persegi $\nbyn{2}$ dan $\nbyn{1}$
+    di kiri atas dan kanan bawah, serta blok nol di
+    kanan atas dan kiri bawah.
+    Tunjukkan bahwa jika suatu matriks dapat kita partisi sebagai
+    \begin{equation*}
+      T=
+      \begin{pmat}{c|c}
+          J   &Z_2  \\  \cline{1-2}
+          Z_1 &K
+       \end{pmat}
+    \end{equation*}
+    dengan $J$ dan $K$ matriks persegi, serta $Z_1$ dan $Z_2$ seluruhnya bernilai nol,
+    maka \( \deter{T}=\deter{J}\cdot\deter{K} \).
+    \begin{answer}
+      Misalkan \( T \) berukuran \( \nbyn{n} \),
+      \( J \) berukuran \( \nbyn{p} \),
+      dan \( K \) berukuran \( \nbyn{q} \).
+      Terapkan rumus ekspansi permutasi,
+      \begin{equation*}
+        \deter{T}=
+        \sum_{\text{\scriptsize permutasi }\phi}
+                t_{1,\phi(1)}t_{2,\phi(2)}\dots t_{n,\phi(n)}
+                \deter{P_{\phi}}
+      \end{equation*}
+      Karena bagian kanan atas \( T \) seluruhnya bernilai nol, jika suatu
+      \( \phi \) memiliki sekurang-kurangnya satu dari \( p+1,\dots,n \) di antara
+      \( p \) nomor kolom pertamanya, \( \phi(1),\dots,\phi(p) \), maka suku yang muncul
+      dari \( \phi \) adalah \( 0 \)
+      (misalnya, jika \( \phi(1)=n \), maka
+      \( t_{1,\phi(1)}t_{2,\phi(2)}\dots t_{n,\phi(n)} \)
+      bernilai \( 0 \)).
+      Jadi, rumus di atas tereduksi menjadi jumlah atas semua permutasi
+      dengan dua bagian:
+      pertama susun ulang \( 1,\dots,p \), lalu setelah itu muncul
+      suatu permutasi dari
+      \( p+1,\dots,p+q \).
+      Untuk melihat bahwa hal ini memberikan \( \deter{J}\cdot\deter{K} \), gunakan sifat distributif.
+      \begin{multline*}
+         \bigg[\sum_{\substack{\text{\scriptsize permutasi }\phi_1 \\
+                              \text{\scriptsize dari } 1,\dots,p}}
+               t_{1,\phi_1(1)}\cdots t_{p,\phi_1(p)} 
+               \deter{P_{\phi_1}} \bigg]                                  \\    
+         \cdot
+         \bigg[\sum_{\substack{\text{\scriptsize permutasi }\phi_2 \\
+                              \text{\scriptsize dari } p+1,\dots,p+q}}
+               t_{p+1,\phi_2(p+1)}\cdots t_{p+q,\phi_2(p+q)} 
+               \deter{P_{\phi_2}}                          \bigg]
+      \end{multline*}  
+    \end{answer}
+  \item
+    Buktikan bahwa untuk setiap matriks \( \nbyn{n} \) \( T \), terdapat paling banyak
+    \( n \) bilangan real berbeda \( r \) sedemikian sehingga matriks \( T-rI \)
+    memiliki determinan nol
+    (kita akan menggunakan hasil ini dalam Bab Lima).
+    \begin{answer}
+      Kasus $n=3$ menunjukkan apa yang terjadi.
+      \begin{equation*}
+        \deter{T-rI}
+        =
+        \begin{vmat}
+          t_{1,1}-r  &t_{1,2}   &t_{1,3}  \\ 
+          t_{2,1}    &t_{2,2}-r &t_{2,3}  \\ 
+          t_{3,1}    &t_{3,2}   &t_{3,3}-r  
+        \end{vmat}
+      \end{equation*}
+      Setiap suku dalam ekspansi permutasi memiliki tiga faktor yang diambil dari 
+      entri-entri matriks (misalnya, $(t_{1,1}-r)(t_{2,2}-r)(t_{3,3}-r)$
+      dan $(t_{1,1}-r)(t_{2,3})(t_{3,2})$), sehingga determinannya
+      dapat dinyatakan sebagai polinom dalam $r$ berderajat $3$.
+      Polinom semacam itu memiliki paling banyak $3$ akar.
+
+      Secara umum, ekspansi permutasi menunjukkan bahwa
+      determinan merupakan jumlah suku-suku yang masing-masing
+      memiliki \( n \) faktor, sehingga memberikan polinom berderajat $n$.
+      Polinom berderajat \( n \) memiliki paling banyak \( n \) akar. 
+    \end{answer}
+  \puzzle \item 
+    \cite{MathMag63Q307}
+    Kesembilan digit positif dapat disusun menjadi larik \( \nbyn{3} \)
+    melalui \( 9! \) cara.
+    Tentukan jumlah determinan semua larik tersebut.
+    \begin{answer}
+      \answerasgiven
+      Ketika dua baris suatu determinan dipertukarkan, tanda
+      determinannya berubah.
+      Ketika baris-baris determinan berukuran tiga-kali-tiga dipermutasikan, diperoleh \( 3 \)
+      determinan positif dan \( 3 \) determinan negatif yang nilai mutlaknya sama.
+      Karena itu, \( 9! \) determinan tersebut terbagi menjadi \( 9!/6 \) kelompok, yang masing-masing
+      berjumlah nol.  
+    \end{answer}
+  \item 
+    \cite{MathMag63Q237}
+    Tunjukkan bahwa
+    \begin{equation*}
+      \begin{vmat}
+        x-2  &x-3  &x-4  \\
+        x+1  &x-1  &x-3  \\
+        x-4  &x-7  &x-10
+      \end{vmat}=0.
+    \end{equation*}
+    \begin{answer}
+      \answerasgiven
+      Ketika elemen-elemen suatu kolom dikurangkan dari elemen-elemen
+      masing-masing dua kolom lainnya, elemen-elemen dalam dua kolom determinan
+      yang dihasilkan bersifat proporsional, sehingga determinannya lenyap.
+      Dengan kata lain,
+      \begin{equation*}
+        \begin{vmat}
+          2  &1    &x-4  \\
+          4  &2    &x-3  \\
+          6  &3    &x-10
+        \end{vmat}=
+        \begin{vmat}
+          1    &x-3  &-1   \\
+          2    &x-1  &-2   \\
+          3    &x-7  &-3
+        \end{vmat}=
+        \begin{vmat}
+          x-2  &-1   &-2   \\
+          x+1  &-2   &-4   \\
+          x-4  &-3   &-6
+        \end{vmat}=0.
+      \end{equation*}  
+    \end{answer}
+  \puzzle \item 
+    \cite{Monthly49p33}
+    Misalkan \( S \) adalah jumlah elemen-elemen bilangan bulat dalam persegi ajaib orde
+    tiga dan \( D \) adalah nilai persegi tersebut ketika dipandang sebagai
+    determinan.
+    Tunjukkan bahwa \( D/S \) merupakan bilangan bulat.
+    \begin{answer}
+      \answerasgiven
+      Misalkan
+      \begin{equation*}
+        \begin{array}{ccc}
+          a  &b  &c  \\
+          d  &e  &f  \\
+          g  &h  &i
+        \end{array}
+      \end{equation*}
+      memiliki jumlah ajaib \( N=S/3 \).
+      Maka
+      \begin{align*}
+        N
+        &=(a+e+i)+(d+e+f)+(g+e+c)   \\
+        &\quad\text{}-(a+d+g)-(c+f+i)=3e
+      \end{align*}
+      dan \( S=9e \).
+      Karena itu, dengan menjumlahkan baris dan kolom,
+      \begin{equation*}
+        D=
+        \begin{vmat}
+          a  &b  &c  \\
+          d  &e  &f  \\
+          g  &h  &i
+        \end{vmat}
+        =\begin{vmat}
+          a  &b  &c  \\
+          d  &e  &f  \\
+         3e  &3e &3e
+        \end{vmat}             
+        =\begin{vmat}
+          a  &b  &3e \\
+          d  &e  &3e \\
+         3e  &3e &9e
+        \end{vmat}             
+        =\begin{vmat}
+          a  &b  &e  \\
+          d  &e  &e  \\
+          1  &1  &1
+        \end{vmat}S.
+      \end{equation*}  
+    \end{answer}
+  \puzzle \item 
+    \cite{Monthly31p355}
+    Tunjukkan bahwa determinan dari \( n^2 \) elemen di sudut kiri atas
+    segitiga Pascal
+    \begin{equation*}
+      \begin{array}{cccccc}
+        1  &1  &1  &1  &.  &.  \\
+        1  &2  &3  &.  &.      \\
+        1  &3  &.  &.  &   &   \\
+        1  &.  &.  &   &   &   \\
+        .                      \\
+        .
+      \end{array}
+    \end{equation*}
+    bernilai satu.
+    \begin{answer}
+      \answerasgiven
+      Nyatakan determinan yang dimaksud dengan \( D_n \) dan elemen \( a_{i,j} \)
+      pada baris ke-\( i \) dan kolom ke-\( j \).
+      Berdasarkan aturan pembentukan elemen-elemennya, kita memperoleh
+      \begin{equation*}
+        a_{i,j}=a_{i,j-1}+a_{i-1,j},
+        \qquad a_{1,j}=a_{i,1}=1.
+      \end{equation*}
+      Kurangkan setiap baris \( D_n \) dari baris setelahnya, dengan memulai
+      proses dari pasangan baris terakhir.
+      Setelah \( n-1 \) pengurangan, kesamaan di atas menunjukkan bahwa
+      elemen
+      \( a_{i,j} \) digantikan oleh elemen \( a_{i,j-1} \), dan semua
+      elemen pada kolom pertama, kecuali \( a_{1,1}=1 \), menjadi nol.
+      Sekarang kurangkan setiap kolom dari kolom setelahnya, dengan memulai dari
+      pasangan terakhir.
+      Setelah proses ini, elemen \( a_{i,j-1} \) digantikan oleh
+      \( a_{i-1,j-1} \), sebagaimana diperlihatkan oleh relasi di atas.
+      Hasil kedua operasi tersebut adalah mengganti \( a_{i,j} \) dengan
+      \( a_{i-1,j-1} \), serta mereduksi setiap elemen pada baris pertama dan
+      kolom pertama menjadi nol.
+      Karena itu, \( D_n=D_{n-1} \), sehingga
+      \begin{equation*}
+        D_n=D_{n-1}=D_{n-2}=\dots=D_2=1.
+      \end{equation*}  
+    \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsectionoptional{Determinan Ada}
+\textit{Subbagian ini memuat bukti dua hasil dari
+subbagian sebelumnya.
+Subbagian ini bersifat opsional.
+Kita hanya akan menggunakan materi yang dikembangkan di sini dalam
+subbagian Bentuk Kanonis Jordan, yang juga bersifat opsional.}
+
+Kita ingin menunjukkan bahwa untuk setiap ukuran~$n$,
+fungsi determinan pada matriks $\nbyn{n}$ terdefinisi dengan baik.
+Subbagian sebelumnya mengembangkan 
+rumus ekspansi permutasi.\index{determinan!ekspansi permutasi}%
+\index{ekspansi permutasi}
+\begin{align*}
+   %\deter{T}
+   %=
+   \begin{vmat}
+      t_{1,1}  &t_{1,2}  &\ldots  &t_{1,n}  \\
+      t_{2,1}  &t_{2,2}  &\ldots  &t_{2,n}  \\
+               &\vdots                      \\
+      t_{n,1}  &t_{n,2}  &\ldots  &t_{n,n}
+   \end{vmat}
+   &=
+   \begin{array}[t]{l}
+      t_{1,\phi_1(1)}t_{2,\phi_1(2)}\cdots
+           t_{n,\phi_1(n)}\deter{P_{\phi_1}}       \\[.75ex]
+      \>\hbox{}+t_{1,\phi_2(1)}t_{2,\phi_2(2)}\cdots
+           t_{n,\phi_2(n)}\deter{P_{\phi_2}}       \\[.75ex]
+      \>\alignedvdots                              \\
+      \>\hbox{}+t_{1,\phi_k(1)}t_{2,\phi_k(2)}\cdots
+           t_{n,\phi_k(n)}\deter{P_{\phi_k}} 
+   \end{array}                                                 \\[1ex]
+   &=\!\!\sum_{\text{permutasi\ }\phi}\!\!\!\!
+     t_{1,\phi(1)}t_{2,\phi(2)}\cdots t_{n,\phi(n)}
+                                 \deter{P_{\phi}}
+\end{align*}
+Hal ini mereduksi masalah pembuktian bahwa
+determinan terdefinisi dengan baik 
+menjadi sekadar pembuktian bahwa determinan 
+terdefinisi dengan baik pada himpunan matriks permutasi.
+
+Suatu matriks permutasi dapat diubah menjadi matriks identitas melalui pertukaran baris.
+Jadi, salah satu cara untuk
+menghitung determinannya adalah mencatat banyaknya pertukaran.
+Namun,
+kita masih harus menunjukkan bahwa hasilnya terdefinisi dengan baik.
+Ingat kembali kesulitannya:~determinan
+\begin{equation*}
+   P_{\phi}=
+   \begin{mat}[r]
+      0  &1  &0  &0 \\
+      1  &0  &0  &0 \\
+      0  &0  &1  &0 \\
+      0  &0  &0  &1
+   \end{mat}
+\end{equation*}
+dapat dihitung dengan satu pertukaran,
+\begin{equation*}
+   P_{\phi}
+   \grstep{\rho_1\leftrightarrow\rho_2}
+   \begin{mat}[r]
+      1  &0  &0  &0 \\
+      0  &1  &0  &0 \\
+      0  &0  &1  &0 \\
+      0  &0  &0  &1
+   \end{mat}
+\end{equation*}
+atau dengan tiga pertukaran.
+\begin{equation*}
+   P_{\phi}
+   \grstep{\rho_3\leftrightarrow\rho_1}
+   % \begin{mat}[r]
+   %    0  &0  &1  &0 \\
+   %    1  &0  &0  &0 \\
+   %    0  &1  &0  &0 \\
+   %    0  &0  &0  &1
+   % \end{mat}
+   \repeatedgrstep{\rho_2\leftrightarrow\rho_3}
+   % \begin{mat}[r]
+   %    0  &0  &1  &0 \\
+   %    0  &1  &0  &0 \\
+   %    1  &0  &0  &0 \\
+   %    0  &0  &0  &1
+   % \end{mat}
+   \repeatedgrstep{\rho_1\leftrightarrow\rho_3}
+   \begin{mat}[r]
+      1  &0  &0  &0 \\
+      0  &1  &0  &0 \\
+      0  &0  &1  &0 \\
+      0  &0  &0  &1
+   \end{mat}
+\end{equation*}
+Kedua reduksi tersebut
+memiliki banyak pertukaran ganjil, sehingga dalam kasus ini 
+kita memperoleh \( \deter{P_{\phi}}=-1 \).
+Namun, jika ada cara melakukannya dengan banyak pertukaran genap,
+maka determinan akan memberikan dua keluaran berbeda
+dari satu masukan.
+Di bawah ini, \nearbycorollary{cor:ParityInversEqParitySwaps} membuktikan 
+bahwa hal tersebut tidak dapat terjadi\Dash
+tidak ada matriks permutasi
+yang dapat diubah melalui pertukaran baris menjadi matriks identitas melalui dua cara, satu dengan 
+banyak pertukaran genap dan yang lain dengan banyak pertukaran ganjil.
+
+% So the critical step will be a way to calculate whether the 
+% number of swaps that it takes could be even or odd.
+
+\begin{definition} \label{df:Inversion}
+%<*df:Inversion>
+Dalam suatu permutasi $\phi=\sequence{\ldots,k,\ldots,j,\ldots}$,
+elemen-elemen dengan $k>j$ berada dalam suatu 
+\definend{inversi} dari urutan alaminya.
+Serupa dengan itu, dalam suatu matriks permutasi, dua baris
+\begin{equation*}
+  P_{\phi}=
+  \begin{mat}
+    \vdots          \\
+    \iota_{k} \\
+    \vdots          \\
+    \iota_{j} \\
+    \vdots
+  \end{mat}
+\end{equation*}
+dengan \( k>j \) berada dalam suatu \definend{inversi}.\index{inversi}%
+\index{permutasi!inversi}
+%</df:Inversion>
+\end{definition}
+
+\begin{example}
+Matriks permutasi berikut
+\begin{equation*}
+  \begin{mat}[r]
+    1  &0  &0  &0 \\
+    0  &0  &1  &0 \\
+    0  &1  &0  &0 \\
+    0  &0  &0  &1
+  \end{mat}
+  =
+  \begin{mat}
+    \iota_1  \\
+    \iota_3  \\
+    \iota_2  \\
+    \iota_4
+  \end{mat}
+\end{equation*}
+memiliki satu inversi, yaitu \( \iota_3 \) mendahului \( \iota_2 \).
+\end{example}
+
+\begin{example} \label{ex:ThreeInversions}
+Di sini terdapat tiga inversi:
+\begin{equation*}
+  \begin{mat}[r]
+    0  &0  &1  \\
+    0  &1  &0  \\
+    1  &0  &0
+  \end{mat}
+  =
+  \begin{mat}
+    \iota_3  \\
+    \iota_2  \\
+    \iota_1
+  \end{mat}
+\end{equation*}
+\( \iota_3 \) mendahului \( \iota_1 \),
+\( \iota_3 \) mendahului \( \iota_2 \), dan \( \iota_2 \) mendahului
+\( \iota_1 \).
+\end{example}
+
+\begin{lemma} \label{le:SwapsChangeSgn}
+%<*lm:SwapsChangeSgn>
+Pertukaran baris dalam matriks permutasi mengubah banyaknya 
+inversi dari genap menjadi ganjil, atau dari ganjil menjadi genap.
+%</lm:SwapsChangeSgn>
+\end{lemma}
+
+\begin{proof}
+%<*pf:SwapsChangeSgn0>
+Tinjaulah pertukaran baris $j$ dan $k$, dengan $k>j$.
+
+Jika kedua baris tersebut bersebelahan,
+\begin{equation*}
+   P_{\phi}=
+   \begin{mat}
+     \vdots           \\
+     \iota_{\phi(j)}  \\
+     \iota_{\phi(k)}  \\
+     \vdots
+   \end{mat}
+ \grstep{\rho_k\leftrightarrow\rho_j}
+   \begin{mat}
+     \vdots           \\
+     \iota_{\phi(k)}  \\
+     \iota_{\phi(j)}  \\
+     \vdots
+   \end{mat}
+\end{equation*}
+maka, karena inversi yang melibatkan baris di luar pasangan ini
+tidak terpengaruh,
+pertukaran tersebut mengubah jumlah inversi sebanyak satu, 
+dengan menghapus atau menghasilkan satu inversi bergantung pada apakah
+\( \phi(j)>\phi(k) \) atau tidak.
+Akibatnya, jumlah inversi berubah dari ganjil menjadi genap 
+atau dari genap menjadi ganjil.
+%</pf:SwapsChangeSgn0>
+
+%<*pf:SwapsChangeSgn1>
+Jika kedua baris tidak bersebelahan, kita dapat mempertukarkannya 
+melalui rangkaian pertukaran baris bersebelahan, mula-mula dengan membawa baris~$k$ ke atas,
+\begin{equation*}
+   \begin{mat}
+     \vdots             \\
+     \iota_{\phi(j)}    \\
+     \iota_{\phi(j+1)}  \\
+     \iota_{\phi(j+2)}  \\
+     \vdots             \\
+     \iota_{\phi(k)}    \\
+     \vdots
+   \end{mat}
+  \grstep{\rho_k\swap\rho_{k-1}}
+  \repeatedgrstep{\rho_{k-1}\swap\rho_{k-2}}
+  \cdots
+  \grstep{\rho_{j+1}\swap\rho_j}
+   \begin{mat}
+     \vdots             \\
+     \iota_{\phi(k)}    \\
+     \iota_{\phi(j)}    \\
+     \iota_{\phi(j+1)}  \\
+     \vdots             \\
+     \iota_{\phi(k-1)}  \\
+     \vdots
+   \end{mat}
+\end{equation*}
+%</pf:SwapsChangeSgn1>
+%<*pf:SwapsChangeSgn2>
+lalu membawa baris~$j$ ke bawah.
+\begin{equation*}
+  \grstep{\rho_{j+1}\swap\rho_{j+2}}
+  \repeatedgrstep{\rho_{j+2}\swap\rho_{j+3}}
+  \cdots
+  \grstep{\rho_{k-1}\swap\rho_k}
+   \begin{mat}
+     \vdots             \\
+     \iota_{\phi(k)}    \\
+     \iota_{\phi(j+1)}  \\
+     \iota_{\phi(j+2)}  \\
+     \vdots             \\
+     \iota_{\phi(j)}    \\
+     \vdots
+   \end{mat}
+\end{equation*}
+Setiap pertukaran bersebelahan ini mengubah banyaknya 
+inversi dari ganjil menjadi genap atau dari genap menjadi ganjil.
+Jumlah pertukaran \( (k-j)+(k-j-1) \) bersifat ganjil.
+Jadi, secara keseluruhan, banyaknya inversi berubah 
+dari genap menjadi ganjil, atau dari ganjil menjadi genap.
+%</pf:SwapsChangeSgn2>
+\end{proof}
+
+\begin{corollary}  \label{cor:ParityInversEqParitySwaps}
+%<*co:ParityInversEqParitySwaps>
+Jika suatu matriks permutasi memiliki banyak inversi ganjil, maka mengubahnya
+menjadi matriks identitas memerlukan banyak pertukaran ganjil.
+Jika matriks tersebut memiliki banyak inversi genap, maka mengubahnya menjadi
+matriks identitas memerlukan banyak pertukaran genap.
+%</co:ParityInversEqParitySwaps>
+\end{corollary}
+
+\begin{proof}
+%<*pf:ParityInversEqParitySwaps>
+Matriks identitas memiliki nol inversi.
+Mengubah bilangan ganjil menjadi nol memerlukan banyak pertukaran ganjil,
+dan mengubah bilangan genap menjadi nol memerlukan banyak pertukaran genap.
+%</pf:ParityInversEqParitySwaps>
+\end{proof}
+
+\begin{example}
+Matriks dalam \nearbyexample{ex:ThreeInversions}
+dapat diubah menjadi matriks identitas dengan satu pertukaran $\rho_1\leftrightarrow\rho_3$.
+(Jadi, banyaknya pertukaran tidak harus sama dengan banyaknya inversi, tetapi
+paritas kedua bilangan tersebut sama.)
+\end{example}
+
+\begin{definition} \label{df:Signum}
+%<*df:Signum>
+\definend{Signum}\index{permutasi!signum}\index{signum}%
+\index{sgn!lihat {signum}}
+suatu permutasi \( \sgn(\phi) \)
+adalah \( -1 \) jika banyaknya inversi dalam \( \phi \) ganjil, dan
+\( +1 \) jika banyaknya inversi genap.
+%</df:Signum>
+\end{definition}
+
+\begin{example}
+Dengan menggunakan notasi permutasi-$3$
+dari \nearbyexample{ex:AllTwoThreePerms}, kita memperoleh
+\begin{equation*}
+  P_{\phi_1}=
+  \begin{mat}
+    1  &0  &0  \\
+    0  &1  &0  \\
+    0  &0  &1
+  \end{mat}
+  \qquad
+  P_{\phi_2}=
+  \begin{mat}
+    1  &0  &0  \\
+    0  &0  &1  \\
+    0  &1  &0  
+  \end{mat}
+\end{equation*}
+sehingga
+\( \sgn(\phi_1)=1 \) karena tidak terdapat inversi, 
+sedangkan \( \sgn(\phi_2)=-1 \) karena terdapat satu inversi.
+\end{example}
+
+Kita masih belum menunjukkan bahwa fungsi determinan
+terdefinisi dengan baik karena kita belum meninjau operasi baris 
+pada matriks permutasi selain pertukaran baris.
+Kita akan menangani persoalan ini secara tidak langsung.
+%<*DefiningDFunction>
+Definisikan suatu fungsi
+\( \map{d}{\matspace_{\nbyn{n}}}{\Re} \)
+dengan mengubah rumus ekspansi permutasi, yaitu mengganti
+$\deter{P_\phi}$ dengan $\sgn(\phi)$.
+\begin{equation*}
+  d(T)=
+  \sum_{\text{permutasi\ }\phi}t_{1,\phi(1)}t_{2,\phi(2)}\cdots t_{n,\phi(n)}
+                                 \cdot\sgn(\phi)
+\end{equation*}
+% This gives the same value as the permutation expansion
+% because the corollary shows that $\det(P_\phi)=\sgn(\phi)$.
+Keunggulan rumus ini ialah bahwa banyaknya inversi 
+jelas terdefinisi dengan baik\Dash cukup hitung inversinya.
+Karena itu, pembuktian 
+bahwa fungsi determinan~$\nbyn{n}$ ada 
+akan selesai setelah kita menunjukkan bahwa~$d$
+memenuhi syarat-syarat dalam definisi determinan.
+%</DefiningDFunction>
+
+\begin{lemma} \label{lm:DeterminantsExist}
+\index{determinan!keberadaan}
+%<*lm:DeterminantsExist>
+Fungsi \( d \) di atas merupakan determinan.
+Dengan demikian, fungsi determinan $\det_{\nbyn{n}}$ ada untuk setiap $n$.
+%</lm:DeterminantsExist>
+\end{lemma}
+
+\begin{proof}
+%<*pf:DeterminantsExist0>
+Kita harus memeriksa bahwa fungsi tersebut memenuhi empat syarat
+dari definisi determinan, \nearbydefinition{def:Det}.
+%</pf:DeterminantsExist0>
+
+%<*pf:DeterminantsExist1>
+Syarat~(4) mudah: jika $I$ adalah matriks identitas $\nbyn{n}$, maka dalam
+\begin{equation*}
+  d(I)=
+  \sum_{\text{permutasi\ }\phi}
+    \iota_{1,\phi(1)}\iota_{2,\phi(2)}\cdots \iota_{n,\phi(n)}
+                                 \sgn(\phi)
+\end{equation*}
+semua suku dalam penjumlahan bernilai nol,
+kecuali suku ketika permutasi~$\phi$ merupakan 
+identitas, yang memberikan hasil kali entri-entri diagonal,
+yaitu satu.
+%</pf:DeterminantsExist1>
+
+%<*pf:DeterminantsExist2>
+Untuk syarat~(3), misalkan \( T\smash[b]{\grstep{k\rho_i}}\hat{T} \), lalu
+tinjaulah $d(\hat{T})$.
+\begin{multline*}
+  \sum_{\text{permutasi\ }\phi}\!\!
+    \hat{t}_{1,\phi(1)}
+     \cdots\hat{t}_{i,\phi(i)}\cdots\hat{t}_{n,\phi(n)}
+                                 \sgn(\phi)   \\
+  =\sum_{\phi}
+     t_{1,\phi(1)}\cdots kt_{i,\phi(i)}\cdots t_{n,\phi(n)}
+                                 \sgn(\phi)
+\end{multline*}
+Keluarkan faktor~\( k \) untuk memperoleh kesamaan yang dikehendaki.
+\begin{equation*}
+  =k\cdot\sum_{\phi}
+     t_{1,\phi(1)}\cdots t_{i,\phi(i)}\cdots t_{n,\phi(n)}
+                                 \sgn(\phi)                 
+  =k\cdot d(T)
+\end{equation*}
+%</pf:DeterminantsExist2>
+
+%<*pf:DeterminantsExist3>
+Untuk~(2), misalkan 
+\( T\smash[b]{\grstep{\rho_i\swap\rho_j}}\hat{T} \).
+Kita harus menunjukkan bahwa $d(\hat{T})$ merupakan negatif dari $d(T)$.
+\begin{equation*}
+  d(\hat{T})=
+  \sum_{\text{permutasi\ }\phi}\!\!
+    \hat{t}_{1,\phi(1)}
+    \cdots\hat{t}_{i,\phi(i)}
+    \cdots\hat{t}_{j,\phi(j)}
+    \cdots \hat{t}_{n,\phi(n)}
+                                 \sgn(\phi)
+    \tag{$*$}
+\end{equation*}
+Kita akan menunjukkan bahwa setiap suku dalam ($*$) dipasangkan dengan suatu suku dalam $d(T)$, 
+dan bahwa kedua suku tersebut saling berlawanan tanda.
+Tinjaulah matriks dari ekspansi multilinear 
+$d(\hat{T})$ yang memberikan suku  
+    $\hat{t}_{1,\phi(1)}
+    \cdots\hat{t}_{i,\phi(i)}
+    \cdots\hat{t}_{j,\phi(j)}
+    \cdots \hat{t}_{n,\phi(n)}
+                                 \sgn(\phi)$.
+\begin{equation*}
+  \begin{mat}
+     \ &                  &\vdots &               &     \\
+       &\hat{t}_{i,\phi(i)}  &       &               &    \\
+       &                &\vdots &                 &  \\
+       &                &       &\hat{t}_{j,\phi(j)} &  \\
+       &                &\vdots                   &
+  \end{mat}
+\end{equation*}
+%</pf:DeterminantsExist3>
+%<*pf:DeterminantsExist4>
+Matriks itu merupakan hasil operasi $\rho_i\swap\rho_j$ yang dilakukan pada
+matriks berikut.
+\begin{equation*}
+  \begin{mat}
+       \ &              &\vdots &           &        \\
+         &              &       &t_{i,\phi(j)} &  \\
+         &              &\vdots &           &       \\
+         &t_{j,\phi(i)}    &       &          &        \\
+         &              &\vdots &          &
+  \end{mat}
+\end{equation*}
+Dengan kata lain, suku dengan $t$ bertopi dipasangkan dengan 
+suku berikut dari ekspansi $d(T)$:
+ \(    t_{1,\sigma(1)}
+       \cdots t_{j,\sigma(j)}
+       \cdots t_{i,\sigma(i)}
+       \cdots t_{n,\sigma(n)} \sgn(\sigma)
+       \), dengan permutasi
+\( \sigma \) 
+sama dengan \( \phi \), tetapi bilangan
+ke-\( i \) dan ke-\( j \)-nya dipertukarkan,
+\( \sigma(i)=\phi(j) \) dan \( \sigma(j)=\phi(i) \).
+Kedua suku tersebut memiliki faktor-faktor yang sama,
+$\hat{t}_{1,\phi(1)}=t_{1,\sigma(1)}$, \ldots, 
+termasuk entri-entri dari baris yang dipertukarkan,
+$\hat{t}_{i,\phi(i)}=t_{j,\phi(i)}=t_{j,\sigma(j)}$
+dan $\hat{t}_{j,\phi(j)}=t_{i,\phi(j)}=t_{i,\sigma(i)}$. 
+Namun, kedua suku tersebut saling berlawanan tanda
+karena \( \sgn(\phi)=-\sgn(\sigma) \), berdasarkan \nearbylemma{le:SwapsChangeSgn}.
+%</pf:DeterminantsExist4>
+
+%<*pf:DeterminantsExist5>
+Sekarang, setiap permutasi $\phi$ dapat diperoleh dari suatu 
+permutasi lain $\sigma$ melalui pertukaran semacam itu,
+dengan tepat satu cara.
+Karena itu, penjumlahan dalam ($*$) sebenarnya merupakan jumlah atas semua permutasi,
+yang masing-masing diambil tepat satu kali.
+\begin{align*}
+  d(\hat{T})
+  &=
+  \sum_{\text{permutasi\ }\phi}\!\!
+    \hat{t}_{1,\phi(1)}
+    \cdots\hat{t}_{i,\phi(i)}
+    \cdots\hat{t}_{j,\phi(j)}
+    \cdots \hat{t}_{n,\phi(n)}
+                                 \sgn(\phi)   \\
+  &=\sum_{\text{permutasi\ }\sigma}\!\!
+     t_{1,\sigma(1)}
+    \cdots t_{j,\sigma(j)}
+    \cdots t_{i,\sigma(i)}
+    \cdots t_{n,\sigma(n)}
+                                 \cdot\bigl(-\sgn(\sigma)\bigr)        
+\end{align*}
+Jadi, \( d(\hat{T})=-d(T) \).
+%</pf:DeterminantsExist5>
+
+%<*pf:DeterminantsExist6>
+Terakhir, untuk syarat~(1), misalkan
+\( T\smash[b]{\grstep{k\rho_i+\rho_j}}\hat{T} \).
+\begin{align*}
+  d(\hat{T})
+  &=\sum_{\text{permutasi\ }\phi}
+    \hat{t}_{1,\phi(1)}\cdots\hat{t}_{i,\phi(i)}
+    \cdots\hat{t}_{j,\phi(j)}\cdots\hat{t}_{n,\phi(n)}
+                                 \sgn(\phi)                \\
+  &=\sum_{\phi}
+    t_{1,\phi(1)}\cdots t_{i,\phi(i)}
+    \cdots (kt_{i,\phi(j)}+t_{j,\phi(j)})\cdots t_{n,\phi(n)}
+                                 \sgn(\phi)
+\end{align*}
+% (notice:~that's 
+% \( kt_{i,\phi(j)} \), not \( kt_{j,\phi(j)} \)).
+Gunakan sifat distributif pada penjumlahan dalam $kt_{i,\phi(j)}+t_{j,\phi(j)}$.
+\begin{equation*}
+  = 
+      \begin{aligned}[t]
+        &\smash[b]{\sum_{\smash{\phi}}}\big[t_{1,\phi(1)}\cdots t_{i,\phi(i)}
+          \cdots kt_{i,\phi(j)}\cdots t_{n,\phi(n)}
+                                 \sgn(\phi)         \\ % [-1ex]
+        &\hbox{}\qquad\quad\hbox{}
+           +t_{1,\phi(1)}\cdots t_{i,\phi(i)}
+           \cdots t_{j,\phi(j)}\cdots t_{n,\phi(n)}
+                                 \sgn(\phi)\big]
+      \end{aligned}                                               
+\end{equation*}
+Pecahlah menjadi dua penjumlahan.
+\begin{equation*}
+  =\begin{aligned}[t] 
+         &\smash[b]{\sum_{\smash{\phi}}} \:t_{1,\phi(1)}\cdots t_{i,\phi(i)}
+            \cdots kt_{i,\phi(j)}\cdots t_{n,\phi(n)}
+                                 \sgn(\phi)           \\ % [-1ex]               
+         &\hbox{}\qquad\quad\hbox{}
+            +\smash[b]{\sum_{\phi}}\:
+            t_{1,\phi(1)}\cdots t_{i,\phi(i)}
+            \cdots t_{j,\phi(j)}\cdots t_{n,\phi(n)}
+                                 \sgn(\phi)        
+     \end{aligned}                                               
+\end{equation*}
+Kenali penjumlahan kedua.
+\begin{equation*}
+  =\begin{aligned}[t]
+       &k\cdot \smash[b]{\sum_{\smash{\phi}}}\:
+            t_{1,\phi(1)}\cdots t_{i,\phi(i)}
+            \cdots t_{i,\phi(j)}\cdots t_{n,\phi(n)}
+                                 \sgn(\phi)          \\  % [-.75ex]
+       &\hbox{}\qquad\quad\hbox{}
+             +d(T)          
+     \end{aligned}
+\end{equation*}
+%</pf:DeterminantsExist6>
+%<*pf:DeterminantsExist7>
+Tinjaulah suku-suku
+\( t_{1,\phi(1)}\cdots t_{i,\phi(i)} \cdots t_{i,\phi(j)}\cdots t_{n,\phi(n)}
+   \sgn(\phi)  \).
+Perhatikan subskripnya; entrinya adalah \( t_{i,\phi(j)} \), bukan \( t_{j,\phi(j)} \).
+Jumlah suku-suku ini merupakan determinan suatu matriks~\( S \) 
+yang sama dengan \( T \),
+kecuali bahwa baris~$j$ dari $S$ merupakan salinan baris~$i$ dari $T$;  
+artinya, $S$ memiliki dua baris yang sama.
+Dengan cara yang sama seperti ketika membuktikan \nearbylemma{le:IdenRowsDetZero}, kita dapat melihat bahwa
+$d(S)=0$: pertukaran dua baris $S$ yang sama akan mengubah 
+tanda $d(S)$, tetapi karena matriks tersebut tidak berubah oleh pertukaran itu, 
+nilai $d(S)$ juga harus tetap, sehingga nilainya harus nol.
+%</pf:DeterminantsExist7>
+\end{proof}
+
+Sekarang kita telah membuktikan bahwa fungsi determinan ada untuk setiap ukuran~$\nbyn{n}$.
+Kita juga telah mengetahui bahwa untuk setiap ukuran terdapat paling banyak satu
+determinan.
+Karena itu, untuk setiap ukuran terdapat
+tepat satu fungsi determinan.
+
+Kita mengakhiri subbagian ini dengan membuktikan hasil lain 
+yang tersisa dari subbagian sebelumnya.
+
+\begin{theorem} \label{th:DetMatrixEqualsDetTrans}
+\index{transpos!determinan}
+%<*th:DetMatrixEqualsDetTrans>
+Determinan suatu matriks sama dengan determinan transposnya.
+%</th:DetMatrixEqualsDetTrans>
+\end{theorem}
+
+\begin{proof}
+%<*pf:DetMatrixEqualsDetTrans0>
+Bukti ini paling mudah dipahami dengan mengerjakan kasus umum
+$\nbyn{3}$.
+Akan jelas bahwa argumen tersebut berlaku untuk kasus $\nbyn{n}$.
+
+Bandingkan ekspansi permutasi matriks~$T$
+\begin{align*}
+  \begin{vmat}
+    t_{1,1}  &t_{1,2}  &t_{1,3}  \\
+    t_{2,1}  &t_{2,2}  &t_{2,3}  \\
+    t_{3,1}  &t_{3,2}  &t_{3,3}  
+  \end{vmat}
+  &=
+  t_{1,1}t_{2,2}t_{3,3}
+  \begin{vmat}
+    1 &0 &0 \\
+    0 &1 &0 \\
+    0 &0 &1
+  \end{vmat}
+  +t_{1,1}t_{2,3}t_{3,2}
+  \begin{vmat}
+    1 &0 &0 \\
+    0 &0 &1 \\
+    0 &1 &0
+  \end{vmat}            \\
+  &\quad+
+  t_{1,2}t_{2,1}t_{3,3}
+  \begin{vmat}
+    0 &1 &0 \\
+    1 &0 &0 \\
+    0 &0 &1
+  \end{vmat}
+  +t_{1,2}t_{2,3}t_{3,1}
+  \begin{vmat}
+    0 &1 &0 \\
+    0 &0 &1 \\
+    1 &0 &0
+  \end{vmat}           \\
+  &\quad+
+  t_{1,3}t_{2,1}t_{3,2}
+  \begin{vmat}
+    0 &0 &1 \\
+    1 &0 &0 \\
+    0 &1 &0
+  \end{vmat}
+  +t_{1,3}t_{2,2}t_{3,1}
+  \begin{vmat}
+    0 &0 &1 \\
+    0 &1 &0 \\
+    1 &0 &0
+  \end{vmat}
+\end{align*}
+dengan ekspansi permutasi transposnya.
+%</pf:DetMatrixEqualsDetTrans0>
+%<*pf:DetMatrixEqualsDetTrans1>
+\begin{align*}
+  \begin{vmat}
+    t_{1,1}  &t_{2,1}  &t_{3,1}  \\
+    t_{1,2}  &t_{2,2}  &t_{3,2}  \\
+    t_{1,3}  &t_{2,3}  &t_{3,3}  
+  \end{vmat}
+  &=
+  t_{1,1}t_{2,2}t_{3,3}
+  \begin{vmat}
+    1 &0 &0 \\
+    0 &1 &0 \\
+    0 &0 &1
+  \end{vmat}
+  +t_{1,1}t_{3,2}t_{2,3}
+  \begin{vmat}
+    1 &0 &0 \\
+    0 &0 &1 \\
+    0 &1 &0
+  \end{vmat}            \\
+  &\quad+
+  t_{2,1}t_{1,2}t_{3,3}
+  \begin{vmat}
+    0 &1 &0 \\
+    1 &0 &0 \\
+    0 &0 &1
+  \end{vmat}
+  +t_{2,1}t_{3,2}t_{1,3}
+  \begin{vmat}
+    0 &1 &0 \\
+    0 &0 &1 \\
+    1 &0 &0
+  \end{vmat}           \\
+  &\quad+
+  t_{3,1}t_{1,2}t_{2,3}
+  \begin{vmat}
+    0 &0 &1 \\
+    1 &0 &0 \\
+    0 &1 &0
+  \end{vmat}
+  +t_{3,1}t_{2,2}t_{1,3}
+  \begin{vmat}
+    0 &0 &1 \\
+    0 &1 &0 \\
+    1 &0 &0
+  \end{vmat}
+\end{align*}
+Pertama-tama bandingkan keenam hasil kali $t$. 
+Hasil kali dalam ekspansi~$T$ sama dengan yang terdapat dalam ekspansi 
+transposnya; sebagai contoh, $t_{1,2}t_{2,3}t_{3,1}$ berada di bagian atas, sedangkan
+$t_{3,1}t_{1,2}t_{2,3}$ berada di bagian bawah.
+Hal ini sepenuhnya masuk akal\Dash keenam bentuk di bagian atas berasal dari semua cara 
+memilih satu entri~$T$ dari setiap baris dan kolom, sedangkan keenam bentuk di bagian bawah
+merupakan semua cara memilih satu entri~$T$ dari setiap kolom dan baris,
+sehingga tentu saja keduanya merupakan himpunan yang sama.
+%</pf:DetMatrixEqualsDetTrans1>
+
+%<*pf:DetMatrixEqualsDetTrans2>
+Selanjutnya perhatikan bahwa dalam kedua ekspansi,
+setiap ekspresi hasil kali $t$ belum tentu dipasangkan dengan 
+matriks permutasi yang sama.
+Sebagai contoh, di bagian atas, $t_{1,2}t_{2,3}t_{3,1}$ dipasangkan dengan
+matriks untuk pemetaan 
+$1\mapsto 2$, $2\mapsto 3$, $3\mapsto 1$.
+Di bagian bawah, $t_{3,1}t_{1,2}t_{2,3}$ 
+dipasangkan dengan matriks untuk pemetaan
+$1\mapsto 3$, $2\mapsto 1$, $3\mapsto 2$.
+Pemetaan kedua merupakan invers dari pemetaan pertama.
+Hal ini juga sepenuhnya masuk akal\Dash baik 
+transpos matriks maupun invers pemetaan membalik
+$1,2$ menjadi $2,1$, membalik $2,3$ menjadi $3,2$, dan membalik $3,1$ menjadi $1,3$.
+ 
+Sebagai penutup, kita mencatat bahwa determinan $P_{\phi}$ sama dengan determinan
+$P_{\phi^{-1}}$, sebagaimana ditunjukkan oleh
+\nearbyexercise{exer:PermInvFacts}. %
+%</pf:DetMatrixEqualsDetTrans2>
+\end{proof}
+
+
+\begin{exercises}
+  \item[]\textit{Berikut merangkum notasi yang digunakan dalam buku ini
+    untuk permutasi-$2$\hbox{} dan permutasi-$3$.
+    \begin{center}
+      \begin{tabular}[t]{c|cc}
+        $i$          &$1$      &$2$    \\
+        \hline
+        $\phi_1(i)$  &$1$      &$2$     \\
+        $\phi_2(i)$  &$2$      &$1$     
+      \end{tabular}
+      \qquad
+      \begin{tabular}[t]{c|ccc}
+        $i$          &$1$     &$2$   &$3$    \\
+        \hline
+        $\phi_1(i)$  &$1$     &$2$   &$3$    \\
+        $\phi_2(i)$  &$1$     &$3$   &$2$    \\
+        $\phi_3(i)$  &$2$     &$1$   &$3$    \\
+        $\phi_4(i)$  &$2$     &$3$   &$1$    \\
+        $\phi_5(i)$  &$3$     &$1$   &$2$    \\
+        $\phi_6(i)$  &$3$     &$2$   &$1$    
+      \end{tabular}
+    \end{center}  }
+  \item 
+    Berikan ekspansi permutasi suatu matriks umum $\nbyn{2}$
+    beserta transposnya.
+    \begin{answer}
+      Berikut adalah ekspansi permutasi determinan suatu 
+      matriks $\nbyn{2}$,
+      \begin{equation*}
+        \begin{vmat}
+          a  &b  \\
+          c  &d
+        \end{vmat}
+         =ad\cdot \begin{vmat}[r]
+                    1  &0  \\
+                    0  &1
+                  \end{vmat}
+         +bc\cdot \begin{vmat}[r]
+                    0  &1 \\
+                    1  &0
+                  \end{vmat}
+      \end{equation*}
+      dan berikut ekspansi permutasi determinan transposnya.
+      \begin{equation*}
+         \begin{vmat}
+            a  &c  \\
+            b  &d
+         \end{vmat}
+         =ad\cdot\begin{vmat}[r]
+                    1  &0  \\
+                    0  &1
+                 \end{vmat}
+         +cb\cdot\begin{vmat}[r]
+                   0  &1 \\
+                   1  &0
+                 \end{vmat}
+       \end{equation*}
+       Seperti pada ekspansi $\nbyn{3}$ yang dijelaskan dalam subbagian ini,
+       matriks permutasi dari suku-suku yang bersesuaian merupakan
+       transpos satu sama lain (meskipun hal ini tersamar oleh fakta bahwa masing-masing
+       sama dengan transposnya sendiri).
+    \end{answer}
+  \recommended \item 
+    \textit{Soal ini juga muncul dalam subbagian sebelumnya.}
+    \begin{exparts}
+      \partsitem Tentukan invers setiap permutasi-$2$.
+      \partsitem Tentukan invers setiap permutasi-$3$.
+    \end{exparts}
+    \begin{answer}
+      Masing-masing hasil berikut mudah diperiksa.
+      \begin{exparts}
+        \partsitem 
+          \begin{tabular}[t]{r|cc}
+            \textit{permutasi} &$\phi_1$  &$\phi_2$ \\
+             \hline
+            \textit{invers}     &$\phi_1$  &$\phi_2$ 
+          \end{tabular}
+        \partsitem 
+          \begin{tabular}[t]{r|cccccc}
+            \textit{permutasi} 
+              &$\phi_1$ &$\phi_2$ &$\phi_3$ &$\phi_4$ &$\phi_5$ &$\phi_6$ \\
+            \hline
+            \textit{invers}
+              &$\phi_1$ &$\phi_2$ &$\phi_3$ &$\phi_5$ &$\phi_4$ &$\phi_6$ 
+          \end{tabular}
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+    \begin{exparts}
+      \partsitem Tentukan signum setiap permutasi-$2$.
+      \partsitem Tentukan signum setiap permutasi-$3$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem \( \sgn(\phi_1)=+1 \), \( \sgn(\phi_2)=-1 \)
+        \partsitem \( \sgn(\phi_1)=+1 \), \( \sgn(\phi_2)=-1 \),
+              \( \sgn(\phi_3)=-1 \), \( \sgn(\phi_4)=+1 \),
+              \( \sgn(\phi_5)=+1 \), \( \sgn(\phi_6)=-1 \)
+      \end{exparts}  
+     \end{answer}
+  \item 
+    Tentukan satu-satunya suku tak nol dalam ekspansi permutasi
+    matriks berikut.
+    \begin{equation*}
+      \begin{vmat}[r]
+        0  &1  &0  &0  \\
+        1  &0  &1  &0  \\
+        0  &1  &0  &1  \\
+        0  &0  &1  &0
+      \end{vmat}
+    \end{equation*}
+    Hitung determinan tersebut dengan menentukan signum permutasi yang
+    bersesuaian.
+    \begin{answer}
+      Untuk memperoleh suku tak nol dalam ekspansi permutasi, kita harus menggunakan
+      entri \( 1,2 \) dan entri \( 4,3 \).
+      Setelah menetapkan kedua entri tersebut, kita juga harus menggunakan entri \( 2,1 \) dan
+      entri \( 3,4 \).
+      Signum \( \sequence{2,1,4,3} \) adalah \( +1 \) karena dari
+      \begin{equation*}
+        \begin{mat}[r]
+          0  &1  &0  &0  \\
+          1  &0  &0  &0  \\
+          0  &0  &0  &1  \\
+          0  &0  &1  &0            
+        \end{mat}
+      \end{equation*}
+      dua pertukaran baris $\rho_1\leftrightarrow\rho_2$ dan 
+      $\rho_3\leftrightarrow\rho_4$ akan menghasilkan matriks identitas.  
+    \end{answer}
+  \item  
+    \cite{Strang}
+    Berapakah signum permutasi-$n$
+    \( \phi=\sequence{n,n-1,\dots,2,1} \)?
+    \begin{answer}
+      Polanya adalah sebagai berikut.
+      \begin{center}
+         \begin{tabular}[b]{c|ccccccc}
+           \( i \) &\( 1 \) &\( 2 \) &\( 3 \) &\( 4 \) &\( 5 \)
+              &\( 6 \) &\ldots \\
+           \hline
+           \( \sgn(\phi_i) \) &\( +1 \) &\( -1 \) &\( -1 \) &\( +1 \)
+              &\( +1 \) &\( -1 \) &\ldots
+         \end{tabular}
+      \end{center}  
+      Permutasi tersebut memiliki
+      $1+2+\cdots+(n-1)=n(n-1)/2$ inversi.
+      Karena itu, signumnya adalah
+      $(-1)^{n(n-1)/2}$.
+      Dengan kata lain, signumnya $+1$ jika $n$ bersisa $0$ atau $1$ ketika
+      dibagi empat, dan $-1$ jika $n$ bersisa $2$ atau $3$ ketika dibagi empat.
+    \end{answer}
+  \item \label{exer:PermInvFacts}
+     Buktikan pernyataan-pernyataan berikut.   
+     \begin{exparts}
+        \partsitem Setiap permutasi memiliki invers.
+        \partsitem \( \sgn(\phi^{-1})=\sgn(\phi) \)
+        \partsitem Setiap permutasi merupakan invers dari suatu permutasi lain.
+     \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+       \partsitem Kita dapat memandang permutasi sebagai pemetaan
+         \( \map{\phi}{\set{1,\ldots,n}}{\set{1,\ldots,n}} \)
+         yang bersifat satu-ke-satu dan pada.
+         Setiap pemetaan satu-ke-satu dan pada memiliki invers.
+       \partsitem Jika selalu diperlukan banyak pertukaran ganjil untuk mengubah 
+         \( P_\phi \)
+         menjadi matriks identitas, maka selalu diperlukan banyak pertukaran ganjil
+         untuk mengubah matriks identitas menjadi \( P_\phi \) (setiap pertukaran dapat dibalik).
+       \partsitem Ini merupakan pertanyaan pertama lagi.
+     \end{exparts}  
+    \end{answer}
+  \item \label{exer:PermInvIffMatTrans}
+      Buktikan bahwa matriks dari invers suatu permutasi
+      merupakan transpos matriks permutasi tersebut, 
+      $P_{\phi^{-1}}=\trans{P_{\phi}}$, 
+      untuk setiap permutasi $\phi$.
+      \begin{answer}
+        Jika $\phi(i)=j$, maka $\phi^{-1}(j)=i$.
+        Hasilnya kini diperoleh dengan mengamati bahwa $P_{\phi}$ memiliki 
+        $1$ pada entri $i,j$ jika dan hanya jika $\phi(i)=j$,
+        dan $P_{\phi^{-1}}$ memiliki 
+        $1$ pada entri $j,i$ jika dan hanya jika $\phi^{-1}(j)=i$.
+      \end{answer}
+  \recommended \item 
+    Tunjukkan bahwa matriks permutasi dengan \( m \) inversi dapat
+    diubah melalui pertukaran baris menjadi matriks identitas dalam \( m \) langkah.
+    Bandingkan hal ini dengan \nearbycorollary{cor:ParityInversEqParitySwaps}.
+    \begin{answer}
+      Pernyataan ini tidak mengatakan bahwa \( m \) merupakan jumlah pertukaran terkecil untuk menghasilkan
+      matriks identitas, dan juga tidak mengatakan bahwa \( m \) merupakan jumlah terbesar.
+      Pernyataan tersebut justru mengatakan bahwa 
+      terdapat cara untuk melakukan pertukaran hingga menjadi matriks identitas dalam tepat \( m \) langkah.
+
+      Misalkan \( \iota_j \) adalah baris pertama yang mengalami inversi relatif
+      terhadap suatu baris sebelumnya,
+      dan misalkan \( \iota_k \) adalah baris pertama yang menimbulkan inversi tersebut.
+      Kita memiliki interval baris berikut.
+      \begin{equation*}
+         \begin{mat}
+           \vdots      \\
+           \iota_k     \\
+           \iota_{r_1} \\
+           \vdots      \\
+           \iota_{r_s} \\
+           \iota_j     \\
+           \vdots
+         \end{mat}
+         \qquad j<k<r_1<\dots <r_s
+      \end{equation*}
+      Lakukan pertukaran.
+      \begin{equation*}
+         \begin{mat}
+           \vdots      \\
+           \iota_j     \\
+           \iota_{r_1} \\
+           \vdots      \\
+           \iota_{r_s} \\
+           \iota_k     \\
+           \vdots
+         \end{mat}
+      \end{equation*}
+      Matriks kedua memiliki satu inversi lebih sedikit karena terdapat satu
+      inversi lebih sedikit
+      dalam interval tersebut (\( s \) dibandingkan dengan\ \( s+1 \)), sedangkan inversi yang melibatkan
+      baris di luar interval tidak terpengaruh.
+
+      Lanjutkan dengan cara ini; pada setiap langkah, kurangi banyaknya inversi
+      sebanyak satu
+      melalui setiap pertukaran baris.
+      Ketika tidak ada inversi yang tersisa, hasilnya adalah matriks identitas. 
+
+      Perbedaannya dengan \nearbycorollary{cor:ParityInversEqParitySwaps}
+      ialah bahwa pernyataan soal ini merupakan pernyataan `terdapat':
+      terdapat cara untuk melakukan pertukaran hingga menjadi matriks identitas dalam tepat~$m$ langkah.
+      Namun, korolari tersebut merupakan pernyataan `untuk semua': untuk semua cara melakukan pertukaran hingga menjadi
+      matriks identitas, paritasnya (genap atau ganjil) sama. 
+    \end{answer}
+  \recommended \item 
+    Untuk setiap permutasi $\phi$, misalkan $g(\phi)$ merupakan bilangan bulat 
+    yang didefinisikan sebagai berikut.
+    \begin{equation*}
+       g(\phi)=\prod_{i<j} [\phi(j)-\phi(i)]
+    \end{equation*}
+    (Ini merupakan hasil kali, atas semua indeks \( i \) dan \( j \) dengan \( i<j \),
+    dari suku-suku berbentuk seperti yang diberikan.)
+    \begin{exparts}
+      \partsitem Hitung nilai $g$ pada semua permutasi-$2$.
+      \partsitem Hitung nilai $g$ pada semua permutasi-$3$.
+      \partsitem Buktikan bahwa $g(\phi)$ tidak bernilai $0$.
+      \partsitem Buktikan pernyataan berikut.
+         \begin{equation*}
+            \sgn(\phi)=\frac{g(\phi)}{\absval{g(\phi)}}
+         \end{equation*}
+    \end{exparts}
+    Banyak penulis memberikan rumus ini sebagai definisi fungsi signum.
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Pertama, $g(\phi_1)$ merupakan hasil kali faktor tunggal
+          $2-1$, sehingga $g(\phi_1)=1$.
+          Kedua, $g(\phi_2)$ merupakan hasil kali faktor tunggal
+          $1-2$, sehingga $g(\phi_2)=-1$.
+        \partsitem 
+            \begin{tabular}[t]{r|cccccc}
+               \textit{permutasi $\phi$} 
+                 &$\phi_{1}$ &$\phi_{2}$ &$\phi_{3}$ 
+                    &$\phi_{4}$ &$\phi_{5}$ &$\phi_{6}$ \\
+               \hline
+               $g(\phi)$ &$2$ &$-2$ &$-2$ &$2$ &$2$ &$-2$ 
+            \end{tabular}
+        \partsitem Bentuk tersebut merupakan hasil kali suku-suku tak nol.
+        \partsitem Perhatikan bahwa \( \phi(j)-\phi(i) \) bernilai negatif jika dan hanya jika
+           \( \iota_{\phi(j)} \) dan \( \iota_{\phi(i)} \) berada dalam suatu inversi
+           dari urutan biasanya.
+      \end{exparts}  
+     \end{answer}
+%  \item Prove that the signum function on permutations is unique in that
+%    if \( f \) is a map from the permutations of \( \set{1,\ldots,n} \)
+%    to the integers that is multiplicative:
+%    \( f(\sigma\phi)=f(\sigma)f(\phi) \) then \( f \) is either the
+%    function that always gives zero, or the function that always gives
+%    one, or is the signum.
+%    \begin{answer}
+%      Consider the identity permutation.
+%      \begin{equation*}
+%        \map{\identity}{\set{1,2,\ldots,n}}{\set{1,2,\ldots,n}}    
+%      \end{equation*}
+%      Note that $f(\identity)$ equals $0$ or $1$ because
+%      the multiplicative property gives 
+%      $f(\identity)
+%       =f(\composed{\identity}{\identity})
+%       =f(\identity)\cdot f(\identity)
+%       =f(\identity)^2$.
+%      If $f(\identity)=0$ then $f$ is the constant function 
+%      $f(\phi)=0$ because 
+%      $f(\phi)=f(\composed{\identity}{\phi})=0\cdot f(\phi)=0$.
+%
+%      If $f(\identity)=1$ then consider the permutation
+%      $\tau$ that just swaps $i$ and $j$
+%      \begin{equation*}
+%        1\mapsto 1
+%        \quad 2\mapsto 2
+%        \quad \cdots 
+%        \quad i\mapsto j
+%        \quad \cdots
+%        \quad j\mapsto i
+%        \quad \cdots
+%        \quad n\mapsto n
+%      \end{equation*}
+%      (the $n=1$ special case is easy).
+%      Note that $\composed{\tau}{\tau}=\identity$ so 
+%      $1=f(\composed{\tau}{\tau})=f(\tau)\cdot f(\tau)$,
+%      and $f(\tau)$ is either $+1$ or $-1$.
+%    \end{answer}
+\end{exercises}
+
+
+
+\index{determinan|)}

@@ -1,0 +1,1409 @@
+% Chapter 4, Section 3 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\section{Rumus Laplace}
+\textit{Bagian ini bersifat opsional.
+  Satu-satunya bagian selanjutnya yang bergantung pada materi ini
+  adalah Lima.III.}
+
+Determinan merupakan sumber berbagai rumus yang menarik dan menghibur.
+Berikut salah satu rumus yang sering digunakan
+untuk menghitung determinan dengan tangan.
+
+
+
+\subsectionoptional{Ekspansi Laplace}
+\index{ekspansi determinan Laplace|(}
+
+%<*dis:LaplaceIntro0>
+Dalam ekspansi permutasi $\deter{T}$,
+setiap suku memiliki tepat satu entri dari setiap baris dan kolom~$T$.
+\begin{equation*}
+  \deter{T}=\!\!
+  \sum_{\text{permutasi\ }\phi}\!\!\!\!
+     t_{1,\phi(1)}t_{2,\phi(2)}\cdots t_{n,\phi(n)}
+                                 \deter{P_{\phi}}
+\end{equation*}
+Berikut bentuk rumus tersebut untuk matriks $\nbyn{3}$.
+\begin{align*}
+  \begin{vmat}
+    t_{1,1}  &t_{1,2}  &t_{1,3} \\
+    t_{2,1}  &t_{2,2}  &t_{2,3} \\
+    t_{3,1}  &t_{3,2}  &t_{3,3} 
+  \end{vmat}
+  &=
+  \begin{aligned}[t]
+    &t_{1,1}t_{2,2}t_{3,3}\deter{P_{\phi_1}}
+     +t_{1,1}t_{2,3}t_{3,2}\deter{P_{\phi_2}}
+     +t_{1,2}t_{2,1}t_{3,3}\deter{P_{\phi_3}} \\
+    &\hspace*{0em}
+     +t_{1,2}t_{2,3}t_{3,1}\deter{P_{\phi_4}}
+     +t_{1,3}t_{2,1}t_{3,2}\deter{P_{\phi_5}}
+     +t_{1,3}t_{2,2}t_{3,1}\deter{P_{\phi_6}}
+  \end{aligned}                                      \\
+  &=
+  \begin{aligned}[t]
+    &t_{1,1}t_{2,2}t_{3,3}
+     -t_{1,1}t_{2,3}t_{3,2}
+     -t_{1,2}t_{2,1}t_{3,3}  \\
+    &\hspace*{0em}
+     +t_{1,2}t_{2,3}t_{3,1} 
+     +t_{1,3}t_{2,1}t_{3,2}
+     -t_{1,3}t_{2,2}t_{3,1}
+  \end{aligned}
+\end{align*}
+%</dis:LaplaceIntro0>
+%<*dis:LaplaceIntro1>
+Kita dapat berfokus pada sebarang baris atau kolom; di sini kita
+mengeluarkan entri-entri dari baris pertama $T$.
+\begin{align*}
+  &=
+    t_{1,1}\cdot\big[t_{2,2}t_{3,3}
+                      -t_{2,3}t_{3,2}\big]  \\
+    &\quad
+     -t_{1,2}\cdot\big[t_{2,1}t_{3,3}
+                       -t_{2,3}t_{3,1}\big]  \\
+    &\quad
+     +t_{1,3}\cdot\big[t_{2,1}t_{3,2}
+                       -t_{2,2}t_{3,1}\big]
+  \tag{$*$}
+\end{align*}
+%</dis:LaplaceIntro1>
+%<*dis:LaplaceIntro2>
+Perhatikan bahwa di dalam pasangan kurung siku pertama terdapat
+determinan
+\begin{equation*}
+  \begin{vmat}
+    t_{2,2}  &t_{2,3} \\
+    t_{3,2}  &t_{3,3}
+  \end{vmat}
+  \tag{$**$}
+\end{equation*}
+dan demikian pula, di dalam pasangan kurung lainnya terdapat determinan lain.
+\begin{equation*}
+  \begin{vmat}
+    t_{2,1}  &t_{2,3} \\
+    t_{3,1}  &t_{3,3}
+  \end{vmat}
+  \qquad
+  \begin{vmat}
+    t_{2,1}  &t_{2,2} \\
+    t_{3,1}  &t_{3,2}
+  \end{vmat}
+  \tag{$*\!*\!*$}
+\end{equation*}
+%</dis:LaplaceIntro2>
+%<*dis:LaplaceIntro3>
+Penjelasan bagi determinan-determinan ini terletak pada permutasinya.
+Jika kita menetapkan suatu baris dan kolom\Dash misalnya ketika meninjau semua
+suku yang memuat~$t_{1,1}$, semua suku yang memuat~$t_{1,2}$, atau semua suku
+yang memuat~$t_{1,3}$\Dash maka yang tersisa bagi permutasi adalah memilih satu
+entri dari setiap baris dan kolom lainnya.
+
+Matriks-matriks di bawah ini memberikan ilustrasi.
+Di sebelah kiri, baris dan kolom yang memuat~$t_{1,1}$ diberi bayangan, dan
+yang tersisa adalah matriks dari~($**$) di atas.
+Demikian pula, pada dua matriks lainnya, yang tersisa adalah matriks-matriks
+dari~($*\!*\!*$).
+\definecolor{shadematrix}{gray}{0.8}
+\begin{equation*}
+  \left(\begin{array}{>{\columncolor{shadematrix}}ccc}
+    \rowcolor{shadematrix}
+    t_{1,1}  &t_{1,2}  &t_{1,3} \\
+    t_{2,1}  &t_{2,2}  &t_{2,3} \\
+    t_{3,1}  &t_{3,2}  &t_{3,3} 
+  \end{array}\right)
+  \quad
+  \left(\begin{array}{c>{\columncolor{shadematrix}}cc}
+    \rowcolor{shadematrix}
+    t_{1,1}  &t_{1,2}  &t_{1,3} \\
+    t_{2,1}  &t_{2,2}  &t_{2,3} \\
+    t_{3,1}  &t_{3,2}  &t_{3,3} 
+  \end{array}\right)
+  \quad
+  \left(\begin{array}{cc>{\columncolor{shadematrix}}c}
+    \rowcolor{shadematrix}
+    t_{1,1}  &t_{1,2}  &t_{1,3} \\
+    t_{2,1}  &t_{2,2}  &t_{2,3} \\
+    t_{3,1}  &t_{3,2}  &t_{3,3} 
+  \end{array}\right)
+\end{equation*}
+%</dis:LaplaceIntro3>
+
+%<*dis:LaplaceIntro4>
+Dengan demikian, kita telah menjelaskan kemunculan determinan matriks-matriks
+berukuran lebih kecil dalam persamaan~($*$).
+Untuk menjelaskan tanda minus pada baris kedua persamaan tersebut,
+tinjau bentuk berikut dari
+$\deter{T}=t_{1,1}t_{2,2}t_{3,3}\deter{P_{\phi_1}}+\cdots+t_{1,3}t_{2,2}t_{3,1}\deter{P_{\phi_6}}$.
+\begin{equation*}
+  \begin{aligned}[t]
+      &t_{1,1}\cdot \bigg[t_{2,2}t_{3,3}\begin{vmat}[r]
+                                 1  &0  &0  \\
+                                 0  &1  &0  \\
+                                 0  &0  &1
+                                \end{vmat}
+                 +t_{2,3}t_{3,2}\begin{vmat}[r]
+                                  1  &0  &0  \\
+                                  0  &0  &1  \\
+                                  0  &1  &0
+                                \end{vmat}\,\bigg]    \\
+         &\hbox{}\quad\hbox{}
+          +t_{1,2}\cdot \bigg[t_{2,1}t_{3,3}\begin{vmat}[r]
+                                        0  &1  &0  \\
+                                        1  &0  &0  \\
+                                        0  &0  &1
+                                       \end{vmat}
+                        +t_{2,3}t_{3,1}\begin{vmat}[r]
+                                         0  &1  &0  \\
+                                         0  &0  &1  \\
+                                         1  &0  &0
+                                        \end{vmat}\,\bigg]  \\
+        &\hbox{}\quad\hbox{}
+         +t_{1,3}\cdot \bigg[t_{2,1}t_{3,2}\begin{vmat}[r]
+                                        0  &0  &1  \\
+                                        1  &0  &0  \\
+                                        0  &1  &0
+                                       \end{vmat}
+                        +t_{2,2}t_{3,1}\begin{vmat}[r]
+                                         0  &0  &1  \\
+                                         0  &1  &0  \\
+                                         1  &0  &0
+                                        \end{vmat}\,\bigg]
+    \end{aligned}
+\end{equation*}
+Matriks $P_{\phi_1}$ dan~$P_{\phi_2}$ pada baris pertama sudah tersusun untuk
+determinan~($**$), karena baris pertamanya sama seperti pada matriks identitas,
+sedangkan dua baris lainnya tampak seperti baris-baris determinan tersebut.
+Matriks $P_{\phi_3}$ dan~$P_{\phi_4}$ pada baris kedua dapat disusun dengan
+cara yang sama melalui satu pertukaran baris, yang menempatkan
+$\rowvec{1 &0 &0}$ pada baris pertama.
+Tentu saja, pertukaran baris tersebut memberi tanda negatif pada baris itu.
+Terakhir, menyusun matriks-matriks pada baris ketiga dengan cara yang sama
+memerlukan dua pertukaran, sehingga tandanya tetap positif.
+%</dis:LaplaceIntro4>
+
+Singkatnya, kita memperoleh rumus berikut.
+\begin{equation*}
+  \deter{T}
+  =t_{1,1}\cdot \begin{vmat}
+            t_{2,2}  &t_{2,3}  \\
+            t_{3,2}  &t_{3,3}
+          \end{vmat}
+   -t_{1,2}\cdot \begin{vmat}
+             t_{2,1}  &t_{2,3}  \\
+             t_{3,1}  &t_{3,3}
+           \end{vmat}
+   +t_{1,3}\cdot \begin{vmat}
+             t_{2,1}  &t_{2,2}  \\
+             t_{3,1}  &t_{3,2}
+           \end{vmat}
+\end{equation*}
+Rumus dalam \nearbytheorem{th:LaPlaceExp}, yang menggeneralisasi hasil ini,
+merupakan suatu \definend{rekurensi}\index{rekurensi}, karena determinan
+dinyatakan sebagai kombinasi determinan-determinan.
+Rumus ini tidak bersifat melingkar karena menyatakan determinan $\nbyn{n}$
+dalam bentuk matriks-matriks berukuran lebih kecil.
+
+\begin{definition} \label{df:Minor}
+%<*df:Minor>
+Untuk sebarang matriks \( \nbyn{n} \), \( T \), matriks \( \nbyn{(n-1)} \)
+yang diperoleh dengan menghapus baris~\( i \) dan kolom~\( j \) dari \( T \)
+adalah \definend{minor} \( i,j \)\index{minor, matriks}%
+\index{determinan!minor}
+\index{matriks!minor}
+dari \( T \).
+\definend{Kofaktor} \( i,j \)\index{kofaktor}
+\index{determinan!menggunakan kofaktor}
+% \index{matrix!cofactor} 
+dari \( T \), yaitu \( T_{i,j} \), adalah \( (-1)^{i+j} \) kali determinan minor
+\( i,j \) dari \( T \).
+%</df:Minor>
+\end{definition}
+
+\begin{example}
+Kofaktor $1,2$ dari matriks dalam persamaan~($*$) adalah negatif dari
+determinan pertama dalam~($*\!*\!*$).
+\begin{equation*}
+  T_{1,2}=
+  -1\cdot\begin{vmat}
+    t_{2,1}  &t_{2,3}  \\
+    t_{3,1}  &t_{3,3}
+  \end{vmat}
+\end{equation*}
+\end{example}
+
+\begin{example}
+Untuk
+\begin{equation*}
+   T=
+   \begin{mat}[r]
+      1  &2  &3  \\
+      4  &5  &6  \\
+      7  &8  &9
+   \end{mat}
+\end{equation*}
+berikut adalah kofaktor \( 1,2 \) dan \( 2,2 \).
+\begin{equation*}
+   T_{1,2}=
+   (-1)^{1+2}\cdot\begin{vmat}[r]
+                4  &6  \\
+                7  &9
+             \end{vmat}=6
+  \qquad
+   T_{2,2}=
+   (-1)^{2+2}\cdot\begin{vmat}[r]
+                1  &3  \\
+                7  &9
+             \end{vmat}=-12
+\end{equation*}
+\end{example}
+
+\begin{theorem}[Ekspansi Laplace untuk Determinan]
+\label{th:LaPlaceExp}
+\index{determinan!ekspansi Laplace}%
+% \index{Laplace expansion!computes determinant}
+%<*th:LaPlaceExp>
+Jika \( T \) merupakan matriks \( \nbyn{n} \), kita dapat menentukan
+determinannya dengan melakukan ekspansi kofaktor pada sebarang
+baris~$i$ atau kolom~$j$.
+\begin{align*}
+   \deter{T}
+   &=t_{i,1}\cdot T_{i,1}+t_{i,2}\cdot T_{i,2}+\cdots+t_{i,n}\cdot T_{i,n}  \\
+   &=t_{1,j}\cdot T_{1,j}+t_{2,j}\cdot T_{2,j}+\cdots+t_{n,j}\cdot T_{n,j}
+\end{align*}
+%</th:LaPlaceExp>
+\end{theorem}
+
+\begin{proof}
+\nearbyexercise{exer:LaplaceProof}.
+\end{proof}
+
+\begin{example} \label{ex:ExpLaPlace}
+Kita dapat menghitung determinan
+\begin{equation*}
+   \deter{T}=
+   \begin{vmat}[r]
+     1  &2  &3  \\
+     4  &5  &6  \\
+     7  &8  &9
+   \end{vmat}
+\end{equation*}
+dengan melakukan ekspansi sepanjang baris pertama.
+\begin{equation*}
+   \deter{T}
+   =1\cdot(+1)\begin{vmat}[r]
+                5  &6  \\
+                8  &9
+              \end{vmat}
+   +2\cdot(-1)\begin{vmat}[r]
+                4  &6  \\
+                7  &9
+              \end{vmat}
+   +3\cdot(+1)\begin{vmat}[r]
+                4  &5  \\
+                7  &8
+              \end{vmat}     
+  =-3+12-9     
+  =0
+\end{equation*}
+Kita juga dapat melakukan ekspansi sepanjang kolom kedua.
+\begin{equation*}
+   \deter{T}
+   =2\cdot(-1)\begin{vmat}[r]
+                4  &6  \\
+                7  &9
+              \end{vmat}
+   +5\cdot(+1)\begin{vmat}[r]
+                1  &3  \\
+                7  &9
+              \end{vmat}
+   +8\cdot(-1)\begin{vmat}[r]
+                1  &3  \\
+                4  &6
+              \end{vmat}     
+  =12-60+48   
+  =0
+\end{equation*}
+\end{example}
+
+\begin{example}
+Baris atau kolom yang memuat banyak nol membuat ekspansi ini lebih mudah.
+\begin{equation*}
+  \begin{vmat}[r]
+    1 &5  &0  \\
+    2 &1  &1  \\
+    3 &-1 &0
+  \end{vmat}
+   =
+   0\cdot(+1)\begin{vmat}[r]
+               2  &1  \\
+               3  &-1
+             \end{vmat}+
+   1\cdot(-1)\begin{vmat}[r]
+               1  &5  \\
+               3  &-1
+             \end{vmat}+
+   0\cdot(+1)\begin{vmat}[r]
+               1  &5  \\
+               2  &1
+             \end{vmat}
+  =16
+\end{equation*}
+\end{example}
+
+Sebagai penutup, kita menerapkan ekspansi Laplace untuk menurunkan rumus baru
+bagi invers suatu matriks.
+Dengan \nearbytheorem{th:LaPlaceExp}, kita dapat menghitung determinan matriks
+dengan mengambil kombinasi linear entri-entri suatu baris dan kofaktor yang
+bersesuaian.
+\begin{equation*}
+  t_{i,1}\cdot T_{i,1}+t_{i,2}\cdot T_{i,2}+\dots+t_{i,n}\cdot T_{i,n}
+   =\deter{T}  
+\end{equation*}
+Ingat bahwa matriks dengan dua baris identik memiliki determinan nol.
+Karena itu, membobot kofaktor-kofaktor baris~$k$ dengan entri-entri dari
+baris~$i$, untuk $k\neq i$, memberikan nol
+\begin{equation*}
+  t_{i,1}\cdot T_{k,1}+t_{i,2}\cdot T_{k,2}+\dots+t_{i,n}\cdot T_{k,n}=0
+\end{equation*}
+karena jumlah tersebut merepresentasikan ekspansi sepanjang baris~$k$ dari
+matriks yang baris~\( k \)-nya dibuat sama dengan baris~\( i \).
+Hal ini dirangkum sebagai berikut.
+\begin{equation*}
+ \generalmatrix{t}{n}{n}
+ \begin{mat}
+   T_{1,1}  &T_{2,1}  &\ldots  &T_{n,1}  \\
+   T_{1,2}  &T_{2,2}  &\ldots  &T_{n,2}  \\
+            &\vdots   &        &         \\
+   T_{1,n}  &T_{2,n}  &\ldots  &T_{n,n}
+ \end{mat}                                  
+ =\begin{mat}
+     |T|      &0        &\ldots  &0        \\
+     0        &|T|      &\ldots  &0        \\
+              &\vdots   &        &         \\
+     0        &0        &\ldots  &|T|
+   \end{mat} 
+\end{equation*}
+Perhatikan bahwa urutan subskrip dalam matriks kofaktor berlawanan dengan
+urutan subskrip dalam matriks lainnya; sebagai contoh, pada baris pertama
+matriks kofaktor, subskripnya adalah $1,1$, lalu $2,1$, dan seterusnya.
+
+\begin{definition}  \label{df:Adjoint}
+%<*df:Adjoint>
+\definend{Matriks adjoin}\index{matriks!adjoin}\index{matriks adjoin}
+(atau \definend{adjugat})\index{matriks!adjugat}\index{matriks adjugat}
+dari matriks persegi \( T \)
+(juga disebut \definend{adjoin klasik})\index{adjoin klasik}
+adalah
+\begin{equation*}
+  \adj(T)=
+    \begin{mat}
+      T_{1,1}  &T_{2,1}  &\ldots  &T_{n,1}  \\
+      T_{1,2}  &T_{2,2}  &\ldots  &T_{n,2}  \\
+               &\vdots   &        &         \\
+      T_{1,n}  &T_{2,n}  &\ldots  &T_{n,n}
+    \end{mat}
+\end{equation*}
+di mana entri pada baris~\( i \), kolom~\( j \), yaitu \( T_{j,i} \),
+merupakan kofaktor \( j,i \).
+%</df:Adjoint>
+\end{definition}
+
+\begin{theorem} \label{th:MatTimesAdjEqDiagDets}
+%<*th:MatTimesAdjEqDiagDets>
+Jika \( T \) merupakan matriks persegi,
+$T\cdot \adj(T)=\adj(T)\cdot T=\deter{T}\cdot I$.
+Jadi, jika $T$ memiliki invers, yakni jika $\deter{T}\neq 0$, maka
+$T^{-1}=(1/\deter{T})\cdot\adj(T)$.\index{matriks!invers}\index{invers!matriks}
+%</th:MatTimesAdjEqDiagDets>
+\end{theorem}
+
+\begin{proof}
+Pembahasan sebelum pernyataan teorema memperjelas hasil tersebut.
+\end{proof}
+
+\begin{example}    \label{ex:MatTimesAdjEqDets}
+Jika
+\begin{equation*}
+  T=\begin{mat}[r]
+        1  &0  &4  \\
+        2  &1  &-1 \\
+        1  &0  &1
+      \end{mat}
+\end{equation*}
+maka $\adj(T)$ adalah
+\begin{equation*}
+    \begin{mat}
+      T_{1,1}  &T_{2,1}  &T_{3,1} \\
+      T_{1,2}  &T_{2,2}  &T_{3,2} \\
+      T_{1,3}  &T_{2,3}  &T_{3,3}   
+    \end{mat}
+    \!\!=\!\!\begin{mat}
+      \begin{vmat}[r]
+           1  &-1 \\
+           0  &1
+         \end{vmat}
+      &-\begin{vmat}[r]
+             0  &4  \\
+             0  &1
+           \end{vmat}
+      &\begin{vmat}[r]
+             0  &4  \\
+             1  &-1
+         \end{vmat}             \\[2.1ex]
+      -\begin{vmat}[r]
+           2  &-1 \\
+           1  &1
+         \end{vmat}
+      &\begin{vmat}[r]
+             1  &4  \\
+             1  &1
+           \end{vmat}
+      &-\begin{vmat}[r]
+             1  &4  \\
+             2  &-1
+           \end{vmat}            \\[2.1ex]
+      \begin{vmat}[r]
+           2  &1  \\
+           1  &0
+         \end{vmat}
+      &-\begin{vmat}[r]
+             1  &0  \\
+             1  &0
+           \end{vmat}
+      &\begin{vmat}[r]
+             1  &0  \\
+             2  &1
+           \end{vmat}
+    \end{mat}
+    \!\!=\!                 
+    \begin{mat}[r]
+       1  &0  &-4  \\
+       -3 &-3 &9  \\
+       -1 &0  &1
+    \end{mat}         
+\end{equation*}
+dan mengalikannya dengan $T$ menghasilkan matriks diagonal $\deter{T}\cdot I$.
+\begin{equation*}
+  \begin{mat}[r]
+    1  &0  &4  \\
+    2  &1  &-1 \\
+    1  &0  &1
+  \end{mat}
+  \begin{mat}[r]
+    1  &0  &-4  \\
+    -3 &-3 &9  \\
+    -1 &0  &1
+   \end{mat}         
+  =\begin{mat}[r]
+     -3  &0  &0  \\
+      0  &-3 &0  \\
+      0  &0  &-3
+   \end{mat}
+\end{equation*}
+% \end{example}
+
+% \begin{corollary} \label{cor:InvFromAdj}
+% \index{matrix!inverse}\index{inverse!matrix}
+% %<*co:InvFromAdj>
+% If \( \deter{T}\neq 0 \) then
+% $T^{-1}=(1/\deter{T})\cdot\adj(T)$.
+% %</co:InvFromAdj>
+% \end{corollary}
+
+% \begin{example}
+\noindent Invers dari $T$
+% The inverse of the matrix from \nearbyexample{ex:MatTimesAdjEqDets}
+adalah $(1/-3)\cdot\adj(T)$.
+\begin{equation*}
+  T^{-1}
+  =\begin{mat}[r]  % braces make the - a negative sign?
+     1/\hbox{$-3$}  &0/\hbox{$-3$}  &-4/\hbox{$-3$}  \\
+    -3/\hbox{$-3$}  &-3/\hbox{$-3$} &9/\hbox{$-3$}   \\
+    -1/\hbox{$-3$}  &0/\hbox{$-3$}  &1/\hbox{$-3$}
+   \end{mat}
+  =\begin{mat}[r]
+     -1/3  &0  &4/3  \\
+      1    &1  &-3   \\
+      1/3  &0  &-1/3
+   \end{mat}
+\end{equation*}
+\end{example}
+
+Rumus-rumus dari subbagian ini sering digunakan untuk perhitungan dengan tangan
+dan kadang-kadang berguna bagi jenis matriks khusus.
+Namun, bagi matriks umum, rumus-rumus ini bukan pilihan terbaik karena
+memerlukan lebih banyak aritmetika daripada, misalnya, metode Gauss--Jordan.
+
+
+
+
+\begin{exercises}
+  \recommended \item 
+    Tentukan kofaktor berikut.
+    \begin{equation*}
+      T=\begin{mat}[r]
+          1  &0  &2  \\
+         -1  &1  &3  \\
+          0  &2  &-1
+        \end{mat}
+    \end{equation*}
+    \begin{exparts*}
+       \partsitem \( T_{2,3} \)
+       \partsitem \( T_{3,2} \)
+       \partsitem \( T_{1,3} \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts*}
+       \partsitem \( (-1)^{2+3}\begin{vmat}[r]
+                            1  &0  \\
+                            0  &2
+                          \end{vmat}=-2  \)
+       \partsitem \( (-1)^{3+2}\begin{vmat}[r]
+                            1  &2  \\
+                           -1  &3
+                          \end{vmat}=-5  \)
+       \partsitem \( (-1)^{4}\begin{vmat}[r]
+                           -1  &1  \\
+                            0  &2
+                          \end{vmat}=-2  \)
+      \end{exparts*}  
+    \end{answer}
+  \recommended \item 
+    Tentukan matriks adjoin dari matriks berikut.
+    \begin{equation*}
+      T=\begin{mat}[r]
+          1  &0  &2  \\
+         -1  &1  &3  \\
+          0  &2  &-1
+        \end{mat}
+    \end{equation*}
+    \begin{answer}
+      % sage: M = matrix(QQ, [[1,0,2], [-1,1,3], [0,2,-1]])
+      % sage: M.adjoint()
+      % [-7  4 -2]
+      % [-1 -1 -5]
+      % [-2 -2  1] 
+      {\renewcommand{\arraystretch}{1.2}
+      \begin{equation*} 
+        \adj(T)=
+        \begin{mat}
+          \begin{vmatrix}
+            1 &3 \\
+            2 &-1
+          \end{vmatrix}
+          &-\begin{vmatrix}
+            0 &2 \\ 
+            2 &-1
+          \end{vmatrix}
+          &\begin{vmatrix}
+             0 &2 \\
+              1 &3
+           \end{vmatrix}                  \\
+          -\begin{vmatrix}
+             -1 &3 \\
+             0 &-1
+           \end{vmatrix}
+          &\begin{vmatrix}
+            1 &2 \\
+            0 &-1
+           \end{vmatrix}
+          &-\begin{vmatrix}
+            1 &2 \\
+            -1 &3
+           \end{vmatrix}                  \\
+          \begin{vmatrix}
+            -1 &1 \\ 
+            0 &2
+          \end{vmatrix}
+          &-\begin{vmatrix}
+            1  &0 \\
+            0 &2
+           \end{vmatrix}
+          &\begin{vmatrix}
+            1 &0 \\
+            -1 &1
+           \end{vmatrix}                  
+        \end{mat}
+        =
+        \begin{mat}
+          -7 &4 &-2 \\
+          -1  &-1 &-5 \\
+          -2 &-2 &1 
+        \end{mat}
+      \end{equation*}}
+    \end{answer}
+  \item Determinan ini bernilai $0$.
+   Hitunglah nilainya dengan melakukan ekspansi pada baris pertama.
+    \begin{equation*}
+      \begin{vmat}[r]
+         1  &2  &3  \\
+         4  &5  &6  \\
+         7  &8  &9
+      \end{vmat}
+    \end{equation*}
+    \begin{answer}
+      \begin{equation*}
+        \begin{vmat}[r]
+          1  &2  &3  \\
+          4  &5  &6  \\
+          7  &8  &9
+        \end{vmat}=
+        1\cdot(+1)\cdot
+          \begin{vmatrix}
+            5 &6 \\
+            8 &9
+          \end{vmatrix}
+        +2\cdot(-1)\cdot
+          \begin{vmatrix}
+            4 &6 \\
+            7 &9
+          \end{vmatrix}
+        +3\cdot(+1)\cdot
+          \begin{vmatrix}
+            4 &5 \\
+            7 &8
+          \end{vmatrix}
+      \end{equation*}
+      Rumus bagi matriks $\nbyn{2}$ memberikan
+      $1\cdot (-3)-2\cdot (-6)+3\cdot(-3)=0$.
+    \end{answer}
+  \recommended \item 
+    Tentukan determinan berikut dengan melakukan ekspansi
+    \begin{equation*}
+      \begin{vmat}[r]
+         3  &0  &1  \\
+         1  &2  &2  \\
+        -1  &3  &0
+      \end{vmat}
+    \end{equation*}
+    \begin{exparts*}
+      \partsitem pada baris pertama
+      \partsitem pada baris kedua
+      \partsitem pada kolom ketiga.
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+         \partsitem \( 3\cdot(+1)\begin{vmat}[r]
+                          2  &2  \\
+                          3  &0
+                       \end{vmat}
+                 +0\cdot (-1)\begin{vmat}[r]
+                          1  &2  \\
+                         -1  &0
+                       \end{vmat}
+                 +1\cdot (+1)\begin{vmat}[r]
+                          1  &2  \\
+                         -1  &3
+                       \end{vmat} =-13 \)
+         \partsitem \( 1\cdot (-1)\begin{vmat}[r]
+                          0  &1  \\
+                          3  &0
+                       \end{vmat}
+                 +2\cdot (+1)\begin{vmat}[r]
+                          3  &1  \\
+                         -1  &0
+                       \end{vmat}
+                 +2\cdot (-1)\begin{vmat}[r]
+                          3  &0  \\
+                         -1  &3
+                       \end{vmat} =-13 \)
+         \partsitem \( 1\cdot (+1)\begin{vmat}[r]
+                          1  &2  \\
+                         -1  &3
+                       \end{vmat}
+                 +2\cdot (-1)\begin{vmat}[r]
+                          3  &0  \\
+                         -1  &3
+                       \end{vmat}
+                 +0\cdot (+1)\begin{vmat}[r]
+                          3  &0  \\
+                          1  &2
+                       \end{vmat} =-13 \)
+       \end{exparts}  
+     \end{answer}
+  \item 
+    Tentukan matriks adjoin dari matriks dalam \nearbyexample{ex:ExpLaPlace}.
+    \begin{answer}
+      Berikut adalah $\adj(T)$.
+      \begin{align*}
+         \begin{mat}
+           T_{1,1}  &T_{2,1}  &T_{3,1} \\
+           T_{1,2}  &T_{2,2}  &T_{3,2} \\
+           T_{1,3}  &T_{2,3}  &T_{3,3}   
+         \end{mat}
+         &=\begin{mat}
+            \begin{vmat}
+               5  &6  \\ 8  &9
+            \end{vmat}
+            &-\begin{vmat}
+               2  &3  \\  8  &9
+            \end{vmat}
+            &+\begin{vmat}
+               2  &3  \\  5  &6
+            \end{vmat}        \\[2.5ex]
+            -\begin{vmat}
+               4  &6  \\  7  &9
+            \end{vmat}
+            &+\begin{vmat}
+               1  &3  \\  7  &9
+            \end{vmat}
+            &-\begin{vmat}
+               1  &3  \\  4  &6
+            \end{vmat}        \\[2.5ex]
+            +\begin{vmat}
+               4  &5  \\  7  &8
+            \end{vmat}
+            &-\begin{vmat}
+               1  &2  \\  7  &8
+            \end{vmat}
+            &+\begin{vmat}
+               1  &2  \\  4  &5
+            \end{vmat}
+         \end{mat}                                   \\
+         &=\begin{mat}[r]
+          -3  &6   &-3 \\
+           6  &-12 &6  \\
+          -3  &6   &-3
+         \end{mat}
+      \end{align*}
+    \end{answer}
+  \recommended \item 
+    Tentukan matriks adjoin dari masing-masing matriks berikut.
+    \begin{exparts*}
+      \partsitem \( \begin{mat}[r]
+                 2   &1  &4  \\
+                -1   &0  &2  \\
+                 1   &0  &1
+               \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+                 3  &-1  \\
+                 2  &4
+               \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+                 1   &1  \\
+                 5   &0
+               \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+                 1   &4  &3  \\
+                -1   &0  &3  \\
+                 1   &8  &9
+               \end{mat}  \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Berikut adalah matriks adjoin tersebut.
+          \begin{align*}
+          \begin{mat}
+            T_{1,1}  &T_{2,1}  &T_{3,1} \\ 
+            T_{1,2}  &T_{2,2}  &T_{3,2} \\ 
+            T_{1,3}  &T_{2,3}  &T_{3,3} 
+          \end{mat}
+          &=\begin{mat}
+            \begin{vmat}[r]
+              0  &2  \\
+              0  &1 
+            \end{vmat}
+            &-\begin{vmat}[r]
+               1  &4  \\
+               0  &1
+            \end{vmat}
+            &\begin{vmat}[r]
+               1  &4  \\
+               0  &2 
+            \end{vmat}        \\[2.5ex]
+            -\begin{vmat}[r]
+              -1  &2  \\
+               1  &1
+            \end{vmat}
+            &\begin{vmat}[r]
+               2  &4  \\
+               1  &1
+            \end{vmat}
+            &-\begin{vmat}[r]
+               2  &4  \\ 
+              -1  &2
+            \end{vmat}         \\[2.5ex]
+            \begin{vmat}[r]
+              -1  &0  \\
+               1  &0
+            \end{vmat} 
+            &-\begin{vmat}[r]
+               2  &1  \\
+               1  &0
+            \end{vmat}
+            &\begin{vmat}[r]
+               2  &1  \\
+              -1  &0
+            \end{vmat}
+          \end{mat}                         \\
+          &=\begin{mat}[r]
+             0  &-1  &2  \\
+             3  &-2  &-8 \\
+             0  &1   &1            
+          \end{mat}
+          \end{align*}
+        \partsitem Minor-minornya berukuran $\nbyn{1}$.
+          $\begin{mat}
+             T_{1,1}  &T_{2,1} \\
+             T_{1,2}  &T_{2,2}  
+          \end{mat}
+          =
+          \begin{mat}
+            \begin{vmat}
+              4              
+            \end{vmat}
+            &-\begin{vmat}
+              -1
+            \end{vmat}        \\[1.5ex]
+            -\begin{vmat}
+               2              
+            \end{vmat}
+            &\begin{vmat}
+               3
+            \end{vmat}
+          \end{mat}
+          =
+          \begin{mat}[r]
+            4  &1  \\
+           -2  &3
+          \end{mat}$
+        \partsitem 
+          $\begin{mat}[r]
+               0  &-1 \\
+              -5  &1
+          \end{mat}$
+        \partsitem Minor-minornya berukuran $\nbyn{2}$.
+          \begin{align*}
+          \begin{mat}
+            T_{1,1}  &T_{2,1}  &T_{3,1} \\ 
+            T_{1,2}  &T_{2,2}  &T_{3,2} \\ 
+            T_{1,3}  &T_{2,3}  &T_{3,3} 
+          \end{mat}
+          &=\begin{mat}
+            \begin{vmat}[r]
+              0  &3  \\
+              8  &9
+            \end{vmat}
+            &-\begin{vmat}[r]
+              4  &3  \\
+              8  &9
+            \end{vmat}
+            &\begin{vmat}[r]
+              4  &3  \\
+              0  &3 
+            \end{vmat}       \\[2.5ex]
+            -\begin{vmat}[r]
+              -1  &3  \\
+               1  &9
+            \end{vmat}
+            &\begin{vmat}[r]
+               1  &3  \\
+               1  &9              
+            \end{vmat}
+            &-\begin{vmat}[r]
+               1  &3 \\
+              -1  &3              
+            \end{vmat}        \\[2.5ex]
+            \begin{vmat}[r]
+               -1  &0  \\
+                1  &8              
+            \end{vmat}
+            &-\begin{vmat}[r]
+                1  &4 \\
+                1  &8              
+            \end{vmat}
+            &\begin{vmat}[r]
+                1  &4  \\
+               -1  &0              
+            \end{vmat}
+          \end{mat}                       \\
+          &=
+          \begin{mat}[r]
+            -24  &-12  &12  \\
+             12  &6    &-6   \\
+             -8  &-4   &4
+          \end{mat}
+        \end{align*}
+      \end{exparts}
+    \end{answer}
+\recommended \item
+    Tentukan invers setiap matriks pada soal sebelumnya dengan menggunakan
+    \nearbytheorem{th:MatTimesAdjEqDiagDets}.
+    \begin{answer}
+      \begin{exparts}
+        \partsitem $(1/3)\cdot 
+           \begin{mat}[r]
+             0  &-1  &2  \\
+             3  &-2  &-8 \\
+             0  &1   &1            
+          \end{mat}          
+          =
+          \begin{mat}[r]
+            0  &-1/3  &2/3  \\
+            1  &-2/3  &-8/3 \\ 
+            0  &1/3   &1/3
+          \end{mat}$
+        \partsitem $(1/14)\cdot 
+          \begin{mat}[r]
+            4  &1  \\
+           -2  &3
+          \end{mat}
+          =
+          \begin{mat}[r]
+            2/7  &1/14  \\
+           -1/7  &3/14
+          \end{mat}$
+        \partsitem $(1/-5)\cdot 
+          \begin{mat}[r]
+               0  &-1 \\
+              -5  &1
+          \end{mat}
+          =
+          \begin{mat}[r]
+            0  &1/5 \\
+            1  &-1/5
+          \end{mat}$
+        \partsitem Matriks tersebut memiliki determinan nol, sehingga tidak
+           memiliki invers.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Tentukan matriks adjoin dari matriks berikut.
+    \begin{equation*}
+      \begin{mat}[r]
+        2  &1  &0  &0  \\
+        1  &2  &1  &0  \\
+        0  &1  &2  &1  \\
+        0  &0  &1  &2
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      $\begin{mat}
+        T_{1,1}  &T_{2,1}  &T_{3,1}  &T_{4,1}  \\ 
+        T_{1,2}  &T_{2,2}  &T_{3,2}  &T_{4,2}  \\ 
+        T_{1,3}  &T_{2,3}  &T_{3,3}  &T_{4,3}  \\ 
+        T_{1,4}  &T_{2,4}  &T_{3,4}  &T_{4,4}  
+      \end{mat}
+      =
+      \begin{mat}[r]
+        4  &-3  &2  &-1  \\
+       -3  &6   &-4 &2   \\
+        2  &-4  &6  &-3  \\
+        -1 &2  &-3  &4
+      \end{mat}$
+    \end{answer}
+  \recommended \item
+    Lakukan ekspansi sepanjang baris pertama untuk menurunkan rumus determinan
+    matriks \( \nbyn{2} \).
+    \begin{answer}
+       Determinan
+       \begin{equation*}
+         \begin{vmat}
+           a  &b  \\
+           c  &d
+         \end{vmat}
+       \end{equation*} 
+       yang diekspansi sepanjang baris pertama memberikan
+       \( a\cdot (+1)\deter{d}+b\cdot (-1)\deter{c}=ad-bc \)
+       (perhatikan kedua minor $\nbyn{1}$).
+     \end{answer}
+  \recommended \item
+    Lakukan ekspansi sepanjang baris pertama untuk menurunkan rumus determinan
+    matriks \( \nbyn{3} \).
+    \begin{answer}
+      Determinan dari
+      \begin{equation*}
+        \begin{mat}
+          a  &b  &c  \\
+          d  &e  &f  \\
+          g  &h  &i
+        \end{mat}
+      \end{equation*}
+      adalah sebagai berikut.
+      \begin{equation*}
+        a\cdot \begin{vmat}
+            e  &f  \\
+            h  &i
+         \end{vmat}
+        -b\cdot \begin{vmat}
+            d  &f  \\
+            g  &i
+         \end{vmat}
+        +c\cdot \begin{vmat}
+            d  &e  \\
+            g  &h
+         \end{vmat}
+        =a(ei-fh)-b(di-fg)+c(dh-eg)
+      \end{equation*}  
+    \end{answer}
+  \recommended \item 
+   \begin{exparts}
+     \partsitem Berikan rumus bagi matriks adjoin dari matriks \( \nbyn{2} \).
+     \partsitem Gunakan rumus tersebut untuk menurunkan rumus invers.
+   \end{exparts} 
+    \begin{answer}
+      \begin{exparts}
+        \partsitem
+          $\begin{mat}
+             T_{1,1}  &T_{2,1}  \\
+             T_{1,2}  &T_{2,2}
+            \end{mat}
+            =\begin{mat}
+            \begin{vmat}
+              t_{2,2}
+            \end{vmat}
+           &-\begin{vmat}
+               t_{1,2}
+             \end{vmat}       \\
+           -\begin{vmat}
+               t_{2,1}
+            \end{vmat}
+           &\begin{vmat}
+              t_{1,1} 
+            \end{vmat}
+          \end{mat}
+          =\begin{mat}
+             t_{2,2}  &-t_{1,2}  \\
+            -t_{2,1} &t_{1,1}
+           \end{mat}$
+        \partsitem
+          $\bigl(1/(t_{1,1}t_{2,2}-t_{1,2}t_{2,1})\bigr)\cdot
+          \begin{mat}
+             t_{2,2}  &-t_{1,2}  \\
+            -t_{2,1} &t_{1,1}
+           \end{mat}$
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+    Dapatkah kita menghitung determinan dengan melakukan ekspansi sepanjang
+    diagonal?
+    \begin{answer}
+      Tidak.
+      Berikut sebuah determinan yang nilainya
+      \begin{equation*}
+        \begin{vmat}[r]
+          1  &0  &0  \\
+          0  &1  &0  \\
+          0  &0  &1
+        \end{vmat}=1
+      \end{equation*}
+      tidak sama dengan hasil ekspansi sepanjang diagonal.
+      \begin{equation*}
+        1\cdot (+1)\begin{vmat}[r]
+               1  &0  \\
+               0  &1
+             \end{vmat}
+       +1\cdot (+1)\begin{vmat}[r]
+               1  &0  \\
+               0  &1
+             \end{vmat}
+       +1\cdot (+1)\begin{vmat}[r]
+               1  &0  \\
+               0  &1
+             \end{vmat}=3
+      \end{equation*}  
+    \end{answer}
+  \item 
+    Berikan rumus bagi matriks adjoin dari suatu matriks diagonal.
+    \begin{answer}
+      Tinjau matriks diagonal berikut.
+      \begin{equation*}
+        D=
+        \begin{mat}
+          d_1  &0   &0   &\ldots    \\
+          0    &d_2 &0   &          \\
+          0    &0   &d_3            \\
+               &    &    &\ddots    \\
+               &    &    &      &d_n   
+        \end{mat}
+      \end{equation*}
+      Jika $i\neq j$, minor $i,j$ merupakan matriks $\nbyn{(n-1)}$ yang hanya
+      memiliki $n-2$ entri tak nol, karena kita telah menghapus $d_i$ dan
+      $d_j$.
+      Jadi, sekurang-kurangnya satu baris atau kolom minor tersebut seluruhnya
+      nol, sehingga kofaktor $D_{i,j}$ bernilai nol.
+      Jika $i=j$, minornya adalah matriks diagonal dengan entri $d_1$, \ldots,
+      $d_{i-1}$, $d_{i+1}$, \ldots, $d_n$.
+      Determinan minor tersebut adalah hasil kali semua entri itu, sedangkan
+      faktor tanda kofaktornya ialah $(-1)^{i+j}=(-1)^{2i}=1$.
+      \begin{equation*}
+        \adj(D)
+        =
+        \begin{mat}
+          d_2\cdots d_n    &0                 &      &0    \\
+          0                &d_1d_3\cdots d_n  &      &0    \\
+                           &                  &\ddots      \\
+                           &                  &       &d_1\cdots d_{n-1} 
+        \end{mat}
+      \end{equation*}
+
+      Sebagai tambahan, \nearbytheorem{th:MatTimesAdjEqDiagDets} memberikan
+      cara yang lebih ringkas untuk menurunkan kesimpulan ini.
+    \end{answer}
+  \recommended \item
+    Buktikan bahwa transpos dari matriks adjoin sama dengan matriks adjoin dari
+    transposnya.
+    \begin{answer}
+      Perhatikan saja bahwa jika $S=\trans{T}$, maka kofaktor $S_{j,i}$ sama
+      dengan kofaktor $T_{i,j}$ karena $(-1)^{j+i}=(-1)^{i+j}$ dan karena
+      kedua minornya saling merupakan transpos (sedangkan determinan transpos
+      sama dengan determinan matriks semula).
+    \end{answer}
+  \item 
+    Buktikan atau sangkal: \( \adj(\adj(T))=T \).
+    \begin{answer}
+      Pernyataan ini salah; berikut sebuah contoh.
+      \begin{equation*}
+         T=\begin{mat}[r]
+           1  &2   &3  \\
+           4  &5   &6  \\
+           7  &8   &9
+         \end{mat}
+         \qquad
+         \adj(T)=\begin{mat}[r]
+          -3  &6   &-3 \\
+           6  &-12 &6  \\
+          -3  &6   &-3
+         \end{mat}
+         \qquad
+         \adj(\adj(T))=\begin{mat}[r]
+           0  &0   &0  \\
+           0  &0   &0  \\
+           0  &0   &0
+         \end{mat}
+      \end{equation*}
+    \end{answer}
+\item
+    Sebuah matriks persegi disebut \definend{segitiga atas}
+    \index{matriks!segitiga} jika setiap entri \( i,j \) pada bagian di bawah
+    diagonal bernilai nol, yakni ketika \( i>j \).
+    \begin{exparts}
+      \partsitem
+        Apakah matriks adjoin dari matriks segitiga atas harus berbentuk
+        segitiga atas? Segitiga bawah?
+      \partsitem Buktikan bahwa invers suatu matriks segitiga atas juga
+        berbentuk segitiga atas, jika invers tersebut ada.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Sebuah contoh
+          \begin{equation*}
+             M=
+            \begin{mat}[r]
+              1  &2  &3  \\
+              0  &4  &5  \\
+              0  &0  &6
+            \end{mat}
+          \end{equation*}
+          mengisyaratkan jawaban yang benar.
+          \begin{align*}
+            \adj(M)=
+            \begin{mat}
+             M_{1,1}  &M_{2,1}  &M_{3,1}  \\
+             M_{1,2}  &M_{2,2}  &M_{3,2}  \\
+             M_{1,3}  &M_{2,3}  &M_{3,3}  
+            \end{mat}
+            &=\begin{mat}
+              \begin{vmat}
+                4  &5 \\ 0 &6
+              \end{vmat}
+              &-\begin{vmat}
+                2  &3  \\  0  &6
+              \end{vmat}
+              &\begin{vmat}
+                2  &3  \\  4  &5 
+              \end{vmat}          \\[1.5ex]
+              -\begin{vmat}
+                0  &5  \\  0  &6
+              \end{vmat}
+              &\begin{vmat}
+                1  &3  \\  0  &6
+              \end{vmat}
+              &-\begin{vmat}
+                1  &3  \\  0  &5  
+              \end{vmat}           \\[1.5ex]
+              \begin{vmat}
+                0  &4  \\  0  &0
+              \end{vmat}
+              &-\begin{vmat}
+                1  &2  \\  0  &0
+              \end{vmat}
+              &\begin{vmat}
+                1  &2  \\  0  &4
+              \end{vmat}
+            \end{mat}                                \\
+            &=
+            \begin{mat}[r]
+              24  &-12 &-2 \\
+               0  &6   &-5  \\
+               0  &0   &4
+            \end{mat}
+          \end{align*}
+          Hasilnya memang berbentuk segitiga atas.
+
+          Verifikasi ini terperinci, tetapi tidak sulit.
+          Entri-entri di bawah diagonal matriks adjoin adalah $M_{a,b}$ dengan
+          $a<b$.
+          Kita perlu memverifikasi bahwa kofaktor $M_{a,b}$ bernilai nol jika
+          $a<b$.
+          Dengan $a<b$, hapus baris~$a$ dan kolom~$b$ dari $M$.
+          \begin{equation*}
+            \begin{mat}
+              m_{1,1} &\ldots   &m_{1,b}  &\ldots       &        \\
+              m_{2,1} &\ldots   &m_{2,b}  &       &        \\
+              \vdots  &         &\vdots   &       &        \\
+              m_{a,1} &\ldots   &m_{a,b}  &\ldots &m_{a,n} \\
+              \vdots        &         &\vdots   &       &        \\
+                      &         &m_{n,b}  &       &                   
+            \end{mat}
+          \end{equation*}
+          setelah dihapus, menyisakan minor berbentuk segitiga atas.
+          Entri~$i,j$ dari minor tersebut dapat berupa entri~$i,j$ dari $M$
+          (jika $i<a$ dan~$j<b$; dalam kasus ini, $i>j$ menyiratkan bahwa
+          entri tersebut nol), atau entri~$i,j+1$ dari $M$ (jika $i<a$ dan
+          $j\geq b$; posisi di bawah diagonal tidak mungkin terjadi karena
+          $i<a<b\leq j$), atau entri~$i+1,j$ dari $M$ (jika $i\geq a$ dan
+          $j<b$; dalam kasus ini, $i>j$ menyiratkan $i+1>j$), atau entri
+          $i+1,j+1$ dari $M$ (jika $i\geq a$ dan~$j\geq b$; di sini $i>j$
+          menyiratkan $i+1>j+1$). Dengan demikian, setiap entri di bawah
+          diagonal minor bernilai nol.
+          Determinan minor tersebut merupakan hasil kali entri-entri diagonalnya.
+          Perhatikan bahwa entri $a+1,a$ dari $M$ menjadi entri
+          $a,a$ dari minor (entri itu tidak terhapus karena $a<b$ secara ketat).
+          Entri tersebut nol karena $M$ berbentuk segitiga atas dan $a+1>a$.
+          Jadi, kofaktornya nol dan matriks adjoin berbentuk segitiga atas.
+          (Kasus segitiga bawah serupa.)
+        \partsitem Hasil ini langsung mengikuti butir sebelumnya dan
+          \nearbytheorem{th:MatTimesAdjEqDiagDets}.
+      \end{exparts}
+    \end{answer}
+  \item 
+    \label{exer:LaplaceProof}
+    \textit{Soal ini memerlukan materi dari subbagian opsional Keberadaan
+       Determinan.}
+    Buktikan \nearbytheorem{th:LaPlaceExp} dengan menggunakan ekspansi
+    permutasi.
+    \begin{answer}
+      Kita akan menunjukkan bahwa setiap determinan dapat diekspansi sepanjang
+      baris~\( i \).
+      Argumen bagi kolom~$j$ serupa.
+
+      Setiap suku dalam ekspansi permutasi memuat tepat satu entri dari setiap
+      baris.
+      Seperti dalam \nearbyexample{ex:ExpLaPlace}, keluarkan setiap entri
+      baris~$i$ sebagai faktor untuk memperoleh
+      \( \deter{T}
+           =t_{i,1}\cdot\hat{T}_{i,1}+\dots+t_{i,n}\cdot\hat{T}_{i,n} \),
+      dengan setiap \( \hat{T}_{i,j} \) merupakan jumlah suku-suku yang tidak
+      memuat satu pun entri dari baris \( i \).
+      Kita akan menunjukkan bahwa \( \hat{T}_{i,j} \) adalah kofaktor
+      \( i,j \).
+
+      Pertama-tama, tinjau kasus \( i,j=n,n \):
+      \begin{equation*}
+        t_{n,n}\cdot\hat{T}_{n,n}
+        =t_{n,n}\cdot
+            \sum_{\phi}t_{1,\phi(1)}t_{2,\phi(2)}\dots\,t_{n-1,\phi(n-1)}
+                      \sgn(\phi)
+      \end{equation*}
+      dengan penjumlahan dilakukan atas semua permutasi berukuran \( n \),
+      \( \phi \), yang
+      memenuhi \( \phi(n)=n \).
+      Untuk menunjukkan bahwa \( \hat{T}_{n,n} \) sama dengan kofaktor
+      \( T_{n,n} \), kita hanya perlu menunjukkan bahwa jika \( \phi \)
+      merupakan permutasi berukuran \( n \) dengan \( \phi(n)=n \), sedangkan
+      \( \sigma \) merupakan permutasi berukuran \( n-1 \) dengan
+      \( \sigma(1)=\phi(1) \), \ldots,
+      \( \sigma(n-1)=\phi(n-1) \), maka
+      \( \sgn(\sigma)=\sgn(\phi) \).
+      Hal ini benar karena $\phi$ dan $\sigma$ memiliki banyak inversi yang sama.
+
+      Kembali ke kasus umum \( i,j \).
+      Tukarkan baris-baris yang bersebelahan hingga baris ke-\( i \) menjadi
+      baris terakhir, lalu tukarkan kolom-kolom yang bersebelahan hingga kolom
+      ke-\( j \) menjadi kolom terakhir.
+      Determinan minor \( i,j \) tidak terpengaruh oleh pertukaran-pertukaran
+      ini karena baris ke-\( i \) dan kolom ke-\( j \) memang dihilangkan dari
+      minor tersebut.
+      Sebaliknya, tanda \( \deter{T} \), dan karenanya tanda
+      \( \hat{T}_{i,j} \), berubah sebanyak \( n-i+n-j \) kali.
+      Nyatakan minor \( i,j \) dengan \( M_{i,j} \). Jadi,
+      \( \hat{T}_{i,j}=(-1)^{n-i+n-j}\deter{M_{i,j}}
+                =(-1)^{i+j}\deter{M_{i,j}}=T_{i,j} \),
+      sehingga \( \hat{T}_{i,j} \) tepat sama dengan kofaktor \( T_{i,j} \).
+    \end{answer}
+  \item 
+    Dengan menggunakan ekspansi Laplace dan induksi pada ukuran matriks,
+    buktikan bahwa determinan suatu matriks sama dengan determinan transposnya.
+    \begin{answer}
+      Pernyataan ini jelas bagi kasus dasar \( \nbyn{1} \).
+
+      Untuk kasus induksi, andaikan determinan suatu matriks sama dengan
+      determinan transposnya bagi semua matriks \( \nbyn{1} \), \ldots,
+      \( \nbyn{(n-1)} \).
+      Ekspansi sepanjang baris~\( i \) memberikan
+      \( \deter{T}=t_{i,1}T_{i,1}+\dots\,+t_{i,n}T_{i,n} \)
+      sedangkan ekspansi sepanjang kolom~\( i \) memberikan
+      \( \deter{\trans{T}}=t_{i,1}(\trans{T})_{1,i}
+           +\dots+t_{i,n}(\trans{T})_{n,i} \).
+      Karena \( (-1)^{i+j}=(-1)^{j+i} \), tanda-tandanya sama dalam kedua
+      penjumlahan.
+      Minor \( j,i \) dari \( \trans{T} \) merupakan transpos dari minor
+      \( i,j \) dari \( T \); berdasarkan hipotesis induksi, kedua minor itu
+      memiliki determinan yang sama. Dengan demikian,
+      \( (\trans{T})_{j,i}=T_{i,j} \), sehingga kedua ekspansi di atas sama.
+    \end{answer}
+  \puzzle \item 
+    Tunjukkan bahwa
+    \begin{equation*}
+      F_n=
+      \begin{vmat}
+        1  &-1  &1  &-1  &1  &-1  &\ldots  \\
+        1  &1   &0  &1   &0  &1   &\ldots  \\
+        0  &1   &1  &0   &1  &0   &\ldots  \\
+        0  &0   &1  &1   &0  &1   &\ldots  \\
+        .  &.   &.  &.   &.  &.   &\ldots
+      \end{vmat}
+    \end{equation*}
+    dengan \( F_n \) merupakan suku ke-\( n \) dari barisan Fibonacci
+    \( 1,1,2,3,5,\dots,x,y,x+y,\ldots\, \), sedangkan determinannya berordo
+    \( n-1 \).
+    \cite{Monthly49p409}
+    \begin{answer}
+      \answerasgiven %
+      Nyatakan determinan di atas dengan \( D_n \). Jelas bahwa
+      \( D_2=1 \) dan \( D_3=2 \).
+      Tinggal menunjukkan bahwa \( D_n=D_{n-1}+D_{n-2},\; n\geq 4 \).
+      Dalam \( D_n \), kurangkan kolom ke-\( (n-3) \) dari kolom ke-\( (n-1) \),
+      kolom ke-\( (n-4) \) dari kolom ke-\( (n-2) \), \ldots, dan kolom
+      pertama dari kolom ketiga, sehingga diperoleh
+      \begin{equation*}
+        D_n=
+        \begin{vmat}
+          1  &-1  &0  &0   &0  &0   &\ldots  \\
+          1  &1   &-1 &0   &0  &0   &\ldots  \\
+          0  &1   &1  &-1  &0  &0   &\ldots  \\
+          0  &0   &1  &1   &-1 &0   &\ldots  \\
+          .  &.   &.  &.   &.  &.   &\ldots
+        \end{vmat}.
+      \end{equation*}
+      Ekspansi determinan ini sepanjang baris pertama menghasilkan relasi yang
+      diinginkan.
+    \end{answer}
+%  \recommended \item 
+%    Prove that a square matrix is singular if and only if its adjoint is
+%    singular.
+%  \item 
+%    Prove that if \( T \) is an \( \nbyn{n} \) matrix then
+%    \( \det(\adj(T))=(\det(T))^{n-1} \).
+%    \begin{answer}
+%      By \nearbytheorem{th:MatTimesAdjEqDiagDets}, 
+%      $\deter{\adj(T)\cdot T}=\deter{T}^n$ because 
+%      $\deter{T}\cdot I$ is a diagonal matrix.
+%      Then $\deter{T}^n=\deter{\adj(T)\cdot T}
+%                         =\deter{\adj(T)}\cdot \deter{T}$.
+%    \end{answer}
+\end{exercises}
+\index{ekspansi determinan Laplace|)}

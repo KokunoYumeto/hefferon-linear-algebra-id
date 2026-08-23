@@ -1,0 +1,298 @@
+% \documentclass[noanswers, nolegalese, 11pt]{examjh}
+\documentclass[answers, nolegalese, 11pt]{examjh}
+\usepackage{../../../../sty/conc}
+\usepackage{../../../../sty/linalgjh}
+\usepackage{graphicx}
+
+\setlength{\parindent}{0em}\setlength{\parskip}{0.5ex}
+\pagestyle{empty}
+\begin{document}\thispagestyle{empty}
+\makebox[\textwidth]{Worksheet for Three.IV (part 2)\hfill  From \textit{Linear Algebra}, by Hef{}feron}\vspace{-1ex}
+\makebox[\textwidth]{\hbox{}\hrulefill\hbox{}}
+
+\begin{questions}
+\question
+Fix this matrix.
+\begin{equation*}
+M=
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+\end{equation*}
+\begin{parts}
+\part
+Multiply $M$ from the left by these two.
+\begin{equation*}
+\begin{mat}
+  0  &0  &0  \\
+  0  &0  &1  \\
+  0  &0  &0  
+\end{mat}
+ \qquad
+\begin{mat}
+  0  &1  &0  \\
+  0  &0  &0
+\end{mat}
+\end{equation*}
+\begin{solution}
+We have this
+\begin{equation*}
+\begin{mat}
+  0  &0  &0  \\
+  0  &0  &1  \\
+  0  &0  &0  
+\end{mat}
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+=
+\begin{mat}
+  0  &0  &0  \\
+  7  &8  &9  \\
+  0  &0  &0
+\end{mat}
+\end{equation*}
+and also this.
+\begin{equation*}
+\begin{mat}
+  0  &1  &0  \\
+  0  &0  &0
+\end{mat}
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+=
+\begin{mat}
+  4  &5  &6  \\
+  0  &0  &0
+\end{mat}
+\end{equation*}
+\end{solution}
+
+\part
+Multiply $M$ from the right by these two.
+\begin{equation*}
+\begin{mat}
+  0  &0  &0  \\
+  0  &0  &1  \\
+  0  &0  &0  
+\end{mat}
+\qquad
+\begin{mat}
+  0  &1    \\
+  0  &0    \\
+  0  &0
+\end{mat}
+\end{equation*}
+\begin{solution}
+The first is
+\begin{equation*}
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+\begin{mat}
+  0  &0  &0  \\
+  0  &0  &1  \\
+  0  &0  &0  
+\end{mat}
+=
+\begin{mat}
+  0  &0  &2  \\
+  0  &0  &5  \\
+  0  &0  &8
+\end{mat}
+\end{equation*}
+and the second is this.
+\begin{equation*}
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+\begin{mat}
+  0  &1    \\
+  0  &0    \\
+  0  &0
+\end{mat}
+=
+\begin{mat}
+  0  &1  \\
+  0  &4  \\
+  0  &7
+\end{mat}
+\end{equation*}
+\end{solution}
+
+\part
+Multiply it from the left by this permutation matrix.
+\begin{equation*}
+P=\begin{mat}
+  0  &1  &0  \\
+  0  &0  &1  \\
+  1  &0  &0  
+\end{mat}
+\end{equation*}
+\begin{solution}
+\begin{equation*}
+PM=\begin{mat}
+  0  &1  &0  \\
+  0  &0  &1  \\
+  1  &0  &0  
+\end{mat}
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+=
+\begin{mat}
+  4  &5  &6  \\
+  7  &8  &9  \\
+  1  &2  &3
+\end{mat}
+\end{equation*}
+\end{solution}
+
+\part Multiply $M$ from the right by the same matrix.
+\begin{solution}
+\begin{equation*}
+MP=
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+\begin{mat}
+  0  &1  &0  \\
+  0  &0  &1  \\
+  1  &0  &0  
+\end{mat}
+=
+\begin{mat}
+  3  &1  &2  \\
+  6  &4  &5  \\
+  9  &7  &8
+\end{mat}
+\end{equation*}
+\end{solution}
+\end{parts}
+
+\question
+Fix these two matrices.
+\begin{equation*}
+F=
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+\qquad
+G=
+\begin{mat}
+  1  &0  &2  \\
+  0  &1  &3  \\
+  2  &-1  &0
+\end{mat}
+\end{equation*}
+\begin{parts}
+\part
+Compute $FG$.
+\begin{solution}
+\begin{equation*}
+FG=
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+\begin{mat}
+  1  &0  &2  \\
+  0  &1  &3  \\
+  2  &-1  &0
+\end{mat}
+=
+\begin{mat}
+  7  &-1  &8  \\
+  16 &-1  &23 \\
+  25 &-1  &38
+\end{mat}
+\end{equation*}
+\end{solution}
+
+\part
+Compute these three.
+\begin{equation*}
+F\colvec{1 \\ 0 \\ 2}
+\qquad
+F\colvec{0 \\ 1 \\ -1}
+\qquad
+F\colvec{2 \\ 3 \\ 0}
+\end{equation*}
+\begin{solution}
+This is the first.
+\begin{equation*}
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+\colvec{1 \\ 0 \\ 2}
+=
+\colvec{7  \\ 16  \\ 25}
+\end{equation*}
+This is the second
+\begin{equation*}
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+\colvec{0 \\ 1 \\ -1}
+=
+\colvec{-1  \\ -1  \\ -1}
+\end{equation*}
+and the third.
+\begin{equation*}
+\begin{mat}
+  1  &2  &3  \\
+  4  &5  &6  \\
+  7  &8  &9
+\end{mat}
+\colvec{2 \\ 3 \\ 0}
+=
+\colvec{8  \\ 23  \\ 38}
+\end{equation*}
+\end{solution}
+
+% \part
+% Compute these three.
+% \begin{equation*}
+% \begin{mat}
+%   1  &2  &3  
+% \end{mat}
+% G
+% \quad
+% \begin{mat}
+%   4  &5  &6  
+% \end{mat}
+% G
+% \quad
+% \begin{mat}
+%   7  &8  &9  
+% \end{mat}
+% G
+% \end{equation*}
+\end{parts}
+
+
+
+\end{questions}
+\end{document}

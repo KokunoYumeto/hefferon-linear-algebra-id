@@ -1,0 +1,3516 @@
+% Chapter 3, Section 3 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\section{Menghitung Peta Linear}
+Bagian sebelumnya menunjukkan bahwa
+suatu peta linear ditentukan oleh aksinya pada suatu basis.
+Persamaan
+\begin{equation*}
+  h(\vec{v})
+  =h(c_1\cdot\vec{\beta}_1+\dots+c_n\cdot\vec{\beta}_n)
+  =c_1\cdot h(\vec{\beta}_1)+\dots +c_n\cdot h(\vec{\beta}_n)
+\tag*{}\end{equation*}
+menjelaskan cara memperoleh nilai peta pada sebarang vektor $\vec{v}$
+dengan bermula 
+dari nilai peta pada vektor-vektor $\vec{\beta}_i$ dalam suatu basis 
+dan memperluasnya secara linear.
+% We just need to  
+% find the $c$'s to express $\vec{v}$ with respect to the basis.
+
+Bagian ini memberikan suatu skema praktis berbasis matriks
+untuk menggunakan representasi 
+\( h(\vec{\beta}_1) \), \ldots, \( h(\vec{\beta}_n) \)
+guna menghitung, dari representasi suatu vektor dalam domain 
+$\rep{\vec{v}}{B}$,
+representasi bayangan vektor tersebut dalam kodomain 
+$\rep{h(\vec{v})}{D}$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Merepresentasikan Peta Linear dengan Matriks}
+\index{homomorfisme!matriks yang merepresentasikan|(}
+\begin{example}  \label{ex:TypLinMapRepByMat}
+Untuk ruang $\Re^2$ dan $\Re^3$, tetapkan basis-basis berikut.
+\begin{equation*}
+   B=\sequence{
+               \colvec[r]{2 \\ 0},
+               \colvec[r]{1 \\ 4}}
+   \qquad
+   D=\sequence{
+               \colvec[r]{1 \\ 0 \\ 0},
+               \colvec[r]{0 \\ -2 \\ 0},
+               \colvec[r]{1 \\ 0 \\ 1}}
+\end{equation*}
+Tinjau peta $\map{h}{\Re^2}{\Re^3}$ yang ditentukan oleh pengaitan berikut.
+\begin{equation*}
+  \colvec[r]{2 \\ 0}
+    \mapsunder{h}
+  \colvec[r]{1 \\ 1 \\ 1}
+  \qquad
+  \colvec[r]{1 \\ 4}
+    \mapsunder{h}
+  \colvec[r]{1 \\ 2 \\ 0}
+\end{equation*}
+Untuk menghitung aksi peta ini pada sebarang vektor dalam domain,
+mula-mula kita merepresentasikan vektor $h(\vec{\beta}_1)$
+\begin{equation*}
+  \colvec[r]{1 \\ 1 \\ 1}=
+         0\colvec[r]{1 \\ 0 \\ 0}
+         -\frac{1}{2}\colvec[r]{0 \\ -2 \\ 0}
+         +1\colvec[r]{1 \\ 0 \\ 1}
+  \qquad
+   \rep{ h(\vec{\beta}_1) }{D}=\colvec[r]{0 \\ -1/2 \\ 1}_D           
+\end{equation*}
+dan $h(\vec{\beta}_2)$.
+\begin{equation*}
+  \colvec[r]{1 \\ 2 \\ 0}=
+        1\colvec[r]{1 \\ 0 \\ 0}
+        -1\colvec[r]{0 \\ -2 \\ 0}
+        +0\colvec[r]{1 \\ 0 \\ 1}
+  \qquad
+  \rep{ h(\vec{\beta}_2) }{D}=\colvec[r]{1 \\ -1 \\ 0}_D
+\end{equation*}
+Dengan ini, untuk sebarang anggota $\vec{v}$ dari domain,
+kita dapat menghitung $h(\vec{v})$.
+\begin{align*}
+  h(\vec{v})
+  &=h(c_1\cdot \colvec[r]{2 \\ 0}+c_2\cdot \colvec[r]{1 \\ 4})   \\
+  &=c_1\cdot h(\colvec[r]{2 \\ 0})+c_2\cdot h(\colvec[r]{1 \\ 4}) \\
+  &=c_1\cdot (
+        0\colvec[r]{1 \\ 0 \\ 0}
+        \!-\frac{1}{2}\colvec[r]{0 \\ -2 \\ 0}
+        \!+1\colvec[r]{1 \\ 0 \\ 1}\!  )
+  +c_2\cdot (
+        1\colvec[r]{1 \\ 0 \\ 0}
+        \!-1\colvec[r]{0 \\ -2 \\ 0}
+        \!+0\colvec[r]{1 \\ 0 \\ 1}\!  )      \\
+  &=(0c_1+1c_2)\cdot \colvec[r]{1 \\ 0 \\ 0}
+   +(-\frac{1}{2}c_1-1c_2)\cdot \colvec[r]{0 \\ -2 \\ 0}
+   +(1c_1+0c_2)\cdot \colvec[r]{1 \\ 0 \\ 1}
+\end{align*}
+Jadi,
+\begin{center}
+  jika $\rep{\vec{v}}{B}=\colvec{c_1 \\ c_2}$
+  maka $\rep{\,h(\vec{v})\,}{D}
+  =\colvec{0c_1+1c_2 \\ -(1/2)c_1-1c_2 \\ 1c_1+0c_2}$.
+\end{center}
+Sebagai contoh, 
+\begin{center}
+  karena $\rep{\colvec[r]{4 \\ 8}}{B}=\colvec[r]{1 \\ 2}_B$,
+  kita memperoleh
+  $\rep{\,h(\colvec[r]{4 \\ 8})\,}{D}
+   =\colvec[r]{2 \\ -5/2 \\ 1}$.
+\end{center}
+\end{example}
+
+Kita menyatakan perhitungan seperti di atas dengan notasi matriks.
+\begin{equation*}
+    \begin{mat}[r]
+      0             &1  \\
+      -1/2          &-1  \\
+      1             &0
+    \end{mat}_{B,D}
+  \colvec{c_1 \\ c_2}_B
+  =
+  \colvec{0c_1+1c_2 \\ (-1/2)c_1-1c_2 \\ 1c_1+0c_2}_D
+\end{equation*}
+Di tengah terdapat argumen $\vec{v}$ bagi peta tersebut, 
+yang direpresentasikan terhadap basis domain $B$
+oleh vektor kolom dengan komponen $c_1$ dan $c_2$.
+Di sebelah kanan terdapat nilai peta pada argumen itu, $h(\vec{v})$,
+yang direpresentasikan terhadap basis kodomain $D$.
+Matriks di sebelah kiri adalah unsur yang baru.
+Kita akan menggunakannya untuk merepresentasikan peta dan memandang 
+persamaan di atas sebagai representasi penerapan peta pada vektor tersebut.
+
+Matriks itu terdiri atas koefisien-koefisien dari vektor di sebelah kanan,
+$0$ dan $1$ dari baris pertama, $-1/2$ dan $-1$ dari
+baris kedua, serta $1$ dan $0$ dari baris ketiga.
+Dengan kata lain, kita menyusunnya dengan menyejajarkan vektor-vektor 
+yang merepresentasikan $h(\vec{\beta}_i)$. 
+\begin{equation*}
+  \left(\begin{array}{c|c}
+     \vdots                         &\vdots    \\
+     \rep{\,h(\vec{\beta}_1)\,}{D}  &\rep{\,h(\vec{\beta}_2)\,}{D}  \\
+     \vdots                         &\vdots
+  \end{array}\right)
+\end{equation*}
+
+\begin{definition} \label{def:MatRepMap}
+%<*df:MatRepMap>
+Andaikan \( V \) dan \( W \) adalah ruang vektor berdimensi \( n \) dan
+\( m \) dengan basis \( B \) dan \( D \),
+dan \( \map{h}{V}{W} \) adalah peta linear.
+Jika
+\begin{equation*}
+  \rep{h( \vec{\beta}_1 )}{D}
+  =
+  \colvec{h_{1,1} \\ h_{2,1} \\ \vdots \\ h_{m,1}}_D
+  \quad\ldots\quad
+  \rep{h( \vec{\beta}_n )}{D}
+  =
+  \colvec{h_{1,n} \\ h_{2,n} \\ \vdots \\ h_{m,n}}_D
+\end{equation*}
+maka 
+\begin{equation*}
+  \rep{h}{B,D}=\generalmatrix{h}{n}{m}_{B,D}
+\end{equation*}
+adalah \definend{representasi matriks dari \( h \) terhadap \( B, D \)}.%
+\index{representasi!matriks}\index{matriks!representasi}%
+\index{homomorfisme!matriks yang merepresentasikan}
+%</df:MatRepMap>
+\end{definition}
+
+\noindent Dalam matriks tersebut, banyaknya kolom~$n$ adalah 
+dimensi domain peta, sedangkan  
+banyaknya baris~$m$ adalah dimensi kodomain.
+
+\begin{remark}
+Seperti notasi untuk representasi suatu vektor, notasi $\mbox{Rep}_{B,D}$
+di sini bukan notasi baku.
+Alternatif yang paling umum adalah $[h]_{B,D}$. 
+\end{remark}
+
+Kita menggunakan huruf kecil untuk peta, 
+huruf besar untuk matriks,
+dan huruf kecil lagi untuk entri-entri matriks.
+Jadi, untuk peta \( h \), matriks yang merepresentasikannya adalah \( H \), dengan
+entri \( h_{i,j} \).
+
+\begin{example}  \label{ex:PolyOneToRThree}
+Jika \( \map{h}{\Re^3}{\polyspace_1} \) adalah
+\begin{equation*}
+  \colvec{a_1 \\ a_2 \\ a_3}
+     \mapsunder{h}
+   (2a_1+a_2)+(-a_3)x
+\end{equation*}
+maka, dengan
+\begin{equation*}
+  B=
+  \sequence{\colvec[r]{0 \\ 0 \\ 1},
+            \colvec[r]{0 \\ 2 \\ 0},
+            \colvec[r]{2 \\ 0 \\ 0} }
+  \qquad
+  D=
+  \sequence{1+x,-1+x}
+\end{equation*}
+aksi \( h \) pada \( B \) adalah sebagai berikut.
+\begin{equation*}
+  \colvec[r]{0 \\ 0 \\ 1}\mapsunder{h}-x
+  \qquad \colvec[r]{0 \\ 2 \\ 0}\mapsunder{h}2
+  \qquad \colvec[r]{2 \\ 0 \\ 0}\mapsunder{h}4
+\end{equation*}
+Perhitungan sederhana
+\begin{equation*}
+  \rep{-x}{D}=\colvec[r]{-1/2 \\ -1/2}_D
+  \quad \rep{2}{D}=\colvec[r]{1 \\ -1}_D 
+  \quad \rep{4}{D}=\colvec[r]{2 \\ -2}_D 
+\end{equation*}
+menunjukkan bahwa inilah matriks yang merepresentasikan $h$ terhadap basis-basis tersebut.
+\begin{equation*}
+  \rep{h}{B,D}
+   =
+   \begin{mat}[r]
+     -1/2  &1   &2  \\
+     -1/2  &-1  &-2
+   \end{mat}_{B,D}
+\end{equation*}
+\end{example}
+
+\begin{theorem} \label{th:MatMultRepsFuncAppl}
+%<*th:MatMultRepsFuncAppl>
+Andaikan \( V \) dan \( W \) adalah ruang vektor
+berdimensi \( n \) dan \( m \)
+dengan basis \( B \) dan \( D \),
+dan \( \map{h}{V}{W} \) adalah peta linear.
+Jika \( h \) direpresentasikan oleh
+\begin{equation*}
+  \rep{h}{B,D}=\generalmatrix{h}{n}{m}_{B,D}
+\end{equation*}
+dan \( \vec{v}\in V \) direpresentasikan oleh
+\begin{equation*}
+  \rep{\vec{v}}{B}=\colvec{c_1 \\ c_2 \\ \vdots \\ c_n}_B
+\end{equation*}
+maka representasi bayangan $\vec{v}$ adalah sebagai berikut.
+\begin{equation*}
+  \rep{\, h(\vec{v}) \,}{D}
+  =
+  \colvec{h_{1,1}c_1+h_{1,2}c_2+\dots+h_{1,n}c_n \\
+          h_{2,1}c_1+h_{2,2}c_2+\dots+h_{2,n}c_n \\
+          \vdots \\
+          h_{m,1}c_1+h_{m,2}c_2+\dots+h_{m,n}c_n}_D
+\end{equation*}
+%</th:MatMultRepsFuncAppl>
+\end{theorem}
+
+\begin{proof}
+%<*pf:MatMultRepsFuncAppl>
+Ini memformalkan \nearbyexample{ex:TypLinMapRepByMat}.
+Lihat \nearbyexercise{exer:MatVecMultRepLinMap}.
+%</pf:MatMultRepsFuncAppl>
+\end{proof}
+
+\begin{definition} \label{def:MatrixVecProd}
+%<*df:MatrixVecProd>
+\definend{Hasil kali matriks-vektor}\index{perkalian!matriks-vektor}%
+\index{matriks!hasil kali matriks-vektor}
+dari suatu matriks \( \nbym{m}{n} \) dan suatu
+vektor \( \nbym{n}{1} \) adalah sebagai berikut.
+\begin{equation*}
+  \generalmatrix{a}{n}{m}
+  \colvec{c_1 \\ \vdots \\ c_n}
+  =
+  \colvec{a_{1,1}c_1+\dots+a_{1,n}c_n \\
+             a_{2,1}c_1+\dots+a_{2,n}c_n \\
+             \vdots \\ 
+             a_{m,1}c_1+\dots+a_{m,n}c_n}
+\end{equation*}
+%</df:MatrixVecProd>
+\end{definition}
+
+% the product of the matrix $\rep{h}{B,D}$ with the vector $\rep{\vec{v}}{B}$ 
+% is the vector $\rep{h(\vec{v})}{D}$.  
+Singkatnya, 
+penerapan suatu peta linear direpresentasikan oleh hasil kali matriks-vektor 
+antara representasi peta dan representasi vektor.
+
+\begin{remark}  \label{rem:NotSurprising}
+\nearbytheorem{th:MatMultRepsFuncAppl} tidaklah mengejutkan,
+karena kita memilih representasi matriks dalam \nearbydefinition{def:MatRepMap}
+tepat agar teorema tersebut benar\Dash
+jika teorema itu tidak benar, kita akan menyesuaikan definisinya
+agar menjadi benar.
+Meskipun demikian, kita tetap memerlukan verifikasi. 
+\end{remark}
+
+\begin{example}
+Untuk matriks dari \nearbyexample{ex:PolyOneToRThree},
+kita dapat menghitung ke mana peta tersebut mengirim vektor berikut.
+\begin{equation*}
+  \vec{v}=\colvec[r]{4 \\ 1 \\ 0}
+\end{equation*}
+Terhadap basis domain $B$, representasi vektor ini adalah 
+\begin{equation*}
+  \rep{\vec{v}}{B}=\colvec[r]{0 \\ 1/2 \\ 2}_B
+\end{equation*}
+sehingga hasil kali matriks-vektor memberikan 
+representasi nilai $h(\vec{v})$ terhadap
+basis kodomain $D$.
+\begin{align*}
+  \rep{h(\vec{v})}{D}
+  &=\begin{mat}[r]
+      -1/2  &1   &2  \\
+      -1/2  &-1  &-2
+    \end{mat}_{B,D}
+    \colvec[r]{0 \\ 1/2 \\ 2}_B                            \\
+  &=\colvec{(-1/2)\cdot 0+1\cdot (1/2) + 2\cdot 2 \\ 
+          (-1/2)\cdot 0-1\cdot (1/2) - 2\cdot 2}_D
+  =\colvec[r]{9/2 \\ -9/2}_D
+\end{align*}
+Untuk mencari $h(\vec{v})$ itu sendiri, bukan representasinya,
+hitung $(9/2)(1+x)-(9/2)(-1+x)=9$.
+\end{example}
+
+\begin{example}
+Misalkan \( \map{\pi}{\Re^3}{\Re^2} \) adalah proyeksi pada bidang \( xy \).
+Untuk memberikan matriks yang merepresentasikan peta ini, mula-mula kita tetapkan beberapa basis. 
+\begin{equation*}
+  B=\sequence{
+              \colvec[r]{1 \\ 0 \\ 0},
+              \colvec[r]{1 \\ 1 \\ 0},
+              \colvec[r]{-1 \\ 0 \\ 1} }
+  \qquad
+  D=\sequence{
+              \colvec[r]{2 \\ 1},
+              \colvec[r]{1 \\ 1} }
+\end{equation*}
+Untuk setiap vektor dalam basis domain, cari bayangannya di bawah peta tersebut. 
+\begin{equation*}
+  \colvec[r]{1 \\ 0 \\ 0}\mapsunder{\pi}\colvec[r]{1 \\ 0}
+  \quad
+  \colvec[r]{1 \\ 1 \\ 0}\mapsunder{\pi}\colvec[r]{1 \\ 1}
+  \quad
+  \colvec[r]{-1 \\ 0 \\ 1}\mapsunder{\pi}\colvec[r]{-1 \\ 0}
+\end{equation*}
+Kemudian cari representasi setiap bayangan terhadap basis
+kodomain. 
+\begin{equation*}
+  \rep{\colvec[r]{1 \\ 0}}{D}=\colvec[r]{1 \\ -1}
+  \quad
+  \rep{\colvec[r]{1 \\ 1}}{D}=\colvec[r]{0 \\ 1}
+  \quad
+  \rep{\colvec[r]{-1 \\ 0}}{D}=\colvec[r]{-1 \\ 1}
+\end{equation*}
+Terakhir, menyejajarkan representasi-representasi ini memberikan matriks yang merepresentasikan 
+\( \pi \) terhadap \( B,D \).
+\begin{equation*}
+    \rep{\pi}{B,D}
+    =\begin{mat}[r]
+      1  &0  &-1  \\
+      -1 &1  &1
+    \end{mat}_{B,D}
+\end{equation*}
+Kita dapat mengilustrasikan \nearbytheorem{th:MatMultRepsFuncAppl} dengan menghitung
+hasil kali matriks-vektor yang merepresentasikan aksi 
+peta proyeksi berikut.
+\begin{equation*}
+  \pi(
+     \colvec[r]{2 \\ 2 \\ 1}
+     )=\colvec[r]{2 \\ 2}
+\end{equation*}
+Representasikan vektor domain 
+terhadap basis domain
+\begin{equation*}
+   \rep{\colvec[r]{2 \\ 2 \\ 1}}{B}=
+        \colvec[r]{1 \\ 2 \\ 1}_B
+\end{equation*}
+untuk memperoleh hasil kali matriks-vektor berikut.
+\begin{equation*}
+   \rep{ \,\pi(\colvec[r]{2 \\ 2 \\ 1})\,}{D}=
+      \begin{mat}[r]
+        1  &0  &-1  \\
+        -1 &1  &1
+      \end{mat}_{B,D}
+   \colvec[r]{1 \\ 2 \\ 1}_B
+   =
+   \colvec[r]{0 \\ 2}_D
+\end{equation*}
+Menguraikannya menjadi kombinasi linear vektor-vektor dari
+\( D \) 
+\begin{equation*}
+   0\cdot\colvec[r]{2 \\ 1}
+   +2\cdot\colvec[r]{1 \\ 1}
+   =
+   \colvec[r]{2 \\ 2}
+\end{equation*}
+memastikan bahwa aksi peta memang
+tercermin dalam operasi matriks tersebut.
+Kadang-kadang kita akan memadatkan ketiga persamaan tersaji ini menjadi satu. 
+\begin{equation*}
+  \colvec[r]{2 \\ 2 \\ 1}=\colvec[r]{1 \\ 2 \\ 1}_B
+    \;\overset{h}{\underset{H}{\longmapsto}}\;
+  \colvec[r]{0 \\ 2}_D=\colvec[r]{2 \\ 2}    
+\end{equation*}
+\end{example}
+
+Kini kita memiliki dua cara untuk menghitung efek proyeksi,
+yakni rumus langsung yang membuang komponen ketiga setiap vektor bertinggi tiga
+untuk membentuk vektor bertinggi dua, 
+dan rumus di atas yang menggunakan representasi serta perkalian 
+matriks-vektor.
+Cara kedua mungkin tampak rumit dibandingkan cara pertama,
+tetapi memiliki kelebihan.
+Contoh berikut menunjukkan bahwa untuk beberapa peta, skema baru ini menyederhanakan
+rumusnya.
+
+\begin{example} \label{exam:RepsOfRigidPlaneMaps}
+Untuk merepresentasikan peta rotasi\index{rotasi (atau perputaran)!representasi}
+$\map{t_{\theta}}{\Re^2}{\Re^2}$ yang 
+memutar semua vektor di bidang berlawanan arah jarum jam sebesar sudut $\theta$,
+\begin{center}  \small
+  \includegraphics{map/mp/ch3.15}
+\end{center}
+kita mulai dengan menetapkan basis standar
+$\stdbasis_2$ sebagai basis domain maupun kodomain.
+Kemudian cari bayangan setiap vektor
+dalam basis domain di bawah peta tersebut.
+\begin{equation*}
+  \colvec[r]{1 \\ 0}\mapsunder{t_\theta}\colvec{\cos\theta \\ \sin\theta}
+  \qquad
+  \colvec[r]{0 \\ 1}\mapsunder{t_\theta}\colvec{-\sin\theta \\ \cos\theta}
+  \tag{$*$}
+\end{equation*}
+Representasikan bayangan-bayangan ini terhadap basis kodomain.
+Karena basis ini adalah $\stdbasis_2$, vektor merepresentasikan dirinya sendiri.
+Sejajarkan representasi-representasi tersebut untuk memperoleh matriks yang merepresentasikan peta.
+\begin{equation*}
+  \rep{t_\theta}{\stdbasis_2,\stdbasis_2}
+  =
+  \begin{mat}
+    \cos\theta  &-\sin\theta \\
+    \sin\theta  &\cos\theta
+  \end{mat}
+\end{equation*}
+Kelebihan skema ini adalah bahwa kita memperoleh rumus bagi 
+bayangan sebarang vektor 
+hanya dengan mengetahui, dalam~($*$), cara
+merepresentasikan bayangan kedua vektor basis. 
+Sebagai contoh, di sini kita merotasi suatu vektor dengan $\theta=\pi/6$.
+\begin{equation*}
+  \colvec[r]{3  \\ -2} = \colvec[r]{3  \\ -2}_{\stdbasis_2}\!\mapsunder{t_{\pi/6}}\;
+  \begin{mat}[r]
+    \sqrt{3}/2  &-1/2  \\
+     1/2        &\sqrt{3}/2
+  \end{mat}
+  \colvec[r]{3  \\ -2}
+  \approx
+  \colvec[r]{3.598 \\ -0.232}_{\stdbasis_2}
+  \!\!=  
+  \colvec[r]{3.598 \\ -0.232}
+\end{equation*}
+Secara lebih umum, kita memiliki rumus untuk rotasi sebesar $\theta=\pi/6$.
+\begin{equation*}
+  \colvec[r]{x  \\ y} \mapsunder{t_{\pi/6}}\;
+  \begin{mat}[r]
+    \sqrt{3}/2  &-1/2  \\
+     1/2        &\sqrt{3}/2
+  \end{mat}
+  \colvec[r]{x  \\ y}
+  =
+  \colvec[r]{(\sqrt{3}/2)x-(1/2)y \\ (1/2)x+(\sqrt{3}/2)y }
+\end{equation*}
+\end{example}
+
+\begin{example}
+Dalam definisi hasil kali matriks-vektor,
+lebar matriks sama dengan tinggi vektor.
+Karena itu, hasil kali berikut tidak terdefinisi. 
+\begin{equation*}
+    \begin{mat}[r]
+      1  &0  &0  \\
+      4  &3  &1
+    \end{mat}
+  \colvec[r]{1 \\ 0}
+\end{equation*}
+Ada alasan mengapa hasil kali ini tidak terdefinisi:~matriks berlebar tiga
+merepresentasikan peta dengan domain berdimensi tiga, sedangkan 
+vektor bertinggi dua merepresentasikan anggota ruang berdimensi dua.
+Jadi, vektor itu tidak mungkin berada dalam domain peta.
+\end{example}
+
+Tidak ada dalam \nearbydefinition{def:MatrixVecProd} yang mengharuskan kita memandang
+hasil kali matriks-vektor melalui representasi.
+Kita dapat memperoleh beberapa wawasan dengan berfokus pada cara entri-entri berpadu.
+
+Cara yang baik untuk memandang hasil kali matriks-vektor adalah bahwa hasil itu dibentuk dari 
+hasil kali titik antara baris-baris matriks dan vektor kolom.
+\begin{equation*}
+    \begin{mat}
+               &\vdots                         \\
+      a_{i,1}  &a_{i,2}  &\ldots   &a_{i,n}    \\
+               &\vdots
+    \end{mat}
+  \colvec{c_1 \\ c_2 \\ \vdots \\ c_n}
+  =
+  \colvec{\vdots \\ a_{i,1}c_1+a_{i,2}c_2+\cdots+a_{i,n}c_n \\ \vdots}
+\end{equation*}
+Jika dipandang baris demi baris seperti ini,
+operasi baru ini memperumum hasil kali titik.
+
+Kita juga dapat memandang operasi ini kolom demi kolom.
+\begin{align*}
+           \generalmatrix{h}{n}{m}
+           \colvec{c_1 \\ c_2 \\ \vdots \\ c_n}
+  &=\colvec{h_{1,1}c_1+h_{1,2}c_2+\dots+h_{1,n}c_n \\
+               h_{2,1}c_1+h_{2,2}c_2+\dots+h_{2,n}c_n \\
+               \vdots \\
+               h_{m,1}c_1+h_{m,2}c_2+\dots+h_{m,n}c_n}    \\
+  &=c_1\colvec{h_{1,1} \\ h_{2,1} \\ \vdots \\ h_{m,1}}
+%   +c_2\colvec{h_{1,2} \\ h_{2,2} \\ \vdots \\ h_{m,2}}
+   +\dots
+   +c_n\colvec{h_{1,n} \\ h_{2,n} \\ \vdots \\ h_{m,n}}
+\end{align*}
+Hasilnya adalah
+kolom-kolom matriks yang diboboti oleh entri-entri vektor.
+
+\begin{example}
+\begin{equation*}
+    \begin{mat}[r]
+      1  &0  &-1  \\
+      2  &0  &3
+    \end{mat}
+  \colvec[r]{2 \\ -1 \\ 1}
+  =
+  2\colvec[r]{1 \\ 2}
+  -1\colvec[r]{0 \\ 0}
+  +1\colvec[r]{-1 \\ 3}
+  =
+  \colvec[r]{1 \\ 7}
+\end{equation*}
+\end{example}
+
+Cara memandang hasil kali matriks-vektor ini
+membawa kita kembali pada tujuan yang dinyatakan di awal bagian ini, yakni menghitung
+\( h(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n) \)
+sebagai
+\( c_1h(\vec{\beta}_1)+\dots+c_nh(\vec{\beta}_n) \).
+
+Kita memulai bagian ini
+dengan mencatat bahwa kesamaan keduanya memungkinkan kita menghitung aksi 
+$h$ pada sebarang
+argumen hanya dengan mengetahui $h(\vec{\beta}_1)$, \ldots, $h(\vec{\beta}_n)$.
+Kita telah mengembangkannya menjadi suatu skema untuk
+menghitung aksi peta dengan mengambil 
+hasil kali matriks-vektor antara matriks yang merepresentasikan 
+peta dan vektor yang merepresentasikan argumen.
+Dengan cara ini, terhadap sebarang basis, setiap peta linear memiliki 
+representasi matriks.
+Subbagian berikut akan menunjukkan kebalikannya: jika kita menetapkan basis, maka 
+setiap matriks memiliki peta linear yang terkait.
+
+
+\begin{exercises}
+  \recommended \item  
+    Kalikan matriks
+    \begin{equation*}
+      \begin{mat}[r]
+        1  &3  &1  \\
+        0  &-1 &2  \\
+        1  &1  &0
+      \end{mat}
+    \end{equation*}
+    dengan setiap vektor, atau nyatakan ``tidak terdefinisi.''
+    \begin{exparts*}
+      \partsitem \( \colvec[r]{2 \\ 1 \\ 0} \)
+      \partsitem \( \colvec[r]{-2 \\ -2} \)
+      \partsitem \( \colvec[r]{0 \\ 0 \\ 0} \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts*}
+        \partsitem \(
+           \colvec{1\cdot 2+3\cdot 1+1\cdot 0         \\
+                        0\cdot 2+(-1)\cdot 1+2\cdot 0 \\
+                        1\cdot 2+1\cdot 1+0\cdot 0}
+           =\colvec[r]{5 \\ -1 \\ 3}   \)
+        \partsitem Tidak terdefinisi.
+        \partsitem \(  \colvec[r]{0 \\ 0 \\ 0}  \)
+      \end{exparts*}  
+    \end{answer}
+  \item Kalikan matriks ini dengan setiap vektor atau nyatakan ``tidak terdefinisi.''
+    \begin{equation*}
+      \begin{mat}
+        3  &1  \\
+        2  &4
+      \end{mat}
+    \end{equation*}
+    \begin{exparts*}
+      \partsitem $\colvec{1 \\ 2  \\ 1}$
+      \partsitem $\colvec{0 \\ -1}$
+      \partsitem $\colvec{0 \\ 0 \\ 0}$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ini tidak terdefinisi.
+        \partsitem Ini terdefinisi.
+          \begin{equation*}
+            \begin{mat}
+              3  &1  \\
+              2  &4
+            \end{mat}
+            \colvec{0 \\ -1}
+            =
+            \colvec{-1 \\ -4}
+          \end{equation*}
+       \partsitem Tidak terdefinisi.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Lakukan setiap perkalian matriks-vektor berikut, jika mungkin.
+    \begin{exparts*}
+      \partsitem $\begin{mat}[r]
+                    2  &1  \\
+                    3  &-1/2
+                  \end{mat}
+                  \colvec[r]{4  \\ 2}$
+      \partsitem $\begin{mat}[r]
+                    1  &1  &0 \\
+                    -2 &1  &0
+                  \end{mat}
+                  \colvec[r]{1 \\ 3 \\ 1}$
+      \partsitem $\begin{mat}[r]
+                    1  &1  \\
+                    -2  &1
+                  \end{mat}
+                  \colvec[r]{1 \\ 3 \\ 1}$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts*}
+        \partsitem $\colvec{2\cdot 4 +1\cdot 2 \\
+                            3\cdot 4-(1/2)\cdot 2}
+                   =\colvec[r]{10 \\ 11}$
+        \partsitem $\colvec[r]{4 \\ 1}$
+        \partsitem Tidak terdefinisi.
+      \end{exparts*}
+    \end{answer}
+  \item  
+    Persamaan matriks ini menyatakan suatu sistem linear.
+    Selesaikan.
+    \begin{equation*}
+      \begin{mat}[r]
+        2  &1  &1  \\
+        0  &1  &3  \\
+        1  &-1 &2
+      \end{mat}
+      \colvec{x \\ y \\ z}
+      =\colvec[r]{8 \\ 4 \\ 4}
+    \end{equation*}
+    \begin{answer}
+      Perkalian matriks-vektor menghasilkan suatu sistem linear.
+      \begin{equation*}
+        \begin{linsys}{3}
+          2x  &+  &y  &+  &z  &=  &8  \\
+              &   &y  &+  &3z &=  &4  \\
+           x  &-  &y  &+  &2z &=  &4 
+        \end{linsys}
+      \end{equation*}
+      Reduksi Gauss menunjukkan bahwa \( z=1 \), \( y=1 \), dan \( x=3 \).  
+    \end{answer}
+  \recommended \item 
+    Untuk suatu homomorfisme dari \( \polyspace_2 \) ke \( \polyspace_3 \) yang memetakan
+    \begin{equation*}
+      1\mapsto 1+x,
+      \quad
+      x\mapsto 1+2x,
+      \quad\text{dan}\quad
+      x^2\mapsto x-x^3
+    \end{equation*}
+    ke manakah \( 1-3x+2x^2 \) dipetakan?
+    \begin{answer}
+      Berikut dua cara memperoleh jawabannya.
+
+      Pertama, jelas bahwa $1-3x+2x^2=1\cdot 1-3\cdot x+2\cdot x^2$, sehingga kita dapat
+      menerapkan sifat umum pelestarian kombinasi untuk memperoleh
+      $h(1-3x+2x^2)
+       =h(1\cdot 1-3\cdot x+2\cdot x^2) 
+       =1\cdot h(1)-3\cdot h(x)+2\cdot h(x^2) 
+       =1\cdot (1+x)-3\cdot (1+2x)+2\cdot (x-x^3) 
+       =-2-3x-2x^3$.
+
+      Cara lainnya menggunakan skema perhitungan yang dikembangkan dalam subbagian ini.
+      Karena kita mengetahui ke mana unsur-unsur ruang ini dipetakan, kita meninjau
+      basis \( B=\sequence{1,x,x^2} \) untuk domain.
+      Secara sebarang, kita dapat mengambil \( D=\sequence{1,x,x^2,x^3} \)
+      sebagai basis untuk kodomain.
+      Dengan pilihan tersebut, kita memperoleh
+      \begin{equation*}
+        \rep{h}{B,D}
+        =\begin{mat}[r]
+           1   &1  &0  \\
+           1   &2  &1  \\
+           0   &0  &0  \\
+           0   &0  &-1
+         \end{mat}_{B,D}
+      \end{equation*}
+      dan karena
+      \begin{equation*}
+        \rep{1-3x+2x^2}{B}=\colvec[r]{1 \\ -3 \\ 2}_B
+      \end{equation*}
+      perhitungan perkalian matriks-vektor memberikan hasil berikut.
+      \begin{equation*}
+        \rep{h(1-3x+2x^2)}{D}=
+         \begin{mat}[r]
+           1   &1  &0  \\
+           1   &2  &1  \\
+           0   &0  &0  \\
+           0   &0  &-1
+         \end{mat}_{B,D}
+         \colvec[r]{1 \\ -3 \\ 2}_B
+         =\colvec[r]{-2 \\ -3 \\ 0 \\ -2}_D
+      \end{equation*}
+      Jadi, \( h(1-3x+2x^2)
+              =-2\cdot 1-3\cdot x+0\cdot x^2-2\cdot x^3
+              =-2-3x-2x^3 \),
+      seperti di atas.  
+    \end{answer}
+  \item Misalkan $\map{h}{\Re^2}{\matspace_{\nbyn{2}}}$ adalah transformasi linear
+   dengan aksi berikut.
+   \begin{equation*}
+     \colvec{1 \\ 0}\mapsto
+     \begin{mat}
+       1  &2  \\
+       0  &1
+     \end{mat}
+     \qquad
+     \colvec{0 \\ 1}\mapsto
+     \begin{mat}
+       0  &-1  \\
+       1  &0
+     \end{mat}
+   \end{equation*}
+   Apakah efeknya pada vektor umum dengan entri $x$ dan~$y$?
+   \begin{answer}
+     Tetapkan basis alami berikut untuk $\matspace_{\nbyn{2}}$.
+     \begin{equation*}
+       D=\sequence{
+       \begin{mat}
+          1 &0  \\
+          0 &0
+       \end{mat},
+       \begin{mat}
+          0 &1  \\
+          0 &0
+       \end{mat},
+       \begin{mat}
+          0 &0  \\
+          1 &0
+       \end{mat},
+       \begin{mat}
+          0 &0  \\
+          0 &1
+       \end{mat}}
+     \end{equation*}
+     Representasi peta~$h$ terhadap $\stdbasis_2,D$ adalah sebagai berikut.
+     \begin{equation*}
+       \rep{h}{\stdbasis_2,D}=
+       \begin{mat}
+         1  &0  \\
+         2  &-1  \\
+         0  &1  \\
+         1  &0
+       \end{mat}
+     \end{equation*}
+     Karena vektor umum direpresentasikan terhadap~$\stdbasis_2$ 
+     oleh dirinya sendiri, 
+     dan demikian pula setiap matriks direpresentasikan terhadap~$D$ oleh dirinya sendiri, 
+     kita memperoleh efek peta berikut.
+     \begin{equation*}
+       \rep{h(\colvec{x \\ y})}{D}
+       =
+       \begin{mat}
+         1  &0  \\
+         2  &-1  \\
+         0  &1  \\
+         1  &0
+       \end{mat}
+       \colvec{x \\ y}
+       =
+       \colvec{x \\ 2x-y \\ y \\ x}
+     \end{equation*}
+   \end{answer}
+  \recommended \item  
+    Andaikan bahwa \( \map{h}{\Re^2}{\Re^3} \) ditentukan oleh 
+    aksi berikut.
+    \begin{equation*}
+      \colvec[r]{1 \\ 0}\mapsto\colvec[r]{2 \\ 2 \\ 0}
+      \qquad
+      \colvec[r]{0 \\ 1}\mapsto\colvec[r]{0 \\ 1 \\ -1}
+    \end{equation*}
+    Dengan menggunakan basis standar, cari
+    \begin{exparts}
+      \partsitem matriks yang merepresentasikan peta ini;
+      \partsitem rumus umum untuk \( h(\vec{v}) \).
+    \end{exparts}
+    \begin{answer}
+      Sekali lagi, seperti diingatkan dalam subbagian ini, 
+      terhadap $\stdbasis_i$, suatu vektor kolom merepresentasikan dirinya sendiri.
+      \begin{exparts}
+        \partsitem Untuk merepresentasikan \( h \) terhadap 
+          \( \stdbasis_2,\stdbasis_3 \), ambil 
+          bayangan vektor-vektor basis dari domain,
+          lalu representasikan terhadap basis kodomain.
+          Yang pertama adalah
+          \begin{equation*}
+            \rep{\,h(\vec{e}_1)\,}{\stdbasis_3}
+            =\rep{\colvec[r]{2 \\ 2 \\ 0}}{\stdbasis_3}
+            =\colvec[r]{2 \\ 2 \\ 0}
+          \end{equation*}
+          sedangkan yang kedua adalah berikut.
+          \begin{equation*}
+            \rep{\,h(\vec{e}_2)\,}{\stdbasis_3}
+            =\rep{\colvec[r]{0 \\ 1 \\ -1}}{\stdbasis_3}
+            =\colvec[r]{0 \\ 1 \\ -1}
+          \end{equation*}
+          Sejajarkan keduanya untuk membentuk matriks.
+          \begin{equation*}
+            \rep{h}{\stdbasis_2,\stdbasis_3}=
+            \begin{mat}[r]
+              2  &0  \\
+              2  &1  \\
+              0  &-1
+            \end{mat}
+          \end{equation*}
+        \partsitem Untuk sebarang \( \vec{v} \) dalam domain \( \Re^2 \),
+          \begin{equation*}
+            \rep{\vec{v}}{\stdbasis_2}
+            =\rep{\colvec{v_1 \\ v_2}}{\stdbasis_2}
+            =\colvec{v_1 \\ v_2}
+          \end{equation*}
+          sehingga
+          \begin{equation*}
+            \rep{\,h(\vec{v})\,}{\stdbasis_3}
+            =\begin{mat}[r]
+              2  &0  \\
+              2  &1  \\
+              0  &-1
+            \end{mat}
+            \colvec{v_1 \\ v_2}
+            =\colvec{2v_1 \\ 2v_1+v_2 \\ -v_2}
+          \end{equation*}
+          adalah representasi yang diinginkan.
+      \end{exparts}  
+    \end{answer}
+  \item Representasikan homomorfisme $\map{h}{\Re^3}{\Re^2}$ yang diberikan oleh rumus ini
+    terhadap basis-basis berikut.
+    \begin{equation*}
+      \colvec{x \\ y \\ z}\mapsto\colvec{x+y \\ x+z}
+      \qquad
+       B=\sequence{\colvec{1 \\ 1 \\ 1},
+                   \colvec{1 \\ 1 \\ 0},
+                   \colvec{1 \\ 0 \\ 0}}
+       \quad
+          D=\sequence{\colvec{1 \\ 0},
+                  \colvec{0 \\ 2}}
+    \end{equation*}
+    \begin{answer}
+      Aksi peta pada vektor-vektor basis domain adalah sebagai berikut.
+      \begin{equation*}
+          \colvec{1 \\ 1 \\ 1}\mapsto\colvec{2 \\ 2}
+          \quad
+          \colvec{1 \\ 1 \\ 0}\mapsto\colvec{2 \\ 1}
+          \quad
+          \colvec{1 \\ 0 \\ 0}\mapsto\colvec{1 \\ 1}
+      \end{equation*}
+      Representasikan semuanya terhadap basis kodomain.
+      \begin{equation*}
+        \rep{\colvec{2 \\ 2}}{D}=\colvec{2 \\ 1}_D
+        \quad
+        \rep{\colvec{2 \\ 1}}{D}=\colvec{2 \\ 1/2}_D
+        \quad
+        \rep{\colvec{1 \\ 1}}{D}=\colvec{1 \\ 1/2}_D
+      \end{equation*}
+      Konkatenasikan semuanya menjadi suatu matriks.
+      \begin{equation*}
+        \rep{h}{B,D}=
+        \begin{mat}
+          2 &2   &1 \\
+          1 &1/2 &1/2
+        \end{mat}
+      \end{equation*}      
+    \end{answer}
+  \recommended \item  
+    Misalkan \( \map{d/dx}{\polyspace_3}{\polyspace_3} \) adalah transformasi
+    turunan.
+    \begin{exparts}
+      \partsitem Representasikan \( d/dx \) terhadap \( B,B \), dengan
+        \( B=\sequence{1,x,x^2,x^3} \).
+      \partsitem Representasikan \( d/dx \) terhadap \( B,D \), dengan
+        \( D=\sequence{1,2x,3x^2,4x^3} \).
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts*}
+        \partsitem 
+        Mula-mula kita harus mencari bayangan setiap vektor dari basis domain,
+        lalu merepresentasikan bayangan tersebut terhadap basis kodomain.
+        \begin{multline*}
+          \rep{\frac{d\,1}{dx}}{B}=\colvec[r]{0 \\ 0 \\ 0 \\ 0}
+          \quad
+          \rep{\frac{d\,x}{dx}}{B}=\colvec[r]{1 \\ 0 \\ 0 \\ 0}
+          \quad
+          \rep{\frac{d\,x^2}{dx}}{B}=\colvec[r]{0 \\ 2 \\ 0 \\ 0}
+          \\
+          \rep{\frac{d\,x^3}{dx}}{B}=\colvec[r]{0 \\ 0 \\ 3 \\ 0}
+        \end{multline*}
+        Representasi-representasi tersebut kemudian disejajarkan untuk membentuk matriks
+        yang merepresentasikan peta.
+        \begin{equation*}
+          \rep{\frac{d}{dx}}{B,B}=
+          \begin{mat}[r]
+            0  &1  &0  &0  \\
+            0  &0  &2  &0  \\
+            0  &0  &0  &3  \\
+            0  &0  &0  &0 
+          \end{mat}  
+        \end{equation*}
+        \partsitem Dengan melanjutkan seperti pada butir sebelumnya, kita merepresentasikan bayangan
+          vektor-vektor basis domain
+        \begin{multline*}
+          \rep{\frac{d\,1}{dx}}{D}=\colvec[r]{0 \\ 0 \\ 0 \\ 0}
+          \quad
+          \rep{\frac{d\,x}{dx}}{D}=\colvec[r]{1 \\ 0 \\ 0 \\ 0}
+          \quad
+          \rep{\frac{d\,x^2}{dx}}{D}=\colvec[r]{0 \\ 1 \\ 0 \\ 0}
+          \\
+          \rep{\frac{d\,x^3}{dx}}{D}=\colvec[r]{0 \\ 0 \\ 1 \\ 0}
+        \end{multline*}
+        lalu menyejajarkannya untuk membentuk matriks.
+        \begin{equation*}
+          \rep{\frac{d}{dx}}{B,D}=
+          \begin{mat}[r]
+            0  &1  &0  &0  \\
+            0  &0  &1  &0  \\
+            0  &0  &0  &1  \\
+            0  &0  &0  &0
+          \end{mat}  
+        \end{equation*}
+      \end{exparts*}  
+    \end{answer}
+  \recommended \item 
+    Representasikan setiap peta linear terhadap setiap pasangan basis.
+    \begin{exparts}
+      \partsitem \( \map{d/dx}{\polyspace_n}{\polyspace_n} \) terhadap
+        \( B,B \), dengan \( B=\sequence{1,x,\dots,x^n} \), yang diberikan oleh
+        \begin{equation*}
+            a_0+a_1x+a_2x^2+\dots+a_nx^n
+            \mapsto
+            a_1+2a_2x+\dots+na_nx^{n-1}
+        \end{equation*}
+      \partsitem \( \map{\int}{\polyspace_n}{\polyspace_{n+1}} \) 
+        terhadap
+        \( B_n,B_{n+1} \), dengan \( B_i=\sequence{1,x,\dots,x^i} \), yang diberikan oleh
+        \begin{equation*}
+            a_0+a_1x+a_2x^2+\dots+a_nx^n
+            \mapsto
+            a_0x+\frac{a_1}{2}x^2+\dots+\frac{a_n}{n+1}x^{n+1}
+        \end{equation*}
+      \partsitem \( \map{\int^1_0}{\polyspace_n}{\Re} \) terhadap
+        \( B,\stdbasis_1 \), dengan \( B=\sequence{1,x,\dots,x^n} \)
+        dan \( \stdbasis_1=\sequence{1} \), yang diberikan oleh
+        \begin{equation*}
+            a_0+a_1x+a_2x^2+\dots+a_nx^n
+            \mapsto
+            a_0+\frac{a_1}{2}+\dots+\frac{a_n}{n+1}
+        \end{equation*}
+      \partsitem \( \map{\text{eval}_3}{\polyspace_n}{\Re} \) terhadap
+        \( B,\stdbasis_1 \), dengan \( B=\sequence{1,x,\dots,x^n} \)
+        dan \( \stdbasis_1=\sequence{1} \), yang diberikan oleh
+        \begin{equation*}
+            a_0+a_1x+a_2x^2+\dots+a_nx^n
+            \mapsto
+            a_0+a_1\cdot 3+a_2\cdot 3^2+\dots+a_n\cdot 3^n
+        \end{equation*}
+      \partsitem \( \map{\text{slide}_{-1}}{\polyspace_n}{\polyspace_n} \) 
+        terhadap
+        \( B,B \), dengan \( B=\sequence{1,x,\ldots,x^n} \), yang diberikan oleh
+        \begin{equation*}
+            a_0+a_1x+a_2x^2+\dots+a_nx^n
+            \mapsto
+            a_0+a_1\cdot (x+1)+\dots+a_n\cdot (x+1)^n
+        \end{equation*}
+    \end{exparts}
+    \begin{answer}
+      Untuk masing-masing peta, kita harus mencari bayangan setiap vektor basis domain,
+      merepresentasikan setiap bayangan terhadap basis kodomain,
+      lalu menyejajarkan representasi-representasi tersebut untuk memperoleh matriks.
+      \begin{exparts}
+        \partsitem Vektor-vektor basis dari domain memiliki bayangan berikut
+          \begin{equation*}
+            1\mapsto 0  
+            \quad x\mapsto 1  
+            \quad x^2\mapsto 2x  
+            \quad \ldots
+          \end{equation*}
+          dan bayangan-bayangan ini direpresentasikan terhadap basis
+          kodomain dengan cara berikut.
+          \begin{multline*}
+            \rep{0}{B}=\colvec{0 \\ 0 \\ 0 \\ \vdots \\ \  \\  \ }
+            \quad
+            \rep{1}{B}=\colvec{1 \\ 0 \\ 0 \\ \vdots \\ \  \\ \ }
+            \quad
+            \rep{2x}{B}=\colvec{0 \\ 2 \\ 0 \\ \vdots \\ \  \\ \ }        \\
+            \ldots\quad
+            \rep{nx^{n-1}}{B}=\colvec{0 \\ 0 \\ 0 \\ \vdots \\ n \\ 0}
+          \end{multline*}
+          Matriks
+          \begin{equation*}
+            \rep{\frac{d}{dx}}{B,B}
+            =\begin{mat}
+              0  &1  &0  &\ldots  &0  \\
+              0  &0  &2  &\ldots  &0  \\
+                 &\vdots             \\
+              0  &0  &0  &\ldots  &n  \\
+              0  &0  &0  &\ldots  &0
+            \end{mat}
+          \end{equation*}
+          memiliki $n+1$ baris dan kolom.
+       \partsitem Setelah bayangan vektor-vektor basis domain di bawah peta ini
+          ditentukan
+          \begin{equation*}
+            1\mapsto x 
+            \quad x\mapsto x^2/2  
+            \quad x^2\mapsto x^3/3 
+            \quad \ldots
+          \end{equation*}
+          semuanya dapat direpresentasikan terhadap basis kodomain
+          \begin{multline*}
+            \rep{x}{B_{n+1}}=\colvec{0 \\ 1 \\ 0 \\ \vdots \\ \ }
+            \quad
+            \rep{x^2/2}{B_{n+1}}=\colvec{0 \\ 0 \\ 1/2 \\ \vdots \\ \ }   \\
+            \ldots\quad
+            \rep{x^{n+1}/(n+1)}{B_{n+1}}
+                     =\colvec{0 \\ 0 \\ 0 \\ \vdots \\ 1/(n+1)}
+          \end{multline*}
+          lalu disatukan untuk membentuk matriks.
+          \begin{equation*}
+            \rep{\int}{B_{n},B_{n+1}}
+            =\begin{mat}
+              0  &0  &\ldots  &0      &0  \\
+              1  &0  &\ldots  &0      &0  \\
+              0  &1/2&\ldots  &0      &0  \\
+                 &\vdots                  \\
+              0  &0  &\ldots  &0      &1/(n+1)
+            \end{mat}
+          \end{equation*}
+        \partsitem Bayangan vektor-vektor basis domain adalah
+          \begin{equation*} 
+            1\mapsto 1 
+            \quad x\mapsto 1/2 
+            \quad x^2\mapsto 1/3 
+            \quad \ldots
+          \end{equation*}
+          dan semuanya direpresentasikan terhadap basis kodomain sebagai
+          \begin{equation*}
+            \rep{1}{\stdbasis_1}=1
+            \quad \rep{1/2}{\stdbasis_1}=1/2
+            \quad \ldots
+          \end{equation*}
+          sehingga matriksnya adalah 
+          \begin{equation*}
+            \rep{\int}{B,\stdbasis_1}
+            =\begin{mat}
+              1  &1/2 &\cdots  &1/n    &1/(n+1)
+            \end{mat}
+          \end{equation*}
+          (ini adalah matriks $\nbym{1}{(n+1)}$).
+        \partsitem Bayangan vektor-vektor basis domain adalah
+          \begin{equation*}  
+            1\mapsto 1 
+            \quad x\mapsto 3 
+            \quad x^2\mapsto 9
+            \quad \ldots 
+          \end{equation*}
+          dan semuanya direpresentasikan dalam kodomain sebagai
+          \begin{equation*}
+            \rep{1}{\stdbasis_1}=1
+            \quad\rep{3}{\stdbasis_1}=3
+            \quad\rep{9}{\stdbasis_1}=9
+            \quad \ldots 
+          \end{equation*}
+          sehingga matriksnya adalah sebagai berikut.
+          \begin{equation*}
+            \rep{\text{eval}_3}{B,\stdbasis_1}
+            =\begin{mat}[r]
+              1  &3   &9  &\cdots  &3^n
+            \end{mat}
+          \end{equation*}
+        \partsitem Bayangan vektor-vektor basis dari domain adalah
+          $1\mapsto 1$, 
+          dan $x\mapsto x+1=1+x$,  
+          dan $x^2\mapsto (x+1)^2=1+2x+x^2$,  
+          dan $x^3\mapsto (x+1)^3=1+3x+3x^2+x^3$, dan seterusnya.  
+          Representasi-representasinya adalah sebagai berikut.
+          \begin{equation*}
+            \rep{1}{B}=\colvec[r]{1 \\ 0 \\ 0 \\ 0 \\ \vdotswithin{0} \\ 0}
+            \quad
+            \rep{1+x}{B}=\colvec{1 \\ 1 \\ 0 \\ 0 \\ \vdotswithin{0} \\ 0}
+            \quad
+            \rep{1+2x+x^2}{B}=\colvec{1 \\ 2 \\ 1 \\ 0 \\ \vdotswithin{0} \\ 0}
+            \quad\ldots
+          \end{equation*}
+          Matriks yang dihasilkan
+          \begin{equation*}
+            \renewcommand{\arraystretch}{1.2}
+            \rep{\text{slide}_{-1}}{B,B}
+            =\begin{mat}
+              1  &1   &1  &1  &\ldots  &1           \\
+              0  &1   &2  &3  &\ldots  &\binom{n}{1}  \\
+              0  &0   &1  &3  &\ldots  &\binom{n}{2}  \\
+                 &\vdots                        \\
+              0  &0   &0  &   &\ldots  &1
+            \end{mat}
+          \end{equation*}
+          adalah \definend{segitiga Pascal}\index{segitiga Pascal}
+          (ingat bahwa $\binom{n}{r}$ adalah banyaknya cara memilih $r$
+          objek, tanpa memperhatikan urutan dan tanpa pengulangan,
+          dari suatu himpunan berukuran $n$). 
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Representasikan peta identitas pada sebarang ruang
+    taktrivial terhadap \( B,B \), dengan \( B \) sebarang basis.
+    \begin{answer}
+      Jika ruang tersebut berdimensi \( n \),
+      \begin{equation*}
+        \rep{\text{id}}{B,B}=
+        \begin{mat}
+          1  &0  \ldots  &0  \\
+          0  &1  \ldots  &0  \\
+             &\vdots         \\
+          0  &0  \ldots  &1
+        \end{mat}_{B,B}
+      \end{equation*}
+      adalah matriks identitas $\nbyn{n}$.  
+    \end{answer}
+  \item 
+    Representasikan, terhadap basis alami, 
+    transformasi transpos pada ruang 
+    \( \matspace_{\nbyn{2}} \) matriks-matriks $\nbyn{2}$.
+    \begin{answer}
+      Ambil berikut ini sebagai basis alami
+      \begin{equation*}
+        B=\sequence{\vec{\beta}_1,\vec{\beta}_2,\vec{\beta}_3,\vec{\beta}_4}
+         =\sequence{
+            \begin{mat}[r]
+              1  &0  \\
+              0  &0
+            \end{mat},
+            \begin{mat}[r]
+              0  &1  \\
+              0  &0
+            \end{mat},
+            \begin{mat}[r]
+              0  &0  \\
+              1  &0
+            \end{mat},
+            \begin{mat}[r]
+              0  &0  \\
+              0  &1
+            \end{mat}   }
+      \end{equation*}
+      maka peta transpos beraksi dengan cara berikut
+      \begin{equation*}
+        \vec{\beta}_1\mapsto\vec{\beta}_1 
+        \quad \vec{\beta}_2\mapsto\vec{\beta}_3 
+        \quad \vec{\beta}_3\mapsto\vec{\beta}_2 
+        \quad \vec{\beta}_4\mapsto\vec{\beta}_4  
+      \end{equation*}
+      sehingga merepresentasikan bayangan-bayangan terhadap basis
+      kodomain dan menyejajarkan vektor-vektor kolom tersebut memberikan hasil berikut.
+      \begin{equation*}
+        \rep{\text{trans}}{B,B}=
+        \begin{mat}[r]
+          1  &0  &0  &0  \\
+          0  &0  &1  &0  \\
+          0  &1  &0  &0  \\
+          0  &0  &0  &1
+        \end{mat}_{B,B}
+      \end{equation*}   
+     \end{answer}
+  \item 
+     Andaikan bahwa 
+     \( B=\sequence{\vec{\beta}_1,\vec{\beta}_2,\vec{\beta}_3,\vec{\beta}_4} \)
+     adalah basis suatu ruang vektor.
+     Representasikan terhadap \( B,B \) transformasi yang ditentukan
+     oleh masing-masing pengaitan berikut.
+     \begin{exparts}
+       \partsitem \( \vec{\beta}_1\mapsto\vec{\beta}_2 \),
+         \( \vec{\beta}_2\mapsto\vec{\beta}_3 \),
+         \( \vec{\beta}_3\mapsto\vec{\beta}_4 \),
+         \( \vec{\beta}_4\mapsto\zero \)
+       \partsitem \( \vec{\beta}_1\mapsto\vec{\beta}_2 \),
+         \( \vec{\beta}_2\mapsto\zero \),
+         \( \vec{\beta}_3\mapsto\vec{\beta}_4 \),
+         \( \vec{\beta}_4\mapsto\zero \)
+       \partsitem \( \vec{\beta}_1\mapsto\vec{\beta}_2 \),
+         \( \vec{\beta}_2\mapsto\vec{\beta}_3 \),
+         \( \vec{\beta}_3\mapsto\zero \),
+         \( \vec{\beta}_4\mapsto\zero \)
+     \end{exparts}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem Terhadap basis kodomain, bayangan anggota-anggota
+           basis domain direpresentasikan sebagai
+           \begin{equation*}
+             \rep{\vec{\beta}_2}{B}=\colvec[r]{0 \\ 1 \\ 0 \\ 0}
+             \quad
+             \rep{\vec{\beta}_3}{B}=\colvec[r]{0 \\ 0 \\ 1 \\ 0}
+             \quad
+             \rep{\vec{\beta}_4}{B}=\colvec[r]{0 \\ 0 \\ 0 \\ 1}
+             \quad
+             \rep{\zero}{B}=\colvec[r]{0 \\ 0 \\ 0 \\ 0}
+           \end{equation*}
+           dan akibatnya, matriks yang merepresentasikan transformasi tersebut adalah 
+           sebagai berikut.
+           \begin{equation*}
+             \begin{mat}[r]
+                   0  &0  &0  &0  \\
+                   1  &0  &0  &0  \\
+                   0  &1  &0  &0  \\
+                   0  &0  &1  &0
+                 \end{mat}  
+         \end{equation*}
+         \partsitem 
+              $\begin{mat}[r]
+                   0  &0  &0  &0  \\
+                   1  &0  &0  &0  \\
+                   0  &0  &0  &0  \\
+                   0  &0  &1  &0
+                 \end{mat}$
+         \partsitem 
+               $\begin{mat}[r]
+                   0  &0  &0  &0  \\
+                   1  &0  &0  &0  \\
+                   0  &1  &0  &0  \\
+                   0  &0  &0  &0
+                 \end{mat}$
+       \end{exparts}  
+     \end{answer}
+  \item
+    \nearbyexample{exam:RepsOfRigidPlaneMaps} menunjukkan cara merepresentasikan
+    transformasi rotasi bidang terhadap 
+    basis standar.
+    Nyatakan pula transformasi-transformasi berikut terhadap basis
+    standar.
+    \begin{exparts}
+      \partsitem peta \definend{dilatasi} $d_s$, yang mengalikan 
+        semua vektor dengan skalar yang sama $s$\index{dilatasi!representasi}
+      \partsitem peta \definend{refleksi} $f_\ell$, yang mencerminkan
+        semua vektor terhadap garis $\ell$ yang melalui titik asal
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Gambar $\map{d_s}{\Re^2}{\Re^2}$ adalah sebagai berikut.
+          \begin{center}  \small
+            \includegraphics{map/mp/ch3.75}
+          \end{center}
+         Efek peta ini pada vektor-vektor dalam basis standar domain 
+         adalah 
+         \begin{equation*} 
+            \colvec[r]{1 \\ 0}\mapsunder{d_s}\colvec{s \\ 0}
+            \qquad
+            \colvec[r]{0 \\ 1}\mapsunder{d_s}\colvec{0 \\ s}
+         \end{equation*}
+         dan bayangan-bayangan tersebut direpresentasikan terhadap 
+         basis kodomain (sekali lagi, basis standar) oleh dirinya sendiri.
+         \begin{equation*} 
+           \rep{\colvec{s \\ 0}}{\stdbasis_2}=\colvec{s \\ 0}
+           \qquad
+           \rep{\colvec{0 \\ s}}{\stdbasis_2}=\colvec{0 \\ s}
+         \end{equation*}
+         Jadi, representasi peta dilatasi adalah sebagai berikut.
+         \begin{equation*}
+           \rep{d_s}{\stdbasis_2,\stdbasis_2}
+           =\begin{mat}
+              s  &0  \\
+              0  &s
+           \end{mat}
+        \end{equation*}
+      \partsitem Gambar $\map{f_\ell}{\Re^2}{\Re^2}$ adalah sebagai berikut.
+         \begin{center}  \small
+           \includegraphics{map/mp/ch3.76}
+        \end{center}
+       Beberapa perhitungan (lihat Latihan~I.\ref{exer:RigidPlaneMapsAutos})
+       menunjukkan bahwa ketika garis memiliki kemiringan $k$, 
+       \begin{equation*}
+         \colvec[r]{1 \\ 0}
+             \mapsunder{f_\ell}\colvec{(1-k^2)/(1+k^2) \\ 2k/(1+k^2)}
+         \qquad
+         \colvec[r]{0 \\ 1}
+             \mapsunder{f_\ell}\colvec{2k/(1+k^2) \\ -(1-k^2)/(1+k^2)}
+       \end{equation*}
+       (kasus garis dengan kemiringan takterdefinisi terpisah, tetapi mudah) 
+       sehingga matriks yang merepresentasikan refleksi adalah sebagai berikut.
+       \begin{equation*}
+         \rep{f_\ell}{\stdbasis_2,\stdbasis_2}
+         =\frac{1}{1+k^2}\cdot\begin{mat}
+            1-k^2  &2k  \\
+            2k     &-(1-k^2)
+         \end{mat}
+       \end{equation*}
+      \end{exparts}  
+    \end{answer}
+  \recommended \item  
+    Tinjau suatu transformasi linear pada \( \Re^2 \) yang ditentukan
+    oleh kedua pengaitan berikut.
+    \begin{equation*}
+      \colvec[r]{1 \\ 1}\mapsto\colvec[r]{2 \\ 0}
+      \qquad
+      \colvec[r]{1 \\ 0}\mapsto\colvec[r]{-1 \\ 0}
+    \end{equation*}
+    \begin{exparts}
+      \partsitem Representasikan transformasi ini terhadap basis-basis
+        standar.
+      \partsitem Ke manakah transformasi ini mengirim vektor berikut?
+        \begin{equation*}
+          \colvec[r]{0 \\ 5}
+        \end{equation*}
+      \partsitem Representasikan transformasi ini terhadap basis-basis berikut.
+        \begin{equation*}
+          B=\sequence{\colvec[r]{1 \\ -1},\colvec[r]{1 \\ 1}}
+          \qquad
+          D=\sequence{\colvec[r]{2 \\ 2},\colvec[r]{-1 \\ 1}}
+        \end{equation*}
+      \partsitem Dengan menggunakan \( B \) dari butir sebelumnya, 
+        representasikan transformasi terhadap \( B,B \).
+    \end{exparts}
+    \begin{answer}
+      Namai peta tersebut \( \map{t}{\Re^2}{\Re^2} \).
+      \begin{exparts}
+        \partsitem Untuk merepresentasikan peta ini terhadap basis-basis standar, kita
+          harus mencari, lalu merepresentasikan, bayangan vektor $\vec{e}_1$
+          dan $\vec{e}_2$ dari basis domain.
+          Bayangan $\vec{e}_1$ telah diberikan.
+
+          Salah satu cara mencari bayangan $\vec{e}_2$ adalah dengan 
+          pengamatan langsung\Dash kita dapat melihat hal berikut.
+          \begin{equation*}
+            \colvec[r]{1 \\ 1}-\colvec[r]{1 \\ 0}=\colvec[r]{0 \\ 1}
+            \;\mapsunder{t}\;
+            \colvec[r]{2 \\ 0}-\colvec[r]{-1 \\ 0}=\colvec[r]{3 \\ 0}
+          \end{equation*}
+
+          Cara yang lebih sistematis untuk mencari bayangan $\vec{e}_2$ adalah
+          menggunakan informasi yang diberikan untuk merepresentasikan transformasi, lalu 
+          menggunakan representasi itu untuk menentukan bayangannya.  
+          Dengan mengambil berikut ini sebagai basis,
+          \begin{equation*}
+            C=\sequence{\colvec[r]{1 \\ 1},\colvec[r]{1 \\ 0}}
+          \end{equation*}
+          informasi yang diberikan menyatakan hal berikut.
+          \begin{equation*}
+            \rep{t}{C,\stdbasis_2}=
+            \begin{mat}[r]
+              2  &-1  \\
+              0  &0
+            \end{mat}
+          \end{equation*}
+          Karena
+          \begin{equation*}
+            \rep{\vec{e}_2}{C}=\colvec[r]{1 \\ -1}_C
+          \end{equation*}
+kita memperoleh
+          \begin{equation*}
+            \rep{t(\vec{e}_2)}{\stdbasis_2}
+            =\begin{mat}[r]
+               2  &-1  \\
+               0  &0
+             \end{mat}_{C,\stdbasis_2}
+            \colvec[r]{1 \\ -1}_C
+            =\colvec[r]{3 \\ 0}_{\stdbasis_2}
+          \end{equation*}
+          dan akibatnya kita mengetahui bahwa $t(\vec{e}_2)=3\cdot\vec{e}_1$
+          (karena terhadap basis standar, vektor ini 
+          direpresentasikan oleh dirinya sendiri).
+          Oleh karena itu, berikut adalah representasi $t$ terhadap
+          $\stdbasis_2,\stdbasis_2$.
+          \begin{equation*}
+            \rep{t}{\stdbasis_2,\stdbasis_2}
+            =\begin{mat}[r]
+               -1 &3   \\
+               0  &0
+             \end{mat}_{\stdbasis_2,\stdbasis_2}
+          \end{equation*}
+        \partsitem Untuk menggunakan matriks yang diperoleh pada butir sebelumnya, perhatikan bahwa
+          \begin{equation*}
+            \rep{\colvec[r]{0 \\ 5}}{\stdbasis_2}=\colvec[r]{0 \\ 5}_{\stdbasis_2}
+          \end{equation*}
+          sehingga berikut adalah representasi bayangan vektor yang diberikan 
+          terhadap basis kodomain.
+          \begin{equation*}
+            \rep{t(\colvec[r]{0 \\ 5})}{\stdbasis_2}
+            =\begin{mat}[r]
+              -1  &3   \\
+               0  &0
+             \end{mat}_{\stdbasis_2,\stdbasis_2}
+            \colvec[r]{0 \\ 5}_{\stdbasis_2}
+            =\colvec[r]{15 \\ 0}_{\stdbasis_2}
+          \end{equation*}
+          Karena basis kodomain adalah basis standar, sehingga vektor-vektor
+          dalam kodomain direpresentasikan oleh dirinya sendiri, kita memperoleh hasil berikut.
+          \begin{equation*}
+            t(\colvec[r]{0 \\ 5})
+            =\colvec[r]{15 \\ 0}
+          \end{equation*}
+        \partsitem Mula-mula kita mencari bayangan setiap anggota \( B \), lalu
+          merepresentasikan bayangan-bayangan tersebut terhadap \( D \).
+          Untuk langkah pertama, kita dapat menggunakan matriks yang diperoleh sebelumnya.
+          \begin{equation*}
+            \rep{\colvec[r]{1 \\-1}}{\stdbasis_2}
+            =\begin{mat}[r]
+              -1  &3   \\
+               0  &0
+             \end{mat}_{\stdbasis_2,\stdbasis_2}
+            \colvec[r]{1 \\ -1}_{\stdbasis_2}
+            =\colvec[r]{-4 \\ 0}_{\stdbasis_2}
+            \quad\text{sehingga}\quad
+            t(\colvec[r]{1 \\ -1})=\colvec[r]{-4 \\ 0}
+          \end{equation*}
+          Sebenarnya, untuk anggota kedua $B$ kita tidak perlu menerapkan
+          matriks karena soal telah memberikan bayangannya.
+          \begin{equation*}
+            t(\colvec[r]{1 \\ 1})=\colvec[r]{2 \\ 0}
+          \end{equation*}
+          Kini merepresentasikan bayangan-bayangan tersebut terhadap $D$ merupakan pekerjaan rutin.
+          \begin{equation*}
+            \rep{\colvec[r]{-4 \\ 0}}{D}=\colvec[r]{-1 \\ 2}_D
+            \quad\text{dan}\quad
+            \rep{\colvec[r]{2 \\ 0}}{D}=\colvec[r]{1/2 \\ -1}_D
+          \end{equation*}
+          Jadi, matriksnya adalah sebagai berikut.
+          \begin{equation*}
+            \rep{t}{B,D}=
+            \begin{mat}[r]
+              -1  &1/2  \\
+               2  &-1
+            \end{mat}_{B,D}
+          \end{equation*}
+        \partsitem Kita mengetahui bayangan anggota-anggota basis domain
+          dari butir sebelumnya.
+          \begin{equation*}
+             t(\colvec[r]{1 \\ -1})=\colvec[r]{-4 \\ 0}
+             \qquad
+             t(\colvec[r]{1 \\ 1})=\colvec[r]{2 \\ 0}
+          \end{equation*}
+          Kita dapat menghitung representasi bayangan-bayangan tersebut terhadap
+          basis kodomain.
+          \begin{equation*}
+             \rep{\colvec[r]{-4 \\ 0}}{B}=\colvec[r]{-2 \\ -2}_B
+             \quad\text{dan}\quad
+             \rep{\colvec[r]{2 \\ 0}}{B}=\colvec[r]{1 \\ 1}_B
+          \end{equation*}
+          Jadi, berikut adalah matriksnya.
+          \begin{equation*}
+            \rep{t}{B,B}=
+            \begin{mat}[r]
+              -2  &1  \\
+              -2  &1
+            \end{mat}_{B,B}
+          \end{equation*}
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Andaikan bahwa \( \map{h}{V}{W} \) adalah satu-satu sehingga, 
+    menurut \nearbytheorem{th:OOHomoEquivalence}, untuk sebarang basis
+    \( B=\sequence{\vec{\beta}_1,\dots,\vec{\beta}_n}\subset V \), bayangan
+    \( h(B)=\sequence{h(\vec{\beta}_1),\dots,h(\vec{\beta}_n)} \)
+    merupakan basis untuk \( h(V) \).
+    (Jika \( h \) adalah pada, maka \( h(V)=W \).)
+    \begin{exparts}
+      \partsitem Representasikan peta $h$ terhadap $\sequence{B,h(B)}$.
+      \partsitem Untuk anggota $\vec{v}$ dari domain, dengan
+        representasi $\vec{v}$ berkomponen $c_1$, \ldots, $c_n$,
+        representasikan vektor bayangan \( h(\vec{v}) \) terhadap 
+        basis bayangan $h(B)$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Bayangan anggota-anggota basis domain adalah
+          \begin{equation*}
+            \vec{\beta}_1\mapsto h(\vec{\beta}_1)
+            \quad 
+            \vec{\beta}_2\mapsto h(\vec{\beta}_2)
+            \quad\ldots\quad 
+            \vec{\beta}_n\mapsto h(\vec{\beta}_n)
+          \end{equation*}
+          dan bayangan-bayangan tersebut direpresentasikan terhadap basis
+          kodomain dengan cara berikut.
+          \begin{multline*}
+            \rep{\,h(\vec{\beta}_1)\,}{h(B)}=\colvec[r]{1 \\ 0 \\ \vdotswithin{0} \\ 0}
+            \quad
+            \rep{\,h(\vec{\beta}_2)\,}{h(B)}=\colvec[r]{0 \\ 1 \\ \vdotswithin{0} \\ 0}  \\
+            \ldots\quad
+            \rep{\,h(\vec{\beta}_n)\,}{h(B)}=\colvec[r]{0 \\ 0 \\ \vdotswithin{0} \\ 1}
+          \end{multline*}
+          Karena itu, matriksnya adalah matriks identitas.
+          \begin{equation*}
+            \rep{h}{B,h(B)}
+            =\begin{mat}
+               1  &0  &\ldots  &0  \\
+               0  &1  &        &0  \\
+                  &   &\ddots      \\
+               0  &0  &        &1 
+            \end{mat}
+          \end{equation*}
+        \partsitem Dengan menggunakan matriks pada butir sebelumnya, 
+          representasinya adalah sebagai berikut.
+          \begin{equation*}
+            \rep{\,h(\vec{v})\,}{h(B)}
+             =\colvec{c_1 \\ \vdots \\ c_n}_{h(B)}
+          \end{equation*}
+        \end{exparts}  
+     \end{answer}
+  \item 
+    Berikan rumus untuk hasil kali suatu matriks dan \( \vec{e}_i \), yaitu
+    vektor kolom yang semua entrinya nol kecuali satu entri bernilai satu pada
+    posisi ke-\( i \).
+    \begin{answer}
+      Hasil kali
+      \begin{equation*}
+        \begin{mat}
+          h_{1,1} &\ldots  &h_{1,i} &\ldots &h_{1,n}  \\
+          h_{2,1} &\ldots  &h_{2,i} &\ldots &h_{2,n}  \\
+                  &\vdots                             \\
+          h_{m,1} &\ldots  &h_{m,i} &\ldots &h_{m,n}
+        \end{mat}
+        \colvec{0 \\ \vdots \\ 1 \\ \vdots \\ 0}
+        =
+        \colvec{h_{1,i} \\ h_{2,i} \\ \vdots \\ h_{m,i}}
+      \end{equation*}
+      memberikan kolom ke-\( i \) dari matriks.  
+    \end{answer}
+  \recommended \item 
+    Untuk setiap ruang vektor fungsi satu variabel real,
+    representasikan transformasi turunan terhadap \( B,B \).
+    \begin{exparts}
+      \partsitem \( \set{a\cos x+b\sin x \suchthat a,b\in\Re} \),
+         \( B=\sequence{\cos x,\sin x} \)
+      \partsitem \( \set{ae^x+be^{2x} \suchthat a,b\in\Re} \),
+         \( B=\sequence{e^x,e^{2x}} \)
+      \partsitem \( \set{a+bx+ce^x+dxe^{x} \suchthat a,b,c,d\in\Re} \),
+         \( B=\sequence{1,x,e^x,xe^{x}} \)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Bayangan vektor-vektor basis domain adalah
+         \( \cos x\mapsunder{d/dx}-\sin x \) dan
+          \( \sin x\mapsunder{d/dx}\cos x \).
+          Merepresentasikannya terhadap basis kodomain (sekali lagi, $B$)
+          dan menyejajarkan representasi-representasi tersebut memberikan matriks berikut.
+          \begin{equation*}
+            \rep{\frac{d}{dx}}{B,B}=
+            \begin{mat}[r]
+                0  &1  \\
+               -1  &0
+            \end{mat}_{B,B}
+          \end{equation*}
+        \partsitem Bayangan vektor-vektor dalam basis domain adalah 
+          \( e^x\mapsunder{d/dx}e^x \) dan
+          \( e^{2x}\mapsunder{d/dx}2e^{2x} \).
+          Merepresentasikannya terhadap basis kodomain dan menyejajarkannya
+          memberikan matriks berikut.
+          \begin{equation*}
+            \rep{\frac{d}{dx}}{B,B}=
+            \begin{mat}[r]
+                1  &0  \\
+                0  &2
+            \end{mat}_{B,B}
+          \end{equation*}
+        \partsitem Bayangan anggota-anggota basis domain adalah 
+          \( 1\mapsunder{d/dx}0 \), 
+          \( x\mapsunder{d/dx}1 \),
+          \( e^{x}\mapsunder{d/dx}e^{x} \), dan
+          \( xe^{x}\mapsunder{d/dx}e^x+xe^x \).
+          Merepresentasikan bayangan-bayangan ini terhadap $B$ dan menyejajarkannya
+          memberikan matriks berikut.
+          \begin{equation*}
+            \rep{\frac{d}{dx}}{B,B}=
+            \begin{mat}[r]
+                0  &1  &0  &0 \\
+                0  &0  &0  &0 \\
+                0  &0  &1  &1 \\
+                0  &0  &0  &1
+            \end{mat}_{B,B}
+          \end{equation*}
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Cari jangkauan transformasi linear pada \( \Re^2 \) yang direpresentasikan
+    terhadap basis-basis standar oleh setiap matriks berikut.
+    \begin{exparts*}
+      \partsitem $\begin{mat}[r]
+            1  &0 \\
+            0  &0
+          \end{mat}$
+      \partsitem $\begin{mat}[r]
+          0  &0  \\
+          3  &2  
+        \end{mat}$
+      \partsitem matriks berbentuk 
+        $\begin{mat}
+            a   &b  \\
+            2a  &2b
+          \end{mat}$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Jangkauannya adalah himpunan vektor kodomain yang direpresentasikan
+          terhadap basis kodomain dengan cara berikut.
+          \begin{equation*}
+            \set{
+              \begin{mat}[r]
+                1  &0  \\
+                0  &0
+              \end{mat}
+              \colvec{x  \\ y}
+              \suchthat x,y\in\Re}
+            =\set{\colvec{x  \\ 0}
+                  \suchthat x,y\in\Re}
+          \end{equation*}
+          Karena basis kodomain adalah $\stdbasis_2$, 
+          sehingga setiap vektor direpresentasikan
+          oleh dirinya sendiri, jangkauan transformasi ini adalah sumbu-$x$.
+        \partsitem Jangkauannya adalah himpunan vektor kodomain yang direpresentasikan
+          dengan cara berikut.
+          \begin{equation*}
+            \set{
+              \begin{mat}[r]
+                0  &0  \\
+                3  &2
+              \end{mat}
+              \colvec{x  \\ y}
+              \suchthat x,y\in\Re}
+            =\set{\colvec{0  \\ 3x+2y}
+                  \suchthat x,y\in\Re}
+          \end{equation*}
+          Terhadap $\stdbasis_2$, vektor-vektor merepresentasikan 
+          dirinya sendiri, sehingga jangkauan ini
+          adalah sumbu-$y$.
+        \partsitem Himpunan vektor yang direpresentasikan 
+          terhadap $\stdbasis_2$ sebagai
+          \begin{align*}
+            \set{
+              \begin{mat}
+                a   &b  \\
+                2a  &2b
+              \end{mat}
+              \colvec{x  \\ y}
+              \suchthat x,y\in\Re}
+            &=\set{\colvec{ax+by  \\ 2ax+2by}
+                  \suchthat x,y\in\Re}                    \\
+            &=\set{(ax+by)\cdot\colvec[r]{1  \\ 2}
+                  \suchthat x,y\in\Re}
+          \end{align*}
+          adalah garis $y=2x$, asalkan $a$ atau $b$ tidak nol, dan
+          merupakan himpunan yang hanya terdiri atas titik asal jika keduanya nol.
+      \end{exparts}  
+    \end{answer}
+  \recommended \item  
+    Dapatkah satu matriks merepresentasikan dua peta linear yang berbeda?
+    Dengan kata lain, dapatkah \( \rep{h}{B,D}=\rep{\hat{h}}{\hat{B},\hat{D}} \)?
+    \begin{answer}
+      Ya, karena dua alasan.
+
+      Pertama, kedua peta $h$ dan $\hat{h}$ tidak harus memiliki domain
+      dan kodomain yang sama.
+      Sebagai contoh,
+      \begin{equation*}
+        \begin{mat}[r]
+          1  &2  \\
+          3  &4
+        \end{mat}
+      \end{equation*}
+      merepresentasikan peta \( \map{h}{\Re^2}{\Re^2} \) terhadap basis-basis
+      standar yang memetakan
+      \begin{equation*}
+        \colvec[r]{1 \\ 0}\mapsto\colvec[r]{1 \\ 3}
+        \quad\text{dan}\quad
+        \colvec[r]{0 \\ 1}\mapsto\colvec[r]{2 \\ 4}
+      \end{equation*}
+      serta juga merepresentasikan suatu
+      \( \map{\hat{h}}{\polyspace_1}{\Re^2} \) terhadap
+      \( \sequence{1,x} \) dan \( \stdbasis_2 \) yang beraksi dengan cara berikut.
+      \begin{equation*}
+        1\mapsto\colvec[r]{1 \\ 3}
+        \quad\text{dan}\quad
+        x\mapsto\colvec[r]{2 \\ 4}
+      \end{equation*}
+
+      Alasan kedua adalah bahwa, sekalipun domain dan
+      kodomain \( h \) dan \( \hat{h} \) sama, basis yang berbeda menghasilkan
+      peta yang berbeda.
+      Contohnya adalah matriks identitas $\nbyn{2}$
+      \begin{equation*}
+        I=\begin{mat}[r]
+          1  &0  \\
+          0  &1
+        \end{mat}
+      \end{equation*}
+      yang merepresentasikan peta identitas pada $\Re^2$ terhadap
+      $\stdbasis_2,\stdbasis_2$.
+      Namun, terhadap $\stdbasis_2$ untuk domain tetapi basis 
+      $D=\sequence{\vec{e}_2,\vec{e}_1}$ untuk kodomain,
+      matriks $I$ yang sama merepresentasikan peta yang menukar komponen pertama dan
+      kedua 
+      \begin{equation*}
+        \colvec{x \\ y}\mapsto\colvec{y \\ x}
+      \end{equation*}
+      (yakni refleksi terhadap garis $y=x$).
+    \end{answer}
+  \item \label{exer:MatVecMultRepLinMap} 
+    Buktikan \nearbytheorem{th:MatMultRepsFuncAppl}.
+    \begin{answer}
+      Kita meniru \nearbyexample{ex:TypLinMapRepByMat}, hanya dengan mengganti 
+      bilangan dengan huruf.
+
+      Tuliskan \( B \) sebagai \( \sequence{\vec{\beta}_1,\ldots,\vec{\beta}_n} \)
+      dan \( D \) sebagai \( \sequence{\vec{\delta}_1,\dots,\vec{\delta}_m} \).
+      Menurut definisi representasi suatu peta terhadap basis-basis,
+      asumsi bahwa
+      \begin{equation*}
+        \rep{h}{B,D}
+        =\begin{mat}
+           h_{1,1} &\ldots  &h_{1,n}  \\
+           \vdots  &        &\vdots   \\
+           h_{m,1} &\ldots  &h_{m,n}
+         \end{mat}
+      \end{equation*}
+      berarti bahwa
+      $h(\vec{\beta}_i)=h_{1,i}\vec{\delta}_1+\dots+h_{m,i}\vec{\delta}_m$.
+      Dan, menurut definisi representasi suatu vektor terhadap
+      suatu basis, asumsi bahwa
+      \begin{equation*}
+        \rep{\vec{v}}{B}=\colvec{c_1 \\ \vdots \\ c_n}
+      \end{equation*}
+      berarti bahwa \( \vec{v}=c_1\vec{\beta}_1+\cdots+c_n\vec{\beta}_n \).
+      Substitusi memberikan
+      \begin{align*}
+        h(\vec{v})
+        &=h(c_1\cdot\vec{\beta}_1+\dots+c_n\cdot\vec{\beta}_n)      \\
+        &=c_1\cdot h(\vec{\beta}_1)+\dots+c_n\cdot h(\vec{\beta}_n)    \\
+        &=c_1\cdot (h_{1,1}\vec{\delta}_1+\dots+h_{m,1}\vec{\delta}_m) 
+        +\dots                                         
+        +c_n\cdot (h_{1,n}\vec{\delta}_1+\dots+h_{m,n}\vec{\delta}_m) \\
+        &=(h_{1,1}c_1+\dots+h_{1,n}c_n)\cdot\vec{\delta}_1    
+        +\cdots                                
+        +(h_{m,1}c_1+\dots+h_{m,n}c_n)\cdot\vec{\delta}_m
+      \end{align*}
+      sehingga $h(\vec{v})$ direpresentasikan seperti yang diperlukan.   
+    \end{answer}
+  \recommended \item  
+    \nearbyexample{exam:RepsOfRigidPlaneMaps} menunjukkan cara merepresentasikan 
+    rotasi semua vektor di bidang sebesar sudut
+    \( \theta \) terhadap titik asal,
+    terhadap basis-basis standar.
+    \begin{exparts}
+      \partsitem Rotasi semua vektor dalam ruang-dimensi-tiga sebesar sudut
+        \( \theta \) terhadap sumbu-\( x \) adalah suatu transformasi pada $\Re^3$.
+        Representasikan terhadap basis-basis standar.
+        Atur rotasi sedemikian rupa sehingga 
+        bagi seseorang yang kakinya berada di titik asal dan
+        kepalanya berada di \( (1,0,0) \), gerakannya tampak searah jarum jam.
+      \partsitem Ulangi butir sebelumnya, tetapi kali ini rotasikan terhadap sumbu-\( y \).
+        (Letakkan kepala orang tersebut di $\vec{e}_2$.)
+      \partsitem Ulangi terhadap sumbu-\( z \).
+      \partsitem Perluas butir sebelumnya ke \( \Re^4 \).
+        (\textit{Petunjuk:} kita dapat menyatakan kembali 
+        `rotasi terhadap sumbu-\( z \)' sebagai `rotasi sejajar
+        dengan bidang \( xy \)'.)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Gambarnya adalah sebagai berikut.
+          \begin{center}  \small
+            \includegraphics{map/mp/ch3.77}
+         \end{center}
+         Bayangan vektor-vektor dari basis domain 
+         \begin{equation*}
+           \colvec[r]{1 \\ 0 \\ 0}\mapsto\colvec[r]{1 \\ 0 \\ 0}
+           \qquad
+           \colvec[r]{0 \\ 1 \\ 0}\mapsto\colvec{0 \\ \cos\theta \\ -\sin\theta}
+           \qquad
+           \colvec[r]{0 \\ 0 \\ 1}\mapsto\colvec{0 \\ \sin\theta \\ \cos\theta}
+         \end{equation*}
+         direpresentasikan terhadap basis kodomain
+         (sekali lagi, $\stdbasis_3$) oleh dirinya sendiri, 
+         sehingga menyejajarkan representasi-representasi tersebut untuk
+         membentuk matriks memberikan hasil berikut.
+         \begin{equation*}
+            \rep{r_\theta}{\stdbasis_3,\stdbasis_3}=
+            \begin{mat}
+              1  &0       &0                \\
+              0  &\cos\theta   &\sin\theta   \\
+              0  &-\sin\theta  &\cos\theta
+            \end{mat}                  
+         \end{equation*}
+       \partsitem Gambarnya serupa dengan gambar pada jawaban sebelumnya. 
+         Bayangan vektor-vektor dari basis domain 
+         \begin{equation*}
+           \colvec[r]{1 \\ 0 \\ 0}\mapsto\colvec{\cos\theta \\ 0 \\ \sin\theta}
+           \qquad
+           \colvec[r]{0 \\ 1 \\ 0}\mapsto\colvec[r]{0 \\ 1 \\ 0}
+           \qquad
+           \colvec[r]{0 \\ 0 \\ 1}\mapsto\colvec{-\sin\theta \\ 0 \\ \cos\theta}
+         \end{equation*}
+         direpresentasikan terhadap basis kodomain $\stdbasis_3$
+         oleh dirinya sendiri, sehingga berikut adalah matriksnya.
+         \begin{equation*}
+            \begin{mat}
+              \cos\theta  &0       &-\sin\theta   \\
+              0           &1       &0             \\
+              \sin\theta  &0       &\cos\theta
+            \end{mat}                  
+         \end{equation*}
+       \partsitem Bagi seseorang yang berdiri tegak, dengan sumbu-$z$ vertikal,
+         rotasi bidang $xy$ yang searah jarum jam bergerak dari
+         sumbu-$y$ positif menuju sumbu-$x$ positif.
+         Artinya, rotasi tersebut berlawanan dengan arah dalam  
+         \nearbyexample{exam:RepsOfRigidPlaneMaps}.
+         Bayangan vektor-vektor dari basis domain 
+         \begin{equation*}
+           \colvec[r]{1 \\ 0 \\ 0}\mapsto\colvec{\cos\theta \\ -\sin\theta \\ 0}
+           \qquad
+           \colvec[r]{0 \\ 1 \\ 0}\mapsto\colvec{\sin\theta \\ \cos\theta \\ 0}
+           \qquad
+           \colvec[r]{0 \\ 0 \\ 1}\mapsto\colvec[r]{0 \\ 0 \\ 1}
+         \end{equation*}
+         direpresentasikan terhadap $\stdbasis_3$
+         oleh dirinya sendiri, sehingga matriksnya adalah sebagai berikut.
+         \begin{equation*}
+            \begin{mat}
+              \cos\theta    &\sin\theta  &0   \\
+              -\sin\theta   &\cos\theta  &0    \\
+              0             &0           &1
+            \end{mat}                  
+         \end{equation*}
+        \partsitem 
+            $\begin{mat}
+              \cos\theta  &\sin\theta &0 &0 \\
+              -\sin\theta  &\cos\theta  &0 &0 \\
+              0           &0           &1 &0 \\
+              0           &0           &0 &1
+            \end{mat}$
+      \end{exparts}   
+    \end{answer}
+  \item (Lema Triangularisasi Schur)\index{triangularisasi}%
+    \index{matriks!segitiga}
+    \begin{exparts}
+      \partsitem Misalkan \( U \) adalah subruang dari \( V \) dan tetapkan basis-basis
+        \( B_U\subseteq B_V \).
+        Apakah hubungan antara representasi suatu vektor
+        dari \( U \) terhadap
+        \( B_U \) dan representasi vektor tersebut
+        (dipandang sebagai anggota \( V \)) terhadap
+        \( B_V \)?
+      \partsitem Bagaimana dengan peta?
+      \partsitem Tetapkan suatu basis 
+        \( B=\sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \)
+        untuk \( V \) dan amati bahwa rentang-rentang
+        \begin{equation*}
+          \spanof{\emptyset}=\set{\zero}\subset\spanof{\set{\vec{\beta}_1}}
+                        \subset\spanof{\set{\vec{\beta}_1,\vec{\beta}_2}}
+               \subset \quad\cdots\quad 
+               \subset\spanof{B}=V
+        \end{equation*}
+        membentuk suatu rantai subruang yang meningkat secara ketat.
+        Tunjukkan bahwa untuk sebarang peta linear \( \map{h}{V}{W} \), terdapat rantai
+        \( W_0=\set{\zero}\subseteq W_1\subseteq \dots \subseteq W_m =W \)
+        subruang dari \( W \) sedemikian sehingga 
+        \begin{equation*}
+          h(\spanof{\set{\vec{\beta}_1,\dots,\vec{\beta}_i}})\subseteq W_i
+        \end{equation*}
+        untuk setiap \( i \).
+      \partsitem Simpulkan bahwa untuk setiap peta linear 
+        \( \map{h}{V}{W} \), terdapat
+        basis \( B,D \) sehingga matriks yang merepresentasikan \( h \) terhadap
+        \( B,D \) berbentuk segitiga atas
+        (artinya, setiap entri \( h_{i,j} \) dengan \( i>j \) adalah nol).
+      \item Apakah representasi segitiga atas itu unik?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem 
+          Tuliskan basis \( B_U \) sebagai 
+          \( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_k} \) dan
+          lalu tuliskan $B_V$ sebagai perluasan 
+          \( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_k,
+                            \vec{\beta}_{k+1},\dots,\vec{\beta}_n} \).
+          Jika 
+          \begin{equation*}
+            \rep{\vec{v}}{B_U}=\colvec{c_1 \\ \vdots \\ c_k}
+          \end{equation*}
+          sehingga $\vec{v}=c_1\cdot\vec{\beta}_1+\cdots+c_k\cdot\vec{\beta}_k$,
+          maka
+          \begin{equation*}
+            \rep{\vec{v}}{B_V}=\colvec{c_1 \\ \vdots\\ c_k \\ 0 \\ \vdots \\ 0}
+          \end{equation*}
+          karena $\vec{v}=c_1\cdot\vec{\beta}_1+\dots+c_k\cdot\vec{\beta}_k
+                    +0\cdot\vec{\beta}_{k+1}+\dots+0\cdot\vec{\beta}_n$.
+        \partsitem
+          Mula-mula kita harus menentukan arti pertanyaan tersebut.
+          Bandingkan \( \map{h}{V}{W} \) dengan pembatasannya pada subruang
+          \( \map{\restrictionmap{h}{U}}{U}{W} \).
+          Ruang jangkauan pembatasan tersebut merupakan subruang dari \( W \), jadi tetapkan
+          basis \( D_{h(U)} \) untuk ruang jangkauan ini dan perluas menjadi basis 
+          \( D_V \) untuk \( W \).
+          Kita mencari hubungan antara kedua hal berikut.
+          \begin{equation*}
+            \rep{h}{B_V,D_V}
+            \quad\text{dan}\quad
+            \rep{\restrictionmap{h}{U}}{B_U,D_{h(U)}}
+          \end{equation*}
+          Jawabannya langsung mengikuti butir sebelumnya:~jika
+          \begin{equation*}
+            \rep{\restrictionmap{h}{U}}{B_U,D_{h(U)}}
+             =\begin{mat}
+                h_{1,1}  &\ldots  &h_{1,k}  \\
+                \vdots   &        &\vdots   \\
+                h_{p,1}  &\ldots  &h_{p,k}
+              \end{mat}
+          \end{equation*}
+          maka perluasannya direpresentasikan dengan cara berikut.
+          \begin{equation*}
+            \rep{h}{B_V,D_V}
+             =\begin{mat}
+                h_{1,1}  &\ldots  &h_{1,k}  &h_{1,k+1}  &\ldots  &h_{1,n}  \\
+                \vdots   &        &         &           &        &\vdots   \\
+                h_{p,1}  &\ldots  &h_{p,k}  &h_{p,k+1}  &\ldots  &h_{p,n}  \\
+                0        &\ldots  &0        &h_{p+1,k+1}&\ldots  &h_{p+1,n}  \\
+                \vdots   &        &         &           &        &\vdots   \\
+                0        &\ldots  &0        &h_{m,k+1}  &\ldots  &h_{m,n}
+              \end{mat}
+          \end{equation*}
+        \partsitem Ambil \( W_i \) sebagai rentang dari
+          \( \set{h(\vec{\beta}_1),\dots,h(\vec{\beta}_i)} \).
+        \partsitem Terapkan jawaban butir kedua pada butir ketiga.
+        \partsitem Tidak.
+          Sebagai contoh, \( \map{\pi_x}{\Re^2}{\Re^2} \), proyeksi pada
+          sumbu-\( x \), direpresentasikan oleh kedua matriks segitiga atas
+          berikut 
+          \begin{equation*}
+             \rep{\pi_x}{\stdbasis_2,\stdbasis_2}=
+             \begin{mat}[r]
+               1  &0  \\
+               0  &0
+             \end{mat}
+             \quad\text{dan}\quad
+             \rep{\pi_x}{C,\stdbasis_2}=
+             \begin{mat}[r]
+               0  &1  \\
+               0  &0
+             \end{mat}
+          \end{equation*}
+          dengan \( C=\sequence{\vec{e}_2,\vec{e}_1} \).
+      \end{exparts}  
+    \end{answer}
+\index{homomorfisme!matriks yang merepresentasikan|)}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Setiap Matriks Merepresentasikan Peta Linear}
+
+%<*MapDefinedByMat0>
+Subbagian sebelumnya menunjukkan bahwa
+aksi suatu peta linear $h$ dijelaskan oleh matriks $H$,
+terhadap basis-basis yang sesuai, dengan cara berikut.
+\begin{equation*}
+ \vec{v}=\colvec{v_1 \\ \vdots \\ v_n}_B
+  \quad\overset{h}{\underset{H}{\longmapsto}}\quad
+  h(\vec{v})=
+  \colvec{h_{1,1}v_1+\dots+h_{1,n}v_n \\ 
+                     \vdots                      \\
+                     h_{m,1}v_1+\dots+h_{m,n}v_n}_D
+  \tag{$*$}
+\end{equation*}
+Di sini kita akan menunjukkan kebalikannya, yakni bahwa
+setiap matriks merepresentasikan suatu peta linear.
+%</MapDefinedByMat0>
+
+%<*MapDefinedByMat1>
+Jadi, kita mulai dengan suatu matriks
+\begin{equation*}
+  H=\generalmatrix{h}{n}{m}
+\end{equation*}
+dan akan menjelaskan cara matriks tersebut mendefinisikan suatu peta~$h$.
+Kita mengharuskan peta itu direpresentasikan oleh matriks, jadi 
+mula-mula perhatikan bahwa dalam ($*$), dimensi domain peta adalah
+banyaknya kolom~$n$ dari matriks 
+dan dimensi kodomain adalah banyaknya baris~$m$.
+Karena itu, sebagai domain $h$, 
+tetapkan suatu ruang vektor $V$ berdimensi \( n \), dan sebagai
+kodomain tetapkan suatu ruang $W$ berdimensi \( m \).
+Tetapkan pula basis
+\( B=\sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \) dan
+\( D=\sequence{\vec{\delta}_1,\dots,\vec{\delta}_m} \) untuk ruang-ruang tersebut.
+%</MapDefinedByMat1>
+
+%<*MapDefinedByMat2>
+Sekarang definisikan \( \map{h}{V}{W} \) sebagai berikut:~jika $\vec{v}$ dalam domain
+memiliki representasi
+\begin{equation*}
+  \rep{\vec{v}}{B}
+    =\colvec{v_1 \\ \vdots \\ v_n}_B
+\end{equation*}
+maka bayangannya \( h(\vec{v}) \) adalah anggota kodomain 
+dengan representasi berikut.
+\begin{equation*}
+  \rep{\,h(\vec{v})\,}{D}
+    =\colvec{h_{1,1}v_1+\dots+h_{1,n}v_n \\ \vdots \\ 
+                   h_{m,1}v_1+\dots+h_{m,n}v_n}_D
+\end{equation*}
+Dengan kata lain, untuk menghitung aksi $h$ pada 
+sebarang $\vec{v}\in V$, mula-mula nyatakan $\vec{v}$ terhadap
+basis sebagai
+$\vec{v}=v_1\vec{\beta}_1+\dots+v_n\vec{\beta}_n$, lalu 
+$h(\vec{v})=
+ (h_{1,1}v_1+\dots+h_{1,n}v_n)\cdot\vec{\delta}_1
+  +\dots+
+  (h_{m,1}v_1+\dots+h_{m,n}v_n)\cdot\vec{\delta}_m$.
+%</MapDefinedByMat2>
+
+%<*MapDefinedByMat3>
+Di atas kita telah membuat beberapa pilihan; misalnya, $V$ dapat berupa sebarang
+ruang berdimensi-$n$ dan $B$ dapat berupa sebarang basis untuk $V$,
+jadi $H$ tidak mendefinisikan fungsi yang unik.
+Namun, perhatikan bahwa   
+setelah kita menetapkan $V$, $B$, $W$, dan $D$, 
+$h$ terdefinisi dengan baik
+karena $\vec{v}$ memiliki representasi unik terhadap basis $B$
+% by Theorem~II.\ref{th:BasisIffUniqueRepWRT} 
+dan penentuan 
+$\vec{w}$ dari representasinya juga bersifat unik.
+%</MapDefinedByMat3>
+
+\begin{example}
+Tinjau matriks berikut.
+\begin{equation*}
+  H=
+  \begin{mat}
+    1 &2 \\
+    3 &4 \\
+    5 &6
+  \end{mat}
+\end{equation*}
+Matriks ini berukuran $\nbym{3}{2}$, sehingga setiap peta yang didefinisikannya harus membawa domain
+berdimensi~$2$ ke kodomain berdimensi~$3$.
+Kita dapat memilih domain dan kodomain sebagai $\Re^2$ dan $\polyspace_2$, 
+dengan basis-basis berikut.
+\begin{equation*}
+  B=\sequence{\colvec{1 \\ 1}, \colvec[r]{1 \\ -1}}
+  \qquad
+  D=\sequence{x^2, x^2+x, x^2+x+1}
+\end{equation*}
+Kemudian, misalkan $\map{h}{\Re^2}{\polyspace_2}$ adalah fungsi yang didefinisikan oleh~$H$.
+Kita akan menghitung bayangan anggota domain berikut di bawah $h$.
+\begin{equation*}
+  \vec{v}=\colvec[r]{-3 \\ 2}
+\end{equation*}
+Perhitungannya langsung.
+\begin{equation*}
+  \rep{h(\vec{v})}{D}
+  =H\cdot\rep{\vec{v}}{B}
+  =
+  \begin{mat}
+    1  &2  \\
+    3  &4  \\
+    5 &6
+  \end{mat}
+  \colvec{-1/2 \\ -5/2}
+  =\colvec{-11/2 \\ -23/2 \\ -35/2}
+\end{equation*}
+Dari representasinya, perhitungan $h(\vec{v})$ merupakan pekerjaan rutin:
+$(-11/2)(x^2)-(23/2)(x^2+x)-(35/2)(x^2+x+1)
+=(-69/2)x^2-(58/2)x-(35/2)$.  
+\end{example}
+
+
+\begin{theorem} \label{th:MatIsLinMap}\index{homomorfisme!matriks yang merepresentasikan}
+%<*th:MatIsLinMap>
+Setiap matriks merepresentasikan suatu homomorfisme antara ruang-ruang vektor
+berdimensi sesuai, terhadap sebarang pasangan basis.
+%</th:MatIsLinMap>
+\end{theorem}
+
+\begin{proof}
+%<*pf:MatIsLinMap>
+Kita harus memeriksa bahwa untuk sebarang matriks $H$ dan sebarang basis domain serta kodomain $B,D$,
+peta \( h \) yang didefinisikan bersifat linear.
+Jika $\vec{v}, \vec{u}\in V$ sedemikian sehingga
+\begin{equation*}
+  \rep{\vec{v}}{B}=\colvec{v_1 \\ \vdots \\ v_n}
+    \qquad
+  \rep{\vec{u}}{B}=\colvec{u_1 \\ \vdots \\ u_n}
+\end{equation*}
+dan \( c,d\in\Re \), maka perhitungan
+\begin{align*}
+  h(c\vec{v}+d\vec{u})
+  &=\bigl(h_{1,1}(cv_1+du_1)+\dots+
+          h_{1,n}(cv_n+du_n)\bigr)\cdot\vec{\delta}_1+  \\
+  & \hbox{}\quad\cdots+\bigl(h_{m,1}(cv_1+du_1)+\dots
+         +h_{m,n}(cv_n+du_n)\bigr)\cdot\vec{\delta}_m  \\
+  &=c\cdot h(\vec{v})+d\cdot h(\vec{u})
+\end{align*}
+memberikan pemeriksaan tersebut.
+%</pf:MatIsLinMap>
+\end{proof}
+
+\begin{example} \label{ex:CngBasesChgMap}
+Sekalipun domain dan kodomainnya sama, peta yang 
+direpresentasikan matriks bergantung pada 
+basis yang kita pilih.
+Jika
+\begin{equation*}
+  H=
+  \begin{mat}[r]
+    1  &0  \\
+    0  &0
+  \end{mat},
+  \quad
+  B_1=D_1=\sequence{\colvec[r]{1 \\ 0},\colvec[r]{0 \\ 1} },
+  \quad\text{dan}\quad
+  B_2=D_2=\sequence{\colvec[r]{0 \\ 1},\colvec[r]{1 \\ 0} },
+\end{equation*}
+maka \( \map{h_1}{\Re^2}{\Re^2} \) yang direpresentasikan oleh \( H \)
+terhadap \( B_1,D_1 \) memetakan
+\begin{equation*}
+  \colvec{c_1 \\ c_2}
+  =\colvec{c_1 \\ c_2}_{B_1}
+  \quad
+  \mapsto
+  \quad
+  \colvec{c_1 \\ 0}_{D_1}
+  =
+  \colvec{c_1 \\ 0}
+\end{equation*}
+sedangkan \( \map{h_2}{\Re^2}{\Re^2} \) yang direpresentasikan oleh \( H \)
+terhadap \( B_2,D_2 \) adalah peta berikut.
+\begin{equation*}
+  \colvec{c_1 \\ c_2}
+  =\colvec{c_2 \\ c_1}_{B_2}
+  \quad
+  \mapsto
+  \quad
+  \colvec{c_2 \\ 0}_{D_2}
+  =
+  \colvec{0 \\ c_2}
+\end{equation*}
+Keduanya adalah fungsi yang berbeda.
+Yang pertama merupakan proyeksi pada sumbu-\( x \), sedangkan yang kedua 
+merupakan proyeksi pada sumbu-$y$.
+\end{example}
+
+% So not only is any linear map described by a
+% matrix but any matrix describes a linear map.
+Hasil ini berarti bahwa, jika praktis, kita dapat 
+bekerja hanya dengan matriks,
+melakukan perhitungan tanpa harus
+mengkhawatirkan apakah matriks yang sedang dikaji merepresentasikan 
+suatu peta linear pada sepasang ruang.
+
+Ketika kita bekerja dengan suatu matriks 
+tanpa membayangkan ruang atau basis tertentu,
+kita dapat mengambil
+domain dan kodomain sebagai $\Re^n$ dan $\Re^m$, dengan basis-basis
+standar.
+Ini praktis karena dengan basis standar,
+representasi vektor bersifat transparan\Dash
+representasi $\vec{v}$ adalah $\vec{v}$ sendiri.
+(Dalam hal ini,
+ruang kolom matriks sama dengan jangkauan peta dan,
+akibatnya,
+ruang kolom \( H \) sering dilambangkan dengan \( \rangespace{H} \).) 
+
+% With the theorem, we have characterized that for fixed bases we can 
+% pass back and forth between a linear map and its representation as a matrix.
+% Each linear map is described by a matrix and each matrix describes a 
+% linear map
+Jika diberikan suatu matriks, untuk membentuk peta yang terkait kita dapat memilih dari banyak 
+ruang domain dan kodomain, serta banyak basis untuk ruang-ruang itu. 
+Jadi, satu matriks dapat merepresentasikan banyak peta.
+Kita mengakhiri bagian ini dengan mengilustrasikan bagaimana matriks dapat 
+memberikan informasi
+tentang peta-peta yang terkait.
+
+\begin{theorem} \label{th:RankMatEqRankMap}
+%<*th:RankMatEqRankMap>
+\index{rank}\index{homomorfisme!rank}\index{matriks!rank}
+Rank suatu matriks sama dengan rank setiap peta yang direpresentasikannya.
+%</th:RankMatEqRankMap>
+\end{theorem}
+
+\begin{proof}
+%<*pf:RankMatEqRankMap0>
+Andaikan matriks \( H \) berukuran \( \nbym{m}{n} \). 
+Tetapkan ruang domain dan kodomain $V$ serta $W$ berdimensi $n$ dan~$m$ dengan
+basis \( B=\sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \) dan \( D \).
+Maka \( H \) merepresentasikan suatu peta linear $h$ antara ruang-ruang tersebut terhadap 
+basis-basis ini, dengan ruang jangkauan
+\begin{align*}
+  \set{h(\vec{v})\suchthat \vec{v}\in V}
+  &=\set{h(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n)  
+           \suchthat c_1,\dots,c_n\in\Re}                    \\
+  &=\set{c_1h(\vec{\beta}_1)+\dots+c_nh(\vec{\beta}_n)
+            \suchthat c_1,\dots,c_n\in\Re}
+\end{align*}
+adalah rentang $\spanof{\set{h(\vec{\beta}_1),\dots,h(\vec{\beta}_n)}}$.
+Rank peta $h$ adalah dimensi ruang jangkauan ini.
+%</pf:RankMatEqRankMap0>
+
+%<*pf:RankMatEqRankMap1>
+Rank matriks adalah dimensi ruang kolomnya,
+yaitu rentang himpunan kolom-kolomnya
+$\spanof{\,\set{\rep{h(\vec{\beta}_1)}{D},\dots,\rep{h(\vec{\beta}_n)}{D}}\,}$.
+%</pf:RankMatEqRankMap1>
+
+%<*pf:RankMatEqRankMap2>
+Untuk melihat bahwa kedua rentang memiliki dimensi yang sama, ingat 
+dari bukti Lema~I.\ref{lem:EqDimImpIso} bahwa jika kita menetapkan suatu basis, maka
+representasi terhadap basis tersebut memberikan isomorfisme 
+$\map{\mbox{Rep}_D}{W}{\Re^m}$.
+Di bawah isomorfisme ini, terdapat hubungan linear di antara anggota-anggota
+ruang jangkauan jika dan hanya jika hubungan yang sama berlaku dalam
+ruang kolom, misalnya,
+$\zero=c_1\cdot h(\vec{\beta}_1)+\dots+c_n\cdot h(\vec{\beta}_n)$ jika dan hanya jika
+$\zero=c_1\cdot\rep{h(\vec{\beta}_1)}{D}+\dots+c_n\cdot\rep{h(\vec{\beta}_n)}{D}$.
+Karena itu, suatu himpunan bagian ruang jangkauan bebas linear jika dan hanya jika
+himpunan bagian yang bersesuaian dari ruang kolom bebas linear.
+Oleh karena itu, ukuran himpunan bagian bebas linear terbesar dari
+ruang jangkauan sama dengan ukuran himpunan bagian bebas linear terbesar dari
+ruang kolom, sehingga kedua ruang memiliki dimensi yang sama.
+%</pf:RankMatEqRankMap2>
+\end{proof}
+
+Ini menyelesaikan ambiguitas semu dalam penggunaan kata yang sama,
+`rank', baik untuk matriks maupun peta.
+
+\begin{example}
+Setiap peta yang direpresentasikan oleh
+\begin{equation*}
+    \begin{mat}[r]
+      1  &2  &2  \\
+      1  &2  &1  \\
+      0  &0  &3  \\
+      0  &0  &2
+    \end{mat}
+\end{equation*}
+harus memiliki domain berdimensi tiga dan kodomain berdimensi empat.
+Selain itu, karena rank matriks ini adalah dua 
+(kita dapat melihatnya langsung atau memperolehnya dengan Metode Gauss),
+setiap peta yang direpresentasikan oleh matriks ini memiliki ruang jangkauan berdimensi dua.
+\end{example}
+
+\begin{corollary} \label{cor:MatDescsMap}
+%<*co:MatDescsMap>
+Misalkan $h$ adalah peta linear yang direpresentasikan oleh matriks $H$.
+Maka $h$ bersifat pada jika dan hanya jika rank $H$ sama dengan banyaknya 
+barisnya, 
+dan $h$ bersifat satu-satu jika dan hanya jika rank $H$ sama dengan banyaknya
+kolomnya.
+%</co:MatDescsMap>
+\end{corollary}
+
+\begin{proof}
+%<*pf:MatDescsMap0>
+Untuk bagian sifat pada, dimensi ruang jangkauan $h$ adalah rank $h$,
+yang menurut teorema sama dengan rank $H$.
+Karena dimensi kodomain $h$ sama dengan banyaknya baris dalam $H$,
+jika rank $H$ sama dengan banyaknya baris, maka dimensi
+ruang jangkauan sama dengan dimensi kodomain.
+Namun, subruang yang berdimensi sama dengan ruang induknya harus sama dengan
+ruang induk tersebut
+(karena sebarang basis ruang jangkauan merupakan himpunan bagian bebas linear 
+dari kodomain
+yang ukurannya sama dengan dimensi kodomain, sehingga 
+basis ruang jangkauan ini juga harus merupakan 
+basis kodomain).
+%</pf:MatDescsMap0>
+
+%<*pf:MatDescsMap1>
+Untuk bagian lainnya, 
+suatu peta linear bersifat satu-satu jika dan hanya jika peta tersebut merupakan isomorfisme
+antara domain dan jangkauannya, yakni jika dan hanya jika domainnya memiliki
+dimensi yang sama dengan jangkauannya.
+Banyaknya kolom dalam $H$ adalah dimensi domain $h$ dan,
+menurut teorema, rank $H$ sama dengan dimensi 
+jangkauan $h$.
+%</pf:MatDescsMap1>
+\end{proof}
+
+\begin{definition}  \label{df:NonsingularMap}
+%<*df:NonsingularMap>
+Pemetaan linear yang injektif dan surjektif disebut
+\definend{nonsingular}\index{homomorfisme!nonsingular}%
+\index{nonsingular!homomorfisme}; jika tidak, pemetaan itu disebut
+\definend{singular}\index{homomorfisme!singular}%
+\index{singular!homomorfisme}.
+Dengan kata lain, pemetaan linear nonsingular jika dan hanya jika merupakan
+isomorfisme.
+%</df:NonsingularMap>
+\end{definition}
+
+\begin{remark}
+Sebagian penulis memakai `nonsingular' sebagai sinonim untuk injektif,
+sedangkan penulis lain memakainya seperti dalam buku ini.
+Perbedaannya kecil karena setiap pemetaan bersifat surjektif pada daerah
+hasilnya, sehingga pemetaan injektif merupakan isomorfisme dengan daerah hasilnya.
+\end{remark}
+
+Dalam bab pertama, kita mendefinisikan matriks nonsingular sebagai matriks
+persegi yang menjadi matriks koefisien suatu sistem linear dengan solusi tunggal.
+Hasil berikut membenarkan penggunaan ganda istilah tersebut.
+
+\begin{lemma} \label{le:NonsingMatIffNonsingMap}
+\index{homomorfisme!nonsingular}\index{matriks!nonsingular}
+\index{nonsingular}
+%<*le:NonsingMatIffNonsingMap>
+Pemetaan linear nonsingular direpresentasikan oleh matriks persegi.
+Matriks persegi merepresentasikan pemetaan nonsingular jika dan hanya jika
+matriks itu nonsingular.
+Jadi, suatu matriks merepresentasikan isomorfisme jika dan hanya jika matriks
+itu persegi dan nonsingular.
+%</le:NonsingMatIffNonsingMap>
+\end{lemma}
+
+\begin{proof}
+%<*pf:NonsingMatIffNonsingMap0>
+Andaikan pemetaan $\map{h}{V}{W}$ nonsingular.
+\nearbycorollary{cor:MatDescsMap} menyatakan bahwa untuk setiap matriks $H$
+yang merepresentasikan pemetaan tersebut, karena $h$ surjektif, banyak baris
+$H$ sama dengan peringkat $H$; dan karena $h$ injektif, banyak kolom~$H$
+juga sama dengan peringkat~$H$.
+Jadi, $H$ persegi.
+%</pf:NonsingMatIffNonsingMap0>
+
+%<*pf:NonsingMatIffNonsingMap1>
+Selanjutnya, andaikan $H$ persegi berukuran $\nbyn{n}$.
+Matriks~$H$ nonsingular jika dan hanya jika peringkat barisnya~$n$;
+menurut Teorema~Dua.III.\ref{th:RowRankEqualsColumnRank}, ini berlaku jika dan
+hanya jika peringkat $H$ adalah~$n$; menurut
+\nearbytheorem{th:RankMatEqRankMap}, ini berlaku jika dan hanya jika peringkat
+$h$ adalah~$n$; dan menurut Teorema~I.\ref{th:NDimSpaceIsoRN}, ini berlaku jika
+dan hanya jika $h$ merupakan isomorfisme.
+(Pernyataan terakhir berlaku karena domain $h$ berdimensi~$n$, yaitu banyak
+kolom dalam $H$.)
+%</pf:NonsingMatIffNonsingMap1>
+\end{proof}
+
+
+\begin{example}
+Setiap pemetaan dari \( \Re^2 \) ke \( \polyspace_1 \) yang terhadap
+sebarang pasangan basis direpresentasikan oleh
+\begin{equation*}
+  \begin{mat}[r]
+     1  &2  \\
+     0  &3  
+  \end{mat}
+\end{equation*}
+bersifat nonsingular karena matriks ini berperingkat dua.
+\end{example}
+
+\begin{example} \label{ex:NonSMatHasNonSMap}
+Setiap pemetaan \( \map{g}{V}{W} \) yang direpresentasikan oleh
+\begin{equation*}
+  \begin{mat}[r]
+    1  &2  \\
+    3  &6
+  \end{mat}
+\end{equation*}
+bersifat singular karena matriks ini singular.
+\end{example}
+
+Sekarang kita telah melihat bahwa hubungan antara pemetaan dan matriks berlaku
+dua arah:~untuk suatu pasangan basis tertentu, setiap pemetaan linear
+direpresentasikan oleh matriks dan setiap matriks mendeskripsikan suatu
+pemetaan linear.
+Dengan menetapkan ruang dan basis, kita memperoleh korespondensi antara
+pemetaan dan matriks.
+Pada sisa bab ini kita akan menjelajahi korespondensi tersebut.
+Sebagai contoh, kita telah mendefinisikan operasi penjumlahan dan perkalian
+skalar pada pemetaan linear, dan akan melihat operasi matriks yang bersesuaian.
+Kita juga akan melihat operasi matriks yang merepresentasikan komposisi
+pemetaan, serta cara mencari matriks yang merepresentasikan invers pemetaan.
+
+
+\begin{exercises}
+  \item Untuk setiap matriks, nyatakan dimensi domain dan kodomain setiap
+    pemetaan yang direpresentasikannya.
+    \begin{exparts*}
+      \partsitem 
+        $\begin{mat}
+          2  &1  \\
+          3  &4
+        \end{mat}$
+      \partsitem 
+        $\begin{mat}
+          1 &1 &-3 \\ 
+          2 &5 &0
+        \end{mat}$
+      \partsitem 
+        $\begin{mat}
+           1 &3 \\
+           1 &4 \\
+           1 &-1
+        \end{mat}$
+      \partsitem 
+        $\begin{mat}
+           0 &0 &0 \\
+           0 &0 &0
+        \end{mat}$
+      \partsitem 
+        $\begin{mat}
+           1 &-1 &4 &5 \\
+           0 &0  &0 &0
+        \end{mat}$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem domain: $2$, kodomain: $2$
+        \partsitem domain: $3$, kodomain: $2$
+        \partsitem domain: $2$, kodomain: $3$
+        \partsitem domain: $3$, kodomain: $2$
+        \partsitem domain: $4$, kodomain: $2$
+      \end{exparts}
+    \end{answer}
+  \item Tinjau pemetaan linear $\map{f}{V}{W}$ yang terhadap suatu basis
+    $B,D$ direpresentasikan oleh matriks berikut.
+    Tentukan apakah pemetaan itu nonsingular.
+    \begin{exparts*}
+      \partsitem $\begin{mat}
+           2  &1 \\
+           3  &4
+         \end{mat}$
+      \partsitem $\begin{mat}
+           1 &1 \\  
+          -3 &-3
+         \end{mat}$
+      \partsitem $\begin{mat}
+          3 &0 &0 \\
+          2 &1 &0 \\
+          4 &4 &4
+         \end{mat}$
+      \partsitem $\begin{mat}
+          2 &0 &-2 \\
+          1 &1 &0 \\
+          4 &1 &-4
+         \end{mat}$
+    \end{exparts*}
+    \begin{answer}
+      Untuk setiap bagian, kita hanya perlu menentukan apakah matriksnya
+      nonsingular, mungkin dengan Metode Gauss.
+      (Sebenarnya, semua bagian dapat ditentukan hanya dengan mengamati.)
+      \begin{exparts}
+        \partsitem Matriks ini nonsingular karena baris kedua bukan kelipatan
+          baris pertama, sehingga pemetaannya nonsingular.
+        \partsitem Matriksnya singular, sehingga pemetaannya singular.
+        \partsitem Nonsingular.
+        \partsitem Nonsingular.
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+   Misalkan $h$ adalah pemetaan linear yang didefinisikan oleh matriks berikut
+   pada domain~$\polyspace_1$ dan kodomain~$\Re^2$ terhadap basis yang diberikan.
+   \begin{equation*}
+     H=
+     \begin{mat}
+       2  &1  \\
+       4  &2
+     \end{mat}
+     \quad
+     B=\sequence{1+x,x},\,
+     D=\sequence{\colvec{1 \\ 1},\colvec{1 \\ 0}}
+   \end{equation*}
+   Apakah citra vektor $\vec{v}=2x-1$ oleh $h$?
+   \begin{answer}
+     Terhadap $B$, representasi vektornya adalah
+     \begin{equation*}
+       \rep{2x-1}{B}=\colvec{-1 \\ 3}
+     \end{equation*}
+     Dengan perkalian matriks-vektor, kita dapat menghitung $\rep{h(\vec{v})}{D}$.
+     \begin{equation*}
+       \rep{h(2x-1)}{D}
+       =
+       \begin{mat}
+         2  &1  \\
+         4  &2
+       \end{mat}
+       \colvec{-1 \\ 3}_B
+       =
+       \colvec{1 \\ 2}_D
+     \end{equation*}
+     Dari representasi tersebut, kita dapat menghitung $h(\vec{v})$.
+     \begin{equation*}
+       h(2x-1)=1\cdot\colvec{1 \\ 1}+2\cdot\colvec{1 \\ 0}
+       =\colvec{3 \\ 1}
+     \end{equation*}
+   \end{answer}
+ \recommended \item 
+   Tentukan apakah setiap vektor berada dalam daerah hasil pemetaan dari
+   \( \Re^3 \) ke \( \Re^2 \) yang terhadap basis standar direpresentasikan
+   oleh matriks berikut.
+   \begin{exparts*}
+     \partsitem \( \begin{mat}[r]
+                1  &1  &3  \\
+                0  &1  &4
+              \end{mat}  \),~\( \colvec[r]{1 \\ 3} \)
+     \partsitem \( \begin{mat}[r]
+                2  &0  &3  \\
+                4  &0  &6
+              \end{mat}  \),~\( \colvec[r]{1 \\ 1} \)
+   \end{exparts*}
+   \begin{answer} 
+     Seperti dijelaskan dalam subbagian, terhadap basis standar representasi
+     bersifat langsung. Jadi, misalnya, matriks pertama mendeskripsikan
+     pemetaan berikut.
+     \begin{equation*}
+       \colvec[r]{1 \\ 0 \\ 0}=\colvec[r]{1 \\ 0 \\ 0}_{\stdbasis_3}
+          \!\mapsto\colvec[r]{1 \\ 0}_{\stdbasis_2}=\colvec[r]{1 \\ 0}
+       \qquad
+       %\colvec[r]{0 \\ 1 \\ 0}=\colvec[r]{0 \\ 1 \\ 0}_{\stdbasis_3}
+       %   \!\mapsto\colvec[r]{1 \\ 1}_{\stdbasis_2}=\colvec[r]{1 \\ 1}
+       \colvec[r]{0 \\ 1 \\ 0}
+          \!\mapsto\colvec[r]{1 \\ 1}
+       \qquad
+       %\colvec[r]{0 \\ 0 \\ 1}=\colvec[r]{0 \\ 0 \\ 1}_{\stdbasis_3}
+       %   \!\mapsto\colvec[r]{3 \\ 4}_{\stdbasis_2}=\colvec[r]{3 \\ 4}
+       \colvec[r]{0 \\ 0 \\ 1}
+          \!\mapsto\colvec[r]{3 \\ 4}
+     \end{equation*}
+     Jadi, untuk bagian pertama kita menanyakan apakah terdapat skalar
+     sedemikian sehingga
+     \begin{equation*}
+       c_1\colvec[r]{1 \\ 0}+c_2\colvec[r]{1 \\ 1}
+           +c_3\colvec[r]{3 \\ 4}=\colvec[r]{1 \\ 3}
+     \end{equation*}
+     yaitu apakah vektor tersebut berada dalam ruang kolom matriks.
+     \begin{exparts}
+       \partsitem Ya.
+         Kita dapat memperoleh kesimpulan ini dengan menyusun sistem linear
+         yang dihasilkan dan menerapkan Metode Gauss seperti biasa.
+         Cara lain adalah mengamati persamaan kolom dan mengambil
+         $c_3=3/4$, $c_1=-5/4$, serta $c_2=0$.
+         Cara ketiga adalah memperhatikan bahwa peringkat matriks sama dengan
+         dua, yang sama dengan dimensi kodomain. Jadi pemetaan itu surjektif:
+         daerah hasilnya seluruh $\Re^2$, termasuk vektor yang diberikan.
+       \partsitem Tidak; perhatikan bahwa semua kolom matriks memiliki
+         komponen kedua dua kali komponen pertama, sedangkan vektor yang
+         diberikan tidak.
+         Sebagai alternatif, ruang kolom matriks adalah
+         \begin{equation*}
+           \set{c_1\colvec[r]{2 \\ 4}
+                +c_2\colvec[r]{0 \\ 0}
+                +c_3\colvec[r]{3 \\ 6} \suchthat c_1,c_2,c_3\in\Re}
+           =\set{c\colvec[r]{1 \\ 2}\suchthat c\in\Re}
+         \end{equation*}
+         (ini adalah fakta yang telah diamati, tetapi sekarang diperoleh lewat
+         perhitungan, bukan ilham), dan vektor yang diberikan tidak berada
+         dalam himpunan tersebut.
+     \end{exparts}  
+    \end{answer}
+  \recommended \item  
+    Tinjau matriks berikut, yang merepresentasikan transformasi $\Re^2$
+    terhadap basis yang diberikan.
+    \begin{equation*}
+      \frac{1}{2}\cdot
+      \begin{mat}[r]
+        1  &1  \\
+        -1 &1
+      \end{mat}
+      \qquad
+      B=\sequence{\colvec[r]{0 \\ 1},\colvec[r]{1 \\ 0}}
+      \quad 
+      D=\sequence{\colvec[r]{1 \\ 1},\colvec[r]{1 \\ -1}}
+    \end{equation*}
+    \begin{exparts}
+      \partsitem Ke vektor manakah dalam kodomain anggota pertama $B$ dipetakan?
+      \partsitem Bagaimana dengan anggota kedua?
+      \partsitem Ke manakah vektor umum dari domain, yaitu vektor dengan
+        komponen $x$ dan $y$, dipetakan?
+        Dengan kata lain, transformasi \( \Re^2 \) manakah yang
+        direpresentasikan matriks ini terhadap \( B,D \)?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Anggota pertama basis
+          \begin{equation*}
+            \colvec[r]{0 \\ 1}=\colvec[r]{1 \\ 0}_B
+          \end{equation*}
+          dipetakan ke
+          \begin{equation*}
+            \colvec[r]{1/2 \\ -1/2}_D
+          \end{equation*}
+          yang merupakan anggota kodomain berikut.
+          \begin{equation*}
+            \frac{1}{2}\cdot\colvec[r]{1 \\ 1}
+              -\frac{1}{2}\cdot\colvec[r]{1 \\ -1}
+              =\colvec[r]{0 \\ 1}
+          \end{equation*}
+        \partsitem Anggota kedua basis dipetakan sebagai
+          \begin{equation*}
+            \colvec[r]{1 \\ 0}=\colvec[r]{0 \\ 1}_B
+            \mapsto
+            \colvec[r]{1/2 \\ 1/2}_D
+          \end{equation*}
+          ke anggota kodomain berikut.
+          \begin{equation*}
+            \frac{1}{2}\cdot\colvec[r]{1 \\ 1}
+              +\frac{1}{2}\cdot\colvec[r]{1 \\ -1}
+              =\colvec[r]{1 \\ 0}
+          \end{equation*}
+        \partsitem Karena pemetaan yang direpresentasikan matriks merupakan
+          identitas pada basis, pemetaan itu harus menjadi identitas pada
+          semua anggota domain.
+          Kita dapat memperoleh kesimpulan yang sama dengan meninjau
+          \begin{equation*}
+            \colvec{x \\ y}=\colvec{y \\ x}_B
+          \end{equation*}
+          yang dipetakan ke
+          \begin{equation*}
+            \colvec{(x+y)/2 \\ (x-y)/2}_D
+          \end{equation*}
+          yang merepresentasikan anggota $\Re^2$ berikut.
+          \begin{equation*}
+            \frac{x+y}{2}\cdot\colvec[r]{1 \\ 1}
+              +\frac{x-y}{2}\cdot\colvec[r]{1 \\ -1}
+            =\colvec{x \\ y}
+          \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \item Tinjau homomorfisme $\map{h}{\Re^2}{\Re^2}$ yang terhadap basis
+    standar $\stdbasis_2,\stdbasis_2$ direpresentasikan oleh matriks berikut.
+    \begin{equation*}
+      \begin{mat}
+        1  &3  \\
+        2  &4
+      \end{mat}
+    \end{equation*}
+    Carilah citra setiap vektor oleh $h$.
+    \begin{exparts*}
+      \partsitem $\colvec{2  \\ 3}$
+      \partsitem $\colvec{0  \\ 1}$
+      \partsitem $\colvec{-1 \\ 1}$
+    \end{exparts*}
+    \begin{answer}
+      Karena terhadap basis standar~$\stdbasis_2$ suatu vektor
+      direpresentasikan oleh dirinya sendiri, kita hanya perlu melakukan
+      perkalian matriks-vektor.
+      \begin{exparts}
+        \partsitem 
+          \begin{align*}
+            \rep{h(\colvec{2 \\ 3})}{\stdbasis_2}       
+             &=\rep{h}{\stdbasis_2,\stdbasis_2}\;
+             \rep{\colvec{2 \\ 3}}{\stdbasis_2}        \\
+             &=\begin{mat}
+              1  &3  \\
+              2  &4
+             \end{mat}_{\stdbasis_2,\stdbasis_2}
+             \colvec{2 \\ 3}_{\stdbasis_2}                 \\
+             &=\colvec{11 \\ 16}_{\stdbasis_2}=
+             \colvec{11 \\ 16}
+          \end{align*}
+        \partsitem
+           $\begin{mat}
+              1  &3  \\
+              2  &4
+             \end{mat}
+             \colvec{0 \\ 1}=
+             \colvec{3 \\ 4}$
+        \partsitem
+           $\begin{mat}
+              1  &3  \\
+              2  &4
+             \end{mat}
+             \colvec{-1 \\ 1}=
+             \colvec{2 \\ 2}$
+      \end{exparts}
+    \end{answer}
+  \item 
+    Transformasi apakah pada
+    \( F=\set{a\cos\theta+b\sin\theta\suchthat a,b\in\Re} \)
+    yang terhadap \( B=\sequence{\cos\theta-\sin\theta,\sin\theta} \) dan
+    \( D=\sequence{\cos\theta+\sin\theta,\cos\theta} \) direpresentasikan
+    oleh matriks berikut?
+    \begin{equation*}
+      \begin{mat}[r]
+          0  &0  \\
+          1  &0
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Anggota umum domain direpresentasikan terhadap basis domain sebagai
+      \begin{equation*}
+        a\cos\theta+b\sin\theta=\colvec{a \\ a+b}_B
+      \end{equation*}
+      dan dipetakan ke
+      \begin{equation*}
+        \colvec{0 \\ a}_D
+        \quad\text{yang merepresentasikan}\quad
+        0\cdot(\cos\theta+\sin\theta)+a\cdot(\cos\theta)
+      \end{equation*}
+      sehingga pemetaan linear yang direpresentasikan matriks terhadap
+      basis-basis tersebut,
+      \begin{equation*}
+        a\cos\theta+b\sin\theta  
+            \mapsto
+        a\cos\theta
+      \end{equation*}
+      merupakan proyeksi pada komponen pertama.
+    \end{answer}
+  \recommended \item  
+     Tentukan apakah $1+2x$ berada dalam daerah hasil pemetaan dari $\Re^3$
+     ke $\polyspace_2$ yang terhadap $\stdbasis_3$ dan
+     $\sequence{1,1+x^2,x}$ direpresentasikan oleh matriks berikut.
+     \begin{equation*}
+       \begin{mat}[r]
+         1  &3  &0  \\
+         0  &1  &0  \\
+         1  &0  &1
+       \end{mat}
+     \end{equation*}
+     \begin{answer}
+       Nyatakan basis $\polyspace_2$ yang diberikan dengan $B$.
+       Penerapan pemetaan linear direpresentasikan oleh perkalian
+       matriks-vektor.
+       Jadi, vektor pertama dalam $\stdbasis_3$ dipetakan ke unsur
+       $\polyspace_2$ yang terhadap~$B$ direpresentasikan oleh
+       \begin{equation*}
+       \begin{mat}[r]
+         1  &3  &0  \\
+         0  &1  &0  \\
+         1  &0  &1
+       \end{mat}
+       \colvec[r]{1 \\ 0 \\ 0}
+       =
+       \colvec[r]{1 \\ 0 \\ 1}  
+       \end{equation*}
+       dan unsur tersebut adalah $1+x$.
+       Hitung dua citra vektor basis lainnya dengan cara yang sama.
+       \begin{equation*}
+         \begin{mat}[r]
+           1  &3  &0  \\
+           0  &1  &0  \\
+           1  &0  &1
+         \end{mat}
+         \colvec[r]{0 \\ 1 \\ 0}
+         =
+         \colvec[r]{3 \\ 1 \\ 0}=\rep{4+x^2}{B}
+         \quad
+         \begin{mat}[r]
+           1  &3  &0  \\
+           0  &1  &0  \\
+           1  &0  &1
+         \end{mat}
+         \colvec[r]{0 \\ 0 \\ 1}
+         =
+         \colvec[r]{0 \\ 0 \\ 1}=\rep{x}{B}
+       \end{equation*}
+       Jadi, daerah hasil $h$ adalah rentang tiga polinomial
+       $1+x$, $4+x^2$, dan $x$.
+       Dengan demikian, kita dapat menentukan apakah $1+2x$ berada dalam
+       daerah hasil pemetaan dengan mencari skalar $c_1$, $c_2$, dan $c_3$
+       sedemikian sehingga
+       \begin{equation*}
+         c_1\cdot(1+x)+c_2\cdot(4+x^2)+c_3\cdot(x)=1+2x
+       \end{equation*}
+       dan jelas $c_1=1$, $c_2=0$, serta $c_3=1$ sudah cukup.
+       Jadi, $1+2x$ berada dalam daerah hasil karena merupakan citra vektor
+       berikut.
+       \begin{equation*}
+         1\cdot\colvec[r]{1 \\ 0 \\ 0}+0\cdot\colvec[r]{0 \\ 1 \\ 0}
+             +1\cdot\colvec[r]{0 \\ 0 \\ 1}
+       \end{equation*}
+
+       \textit{Catatan.}
+       Argumen yang lebih ringkas adalah memperhatikan bahwa matriks tersebut
+       nonsingular, sehingga berperingkat~$3$ dan daerah hasilnya
+       berdimensi~$3$. Karena kodomain juga berdimensi~$3$, pemetaan itu
+       surjektif. Jadi setiap polinomial merupakan citra suatu vektor;
+       khususnya,~$1+2x$ merupakan citra suatu vektor dalam domain.
+     \end{answer}
+  \item Carilah pemetaan yang direpresentasikan matriks berikut terhadap $B,B$.
+    \begin{equation*}
+      \begin{mat}
+        2  &1  \\
+        -1 &0
+      \end{mat}
+      \qquad
+      B=\sequence{\colvec{1 \\ 0},\colvec{1 \\ 1}}
+    \end{equation*}
+    \begin{answer}
+        Dengan $B=\sequence{\vec{\beta}_1,\vec{\beta}_2}$, kita dapat
+          menentukan $\rep{\vec{v}}{B}$ melalui pengamatan, dengan $\vec{v}$
+          sebagai vektor umum berentri $x$ dan~$y$.
+          \begin{equation*}
+            \colvec{x \\ y}=a\cdot\colvec{1 \\ 0}+b\cdot\colvec{1 \\ 1}
+            \quad\text{menghasilkan}\quad
+            b=y, a=x-y
+          \end{equation*}
+          Jadi, representasi vektor umum terhadap~$B$ adalah
+          \begin{equation*}
+            \rep{\colvec{x \\ y}}{B}=\colvec{x-y \\ y}
+          \end{equation*}
+          Hitung pengaruh pemetaan dengan perkalian matriks-vektor.
+          \begin{equation*}
+            \begin{mat}
+              2  &1  \\
+             -1 &0
+            \end{mat}_B
+            \colvec{x-y \\ y}_B
+            =
+            \colvec{2(x-y)+y \\ -(x-y)}_B     
+            =
+            \colvec{2x-y \\ -x+y}_B     
+          \end{equation*}
+          Selesaikan dengan mengubahnya kembali ke representasi vektor standar.
+          \begin{equation*}
+            \colvec{2x-y \\ -x+y}_B     
+            =
+            (2x-y)\cdot\colvec{1 \\ 0}+(-x+y)\cdot\colvec{1 \\ 1}
+            =\colvec{x \\ -x+y}      
+          \end{equation*}
+    \end{answer}
+  \item 
+    \nearbyexample{ex:NonSMatHasNonSMap} memberikan matriks singular yang
+    karena itu terkait dengan pemetaan-pemetaan singular.
+    Kita tidak dapat menyatakan tindakan pemetaan terkait~$g$ pada unsur
+    domain~$\vec{v}\in V$ karena kita tidak mengetahui domain~$V$,
+    kodomain~$W$, ataupun basis awal dan akhir $B$ dan~$D$.
+    Namun, kita dapat menghitung apa yang terjadi pada representasi
+    $\rep{\vec{v}}{B}$.
+    \begin{exparts}
+      \partsitem Carilah himpunan vektor kolom yang merepresentasikan anggota
+        ruang nol dari setiap pemetaan~$g$ yang direpresentasikan matriks ini.
+      \partsitem Carilah nulitas setiap pemetaan~$g$ tersebut.
+      \partsitem Carilah himpunan vektor kolom yang merepresentasikan anggota
+        daerah hasil setiap pemetaan~$g$ yang direpresentasikan matriks ini.
+      \partsitem Carilah peringkat setiap pemetaan~$g$ tersebut.
+      \partsitem Periksa bahwa peringkat ditambah nulitas sama dengan dimensi domain.
+    \end{exparts}
+    \begin{answer}
+      Misalkan matriks tersebut adalah $G$ dan merepresentasikan
+      $\map{g}{V}{W}$ terhadap basis $B$ dan $D$.
+      Karena $G$ memiliki dua kolom, domain $V$ berdimensi dua.
+      Karena $G$ memiliki dua baris, kodomain $W$ berdimensi dua.
+      Tindakan $g$ pada representasi $\rep{\vec{v}}{B}$ dari anggota umum
+      domain adalah
+      \begin{equation*}
+        \colvec{x \\ y}_B 
+         \;\mapsto\; 
+        \colvec{x+2y \\ 3x+6y}_D
+      \end{equation*}
+      \begin{exparts}
+        \partsitem Apa pun basis kodomain~$D$, satu-satunya representasi
+           vektor nol $\zero_W$ adalah
+           \begin{equation*}
+             \rep{\zero}{D}=\colvec[r]{0 \\ 0}_D
+           \end{equation*}
+           sehingga himpunan representasi anggota ruang nol adalah
+           \begin{equation*}
+             \set{\colvec{x \\ y}_B\suchthat \text{$x+2y=0$ dan $3x+6y=0$}}
+             =\set{y\cdot\colvec[r]{-2 \\ 1}_B\suchthat y\in\Re}
+           \end{equation*}
+         \partsitem Nulitasnya adalah~$1$.
+           Pemetaan representasi $\map{\mbox{Rep}_B}{V}{\Re^2}$ dan inversnya
+           merupakan isomorfisme, sehingga mempertahankan dimensi subruang.
+           Subruang $\Re^2$ pada bagian sebelumnya berdimensi satu.
+           Karena itu, citra subruang tersebut di bawah invers pemetaan
+           representasi\Dash yakni ruang nol $g$\Dash juga berdimensi satu.
+         \partsitem Himpunan representasi anggota daerah hasil adalah
+           \begin{align*}
+             \set{\colvec{x+2y \\ 3x+6y}_D\suchthat x,y\in\Re}
+             &=\set{x\cdot\colvec{1 \\ 3}_D+y\cdot\colvec{2 \\ 6}_D\suchthat x,y\in\Re}  \\
+             &=\set{k\cdot\colvec[r]{1 \\ 3}_D\suchthat k\in\Re}
+           \end{align*}
+         \partsitem Tentu saja, \nearbytheorem{th:RankMatEqRankMap}
+           menyatakan bahwa peringkat pemetaan sama dengan peringkat matriks,
+           yaitu satu. Sebagai alternatif, argumen yang sama seperti untuk
+           ruang nol menunjukkan bahwa dimensi daerah hasil adalah satu.
+         \partsitem Satu ditambah satu sama dengan dua.
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+     Anggap setiap matriks merepresentasikan $\map{h}{\Re^m}{\Re^n}$
+     terhadap basis standar.
+     Untuk setiap matriks, (i)~nyatakan $m$ dan~$n$.
+     Kemudian susun matriks diperbesar dengan matriks yang diberikan di kiri
+     dan vektor yang merepresentasikan anggota daerah hasil di kanan
+     (misalnya, jika kodomainnya~$\Re^3$, letakkan entri $a$, $b$, dan $c$
+     pada kolom kanan).
+     Lakukan reduksi Gauss--Jordan.
+     Gunakan hasilnya untuk
+     (ii)~mencari $\rangespace{h}$ dan $\rank(h)$ serta menyatakan apakah
+     pemetaannya surjektif, dan
+     (iii)~mencari $\nullspace{h}$ dan $\nullity(h)$ serta menyatakan apakah
+     pemetaannya injektif.
+     \begin{exparts}
+       \partsitem     $
+         \begin{mat}
+           2  &1  \\ 
+           -1 &3
+         \end{mat}$
+      \partsitem
+        $\begin{mat}
+          0  &1  &3  \\ 
+          2  &3  &4  \\
+         -2  &-1 &2 
+        \end{mat}$
+      \partsitem
+        $\begin{mat}
+          1  &1  \\ 
+          2  &1  \\
+          3  &1
+       \end{mat}$
+     \end{exparts}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem
+           (i)~Dimensi ruang domain adalah banyaknya kolom,~$m=2$.
+           Dimensi ruang kodomain adalah banyaknya baris,~$n=2$.
+
+           Untuk bagian selanjutnya, tinjau persamaan matriks-vektor berikut.
+           \begin{equation*}
+             \begin{mat}
+               2  &1  \\ 
+              -1  &3        
+             \end{mat}
+             \colvec{x \\ y}
+             =
+             \colvec{a \\ b}
+             \tag{$*$}
+           \end{equation*}
+           Kita menyelesaikannya untuk $x$ dan~$y$.
+           \begin{equation*}
+             \begin{amat}{2}
+             2  &1 &a  \\ 
+             -1 &3 &b       
+             \end{amat}
+             \grstep{(1/2)\rho_1+\rho_2}
+             \grstep[(2/7)\rho_2]{(1/2)\rho_1}
+             \grstep{-(1/2)\rho_2+\rho_1}
+             \begin{amat}{2}
+               1  &0 &(3/7)a-(1/7)b  \\ 
+               0  &1 &(1/7)a+(2/7)b       
+             \end{amat}
+           \end{equation*}
+           (ii)~Untuk setiap
+           \begin{equation*}
+             \colvec{a \\ b}\in\Re^2
+           \end{equation*}
+           dalam persamaan~($*$), perhitungan menunjukkan bahwa sistem
+           memiliki solusi.
+           Jadi, daerah hasil adalah seluruh kodomain,
+           $\rangespace{h}=\Re^2$.
+           Peringkat pemetaan adalah dimensi daerah hasil, yaitu~$2$.
+           Pemetaan itu surjektif karena daerah hasilnya seluruh kodomain.
+
+           (iii)~Sekali lagi berdasarkan perhitungan, untuk mencari ruang nol,
+           tetapkan $a=b=0$ dalam persamaan~($*$). Hasilnya $x=y=0$.
+           Ruang nol adalah subruang trivial dari domain.
+           \begin{equation*}
+             \nullspace{h}=\set{\colvec{0 \\ 0}}
+           \end{equation*}
+           Nulitas adalah dimensi ruang nol tersebut, yaitu~$0$.
+           Pemetaan itu injektif karena ruang nolnya trivial.
+         \partsitem
+            (i)~Dimensi ruang domain adalah banyaknya kolom matriks,~$m=3$,
+            sedangkan dimensi ruang kodomain adalah banyaknya baris,~$n=3$.
+
+           Perhitungannya adalah sebagai berikut.
+            \begin{multline*}
+              \begin{amat}{3}
+                0  &1  &3  &a \\ 
+                2  &3  &4  &b \\
+               -2  &-1 &2  &c
+              \end{amat}
+              \grstep{\rho_1\leftrightarrow\rho_2}
+              \grstep{\rho_1+\rho_3}
+              \grstep{-2\rho_2+\rho_3}                 \\
+              \grstep{(1/2)\rho_1}
+              \grstep{-(3/2)\rho_2+\rho_1}
+              \begin{amat}{3}
+                1  &0 &-5/2 &-(3/2)a+(1/2)b  \\ 
+                0  &1 &3    &a  \\
+                0  &0 &0    &-2a+b+c      
+              \end{amat}
+            \end{multline*}
+            (ii)~Terdapat tripel kodomain
+            \begin{equation*}
+              \colvec{a \\ b \\ c}\in\Re^3
+            \end{equation*}
+            yang tidak menghasilkan solusi sistem; secara khusus, sistem
+            hanya memiliki solusi jika $-2a+b+c=0$.
+            \begin{equation*}
+              \rangespace{h}=\set{\colvec{a \\ b \\ c}\suchthat a=(b+c)/2}
+                            =\set{\colvec{1/2 \\ 1 \\ 0}b
+                                  +\colvec{1/2 \\ 0 \\ 1}c\suchthat b,c\in\Re} 
+            \end{equation*}
+            Peringkat pemetaan adalah dimensi daerah hasil, yaitu~$2$.
+            Pemetaan itu tidak surjektif karena daerah hasilnya bukan seluruh
+            kodomain.
+
+            (iii)~Menetapkan $a=b=c=0$ dalam perhitungan menghasilkan tak
+            hingga banyak solusi.
+            Parametrisasi dengan variabel bebas~$z$ memberikan deskripsi
+            ruang nol berikut.
+            \begin{equation*}
+              \nullspace{h}=\set{\colvec{x \\ y \\ z}\suchthat 
+                               \text{$y=-3z$ dan $x=(5/2)z$}}
+                           =\set{\colvec{5/2 \\ -3 \\ 1}z\suchthat z\in\Re}
+            \end{equation*}
+            Nulitas adalah dimensi ruang nol tersebut, yaitu~$1$.
+            Pemetaan itu tidak injektif karena ruang nolnya tidak trivial.
+          \partsitem
+            (i)~Domain berdimensi $m=2$, sedangkan kodomain berdimensi~$n=3$.
+            Perhitungannya adalah
+              \begin{equation*}
+                \begin{amat}{2}
+                  1  &1  &a \\ 
+                  2  &1  &b \\
+                  3  &1  &c
+                \end{amat}
+                \grstep[-3\rho_1+\rho_3]{-2\rho_1+\rho_2}
+                \grstep{-2\rho_2+\rho_3}
+                \grstep{-\rho_2}                 
+                \grstep{-\rho_2+\rho_1}
+                \begin{amat}{2}
+                  1  &0 &-a+b  \\ 
+                  0  &1 &2a-b  \\
+                  0  &0 &a-2b+c      
+                \end{amat}
+              \end{equation*}
+
+            (ii)~Daerah hasil adalah subruang kodomain berikut.
+            \begin{equation*}
+              \rangespace{h}=\set{\colvec{2b-c \\ b \\ c}\suchthat b,c\in\Re}
+                  =\set{\colvec{2 \\ 1 \\ 0}b+\colvec{-1 \\ 0 \\ 1}c\suchthat b,c\in\Re}
+            \end{equation*}
+            Peringkatnya~$2$.
+            Pemetaannya tidak surjektif.
+
+            (iii)~Ruang nol adalah subruang trivial dari domain.
+            \begin{equation*}
+              \nullspace{h}=\set{\colvec{x \\ y}=\colvec{0 \\ 0}}
+            \end{equation*}
+            Nulitasnya~$0$.
+            Pemetaannya injektif.
+       \end{exparts}
+     \end{answer}
+  \item Gunakan metode dari latihan sebelumnya pada matriks berikut.
+    \begin{equation*}
+        \begin{mat}
+          1 &0 &-1 \\
+          2 &1 &0  \\
+          2 &2 &2
+        \end{mat}
+    \end{equation*}
+    \begin{answer}
+          Berikut reduksi Gauss--Jordan-nya.
+          \begin{align*}
+            \begin{amat}{3}
+                1 &0 &-1 &a \\
+                2 &1 &0  &b \\
+                2 &2 &2  &c  
+            \end{amat}
+            &\grstep[-2\rho_1+\rho_3]{-2\rho_1+\rho_2}
+            \begin{amat}{3}
+                1 &0 &-1 &a \\
+                0 &1 &2  &-2a+b \\
+                0 &2 &4  &-2a+c  
+            \end{amat}                                    \\
+            &\grstep{-2\rho_2+\rho_3}
+            \begin{amat}{3}
+                1 &0 &-1 &a \\
+                0 &1 &2  &-2a+b \\
+                0 &0 &0  &2a-2b+c  
+            \end{amat}
+          \end{align*}
+          (i)~Dimensinya adalah $m=n=3$.
+          (ii)~Daerah hasil adalah himpunan semua anggota kodomain yang
+          membuat sistem ini memiliki solusi.
+          \begin{equation*}
+            \rangespace{h}=\set{\colvec{b-(1/2)c \\ b \\ c}\suchthat b,c\in\Re}
+          \end{equation*}
+          Peringkatnya adalah 2.
+          Karena peringkat lebih kecil daripada dimensi kodomain~$n=3$,
+          pemetaan itu tidak surjektif.
+      
+          (iii)~Ruang nol adalah himpunan anggota domain yang dipetakan ke
+          $a=0$, $b=0$, dan~$c=0$.
+          \begin{equation*}
+            \nullspace{h}=\set{\colvec{z \\ -2z \\ z}\suchthat z\in\Re}
+          \end{equation*}
+          Nulitasnya~$1$.
+          Karena nulitasnya tidak~$0$, pemetaan itu tidak injektif.
+    \end{answer}
+  \item Verifikasi bahwa pemetaan yang direpresentasikan matriks berikut
+        merupakan isomorfisme.
+        \begin{equation*}
+          \begin{mat}
+            2  &1  &0  \\
+            3  &1  &1  \\
+            7  &2  &1
+          \end{mat}
+        \end{equation*}
+    \begin{answer}
+       Untuk setiap pemetaan yang direpresentasikan matriks ini, domain dan
+       kodomain masing-masing berdimensi~$3$.
+           Untuk menunjukkan bahwa pemetaan tersebut merupakan isomorfisme,
+           kita harus menunjukkan bahwa ia surjektif sekaligus injektif.
+           Untuk itu, kita tidak perlu memperbesar matriks dengan $a$, $b$,
+           dan~$c$; perhitungan berikut
+             \begin{multline*}
+               \begin{mat}
+                 2  &1  &0 \\ 
+                 3  &1  &1 \\
+                 7  &2  &1
+               \end{mat}
+               \grstep[-(7/2)\rho_1+\rho_3]{-(3/2)\rho_1+\rho_2}
+               \grstep{-3\rho_2+\rho_3}
+               \grstep[-2\rho_2 \\ -(1/2)\rho_3]{(1/2)\rho_1}                 
+               \grstep{2\rho_3+\rho_2}                          \\
+               \grstep{-(1/2)\rho_2+\rho_1}
+               \begin{mat}
+                 1  &0 &0  \\ 
+                 0  &1 &0  \\
+                 0  &0 &1      
+               \end{mat}
+             \end{multline*}
+          menunjukkan bahwa setiap vektor kodomain terkait dengan tepat satu
+          vektor domain.
+    \end{answer}
+  \item Berikut adalah pembuktian alternatif untuk
+    \nearbylemma{le:NonsingMatIffNonsingMap}.
+    Diberikan matriks $\nbyn{n}$ $H$, tetapkan domain~$V$ dan kodomain~$W$
+    dengan dimensi~$n$ yang sesuai, serta basis $B,D$ bagi ruang-ruang itu,
+    lalu tinjau pemetaan~$h$ yang direpresentasikan matriks tersebut.
+    \begin{exparts}
+      \partsitem
+        Tunjukkan bahwa $h$ surjektif jika dan hanya jika terdapat sedikitnya
+        satu $\rep{\vec{v}}{B}$ yang oleh $H$ dikaitkan dengan setiap
+        $\rep{\vec{w}}{D}$.
+      \partsitem
+        Tunjukkan bahwa $h$ injektif jika dan hanya jika terdapat paling banyak
+        satu $\rep{\vec{v}}{B}$ yang oleh $H$ dikaitkan dengan setiap
+        $\rep{\vec{w}}{D}$.
+      \partsitem
+        Tinjau sistem linear
+        $H\cdot\rep{\vec{v}}{B}=\rep{\vec{w}}{D}$.
+        Tunjukkan bahwa $H$ nonsingular jika dan hanya jika terdapat tepat satu
+        solusi~$\rep{\vec{v}}{B}$ untuk setiap $\rep{\vec{w}}{D}$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem
+          Pemetaan $h$ yang didefinisikan bersifat surjektif jika dan hanya
+          jika untuk setiap $\vec{w}\in W$ terdapat $\vec{v}\in V$ sedemikian
+          sehingga $h(\vec{v})=\vec{w}$.
+          Karena setiap vektor memiliki tepat satu representasi, pengubahan ke
+          representasi menunjukkan bahwa $h$ surjektif jika dan hanya jika
+          untuk setiap representasi $\rep{\vec{w}}{D}$ terdapat representasi
+          $\rep{\vec{v}}{B}$ sedemikian sehingga
+          $H\cdot\rep{\vec{v}}{B}=\rep{\vec{w}}{D}$.
+       \partsitem
+          Bagian ini sama seperti bagian sebelumnya.
+       \partsitem 
+          Seperti dijelaskan pada awal subbagian ini, menurut definisi
+          pemetaan $h$ yang ditentukan oleh matriks $H$ mengaitkan vektor
+          domain $\vec{v}$ berikut dengan vektor kodomain $\vec{w}$ berikut.
+          \begin{equation*}
+            \rep{\vec{v}}{B}=\colvec{v_1 \\ \vdots \\ v_n}
+            \qquad
+            \rep{\vec{w}}{D}
+               =
+               H\cdot\rep{\vec{v}}{B}
+               =\colvec{h_{1,1}v_1+\dots+h_{1,n}v_n  \\ 
+                          \vdots \\ 
+                       h_{m,1}v_1+\dots+h_{m,n}v_n}
+          \end{equation*}
+          Tetapkan $\vec{w}\in W$ dan tinjau sistem linear yang didefinisikan
+          oleh persamaan di atas.
+          \begin{equation*}
+            % H\cdot\rep{\vec{v}}{B}=\rep{\vec{w}}{D}
+            % \qquad
+            \begin{linsys}{3}
+              h_{1,1}v_1 &+ &\cdots &+ &h_{1,n}v_n &= &w_1  \\
+              h_{2,1}v_1 &+ &\cdots &+ &h_{2,n}v_n &= &w_2  \\
+                       &  &        & &          &\vdotswithin{=} & \\
+              h_{n,1}v_1 &+ &\cdots &+ &h_{n,n}v_n &= &w_n
+            \end{linsys}
+          \end{equation*}
+          (Sekali lagi, di sini $w_i$ ditetapkan dan $v_j$ adalah variabel tak
+           diketahui.)
+          Matriks $H$ nonsingular jika dan hanya jika untuk semua
+          $w_1$, \ldots, $w_n$ sistem ini memiliki solusi tunggal.
+          Berdasarkan dua bagian pertama latihan ini, hal tersebut berlaku
+          jika dan hanya jika pemetaan $h$ surjektif dan injektif.
+          Pada gilirannya, ini berlaku jika dan hanya jika $h$ merupakan
+          isomorfisme.
+       \end{exparts}
+      \end{answer}
+  \recommended \item  
+    Karena peringkat matriks sama dengan peringkat setiap pemetaan yang
+    direpresentasikannya, jika satu matriks merepresentasikan dua pemetaan berbeda,
+    \( H=\rep{h}{B,D}=\rep{\hat{h}}{\hat{B},\hat{D}} \) 
+    (dengan \( \map{h,\hat{h}}{V}{W} \))
+    maka dimensi daerah hasil \( h \) sama dengan dimensi daerah hasil
+    \( \hat{h} \).
+    Apakah kedua daerah hasil yang berdimensi sama ini harus benar-benar sama?
+    \begin{answer}
+      Tidak, daerah hasilnya dapat berbeda.
+      \nearbyexample{ex:CngBasesChgMap} menunjukkan hal ini.
+    \end{answer}
+  \item 
+    Misalkan \( V \) adalah ruang berdimensi \( n \) dengan basis \( B \)
+    dan \( D \).
+    Tinjau pemetaan yang untuk \( \vec{v}\in V \) mengirim vektor kolom yang
+    merepresentasikan \( \vec{v} \) terhadap \( B \) ke vektor kolom yang
+    merepresentasikan \( \vec{v} \) terhadap \( D \).
+    Tunjukkan bahwa pemetaan tersebut merupakan transformasi linear \( \Re^n \).
+    \begin{answer}
+      Ingat bahwa pemetaan representasi
+      \begin{equation*}
+        V\mapsunder{\text{Rep}_{B}}\Re^n
+      \end{equation*}
+      merupakan isomorfisme.
+      Jadi, pemetaan inversnya $\map{\mbox{Rep}_B^{-1}}{\Re^n}{V}$ juga
+      merupakan isomorfisme.
+      Transformasi $\Re^n$ yang diinginkan kemudian merupakan komposisi berikut.
+      \begin{equation*}
+        \Re^n\mapsunder{\text{Rep}_{B}^{-1}}
+        V\mapsunder{\text{Rep}_{D}}\Re^n
+      \end{equation*}
+      Karena komposisi isomorfisme juga merupakan isomorfisme, pemetaan
+      $\composed{\mbox{Rep}_{D}}{\mbox{Rep}_{B}^{-1}}$ ini merupakan
+      isomorfisme.
+    \end{answer}
+  \item 
+    \nearbyexample{ex:CngBasesChgMap} menunjukkan bahwa mengubah pasangan
+    basis dapat mengubah pemetaan yang direpresentasikan suatu matriks,
+    walaupun domain dan kodomainnya tetap sama.
+    Dapatkah pemetaannya tidak berubah?
+    Apakah terdapat matriks \( H \), ruang vektor \( V \) dan \( W \), serta
+    pasangan basis terkait \( B_1,D_1 \) dan \( B_2,D_2 \), dengan
+    \( B_1\neq B_2 \), \( D_1\neq D_2 \), atau keduanya, sedemikian sehingga
+    pemetaan yang direpresentasikan \( H \) terhadap \( B_1,D_1 \) sama
+    dengan pemetaan yang direpresentasikannya terhadap \( B_2,D_2 \)?
+    \begin{answer}
+      Ya.
+      Tinjau
+      \begin{equation*}
+        H=\begin{mat}[r]
+            1  &0  \\
+            0  &1
+          \end{mat}
+      \end{equation*}
+      yang merepresentasikan pemetaan dari \( \Re^2 \) ke \( \Re^2 \).
+      Terhadap basis standar \( B_1=\stdbasis_2, D_1=\stdbasis_2 \), matriks
+      ini merepresentasikan pemetaan identitas.
+      Terhadap
+      \begin{equation*}
+        B_2=D_2=\sequence{\colvec[r]{1 \\ 1},\colvec[r]{1 \\ -1}}
+      \end{equation*}
+      matriks ini kembali merepresentasikan identitas.
+      Bahkan, selama basis awal dan akhir sama\Dash selama
+      \( B_i=D_i \)\Dash pemetaan yang direpresentasikan $H$ adalah identitas.
+    \end{answer}
+  \recommended \item 
+    Matriks persegi disebut matriks
+    \definend{diagonal}\index{matriks!diagonal}\index{matriks diagonal} %
+    jika semua entrinya nol kecuali mungkin entri pada diagonal dari kiri atas
+    ke kanan bawah\Dash entri \( 1,1 \), entri \( 2,2 \), dan seterusnya.
+    Tunjukkan bahwa pemetaan linear merupakan isomorfisme jika terdapat basis
+    sedemikian sehingga terhadap basis tersebut pemetaan direpresentasikan
+    oleh matriks diagonal tanpa entri nol pada diagonalnya.
+    \begin{answer}
+      Hal ini langsung mengikuti \nearbylemma{le:NonsingMatIffNonsingMap}.
+    \end{answer}
+  \item 
+    Deskripsikan secara geometris tindakan pada \( \Re^2 \) dari pemetaan
+    yang terhadap basis standar $\stdbasis_2,\stdbasis_2$ direpresentasikan
+    oleh matriks berikut.
+    \begin{equation*}
+      \begin{mat}[r]
+        3  &0  \\
+        0  &2
+      \end{mat}
+    \end{equation*}
+    Lakukan hal yang sama untuk matriks-matriks berikut.
+    \begin{equation*}
+      \begin{mat}[r]
+        1  &0  \\
+        0  &0
+      \end{mat}
+      \quad
+      \begin{mat}[r]
+        0  &1  \\
+        1  &0
+      \end{mat}
+      \quad
+      \begin{mat}[r]
+        1  &3  \\
+        0  &1
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Pemetaan pertama
+      \begin{equation*}
+        \colvec{x \\ y}=\colvec{x \\ y}_{\stdbasis_2}
+        \mapsto
+        \colvec{3x \\ 2y}_{\stdbasis_2}=\colvec{3x \\ 2y}
+      \end{equation*}
+      meregangkan vektor dengan faktor tiga pada arah~\( x \) dan faktor dua
+      pada arah~\( y \).
+      Pemetaan kedua
+      \begin{equation*}
+        \colvec{x \\ y}=\colvec{x \\ y}_{\stdbasis_2}
+        \mapsto
+        \colvec{x \\ 0}_{\stdbasis_2}=\colvec{x \\ 0}
+      \end{equation*}
+      memproyeksikan vektor pada sumbu~\( x \).
+      Pemetaan ketiga
+      \begin{equation*}
+        \colvec{x \\ y}=\colvec{x \\ y}_{\stdbasis_2}
+        \mapsto
+        \colvec{y \\ x}_{\stdbasis_2}=\colvec{y \\ x}
+      \end{equation*}
+      menukar komponen pertama dan kedua (yakni refleksi terhadap garis
+      \( y=x \)).
+      Pemetaan terakhir
+      \begin{equation*}
+        \colvec{x \\ y}=\colvec{x \\ y}_{\stdbasis_2}
+        \mapsto
+        \colvec{x+3y \\ y}_{\stdbasis_2}=\colvec{x+3y \\ y}
+      \end{equation*}
+      menggeser vektor sejajar sumbu~\( x \) sejauh tiga kali jaraknya dari
+      sumbu tersebut (ini adalah suatu \definend{geseran miring}).
+     \end{answer}
+  \item 
+     Fakta bahwa untuk setiap pemetaan linear, peringkat ditambah nulitas sama
+     dengan dimensi domain menunjukkan bahwa syarat perlu bagi keberadaan
+     homomorfisme surjektif dari suatu ruang ke ruang kedua adalah tidak
+     terjadinya kenaikan dimensi.
+     Dengan kata lain, jika $\map{h}{V}{W}$ surjektif, dimensi $W$ harus lebih
+     kecil daripada atau sama dengan dimensi $V$.
+     \begin{exparts}
+       \partsitem Tunjukkan bahwa kebalikan kuat berikut berlaku:
+          tidak adanya kenaikan dimensi mengimplikasikan bahwa terdapat suatu
+          homomorfisme; bahkan setiap matriks dengan ukuran dan peringkat yang
+          tepat merepresentasikan pemetaan seperti itu.
+       \partsitem Apakah terdapat basis untuk $\Re^3$ sedemikian sehingga
+          matriks berikut
+          \begin{equation*}
+            H=\begin{mat}[r]
+                1  &0  &0 \\
+                2  &0  &0 \\
+                0  &1  &0 
+              \end{mat}
+          \end{equation*}
+          merepresentasikan pemetaan dari $\Re^3$ ke $\Re^3$ yang daerah
+          hasilnya adalah subruang bidang~$xy$ dari $\Re^3$?
+     \end{exparts}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem Hal ini langsung mengikuti
+           \nearbytheorem{th:RankMatEqRankMap}.
+         \partsitem Ya.
+            Hal ini langsung mengikuti bagian sebelumnya.
+
+            Untuk memberikan contoh khusus, kita dapat memulai dengan
+            $\stdbasis_3$ sebagai basis domain, lalu mencari basis $D$ bagi
+            kodomain $\Re^3$.
+            Matriks $H$ memberikan tindakan pemetaan sebagai berikut.
+            \begin{multline*}
+              \colvec[r]{1 \\ 0 \\ 0}=\colvec[r]{1 \\ 0 \\ 0}_{\stdbasis_3}
+                 \mapsto\colvec[r]{1 \\ 2 \\ 0}_D
+              \quad       
+              \colvec[r]{0 \\ 1 \\ 0}=\colvec[r]{0 \\ 1 \\ 0}_{\stdbasis_3}
+                 \mapsto\colvec[r]{0 \\ 0 \\ 1}_D
+              \\  %\quad       
+              \colvec[r]{0 \\ 0 \\ 1}=\colvec[r]{0 \\ 0 \\ 1}_{\stdbasis_3}
+                 \mapsto\colvec[r]{0 \\ 0 \\ 0}_D
+            \end{multline*}
+            Kita dapat mencari basis $D$ sedemikian sehingga
+            \begin{equation*}
+              \rep{\colvec[r]{1 \\ 0 \\ 0}}{D}=\colvec[r]{1 \\ 2 \\ 0}_D
+              \quad\mbox{dan}\quad
+              \rep{\colvec[r]{0 \\ 1 \\ 0}}{D}=\colvec[r]{0 \\ 0 \\ 1}_D
+            \end{equation*}
+            yakni sedemikian sehingga pemetaan yang direpresentasikan $H$
+            terhadap $\stdbasis_3,D$ merupakan proyeksi pada bidang~$xy$.
+            Syarat kedua memberikan anggota ketiga $D$ sebagai $\vec{e}_2$.
+            Syarat pertama menyatakan bahwa anggota pertama $D$ ditambah dua
+            kali anggota kedua sama dengan $\vec{e}_1$, sehingga basis berikut
+            memenuhi.
+            \begin{equation*}
+              D=\sequence{\colvec{2 \\ 0 \\ 1},
+                          \colvec{-1/2 \\ 0 \\ -1/2},
+                          \colvec{0 \\ 1 \\ 0}}
+            \end{equation*}
+% sage: load('gauss_method.sage')
+% sage: M = matrix(QQ, [[2,-1/2,0], [0,0,1], [1,-1/2,0]])
+% sage: gauss_method(M)
+% [   2 -1/2    0]
+% [   0    0    1]
+% [   1 -1/2    0]
+% (' take', -1/2, 'times row', 1, 'plus row', 3)
+% [   2 -1/2    0]
+% [   0    0    1]
+% [   0 -1/4    0]
+% (' swap row', 2, 'with row', 3)
+% [   2 -1/2    0]
+% [   0 -1/4    0]
+% [   0    0    1]
+       \end{exparts} 
+     \end{answer}
+  \item 
+    Misalkan \( V \) adalah ruang berdimensi \( n \) dan
+    \( \vec{x}\in\Re^n \).
+    Tetapkan basis \( B \) bagi \( V \), lalu tinjau pemetaan
+    \( \map{h_{\vec{x}}}{V}{\Re} \) yang diberikan oleh hasil kali titik
+    $\vec{v}\mapsto\vec{x}\dotprod\rep{\vec{v}}{B}$.
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa pemetaan ini linear.
+      \partsitem Tunjukkan bahwa untuk setiap pemetaan linear
+        \( \map{g}{V}{\Re} \), terdapat \( \vec{x}\in\Re^n \) sedemikian
+        sehingga \( g=h_{\vec{x}} \).
+      \partsitem Pada bagian sebelumnya kita menetapkan basis dan memvariasikan
+        \( \vec{x} \) untuk memperoleh semua pemetaan linear yang mungkin.
+        Dapatkah kita memperoleh semua pemetaan linear dengan menetapkan
+        \( \vec{x} \) dan memvariasikan basis?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ingat bahwa pemetaan representasi
+          $\map{\mbox{Rep}_{B}}{V}{\Re^n}$ bersifat linear (sebenarnya
+          merupakan isomorfisme, tetapi sifat injektif atau surjektifnya tidak
+          diperlukan di sini).
+          Dengan menganggap transpos vektor kolom $\vec{x}$ sebagai matriks
+          $\nbym{1}{n}$, pemetaan dari $\Re^n$ ke $\Re$ yang membawa vektor
+          kolom ke hasil kali titiknya dengan $\vec{x}$ bersifat linear
+          (ini adalah perkalian matriks-vektor, sehingga
+          \nearbytheorem{th:MatIsLinMap} berlaku).
+          Jadi, pemetaan $h_{\vec{x}}$ linear karena merupakan komposisi dua
+          pemetaan linear.
+          \begin{equation*}
+            \vec{v}\mapsto \rep{\vec{v}}{B}
+                   \mapsto \vec{x}\cdot\rep{\vec{v}}{B}     
+          \end{equation*}
+       \partsitem Setiap pemetaan linear $\map{g}{V}{\Re}$ direpresentasikan
+          oleh suatu matriks
+          \begin{equation*}
+            \begin{mat}
+              g_1  &g_2 &\cdots &g_n
+            \end{mat}
+          \end{equation*}
+          (matriks tersebut memiliki $n$ kolom karena $V$ berdimensi~$n$ dan
+          hanya satu baris karena $\Re$ berdimensi satu).
+          Ambil $\vec{x}$ sebagai vektor kolom yang merupakan transpos matriks ini,
+          \begin{equation*}
+            \vec{x}=\colvec{g_1 \\ \vdots \\ g_n}
+          \end{equation*}
+          sehingga diperoleh tindakan yang diinginkan.
+          \begin{equation*}
+            \vec{v}=\colvec{v_1 \\ \vdots \\ v_n}
+             \mapsto
+            \colvec{g_1 \\ \vdots \\ g_n}\dotprod\colvec{v_1 \\ \vdots \\ v_n}
+            =g_1v_1+\dots+g_nv_n
+          \end{equation*}
+        \partsitem Tidak.
+          Jika \( \vec{x} \) memiliki suatu entri tak nol, maka
+          \( h_{\vec{x}} \) tidak mungkin menjadi pemetaan nol; jika
+          \( \vec{x} \) adalah vektor nol, maka \( h_{\vec{x}} \) hanya dapat
+          menjadi pemetaan nol.
+      \end{exparts}  
+    \end{answer}
+  \item
+    Misalkan \( V,W,X \) adalah ruang vektor dengan basis \( B,C,D \).
+    \begin{exparts}
+      \partsitem Andaikan \( \map{h}{V}{W} \) direpresentasikan terhadap
+        \( B,C \) oleh matriks \( H \).
+        Berikan matriks yang merepresentasikan kelipatan skalar \( rh \),
+        dengan \( r\in\Re \), terhadap \( B,C \), dan nyatakan dalam $H$.
+      \partsitem Andaikan \( \map{h,g}{V}{W} \) direpresentasikan terhadap
+        \( B,C \) oleh \( H \) dan \( G \).
+        Berikan matriks yang merepresentasikan \( h+g \) terhadap \( B,C \),
+        dan nyatakan dalam \( H \) serta \( G \).
+      \partsitem Andaikan \( \map{h}{V}{W} \) direpresentasikan terhadap
+        \( B,C \) oleh \( H \), dan \( \map{g}{W}{X} \) direpresentasikan
+        terhadap \( C,D \) oleh \( G \).
+        Berikan matriks yang merepresentasikan \( \composed{g}{h} \) terhadap
+        \( B,D \), dan nyatakan dalam \( H \) serta \( G \).
+    \end{exparts}
+    \begin{answer}
+       Lihat bagian berikutnya.
+    \end{answer}
+\end{exercises}

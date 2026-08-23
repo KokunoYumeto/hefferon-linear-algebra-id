@@ -1,0 +1,109 @@
+{
+  "schema_version": "2.0.0",
+  "inventory_scope": "Exact unmodified files vendored for the pinned pdfTeX map, encoding, and embedded Type 1 font-program closure, with preserved notices and authority archives.",
+  "vendoring_mode": "exact-unmodified-bytes",
+  "runtime_dependency_count": 51,
+  "payload_file_count": 70,
+  "payload_total_bytes": 10309534,
+  "integrity_manifest": "SHA256SUMS",
+  "map_policy": {
+    "default_map": "maps/hefferon-standard.map",
+    "default_map_mode": "loaded without a pdfmapfile modifier so the mutable system pdftex.map is not read",
+    "appended_component_maps": [
+      "maps/cm-super-t1.map",
+      "maps/cm-super-ts1.map",
+      "maps/bera.map",
+      "maps/ugq.map",
+      "maps/pbsi.map"
+    ]
+  },
+  "authority_archives": [
+    {
+      "path": "sources/amsfonts-3.04-ctan.zip",
+      "bytes": 5834307,
+      "sha256": "aaab3930b952128b7ed65260144493eb3d88cb063b50da1f90272e23c7e08ba2",
+      "url": "https://mirrors.ctan.org/fonts/amsfonts.zip",
+      "retrieved_utc_date": "2026-08-22"
+    },
+    {
+      "path": "sources/rsfs-1998-04-24-ctan.zip",
+      "bytes": 65479,
+      "sha256": "d57d16ff8b438fad7212a822a394e099b427d1fb8434fd1f78decb09a4c84aaa",
+      "url": "https://mirrors.ctan.org/fonts/rsfs.zip",
+      "retrieved_utc_date": "2026-08-22"
+    },
+    {
+      "path": "sources/urw-base35-2003-05-06-ctan.zip",
+      "bytes": 1968003,
+      "sha256": "07abaf13d6dbff68b884a877c91c9692283562273adc2d52a4bf9bfdd90668fd",
+      "url": "https://mirrors.ctan.org/fonts/urw/base35.zip",
+      "retrieved_utc_date": "2026-08-22"
+    }
+  ],
+  "components": [
+    {
+      "name": "CM-Super 0.3.4",
+      "runtime_paths": ["maps/cm-super-t1.map", "maps/cm-super-ts1.map", "encodings/cm-super-t1.enc", "encodings/cm-super-ts1.enc", "type1/sf*.pfb"],
+      "license_route": "GPL-2.0-or-later with the CM-Super PostScript/PDF font-inclusion exception.",
+      "notice_references": ["licenses/cm-super/README", "licenses/cm-super/COPYING"],
+      "source_references": ["sources/cm-super-src.tar.bz2"],
+      "source_scope_note": "The retained CM-Super source archive is provenance and corresponding-source support; it is not claimed to independently regenerate the exact optimized and hinted PFB bytes without the additional historical toolchain described upstream."
+    },
+    {
+      "name": "AMSFonts 3.04",
+      "runtime_paths": [
+        "type1/cmex10.pfb", "type1/cmmi10.pfb", "type1/cmmi5.pfb", "type1/cmmi7.pfb", "type1/cmr10.pfb", "type1/cmsy10.pfb", "type1/cmsy5.pfb", "type1/cmsy7.pfb",
+        "type1/euex10.pfb", "type1/eufm10.pfb", "type1/eufm5.pfb", "type1/eufm7.pfb", "type1/eurb10.pfb", "type1/eurm10.pfb", "type1/eurm5.pfb", "type1/eurm7.pfb", "type1/eusm10.pfb", "type1/eusm7.pfb",
+        "type1/lcircle1.pfb", "type1/line10.pfb", "type1/linew10.pfb", "type1/msam10.pfb", "type1/msam7.pfb", "type1/msbm10.pfb", "type1/msbm7.pfb"
+      ],
+      "license_route": "SIL Open Font License 1.1 for the unmodified font programs; each PFB header independently identifies the license and any reserved font name.",
+      "notice_references": ["licenses/amsfonts/OFL.txt", "licenses/amsfonts/OFL-FAQ.txt", "licenses/amsfonts/README"],
+      "source_references": ["sources/amsfonts-3.04-ctan.zip"]
+    },
+    {
+      "name": "RSFS 1.0 / Type 1 conversion",
+      "runtime_paths": ["type1/rsfs10.pfb"],
+      "license_route": "Ralph Smith permits use and distribution of the sources with rename-and-credit conditions for modifications; Taco Hoekwater donates the Type 1 conversion to the public domain without adding restrictions. The vendored bytes are unmodified.",
+      "notice_references": ["licenses/rsfs/README", "licenses/rsfs/TYPE1_README"],
+      "source_references": ["sources/rsfs-1998-04-24-ctan.zip"]
+    },
+    {
+      "name": "URW Base 35 (patched Nimbus Sans Regular 1.05a)",
+      "runtime_paths": ["type1/uhvr8a.pfb"],
+      "license_route": "GNU GPL version 2 as stated by the matching CTAN Base 35 distribution; the exact runtime byte matches that archive.",
+      "notice_references": ["licenses/urw-base35/README.base35", "licenses/urw-base35/COPYING"],
+      "source_references": ["sources/urw-base35-2003-05-06-ctan.zip"]
+    },
+    {
+      "name": "Bera Type 1 fonts and TeX support",
+      "runtime_paths": ["maps/bera.map", "type1/fvmr8a.pfb", "type1/fvsb8a.pfb", "type1/fvsr8a.pfb"],
+      "license_route": "Bitstream Vera font license for the font programs; LPPL-1.2-or-later for Bera TeX support.",
+      "notice_references": ["licenses/bera/LICENSE", "licenses/bera/README"]
+    },
+    {
+      "name": "URW Grotesq",
+      "runtime_paths": ["maps/ugq.map", "type1/ugqb8a.pfb"],
+      "license_route": "GPL-2.0-or-later as stated in the preserved package notice.",
+      "notice_references": ["licenses/urw-grotesq/readme.grotesq", "licenses/cm-super/COPYING"]
+    },
+    {
+      "name": "BrushScriptX",
+      "runtime_paths": ["maps/pbsi.map", "type1/BrushScriptX-Italic.pfa"],
+      "license_route": "Public domain as stated in the preserved package README.",
+      "notice_references": ["licenses/brushscr/README"]
+    },
+    {
+      "name": "TeX Base 1 encoding",
+      "runtime_paths": ["encodings/8r.enc"],
+      "license_route": "Preserved PSNFSS provenance; installed dvips metadata declares GPL and the PSNFSS manifest separates 8r.enc from its whole-bundle restriction.",
+      "notice_references": ["licenses/psnfss/manifest.txt", "licenses/dvips/dvips.tpm", "licenses/cm-super/COPYING"]
+    },
+    {
+      "name": "Hefferon id-ID deterministic map compilation",
+      "runtime_paths": ["maps/hefferon-standard.map"],
+      "license_route": "Project-authored compilation of the exact map entries needed to bind the unmodified, separately licensed font programs above; no new restriction is asserted over the underlying map facts.",
+      "notice_references": ["README.md"]
+    }
+  ],
+  "non_endorsement": "No component name, author name, organization name, reserved font name, or trademark is used to imply endorsement."
+}

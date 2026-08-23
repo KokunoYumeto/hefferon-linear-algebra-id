@@ -1,0 +1,904 @@
+\documentclass[titlepage]{article}
+% 1st_readme.tex
+%  Instructions for Jim Hefferon's Linear Algebra book.
+\usepackage[margin=1in]{geometry}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{graphics}
+%\usepackage{linalgjh,graphics}
+
+\usepackage{url}
+% adjust LaTeX's default sectioning commands
+\makeatletter
+\renewcommand{\section}{\@startsection{section}%
+  {1}%
+  {0em}%
+  {5ex plus1ex minus.5ex}%
+  {1ex plus .25ex minus .15ex}%
+  {\large\bfseries\raggedright}}
+\renewcommand{\subsection}{\@startsection{subsection}%
+  {2}%
+  {0em}%
+  {3ex plus.25ex minus.25ex}%
+  {.5ex plus .05ex minus .05ex}%
+  {\bfseries\raggedright}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}%
+  {3}%
+  {0em}%
+  {1.75ex plus.25ex minus.25ex}%
+  {.5ex plus .05ex}%
+  {\bfseries\raggedright}}
+\makeatother
+
+\newcommand{\latexnote}{\textit{\LaTeX\ note.} }
+
+\newif\iffancytitle\fancytitletrue % change to ..true for fancy title page
+\iffancytitle
+  \usepackage{color}
+    \definecolor{titlegray}{rgb}{0.87,0.87,0.87}
+  \DeclareFontFamily{OT1}{bigandbold}{}
+  \DeclareFontShape{OT1}{bigandbold}{m}{n}{<-> cmb10 }{}
+  \usepackage{pbsi}
+\else
+  \title{\LaTeX-ing \textit{Linear Algebra}}
+  \author{Jim Hef{}feron}
+  \input{src/publicationdate}
+\fi
+
+\begin{document}
+\iffancytitle
+  \thispagestyle{empty}
+  \vspace*{3in}
+  \begin{center}
+    \begin{picture}(0,0)(0,0)
+      \put(0,40){\makebox[0pt]{\color{titlegray}\fontsize{100}{130}\usefont{OT1}{bigandbold}{m}{n}\selectfont\LaTeX-ing}}
+      \put(68,0){\makebox[0pt]{\Huge\bsifamily Linear Algebra}}  
+      \put(0,-350){\makebox[0pt]{\large\scshape\begin{tabular}{c} Jim Hef{}feron \\[0.75ex] \input{src/publicationdate}\end{tabular}}}
+    \end{picture}
+  \end{center}
+  \clearpage\setcounter{page}{1}
+\else
+  \maketitle
+\fi
+
+This document contains instructions for using the macros from 
+\textit{Linear Algebra}, 
+an undergraduate text by
+to Jim Hef{}feron.
+
+
+
+
+\section{Summary of \textit{Linear Algebra}.}
+\textit{Linear Algebra}
+covers the material that is usually done in a three or four
+hour a week, one semester US course:
+solving linear systems,
+vector spaces, linear maps, determinants, and eigenvalues and eigenvectors.
+
+The pedagogical approach is to help a student make the
+transition from Calculus to upper division mathematics.
+The presentation stresses careful motivation,
+many examples, clarity in the proofs, and 
+developmental exercise sets.
+See the Preface for more detail.
+
+To have a look,
+go to \url{https://hefferon.net/linearalgebra}.
+Get both the book and the answers, and put them in the same directory.
+That way,  
+clicking on a question number takes you to its answer 
+and clicking on the answer number
+takes you back to the question.
+
+
+
+
+
+
+\subsection{It is Free}
+These materials are freely available, in both output and source form.
+
+First, you are free to download the book.
+If you are an
+instructor then you are also free to have students in your class 
+use paper or electronic copies. 
+This includes the freedom to print out copies and sell them
+from your bookstore.
+But note that hard copies are for sale from major distributers; 
+see \url{https://hefferon.net/linearalgebra}.
+
+Besides being free to use the output form of the text, you are
+also free to use the source.
+For example, 
+an instructor can add a few favorite exercises 
+here and there, perhaps include a new Topic, adjust the development
+in a subsection, or even rewrite a portion entirely.
+For this, some people may want to modify the source.
+
+
+
+\section{Use the Source}
+If you want to modify the materials then 
+you need to know that the files here
+use the \LaTeX\ macro system for the text formatter \TeX. 
+It is the 
+standard system for writing mathematics.
+
+So you need a
+distribution of the software;
+I recommend \TeX{}Live, \texttt{http://www.tug.org/texlive}. 
+
+If you are unfamiliar with \LaTeX{} then
+this might not be the right job on which to learn.
+Just saying.
+(If you are just starting working with \LaTeX{} then I recommend finding the 
+\textit{Short Guide to \LaTeX2e} at
+\url{http://www.ctan.org/}, which might be enough
+for you to get through making small changes in the materials.)
+
+The graphics here are in MetaPost and Asymptote.
+These should come with a \TeX{} distribution.
+
+
+
+
+\subsection{Compiling from source}
+
+For compilation instructions see the \verb!INSTALL! file.
+Basically, there is a \texttt{Makefile}, but in particular 
+you cannot just run \texttt{latex book}.
+If you hit a snag, I'm sorry, I am unlikely to be able to help.
+
+The book's source comes in a number of separate files, all of 
+which live below the \texttt{src} directory.
+The first chapter is in the subdirectory \texttt{src/gr}, and the files
+are called 
+\texttt{gr1.tex}, \texttt{gr2.tex}, etc.
+The topics have names that do not follow any particular pattern.
+The second chapter is in \texttt{src/vs}, 
+the third chapter is in \texttt{src/map},
+the fourth chapter is in \texttt{src/det}, 
+and the fifth chapter is in
+\texttt{src/jc}.
+Besides those, here are some more.
+\begin{center}
+  \begin{tabular}{r|l}
+    \textit{file name}  &\textit{what it is}  \\
+    \hline
+    \texttt{src/book.tex}     &Main file \\
+    \texttt{sty/bookjhconcrete.sty}   &Formatting instructions  \\
+    \texttt{src/sty/linalgjh.sty} &Macros for Linear Algebra \\
+    \texttt{src/sty/jhanswer.tex} &Main file for the answers \\
+    \texttt{src/cover/cover.tex} &Make the front, back, and spine \\
+  \end{tabular}
+\end{center}
+
+
+
+
+
+\subsection{Slides}
+
+I have some slides for a classroom projector.
+These are keyed to the text in a couple of ways.
+
+First, they reference numbers for theorems, lemmas, etc.
+These references are generated automatically, meaning that I did not input
+them by hand, so in theory they are accurate.
+Second, I have changed almost all the examples from the text.
+This way students see twice as many.
+Third, the system is set so that the source of the statements of
+definitions, theorems, etc., is the text.
+Thus there is guaranteed, in theory, to be no discrepency with the 
+text. 
+
+These are generated by the Makefile.
+One caution is that they use Asymptote for graphics, which can 
+give you trouble involving the Ghostscript version that you have.
+See \texttt{slides/README.opacity}.
+
+
+
+
+
+
+\section{Guide to the Macros}
+You can use the same
+macros to write your materials as are used in the text.
+For example, when you make up an exam and you want to
+refer to the vector space of polynomials of degree three, 
+use \verb!$\polyspace_3$!,
+avoiding students' confusion and also simplifying your day.  
+This section describes how to use those macros.
+
+
+\subsection{Linear algebra macros}
+The macros that seemed to me to be specific to typesetting the
+linear algebra material are in the file 
+\texttt{src/sty/linalgjh.sty}.
+For instance, here are macros for displaying systems of linear equations,
+matrices, row and column vectors, special vector spaces, linear maps,
+etc.
+
+Note that the book uses the \textit{amsmath} package, 
+including the commutative diagram extension \textit{amscd},
+so all of those
+wonderful macros are available.
+In particular, displayed equations are shown with 
+\verb|equation*| (the \texttt{*} makes them not-numbered) and all of the 
+alignment structures like \verb|align| and matrix structures 
+are available.
+
+Another style that the book loads is \textit{mathrsfs}, for the 
+Ralph Smith Formal Script fonts to make, for instance, the script R
+for the range space.
+
+
+\begin{description}
+\item[linsys] 
+  Make a linear system, in such a way that the columns line up.    
+  Here is an example of a three-unknowns system; you want to
+  do this only as a displayed equation.
+\begin{verbatim}
+  \begin{equation*}
+    \begin{linsys}{3}
+       x &+ &3y &+ &a &= &7 \\
+       x &- &3y &+ &a &= &7 
+    \end{linsys}
+  \end{equation*}
+\end{verbatim}
+  If a row is without some of the variables, be sure to nonetheless
+  add the appropriate \&'s.
+\begin{verbatim}
+  \begin{equation*}
+    \begin{linsys}{3}
+       x &+ &3y &+ &a &= &7 \\
+         &  &3y &  &  &= &7 
+    \end{linsys}
+  \end{equation*}
+\end{verbatim}
+  In the special case that a row starts with a negative sign, do not 
+  use \&$-$.
+  That is, do not start the second line below with \verb! &- &3y!.
+\begin{verbatim}
+  \begin{equation*}
+    \begin{linsys}{3}
+       x &+ &3y &+ &a &= &7 \\
+         &  &-3y&+ &a &= &7 
+    \end{linsys}
+  \end{equation*}
+\end{verbatim}
+
+  \textit{Remarks.}
+  \begin{enumerate}
+    \item 
+      In the exercises I might have three or four linear systems on 
+      a horizontal line and to get them to line up (to be \texttt{t}-aligned)
+      I included an optional argument governing that vertical alignment.
+    \item 
+      \latexnote
+      The variables are put in the columns right-justified, while the  
+      additions or subtractions are centered.
+      Between the columns is put $4/18$-ths of an em (\TeX book, p.~167--170;
+      that's a medmuskip).
+    \item
+      \latexnote 
+      The argument saying how many variables (which in the examples above
+      is the $3$)
+      is there instead of some quite large number because it isn't
+      as simple as $\text{\textit{arg}}+1$ times \texttt{rc}.
+      But I wasn't sure, and might be convinced to change this by someone
+      who knows what they are doing here.
+  \end{enumerate}
+
+\item[grstep]
+  Denote a step of Gauss's Method.
+\begin{verbatim}
+  \begin{equation*}
+    \begin{linsys}{2}
+      x  &+  &y  &=  &0  \\
+      x  &-  &y  &=  &1
+    \end{linsys}
+    \grstep{-\rho_1+\rho_2}
+    \begin{linsys}{2}
+      x  &+  &y  &=  &0  \\
+         &   &-2y&=  &1
+    \end{linsys}
+  \end{equation*}
+\end{verbatim}
+  Show more than one row operation at a time with
+  \verb|\grstep[2\rho_5]{\rho_1+\rho_3}| for two row operations,
+  or \verb|\grstep[2\rho_5 \\ 3\rho_6]{\rho_1+\rho_3}| for three.
+  Swap two rows with \verb|\rho_1\swap\rho_2|.
+  
+\item[matrix structures]
+Generic matrices are made with \verb|mat|. 
+\begin{verbatim}
+  \begin{equation*}
+    \begin{mat}
+      1  &2  &3  \\
+      4  &5  &6 
+    \end{mat}
+  \end{equation*}
+\end{verbatim}
+  Note that there is no need to specify the number of columns;
+  see the \textit{amsmath} documentation.
+
+  There is an optional argument to make the columns right-aligned.
+\begin{verbatim}
+  \begin{equation*}
+    \begin{mat}[r]
+      1  &2  &13  \\
+      4  &5  &6 
+    \end{mat}
+  \end{equation*}
+\end{verbatim}
+I restrict its use to those matrices (and column vectors) that contain
+only numbers, no variables at all.
+
+  There are places where I needed something a little different.
+  In particular, I needed augmented matrices:
+\begin{verbatim}
+  \begin{equation*}
+    \begin{amat}{2}
+      1  &2  &3  \\
+      4  &5  &6 
+    \end{amat}
+  \end{equation*}
+\end{verbatim}
+  produces a matrix that is two-by-three, with a vertical bar between
+  the final and next-to-final columns. 
+  The argument \texttt{2} means that there
+  are two columns before the vertical bar.
+  (This also has an optional argument to right-align.)
+  I also sometime need matrices partitioned into columns:
+\begin{verbatim}
+  \begin{equation*}
+    \begin{pmat}{c|c|c}
+      1  &2  &3  \\
+      4  &5  &6 
+    \end{pmat}
+  \end{equation*}
+\end{verbatim}
+  produces a two-by-three matrix that has vertical bars separating the
+  columns.
+
+  I make displayed determinant arrays with \verb!vmat! 
+\begin{verbatim}
+  \begin{equation*}
+    \begin{vmat}
+      a  &c  \\
+      b  &d   
+    \end{vmat}
+    =ad-bc
+  \end{equation*}
+\end{verbatim}
+  and in-line  determinants with \verb!\deter{A}!.
+  (Again, there is an optional argument to right-align.)
+
+\item[vectors]
+  Make column vectors with \verb|\colvec{1 \\ 2 \\ 3}|.
+  (There is an optonal argument to right-align that I use 
+  for number-only vectors \verb|\colvec[r]{1 \\ 2 \\ 3}|)
+  Make row vectors with \verb|\rowvec{1  &2  &3}|.
+
+\item[decimal point-aligned columns]
+  I use the \textit{dcolumn} package:
+\begin{verbatim}
+  \begin{equation*}
+    \begin{aligncolondecimal}{3}
+      15.12  &0.345    
+    \end{aligncolondecimal}
+  \end{equation*}
+\end{verbatim}
+  makes a column vector aligned on the decimal with room for at most 
+  three decimal places on the right.
+
+
+\item[strings]
+  A digit $3$ in a square is \verb!\digitinsq{3}!.
+  Not surprisingly, a digit $3$ in a circle is \verb!\digitincirc{3}!.
+  A sequence of strings is shown this way.
+\begin{verbatim}
+  \begin{equation*}
+    \begin{strings}{ccccc}
+           \vec{e}_1 &\mapsto &\vec{e}_2 &\mapsto &\zero \\
+           \vec{e}_3 &\mapsto &\zero
+    \end{strings}
+  \end{equation*}
+\end{verbatim}
+  There are five \verb!c!'s because the longest line
+  is of length five.
+
+\item[names for things]
+  Note that there is a page (inside the book's cover) 
+  covering the notation conventions.
+
+  I tried to remember to make up macros to name things, rather than retype the
+  thing each time I ran across it.
+  Here is a list.
+  \begin{enumerate}
+    \item The reals \verb|\Re|, the rationals \verb|\Q|,
+      the complex numbers \verb|\C|, the integers \verb|\Z|,
+      and the natural numbers \verb|\N| come out in the traditional
+      ``blackboard bold''.
+    \item A vector is \verb|\vec{v}_j|.
+      The zero vector is \verb|\zero|.
+      The length of a vector is \verb|\norm{\vec{v}}|, and the 
+      absolute value of a number is \verb|\absval{r}|.
+      An angle can be expressed in degrees as \verb!$53\degs$!.
+      The distance between two vectors is \verb|\dist (\vec{v}_1,\vec{v}_2)|.
+    \item The dot product of two vectors \verb|\vec{v}\dotprod\vec{w}|.
+      Please note that (as it is set up coming from me) 
+      this is different than a \verb!\cdot!.
+    \item The vector space of degree $n$ polynomials \verb|\polyspace_n|,
+      and the vector space of $n$-by-$m$ matrices 
+      \verb|\matspace_{\nbym{n}{m}}|.
+      The vector space of linear maps from $V$ to $W$
+      \verb|\linmaps{V}{W}|. 
+    \item The span of a set $S$ of vectors
+      \verb|\spanof{S}|.
+    \item The row space of a matrix is \verb!\rowspace{M}! and
+      the columnspace is \verb!\colspace{M}!.
+    \item A set is \verb!\set{\colvec{x \\ y}\suchthat 2x+y=0}!.
+      The union and intersection of the sets $S$ and $T$ is
+      \verb|S\union T| and \verb|S\intersection T|.
+      The complement of a set is \verb!\complement{S}!.
+    \item The empty set is \verb!\emptyset!.
+    \item A sequence, such as a string, is \verb!\sequence{s_0,s_1,\dots,s_n}!.
+      The concatenation of two sequences is \verb!\cat{B_1}{B_2}!.
+    \item A basis is \verb!\basis{\vec{\beta}_1,\dots,\vec{\beta}_n}!.
+      The standard basis for real $n$-space is
+      \verb|\stdbasis_n|. 
+    \item Isomorphic spaces is \verb!V\isomorphicto W!.
+    \item The matrix representing a linear map $h$ with respect to 
+      the bases $B$ and $D$ is \verb|\rep{h}{B,D}|.
+    \item The size of a general matrix is \verb|\nbym{n}{m}| 
+      while the special case of a square matrix is \verb|\nbyn{n}|.
+    \item A map $h$'s range space \verb|\rangespace{h}| 
+      and null space \verb|\nullspace{h}|, 
+      and generalized range space \verb|\genrangespace{h}|
+      and generalized null space \verb|\gennullspace{h}|
+    \item The direct sum of two subspaces \verb|V\directsum W|.
+    \item The function, as specified by its domain and codomain,
+      is described by \verb!\map{f}{D}{C}!.
+      Its action on a single element $x$ is 
+      \verb|x\mapsunder{f} f(x)|.
+      Two maps are composed with \verb!\composed{g}{f}!.
+      The identity map is \verb|\identity|.       
+    \item The projection of a vector into a subspace
+      \verb|\proj{\vec{v}}{S}|. 
+    \item The restriction of a map to some subdomain is
+      \verb!\restrictionmap{f}{S}!.
+    \item The rank of a matrix \verb|\rank (A)| and the nullity  of a
+      matrix \verb|\nullity (A)|. 
+      The transpose of a matrix \verb|\trans{A}|.
+      The trace of a matrix \verb|\trace (A)|.
+      The adjoint of a matrix is \verb|\adj (A)|.
+    \item The size of a box is \verb!\size (B)!.
+    \item The signum of a permutation $\phi$ is \verb|\sgn (\phi)|.
+    \item For the Topic on voting, voter preferences are indicated
+      by \verb|\votepreflist{7}{1}{5}| for the column vector,
+      and \verb|\voteprefloop{1}{2}{3}| for the circle (for this one,
+      the first argument appears at the ten o'clock position, the second
+      argument at six o'clock, and the third argument at two o'clock).
+    \item A generic field is \verb!\F!.
+  \end{enumerate}
+
+
+\item[aligned vdots]
+  To make \verb!\vdots! come out inside a bunch of aligned equations,
+  I use \verb!\vdotswithin{}! from the \textit{mathtools} package.
+\begin{verbatim}
+  \begin{align*}
+    a_{1,1}x_1+\cdots+a_{1,n}x_n &= d_1         \\
+                                 &\vdotswithin{=} \\
+    a_{m,1}x_1+\cdots+a_{m,n}x_n &= d_m         
+  \end{align*}
+\end{verbatim}
+  Otherwise the three vertical dots are not centered on the equals sign.
+
+
+\end{description}
+
+
+
+
+
+\subsection{Book layout macros}
+The macros that do chapter and section headings, or cross references,
+or how the exercises are laid out, are in the file 
+\texttt{bookjh.sty}.
+
+
+\begin{description}
+  \item[theorem-like structures]
+    I have already declared the
+    \texttt{theorem}, \texttt{lemma}, 
+    \texttt{definition}, and \texttt{corollary}
+    environments.
+    These will come out shaded.
+    To change this, or the color of the shading or its border, see
+    also \textit{bookjh.sty}
+\begin{verbatim}
+  \begin{definition}
+    A \definend{big} vector space is one where you can't  see the end when 
+    you are standing at the zero vector, even with your glasses on. 
+  \end{definition}
+\end{verbatim}
+    I have also declared (not shaded):~ \texttt{example} and 
+    \texttt{remark}.
+
+    By the way, note the \verb!\definend!; I use this for the
+    term being defined (I though I would automate indexing,
+    but I've not got around to that).
+
+  \item[proofs]
+    Use this.
+\begin{verbatim}
+  \begin{proof}
+     Because I said so; that's why.
+  \end{proof}
+\end{verbatim}
+   The end-of-proof symbol can be changed as
+   \verb!\renewcommand{\qedsymbol}{$\box$}!.
+   I avoid ever having a proof end with a displayed equation
+   so the question of
+   where to put the end-of-proof symbol in that case never arises.
+
+  \item[footnotes]
+    Footnotes come out on the same page as the reference.
+    I only use footnotes 
+    to suggest that a reader can look for more in the Appendix
+    \verb!\appendrefs{codomains}!.
+
+  \item[graphics]
+    I am using MetaPost for all of the graphics and all of the 
+    output drivers that I am interested in handle \textit{.mp}'s straight off. 
+    Instead I say this.
+\begin{verbatim}
+  \begin{center}
+     \includegraphics{gr2.7}
+  \end{center}
+\end{verbatim}
+   Putting two graphics side-by-side, or putting parallel text, are
+   all a bit messy.
+   I use \verb!vcenteredhbox{}!.
+   Just mimic what I did somewhere.
+
+  \item[exercises and answers]
+    The exercise portions of a subsection looks like you might expect.
+\begin{verbatim}
+ \begin{exercises}
+   \item 
+     First Exercise
+     \begin{answer}
+       Answer to the first exercise.
+     \end{answer}
+   \item 
+     Second Exercise
+     \begin{answer}
+       Answer to the second.
+     \end{answer}
+   \recommended \item 
+     Third Exercise, recommended.
+     \begin{answer}
+        Answer to the third.
+     \end{answer}
+ \end{exercises}
+\end{verbatim}
+    Exercises are, of course, numbered automatically, 
+    in the same sequence as the
+    other numbered parts of the text.
+
+    My goal is to have all exercises have answers, even the proof exercises.
+    Of course, the answers are not written directly to the text;
+    they are written to one or two separate files.
+    Use \textit{jhanswer.tex} to print them.
+  
+    \textit{Remarks.}
+    \begin{enumerate}
+      %\item If you dislike having the exercises numbered as though they form
+      %  an integral part of the material of the subsection (even though
+      %  they \emph{do} form an integral part), comment out the line
+      %  in the definition of the environment \verb|exerciselist| that says
+      %  \verb|\setcounter{exercisecounter}{#1}|.
+      %  You also probably want to adjust the definitions of 
+      %  \verb|\exercise@makelabel| and \verb|\exercise@deflabel|
+      %  (these are defined three times, once for default, once in the 
+      %  definition of a \verb|topic|, and once in the definition of a
+      %  \verb|chapter|).
+      \item 
+        Some of the exercises have parts.
+        I use the environment \verb|exparts|. 
+        The items in such an
+        environment are \verb|\partsitem|'s.
+\begin{verbatim}
+\recommended\item Do this one right away.
+  \begin{exparts}
+    \partsitem Do this first.
+    \partsitem Do this second.
+  \end{exparts}
+  \begin{answer}
+    \begin{exparts}
+      \partsitem Answer to the first.
+      \partsitem Answer to the second.
+    \end{exparts}
+  \end{answer}
+\end{verbatim}
+        I sometimes use \verb|exparts*|, which leaves the items in a 
+        horizontal list, but it doesn't work very well (it sometimes
+        causes \TeX's \texttt{Underfull hbox} errors; this is not
+        as easy to fix as using a paralist because I don't want the
+        beginning of a part on one line and the end on another).
+      \item
+        Any desired changes to the spacing, etc., of exercises is 
+        in \verb|exerciselist|.
+        See also the style for the answers in \textit{bookans.sty}.
+      \item
+        You can redefine \verb|\recommendationmark| to change 
+        the mark used to denote recommended exercises.
+        You can also mark puzzles with \verb!\puzzle\item!.
+        This can be combined with \verb!\recommended!.
+      \item If you are putting in an exercise without an answer, your
+        best bet is to put an answer environment that is blank.
+        But really, you shouldn't do that. 
+        I have found that doing the answers to all of the exercises
+        improved both the questions and the presentation greatly,
+        since I often found that I needed a detail here, or
+        some tweak there.  
+        (If what you want is that students can't read the answer in their
+        answer list, that is a different matter.
+        See the next two remarks.)
+      \item
+         These answers are typically quite detailed, giving the work
+         and not just the answer; I approached the answers 
+         expecting that the reader wants to learn
+         and did not take the
+         approach that the reader is trying to cheat.
+         (\textit{Remark}.
+         As a practicing teacher, I am very aware that it is not a simple
+         issue.
+         Nonetheless, in my opinion, a reader is 
+         entitled to enough exercise and answer pairs that,
+         having tried a good selection and not just read the questions 
+         and peeked at the answers,
+         they can move on well-prepared to the next subsection.
+         I figure that a dozen such pairs in each subsection is
+         about right.
+         Then, to provide a selection and also to allow someone 
+         a second crack at a problem type that gave them trouble the 
+         first time, I aimed for two dozen
+         questions in each subsection.
+         If this question/answer situation bothers you, 
+         I would very much welcome additional submissions of 
+         exercise sets for which students do not have access
+         to the answers.)  
+     \item 
+         I used to have it set up so that 
+         you can have the answers written to either 
+         a single file,
+         or separate files for the answers to recommended exercises and
+         the answers to the others.
+         Although I no longer do that, I haven't deleted the code so maybe 
+         you could get it to work.
+         (In this Internet age, trying to control access to such files
+         quickly proved to be folly.
+         For a while I only released the entire answers to people who emailed
+         me with a claim to being an instructor, but soon the silliness of that
+         became too much to even hold a pretense.
+         I'll just say that every twenty year old
+         on the planet can come up in minutes 
+         with a download address for the answers to exercises for any
+         popular math text.
+         It is just a fact.)
+      \item
+         \latexnote
+         You can use \verb|\ref|'s inside answers, even though they
+         are written to other files.
+         The style for the answers reads in the reference files.
+      \item
+         An answer that is taken from a cited source may not blend 
+         stylistically with the others (insofar as I have a style).
+         I use the disclaimer \verb|\answerasgiven|.
+    \end{enumerate}
+
+
+  \item[tfae]
+    A small environment for The Following are Equivalent-type lists.
+ 
+  \item[clearemptydoublepage]
+    Taken straight from the \textit{Companion}.
+    It does what it says.
+
+  \item[cross references]
+    I use \verb!\nearbydefinition{def:BigThm}!-like references.
+    This has the disadvantage that the referrer has to know what type
+    of textual element it is referring to (in this case a definition),
+    but \LaTeX\ doesn't give you a way to know in this case (that I can see).
+    Note that I try to make the \verb!\label{def:BigThm}! moderately
+    descriptive.
+
+    I have set up nearby cross references (meaning there is no need
+    to reference the chapter number and the section number) for:
+    \verb!\nearbydefinition!, 
+    \verb!\nearbyfigure!, 
+    \verb!\nearbylemma!, 
+    \verb!\nearbyexample!, 
+    \verb!\nearbycounterexample!, 
+    \verb!\nearbytheorem!, 
+    \verb!\nearbycorollary!, 
+    \verb!\nearbyexercise!, 
+    \verb!\nearbyremark!, 
+    \verb!\nearbynotice!, and 
+    \verb!\nearbynote!.
+    (I don't use most of these, but they are there anyway.)
+
+
+  \item[topics]
+   Begin a new
+   topic with \verb|\topic{My Favorite Topic}|.
+   The exercises come out looking a little differently automatically, 
+   because I couldn't think of a common treatment that was both 
+   convienent and consistent.
+
+  \item[optional subsections]
+    A subsection is marked as optional with \verb|\subsectionoptional|
+    instead of \LaTeX's standard \verb|\subsection|.
+    This asterisk's the name in the Table of Contents.
+    I have also followed the practice of beginning each optional 
+    subsection with a
+    italicised comment that it is optional, but this is not part of the macro.
+
+
+  \item[page headings]
+    This work is all done through the wonderful \textit{fancyhdr} style.
+    See the documentation for that package.
+
+  \item[hyperlink style]
+    I have set the links to come out in blue.
+    Change that by altering the 
+\begin{verbatim}
+  \usepackage{
+              ..,
+              linkcolor=blue,
+              ..}{hyperref}
+\end{verbatim}
+    entry.
+
+
+\end{description}
+
+
+
+\section{Making Your Exams}
+I have included an exam style that does what you'd think it would do,
+number the exercises automatically, automatically put headers and page
+numbers, and optionally allow exercises to have attached answers that are
+printed to a separate file.  
+
+Here is a sample exam, without answers.
+See the web page for more extensive examples.
+
+\begin{verbatim}
+\begin{exam}
+  \item \pts{15}
+    How much wood could a woodchuck chuck?
+    \begin{enumerate}
+      \item If he would chuck wood?
+      \item If not?
+    \end{enumerate}
+  \item \pts{85}
+    Justify the Axiom of Choice, since we all know it is true anyway.
+\end{exam}
+\end{verbatim}
+
+
+\section{Bugs}
+
+See the \verb!TODO.org! file in the source.
+
+% These are known to me; I'd appreciate any help, of course.
+% \begin{description}
+%   \item[2001-Oct-08]
+%     I can't figure out how to get \textit{hyperref.sty} to 
+%     have the indexing links both work and show the correct page number
+%     (they are advanced by ten, which I presume is length of the front matter).
+%     I've disabled the indexing links with \verb!hyperindex=false!. 
+% \end{description}
+
+
+
+
+% \section{Extra: Installing the Brushscript Fonts}
+
+% These are the steps that I followed to install the brushscript fonts
+% on a fresh Debian Linux file system.
+% Note that TeX~Live now ships with these installed.
+
+% I first downloaded the source files from \url{http://www.ctan.org}.
+% To do that, I clicked on \verb!search!, typed \textit{brushscript}
+% in the box, and elected to download the entire directory as a .zip file.
+
+% Then, with the source files on my machine,
+% as the superuser, I first made \verb!/usr/local/share/texmf! for my
+% non-te\TeX{} files.
+% Having a local tree ensures that I won't overwrite the material if 
+% I install a new standard tree.
+
+% Then I followed these steps.
+% \begin{enumerate}
+% \item
+%   \verb!mkdir /usr/local/share/texmf/fonts! 
+%   just as in \verb!/usr/share/texmf!  
+% \item
+%   \verb!mkdir /usr/local/share/texmf/fonts/source!
+% \item 
+%   \verb!mkdir /usr/local/share/texmf/fonts/source/public! 
+% \item
+%   \verb!cp brushscr.zip /usr/local/share/texmf/fonts/source/public! 
+%   to put it in place  
+% \item
+%   \verb!cd /usr/local/share/texmf/fonts/source/public! 
+% \item
+%   \verb!unzip brushscr!
+% \item
+%   \verb!cd brushscr!
+% \item
+%   \verb!make! as the brushscripts directions in the directory say
+% \item
+%   \verb!mkdir /usr/local/share/texmf/fonts/tfm! for \TeX{} font metrics
+% \item
+%   \verb!mkdir /usr/local/share/texmf/fonts/tfm/public!
+% \item
+%   \verb!mkdir /usr/local/share/texmf/fonts/tfm/public/brushscr!
+% \item
+%   \verb!cp *.tfm /usr/local/share/texmf/fonts/tfm/public/brushscr!
+% \item
+%   \verb!mkdir /usr/local/share/texmf/fonts/vf! for virtual fonts
+% \item
+%   \verb!mkdir /usr/local/share/texmf/fonts/vf/public!
+% \item
+%   \verb!mkdir /usr/local/share/texmf/fonts/vf/public/brushscr!
+% \item
+%   \verb!cp *.vf /usr/local/share/texmf/fonts/vf/public/brushscr!
+% \item
+%   \verb!mkdir /usr/local/share/texmf/tex/latex/brushscr! \LaTeX{} font definition files
+% \item
+%   \verb!cp *.fd /usr/local/share/texmf/tex/latex/brushscr!
+% \item
+%   \verb!cp *.sty /usr/local/share/texmf/tex/latex/brushscr! and \LaTeX{} styles
+% \item
+%   \verb!mkdir /usr/local/share/texmf/fonts/type1! Postscript outline fonts
+% \item
+%   \verb!mkdir /usr/local/share/texmf/fonts/type1/brushscr!
+% \item
+%   \verb!cp *.pfa /usr/local/share/texmf/fonts/type1/brushscr! 
+%   ASCII-encoded Postscript fonts
+% \item
+%   \verb!mkdir /usr/local/share/texmf/dvips! tell the dvi drivers
+% \item
+%   \verb!mkdir /usr/local/share/texmf/dvips/config!
+% \item
+%   \verb!cp /usr/share/texmf/dvips/config/config.ps /usr/local/share/texmf/dvips/config/config.ps!
+% \item
+%   \verb!cp pbsi.map /usr/local/share/texmf/dvips/config!
+% \item
+%   \verb!emacs /usr/local/share/texmf/dvips/config/config.ps! edit the config file
+% \item
+%   I then found the lines that say, 
+%   ``This shows how to add your own map file. 
+%   Remove the comment and adjust the name:'' 
+%   and the next line says \verb!p +myfonts.map! 
+%   (but it is commented out with a percent sign). 
+%   I added a line just below that to say (without the percent sign) 
+%   \verb!p +pbsi.map!.
+% \end{enumerate}
+
+% Finally, I ran the \verb!texhash! command to tell \TeX{}'s path searching
+% mechanism about the new files. 
+\end{document}
+
+
+

@@ -1,0 +1,2827 @@
+% Chapter 1, Section 3 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-09
+\section{Bentuk Eselon Tereduksi}
+Setelah mengembangkan mekanisme Metode Gauss,
+kita melihat bahwa metode itu dapat dijalankan dengan lebih dari satu cara.
+Sebagai contoh, dari matriks
+\begin{equation*}
+    \begin{mat}[r]
+       2  &2  \\
+       4  &3
+    \end{mat}
+\end{equation*}
+kita dapat memperoleh salah satu dari ketiga matriks berbentuk eselon berikut.
+\begin{equation*}
+    \begin{mat}[r]
+       2  &2  \\
+       0  &-1
+    \end{mat}
+    \qquad
+    \begin{mat}[r]
+       1  &1  \\
+       0  &-1
+    \end{mat}
+    \qquad
+    \begin{mat}[r]
+       2  &0  \\
+       0  &-1
+    \end{mat}
+\end{equation*}
+Matriks pertama dihasilkan oleh $-2\rho_1+\rho_2$.
+Matriks kedua diperoleh dengan menjalankan $(1/2)\rho_1$, lalu
+$-4\rho_1+\rho_2$.
+Matriks ketiga diperoleh dari $-2\rho_1+\rho_2$, dilanjutkan dengan
+$2\rho_2+\rho_1$ (setelah kombinasi baris pertama, matriks sudah berbentuk
+eselon, tetapi operasi berikutnya tetap merupakan operasi baris yang sah).
+
+Dalam bagian pertama bab ini, kita mencatat bahwa hal tersebut menimbulkan
+beberapa pertanyaan.
+Apakah sebarang dua versi berbentuk eselon dari suatu sistem linear memiliki
+jumlah variabel bebas yang sama?
+Jika ya, apakah keduanya memiliki variabel bebas yang persis sama?
+Dalam bagian ini, kita akan memberikan cara untuk menentukan apakah suatu
+sistem linear dapat diperoleh dari sistem lain melalui operasi baris.
+Dari sana akan diperoleh jawaban ``ya'' untuk kedua pertanyaan tersebut.
+
+
+
+
+
+
+
+
+\subsection{Reduksi Gauss--Jordan}%
+% Gaussian elimination coupled with back-substitution
+% solves linear systems but it is not the only method possible.
+Berikut adalah perluasan Metode Gauss yang memiliki beberapa keunggulan.
+
+\begin{example} \label{exm:GJRedReadOffSol}
+Untuk menyelesaikan
+\begin{equation*}
+  \begin{linsys}{3}
+    x  &+  &y  &-  &2z  &=  &-2  \\
+       &   &y  &+  &3z  &=  &7   \\
+    x  &   &   &-  &z   &=  &-1  
+  \end{linsys}
+\end{equation*}
+kita dapat mulai seperti biasa dengan mereduksinya ke bentuk eselon.
+\begin{equation*}
+  \grstep{-\rho_1+\rho_3}
+    \begin{amat}[r]{3}
+       1  &1  &-2 &-2  \\
+       0  &1  &3  &7   \\
+       0  &-1 &1  &1
+    \end{amat}
+  \grstep{\rho_2+\rho_3}
+    \begin{amat}[r]{3}
+       1  &1  &-2 &-2  \\
+       0  &1  &3  &7   \\
+       0  &0  &4  &8
+    \end{amat}
+\end{equation*}
+Kita dapat melanjutkan ke tahap kedua dengan menjadikan entri-entri utama
+bernilai \( 1 \)
+\begin{equation*}
+    \grstep{(1/4)\rho_3}
+    \begin{amat}[r]{3}
+       1  &1  &-2 &-2  \\
+       0  &1  &3  &7   \\
+       0  &0  &1  &2
+    \end{amat}
+\end{equation*}
+lalu ke tahap ketiga, yang menggunakan entri-entri utama untuk mengeliminasi
+semua entri lain dalam setiap kolom melalui kombinasi ke arah atas.
+\begin{equation*}
+  \grstep[2\rho_3+\rho_1]{-3\rho_3+\rho_2}
+    \begin{amat}[r]{3}
+       1  &1  &0  &2   \\
+       0  &1  &0  &1   \\
+       0  &0  &1  &2
+    \end{amat}
+  \grstep{-\rho_2+\rho_1}
+    \begin{amat}[r]{3}
+       1  &0  &0  &1   \\
+       0  &1  &0  &1   \\
+       0  &0  &1  &2
+    \end{amat}
+\end{equation*}
+Jawabannya adalah \( x=1 \), \( y=1 \), dan \( z=2 \).
+\end{example}
+%<*Pivoting>
+Menggunakan satu entri untuk menolkan semua entri lain dalam suatu kolom
+disebut \definend{pemivotan}\index{pemivotan} pada entri tersebut.
+%</Pivoting>
+
+Perhatikan bahwa operasi kombinasi baris pada tahap pertama bergerak dari kiri
+ke kanan, sedangkan operasi kombinasi pada tahap ketiga bergerak dari kanan ke
+kiri.
+
+\begin{example}  \label{exm:GJRedReadOffSolTwo}
+Operasi-operasi tahap tengah yang menjadikan entri-entri utama bernilai
+\( 1 \) tidak saling berinteraksi, sehingga beberapa operasi dapat digabungkan
+menjadi satu langkah.
+\begin{align*}
+    \begin{amat}[r]{2}
+       2   &1   &7   \\
+       4   &-2  &6
+    \end{amat}
+  &\grstep{-2\rho_1+\rho_2}
+  \begin{amat}[r]{2}
+       2   &1   &7   \\
+       0   &-4  &-8
+    \end{amat}                                   \\
+  &\grstep[(-1/4)\rho_2]{(1/2)\rho_1}
+  \begin{amat}[r]{2}
+       1   &1/2   &7/2   \\
+       0   &1     &2
+    \end{amat}                                    \\
+  &\grstep{-(1/2)\rho_2+\rho_1}
+  \begin{amat}[r]{2}
+       1   &0   &5/2   \\
+       0   &1   &2
+    \end{amat}
+\end{align*}
+Jawabannya adalah $x=5/2$ dan $y=2$.
+\end{example}
+
+%<*GaussJordanReduction>
+Perluasan Metode Gauss ini disebut
+\definend{Metode Gauss--Jordan}\index{Metode Gauss!Metode Gauss--Jordan} atau
+\definend{reduksi Gauss--Jordan}.\index{persamaan linear!solusi!Gauss--Jordan}\index{Metode Gauss!Gauss--Jordan}
+%</GaussJordanReduction>
+% It goes past echelon form to a more refined, more specialized,
+% matrix form.
+
+\begin{definition}\label{def:RedEchForm}
+%<*df:RedEchForm>
+Suatu matriks atau sistem linear berada dalam
+\definend{bentuk eselon tereduksi\/}\index{bentuk eselon!tereduksi}\index{bentuk eselon tereduksi}
+jika, selain berada dalam bentuk eselon, setiap entri utama bernilai~$1$ dan
+merupakan satu-satunya entri tak nol dalam kolomnya.
+%</df:RedEchForm>
+\end{definition}
+
+\noindent
+%<*CostRedEchForm>
+Kerugian menggunakan reduksi Gauss--Jordan untuk menyelesaikan suatu sistem
+adalah bertambahnya perhitungan aritmetika.
+Keuntungannya adalah kita dapat langsung membaca deskripsi himpunan solusinya.
+%</CostRedEchForm>
+
+Pada setiap sistem berbentuk eselon, tereduksi ataupun tidak, kita dapat
+langsung mengenali kapan sistem memiliki himpunan solusi kosong karena ada
+persamaan yang kontradiktif.
+Kita dapat mengenali kapan sistem memiliki himpunan solusi beranggota satu
+karena tidak ada kontradiksi dan setiap variabel merupakan variabel utama pada
+suatu baris.
+Kita juga dapat mengenali kapan sistem memiliki himpunan solusi tak hingga
+karena tidak ada kontradiksi dan sedikitnya satu variabel bebas.
+
+Namun, dalam bentuk eselon tereduksi, kita tidak hanya dapat membaca ukuran
+himpunan solusi, tetapi juga deskripsinya.
+Tentu saja, tidak sulit mendeskripsikan himpunan solusi yang kosong.
+\nearbyexample{exm:GJRedReadOffSol} dan~\ref{exm:GJRedReadOffSolTwo}
+menunjukkan bahwa dalam kasus himpunan solusi beranggota satu, anggota tunggal
+itu terdapat pada kolom konstanta.
+Contoh berikut menunjukkan cara membaca parametrisasi himpunan solusi tak
+hingga.
+
+\begin{example}
+\begin{multline*}
+  \begin{amat}[r]{4}
+     2  &6  &1  &2  &5  \\
+     0  &3  &1  &4  &1  \\
+     0  &3  &1  &2  &5
+  \end{amat}
+  \grstep{-\rho_2+\rho_3}
+  \begin{amat}[r]{4}
+     2  &6  &1  &2  &5  \\
+     0  &3  &1  &4  &1  \\
+     0  &0  &0  &-2 &4
+  \end{amat}                                        \\
+  \grstep[(1/3)\rho_2 \\ -(1/2)\rho_3]{(1/2)\rho_1}
+  \repeatedgrstep[-\rho_3+\rho_1]{-(4/3)\rho_3+\rho_2}
+  \repeatedgrstep{-3\rho_2+\rho_1}
+  \begin{amat}[r]{4}
+     1  &0  &-1/2  &0  &-9/2  \\
+     0  &1  &1/3   &0  &3  \\
+     0  &0  &0     &1  &-2
+  \end{amat}
+\end{multline*}
+Sebagai sistem linear, matriks ini adalah
+\begin{equation*}
+  \begin{linsys}{4}
+     x_1  &&     &-&1/2x_3  &&   &= &-9/2  \\
+          &&x_2  &+&1/3x_3  &&   &= &3  \\
+          &&     &&        &{}\hspace{.5em}{}&x_4 &= &-2    
+  \end{linsys}
+\end{equation*}
+sehingga deskripsi himpunan solusinya adalah
+\begin{equation*}  
+  S=\set{\colvec{x_1 \\ x_2 \\ x_3 \\ x_4}
+                        =\colvec[r]{-9/2 \\ 3 \\ 0 \\ -2}
+                         +\colvec[r]{1/2 \\ -1/3 \\ 1 \\ 0}x_3
+                        \suchthat x_3\in\Re}
+\end{equation*}
+\end{example}
+
+Jadi, bentuk eselon bukanlah satu-satunya bentuk terbaik bagi semua sistem.
+Bentuk lain, seperti bentuk eselon tereduksi, memiliki kelebihan dan
+kekurangan.
+Alih-alih membayangkan sistem linear (beserta matriks terkaitnya) sebagai objek
+yang selalu kita operasikan menuju bentuk eselon, kita dapat memandang
+sistem-sistem itu sebagai objek yang saling berhubungan dan dapat diubah dari
+satu ke yang lain melalui operasi baris.
+Sisa subbagian ini mengembangkan gagasan tersebut.
+
+\begin{lemma} \label{le:RowOpsRev}
+%<*lm:RowOpsRev>
+Operasi baris elementer dapat dibalik.
+%</lm:RowOpsRev>
+\end{lemma}
+
+\begin{proof}
+%<*pf:RowOpsRev>
+Untuk setiap matriks \( A \), efek menukar dua baris dibalik dengan menukarnya
+kembali; mengalikan suatu baris dengan \( k \) tak nol dibatalkan dengan
+mengalikannya dengan $1/k$; dan menambahkan kelipatan baris \( i \) ke baris
+\( j \) (dengan $i\neq j$) dibatalkan dengan mengurangkan kelipatan baris
+\( i \) yang sama dari baris \( j \).
+\begin{equation*}
+      A
+     \grstep{\rho_i\leftrightarrow\rho_j}
+     \repeatedgrstep{\rho_j\leftrightarrow\rho_i}
+      A
+  \qquad
+        A
+     \grstep{k\rho_i}
+     \repeatedgrstep{(1/k)\rho_i}
+      A
+  \qquad
+        A
+     \grstep{k\rho_i+\rho_j}
+     \repeatedgrstep{-k\rho_i+\rho_j}
+      A                          
+\end{equation*}
+%</pf:RowOpsRev>
+(Kita memerlukan syarat $i\neq j$; lihat
+\nearbyexercise{exer:INotJMakesRowOpsRev}.)
+\end{proof}
+
+Sekali lagi, sudut pandang yang sedang kita kembangkan, dan kini didukung oleh
+lema tersebut, adalah bahwa istilah `mereduksi menjadi' dapat menyesatkan:~jika
+\( A\longrightarrow B \), kita tidak seharusnya menganggap \( B \) muncul
+sesudah~\( A \) atau lebih sederhana daripada~$A$.
+Sebaliknya, kita perlu memandang kedua matriks itu sebagai objek yang saling
+berhubungan.
+Gambar berikut menunjukkan matriks-matriks dari awal bagian ini beserta versi
+bentuk eselon tereduksinya sebagai satu kelompok matriks yang dapat saling
+direduksi.
+\begin{center}  
+  \includegraphics{gr/mp/ch1.28}
+\end{center}
+
+%<*EquivMatrices>
+Kita mengatakan bahwa matriks-matriks yang dapat saling direduksi ekuivalen
+terhadap relasi reduksi baris.
+Hasil berikut membenarkan istilah tersebut dengan menggunakan definisi
+ekuivalensi.\appendrefs{relasi ekuivalensi}
+%</EquivMatrices>
+
+\begin{lemma} \label{lm:ReducesToIsEqRel}
+%<*lm:ReducesToIsEqRel>
+Pada himpunan matriks, `mereduksi menjadi' merupakan relasi ekuivalensi.
+%</lm:ReducesToIsEqRel>
+\end{lemma}
+
+\begin{proof}
+%<*pf:ReducesToIsEqRel0>
+Kita harus memeriksa syarat-syarat berikut:
+(i)~refleksivitas, yaitu setiap matriks mereduksi menjadi dirinya sendiri;
+(ii)~simetri, yaitu jika \( A \) mereduksi menjadi \( B \), maka
+   \( B \) mereduksi menjadi \( A \); dan
+(iii)~transitivitas, yaitu jika \( A \) mereduksi menjadi \( B \) dan
+      \( B \) mereduksi menjadi \( C \), maka \( A \) mereduksi menjadi
+      \( C \).
+%</pf:ReducesToIsEqRel0>
+
+%<*pf:ReducesToIsEqRel1>
+Refleksivitas mudah; setiap matriks mereduksi menjadi dirinya sendiri melalui
+nol operasi.
+
+Relasi tersebut simetris menurut lema sebelumnya\Dash jika \( A \) mereduksi
+menjadi \( B \) melalui sejumlah operasi baris, maka \( B \) juga mereduksi
+menjadi \( A \) dengan membalik operasi-operasi itu.
+%</pf:ReducesToIsEqRel1>
+
+%<*pf:ReducesToIsEqRel2>
+Untuk transitivitas, misalkan \( A \) mereduksi menjadi \( B \) dan
+\( B \) mereduksi menjadi \( C \).
+Meneruskan langkah-langkah reduksi $A \rightarrow\cdots\rightarrow B$
+dengan langkah-langkah $B \rightarrow\cdots\rightarrow C$ menghasilkan
+reduksi dari \( A \) ke \( C \).
+%</pf:ReducesToIsEqRel2>
+\end{proof}
+
+\begin{definition} \label{df:RowEquivalence}
+%<*df:RowEquivalence>
+Dua matriks yang dapat saling direduksi melalui operasi baris elementer disebut
+\definend{ekuivalen baris}.\index{matriks!ekuivalensi baris}%
+\index{ekuivalensi baris}\index{relasi ekuivalensi!ekuivalensi baris}
+%</df:RowEquivalence>
+\end{definition}
+
+%<*RowEquivalanceClasses>
+Diagram berikut menunjukkan kumpulan semua matriks sebagai sebuah kotak.
+Di dalam kotak itu, setiap matriks terletak dalam suatu kelas.
+Dua matriks berada dalam kelas yang sama jika dan hanya jika keduanya dapat
+saling direduksi.
+Kelas-kelas tersebut saling lepas\Dash tidak ada matriks yang berada dalam dua
+kelas berbeda.
+Dengan demikian, kita telah mempartisi kumpulan matriks menjadi
+\definend{kelas ekuivalensi baris}.\appendrefs{partisi dan wakil kelas}\index{partisi!kelas ekuivalensi baris}
+%</RowEquivalanceClasses>
+\begin{center}
+  \includegraphics{gr/mp/ch1.27}
+\end{center}
+\noindent Salah satu kelas adalah kelompok matriks yang saling berhubungan
+dari awal bagian ini, sebagaimana digambarkan di atas (kelas tersebut memuat
+semua matriks nonsingular $\nbyn{2}$).
+
+Subbagian berikut membuktikan bahwa bentuk eselon tereduksi suatu matriks
+bersifat unik.
+Dalam bahasa relasi ekuivalensi baris, kita akan membuktikan bahwa setiap
+matriks ekuivalen baris dengan tepat satu matriks berbentuk eselon tereduksi.
+Dalam bahasa partisi, kita akan membuktikan bahwa setiap kelas ekuivalensi
+memuat tepat satu matriks berbentuk eselon tereduksi.
+Jadi, setiap matriks berbentuk eselon tereduksi menjadi wakil kelasnya.
+
+\begin{exercises}
+   \recommended \item 
+     Gunakan reduksi Gauss--Jordan untuk menyelesaikan setiap sistem.
+     \begin{exparts*}
+        \partsitem \(
+          \begin{linsys}[t]{2}
+               x  &+  &y  &=  &2  \\
+               x  &-  &y  &=  &0  
+          \end{linsys}   \)
+        \partsitem \(
+          \begin{linsys}[t]{3}
+               x  &   &   &-  &z  &=  &4  \\
+              2x  &+  &2y &   &   &=  &1  
+          \end{linsys}  \)
+        \partsitem  \(
+           \begin{linsys}[t]{2}
+               3x  &-  &2y  &=  &1  \\
+               6x  &+  &y   &=  &1/2 
+           \end{linsys}  \)
+        \partsitem \(
+           \begin{linsys}[t]{3}
+              2x  &-  &y  &  &  &= &-1  \\
+               x  &+  &3y &- &z &= &5   \\
+                  &   &y  &+ &2z&= &5   
+           \end{linsys} \)
+     \end{exparts*}
+     \begin{answer}
+       Jawaban-jawaban ini hanya menunjukkan reduksi Gauss--Jordan.
+       Setelah itu, deskripsi himpunan solusinya dapat dibaca dengan mudah.
+       \begin{exparts}
+         \partsitem Himpunan solusinya hanya memuat satu anggota.
+           \begin{multline*}
+             \begin{amat}[r]{2}
+               1  &1  &2  \\
+               1  &-1 &0
+             \end{amat}
+             \grstep{-\rho_1+\rho_2}
+             \begin{amat}[r]{2}
+               1  &1  &2  \\
+               0  &-2 &-2
+             \end{amat}                          \\                       
+             \grstep{-(1/2)\rho_2}
+             \begin{amat}[r]{2}
+               1  &1  &2  \\
+               0  &1  &1
+             \end{amat}                         
+             \grstep{-\rho_2+\rho_1}
+             \begin{amat}[r]{2}
+               1  &0  &1  \\
+               0  &1  &1
+             \end{amat}
+           \end{multline*}
+         \partsitem Himpunan solusinya memiliki satu parameter.
+            \begin{equation*}
+             \begin{amat}[r]{3}
+               1  &0  &-1  &4  \\
+               2  &2  &0   &1
+             \end{amat}
+             \grstep{-2\rho_1+\rho_2}
+             \begin{amat}[r]{3}
+               1  &0  &-1  &4  \\
+               0  &2  &2   &-7
+             \end{amat}                    
+             \grstep{(1/2)\rho_2}
+             \begin{amat}[r]{3}
+               1  &0  &-1  &4  \\
+               0  &1  &1   &-7/2
+             \end{amat}
+           \end{equation*}
+         \partsitem Terdapat solusi tunggal.
+           \begin{multline*}
+             \begin{amat}[r]{2}
+               3  &-2  &1  \\
+               6  &1   &1/2
+             \end{amat}
+             \grstep{-2\rho_1+\rho_2}
+             \begin{amat}[r]{2}
+               3  &-2  &1  \\
+               0  &5   &-3/2
+             \end{amat}                            \\                       
+             \grstep[(1/5)\rho_2]{(1/3)\rho_1}
+             \begin{amat}[r]{2}
+               1  &-2/3&1/3 \\
+               0  &1   &-3/10
+             \end{amat}                       
+             \grstep{(2/3)\rho_2+\rho_1}
+             \begin{amat}[r]{2}
+               1  &0   &2/15 \\
+               0  &1   &-3/10
+             \end{amat}
+          \end{multline*}
+        \partsitem Pertukaran baris pada langkah kedua mempermudah
+          perhitungan aritmetika.
+         \begin{multline*}
+          \begin{amat}[r]{3}
+            2  &-1  &0  &-1  \\
+            1  &3   &-1 &5   \\
+            0  &1   &2  &5
+          \end{amat}
+          \grstep{-(1/2)\rho_1+\rho_2}
+          \begin{amat}[r]{3}
+            2  &-1  &0  &-1   \\
+            0  &7/2 &-1 &11/2 \\
+            0  &1   &2  &5
+          \end{amat}                                \\
+          \begin{aligned}
+          &\grstep{\rho_2\leftrightarrow\rho_3}
+          \begin{amat}[r]{3}
+            2  &-1  &0  &-1   \\
+            0  &1   &2  &5    \\
+            0  &7/2 &-1 &11/2
+          \end{amat}                      
+            \grstep{-(7/2)\rho_2+\rho_3}
+            \begin{amat}[r]{3}
+              2  &-1  &0  &-1   \\
+              0  &1   &2  &5    \\
+              0  &0   &-8 &-12
+            \end{amat}                               \\     
+            &\grstep[-(1/8)\rho_3]{(1/2)\rho_1}
+            \begin{amat}[r]{3}
+              1  &-1/2&0  &-1/2 \\
+              0  &1   &2  &5    \\
+              0  &0   &1  &3/2
+            \end{amat}                                
+            \grstep{-2\rho_3+\rho_2}
+            \begin{amat}[r]{3}
+              1  &-1/2&0  &-1/2 \\
+              0  &1   &0  &2    \\
+              0  &0   &1  &3/2
+            \end{amat}                                    \\             
+            &\grstep{(1/2)\rho_2+\rho_1}
+            \begin{amat}[r]{3}
+              1  &0   &0  &1/2  \\
+              0  &1   &0  &2    \\
+              0  &0   &1  &3/2
+            \end{amat}
+          \end{aligned}
+        \end{multline*}
+       \end{exparts}  
+     \end{answer}
+  \item Lakukan reduksi Gauss--Jordan.
+    \begin{exparts*}
+      \partsitem
+        $\begin{linsys}[t]{3}
+          x  &+ &y &- &z &= &3 \\
+          2x &- &y  &- &z &= &1 \\
+          3x &+  &y  &+ &2z &= &0
+        \end{linsys}$
+      \partsitem
+        $\begin{linsys}[t]{3}
+          x  &+ &y  &+ &2z  &= &0 \\
+          2x  &- &y  &+  &z &= &1 \\
+          4x &+ &y  &+ &5z &= &1  
+        \end{linsys}$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem
+          \begin{multline*}
+            \begin{amat}{3}
+              1 &1  &-1 &3 \\
+              2 &-1 &-1 &1 \\
+              3 &1  &2  &0
+            \end{amat}
+            \grstep[-3\rho_1+\rho_3]{-2\rho_1+\rho_2}
+            \begin{amat}{3}
+              1 &1  &-1 &3 \\
+              0 &-3 &1  &-5 \\
+              0 &-2  &5  &-9
+            \end{amat}                             \\
+          \begin{aligned}   
+            &\grstep{-(2/3)\rho_2+\rho_3}
+            \begin{amat}{3}
+              1 &1  &-1    &3 \\
+              0 &-3 &1     &-5 \\
+              0 &0  &13/3  &-17/3
+            \end{amat}                                 
+            \grstep[(3/13)\rho_3]{-(1/3)\rho_2}
+            \begin{amat}{3}
+              1 &1  &-1    &3 \\
+              0 &1  &-1/3    &5/3 \\
+              0 &0  &1      &-17/13
+            \end{amat}                                \\
+            &\grstep[(1/3)\rho_3+\rho_2]{\rho_3+\rho_1}
+            \begin{amat}{3}
+              1 &1  &0    &22/13 \\
+              0 &1  &0    &16/13 \\
+              0 &0  &1      &-17/13
+            \end{amat}
+            \grstep{-\rho_2+\rho_1}
+            \begin{amat}{3}
+              1 &0  &0    &6/13 \\
+              0 &1  &0    &16/13 \\
+              0 &0  &1      &-17/13
+            \end{amat}
+          \end{aligned}
+          \end{multline*}
+        \partsitem
+          \begin{multline*}
+            \begin{amat}{3}
+              1 &1  &2 &0 \\
+              2 &-1 &1 &1 \\
+              4 &1  &5 &1
+            \end{amat}
+            \grstep[-4\rho_1+\rho_3]{-2\rho_1+\rho_2}
+            \begin{amat}{3}
+              1 &1  &2  &0 \\
+              0 &-3 &-3 &1 \\
+              0 &-3 &-3 &1
+            \end{amat}
+            \grstep{-\rho_2+\rho_3}
+            \begin{amat}{3}
+              1 &1  &2  &0 \\
+              0 &-3 &-3 &1 \\
+              0 &0  &0  &0
+            \end{amat}                              \\
+            \grstep{-(1/3)\rho_2}
+            \begin{amat}{3}
+              1 &1  &2  &0 \\
+              0 &1  &1 &-1/3 \\
+              0 &0  &0  &0
+            \end{amat}
+            \grstep{-\rho_2+\rho_1}
+            \begin{amat}{3}
+              1 &0  &1  &1/3 \\
+              0 &1  &1 &-1/3 \\
+              0 &0  &0  &0
+            \end{amat}
+          \end{multline*}
+      \end{exparts}
+    \end{answer}
+  \recommended \item 
+    Tentukan bentuk eselon tereduksi setiap matriks.
+    \begin{exparts*}
+      \partsitem \( \begin{mat}[r]
+          2  &1  \\
+          1  &3
+        \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+          1  &3  &1  \\
+          2  &0  &4  \\
+         -1  &-3 &-3
+        \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+          1  &0  &3  &1  &2  \\
+          1  &4  &2  &1  &5  \\
+          3  &4  &8  &1  &2
+        \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+          0  &1  &3  &2  \\
+          0  &0  &5  &6  \\
+          1  &5  &1  &5
+        \end{mat}  \)
+    \end{exparts*}
+    \begin{answer}
+      Gunakan reduksi Gauss--Jordan.
+      \begin{exparts}
+        \partsitem Bentuk eselon tereduksinya hanya memuat nol, kecuali
+          diagonal yang seluruh entrinya satu.
+          \begin{equation*}
+            \grstep{-(1/2)\rho_1+\rho_2}
+            \begin{mat}[r]
+              2  &1  \\
+              0  &5/2
+            \end{mat}
+            \grstep[(2/5)\rho_2]{(1/2)\rho_1}
+            \begin{mat}[r]
+              1  &1/2\\
+              0  &1
+            \end{mat}                      
+            \grstep{-(1/2)\rho_2+\rho_1}
+            \begin{mat}[r]
+              1  &0  \\
+              0  &1
+            \end{mat}
+          \end{equation*}
+        \partsitem Seperti pada soal sebelumnya, bentuk eselon tereduksinya
+          hanya memuat nol, kecuali diagonal yang seluruh entrinya satu.
+          \begin{multline*}
+            \grstep[\rho_1+\rho_3]{-2\rho_1+\rho_2}
+            \begin{mat}[r]
+              1  &3  &1  \\
+              0  &-6 &2  \\
+              0  &0  &-2
+            \end{mat}
+            \grstep[-(1/2)\rho_3]{-(1/6)\rho_2}
+            \begin{mat}[r]
+              1  &3  &1     \\
+              0  &1  &-1/3  \\
+              0  &0  &1
+            \end{mat}                                      \\              
+            \grstep[-\rho_3+\rho_1]{(1/3)\rho_3+\rho_2}
+            \begin{mat}[r]
+              1  &3  &0     \\
+              0  &1  &0     \\
+              0  &0  &1
+            \end{mat}                  
+            \grstep{-3\rho_2+\rho_1}
+            \begin{mat}[r]
+              1  &0  &0     \\
+              0  &1  &0     \\
+              0  &0  &1
+            \end{mat}
+           \end{multline*}
+        \partsitem Karena jumlah kolom lebih banyak daripada jumlah baris,
+          hasilnya tidak mungkin hanya berupa diagonal satu.
+          \begin{multline*}
+            \grstep[-3\rho_1+\rho_3]{-\rho_1+\rho_2}
+            \begin{mat}[r]
+              1  &0  &3  &1  &2  \\
+              0  &4  &-1 &0  &3  \\
+              0  &4  &-1 &-2 &-4
+            \end{mat}
+            \grstep{-\rho_2+\rho_3}
+            \begin{mat}[r]
+              1  &0  &3  &1  &2  \\
+              0  &4  &-1 &0  &3  \\
+              0  &0  &0  &-2 &-7
+            \end{mat}                           \\
+            \grstep[-(1/2)\rho_3]{(1/4)\rho_2}
+            \begin{mat}[r]
+              1  &0  &3    &1  &2  \\
+              0  &1  &-1/4 &0  &3/4  \\
+              0  &0  &0    &1  &7/2
+            \end{mat}                           
+            \grstep{-\rho_3+\rho_1}
+            \begin{mat}[r]
+              1  &0  &3    &0  &-3/2  \\
+              0  &1  &-1/4 &0  &3/4     \\
+              0  &0  &0    &1  &7/2
+            \end{mat}
+          \end{multline*}
+        \partsitem Seperti pada butir sebelumnya, matriks ini bukan matriks
+          persegi.
+          \begin{multline*}
+            \grstep{\rho_1\leftrightarrow\rho_3}
+            \begin{mat}[r]
+              1  &5  &1  &5  \\
+              0  &0  &5  &6  \\
+              0  &1  &3  &2
+            \end{mat}
+            \grstep{\rho_2\leftrightarrow\rho_3}
+            \begin{mat}[r]
+              1  &5  &1  &5  \\
+              0  &1  &3  &2  \\
+              0  &0  &5  &6
+            \end{mat}                    \\
+            \begin{aligned}
+              &\grstep{(1/5)\rho_3}
+              \begin{mat}[r]
+                1  &5  &1  &5  \\
+                0  &1  &3  &2  \\
+                0  &0  &1  &6/5
+              \end{mat}                  
+              \grstep[-\rho_3+\rho_1]{-3\rho_3+\rho_2}
+              \begin{mat}[r]
+                1  &5  &0  &19/5  \\
+                0  &1  &0  &-8/5  \\
+                0  &0  &1  &6/5
+              \end{mat}                   \\
+              &\grstep{-5\rho_2+\rho_1}
+              \begin{mat}[r]
+                1  &0  &0  &59/5  \\
+                0  &1  &0  &-8/5  \\
+                0  &0  &1  &6/5
+              \end{mat}
+            \end{aligned}
+          \end{multline*}
+      \end{exparts}  
+    \end{answer}
+  \item Tentukan bentuk eselon tereduksi masing-masing matriks berikut.
+    \begin{exparts*}
+      \partsitem $
+        \begin{mat}
+          0  &2 &1 \\
+          2  &-1 &1 \\
+          -2 &-1 &0
+        \end{mat}$
+      \partsitem $
+        \begin{mat}
+          1 &3 &1 \\
+          2 &6 &2 \\
+         -1 &0 &0
+        \end{mat}$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Mulailah dengan pertukaran baris.
+          \begin{equation*}
+            \grstep{\rho_1\leftrightarrow\rho_2}
+            \grstep{\rho_1+\rho_3}
+            \grstep{\rho_2+\rho_3}
+            \grstep[(1/2)\rho_2 \\ (1/2)\rho_3]{(1/2)\rho_1}
+            \grstep[(-1/2)\rho_3+\rho_2]{(-1/2)\rho_3+\rho_1}
+            \grstep{(1/2)\rho_2+\rho_1}
+            \begin{mat}
+              1 &0 &0 \\
+              0 &1 &0 \\
+              0 &0 &1
+            \end{mat}
+          \end{equation*}
+        \partsitem Di sini pertukaran baris dilakukan di tengah proses.
+        \begin{equation*}
+          \grstep[\rho_1+\rho_3]{-2\rho_1+\rho_2}
+          \grstep{\rho_2\leftrightarrow\rho_3}
+          \grstep{(1/3)\rho_2}
+          \grstep{-3\rho_2+\rho_1}
+          \begin{mat}
+            1 &0 &0   \\
+            0 &1 &1/3 \\
+            0 &0 &0
+          \end{mat}
+        \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \recommended \item 
+    Tentukan setiap himpunan solusi dengan menggunakan reduksi Gauss--Jordan,
+    lalu baca parametrisasi yang dihasilkan.
+    \begin{exparts}
+      \partsitem \( \begin{linsys}[t]{3}
+                  2x  &+  &y  &-  &z  &=  &1  \\
+                  4x  &-  &y  &   &   &=  &3  
+                  \end{linsys}  \)
+      \partsitem \( \begin{linsys}[t]{4}
+                   x  &   &   &-  &z  &   &   &=  &1  \\
+                      &   &y  &+  &2z &-  &w  &=  &3  \\
+                   x  &+  &2y &+  &3z &-  &w  &=  &7  
+                    \end{linsys}  \)
+      \partsitem \( \begin{linsys}[t]{4}
+                   x  &-  &y  &+  &z  &   &   &=  &0  \\
+                      &   &y  &   &   &+  &w  &=  &0  \\
+                  3x  &-  &2y &+  &3z &+  &w  &=  &0  \\
+                      &   &-y &   &   &-  &w  &=  &0  
+                  \end{linsys}  \)
+      \partsitem \( \begin{linsys}[t]{5}
+                   a  &+  &2b &+  &3c &+  &d  &-  &e  &=  &1  \\
+                  3a  &-  &b  &+  &c  &+  &d  &+  &e  &=  &3  
+                  \end{linsys}  \)
+    \end{exparts}
+    \begin{answer}
+      Untuk bagian reduksi Gauss, lihat jawaban Latihan~I.2 di Bab Satu,
+      \nearbyexercise{exer:SlvMatNot}.
+      \begin{exparts}
+      \partsitem Bagian ``Jordan'' berjalan sebagai berikut.
+        \begin{equation*}
+          \grstep[-(1/3)\rho_2]{(1/2)\rho_1}
+          \begin{amat}[r]{3}
+            1  &1/2 &-1/2 &1/2  \\
+            0  &1   &-2/3 &-1/3
+          \end{amat}                           
+          \grstep{-(1/2)\rho_2+\rho_1}
+          \begin{amat}[r]{3}
+            1  &0   &-1/6 &2/3  \\
+            0  &1   &-2/3 &-1/3
+          \end{amat}
+        \end{equation*}
+        Himpunan solusinya adalah
+        \begin{equation*}
+          \set{\colvec[r]{2/3 \\ -1/3 \\ 0}
+               +\colvec[r]{1/6 \\ 2/3 \\ 1}z
+              \suchthat z\in\Re}
+        \end{equation*}
+      \partsitem Bagian keduanya adalah
+        \begin{equation*}
+          \grstep{\rho_3+\rho_2}
+          \begin{amat}[r]{4}
+            1  &0  &-1  &0  &1 \\
+            0  &1  &2   &0  &3 \\
+            0  &0  &0   &1  &0
+          \end{amat}
+        \end{equation*}
+        sehingga himpunan solusinya adalah
+        \begin{equation*}
+          \set{\colvec[r]{1 \\ 3 \\ 0 \\ 0}
+               +\colvec[r]{1 \\ -2 \\ 1 \\ 0}z
+              \suchthat z\in\Re}
+        \end{equation*}
+      \partsitem Bagian Jordan berikut
+        \begin{equation*}
+          \grstep{\rho_2+\rho_1}
+          \begin{amat}[r]{4}
+            1  &0  &1   &1  &0 \\
+            0  &1  &0   &1  &0 \\
+            0  &0  &0   &0  &0 \\
+            0  &0  &0   &0  &0
+          \end{amat}
+        \end{equation*}
+        menghasilkan
+        \begin{equation*}
+          \set{\colvec[r]{0 \\ 0 \\ 0 \\ 0}
+               +\colvec[r]{-1 \\ 0 \\ 1 \\ 0}z
+               +\colvec[r]{-1 \\ -1 \\ 0 \\ 1}w
+              \suchthat z,w\in\Re}
+        \end{equation*}
+        (tentu saja, vektor nol dapat dihilangkan dari deskripsi tersebut).
+      \partsitem Bagian ``Jordan''
+        \begin{align*}
+          &\grstep{-(1/7)\rho_2}
+          \begin{amat}[r]{5}
+            1  &2  &3   &1   &-1   &1  \\
+            0  &1  &8/7 &2/7 &-4/7 &0
+          \end{amat}                   \\
+          &\grstep{-2\rho_2+\rho_1}
+          \begin{amat}[r]{5}
+            1  &0  &5/7 &3/7 &1/7  &1  \\
+            0  &1  &8/7 &2/7 &-4/7 &0
+          \end{amat}
+        \end{align*}
+        berakhir dengan himpunan solusi berikut.
+        \begin{equation*}
+          \set{\colvec[r]{1 \\ 0 \\ 0 \\ 0 \\ 0}
+               +\colvec[r]{-5/7 \\ -8/7 \\ 1 \\ 0 \\ 0}c
+               +\colvec[r]{-3/7 \\ -2/7 \\ 0 \\ 1 \\ 0}d
+               +\colvec[r]{-1/7 \\ 4/7 \\ 0 \\ 0 \\ 1}e
+              \suchthat c,d,e\in\Re}
+        \end{equation*}
+    \end{exparts}
+   \end{answer}
+  \item 
+    Berikan dua versi berbentuk eselon yang berbeda dari matriks berikut.
+    \begin{equation*}
+      \begin{mat}[r]
+        2  &1  &1  &3  \\
+        6  &4  &1  &2  \\
+        1  &5  &1  &5
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Metode Gauss yang biasa menghasilkan salah satunya:
+      \begin{equation*}
+        \grstep[-(1/2)\rho_1+\rho_3]{-3\rho_1+\rho_2}
+        \begin{mat}[r]
+          2  &1  &1  &3  \\
+          0  &1  &-2 &-7 \\
+          0  &9/2&1/2&7/2
+        \end{mat}
+        \grstep{-(9/2)\rho_2+\rho_3}
+        \begin{mat}[r]
+          2  &1  &1    &3  \\
+          0  &1  &-2   &-7 \\
+          0  &0  &19/2 &35
+        \end{mat}
+      \end{equation*}
+      dan perubahan kosmetik apa pun, seperti mengalikan baris terbawah dengan
+      \( 2 \),
+      \begin{equation*}
+        \begin{mat}[r]
+          2  &1  &1    &3  \\
+          0  &1  &-2   &-7 \\
+          0  &0  &19   &70
+        \end{mat}
+      \end{equation*}
+      menghasilkan versi lainnya.  
+    \end{answer}
+  \recommended \item \label{exer:PossRedEchFrms} 
+    Daftarkan semua bentuk eselon tereduksi yang mungkin untuk setiap ukuran.
+    \begin{exparts*}
+      \partsitem \( \nbyn{2} \)
+      \partsitem \( \nbym{2}{3} \)
+      \partsitem \( \nbym{3}{2} \)
+      \partsitem \( \nbyn{3} \)
+    \end{exparts*}
+    \begin{answer}
+      Dalam kasus-kasus berikut, kita mengambil $a,b\in\Re$.
+      Jadi, beberapa bentuk kanonis yang didaftarkan sebenarnya mencakup tak
+      hingga banyak kasus.
+      Secara khusus, bentuk-bentuk tersebut mencakup kasus $a=0$ dan $b=0$.
+      \begin{exparts}
+        \partsitem 
+          $\begin{mat}[r]
+            0  &0  \\
+            0  &0
+          \end{mat}$,
+          $\begin{mat}[r]
+            1  &a  \\
+            0  &0
+          \end{mat}$, 
+          $\begin{mat}[r]
+            0  &1  \\
+            0  &0
+          \end{mat}$, 
+          $\begin{mat}[r]
+            1  &0  \\
+            0  &1
+          \end{mat}$
+        \partsitem
+          $\begin{mat}[r]
+               0  &0  &0  \\
+               0  &0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               1  &a  &b  \\
+               0  &0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               0  &1  &a  \\
+               0  &0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               0  &0  &1  \\
+               0  &0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               1  &0  &a  \\
+               0  &1  &b
+             \end{mat}$,
+          $\begin{mat}[r]
+               1  &a  &0  \\
+               0  &0  &1
+             \end{mat}$,
+          $\begin{mat}[r]
+               0  &1  &0  \\
+               0  &0  &1
+             \end{mat}$
+        \partsitem
+          $\begin{mat}[r]
+               0  &0  \\
+               0  &0  \\
+               0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               1  &a  \\
+               0  &0  \\
+               0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               0  &1  \\
+               0  &0  \\
+               0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               1  &0  \\
+               0  &1  \\
+               0  &0
+             \end{mat}$
+        \partsitem
+          $\begin{mat}[r]
+               0  &0  &0  \\
+               0  &0  &0  \\
+               0  &0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               1  &a  &b  \\
+               0  &0  &0  \\
+               0  &0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               0  &1  &a  \\
+               0  &0  &0  \\
+               0  &0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               0  &1  &0  \\
+               0  &0  &1  \\
+               0  &0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               0  &0  &1  \\
+               0  &0  &0  \\
+               0  &0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               1  &0  &a  \\
+               0  &1  &b  \\
+               0  &0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               1  &a  &0  \\
+               0  &0  &1  \\
+               0  &0  &0
+             \end{mat}$,
+          $\begin{mat}[r]
+               1  &0  &0  \\
+               0  &1  &0  \\
+               0  &0  &1
+             \end{mat}$
+      \end{exparts}  
+    \end{answer}
+  \recommended \item  
+    Apa hasil penerapan reduksi Gauss--Jordan pada matriks nonsingular?
+    \begin{answer}
+      Sistem linear homogen nonsingular memiliki solusi tunggal.
+      Jadi, matriks nonsingular harus tereduksi menjadi matriks (persegi) yang
+      seluruh entrinya \( 0 \), kecuali entri-entri \( 1 \) pada diagonal dari
+      kiri atas ke kanan bawah, seperti berikut.
+      \begin{equation*}
+         \begin{mat}[r]
+           1  &0  \\
+           0  &1  \\
+         \end{mat}
+         \qquad
+         \begin{mat}[r]
+           1  &0  &0  \\
+           0  &1  &0  \\
+           0  &0  &1
+         \end{mat}
+      \end{equation*}  
+    \end{answer}
+ \item Tentukan apakah setiap relasi berikut merupakan relasi ekuivalensi pada
+   himpunan matriks $\nbyn{2}$.
+   \begin{exparts}
+     \partsitem dua matriks berelasi jika keduanya memiliki entri yang sama
+       pada baris pertama dan kolom pertama
+     % \partsitem two matrices are related if their four entries sum to the 
+     %   same total
+     \partsitem dua matriks berelasi jika keduanya memiliki entri yang sama
+       pada baris pertama dan kolom pertama, atau entri yang sama pada baris
+       kedua dan kolom kedua
+   \end{exparts}
+   \begin{answer}
+     \begin{exparts}
+       \partsitem Ini merupakan relasi ekuivalensi.
+        
+          Kita dapat menuliskan $M_1\sim M_2$ jika keduanya berelasi.
+          Relasi $\sim$ refleksif karena setiap matriks memiliki entri $1,1$
+          yang sama dengan dirinya sendiri.
+          Relasi tersebut simetris karena jika $M_1$ memiliki entri $1,1$
+          yang sama dengan~$M_2$, maka jelas $M_2$ juga memiliki entri $1,1$
+          yang sama dengan~$M_1$.
+          Terakhir, relasi tersebut transitif: jika $M_1\sim M_2$, keduanya
+          memiliki entri $1,1$ yang sama; jika $M_2\sim M_3$, keduanya juga
+          memiliki entri itu yang sama. Jadi, ketiganya memiliki entri $1,1$
+          yang sama dan $M_1\sim M_3$.
+       % \partsitem  This is an equivalence.
+       %    Write $M_1\sim M_2$ if they are related.
+
+       %    This relation is reflexive because any matrix has the 
+       %    same sum of entries as itself.
+       %    The $\sim$~relation is symmetric because if $M_1$ has the same
+       %    sum of 
+       %    entries as~$M_2$, then also $M_2$ has the same sum of entries
+       %    as~$M_1$.
+       %    Finally, the relation is transitive because if $M_1\sim M_2$ so their
+       %    entry sum is the same, 
+       %    and $M_2\sim M_3$ so they have the 
+       %    same entry sum as each other, then all three have the same entry sum, 
+       %    and $M_1\sim M_3$. 
+       \partsitem
+          Ini bukan relasi ekuivalensi karena tidak transitif.
+          Matriks pertama dan kedua berikut berelasi melalui entri $1,1$,
+          sedangkan matriks kedua dan ketiga berelasi melalui entri $2,2$.
+          Namun, matriks pertama dan ketiga tidak berelasi.
+          \begin{equation*}
+            \begin{mat}
+              1 &0 \\
+              0 &0
+            \end{mat}
+            \quad
+            \begin{mat}
+              1 &0 \\
+              0 &-1
+            \end{mat}
+            \quad
+            \begin{mat}
+              0 &0 \\
+              0 &-1
+            \end{mat}
+          \end{equation*}
+     \end{exparts}
+   \end{answer}
+ \item \cite{Cleary}
+    Tinjau relasi berikut pada himpunan matriks $\nbyn{2}$: kita mengatakan
+    bahwa $A$ \textit{serupa-jumlah} dengan $B$ jika jumlah semua entri dalam
+    $A$ sama dengan jumlah semua entri dalam $B$.
+    Sebagai contoh, matriks nol serupa-jumlah dengan matriks yang baris
+    pertamanya memuat dua angka tujuh dan baris keduanya memuat dua angka
+    negatif tujuh.
+    Buktikan atau sangkal bahwa relasi ini merupakan relasi ekuivalensi pada
+    himpunan matriks $\nbyn{2}$.
+    \begin{answer}
+      Relasi ini merupakan relasi ekuivalensi.
+      Untuk membuktikannya, kita harus memeriksa bahwa relasi tersebut
+      refleksif, simetris, dan transitif.
+
+      Andaikan semua matriks berukuran $\nbyn{2}$.
+      Untuk refleksivitas, perhatikan bahwa suatu matriks memiliki jumlah
+      entri yang sama dengan dirinya sendiri.
+      Untuk simetri, andaikan $A$ memiliki jumlah entri yang sama dengan~$B$;
+      jelas bahwa $B$ kemudian memiliki jumlah entri yang sama dengan~$A$.
+      Transitivitas juga mudah\Dash jika $A$ memiliki jumlah entri yang sama
+      dengan $B$ dan $B$ memiliki jumlah entri yang sama dengan $C$, maka
+      $A$ memiliki jumlah entri yang sama dengan $C$.
+    \end{answer}
+ \item \label{exer:INotJMakesRowOpsRev}
+   Pembuktian \nearbylemma{le:RowOpsRev} menyebut syarat $i\neq j$ pada
+   operasi kombinasi baris.
+   \begin{exparts}
+     \partsitem Tuliskan matriks $\nbyn{2}$ dengan entri-entri tak nol, lalu
+        tunjukkan bahwa operasi $-1\cdot\rho_1+\rho_1$ tidak dibalik oleh
+        $1\cdot\rho_1+\rho_1$.
+     \partsitem Perluas pembuktian lema tersebut untuk menunjukkan secara
+        eksplisit bagian yang menggunakan syarat $i\neq j$ pada kombinasi.
+   \end{exparts}
+   \begin{answer}
+    \begin{exparts}
+      \partsitem Sebagai contoh,
+        \begin{equation*}
+          \begin{mat}[r]
+            1  &2  \\
+            3  &4  
+          \end{mat}
+          \grstep{-\rho_1+\rho_1}
+          \begin{mat}[r]
+            0  &0  \\
+            3  &4  
+          \end{mat}
+          \grstep{\rho_1+\rho_1}
+          \begin{mat}[r]
+            0  &0  \\
+            3  &4  
+          \end{mat}
+        \end{equation*}
+        membiarkan matriks dalam keadaan yang telah berubah.
+      \partsitem Operasi berikut
+        \begin{equation*}
+          \begin{mat}
+            \vdotswithin{a_{i,1}}                     \\
+            a_{i,1}  &\cdots  &a_{i,n}  \\
+            \vdotswithin{a_{i,1}}                     \\
+            a_{j,1}  &\cdots  &a_{j,n}  \\
+            \vdotswithin{a_{i,1}}                     
+          \end{mat}
+          \grstep{k\rho_i+\rho_j}
+          \begin{mat}
+            \vdotswithin{a_{i,1}}                                      \\
+            a_{i,1}           &\cdots  &a_{i,n}          \\
+            \vdotswithin{a_{i,1}}                                      \\
+            ka_{i,1}+a_{j,1}  &\cdots  &ka_{i,n}+a_{j,n}  \\
+            \vdotswithin{a_{i,1}}                     
+          \end{mat}
+        \end{equation*}      
+        membiarkan baris ke-$i$ tetap karena pembatasan $i\neq j$.
+        Karena baris ke-$i$ tidak berubah, operasi
+        \begin{equation*}                                        
+          \grstep{-k\rho_i+\rho_j}
+          \begin{mat}
+            \vdotswithin{a_{i,1}}                                      \\
+            a_{i,1}           &\cdots  &a_{i,n}          \\
+            \vdotswithin{a_{i,1}}                                      \\
+            -ka_{i,1}+ka_{i,1}+a_{j,1}  &\cdots &-ka_{i,n}+ka_{i,n}+a_{j,n} \\
+            \vdotswithin{a_{i,1}}                     
+          \end{mat}
+        \end{equation*}
+        mengembalikan baris ke-$j$ ke keadaan semula.
+        % (If $i=j$ then the third matrix would have entries of the 
+        % form $-k(ka_{i,j}+a_{i,j})+ka_{i,j}+a_{i,j}$.)
+    \end{exparts}
+   \end{answer}
+ \recommended \item \cite{Cleary}
+  Tinjau himpunan siswa dalam suatu kelas.
+  Manakah di antara relasi berikut yang merupakan relasi ekuivalensi?
+  Jelaskan setiap jawaban dalam sedikitnya satu kalimat.
+  \begin{exparts}
+    \item Dua siswa $x,y$ berelasi jika $x$ telah mengikuti setidaknya
+      sebanyak mata pelajaran matematika yang telah diikuti $y$.
+    \item Siswa $x,y$ berelasi jika nama mereka diawali huruf yang sama.
+  \end{exparts}
+  \begin{answer}
+    Agar menjadi relasi ekuivalensi, setiap relasi harus refleksif, simetris,
+    dan transitif.
+    \begin{exparts}
+      \item Relasi ini tidak simetris karena jika $x$ telah mengikuti
+        $4$~mata pelajaran dan $y$ telah mengikuti $3$, maka $x$ berelasi
+        dengan $y$, tetapi $y$ tidak berelasi dengan $x$.
+      \item Relasi ini refleksif karena nama $x$ diawali huruf yang sama dengan
+        nama $x$ sendiri.
+        Relasi ini simetris karena jika nama $x$ diawali huruf yang sama dengan
+        nama $y$, maka nama $y$ juga diawali huruf yang sama dengan nama~$x$.
+        Relasi ini transitif karena jika nama $x$ diawali huruf yang sama dengan
+        nama~$y$ dan nama $y$ diawali huruf yang sama dengan nama $z$, maka
+        nama $x$ diawali huruf yang sama dengan nama $z$.
+        Jadi, relasi ini merupakan relasi ekuivalensi.
+    \end{exparts}
+  \end{answer}
+  \item
+  Tunjukkan bahwa masing-masing relasi berikut merupakan relasi ekuivalensi
+  pada himpunan matriks $\nbyn{2}$.
+  Jelaskan kelas-kelas ekuivalensinya.
+  \begin{exparts}
+    \item Dua matriks berelasi jika hasil kali entri pada diagonalnya sama,
+      yakni jika hasil kali entri kiri atas dan kanan bawahnya sama.
+    \item Dua matriks berelasi jika keduanya memiliki sedikitnya satu entri
+      bernilai~$1$, atau jika keduanya sama-sama tidak memilikinya.
+  \end{exparts}
+  \begin{answer}
+    Untuk masing-masing relasi, kita harus memeriksa ketiga syarat
+    refleksivitas, simetri, dan transitivitas.
+    \begin{exparts}
+      \item Setiap matriks jelas memiliki hasil kali diagonal yang sama dengan
+        dirinya sendiri, sehingga relasi tersebut refleksif.
+        Relasi itu simetris karena jika $A$ memiliki hasil kali diagonal yang
+        sama dengan~$B$, yaitu jika
+        $a_{1,1}\cdot a_{2,2}=b_{1,1}\cdot b_{2,2}$, maka $B$ memiliki hasil
+        kali yang sama dengan~$A$.
+ 
+        Transitivitas serupa: andaikan hasil kali $A$ adalah~$r$ dan sama
+        dengan hasil kali $B$.
+        Andaikan pula hasil kali $B$ sama dengan hasil kali $C$.
+        Maka ketiganya memiliki hasil kali~$r$, sehingga hasil kali $A$ sama
+        dengan hasil kali $C$.
+
+        Terdapat satu kelas ekuivalensi untuk setiap bilangan riil, yaitu kelas
+        yang memuat semua matriks $\nbyn{2}$ dengan hasil kali diagonal sama
+        dengan bilangan riil tersebut.
+      \item Untuk refleksivitas, jika matriks $A$ memiliki entri~$1$, maka ia
+        berelasi dengan dirinya sendiri; jika tidak, ia juga tetap berelasi
+        dengan dirinya sendiri.
+        Simetri juga memiliki dua kasus: andaikan $A$ dan~$B$ berelasi.
+        Jika $A$ memiliki entri~$1$, maka $B$ juga memilikinya, sehingga $B$
+        berelasi dengan~$A$.
+        Jika $A$ tidak memiliki entri~$1$, maka $B$ juga tidak, sehingga sekali
+        lagi $B$ berelasi dengan $A$.
+ 
+        Untuk transitivitas, andaikan $A$ berelasi dengan~$B$ dan $B$ berelasi
+        dengan~$C$.
+        Jika $A$ memiliki entri~$1$, maka $B$ juga memilikinya; karena $B$
+        berelasi dengan~$C$, $C$ juga memilikinya. Jadi, $A$ berelasi
+        dengan~$C$.
+        Demikian pula, jika $A$ tidak memiliki entri~$1$, maka $B$ juga tidak,
+        dan akibatnya $C$ juga tidak. Jadi, $A$ berelasi dengan~$C$.
+
+        Tepat ada dua kelas ekuivalensi: satu memuat semua matriks $\nbyn{2}$
+        yang memiliki sedikitnya satu entri bernilai~$1$, dan yang lain memuat
+        semua matriks yang tidak memiliki entri bernilai~$1$.
+    \end{exparts}
+  \end{answer}
+  \item Tunjukkan bahwa masing-masing relasi berikut bukan relasi ekuivalensi
+    pada himpunan matriks $\nbyn{2}$.
+    \begin{exparts}
+      \item Dua matriks $A,B$ berelasi jika $a_{1,1}=-b_{1,1}$.
+      \item Dua matriks berelasi jika selisih jumlah entrinya kurang dari
+        $5$, yakni $A$ berelasi dengan~$B$ jika
+        $\absval{(a_{1,1}+\cdots+a_{2,2})-(b_{1,1}+\cdots+b_{2,2})}<5$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \item Relasi ini tidak refleksif.
+          Sebagai contoh, setiap matriks dengan entri kiri atas~$1$ tidak
+          berelasi dengan dirinya sendiri.
+        \item Relasi ini tidak transitif.
+          Untuk ketiga matriks berikut, $A$ berelasi dengan~$B$ dan $B$
+          berelasi dengan~$C$, tetapi $A$ tidak berelasi dengan~$C$.
+          \begin{equation*}
+            A=\begin{mat}
+              0 &0 \\
+              0 &0
+            \end{mat},\quad
+            B=\begin{mat}
+              4 &0 \\
+              0 &0
+            \end{mat},\quad
+            C=\begin{mat}
+              8 &0 \\
+              0 &0
+            \end{mat},\quad
+          \end{equation*}
+      \end{exparts}
+    \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Lema Kombinasi Linear}
+Kita akan menutup bab ini dengan membuktikan bahwa setiap matriks ekuivalen
+baris dengan tepat satu matriks berbentuk eselon tereduksi.
+Gagasan-gagasan di sini akan muncul kembali dan dikembangkan lebih lanjut
+dalam bab berikutnya.
+% Here is an informal argument that the reduced 
+% echelon form version of a matrix is unique.
+% Consider again the example that started this section of a matrix that
+% reduces to three different echelon form matrices.
+% The first matrix of the three is the natural echelon form version.
+% The second matrix is the same as 
+% the first except that a row has been halved.
+% The third matrix, too, is just a cosmetic variant of the first. 
+% The definition of reduced echelon form outlaws this kind of fooling around.
+% In reduced echelon form,
+% halving a row is not possible because that would
+% change the row's leading entry away from one, and
+% neither is combining rows possible, because then a leading entry would no
+% longer be alone in its column.
+
+% This informal justification is not a proof;
+% the argument shows that no two different reduced echelon form matrices
+% are related by a single row operation step, but the argument does not
+% rule out the possibility that two different reduced echelon form
+% matrices could be related by multiple steps.
+% Before we go to the proof, we finish this subsection by 
+% rephrasing our work in a terminology that will be enlightening.
+Pengamatan kuncinya menyangkut cara operasi baris mengubah suatu matriks
+menjadi matriks lain: baris-baris baru merupakan kombinasi linear dari
+baris-baris lama.
+
+\begin{example}
+Tinjau reduksi Gauss--Jordan berikut.
+\begin{align*}
+  \begin{amat}{2}
+    2  &1  &0  \\
+    1  &3  &5
+  \end{amat}
+  &\grstep{-(1/2)\rho_1+\rho_2}
+  \begin{amat}{2}
+    2  &1    &0  \\
+    0  &5/2  &5
+  \end{amat}                           \\
+  &\grstep[(2/5)\rho_2]{(1/2)\rho_1}
+  \begin{amat}{2}
+    1  &1/2  &0  \\
+    0  &1    &2
+  \end{amat}                        \\
+  &\grstep{-(1/2)\rho_2+\rho_1}\;
+  \begin{amat}{2}
+    1  &0    &-1  \\
+    0  &1    &2
+  \end{amat}                       
+\end{align*}
+Dengan menamai matriks-matriks tersebut
+$A\rightarrow D\rightarrow G\rightarrow B$ dan menuliskan baris-baris $A$
+sebagai $\alpha_1$ dan $\alpha_2$, dan seterusnya, kita memperoleh
+\begin{align*}  % multline looks worse
+  \left(\begin{array}{l}
+    \alpha_1 \\
+    \alpha_2
+  \end{array}\right)
+  &\grstep{-(1/2)\rho_1+\rho_2}
+  \left(\begin{array}{l}
+    \delta_1=\alpha_1 \\
+    \delta_2=-(1/2)\alpha_1+\alpha_2
+  \end{array}\right)                          \\
+  &\grstep[(2/5)\rho_2]{(1/2)\rho_1}
+  \left(\begin{array}{l}
+    \gamma_1=(1/2)\alpha_1 \\
+    \gamma_2=-(1/5)\alpha_1+(2/5)\alpha_2
+  \end{array}\right)                          \\
+  &\grstep{-(1/2)\rho_2+\rho_1}
+  \left(\begin{array}{l}
+    \beta_1=(3/5)\alpha_1-(1/5)\alpha_2  \\
+    \beta_2=-(1/5)\alpha_1+(2/5)\alpha_2
+  \end{array}\right)                         
+\end{align*} 
+\end{example}
+
+\begin{example}
+Fakta bahwa operasi Gauss mengombinasikan baris secara linear juga berlaku
+jika terjadi pertukaran baris.
+Dengan \( A \), \( D \), \( G \), dan \( B \) berikut,
+\begin{equation*}
+    \begin{mat}[r]
+       0  &2  \\
+       1  &1
+     \end{mat}
+    \grstep{\rho_1\leftrightarrow\rho_2}
+    \begin{mat}[r]
+       1  &1  \\
+       0  &2
+     \end{mat}                  
+    \grstep{(1/2)\rho_2}
+    \begin{mat}[r]
+       1  &1  \\
+       0  &1
+     \end{mat}                   
+    \grstep{-\rho_2+\rho_1}
+    \begin{mat}[r]
+       1  &0  \\
+       0  &1
+     \end{mat}
+\end{equation*}
+kita memperoleh hubungan linear berikut.
+\begin{multline*}
+  \left(\begin{array}{l}
+    \vec{\alpha}_1 \\
+    \vec{\alpha}_2
+  \end{array}\right)
+  \,\grstep{\rho_1\leftrightarrow\rho_2}\,
+  \left(\begin{array}{l}
+     \vec{\delta}_1 =\vec{\alpha}_2   \\
+     \vec{\delta}_2 =\vec{\alpha}_1
+  \end{array}\right)                                                 
+  \,\grstep{(1/2)\rho_2}\,
+  \left(\begin{array}{l}
+     \vec{\gamma}_1 =\vec{\alpha}_2  \\
+     \vec{\gamma}_2 =(1/2)\vec{\alpha}_1
+  \end{array}\right)                                               \\
+  \,\grstep{-\rho_2+\rho_1}\,
+  \left(\begin{array}{l}
+     \vec{\beta}_1 =(-1/2)\vec{\alpha}_1+1\cdot\vec{\alpha}_2   \\
+     \vec{\beta}_2 =(1/2)\vec{\alpha}_1
+  \end{array}\right)
+\end{multline*}
+\end{example}
+
+Ringkasnya, Metode Gauss secara sistematis menentukan urutan kombinasi linear
+baris yang sesuai.
+
+% \begin{definition}
+% A \definend{linear combination}\index{linear combination} of 
+% \( x_1,\ldots,x_m \)
+% is an expression of the form $c_1x_1+c_2x_2+\,\cdots\,+c_mx_m$
+% where the \( c \)'s are scalars.
+%\end{definition}
+
+% \noindent (We have already used the phrase 
+% `linear combination' in this book.
+% The meaning is unchanged, but the next result's statement makes
+% a more formal definition in order.)
+
+\begin{lemma}[Lema Kombinasi Linear] \label{lm:LinearCombinationLemma} \index{Lema Kombinasi Linear}
+%<*lm:LinearCombinationLemma>
+Kombinasi linear dari kombinasi-kombinasi linear merupakan kombinasi linear.
+%</lm:LinearCombinationLemma>
+\end{lemma}
+
+\begin{proof}
+%<*pf:LinearCombinationLemma>
+Diberikan kumpulan kombinasi linear dari variabel-variabel
+$x_1,\ldots,x_n$,
+$c_{1,1}x_1+\dots+c_{1,n}x_n$ hingga
+$c_{m,1}x_1+\dots+c_{m,n}x_n$, tinjau kombinasi dari semuanya,
+\begin{equation*}
+  d_1(c_{1,1}x_1+\dots+c_{1,n}x_n)\,+\dots+\,d_m(c_{m,1}x_1+\dots+c_{m,n}x_n)
+\end{equation*}
+dengan semua $d_i$ dan $c_{i,j}$ merupakan skalar.
+Mendistribusikan $d$ tersebut dan mengelompokkan ulang menghasilkan
+\begin{equation*}
+  %&=d_1c_{1,1}x_1+\dots+d_1c_{1,n}x_n\,
+  % +d_2c_{2,1}x_1+\dots+\,
+  % d_mc_{1,1}x_1+\dots+d_mc_{1,n}x_n         \\
+  =(d_1c_{1,1}+\dots+d_mc_{m,1})x_1\,+\dots+\,(d_1c_{1,n}+\dots+d_mc_{m,n})x_n
+\end{equation*}
+yang juga merupakan kombinasi linear dari $x_1,\ldots,x_n$.
+%</pf:LinearCombinationLemma>
+\end{proof}
+
+
+\begin{corollary} \label{cor:RowsOfEqMatsLinCombos}
+%<*co:RowsOfEqMatsLinCombos>
+Jika suatu matriks mereduksi menjadi matriks lain, setiap baris matriks kedua
+merupakan kombinasi linear dari baris-baris matriks pertama.
+%</co:RowsOfEqMatsLinCombos>
+\end{corollary}
+
+% The proof 
+% uses induction. % \appendrefs{mathematical induction}\spacefactor=1000 %
+% Before we proceed, here is an outline of the argument.
+% For the base step, we
+% will verify that the proposition is true when reduction 
+% can be done in zero row operations.
+% For the inductive step, we will 
+% argue that if being able to reduce the first matrix to the second in some
+% number $t\geq 0$ of operations implies that each row of the second is a linear
+% combination of the rows of the first, then being able to reduce the first to
+% the second in $t+1$ operations implies the same thing.
+% Together these prove the result because  
+% the base step shows that it is true in the zero operations case,
+% and then the inductive step
+% implies that it is true in the one operation case, and then the inductive step
+% applied again gives that it is therefore true for two operations, etc.
+
+\begin{proof}
+%<*pf:RowsOfEqMatsLinCombos0>
+Untuk sebarang dua matriks $A$ dan~$B$ yang dapat saling direduksi, terdapat
+jumlah minimum operasi baris yang mengubah salah satunya menjadi yang lain.
+Kita menggunakan induksi pada jumlah tersebut.
+
+Pada langkah dasar, jika kita dapat berpindah dari satu matriks ke matriks lain
+dengan nol operasi reduksi, kedua matriks itu sama.
+Dengan demikian, setiap baris $B$ secara langsung merupakan kombinasi dari
+baris-baris $A$,
+$\vec{\beta}_i
+  =0\cdot\vec{\alpha}_1+\cdots+1\cdot\vec{\alpha}_i+\cdots+0\cdot\vec{\alpha}_m$.
+%</pf:RowsOfEqMatsLinCombos0>
+
+%<*pf:RowsOfEqMatsLinCombos1>
+Untuk langkah induksi, andaikan hipotesis induksi berikut:~untuk $k\geq 0$,
+setiap matriks yang dapat diperoleh dari \( A \) dalam \( k \) operasi atau
+kurang memiliki baris-baris yang merupakan kombinasi linear dari baris-baris
+$A$.
+Tinjau matriks~$B$ sedemikian sehingga reduksi \( A \) menjadi~\( B \)
+memerlukan $k+1$ operasi.
+Dalam reduksi tersebut terdapat matriks kedua dari akhir,~$G$, sehingga
+$A\longrightarrow\cdots\longrightarrow G\longrightarrow B$.
+Hipotesis induksi berlaku bagi \( G \) karena jaraknya hanya $k$ langkah dari
+\( A \).
+Artinya, setiap baris \( G \) merupakan kombinasi linear dari baris-baris
+\( A \).
+%</pf:RowsOfEqMatsLinCombos1>
+
+%<*pf:RowsOfEqMatsLinCombos2>
+Kita akan memastikan bahwa baris-baris~$B$ merupakan kombinasi linear dari
+baris-baris~$G$.
+Lema Kombinasi Linear, \nearbylemma{lm:LinearCombinationLemma}, kemudian
+menunjukkan bahwa baris-baris~$B$ merupakan kombinasi linear dari baris-baris
+~$A$.
+
+Jika operasi baris yang mengubah \( G \) menjadi~\( B \) adalah pertukaran,
+baris-baris $B$ hanyalah baris-baris $G$ dalam urutan berbeda dan setiap baris
+$B$ merupakan kombinasi linear dari baris-baris $G$.
+Jika operasi yang mengubah $G$ menjadi~$B$ adalah perkalian suatu baris dengan
+skalar~$c\rho_i$, maka $\vec{\beta}_i=c\vec{\gamma}_i$ dan baris-baris lainnya
+tidak berubah.
+Terakhir, jika operasi barisnya menambahkan kelipatan suatu baris ke baris lain,
+$r\rho_i+\rho_j$, hanya baris~$j$ dari $B$ yang berbeda dari baris bersesuaian
+dalam~$G$, dan
+$\vec{\beta}_j=r\vec{\gamma}_i+\vec{\gamma}_j$, yang memang merupakan
+kombinasi linear dari baris-baris $G$.
+%</pf:RowsOfEqMatsLinCombos2>
+
+Karena kita telah membuktikan langkah dasar maupun langkah induksi, proposisi
+tersebut mengikuti prinsip induksi matematika.
+\end{proof}
+
+Sekarang kita memahami bahwa Metode Gauss membangun kombinasi linear dari
+baris-baris.
+Namun, tentu saja tujuannya adalah mencapai bentuk eselon karena bentuk itu
+merupakan versi sistem linear yang sangat mendasar, dengan variabel-variabel
+yang telah diisolasi.
+Sebagai contoh, dalam matriks
+\begin{equation*}
+  R=\begin{mat}[r]
+    2  &3  &7  &8  &0  &0  \\
+    0  &0  &1  &5  &1  &1  \\
+    0  &0  &0  &3  &3  &0  \\
+    0  &0  &0  &0  &2  &1
+  \end{mat}
+\end{equation*}
+$x_1$ telah dieliminasi dari persamaan $x_5$.
+Artinya, Metode Gauss telah membuat baris $x_5$ bebas, dalam suatu arti,
+dari baris $x_1$.
+
+Hasil berikut menjadikan intuisi ini tepat.
+Kita kadang menyebut Metode Gauss sebagai eliminasi Gauss.
+Yang dieliminasinya adalah hubungan linear antarbaris.
+
+\begin{lemma}      \label{le:EchFormNoLinCombo}
+%<*lm:EchFormNoLinCombo>
+Dalam matriks berbentuk eselon, tidak ada baris tak nol yang merupakan
+kombinasi linear dari baris-baris tak nol lainnya.
+%</lm:EchFormNoLinCombo>
+\end{lemma}
+
+\begin{proof}
+%<*pf:EchFormNoLinCombo0>
+Misalkan $R$ matriks berbentuk eselon dan tinjau baris-baris tak nolnya.
+Pertama, perhatikan bahwa jika suatu baris dituliskan sebagai kombinasi
+baris-baris lainnya,
+$\vec{\rho}_i=c_1\vec{\rho}_1+\cdots+c_{i-1}\vec{\rho}_{i-1}+
+               c_{i+1}\vec{\rho}_{i+1}+\cdots+c_m\vec{\rho}_m$
+maka persamaan itu dapat ditulis ulang sebagai
+\begin{equation*}
+   \vec{0}=c_1\vec{\rho}_1+\cdots+c_{i-1}\vec{\rho}_{i-1}+c_i\vec{\rho}_i+
+               c_{i+1}\vec{\rho}_{i+1}+\cdots+c_m\vec{\rho}_m
+  \tag{$*$}
+\end{equation*}
+dengan tidak semua koefisien bernilai nol; khususnya, $c_i=-1$.
+Pernyataan sebaliknya juga berlaku:~diberikan persamaan~($*$) dengan suatu
+$c_i\neq 0$, kita dapat menyatakan $\vec{\rho}_i$ sebagai kombinasi baris-baris
+lainnya dengan memindahkan $c_i\vec{\rho}_i$ ke kiri dan membagi dengan
+$-c_i$.
+Jadi, untuk membuktikan lema tersebut, cukup kita tunjukkan bahwa semua
+koefisien dalam~($*$) bernilai~$0$.
+Untuk itu, kita menggunakan induksi pada nomor baris~$i$.
+%</pf:EchFormNoLinCombo0>
+
+%<*pf:EchFormNoLinCombo1>
+Kasus dasarnya adalah baris pertama,~$i=1$ (jika tidak ada baris tak nol
+seperti itu, sehingga $R$ merupakan matriks nol, lema berlaku secara hampa).
+Misalkan $\ell_i$ nomor kolom entri utama pada baris~$i$.
+Tinjau entri setiap baris yang berada dalam kolom~$\ell_1$.
+Persamaan~($*$) memberikan
+\begin{equation*}
+  0=c_1r_{1,\ell_1}+c_2r_{2,\ell_1}+\cdots+c_mr_{m,\ell_1}
+  \tag{$**$}
+\end{equation*}
+Matriks berada dalam bentuk eselon sehingga setiap baris setelah baris pertama
+memiliki entri nol dalam kolom itu,
+$r_{2,\ell_1}=\cdots=r_{m,\ell_1}=0$.
+Jadi, persamaan~($**$) menunjukkan bahwa $c_1=0$ karena
+$r_{1,\ell_1}\neq 0$ sebagai entri utama baris tersebut.
+%</pf:EchFormNoLinCombo1>
+
+%<*pf:EchFormNoLinCombo2>
+Langkah induksi hampir sama dengan langkah dasar.
+Tinjau kembali persamaan~($*$).
+Kita akan membuktikan bahwa jika koefisien $c_i$ bernilai $0$ untuk setiap
+indeks baris $i\in\set{1,\ldots,k}$, maka $c_{k+1}$ juga bernilai $0$.
+Kita memusatkan perhatian pada entri-entri kolom~$\ell_{k+1}$.
+\begin{equation*}
+  0=c_1r_{1,\ell_{k+1}}+\cdots+c_{k+1}r_{k+1,\ell_{k+1}}+\cdots+c_mr_{m,\ell_{k+1}}
+\end{equation*}
+Menurut hipotesis induksi, $c_1$, \ldots, $c_k$ semuanya bernilai $0$, sehingga
+persamaan tersebut tereduksi menjadi
+$0=c_{k+1}r_{k+1,\ell_{k+1}}+\cdots+c_mr_{m,\ell_{k+1}}$.
+Matriks berada dalam bentuk eselon sehingga entri
+$r_{k+2,\ell_{k+1}}$, \ldots, $r_{m,\ell_{k+1}}$ semuanya bernilai~$0$.
+Jadi, $c_{k+1}=0$ karena $r_{k+1,\ell_{k+1}}\neq 0$ sebagai entri utama.
+%</pf:EchFormNoLinCombo2>
+\end{proof}
+
+Dengan hasil itu, kita siap menunjukkan bahwa hasil akhir reduksi
+Gauss--Jordan bersifat unik.
+
+\begin{theorem}
+\label{th:ReducedEchelonFormIsUnique}
+%<*th:ReducedEchelonFormIsUnique>
+Setiap matriks ekuivalen baris dengan tepat satu matriks berbentuk eselon
+tereduksi.
+%</th:ReducedEchelonFormIsUnique>
+\end{theorem}
+
+\begin{proof} \cite{Yuster}
+%<*pf:ReducedEchelonFormIsUnique0>
+Tetapkan jumlah baris \( m \).
+Kita menggunakan induksi pada jumlah kolom \( n \).
+
+Kasus dasarnya adalah matriks dengan \( n=1 \) kolom.
+Jika matriks itu matriks nol, bentuk eselonnya adalah matriks nol.
+Jika sebaliknya matriks memiliki suatu entri tak nol, ketika dibawa ke bentuk
+eselon tereduksi, matriks itu harus memiliki sedikitnya satu entri tak nol,
+yang harus berupa \( 1 \) pada baris pertama.
+Dalam kedua kasus, bentuk eselon tereduksinya unik.
+%</pf:ReducedEchelonFormIsUnique0>
+
+%<*pf:ReducedEchelonFormIsUnique1>
+Untuk langkah induksi, andaikan \( n>1 \) dan semua matriks dengan \( m \)
+baris dan kurang dari~\( n \) kolom memiliki bentuk eselon tereduksi yang unik.
+Tinjau matriks \( \nbym{m}{n} \), \( A \), dan andaikan \( B \) serta
+\( C \) merupakan dua matriks berbentuk eselon tereduksi yang diperoleh dari
+\( A \).
+Kita akan menunjukkan bahwa keduanya harus sama.
+%</pf:ReducedEchelonFormIsUnique1>
+
+%<*pf:ReducedEchelonFormIsUnique2>
+Misalkan \( \hat{A} \) matriks yang terdiri atas \( n-1 \) kolom pertama dari
+\( A \).
+Perhatikan bahwa
+% if an $n$~column matrix is in reduced echelon form then any initial
+% set of its columns is also in reduced echelon form, so \( \hat{A} \)
+% is in reduced echelon form. 
+setiap urutan operasi baris yang membawa \( A \) ke bentuk eselon tereduksi
+juga membawa \( \hat{A} \) ke bentuk eselon tereduksi.
+Menurut hipotesis induksi, bentuk eselon tereduksi \( \hat{A} \) ini unik;
+jadi, jika \( B \) dan \( C \) berbeda, perbedaannya harus terdapat dalam
+kolom~\( n \).
+%</pf:ReducedEchelonFormIsUnique2>
+
+Kita menyelesaikan langkah induksi dan pembuktian dengan menunjukkan bahwa
+keduanya tidak mungkin hanya berbeda dalam kolom tersebut.
+%<*pf:ReducedEchelonFormIsUnique3>
+Tinjau sistem persamaan homogen dengan \( A \) sebagai matriks koefisien.
+\begin{equation*}
+  \begin{linsys}{4}
+    a_{1,1}x_1  &+  &a_{1,2}x_2  &+  &\cdots  &+  &a_{1,n}x_n  &=  &0  \\
+    a_{2,1}x_1  &+  &a_{2,2}x_2  &+  &\cdots  &+  &a_{2,n}x_n  &=  &0  \\
+              &&&&&&&\vdotswithin{=}  \\
+    a_{m,1}x_1  &+  &a_{m,2}x_2  &+  &\cdots  &+  &a_{m,n}x_n  &=  &0  
+  \end{linsys}
+  \tag{$*$}
+\end{equation*}
+Menurut Teorema~I.\ref{th:GaussMethod} di Bab Satu,
+%the first theorem of this chapter 
+himpunan solusi sistem tersebut sama dengan himpunan solusi sistem milik $B$,
+\begin{equation*}
+  \begin{linsys}{4}
+    b_{1,1}x_1  &+  &b_{1,2}x_2  &+  &\cdots  &+  &b_{1,n}x_n  &=  &0  \\
+    b_{2,1}x_1  &+  &b_{2,2}x_2  &+  &\cdots  &+  &b_{2,n}x_n  &=  &0  \\
+               &&&&&&&\vdotswithin{=}  \\
+    b_{m,1}x_1  &+  &b_{m,2}x_2  &+  &\cdots  &+  &b_{m,n}x_n  &=  &0  
+  \end{linsys}
+  \tag{$**$}
+\end{equation*}
+dan juga sama dengan himpunan solusi sistem milik $C$.
+\begin{equation*}
+  \quad
+  \begin{linsys}{4}
+    c_{1,1}x_1  &+  &c_{1,2}x_2  &+  &\cdots  &+  &c_{1,n}x_n  &=  &0  \\
+    c_{2,1}x_1  &+  &c_{2,2}x_2  &+  &\cdots  &+  &c_{2,n}x_n  &=  &0  \\
+               &&&&&&&\vdotswithin{=}  \\
+    c_{m,1}x_1  &+  &c_{m,2}x_2  &+  &\cdots  &+  &c_{m,n}x_n  &=  &0  
+  \end{linsys}
+  \tag{$\mathord{*}\mathord{*}\mathord{*}$}
+\end{equation*}
+%</pf:ReducedEchelonFormIsUnique3>
+%<*pf:ReducedEchelonFormIsUnique4>
+Karena \( B \) dan \( C \) hanya berbeda dalam kolom~\( n \), andaikan
+keduanya berbeda pada baris~\( i \).
+Kurangkan baris ke-\( i \) pada ($\mathord{*}\mathord{*}\mathord{*}$) dari
+baris ke-\( i \) pada ($**$) untuk memperoleh persamaan
+\( (b_{i,n}-c_{i,n})\cdot x_n=0 \).
+Kita telah mengandaikan \( b_{i,n}\neq c_{i,n} \), sehingga diperoleh
+$x_n=0$.
+Jadi, $x_n$ bukan variabel bebas; karena itu, dalam ($**$) dan
+~($\mathord{*}\mathord{*}\mathord{*}$), kolom ke-\( n \) memuat entri utama
+suatu baris, sebab dalam matriks berbentuk eselon, setiap kolom tanpa entri
+utama berkaitan dengan variabel bebas.
+
+Namun, karena \( B \) dan \( C \) sama pada \( n-1 \) kolom pertama, menurut
+definisi bentuk eselon tereduksi, entri utama keduanya dalam kolom ke-\( n \)
+berada pada baris yang sama.
+Kedua entri utama itu harus bernilai $1$ dan harus menjadi satu-satunya entri
+tak nol dalam kolom tersebut.
+Jadi, \( B=C \).
+%</pf:ReducedEchelonFormIsUnique4>
+\end{proof}
+
+Kita telah bertanya apakah sebarang dua versi berbentuk eselon dari suatu sistem
+linear memiliki jumlah variabel bebas yang sama dan, jika ya, apakah variabel
+bebasnya persis sama.
+Dengan hasil sebelumnya, kita dapat menjawab ``ya'' untuk kedua pertanyaan.
+Tidak ada sistem linear yang, misalnya, menghasilkan $y$ dan $z$ sebagai
+variabel bebas ketika Metode Gauss diterapkan dengan satu cara, tetapi
+menghasilkan $y$ dan $w$ sebagai variabel bebas ketika diterapkan dengan cara
+lain.
+
+Sebelum pembuktian, ingat kembali perbedaan antara variabel bebas dan
+parameter.
+Sistem berikut
+\begin{equation*}
+  \begin{linsys}{3}
+    x &+ &y &  &  &= &1 \\ 
+      &  &y &+ &z &= &2  
+  \end{linsys}
+\end{equation*}
+memiliki satu variabel bebas,~$z$, karena hanya variabel itu yang bukan
+variabel utama suatu baris.
+Kita biasanya melakukan parametrisasi menggunakan variabel bebas tersebut,
+$y=2-z$, $x=-1+z$, tetapi kita juga dapat melakukan parametrisasi menggunakan
+variabel lain, misalnya $z=2-y$, $x=1-y$.
+Jadi, himpunan parameter tidak unik; himpunan variabel bebaslah yang unik.
+
+\begin{corollary}
+Jika dari suatu sistem linear awal kita memperoleh dua sistem berbentuk eselon
+yang berbeda melalui Metode Gauss, keduanya memiliki variabel bebas yang sama.
+\end{corollary}
+
+\begin{proof}
+Hasil sebelumnya menyatakan bahwa bentuk eselon tereduksi bersifat unik.
+Kita berpindah dari versi berbentuk eselon mana pun ke bentuk eselon tereduksi
+dengan mengeliminasi ke arah atas; jadi, setiap versi berbentuk eselon suatu
+sistem memiliki variabel bebas yang sama dengan versi bentuk eselon
+tereduksinya.
+\end{proof}
+
+Kita tutup dengan rangkuman.
+Dalam Metode Gauss, kita mulai dengan suatu matriks, lalu memperoleh urutan
+matriks-matriks lain.
+Kita mendefinisikan dua matriks berelasi jika salah satunya dapat diperoleh
+dari yang lain.
+Relasi tersebut merupakan relasi ekuivalensi, %\appendrefs{equivalence relation} 
+yang disebut ekuivalensi baris, sehingga mempartisi himpunan semua matriks
+menjadi kelas-kelas ekuivalensi baris.
+\begin{center}
+  \includegraphics{gr/mp/ch1.30}
+\end{center}
+(Kelas yang digambarkan memuat tak hingga banyak matriks, tetapi ruang yang
+tersedia hanya cukup untuk menunjukkan dua.)
+Kita telah membuktikan bahwa terdapat tepat satu matriks berbentuk eselon
+tereduksi dalam setiap kelas ekuivalensi baris.
+%<*ReducedEchelonFormIsCanonicalForm>
+Jadi, bentuk eselon tereduksi merupakan
+bentuk kanonis\appendrefs{wakil kanonis}\spacefactor=1000
+\index{bentuk kanonis!untuk ekuivalensi baris}\index{wakil!untuk kelas ekuivalensi baris}
+bagi ekuivalensi baris: matriks-matriks berbentuk eselon tereduksi merupakan
+wakil kelas-kelas tersebut.
+%</ReducedEchelonFormIsCanonicalForm>
+\begin{center}
+  \includegraphics{gr/mp/ch1.31}
+\end{center}
+
+Gagasannya adalah bahwa salah satu cara memahami situasi matematika ialah
+dengan mengklasifikasikan kasus-kasus yang dapat terjadi.
+Hal ini merupakan tema buku ini dan telah kita jumpai beberapa kali.
+Kita mengklasifikasikan himpunan solusi sistem linear menjadi kasus tanpa
+anggota, beranggota satu, dan beranggota tak hingga.
+Kita juga mengklasifikasikan sistem linear dengan jumlah persamaan sama dengan
+jumlah variabel tak diketahui menjadi kasus nonsingular dan singular.
+
+Di sini, ketika menyelidiki ekuivalensi baris, kita mengetahui bahwa himpunan
+semua matriks terbagi menjadi kelas-kelas ekuivalensi baris dan sekarang kita
+memiliki cara untuk mengidentifikasi setiap kelas\Dash kita dapat
+memandang matriks-matriks dalam suatu kelas sebagai hasil operasi baris dari
+matriks berbentuk eselon tereduksi unik dalam kelas itu.
+
+Dalam istilah yang lebih operasional, keunikan bentuk eselon tereduksi
+memungkinkan kita menjawab pertanyaan tentang kelas dengan mengubahnya menjadi
+pertanyaan tentang wakilnya.
+Sebagai contoh, seperti dijanjikan pada awal bagian ini, sekarang kita dapat
+menentukan apakah suatu matriks dapat diperoleh dari matriks lain melalui
+reduksi baris.
+Kita menerapkan prosedur Gauss--Jordan pada keduanya dan memeriksa apakah
+keduanya menghasilkan bentuk eselon tereduksi yang sama.
+
+\begin{example}  \label{ex:MatsNotRowEq}
+Matriks-matriks berikut tidak ekuivalen baris
+\begin{equation*}
+  \begin{mat}[r]
+    1  &-3  \\
+   -2  &6
+  \end{mat}
+  \qquad
+  \begin{mat}[r]
+    1  &-3  \\
+   -2  &5
+  \end{mat}
+\end{equation*}
+karena bentuk eselon tereduksinya tidak sama.
+\begin{equation*}
+  \begin{mat}[r]
+    1  &-3  \\
+    0  &0
+  \end{mat}
+  \qquad
+  \begin{mat}[r]
+    1  &0   \\
+    0  &1
+  \end{mat}
+\end{equation*}
+\end{example}
+
+\begin{example}
+Setiap matriks nonsingular \( \nbyn{3} \) tereduksi melalui Gauss--Jordan
+menjadi matriks berikut.
+\begin{equation*}
+    \begin{mat}[r]
+      1  &0  &0 \\
+      0  &1  &0 \\
+      0  &0  &1
+    \end{mat}
+\end{equation*}
+\end{example}
+
+\begin{example} \label{ex:RowEqClassTwoTwoMats}
+Kita dapat mendeskripsikan semua kelas dengan mendaftarkan semua matriks
+berbentuk eselon tereduksi yang mungkin.
+Setiap matriks $\nbyn{2}$ berada dalam salah satu kelas berikut:~kelas matriks
+yang ekuivalen baris dengan
+\begin{equation*}
+  \begin{mat}[r]
+     0  &0  \\
+     0  &0
+  \end{mat}
+\end{equation*}
+tak hingga banyak kelas matriks yang ekuivalen baris dengan salah satu matriks
+berjenis
+\begin{equation*}
+  \begin{mat}
+     1  &a  \\
+     0  &0
+  \end{mat}
+\end{equation*}
+dengan \( a\in\Re \) (termasuk $a=0$), kelas matriks yang ekuivalen baris
+dengan
+\begin{equation*}
+  \begin{mat}[r]
+     0  &1  \\
+     0  &0
+  \end{mat}
+\end{equation*}
+dan kelas matriks yang ekuivalen baris dengan
+\begin{equation*}
+  \begin{mat}[r]
+     1  &0  \\
+     0  &1
+  \end{mat}
+\end{equation*}
+(ini adalah kelas matriks nonsingular $\nbyn{2}$).
+\end{example}
+
+
+
+\begin{exercises}
+  \recommended \item 
+    Tentukan apakah pasangan-pasangan matriks berikut ekuivalen baris.
+    \begin{exparts*}
+       \partsitem \(
+           \begin{mat}[r]
+             1  &2  \\
+             4  &8
+           \end{mat}, 
+           \begin{mat}[r]
+             0  &1  \\
+             1  &2
+           \end{mat} \)
+       \partsitem \(
+           \begin{mat}[r]
+             1  &0  &2  \\
+             3  &-1 &1  \\
+             5  &-1 &5
+           \end{mat},  
+           \begin{mat}[r]
+             1  &0  &2  \\
+             0  &2  &10 \\
+             2  &0  &4
+           \end{mat} \)
+       \partsitem \(
+           \begin{mat}[r]
+             2  &1  &-1 \\
+             1  &1  &0  \\
+             4  &3  &-1
+           \end{mat},  
+           \begin{mat}[r]
+             1  &0  &2  \\
+             0  &2  &10 \\
+           \end{mat} \)
+       \partsitem \(
+           \begin{mat}[r]
+             1  &1  &1  \\
+            -1  &2  &2
+           \end{mat},  
+           \begin{mat}[r]
+             0  &3  &-1 \\
+             2  &2  &5
+           \end{mat} \)
+       \partsitem \(
+           \begin{mat}[r]
+             1  &1  &1  \\
+             0  &0  &3
+           \end{mat},  
+           \begin{mat}[r]
+             0  &1  &2  \\
+             1  &-1 &1
+           \end{mat} \)
+    \end{exparts*}
+    \begin{answer}
+      Bawa setiap matriks ke bentuk eselon tereduksi, lalu bandingkan.
+      \begin{exparts}
+        \partsitem Matriks pertama menghasilkan
+          \begin{equation*}
+            \grstep{-4\rho_1+\rho_2}
+            \begin{mat}[r]
+              1  &2  \\
+              0  &0
+            \end{mat}
+          \end{equation*}
+          sedangkan matriks kedua menghasilkan
+          \begin{equation*}
+            \grstep{\rho_1\leftrightarrow\rho_2}
+            \begin{mat}[r]
+              1  &2  \\
+              0  &1
+            \end{mat}
+            \grstep{-2\rho_2+\rho_1}
+            \begin{mat}[r]
+              1  &0  \\
+              0  &1
+            \end{mat}
+          \end{equation*}
+          Kedua matriks berbentuk eselon tereduksi itu tidak identik, sehingga
+          matriks semula tidak ekuivalen baris.
+        \partsitem Matriks pertama menjadi
+          \begin{equation*}
+            \grstep[-5\rho_1+\rho_3]{-3\rho_1+\rho_2}
+            \begin{mat}[r]
+              1  &0  &2  \\
+              0  &-1 &-5 \\
+              0  &-1 &-5
+            \end{mat}
+            \grstep{-\rho_2+\rho_3}
+            \begin{mat}[r]
+              1  &0  &2  \\
+              0  &-1 &-5 \\
+              0  &0  &0
+            \end{mat}
+            \grstep{-\rho_2}
+            \begin{mat}[r]
+              1  &0  &2  \\
+              0  &1  &5  \\
+              0  &0  &0
+            \end{mat}
+          \end{equation*}
+          Matriks kedua menjadi
+          \begin{equation*}
+            \grstep{-2\rho_1+\rho_3}
+            \begin{mat}[r]
+              1  &0  &2  \\
+              0  &2  &10 \\
+              0  &0  &0
+            \end{mat}
+            \grstep{(1/2)\rho_2}
+            \begin{mat}[r]
+              1  &0  &2  \\
+              0  &1  &5  \\
+              0  &0  &0
+            \end{mat}
+          \end{equation*}
+          Kedua matriks tersebut ekuivalen baris.
+        \partsitem Keduanya tidak ekuivalen baris karena ukurannya berbeda.
+        \partsitem Matriks pertama menjadi
+          \begin{equation*}
+            \grstep{\rho_1+\rho_2}
+            \begin{mat}[r]
+              1  &1  &1  \\
+              0  &3  &3
+            \end{mat}
+            \grstep{(1/3)\rho_2}
+            \begin{mat}[r]
+              1  &1  &1  \\
+              0  &1  &1
+            \end{mat}
+            \grstep{-\rho_2+\rho_1}
+            \begin{mat}[r]
+              1  &0  &0  \\
+              0  &1  &1
+            \end{mat}
+          \end{equation*}
+          sedangkan matriks kedua menjadi
+          \begin{equation*}
+            \grstep{\rho_1\leftrightarrow\rho_2}
+            \begin{mat}[r]
+              2  &2  &5  \\
+              0  &3  &-1
+            \end{mat}
+            \grstep[(1/3)\rho_2]{(1/2)\rho_1}
+            \begin{mat}[r]
+              1  &1  &5/2 \\
+              0  &1  &-1/3
+            \end{mat}
+            \grstep{-\rho_2+\rho_1}
+            \begin{mat}[r]
+              1  &0  &17/6 \\
+              0  &1  &-1/3
+            \end{mat}
+          \end{equation*}
+          Keduanya tidak ekuivalen baris.
+        \partsitem Di sini matriks pertama menjadi
+          \begin{equation*}
+            \grstep{(1/3)\rho_2}
+            \begin{mat}[r]
+              1  &1  &1  \\
+              0  &0  &1
+            \end{mat}
+            \grstep{-\rho_2+\rho_1}
+            \begin{mat}[r]
+              1  &1  &0  \\
+              0  &0  &1
+            \end{mat}
+          \end{equation*}
+          sedangkan matriks kedua menjadi
+          \begin{equation*}
+            \grstep{\rho_1\leftrightarrow\rho_2}
+            \begin{mat}[r]
+              1  &-1 &1  \\
+              0  &1  &2
+            \end{mat}
+            \grstep{\rho_2+\rho_1}
+            \begin{mat}[r]
+              1  &0  &3  \\
+              0  &1  &2
+            \end{mat}
+          \end{equation*}
+          Keduanya tidak ekuivalen baris.
+       \end{exparts}  
+     \end{answer}
+  \item 
+    Manakah di antara matriks-matriks berikut yang saling ekuivalen baris?
+    \begin{exparts*}
+      \partsitem
+         \(\begin{mat}
+             1 &3 \\
+             2 &4
+           \end{mat}\)
+      \partsitem
+         \(\begin{mat}
+             1 &5 \\
+             2 &10
+           \end{mat}\)
+      \partsitem
+         \(\begin{mat}
+             1 &-1 \\
+             3 &0
+           \end{mat}\)
+      \partsitem
+         \(\begin{mat}
+             2 &6 \\
+             4 &10
+           \end{mat}\)
+      \partsitem
+         \(\begin{mat}
+             0  &1 \\
+             -1 &0
+           \end{mat}\)
+      \partsitem
+         \(\begin{mat}
+             3 &3 \\
+             2 &2
+           \end{mat}\)
+    \end{exparts*}
+    \begin{answer}
+      Lakukan reduksi Gauss--Jordan pada setiap matriks.
+      Dua matriks ekuivalen baris jika dan hanya jika keduanya memiliki bentuk
+      eselon tereduksi yang sama.
+      Berikut bentuk tereduksi masing-masing matriks.
+      % sage: M = matrix(QQ, [[1,3], [2,4]])
+      % sage: gauss_jordan(M)
+      % [1 3]
+      % [2 4]
+      %  take -2 times row 1 plus row 2
+      % [ 1  3]
+      % [ 0 -2]
+      %  take -1/2 times row 2
+      % [1 3]
+      % [0 1]
+      %  take -3 times row 2 plus row 1
+      % [1 0]
+      % [0 1]
+      % sage: M = matrix(QQ, [[1,5], [2,10]])
+      % sage: gauss_jordan(M)
+      % [ 1  5]
+      % [ 2 10]
+      %  take -2 times row 1 plus row 2
+      % [1 5]
+      % [0 0]
+      % sage: M = matrix(QQ, [[1,-1], [3,0]])
+      % sage: gauss_jordan(M)
+      % [ 1 -1]
+      % [ 3  0]
+      %  take -3 times row 1 plus row 2
+      % [ 1 -1]
+      % [ 0  3]
+      %  take 1/3 times row 2
+      % [ 1 -1]
+      % [ 0  1]
+      %  take 1 times row 2 plus row 1
+      % [1 0]
+      % [0 1]
+      % sage: M = matrix(QQ, [[2,6], [4,10]])
+      % sage: gauss_jordan(M)
+      % [ 2  6]
+      % [ 4 10]
+      %  take -2 times row 1 plus row 2
+      % [ 2  6]
+      % [ 0 -2]
+      %  take 1/2 times row 1
+      %  take -1/2 times row 2
+      % [1 3]
+      % [0 1]
+      %  take -3 times row 2 plus row 1
+      % [1 0]
+      % [0 1]
+      % sage: M = matrix(QQ, [[0,1], [-1,0]])
+      % sage: gauss_jordan(M)
+      % [ 0  1]
+      % [-1  0]
+      %  swap row 1 with row 2
+      % [-1  0]
+      % [ 0  1]
+      %  take -1 times row 1
+      % [1 0]
+      % [0 1]
+      % sage: M = matrix(QQ, [[3,3], [2,2]])
+      % sage: gauss_jordan(M)
+      % [3 3]
+      % [2 2]
+      %  take -2/3 times row 1 plus row 2
+      % [3 3]
+      % [0 0]
+      %  take 1/3 times row 1
+      % [1 1]
+      % [0 0]
+      \begin{exparts*}
+        \partsitem
+          \(\begin{mat}
+              1  &0  \\
+              0  &1
+            \end{mat} \)
+        \partsitem
+          \(\begin{mat}
+              1  &5  \\
+              0  &0
+            \end{mat} \)
+        \partsitem
+          \(\begin{mat}
+             1   &0  \\
+             0   &1
+            \end{mat} \)
+        \partsitem
+          \(\begin{mat}
+             1   &0  \\
+             0   &1
+            \end{mat} \)
+        \partsitem
+          \(\begin{mat}
+             1   &0  \\
+             0   &1
+            \end{mat} \)
+        \partsitem
+          \(\begin{mat}
+             1   &1  \\
+             0   &0
+            \end{mat} \)
+      \end{exparts*}
+      Jadi, matriks pada butir (a), (c), (d), dan (e) saling ekuivalen baris.
+      Matriks pada butir (b) dan (f) masing-masing berada dalam kelas lain yang
+      berbeda.
+    \end{answer}
+ \item Buatlah tiga matriks lain yang ekuivalen baris dengan matriks yang
+   diberikan.
+   \begin{exparts*}
+     \partsitem 
+       \(\begin{mat}
+           1 &3 \\
+           4 &-1
+         \end{mat}\)
+     \partsitem
+       \(\begin{mat}
+           0 &1 &2 \\
+           1 &1 &1  \\
+           2 &3 &4
+         \end{mat}\)
+   \end{exparts*}
+   \begin{answer}
+     Untuk masing-masing matriks, kita cukup melakukan beberapa operasi baris
+     pada matriks awal.
+     \begin{exparts}
+       \partsitem
+         Mengalikan baris pertama dengan~$3$ menghasilkan
+         \begin{equation*}
+           \begin{mat}
+             3 &9  \\
+             4 &-1
+           \end{mat}
+         \end{equation*}
+         (Pemilihan operasi baris ini tidak memiliki alasan khusus; operasi
+         tersebut hanya yang pertama terpikirkan.)
+         Dua operasi baris lainnya adalah pertukaran
+         $\rho_1\leftrightarrow\rho_2$ dan penambahan $\rho_1+\rho_2$.
+         \begin{equation*}
+           \begin{mat}
+             4 &-1  \\
+             1 &3
+           \end{mat}
+           \quad
+           \begin{mat}
+             1 &3  \\
+             5 &2
+           \end{mat}
+         \end{equation*}
+       \partsitem Menjalankan tiga operasi baris sebarang yang sama menghasilkan
+         ketiga matriks berikut.
+         \begin{equation*}
+          \begin{mat} 
+           0 &3 &6 \\
+           1 &1 &1  \\
+           2 &3 &4  
+          \end{mat}
+          \quad         
+          \begin{mat} 
+           1 &1 &1  \\
+           0 &1 &2 \\
+           2 &3 &4  
+          \end{mat}
+          \quad         
+          \begin{mat} 
+           0 &1 &2 \\
+           1 &2 &3  \\
+           2 &3 &4  
+          \end{mat}
+          \quad         
+         \end{equation*}
+     \end{exparts}
+   \end{answer}
+  \recommended \item Terapkan Metode Gauss pada matriks berikut.
+    Nyatakan setiap baris matriks akhir sebagai kombinasi linear baris-baris
+    matriks awal.
+    \begin{equation*}
+      \begin{mat}
+        1 &2   &1 \\
+        3 &-1  &0 \\
+        0 &4   &0
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Reduksi Gauss berjalan seperti biasa.
+      % sage: load("gauss_method.sage")
+      % sage: M = matrix (QQ, [[1,2,1], [3,-1,0], [0,4,0]])
+      % sage: gauss_method(M)
+      % [ 1  2  1]
+      % [ 3 -1  0]
+      % [ 0  4  0]
+      %  take -3 times row 1 plus row 2
+      % [ 1  2  1]
+      % [ 0 -7 -3]
+      % [ 0  4  0]
+      %  take 4/7 times row 2 plus row 3
+      % [    1     2     1]
+      % [    0    -7    -3]
+      % [    0     0 -12/7]
+      \begin{equation*}
+        \begin{mat}
+          1 &2   &1 \\
+          3 &-1  &0 \\
+          0 &4   &0
+        \end{mat}
+        \grstep{-3\rho_1+\rho_2}    
+        \begin{mat}
+          1 &2   &1 \\
+          0 &-7  &-3 \\
+          0 &4   &0
+        \end{mat}
+        \grstep{(4/7)\rho_2+\rho_3}    
+        \begin{mat}
+          1 &2   &1 \\
+          0 &-7  &-3 \\
+          0 &0   &-12/7
+        \end{mat}
+      \end{equation*}
+      Dengan menamai matriks-matriks tersebut berturut-turut $A$, $D$, dan~$B$,
+      kita memperoleh
+      \begin{align*}
+        \begin{mat}
+          \alpha_1 \\
+          \alpha_2 \\
+          \alpha_3
+        \end{mat}
+        &\grstep{-3\rho_1+\rho_2}    
+        \begin{mat}
+          \delta_1=\alpha_1 \\
+          \delta_2=-3\alpha_1+\alpha_2 \\
+          \delta_3=\alpha_3
+        \end{mat}                                   \\
+        & \grstep{(4/7)\rho_2+\rho_3}
+        \begin{mat}
+          \beta_1=\alpha_1  \\
+          \beta_2=-3\alpha_1+\alpha_2 \\
+          \beta_3=-(12/7)\alpha_1+(4/7)\alpha_2+\alpha_3
+        \end{mat}
+      \end{align*}
+    \end{answer}
+  \item 
+     Jelaskan matriks-matriks dalam setiap kelas yang wakilnya ditampilkan dalam
+     \nearbyexample{ex:RowEqClassTwoTwoMats}.
+     \begin{answer}
+       Pertama, satu-satunya matriks yang ekuivalen baris dengan matriks yang
+       seluruh entrinya \( 0 \) adalah matriks itu sendiri (karena operasi
+       baris tidak berpengaruh).
+
+       Kedua, matriks-matriks yang tereduksi menjadi
+       \begin{equation*}
+         \begin{mat}
+           1  &a  \\
+           0  &0
+         \end{mat}
+       \end{equation*}
+       berbentuk
+       \begin{equation*}
+         \begin{mat}
+           b  &ba \\
+           c  &ca
+         \end{mat}
+       \end{equation*}
+       (dengan \( a,b,c\in\Re \), dan \(b\) serta \(c\) tidak keduanya nol).
+
+       Selanjutnya, matriks-matriks yang tereduksi menjadi
+       \begin{equation*}
+         \begin{mat}[r]
+           0  &1  \\
+           0  &0
+         \end{mat}
+       \end{equation*}
+       berbentuk
+       \begin{equation*}
+         \begin{mat}
+           0  &a \\
+           0  &b
+         \end{mat}
+       \end{equation*}
+       (dengan \( a,b\in\Re \), dan keduanya tidak sekaligus nol).
+
+       Terakhir, matriks-matriks yang tereduksi menjadi
+       \begin{equation*}
+         \begin{mat}[r]
+           1  &0  \\
+           0  &1
+         \end{mat}
+       \end{equation*}
+       adalah matriks-matriks nonsingular.
+       Alasannya, sistem linear yang memiliki matriks tersebut sebagai matriks
+       koefisien akan memiliki solusi tunggal, dan itulah definisi nonsingular.
+       (Cara lain menyatakan hal yang sama adalah bahwa matriks-matriks itu
+       tidak termasuk kelas mana pun di atas.)
+     \end{answer}
+  \item 
+    Jelaskan semua matriks dalam kelas ekuivalensi baris masing-masing matriks
+    berikut.
+    \begin{exparts*}
+       \partsitem  \(
+           \begin{mat}[r]
+             1  &0  \\
+             0  &0
+           \end{mat}  \)
+       \partsitem  \(
+           \begin{mat}[r]
+             1  &2      \\
+             2  &4
+           \end{mat} \)
+       \partsitem \(
+           \begin{mat}[r]
+             1  &1      \\
+             1  &3
+           \end{mat} \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Matriks-matriks tersebut berbentuk
+          \begin{equation*}
+            \begin{mat}
+              a  &0  \\
+              b  &0
+            \end{mat}
+          \end{equation*}
+          dengan sedikitnya satu dari \( a,b\in\Re \) bernilai tak nol.
+        \partsitem Matriks-matriks tersebut berbentuk
+          \begin{equation*}
+            \begin{mat}
+             a  &2a \\
+             b  &2b
+            \end{mat}
+          \end{equation*}
+          dengan sedikitnya satu dari \( a,b\in\Re \) bernilai tak nol.
+        \partsitem Matriks yang diberikan nonsingular.
+          Jadi, kelas ekuivalensi barisnya terdiri atas semua matriks
+          nonsingular $\nbyn{2}$.
+          (Sebagai rumus, matriks-matriks itu berbentuk
+          \begin{equation*}
+            \begin{mat}
+              a  &b  \\
+              c  &d
+            \end{mat}
+          \end{equation*}
+          untuk \( a,b,c,d\in\Re \), dengan \( ad-bc\neq 0 \).
+          Dalam Bab Empat, kita akan melihat bahwa rumus ini menentukan kapan
+          matriks \( \nbyn{2} \) bersifat nonsingular.)
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Berapa banyak kelas ekuivalensi baris yang ada?
+    \begin{answer}
+       Tak hingga banyak.
+       Sebagai contoh, dalam
+       \begin{equation*}
+         \begin{mat}
+           1  &k  \\
+           0  &0
+         \end{mat}
+       \end{equation*}
+       setiap $k\in\Re$ memberikan kelas yang berbeda.
+    \end{answer}
+  \item 
+    Dapatkah suatu kelas ekuivalensi baris memuat matriks dengan ukuran
+    berbeda?
+    \begin{answer}
+      Tidak.
+      Operasi baris tidak mengubah ukuran matriks.
+    \end{answer}
+  \item 
+    Seberapa besar kelas-kelas ekuivalensi baris?
+    \begin{exparts} 
+      \partsitem Tunjukkan bahwa untuk setiap matriks nol, kelasnya berhingga.
+      \partsitem Adakah kelas lain yang hanya memuat berhingga banyak anggota?
+    \end{exparts}
+    \begin{answer}
+     \begin{exparts}
+      \partsitem Operasi baris pada matriks nol tidak berpengaruh.
+        Jadi, setiap matriks tersebut merupakan satu-satunya anggota kelas
+        ekuivalensi barisnya.
+      \partsitem Tidak.
+        Setiap entri tak nol dapat diskalakan ulang.
+     \end{exparts}
+    \end{answer}
+  \recommended \item 
+    Berikan dua matriks berbentuk eselon tereduksi yang entri-entri utamanya
+    berada dalam kolom-kolom yang sama, tetapi tidak ekuivalen baris.
+    \begin{answer}
+      Berikut dua contohnya.
+      \begin{equation*}
+        \begin{mat}[r]
+          1  &1  &0  \\
+          0  &0  &1
+        \end{mat}
+        \quad\text{dan}\quad
+        \begin{mat}[r]
+          1  &0  &0  \\
+          0  &0  &1
+        \end{mat}
+      \end{equation*}  
+     \end{answer}
+  \recommended \item 
+    Tunjukkan bahwa sebarang dua matriks nonsingular \( \nbyn{n} \) ekuivalen
+    baris.
+    Apakah sebarang dua matriks singular ekuivalen baris?
+    \begin{answer}
+      Sebarang dua matriks nonsingular \( \nbyn{n} \) memiliki bentuk eselon
+      tereduksi yang sama, yaitu matriks yang seluruh entrinya \( 0 \), kecuali
+      entri-entri \( 1 \) pada diagonal.
+      \begin{equation*}
+        \begin{mat}
+          1  &0  &       &0  \\
+          0  &1  &       &0  \\
+             &   &\ddots &   \\
+          0  &0  &       &1
+        \end{mat}
+      \end{equation*}
+
+      Dua matriks singular berukuran sama belum tentu ekuivalen baris.
+      Sebagai contoh, kedua matriks singular \( \nbyn{2} \) berikut tidak
+      ekuivalen baris.
+      \begin{equation*}
+        \begin{mat}[r]
+          1  &1  \\
+          0  &0
+        \end{mat}
+        \quad\text{dan}\quad
+        \begin{mat}[r]
+          1  &0  \\
+          0  &0
+        \end{mat}
+      \end{equation*}  
+    \end{answer}
+  \recommended \item 
+    Jelaskan semua kelas ekuivalensi baris yang memuat matriks-matriks berikut.
+    \begin{exparts*}
+      \partsitem matriks \( \nbyn{2} \)
+      \partsitem matriks \( \nbym{2}{3} \)
+      \partsitem matriks \( \nbym{3}{2} \)
+      \partsitem matriks \( \nbyn{3} \)
+    \end{exparts*}
+    \begin{answer}
+      Karena terdapat tepat satu matriks berbentuk eselon tereduksi dalam
+      setiap kelas, kita cukup mendaftarkan matriks-matriks berbentuk eselon
+      tereduksi yang mungkin.
+
+      Untuk daftar tersebut, lihat jawaban
+      \nearbyexercise{exer:PossRedEchFrms}.
+    \end{answer}
+  \item  
+     \begin{exparts}
+          \partsitem Tunjukkan bahwa suatu vektor $\vec{\beta}_0$ merupakan
+            kombinasi linear dari anggota-anggota himpunan
+            $\set{\vec{\beta}_1,\ldots,\vec{\beta}_n}$ jika dan hanya jika
+            terdapat suatu hubungan linear
+            $\zero=c_0\vec{\beta}_0+\cdots+c_n\vec{\beta}_n$
+            dengan $c_0$ tak nol.
+            (\textit{Petunjuk.} Perhatikan kasus
+            $\vec{\beta}_0=\zero$.)
+         \partsitem Gunakan hasil itu untuk menyederhanakan pembuktian
+            \nearbylemma{le:EchFormNoLinCombo}.
+       \end{exparts}
+       \begin{answer}
+          \begin{exparts}
+           \partsitem Jika terdapat suatu hubungan linear dengan $c_0$ tak nol,
+             kita dapat mengurangkan $c_0\vec{\beta}_0$ dari kedua ruas lalu
+             membagi dengan $-c_0$ untuk memperoleh $\vec{\beta}_0$ sebagai
+             kombinasi linear dari vektor-vektor lainnya.
+             (Catatan: jika tidak ada vektor lain dalam himpunan itu\Dash
+             misalnya, jika hubungannya adalah
+             $\zero=3\cdot\zero$\Dash pernyataan tersebut tetap benar karena,
+             berdasarkan definisi, vektor nol merupakan jumlah kosong, yaitu
+             penjumlahan atas himpunan vektor kosong.)
+
+             Sebaliknya, jika $\vec{\beta}_0$ merupakan kombinasi dari
+             vektor-vektor lainnya,
+             $\vec{\beta}_0=c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n$
+             maka mengurangkan $\vec{\beta}_0$ dari kedua ruas menghasilkan
+             hubungan dengan sekurang-kurangnya satu koefisien tak nol, yaitu
+             $-1$ di depan $\vec{\beta}_0$.
+           \partsitem Baris pertama bukan kombinasi linear dari baris-baris
+             lainnya karena alasan yang diberikan dalam pembuktian: pada
+             persamaan komponen yang berasal dari kolom berisi entri utama
+             baris pertama, satu-satunya entri tak nol adalah entri utama
+             baris pertama, sehingga koefisiennya harus nol.
+             Jadi, menurut bagian sebelumnya dalam latihan ini, baris pertama
+             tidak berada dalam hubungan linear apa pun dengan baris-baris
+             lainnya.
+
+             Oleh karena itu, ketika meninjau apakah baris kedua dapat berada
+             dalam hubungan linear dengan baris-baris lainnya, kita dapat
+             mengabaikan baris pertama. Namun, argumen yang baru saja diterapkan
+             pada baris pertama kini berlaku pada baris kedua.
+             (Dengan kata lain, kita berargumen menggunakan induksi.)
+         \end{exparts}
+      \end{answer}
+  % \item 
+  %   Why, in the proof of \nearbytheorem{th:ReducedEchelonFormIsUnique},
+  %   do we bother to restrict to the nonzero rows?
+  %   Why not just stick to the relationship that we began with,
+  %   $\beta_i=c_{i,1}\delta_1+\dots+c_{i,m}\delta_m$, with $m$ instead of $r$,
+  %   and argue using it that the only nonzero coefficient
+  %   is \( c_{i,i}  \), which is \( 1 \)?
+  %   \begin{answer}
+  %      The zero rows could have nonzero coefficients, and
+  %      so the statement would not be true.
+  %   \end{answer}
+  \recommended \item 
+   \cite{Trono}
+   Tiga pengemudi truk singgah di sebuah kedai tepi jalan.
+   Pengemudi pertama membeli empat roti lapis, secangkir kopi, dan sepuluh
+   donat seharga \$$8.45$.
+   Pengemudi lainnya membeli tiga roti lapis, secangkir kopi, dan tujuh donat
+   seharga \$$6.30$.
+   Berapa harga yang dibayar pengemudi ketiga untuk satu roti lapis,
+   secangkir kopi, dan satu donat?
+   \begin{answer}
+     Kita mengetahui bahwa $4s+c+10d=8.45$ dan $3s+c+7d=6.30$, dan kita ingin
+     mengetahui nilai $s+c+d$.
+     Untungnya, $s+c+d$ merupakan kombinasi linear dari $4s+c+10d$ dan
+     $3s+c+7d$.
+     Dengan menyebut harga yang belum diketahui itu sebagai $p$, kita
+     memperoleh reduksi berikut.
+     \begin{align*}
+       \begin{amat}{3}
+         4  &1  &10  &8.45 \\
+         3  &1  &7   &6.30 \\
+         1  &1  &1   &p
+       \end{amat}
+       &\grstep[-(1/4)\rho_1+\rho_3]{-(3/4)\rho_1+\rho_2}
+       \begin{amat}{3}
+         4  &1    &10     &8.45      \\
+         0  &1/4  &-1/2   &-0.037\,5 \\
+         0  &3/4  &-3/2   &p-2.112\,5
+       \end{amat}                                      \\
+       &\grstep{-3\rho_2+\rho_3}
+       \begin{amat}{3}
+         4  &1    &10     &8.45      \\
+         0  &1/4  &-1/2   &-0.037\,5 \\
+         0  &0    &0      &p-2.00
+       \end{amat}
+     \end{align*}
+     Harga yang dibayar adalah \$$2.00$.
+   \end{answer}
+  % \item
+  %  The fact that Gaussian reduction disallows multiplication of
+  %  a row by zero is needed for the proof of uniqueness of reduced echelon form,
+  %  or else every matrix would
+  %  be row equivalent to a matrix of all zeros.
+  %  Where is it used?
+  %  \begin{answer}
+  %    If multiplication of a row by zero were allowed then
+  %    \nearbylemma{le:EquivMatsSameForm}
+  %    would not hold.
+  %    That is, where
+  %    \begin{equation*}
+  %      \begin{mat}[r]
+  %        1  &3  \\
+  %        2  &1
+  %      \end{mat}
+  %      \grstep{0\rho_2}
+  %      \begin{mat}[r]
+  %        1  &3  \\
+  %        0  &0
+  %      \end{mat}
+  %    \end{equation*}
+  %    all the rows of the second matrix can be expressed as linear combinations
+  %    of the rows of the first, but the converse does not hold.
+  %    The second row of the first matrix is not a linear combination of the
+  %    rows of the second matrix.  
+  %  \end{answer}
+  \item 
+   Lema Kombinasi Linear menyatakan persamaan mana yang dapat diperoleh dari
+   reduksi Gauss suatu sistem linear tertentu.
+   \begin{enumerate}
+     \item Berikan suatu persamaan yang tidak diimplikasikan oleh sistem ini.
+       \begin{equation*}
+         \begin{linsys}{2}
+           3x  &+  &4y  &=  &8 \\
+           2x  &+  & y  &=  &3 
+         \end{linsys}
+       \end{equation*}
+     \item Apakah dari setiap sistem tak konsisten dapat diturunkan sembarang
+       persamaan?
+   \end{enumerate}
+   \begin{answer}
+     \begin{enumerate}
+        \item Jawaban yang mudah adalah berikut ini.
+          \begin{equation*}
+            0=3
+          \end{equation*}
+          Untuk jawaban yang tidak terlalu berseloroh, selesaikan sistemnya:
+          \begin{equation*}
+            \begin{amat}[r]{2}
+              3  &4  &8  \\
+              2  &1   &3
+            \end{amat}
+            \grstep{-(2/3)\rho_1+\rho_2}
+            \begin{amat}[r]{2}
+              3  &4    &8    \\
+              0  &-5/3 &-7/3
+            \end{amat}
+          \end{equation*}
+          diperoleh \( y=7/5 \) dan \( x=4/5 \).
+          Kini persamaan apa pun yang tidak dipenuhi oleh \( (4/5,7/5) \)
+          dapat digunakan, misalnya \( 5x+5y=10 \).
+        \item Tidak selalu. Operasi baris hanya membentuk kombinasi linear
+          dengan koefisien skalar tetap dari persamaan-persamaan semula.
+          Sebagai contoh, sistem tak konsisten yang hanya memuat
+          \( 0=5 \) dapat menghasilkan persamaan lain yang ruas kirinya nol,
+          tetapi tidak dapat menghasilkan koefisien baru untuk $x$ atau $y$;
+          jadi sistem itu tidak dapat menghasilkan \( 3x+2y=4 \).
+
+          Suatu sistem tak konsisten dapat menghasilkan setiap persamaan hanya
+          jika baris-baris koefisiennya merentang semua kemungkinan koefisien
+          variabel. Ketakkonsistenan sendiri tidak menjamin syarat tersebut.
+     \end{enumerate}  
+    \end{answer}
+  \item 
+    \cite{HoffmanKunze}
+    Perluas definisi ekuivalensi baris ke sistem linear.
+    Menurut definisi Anda, apakah sistem-sistem yang ekuivalen memiliki
+    himpunan solusi yang sama?
+    \begin{answer}
+      Definisikan dua sistem linear sebagai ekuivalen jika matriks
+      teraugmentasi keduanya ekuivalen baris.
+      Pembuktian bahwa sistem-sistem ekuivalen memiliki himpunan solusi yang
+      sama adalah mudah.
+    \end{answer}
+  \item 
+    Dalam matriks berikut,
+    \begin{equation*}
+      \begin{mat}[r]
+        1  &2  &3  \\
+        3  &0  &3  \\
+        1  &4  &5
+      \end{mat}
+    \end{equation*}
+    jumlah kolom pertama dan kedua sama dengan kolom ketiga.
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa pernyataan tersebut tetap benar setelah
+        operasi baris apa pun.
+      \partsitem Buatlah sebuah konjektur.
+      \partsitem Buktikan bahwa konjektur tersebut benar.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ketiga pertukaran baris yang mungkin mudah diperiksa,
+          demikian pula ketiga penskalaan ulang yang mungkin.
+          Salah satu dari enam kombinasi baris yang mungkin adalah
+          \( k\rho_1+\rho_2 \):
+          \begin{equation*}
+            \begin{mat}
+              1           &2           &3  \\
+              k\cdot 1+3  &k\cdot 2+0  &k\cdot 3+3  \\
+              1           &4           &5
+            \end{mat}
+          \end{equation*}
+          dan sekali lagi jumlah kolom pertama dan kedua sama dengan kolom
+          ketiga. Lima kombinasi lainnya serupa.
+        \partsitem Konjektur yang wajar adalah bahwa operasi baris tidak
+          mengubah hubungan linear antarkolom.
+        \partsitem Pembuktian dengan memeriksa setiap kasus mengikuti sketsa
+          yang diberikan pada bagian pertama.
+      \end{exparts}  
+   \end{answer}
+\end{exercises}

@@ -1,0 +1,765 @@
+% Chapter 4, Topic _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\topic{Rekurensi Linear}
+\index{rekurensi linear|(}
+\index{relasi rekurensi|(}
+
+Pada tahun 1202, Leonardo dari Pisa, yang dikenal sebagai Fibonacci,
+mengajukan masalah berikut.
+\begin{quotation}
+  \noindent Seorang pria menaruh sepasang kelinci di suatu tempat
+  yang dikelilingi tembok pada semua sisinya.
+  Berapa pasang kelinci dapat dihasilkan oleh pasangan itu dalam setahun
+  jika diasumsikan bahwa setiap bulan tiap pasangan melahirkan satu pasangan
+  baru yang mulai berkembang biak pada bulan keduanya?
+\end{quotation}
+Model ini mengembangkan model dasar pertumbuhan populasi secara eksponensial
+dengan memperhitungkan bahwa kelinci yang baru lahir belum subur selama suatu
+periode, dalam hal ini satu bulan.
+Namun, model ini tetap mempertahankan asumsi penyederhanaan lain, misalnya
+bahwa tidak ada usia yang setelahnya kelinci menjadi tidak subur.
+
+Untuk memperoleh jumlah seluruh pasangan pada bulan berikutnya,
+kita menjumlahkan banyak pasangan yang masih hidup ketika memasuki bulan itu
+dengan banyak pasangan yang baru akan lahir pada bulan tersebut.
+Besaran terakhir ini sama dengan banyak pasangan yang akan mampu
+berkembang biak ketika memasuki bulan berikutnya, yaitu pasangan yang pada
+bulan berikutnya sudah hidup setidaknya dua bulan.
+\begin{equation*}
+  F(n)=F(n-1)+F(n-2)  \qquad \text{dengan $F(0)=0$, $F(1)=1$}
+  \tag{$*$}
+\end{equation*}
+Di ruas kiri terdapat suatu
+\definend{relasi rekurensi}.\index{rekurensi}
+Nama itu digunakan karena $F$ muncul kembali dalam persamaan yang
+mendefinisikannya.
+Di ruas kanan terdapat kondisi awal.
+Dari~($*$), kita dapat menghitung $F(2)$, $F(3)$, dan seterusnya,
+hingga memperoleh jawaban atas pertanyaan Fibonacci.
+\begin{center}
+  \begin{tabular}{r|ccccccccccccc}
+    \textit{bulan}~$n$
+     &0  &1  &2  &3  &4  &5  &6  &7  &8  &9  &10  &11  &12  \\ \hline
+    \textit{pasangan}~$F(n)$
+     &0  &1  &1  &2  &3  &5  &8  &13  &21  &34  &55  &89  &144   
+  \end{tabular}
+\end{center}
+Kita akan menggunakan aljabar linear untuk memperoleh rumus yang menghitung
+$F(n)$ tanpa harus lebih dahulu menghitung nilai-nilai antara $F(2)$, $F(3)$,
+dan seterusnya.
+
+Kita mulai dengan menyatakan ($*$) dalam bentuk matriks.
+\begin{equation*}
+  \colvec{F(n) \\ F(n-1)}
+  =
+  \begin{mat}[r]
+    1  &1   \\
+    1  &0
+  \end{mat}
+  \colvec{F(n-1) \\ F(n-2)}
+  \qquad\text{dengan $\colvec{F(1) \\ F(0)}=\colvec{1 \\  0}$}
+\end{equation*}  
+Tuliskan $T$ untuk matriks tersebut dan $\vec{v}_{n}$ untuk vektor yang
+komponennya $F(n)$ dan $F(n-1)$, sehingga
+$\vec{v}_{n}=T^{n-1}\vec{v}_1$ untuk $n\geq 1$.
+Jika kita mendiagonalkan $T$, kita memperoleh cara cepat untuk menghitung
+pangkat-pangkatnya:~jika $T=PDP^{-1}$, maka $T^n=PD^nP^{-1}$, dan pangkat
+ke-$n$ dari matriks diagonal $D$ adalah matriks diagonal yang entri-entrinya
+merupakan pangkat ke-$n$ dari entri-entri $D$.
+
+Persamaan karakteristik $T$ adalah $\lambda^2-\lambda-1=0$.
+Rumus kuadrat memberikan akar-akarnya, yaitu $(1+\sqrt{5})/2$ dan
+$(1-\sqrt{5})/2$.
+(Keduanya kadang-kadang disebut ``rasio emas;''
+lihat \cite{Falbo}.)
+Pendiagonalan memberikan hasil berikut.
+\begin{equation*}
+  \begin{mat}[r]
+    1  &1  \\
+    1  &0
+  \end{mat}
+  =\begin{mat}
+     \frac{1+\sqrt{5}}{2}  &\frac{1-\sqrt{5}}{2} \\
+     % \sfrac{1+\sqrt{5}}{2}  &\sfrac{1-\sqrt{5}}{2} \\
+     1                     &1
+   \end{mat}
+   \begin{mat}
+     \frac{1+\sqrt{5}}{2}  &0   \\
+     0                     &\frac{1-\sqrt{5}}{2}
+   \end{mat}
+   \begin{mat}
+     \frac{1}{\sqrt{5}}     &-(\frac{1-\sqrt{5}}{2\sqrt{5}})  \\
+     \frac{-1}{\sqrt{5}}    &\frac{1+\sqrt{5}}{2\sqrt{5}}       
+   \end{mat}
+\end{equation*} 
+Dengan memperkenalkan vektor-vektor tersebut dan mengambil pangkat ke-$n$,
+kita memperoleh
+\begin{multline*}
+  \colvec{F(n) \\ F(n-1)}
+  =\begin{mat}[r]
+    1  &1  \\
+    1  &0
+  \end{mat}^{n-1}
+  \colvec{F(1) \\ F(0)}                                          \\
+  =\begin{mat}
+     \frac{1+\sqrt{5}}{2}  &\frac{1-\sqrt{5}}{2} \\
+     1                     &1
+   \end{mat}
+   \begin{mat}
+     \left(\frac{1+\sqrt{5}}{2}\right)^{n-1}  &0   \\
+     0                                  &\left(\frac{1-\sqrt{5}}{2}\right)^{n-1}
+   \end{mat}
+   \begin{mat}
+     \frac{1}{\sqrt{5}}     &-(\frac{1-\sqrt{5}}{2\sqrt{5}})  \\
+     \frac{-1}{\sqrt{5}}    &\frac{1+\sqrt{5}}{2\sqrt{5}}       
+   \end{mat}
+  \colvec[r]{1 \\ 0}                                             
+\end{multline*}
+Perhitungannya kurang elok, tetapi tidak sulit.
+\begin{align*}
+  \colvec{F(n) \\ F(n-1)}
+  &=\begin{mat}
+     \frac{1+\sqrt{5}}{2}  &\frac{1-\sqrt{5}}{2} \\
+     1                     &1
+   \end{mat}
+   \begin{mat}
+     \left(\frac{1+\sqrt{5}}{2}\right)^{n-1}  &0   \\
+     0                                  &\left(\frac{1-\sqrt{5}}{2}\right)^{n-1}
+   \end{mat}
+  \colvec{\frac{1}{\sqrt{5}} \\ -\frac{1}{\sqrt{5}}}       \\ 
+  &=\frac{1}{\sqrt{5}}
+    \begin{mat}
+     \frac{1+\sqrt{5}}{2}  &\frac{1-\sqrt{5}}{2} \\
+     1                     &1
+   \end{mat}
+  \colvec{\left(\frac{1+\sqrt{5}}{2}\right)^{n-1} \\ 
+          -\left(\frac{1-\sqrt{5}}{2}\right)^{n-1}}    \\    
+  &=\frac{1}{\sqrt{5}}
+  \colvec{\left(\frac{1+\sqrt{5}}{2}\right)^{n}  
+          -\left(\frac{1-\sqrt{5}}{2}\right)^{n}  \\
+          \left(\frac{1+\sqrt{5}}{2}\right)^{n-1}  
+          -\left(\frac{1-\sqrt{5}}{2}\right)^{n-1}}   
+\end{align*}
+Yang kita perlukan adalah komponen pertama.
+\begin{equation*}
+  F(n)=\frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^{n}
+                               -\left(\frac{1-\sqrt{5}}{2}\right)^{n}\right]
+\end{equation*}
+Rumus ini memberikan nilai setiap suku barisan tanpa harus lebih dahulu
+menentukan nilai-nilai antaranya.
+
+Karena $(1-\sqrt{5})/2\approx -0.618$ bernilai mutlak kurang dari satu,
+pangkat-pangkatnya menuju nol. Oleh karena itu, rumus $F(n)$ didominasi oleh
+suku pertamanya.
+Meskipun kita telah mengembangkan model dasar pertumbuhan populasi dengan
+menambahkan masa tunda sebelum kesuburan dimulai, kita tetap memperoleh
+fungsi yang secara asimtotik bersifat eksponensial.
+
+Secara umum, suatu
+\definend{relasi rekurensi linear homogen berkoefisien konstan dan berorde $k$}\index{rekurensi}\index{rekurensi linear!definisi}
+berbentuk sebagai berikut.
+\begin{equation*}
+  f(n)=a_1f(n-1)+a_2f(n-2)+\dots+a_kf(n-k)
+\end{equation*}
+Relasi rekurensi ini homogen karena tidak mempunyai suku konstanta; dengan
+kata lain, kita dapat menuliskannya kembali sebagai
+$0=-f(n)+a_1f(n-1)+a_2f(n-2)+\dots+a_kf(n-k)$.
+Relasi ini berorde~$k$ karena menggunakan $k$ suku sebelumnya untuk
+menghitung $f(n)$.
+Relasi tersebut, bersama dengan
+kondisi awal\index{rekurensi!kondisi awal} yang memberikan nilai
+$f(0)$, \ldots, $f(k-1)$, menentukan suatu barisan secara lengkap, sebab
+kita dapat menghitung $f(n)$ dengan lebih dahulu menghitung $f(k)$,
+$f(k+1)$, dan seterusnya.
+Seperti pada kasus Fibonacci, kita akan mencari rumus yang menyelesaikan
+rekurensi tersebut dan memberikan $f(n)$ secara langsung.
+
+Misalkan $V$ adalah himpunan fungsi dengan domain
+$\N=\set{0,1,2,\ldots}$ dan kodomain $\C$.
+(Jika memudahkan, kadang-kadang kita menggunakan domain
+$\Z^+=\set{1,2,\ldots}$.)
+Himpunan ini merupakan ruang vektor dengan pengertian biasa untuk
+penjumlahan dan perkalian skalar: $f+g$ adalah pemetaan
+$x\mapsto f(x)+g(x)$ dan $cf$ adalah pemetaan $x\mapsto c\cdot f(x)$.
+
+Jika kita mengesampingkan kondisi awal dan hanya memperhatikan
+rekurensinya, mungkin terdapat banyak fungsi yang memenuhi relasi tersebut.
+Sebagai contoh, rekurensi Fibonacci, yaitu bahwa setiap nilai setelah
+nilai-nilai awal merupakan jumlah dua nilai sebelumnya, dipenuhi oleh fungsi
+$L$ yang beberapa nilai pertamanya adalah $L(0)=2$, $L(1)=1$, $L(2)=3$,
+$L(3)=4$, dan $L(4)=7$.
+
+Tetapkan suatu relasi rekurensi linear homogen berorde~$k$, lalu perhatikan
+subhimpunan $S$ yang terdiri atas fungsi-fungsi yang memenuhi relasi tersebut
+(tanpa kondisi awal).
+Himpunan $S$ ini adalah subruang dari $V$.
+Himpunan ini tidak kosong karena, berdasarkan kehomogenan, fungsi nol adalah
+sebuah solusi.
+Himpunan ini tertutup terhadap penjumlahan karena, jika $f_1$ dan $f_2$
+merupakan solusi, maka persamaan berikut berlaku.
+\begin{multline*}
+  -(f_1+f_2)(n)+a_1(f_1+f_2)(n-1)+\dots+a_k(f_1+f_2)(n-k) \\  
+  \begin{aligned}
+    &=(-f_1(n)+\dots+a_kf_1(n-k))          \\
+    &\qquad\hbox{}+(-f_2(n)+\dots+a_kf_2(n-k))     \\
+    &=0+0=0
+  \end{aligned}
+\end{multline*}
+Himpunan ini juga tertutup terhadap perkalian skalar.
+\begin{multline*}
+  -(rf_1)(n)+a_1(rf_1)(n-1)+\dots+a_k(rf_1)(n-k) \\  
+  \begin{aligned}
+    &=r\cdot (-f_1(n)+\dots+a_kf_1(n-k))   \\
+    &=r\cdot 0                                    \\
+    &=0
+  \end{aligned}
+\end{multline*}
+Kita dapat menentukan dimensi $S$.
+Karena $k$ adalah orde rekurensi, perhatikan pemetaan berikut dari himpunan
+fungsi~$S$ ke himpunan vektor dengan $k$ komponen.
+\begin{equation*}
+  f 
+  \mapsto 
+  \colvec{f(0) \\ f(1) \\ \vdots \\ f(k-1)}
+\end{equation*}
+\nearbyexercise{exer:SeqToRnLinMap} menunjukkan bahwa pemetaan ini linear.
+Setiap solusi rekurensi ditentukan secara tunggal oleh $k$ kondisi awal,
+sehingga pemetaan ini bersifat injektif dan surjektif.
+Jadi, pemetaan ini merupakan isomorfisme dan $S$ berdimensi $k$.
+
+Dengan demikian, kita dapat mendeskripsikan himpunan solusi relasi rekurensi
+linear homogen berorde~$k$ dengan mencari suatu basis yang terdiri atas
+$k$ fungsi bebas linear.
+Untuk menghasilkan fungsi-fungsi itu, kita menyatakan rekurensi tersebut
+dalam bentuk matriks.
+\begin{equation*}
+  \colvec{f(n) \\ f(n-1) \\ \vdots  \\ f(n-k+1)}
+  =
+  \begin{mat}
+    a_1  &a_2  &a_3  &\ldots  &a_{k-1} &a_k  \\
+    1    &0        &0        &\ldots  &0         &0        \\
+    0    &1        &0                                      \\
+    0    &0        &1                                      \\
+    \vdots &\vdots &         &\ddots  &           &\vdots  \\
+    0    &0        &0        &\ldots   &1          &0
+  \end{mat}
+  \colvec{f(n-1) \\ f(n-2) \\ \vdots  \\ f(n-k)}
+\end{equation*}
+Sebut matriks tersebut~$A$.
+Kita ingin menentukan fungsi karakteristiknya, yaitu determinan
+$A-\lambda I$.
+Pola pada kasus $\nbyn{2}$
+\begin{equation*}
+  \begin{vmat}
+    a_1-\lambda  &a_2 \\
+    1               &-\lambda
+  \end{vmat}
+  =\lambda^2-a_1\lambda-a_2
+\end{equation*}
+dan pada kasus $\nbyn{3}$
+\begin{equation*}
+  \begin{vmat}
+    a_1-\lambda  &a_2   &a_3  \\
+    1               &-\lambda  &0        \\
+    0               &1         &-\lambda
+  \end{vmat}
+  =-\lambda^3+a_1\lambda^2+a_2\lambda+a_3
+\end{equation*}
+mengarahkan kita untuk menduga, dan
+\nearbyexercise{exer:CharEqnIsDeter} membuktikan, bahwa persamaan berikut
+adalah persamaan karakteristiknya.
+\begin{align*}
+  0 &=
+  \begin{vmat}
+    a_1-\lambda &a_2  &a_3  &\ldots  &a_{k-1} &a_k  \\
+    1              &-\lambda &0        &\ldots  &0         &0        \\
+    0              &1        &-\lambda                                      \\
+    0              &0        &1                                      \\
+    \vdots         &\vdots &         &\ddots   &           &\vdots  \\
+    0             &0        &0        &\ldots   &1          &-\lambda
+  \end{vmat}                                                           \\
+  &=\pm(-\lambda^k+a_1\lambda^{k-1}+a_2\lambda^{k-2}
+       +\dots+a_{k-1}\lambda+a_k)
+\end{align*}
+Tanda $\pm$ tidak relevan untuk menentukan akar, sehingga kita abaikan.
+Kita katakan bahwa polinomial
+$-\lambda^k+a_1\lambda^{k-1}+a_2\lambda^{k-2}
+       +\dots+a_{k-1}\lambda+a_k$
+berasosiasi dengan relasi rekurensi tersebut.
+\index{rekurensi!polinomial berasosiasi}\index{polinomial!berasosiasi dengan rekurensi}
+
+Jika persamaan karakteristik tidak mempunyai akar berulang, matriks tersebut
+dapat didiagonalkan dan, secara teori, kita dapat memperoleh rumus untuk
+$f(n)$ seperti pada kasus Fibonacci.
+Namun, karena kita mengetahui bahwa subruang solusi berdimensi~$k$, kita tidak
+perlu melakukan perhitungan pendiagonalan asalkan kita dapat menunjukkan
+$k$ fungsi berbeda yang bebas linear dan memenuhi relasi tersebut.
+
+Jika $r_1$, $r_2$, \ldots, $r_k$ adalah akar-akar yang berbeda, perhatikan
+fungsi-fungsi berupa pangkat akar tersebut, dari $f_{r_1}(n)=r_1^n$ hingga
+$f_{r_k}(n)=r_k^n$.
+\nearbyexercise{exer:SoltnsLinRecur} menunjukkan bahwa masing-masing fungsi
+merupakan solusi rekurensi dan bahwa semuanya membentuk himpunan bebas linear.
+% So given the homogeneous linear recurrence
+% $f(n+1)=a_nf(n)+\dots+a_{n-k}f(n-k)$
+% (that is, $0=-f(n+1)+a_nf(n)+\dots+a_{n-k}f(n-k)$)
+% we consider the associated equation
+% $0=-\lambda^k+a_n\lambda^{k-1}+\dots+a_{n-k+1}\lambda+a_{n-k}$.
+Jadi, jika akar-akar polinomial yang berasosiasi itu berbeda, setiap solusi
+relasi tersebut berbentuk
+$f(n)=c_1r_1^n+c_2r_2^n+\dots+c_kr_k^n$ untuk beberapa skalar
+$c_1, \dots, c_k$.
+(Kasus akar berulang serupa, tetapi tidak akan kita bahas di sini; lihat buku
+teks matematika diskret mana pun.)
+
+Sekarang kita sertakan kondisi awal.
+Gunakan kondisi-kondisi itu untuk menentukan $c_1$, \ldots, $c_k$.
+Sebagai contoh, polinomial yang berasosiasi dengan relasi Fibonacci adalah
+$-\lambda^2+\lambda+1$, yang akar-akarnya $r_1=(1+\sqrt{5})/2$ dan
+$r_2=(1-\sqrt{5})/2$. Dengan demikian, setiap solusi rekurensi Fibonacci
+berbentuk $f(n)=c_1((1+\sqrt{5})/2)^n+c_2((1-\sqrt{5})/2)^n$.
+Gunakan kondisi awal Fibonacci untuk $n=0$ dan $n=1$,
+\begin{equation*}
+  \begin{linsys}{2}
+    c_1               &+  &c_2               &=  &0  \\
+    ((1+\sqrt{5})/2)c_1 &+  &((1-\sqrt{5})/2)c_2 &=  &1
+  \end{linsys}
+\end{equation*}
+dan selesaikan untuk memperoleh $c_1=1/\sqrt{5}$ dan
+$c_2=-1/\sqrt{5}$, seperti yang kita temukan di atas.
+
+Sebagai penutup, kita tinjau kasus tak homogen, dengan relasi berbentuk
+$f(n)=a_1f(n-1)+a_2f(n-2)+\dots+a_kf(n-k)+b$ untuk suatu $b$ taknol.
+Kita hanya memerlukan sedikit penyesuaian untuk beralih dari kasus homogen.
+
+Contoh klasik berikut memberikan ilustrasi.
+Pada tahun 1883, Edouard Lucas mengajukan masalah
+Menara Hanoi.\index{Menara Hanoi}
+\begin{quotation}
+  \noindent
+  Di kuil besar di Benares, di bawah kubah yang menandai pusat dunia,
+  terdapat sebuah lempeng kuningan tempat tertancap tiga jarum berlian,
+  masing-masing setinggi satu hasta dan setebal tubuh seekor lebah.
+  Pada saat penciptaan, Tuhan menaruh enam puluh empat cakram emas murni
+  pada salah satu jarum ini; cakram terbesar terletak di atas lempeng
+  kuningan, dan cakram-cakram lain makin mengecil hingga cakram teratas.
+  Inilah Menara Brahma.
+  Siang dan malam tanpa henti, para pendeta memindahkan cakram-cakram dari
+  satu jarum berlian ke jarum lain menurut hukum Brahma yang tetap dan tak
+  berubah. Hukum itu menetapkan bahwa pendeta yang bertugas tidak boleh
+  memindahkan lebih dari satu cakram sekaligus dan harus menaruh cakram itu
+  pada jarum sedemikian sehingga tidak ada cakram yang lebih kecil di
+  bawahnya.
+  Setelah keenam puluh empat cakram itu dipindahkan dari jarum tempat Tuhan
+  menaruhnya pada saat penciptaan ke salah satu jarum lain, menara, kuil,
+  dan para Brahmana akan sama-sama runtuh menjadi debu, dan dunia akan lenyap
+  dengan satu gelegar guntur.
+  (Terjemahan \cite{DeParville} dari \cite{Ball}.)
+\end{quotation}
+Kita mengesampingkan pertanyaan mengapa para pendeta tidak duduk beristirahat
+agar dunia bertahan sedikit lebih lama. Sebagai gantinya, kita tanyakan berapa
+banyak pemindahan cakram yang diperlukan.
+Sebelum menangani masalah enam puluh empat cakram, kita akan meninjau masalah
+untuk tiga cakram.
+
+Pada awalnya, ketiga cakram berada pada jarum yang sama.
+\begin{center}
+  \includegraphics{jc/mp/ch5.6}
+\end{center}
+Setelah tiga langkah---memindahkan cakram kecil ke jarum terjauh, cakram
+sedang ke jarum tengah, lalu cakram kecil ke jarum tengah---kita memperoleh
+keadaan berikut.
+\begin{center}
+  \includegraphics{jc/mp/ch5.7}
+\end{center}
+Sekarang kita dapat memindahkan cakram besar ke jarum terjauh.
+Untuk menyelesaikannya, kita ulangi proses tiga langkah pada dua cakram yang
+lebih kecil, kali ini agar keduanya berakhir pada jarum ketiga, di atas
+cakram besar.
+
+Urutan langkah tersebut adalah yang terbaik yang dapat kita lakukan.
+Untuk memindahkan cakram terbawah, setidaknya kita harus lebih dahulu
+memindahkan cakram-cakram yang lebih kecil ke jarum tengah, lalu memindahkan
+cakram besar, kemudian memindahkan semua cakram yang lebih kecil dari jarum
+tengah ke jarum tujuan.
+Karena jumlah minimum ini dapat dicapai, kita memperoleh rekurensi berikut.
+\begin{equation*}
+  T(n)=T(n-1)+1+T(n-1)=2T(n-1)+1 \qquad \text{dengan $T(1)=1$}
+\end{equation*} 
+Berikut adalah beberapa nilai pertama $T$.
+\begin{center}
+  \begin{tabular}{r|cccccccccc}
+    \textit{cakram}~$n$             
+       &1  &2  &3  &4  &5  &6     &7    &8    &9   &10  \\
+    \hline
+    \textit{pemindahan}~$T(n)$ 
+       &1  &3  &7  &15  &31  &63  &127  &255  &511 &1023 
+  \end{tabular}
+\end{center}
+Tentu saja, masing-masing bilangan ini kurang satu dari suatu pangkat dua.
+Untuk menurunkan hal tersebut, tuliskan relasi semula sebagai
+$-1=-T(n)+2T(n-1)$.
+Perhatikan $0=-T(n)+2T(n-1)$, suatu rekurensi linear homogen berorde~$1$.
+Polinomial yang berasosiasi dengannya adalah $-\lambda+2$, dengan satu-satunya
+akar $r_1=2$.
+Jadi, fungsi yang memenuhi relasi homogen berbentuk $c_12^n$.
+
+Itulah solusi homogen.
+Sekarang kita memerlukan suatu solusi partikular.
+Karena relasi tak homogen $-1=-T(n)+2T(n-1)$ begitu sederhana, kita dapat
+langsung melihat solusi partikular $T(n)=-1$.
+Setiap solusi rekurensi $T(n)=2T(n-1)+1$ (tanpa kondisi awal) merupakan jumlah
+solusi homogen dan solusi partikular, yaitu $c_12^n-1$.
+Sekarang kondisi awal $T(1)=1$ memberikan $c_1=1$, dan kita telah memperoleh
+rumus yang menghasilkan tabel tersebut:~masalah Menara Hanoi dengan $n$
+cakram memerlukan $T(n)=2^n-1$ pemindahan.
+
+Menentukan solusi partikular pada kasus yang lebih rumit, barangkali tidak
+mengherankan, juga lebih rumit.
+Sumber yang menyenangkan dan bermanfaat, tetapi menantang, adalah
+\cite{GrahamKnuthPatashnik}.
+Untuk pembahasan lebih lanjut tentang Menara Hanoi, lihat \cite{Ball},
+\cite{Gardner57}, dan \cite{Hofstadter}.
+Sejumlah kode komputer disajikan setelah latihan.
+
+\begin{exercises}
+  \item 
+   Berapa bulan diperlukan hingga jumlah pasangan kelinci Fibonacci
+   melampaui seribu?
+   Sepuluh ribu?
+   Satu juta?
+   \begin{answer}
+     Kita menggunakan rumus
+     \begin{equation*}
+       F(n)=\frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^{n}
+                               -\left(\frac{1-\sqrt{5}}{2}\right)^{n}\right]
+     \end{equation*}
+     Seperti telah diamati sebelumnya, $(1+\sqrt{5})/2$ lebih besar dari satu,
+     sedangkan $(1-\sqrt{5})/2$ bernilai mutlak kurang dari satu.
+\begin{lstlisting}
+sage: phi = (1+5^(0.5))/2
+sage: psi = (1-5^(0.5))/2
+sage: phi
+1.61803398874989
+sage: psi
+-0.618033988749895       
+\end{lstlisting}
+     Jadi, nilai ungkapan tersebut didominasi oleh suku pertama.
+     Menyelesaikan $1000=(1/\sqrt{5})\cdot ((1+\sqrt{5})/2)^n$
+     memberikan hasil berikut.
+\begin{lstlisting}
+sage: a = ln(1000*5^(0.5))/ln(phi)
+sage: a
+16.0271918385296
+sage: psi^(17)
+-0.000280033582072583       
+\end{lstlisting}
+   Jadi, pada pangkat ketujuh belas, sumbangan suku kedua tidak cukup besar
+   untuk mengubah hasil pembulatan.
+   Untuk perhitungan sepuluh ribu dan satu juta, situasinya bahkan lebih
+   ekstrem.
+\begin{lstlisting}
+sage: b = ln(10000*5^(0.5))/ln(phi)
+sage: b
+20.8121638053112
+sage: c = ln(1000000*5^(0.5))/ln(phi)
+sage: c
+30.3821077388746    
+\end{lstlisting}
+   Jawaban untuk kedua kasus ini adalah $21$ dan $31$.
+   \end{answer}
+  \item 
+   Selesaikan setiap relasi rekurensi linear homogen berikut.
+   \begin{exparts}
+     \partsitem $f(n)=5f(n-1)-6f(n-2)$   
+     \partsitem $f(n)=4f(n-2)$   
+     \partsitem $f(n)=5f(n-1)-2f(n-2)-8f(n-3)$   
+   \end{exparts}
+   \begin{answer}
+    \begin{exparts}
+      \partsitem 
+        Kita menyatakan relasi tersebut dalam bentuk matriks.
+        \begin{equation*}
+          \colvec{f(n) \\ f(n-1)}
+          =
+          \begin{mat}[r]
+            5  &-6  \\
+            1  &0
+          \end{mat}
+          \colvec{f(n-1) \\ f(n-2)}
+        \end{equation*}
+        Persamaan karakteristik matriks tersebut,
+        \begin{equation*}
+          \begin{vmat}
+            5-\lambda &-6       \\
+            1         &-\lambda
+          \end{vmat}
+          =\lambda^2-5\lambda+6 
+        \end{equation*}
+        mempunyai akar $2$ dan $3$.
+        Setiap fungsi berbentuk
+        $f(n)=c_12^n+c_23^n$
+        memenuhi rekurensi tersebut.
+      \partsitem 
+        Bentuk matriks relasi tersebut adalah
+        \begin{equation*}
+          \colvec{f(n) \\ f(n-1)}
+          =
+          \begin{mat}[r]
+            0  &4  \\
+            1  &0  
+          \end{mat}
+          \colvec{f(n-1) \\ f(n-2)}
+        \end{equation*}
+        dan persamaan karakteristiknya,
+        \begin{equation*}
+          \begin{vmat}
+            -\lambda &4  \\
+            1        &-\lambda
+          \end{vmat}
+          =\lambda^2-4=(\lambda-2)(\lambda+2)
+        \end{equation*}
+        mempunyai dua akar, yaitu $2$ dan $-2$.
+        Setiap fungsi berbentuk
+        $f(n)=c_12^n+c_2(-2)^n$
+        memenuhi rekurensi ini.
+      \partsitem 
+        Dalam bentuk matriks, relasi
+        \begin{equation*}
+          \colvec{f(n) \\ f(n-1) \\ f(n-2)}
+          =
+          \begin{mat}[r]
+            5  &-2  &-8  \\
+            1  &0  &0  \\
+            0  &1  &0
+          \end{mat}
+          \colvec{f(n-1) \\ f(n-2) \\ f(n-3)}
+        \end{equation*}
+        mempunyai persamaan karakteristik dengan akar $-1$, $2$, dan $4$.
+        Setiap kombinasi berbentuk
+        $c_1(-1)^n+c_22^n+c_34^n$ menyelesaikan rekurensi tersebut.
+    \end{exparts} 
+   \end{answer}
+  \item \label{exer:SolvePartRecurSoltn} 
+    Berikan rumus untuk relasi-relasi pada latihan sebelumnya dengan kondisi
+    awal berikut.
+    \begin{exparts}
+      \partsitem $f(0)=1$, $f(1)=1$
+      \partsitem $f(0)=0$, $f(1)=1$
+      \partsitem $f(0)=1$, $f(1)=1$, $f(2)=3$.      
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Solusi rekurensi homogen tersebut adalah
+          $f(n)=c_12^n+c_23^n$.
+          Menyubstitusikan $f(0)=1$ dan $f(1)=1$ memberikan sistem linear
+          berikut.
+          \begin{equation*}
+            \begin{linsys}{2}
+              c_1 &+ &c_2   &= &1 \\
+             2c_1 &+ &3c_2  &= &1
+            \end{linsys}
+          \end{equation*}
+          Dengan pengamatan langsung, kita memperoleh $c_1=2$ dan $c_2=-1$.
+        \partsitem
+          Solusi rekurensi homogen tersebut adalah
+          $c_12^n+c_2(-2)^n$.
+          Kondisi awal memberikan sistem linear berikut.
+          \begin{equation*}
+            \begin{linsys}{2}
+              c_1 &+ &c_2  &= &0  \\
+             2c_1 &- &2c_2 &= &1
+            \end{linsys}
+          \end{equation*}
+          Solusinya adalah $c_1=1/4$, $c_2=-1/4$.
+        \partsitem
+          Rekurensi homogen tersebut mempunyai solusi
+          $f(n)=c_1(-1)^n+c_22^n+c_34^n$.
+          Dengan kondisi awal, kita memperoleh sistem linear berikut.
+          \begin{equation*}
+            \begin{linsys}{3}
+              c_1 &+  &c_2   &+  &c_3  &= &1 \\
+             -c_1 &+  &2c_2  &+  &4c_3  &= &1 \\
+              c_1 &+  &4c_2  &+  &16c_3  &= &3
+            \end{linsys}
+          \end{equation*}
+          Solusinya adalah $c_1=1/3$, $c_2=2/3$, $c_3=0$.
+      \end{exparts}
+    \end{answer}
+  \item \label{exer:SeqToRnLinMap}
+    Periksa bahwa isomorfisme yang diberikan antara $S$ dan $\C^k$ merupakan
+    pemetaan linear.
+    % We argue above that this map is one-to-one.
+    % What is its inverse?
+    \begin{answer}
+      Tetapkan suatu rekurensi linear homogen berorde~$k$.
+      Misalkan $S$ adalah himpunan fungsi $\map{f}{\N}{\C}$ yang memenuhi
+      rekurensi tersebut.
+      Perhatikan fungsi $\map{\Phi}{S}{\C^k}$ berikut.
+      \begin{equation*}
+        f\mapsunder{\Phi}\colvec{f(0) \\ f(1) \\ \vdots \\ f(k-1)}
+      \end{equation*}
+      Perhitungan berikut menunjukkan linearitasnya.
+      \begin{multline*}
+        \Phi(a\cdot f_1+b\cdot f_2)
+        =
+        \colvec{af_1(0)+bf_2(0) \\ \vdots \\ af_1(k-1)+bf_2(k-1)}     \\
+        =
+        a\colvec{f_1(0) \\ \vdots \\ f_1(k-1)}
+        +
+        b\colvec{f_2(0) \\ \vdots \\ f_2(k-1)}
+        =a\cdot \Phi(f_1)+b\cdot \Phi(f_2)
+      \end{multline*}
+    \end{answer}
+  \item \label{exer:CharEqnIsDeter}
+    Tunjukkan bahwa persamaan karakteristik matriks tersebut adalah seperti
+    yang dinyatakan, yaitu polinomial yang berasosiasi dengan relasi itu.
+    (\textit{Petunjuk:} ekspansi sepanjang kolom terakhir dan penggunaan
+    induksi akan berhasil.)
+    \begin{answer}
+      Kita menggunakan petunjuk tersebut untuk membuktikannya.
+      \begin{align*}
+        0 &=
+        \begin{vmat}
+          a_1-\lambda &a_2  &a_3  &\ldots  &a_{k-1} &a_k  \\
+          1              &-\lambda &0        &\ldots  &0         &0        \\
+          0              &1        &-\lambda                               \\
+          0              &0        &1                                      \\
+          \vdots         &\vdots &         &\ddots   &           &\vdots  \\
+          0             &0        &0        &\ldots   &1          &-\lambda
+        \end{vmat}                                                           \\
+        &=(-1)^{k-1}(-\lambda^k+a_1\lambda^{k-1}+a_2\lambda^{k-2}       
+               +\dots+a_{k-1}\lambda+a_k)                      \\
+        &=\pm(-\lambda^k+a_1\lambda^{k-1}+a_2\lambda^{k-2}       
+               +\dots+a_{k-1}\lambda+a_k)
+      \end{align*}
+      Langkah basis bersifat langsung.
+      Untuk langkah induksi, ekspansi sepanjang kolom terakhir memberikan
+      dua suku taknol.
+      \begin{equation*}
+        (-1)^{k-1}a_k\cdot 1
+        -\lambda\cdot
+        \begin{vmat}
+          a_1-\lambda &a_2  &a_3  &\ldots  &a_{k-1}  \\
+          1              &-\lambda &0        &\ldots  &0       \\
+          0              &1        &-\lambda                               \\
+          0              &0        &1                                      \\
+          \vdots         &\vdots &         &\ddots   &        \\
+          0             &0        &0        &\ldots   &1     
+        \end{vmat}                                                          
+      \end{equation*}
+      (Matriks tersebut persegi, sehingga tanda di depan $-\lambda$ adalah
+      $(-1)^{\text{genap}}$.)
+      Penerapan hipotesis induksi memberikan hasil yang diinginkan.
+      \begin{multline*}
+        =(-1)^{k-1}a_k\cdot 1                     \\
+        -\lambda\cdot
+         (-1)^{k-2}(-\lambda^{k-1}+a_1\lambda^{k-2}+a_2\lambda^{k-3}       
+               +\dots+a_{k-1}\lambda^0)
+      \end{multline*}
+    \end{answer}
+  \item \label{exer:SoltnsLinRecur}
+    Diberikan suatu relasi rekurensi linear homogen
+    $f(n)=a_1f(n-1)+\dots+a_kf(n-k)$, misalkan $r_1$, \ldots, $r_k$
+    adalah akar-akar polinomial yang berasosiasi dengannya.
+    Buktikan bahwa setiap fungsi
+         $f_{r_i}(n)=r_i^n$
+         memenuhi rekurensi tersebut (tanpa kondisi awal).
+    \begin{answer}
+       Hasil ini diperoleh dengan induksi langsung pada $n$.
+    \end{answer}
+  \item 
+    (Soal ini merujuk pada nilai $T(64)=18,446,744,073,709,551,615$ yang
+    diberikan dalam kode komputer di bawah.)
+    Jika satu cakram dipindahkan setiap detik, berapa tahun yang diperlukan
+    para pendeta di Menara Hanoi untuk menyelesaikan tugas tersebut?
+    \begin{answer}
+      \Sage{} menyatakan bahwa kita masih aman.
+\begin{lstlisting}
+sage: T64 = 18446744073709551615
+sage: T64_days = T64/(60*60*24)
+sage: T64_days
+1229782938247303441/5760
+sage: T64_years = T64_days/365.25
+sage: T64_years
+5.84542046090626e11        
+sage: age_of_universe = 13.8e9
+sage: T64_years/age_of_universe
+42.3581192819294
+\end{lstlisting}
+    \end{answer}
+
+\end{exercises}
+
+\announcecomputercode
+Kode ini menghasilkan beberapa nilai pertama suatu fungsi yang didefinisikan
+oleh rekurensi dan kondisi awal.
+Kode tersebut ditulis dalam dialek Scheme dari LISP, khususnya
+\cite{ChickenScheme}.
+
+Setelah memuat ekstensi yang mencegah komputer beralih ke bilangan titik
+mengambang ketika bilangan bulat menjadi besar, fungsi Menara Hanoi dapat
+ditulis dengan mudah.
+\begin{lstlisting}
+(require-extension numbers)
+
+(define (tower-of-hanoi-moves n) 
+    (if (= n 1)
+       1
+       (+ (* (tower-of-hanoi-moves (- n 1)) 
+              2) 
+           1) ) )
+
+; Dua fungsi bantu
+(define (first-few-outputs proc n)
+    (first-few-outputs-aux proc n '()) )
+
+(define (first-few-outputs-aux proc n lst)
+    (if (< n 1)
+    lst 
+    (first-few-outputs-aux proc (- n 1) (cons (proc n) lst)) ) )
+\end{lstlisting}
+\noindent (Bagi pembaca yang belum terbiasa dengan kode rekursif:~untuk
+menghitung $T(64)$, komputer hendak menghitung $2*T(63)+1$, yang mengharuskan
+komputer menghitung $T(63)$.
+Komputer menyisihkan operasi `kali $2$' dan `tambah $1$' sejenak.
+Komputer menghitung $T(63)$ menggunakan potongan kode yang sama (itulah arti
+`rekursif'), dan untuk melakukannya komputer hendak menghitung
+$2*T(62)+1$.
+Proses ini berlanjut hingga, setelah $63$ langkah, komputer mencoba menghitung
+$T(1)$.
+Komputer lalu mengembalikan $T(1)=1$, yang memungkinkan perhitungan $T(2)$
+berlanjut, dan seterusnya, hingga perhitungan awal $T(64)$ selesai.)
+
+Fungsi-fungsi pembantu memberikan tabel beberapa nilai pertama.
+% (Some language notes:~\texttt{'()} is the empty list
+% and \texttt{cons} pushes something onto the start of a 
+% list.
+% Note that, in the last line, the function \texttt{proc}
+% is called on argument \texttt{n}.)
+Berikut adalah sesi pada baris perintah.
+\begin{lstlisting}
+#;1> (load "hanoi.scm")
+; loading hanoi.scm ...
+; loading /var/lib//chicken/6/numbers.import.so ...
+; loading /var/lib//chicken/6/chicken.import.so ...
+; loading /var/lib//chicken/6/foreign.import.so ...
+; loading /var/lib//chicken/6/numbers.so ...
+#;2> (tower-of-hanoi-moves 64)
+18446744073709551615
+#;3> (first-few-outputs tower-of-hanoi-moves 64)
+(1 3 7 15 31 63 127 255 511 1023 2047 4095 8191 16383 32767 65535 131071 262143 524287 1048575 
+2097151 4194303 8388607 16777215 33554431 67108863 134217727 268435455 536870911 1073741823 
+2147483647 4294967295 8589934591 17179869183 34359738367 68719476735 137438953471 274877906943 
+549755813887 1099511627775 2199023255551 4398046511103 8796093022207 17592186044415 
+35184372088831 70368744177663 140737488355327 281474976710655 562949953421311 1125899906842623 
+2251799813685247 4503599627370495 9007199254740991 18014398509481983 36028797018963967 
+72057594037927935 144115188075855871 288230376151711743 576460752303423487 1152921504606846975 
+2305843009213693951 4611686018427387903 9223372036854775807 18446744073709551615)
+\end{lstlisting}
+\noindent Ini adalah daftar dari $T(1)$ hingga $T(64)$ (sesi tersebut telah
+disunting dengan menambahkan pemisah baris agar mudah dibaca).
+\index{relasi rekurensi|)}
+\index{rekurensi linear|)}
+\endinput

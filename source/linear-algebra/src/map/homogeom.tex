@@ -1,0 +1,711 @@
+% Chapter 3, Topic _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\topic{Geometri Pemetaan Linear} 
+\index{geometri pemetaan linear|(}
+%The geometry of linear maps %$\map{h}{\Re^n}{\Re^m}$ 
+%is appealing both for its simplicity and for its usefulness.
+Pasangan-pasangan gambar berikut membandingkan aksi geometris pemetaan nonlinear
+\( f_1(x)=e^x \) dan \( f_2(x)=x^2 \)
+\begin{center}
+  \includegraphics{map/mp/ch3.46}
+  \hspace*{4em}
+  \includegraphics{map/mp/ch3.47}
+\end{center}
+dengan aksi pemetaan linear
+\( h_1(x)=2x \) dan \( h_2(x)=-x \).
+\begin{center}
+  \includegraphics{map/mp/ch3.48}
+  \hspace*{4em}
+  \includegraphics{map/mp/ch3.49}
+\end{center}
+Keempat gambar tersebut menunjukkan domain $\Re$ di sebelah kiri yang dipetakan
+ke kodomain $\Re$ di sebelah kanan.
+Anak panah menelusuri ke mana setiap pemetaan mengirim
+$x=0$, $x=1$, $x=2$, $x=-1$, dan $x=-2$.
+
+Pemetaan nonlinear mendistorsi domain ketika mengubahnya menjadi ruang hasil.
+Sebagai contoh,
+jarak \( f_1(1) \) dari $f_1(2)$ lebih jauh daripada jaraknya dari $f_1(0)$
+\Dash pemetaan ini meregangkan domain
+secara tidak merata, sehingga interval domain di dekat $x=2$ diregangkan lebih
+jauh daripada interval domain di dekat $x=0$.
+Pemetaan linear lebih teratur: bagi setiap pemetaan, seluruh domain diregangkan
+dengan faktor yang sama.
+Pemetaan~$h_1$ di sebelah kiri membuat setiap interval dua kali lebih lebar,
+sedangkan~$h_2$ di sebelah kanan mempertahankan panjang interval tetapi membalik
+orientasinya, seperti interval naik dari $1$ ke $2$ yang diubah menjadi interval
+turun dari $-1$ ke~$-2$.
+
+Satu-satunya pemetaan linear dari $\Re$ ke $\Re$ adalah perkalian dengan skalar,
+tetapi di dimensi yang lebih tinggi dapat terjadi lebih banyak hal.
+Sebagai contoh, transformasi linear pada $\Re^2$ berikut memutar vektor
+berlawanan arah jarum jam.\index{rotasi}\index{pemetaan linear!rotasi}
+\begin{center}
+  \includegraphics{map/mp/ch3.50}
+\end{center}
+Transformasi pada $\Re^3$ yang memproyeksikan vektor ke bidang $xz$ juga bukan
+sekadar penskalaan ulang.
+\begin{center}
+ \includegraphics{map/mp/ch3.51}
+\end{center}
+
+Meskipun lebih beragam, pemetaan linear tetap berperilaku teratur bahkan di
+dimensi yang lebih tinggi.
+Tinjau pemetaan linear $\map{h}{\Re^n}{\Re^m}$ dan gunakan basis-basis standar
+untuk merepresentasikannya dengan matriks $H$.
+Ingat dari Teorema~V.\ref{th:CanonFormForMatEquiv} bahwa $H$ dapat difaktorkan
+sebagai $H=PBQ$, dengan $P$ dan $Q$ nonsingular serta $B$ matriks identitas
+parsial. Ingat pula bahwa matriks nonsingular dapat difaktorkan menjadi
+matriks-matriks elementer\index{matriks!reduksi elementer}%
+\index{matriks reduksi elementer}
+$PBQ=T_nT_{n-1}\cdots T_sBT_{s-1}\cdots T_1$,
+yaitu matriks yang diperoleh dari identitas $I$ setelah satu operasi baris
+Gauss, sehingga setiap matriks $T$ memiliki salah satu dari tiga bentuk berikut:
+\begin{equation*}
+  I\grstep{k\rho_i}M_i(k) 
+  \qquad 
+  I\grstep{\rho_i\leftrightarrow\rho_j}P_{i,j}  
+  \qquad
+  I\grstep{k\rho_i+\rho_j}C_{i,j}(k) 
+\end{equation*}
+dengan $i\neq j$ dan $k\neq 0$.
+Jadi, jika kita memahami efek geometris pemetaan linear yang dideskripsikan oleh
+matriks identitas parsial dan efek pemetaan linear yang dideskripsikan oleh
+matriks-matriks elementer, dalam arti tertentu kita akan memahami sepenuhnya
+efek setiap pemetaan linear.
+(Agar mudah digambar, gambar-gambar di bawah dibatasi pada transformasi $\Re^2$,
+tetapi prinsipnya berlaku bagi pemetaan dari sebarang $\Re^n$ ke sebarang
+$\Re^m$.)
+
+Efek geometris transformasi linear yang direpresentasikan oleh matriks identitas
+parsial adalah proyeksi.
+\begin{equation*}
+  \colvec{x \\ y  \\ z}
+  \quad\xrightarrow{{\text{\tiny$\displaystyle\left(\begin{array}[r]{@{}c@{\hspace{0.8em}}c@{\hspace{0.8em}}c@{}}
+                1  &0  &0 \\
+                0  &1  &0 \\
+                0  &0  &0
+          \end{array}\right)$}}}
+% \begin{mat}[r]
+%       1  &0  &0   \\
+%       0  &1  &0   \\
+%       0  &0  &0   
+%     \end{mat}} % _{\stdbasis_3,\stdbasis_3}}
+  \qquad
+  \colvec{x \\ y  \\ 0}
+\end{equation*}
+
+Efek geometris matriks $M_i(k)$ adalah meregangkan vektor dengan faktor $k$
+sepanjang sumbu ke-$i$.
+Pemetaan berikut meregangkan dengan faktor $3$ sepanjang sumbu $x$.
+\begin{center}
+  \includegraphics{map/mp/ch3.52}
+\end{center}
+Jika $0\leq k<1$ atau $k<0$, komponen ke-$i$ bergerak ke arah sebaliknya, dalam
+gambar ini ke kiri.
+\begin{center}
+  \includegraphics{map/mp/ch3.53}
+\end{center}
+Kedua jenis peregangan ini disebut
+\definend{dilatasi}.\index{dilatasi}\index{pemetaan linear!dilatasi}
+
+Transformasi yang direpresentasikan oleh matriks $P_{i,j}$ menukar sumbu ke-$i$
+dan ke-$j$. Transformasi ini merupakan \definend{pencerminan}%
+\index{pencerminan}\index{pemetaan linear!pencerminan} terhadap hiperbidang
+$x_i=x_j$.
+\begin{center}
+  \includegraphics{map/mp/ch3.54}
+\end{center}
+Permutasi yang melibatkan lebih dari dua sumbu dapat diuraikan menjadi kombinasi
+pertukaran pasangan-pasangan sumbu; lihat
+\nearbyexercise{exer:PermIsCompSwaps}.
+
+Matriks-matriks yang tersisa memiliki bentuk $C_{i,j}(k)$.
+Sebagai contoh, $C_{1,2}(2)$ menjalankan $2\rho_1+\rho_2$.
+\begin{equation*}
+  \colvec{x  \\  y}\quad
+  \xrightarrow{\text{\tiny$\displaystyle\left(\begin{array}[r]{@{}c@{\hspace{0.8em}}c@{}}
+                1  &0  \\
+                2  &1  
+          \end{array}\right)$}}  % _{\stdbasis_2,\stdbasis_2}}
+   \quad\colvec{x \\ 2x+y}
+\end{equation*}
+Pada gambar di bawah, vektor $\vec{u}$ yang komponen pertamanya $1$ terkena efek
+lebih kecil daripada vektor $\vec{v}$ yang komponen pertamanya $2$.
+Vektor $\vec{u}$ dipetakan ke $h(\vec{u})$ yang hanya $2$ satuan lebih tinggi
+daripada $\vec{u}$, sedangkan $h(\vec{v})$ berada $4$ satuan lebih tinggi
+daripada $\vec{v}$.
+\begin{center}
+  \includegraphics{map/mp/ch3.55}
+\end{center}
+Setiap vektor yang komponen pertamanya $1$ akan terkena efek yang sama seperti
+$\vec{u}$: vektor itu akan bergeser ke atas sejauh $2$.
+Setiap vektor yang komponen pertamanya $2$ akan bergeser ke atas sejauh $4$,
+seperti $\vec{v}$.
+Artinya, transformasi yang direpresentasikan oleh $C_{i,j}(k)$ memengaruhi
+vektor berdasarkan komponen ke-$i$-nya.
+
+Cara lain untuk melihatnya adalah dengan meninjau aksi pemetaan ini pada persegi
+satuan. Pada gambar berikut, vektor dengan komponen pertama $0$, seperti titik
+asal, sama sekali tidak terdorong secara vertikal, sedangkan vektor dengan
+komponen pertama positif bergeser ke atas.
+Di sini semua vektor yang komponen pertamanya $1$, yakni seluruh sisi kanan
+persegi, bergeser sejauh sama.
+Secara umum, vektor-vektor pada garis vertikal yang sama bergeser sejauh sama,
+yaitu dua kali komponen pertamanya.
+Bangun yang dihasilkan memiliki alas dan tinggi yang sama dengan persegi
+(sehingga luasnya juga sama), tetapi sudut-sudut siku-sikunya lenyap.
+\begin{center}
+  \includegraphics{map/mp/ch3.56}
+\end{center}
+
+Sebagai perbandingan, gambar berikut menunjukkan efek pemetaan yang
+direpresentasikan oleh $C_{2,1}(2)$.
+Di sini vektor dipengaruhi berdasarkan komponen keduanya:
+$\binom{x}{y}$ bergeser secara horizontal sejauh dua kali $y$.
+\begin{center}
+  \includegraphics{map/mp/ch3.57}
+\end{center}
+Secara umum, bagi setiap $C_{i,j}(k)$, vektor-vektor dengan komponen ke-$i$ yang
+sama bergeser sejauh sama.
+Pemetaan semacam ini disebut
+\definend{geseran}.\index{geseran}\index{pemetaan linear!geseran}
+
+Dengan demikian, kita memahami efek geometris keempat jenis matriks pada ruas
+kanan $H=T_nT_{n-1}\cdots T_sBT_{s-1}\cdots T_1$, sehingga dalam arti tertentu
+kita memahami aksi sebarang matriks~$H$.
+Jadi, bahkan di dimensi yang lebih tinggi, geometri pemetaan linear tetap
+sederhana: geometri itu dibangun dengan merangkai sejumlah komponen yang
+masing-masing beraksi secara sederhana.
+
+Kita akan menerapkan pemahaman ini dalam dua cara.
+Cara pertama adalah membuktikan suatu pernyataan umum tentang geometri pemetaan
+linear. Ingat bahwa di bawah pemetaan linear, citra subruang merupakan subruang.
+Karena itu, transformasi linear $h$ yang direpresentasikan oleh $H$ memetakan
+garis yang melalui titik asal ke garis yang melalui titik asal.
+(Dimensi ruang citra tidak dapat melebihi dimensi ruang domain, sehingga garis
+tidak dapat dipetakan secara surjektif ke, misalnya, suatu bidang.)
+Kita akan menunjukkan bahwa $h$ memetakan setiap garis\Dash bukan hanya garis
+yang melalui titik asal\Dash ke suatu garis.
+Pembuktiannya sederhana: proyeksi identitas parsial $B$ dan setiap $T_i$
+elementer mengubah masukan berupa garis menjadi keluaran berupa garis;
+verifikasi keempat kasus tersebut menjadi isi
+\nearbyexercise{exer:ImageLinSurIsLinSur}.
+Oleh karena itu, komposisinya juga mempertahankan garis.
+% Thus, by understanding its components we can understand arbitrary square 
+% matrices $H$, in the sense that we can prove things about them.
+
+Cara kedua penerapan pemahaman geometris tentang pemetaan linear adalah untuk
+memperjelas satu pokok dalam Kalkulus.
+Gambar di bawah memperlihatkan aksi fungsi riil satu variabel
+\( y(x)=x^2+x \).
+Seperti fungsi-fungsi nonlinear yang digambarkan sebelumnya, efek geometris
+pemetaan ini tidak teratur karena efeknya berbeda pada titik-titik domain yang
+berbeda. Sebagai contoh, ketika masukan~$x$ bergerak dari $2$ ke $-2$, keluaran
+terkait~$y(x)$ mula-mula menurun, berhenti sesaat, lalu meningkat.
+\begin{center}
+  \includegraphics{map/mp/ch3.58}
+\end{center}
+Namun, dalam Kalkulus kita tidak terlalu berfokus pada pemetaan secara
+keseluruhan, melainkan pada efek lokalnya.
+Di bawah ini kita mencermati perilaku pemetaan tersebut di dekat $x=1$.
+Turunannya adalah $dy/dx=2x+1$, sehingga di dekat \( x=1 \) berlaku
+\( \Delta y\approx 3\cdot\Delta x \).
+%; in other words, \( (1.001^2+1.001)-(1^2+1)\approx 3\cdot (0.001) \).
+Artinya, di suatu persekitaran $x=1$, pemetaan ini membuat domain membesar dengan
+faktor $3$ \Dash secara lokal, pemetaan tersebut kira-kira merupakan dilatasi.
+%The map $y$ is locally regular.
+Gambar di bawah memperlihatkannya sebagai interval kecil
+$(1-\Delta x\,..\,1+\Delta x)$ dalam domain yang dibawa ke interval
+$(2-\Delta y\,..\,2+\Delta y)$ dalam kodomain yang tiga kali lebih lebar.
+% $\Delta y \approx 3\cdot \Delta x$.
+\begin{center}
+  \includegraphics{map/mp/ch3.59}
+\end{center}
+% (When the above picture is drawn in the traditional cartesian way
+% then the prior sentence about the rate of growth of $y(x)$ is usually
+% stated:~the derivative $3$ is the slope of the 
+% line tangent to the graph at the point $(1,2)$.)
+
+Di dimensi yang lebih tinggi, gagasan intinya sama, tetapi lebih banyak hal dapat
+terjadi. Bagi fungsi \( \map{y}{\Re^n}{\Re^m} \) dan titik
+\( \vec{x}\in\Re^n \), turunan didefinisikan sebagai pemetaan linear
+\( \map{h}{\Re^n}{\Re^m} \) yang paling baik menghampiri perubahan \( y \) di
+dekat \( \vec{x} \).
+Jadi, geometri yang dideskripsikan di atas berlaku langsung bagi turunan.
+%Calculus considers the map 
+%that locally approximates the change \( \Delta x\mapsto 3\cdot\Delta x \)
+%(instead of the actual change map
+%\( \Delta x\mapsto y(1+\Delta x)-y(1) \)) because the local map 
+%is easier.
+%It is easier in that, if the
+%input change is doubled, or tripled, etc., then the
+%resulting output change will double, or triple, etc.
+%\begin{equation*}
+%  3(r\,\Delta x)=r\,(3\Delta x)
+%\end{equation*}
+%(for $r\in\Re$), 
+%and it is easier in that 
+%adding changes in input adds the resulting output changes.
+%\begin{equation*}
+%  3(\Delta x_1+\Delta x_2)=3\Delta x_1+3\Delta x_2
+%\end{equation*}
+%In short, what's
+%easy about \( \Delta x\mapsto 3\cdot\Delta x \) is that
+%it is linear.
+
+Sebagai penutup, kita perhatikan bagaimana sudut pandang ini memperjelas hasil
+tentang turunan yang sering disalahpahami, yaitu Aturan Rantai.
+Ingat bahwa, di bawah syarat-syarat yang sesuai pada kedua fungsi, turunan
+komposisinya adalah sebagai berikut.
+\begin{equation*}
+  \frac{d\,(\composed{g}{f})}{dx}(x) = 
+  \frac{dg}{dx}(f(x))\cdot\frac{df}{dx}(x)
+\end{equation*} 
+Sebagai contoh, turunan $\sin(x^2+3x)$ adalah
+$\cos(x^2+3x)\cdot(2x+3)$.
+
+Dari mana hasil ini berasal?
+Tinjau $\map{f,g}{\Re}{\Re}$.
+\begin{center}
+  \includegraphics{map/mp/ch3.60}
+\end{center}
+Pemetaan pertama $f$ mendilatasi persekitaran $x$ dengan faktor
+\begin{equation*}
+  \frac{df}{dx}(x) 
+\end{equation*}
+kemudian pemetaan kedua $g$ mendilatasi persekitaran $f(x)$ dengan faktor
+\begin{equation*}
+  \frac{dg}{dx}(\,f(x)\,) 
+\end{equation*}
+dan ketika keduanya digabungkan, komposisi tersebut mendilatasi dengan hasil
+kali kedua faktor itu.
+Di dimensi yang lebih tinggi, pemetaan yang menyatakan perubahan fungsi di dekat
+suatu titik merupakan pemetaan linear dan direpresentasikan oleh matriks.
+Aturan Rantai mengalikan matriks-matriks tersebut.
+
+% Thus, the geometry of linear maps $\map{h}{\Re^n}{\Re^m}$ 
+% is appealing both for its simplicity and for its usefulness.
+
+\begin{exercises}
+  \item 
+    Gunakan penguraian $H=PBQ$ untuk menemukan kombinasi dilatasi, pencerminan,
+    geseran, dan proyeksi yang menghasilkan pemetaan
+    $\map{h}{\Re^3}{\Re^3}$ yang direpresentasikan terhadap basis-basis standar
+    oleh matriks berikut.
+    \begin{equation*}
+      H=\begin{mat}[r]
+        1  &2  &1  \\
+        3  &6  &0  \\
+        1  &2  &2
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Reduksi Gauss berikut
+      \begin{multline*}
+        \grstep[-\rho_1+\rho_3]{-3\rho_1+\rho_2}
+        \begin{mat}[r]
+          1  &2  &1  \\
+          0  &0  &-3 \\
+          0  &0  &1
+        \end{mat}
+        \grstep{(1/3)\rho_2+\rho_3}
+        \begin{mat}[r]
+          1  &2  &1  \\
+          0  &0  &-3 \\
+          0  &0  &0
+        \end{mat}                                     \\
+        \grstep{(-1/3)\rho_2}
+        \begin{mat}[r]
+          1  &2  &1  \\
+          0  &0  &1 \\
+          0  &0  &0
+        \end{mat}
+        \grstep{-\rho_2+\rho_1}
+        \begin{mat}[r]
+          1  &2  &0  \\
+          0  &0  &1 \\
+          0  &0  &0
+        \end{mat}
+      \end{multline*}
+      menghasilkan bentuk eselon tereduksi matriks tersebut.
+      Selanjutnya, dua operasi kolom berupa menambahkan $-2$ kali kolom pertama
+      ke kolom kedua, kemudian menukar kolom kedua dan ketiga, menghasilkan
+      identitas parsial berikut.
+      \begin{equation*} 
+        B=\begin{mat}[r]
+          1  &0  &0  \\
+          0  &1  &0  \\ 
+          0  &0  &0
+        \end{mat}
+      \end{equation*}
+      Semua langkah itu dapat dinyatakan dalam bentuk matriks sebagai berikut:~jika
+      \begin{equation*}
+        R=
+        \begin{mat}[r]
+          1  &-1    &0  \\
+          0  &1     &0  \\
+          0  &0     &1         
+        \end{mat}
+        \begin{mat}[r]
+          1  &0    &0  \\
+          0  &-1/3 &0  \\
+          0  &0    &1
+        \end{mat}
+        \begin{mat}[r]
+          1  &0    &0  \\
+          0  &1    &0  \\
+          0  &1/3  &1         
+        \end{mat}
+        \begin{mat}[r]
+          1  &0  &0  \\
+          0  &1  &0  \\
+         -1  &0  &1         
+        \end{mat}
+        \begin{mat}[r]
+          1  &0  &0  \\
+         -3  &1  &0  \\
+          0  &0  &1         
+        \end{mat}
+      \end{equation*}
+      dan
+      \begin{equation*}
+        C=
+        \begin{mat}[r]
+          1  &-2    &0  \\
+          0  &1     &0  \\
+          0  &0     &1         
+        \end{mat}
+        \begin{mat}[r]
+          1  &0     &0  \\
+          0  &0     &1  \\
+          0  &1     &0         
+        \end{mat}
+      \end{equation*}
+      maka $RHC=B$. Karena itu,
+      $H=R^{-1}BC^{-1}$, yang merupakan faktorisasi berbentuk $PBQ$.
+    \end{answer}
+  \item 
+    Kombinasi dilatasi, pencerminan, geseran, dan proyeksi apa yang menghasilkan
+    rotasi sebesar $2\pi/3$ radian berlawanan arah jarum jam?
+    \begin{answer}
+      Pertama-tama, kita merepresentasikan pemetaan tersebut dengan matriks $H$,
+      lalu menjalankan operasi baris dan, jika diperlukan, operasi kolom untuk
+      mereduksinya menjadi matriks identitas parsial.
+      Setelah itu, kita menerjemahkannya menjadi faktorisasi $H=PBQ$.
+      Substitusi ke dalam matriks umum
+          \begin{equation*}
+            \rep{r_\theta}{\stdbasis_2,\stdbasis_2}
+            =
+            \begin{mat}
+              \cos\theta  &-\sin\theta  \\
+              \sin\theta  &\cos\theta
+            \end{mat}
+          \end{equation*}
+          memberikan representasi berikut.
+          \begin{equation*}
+            \rep{r_{2\pi/3}}{\stdbasis_2,\stdbasis_2}
+            =
+            \begin{mat}[r]
+              -1/2        &-\sqrt{3}/2  \\
+              \sqrt{3}/2  &-1/2
+            \end{mat}
+          \end{equation*}
+          Metode Gauss berjalan secara rutin.
+          \begin{equation*}
+            \grstep{\sqrt{3}\rho_1+\rho_2}
+            \begin{mat}[r]
+              -1/2        &-\sqrt{3}/2  \\
+               0          &-2
+            \end{mat}
+            \grstep[(-1/2)\rho_2]{-2\rho_1}
+            \begin{mat}[r]
+               1          &\sqrt{3}    \\
+               0          &1
+            \end{mat}
+            \grstep{-\sqrt{3}\rho_2+\rho_1}
+            \begin{mat}[r]
+               1          &0   \\
+               0          &1
+            \end{mat}
+          \end{equation*}
+          Hal itu dapat diterjemahkan menjadi persamaan matriks berikut.
+          \begin{equation*}
+            \begin{mat}[r]
+              1  &-\sqrt{3}  \\
+              0  &1
+            \end{mat}
+            \begin{mat}[r]
+              -2  &0    \\
+               0  &-1/2
+            \end{mat}
+            \begin{mat}[r]
+               1         &0  \\
+               \sqrt{3}  &1
+            \end{mat}
+            \begin{mat}[r]
+              -1/2        &-\sqrt{3}/2  \\
+              \sqrt{3}/2  &-1/2
+            \end{mat}
+            =I
+          \end{equation*}
+          Mengambil invers untuk menyelesaikan $H$ menghasilkan faktorisasi ini.
+          \begin{equation*}
+            \begin{mat}[r]
+              -1/2        &-\sqrt{3}/2  \\
+              \sqrt{3}/2  &-1/2
+            \end{mat}
+            =
+            \begin{mat}[r]
+                1         &0  \\
+               -\sqrt{3}  &1
+            \end{mat}
+            \begin{mat}[r]
+              -1/2  &0    \\
+               0    &-2
+            \end{mat}
+            \begin{mat}[r]
+              1  &\sqrt{3}  \\
+              0  &1
+            \end{mat}
+            I
+          \end{equation*}
+    \end{answer}
+  \item 
+    Jika suatu pemetaan nonsingular, kita tidak memerlukan operasi kolom untuk
+    mengubah representasinya menjadi matriks identitas, sehingga dalam $H=PBQ$
+    matriks $Q$ merupakan identitas.
+    Salah satu contoh pemetaan nonsingular adalah transformasi
+    $\map{t_{-\pi/4}}{\Re^2}{\Re^2}$ yang memutar vektor sebesar $\pi/4$~radian
+    searah jarum jam.
+    \begin{exparts}
+      \partsitem Temukan matriks $H$ yang merepresentasikan pemetaan ini terhadap
+        basis-basis standar.
+      \partsitem Gunakan Gauss--Jordan untuk mereduksi $H$ menjadi identitas
+        tanpa operasi kolom.
+      \partsitem
+        Terjemahkan hasil tersebut menjadi persamaan matriks
+        $T_jT_{j-1}\cdots T_1H=I$.
+      \partsitem Selesaikan persamaan matriks itu untuk $H$.
+      \partsitem Deskripsikan $H$ sebagai kombinasi dilatasi, pencerminan,
+        geseran, dan proyeksi (identitas merupakan proyeksi trivial).
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ingat bahwa rotasi sebesar $\theta$~radian berlawanan arah
+          jarum jam direpresentasikan terhadap basis standar sebagai berikut.
+          \begin{equation*}
+            \rep{t_{\theta}}{\stdbasis_2,\stdbasis_2}
+            =\begin{mat}
+              \cos\theta  &-\sin\theta  \\
+              \sin\theta  &\cos\theta
+             \end{mat}
+          \end{equation*}
+          Sudut searah jarum jam merupakan negatif dari sudut berlawanan arah
+          jarum jam.
+          \begin{equation*}
+            \rep{t_{-\pi/4}}{\stdbasis_2,\stdbasis_2}
+            =\begin{mat}
+              \cos(-\pi/4)  &-\sin(-\pi/4)  \\
+              \sin(-\pi/4)  &\cos(-\pi/4)
+            \end{mat}
+            =\begin{mat}[r]
+              \sqrt{2}/2  &\sqrt{2}/2  \\
+              -\sqrt{2}/2 &\sqrt{2}/2
+            \end{mat}
+          \end{equation*}
+        \partsitem
+          Reduksi Gauss--Jordan berikut
+          \begin{equation*}
+            \grstep{\rho_1+\rho_2}
+            \begin{mat}[r]
+              \sqrt{2}/2  &\sqrt{2}/2  \\
+              0           &\sqrt{2}
+            \end{mat}
+            \grstep[(1/\sqrt{2})\rho_2]{(2/\sqrt{2})\rho_1}
+            \begin{mat}[r]
+              1  &1  \\
+              0  &1
+            \end{mat}
+            \grstep{-\rho_2+\rho_1}
+            \begin{mat}[r]
+              1  &0  \\
+              0  &1
+            \end{mat}
+          \end{equation*}
+          menghasilkan matriks identitas.
+          Jadi, kita tidak memerlukan operasi pertukaran kolom untuk berakhir
+          pada identitas parsial.
+        \partsitem Dalam perkalian matriks, reduksinya adalah
+          \begin{equation*}
+            \begin{mat}[r]
+              1  &-1 \\
+              0  &1
+            \end{mat}
+            \begin{mat}[r]
+              2/\sqrt{2}  &0         \\
+              0           &1/\sqrt{2}
+            \end{mat}
+            \begin{mat}[r]
+              1  &0 \\
+              1  &1
+            \end{mat}
+            H
+            =I
+          \end{equation*}
+          (perhatikan bahwa komposisi operasi Gauss dibaca dari kanan ke kiri).
+        \partsitem Mengambil invers
+          \begin{equation*}
+            H
+            =
+            \underbrace{
+              \begin{mat}[r]
+                1  &0 \\
+                -1  &1
+              \end{mat}
+              \begin{mat}[r]
+                \sqrt{2}/2  &0         \\
+                0           &\sqrt{2}
+              \end{mat}
+              \begin{mat}[r]
+                1  &1 \\
+                0  &1
+              \end{mat}
+             }_P
+            I
+          \end{equation*}
+          memberikan faktorisasi $H$ yang diinginkan.
+          Identitas parsialnya adalah $I$.
+          % , and $Q$ is trivial, that is, it is also an identity
+          % matrix.
+        \partsitem Dengan membaca komposisi dari kanan ke kiri (dan mengabaikan
+          matriks identitas sebagai langkah trivial), kita memperoleh bahwa $H$
+          berefek sama seperti pertama-tama menjalankan geseran berikut,
+          \begin{center}
+            \includegraphics{map/mp/ch3.95}
+         \end{center}
+         kemudian dilatasi yang mengalikan semua komponen pertama dengan
+         $\sqrt{2}/2$ (ini merupakan penyusutan karena
+         $\sqrt{2}/2\approx0.707$ kurang dari $1$) dan semua komponen kedua
+         dengan $\sqrt{2}$, lalu geseran lain.
+          \begin{center}
+            \includegraphics{map/mp/ch3.96}
+         \end{center}
+         Sebagai contoh, kita mulai dengan vektor satuan yang sudutnya terhadap
+         sumbu $x$ adalah $\pi/6$, lalu menerapkan komponen-komponen $H$ secara
+         berurutan.
+          \begin{center}
+            \includegraphics{map/mp/ch3.97}
+         \end{center}
+         Kita dapat dengan mudah memverifikasi bahwa vektor yang dihasilkan
+         memiliki panjang satu dan membentuk sudut $-\pi/12$ terhadap sumbu
+         $x$, yang memang merupakan rotasi sebesar $\pi/4$ radian searah jarum
+         jam karena $(\pi/6)-(\pi/4)=-\pi/12$.
+      \end{exparts}
+    \end{answer}
+  \item \label{exer:RToRIsScalMult} 
+    Tunjukkan bahwa setiap transformasi linear pada $\Re^1$ merupakan pemetaan
+    $h_k$ yang mengalikan dengan skalar, $x\mapsto kx$.
+    \begin{answer}
+      Representasikan pemetaan tersebut terhadap basis-basis standar
+      $\stdbasis_1,\stdbasis_1$.
+      Hasilnya adalah matriks $\nbyn{1}$ yang satu-satunya entri merupakan
+      skalar~$k$.
+    \end{answer}
+  \item \label{exer:ImageLinSurIsLinSur} 
+    Tunjukkan bahwa pemetaan linear mempertahankan struktur linear suatu ruang.
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa bagi setiap pemetaan linear dari $\Re^n$ ke
+         $\Re^m$, citra setiap garis merupakan garis.
+         Citranya dapat berupa garis degenerat, yaitu satu titik saja.
+      \partsitem Tunjukkan bahwa citra setiap permukaan linear merupakan
+         permukaan linear. Hasil ini memperumum fakta bahwa di bawah pemetaan
+         linear, citra subruang merupakan subruang.
+      \partsitem Pemetaan linear juga mempertahankan gagasan linear lainnya.
+         Tunjukkan bahwa pemetaan linear mempertahankan sifat ``berada di
+         antara'':~jika titik $B$ berada di antara $A$ dan $C$, maka citra $B$
+         berada di antara citra $A$ dan citra $C$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Garis merupakan himpunan bagian dari $\Re^n$ yang berbentuk
+          $\set{\vec{v}=\vec{u}+t\cdot\vec{w}\suchthat t\in\Re}$.
+          Citra titik pada garis tersebut adalah
+          $h(\vec{v})=h(\vec{u}+t\cdot\vec{w})=h(\vec{u})+t\cdot h(\vec{w})$,
+          dan himpunan vektor semacam itu, ketika $t$ menjelajahi bilangan riil,
+          merupakan garis (meskipun degenerat jika $h(\vec{w})=\zero$).
+        \partsitem Pernyataan ini merupakan perluasan langsung dari argumen
+          sebelumnya.
+        \partsitem Jika titik~$B$ berada di antara titik~$A$ dan~$C$, maka $B$
+          terletak pada garis dari $A$ ke $C$.
+          Artinya, terdapat $t\in (0\,..\,1)$ sedemikian sehingga
+          $\vec{b}=\vec{a}+t\cdot (\vec{c}-\vec{a})$ (dengan $B$ sebagai titik
+          ujung $\vec{b}$, dan seterusnya).
+          Seperti dalam argumen butir pertama, linearitas menunjukkan bahwa
+          $h(\vec{b})=h(\vec{a})+t\cdot h(\vec{c}-\vec{a})$.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Gunakan gambar seperti yang muncul dalam pembahasan Aturan Rantai untuk
+    menjawab pertanyaan berikut:~jika fungsi $\map{f}{\Re}{\Re}$ memiliki
+    invers, apakah hubungan antara cara fungsi tersebut\Dash secara lokal dan
+    hampiran\Dash mendilatasi ruang dan cara inversnya mendilatasi ruang?
+    \begin{answer}
+      Kedua faktor dilatasi itu saling invers.
+      Sebagai contoh, bagi $x\in\Re$ yang tetap, jika $f^\prime (x)=k$ (dengan
+      $k\neq 0$), maka $(f^{-1})^\prime (f(x))=1/k$.
+      \begin{center}
+        \includegraphics{map/mp/ch3.98}
+     \end{center}
+    \end{answer}
+  \item \label{exer:PermIsCompSwaps}
+    Tunjukkan bahwa bagi sebarang permutasi, yakni sebarang pengurutan ulang $p$
+    atas bilangan $1$, \ldots, $n$, pemetaan
+    \begin{equation*}
+      \colvec{x_1 \\ x_2 \\ \vdots\\ x_n}
+      \mapsto
+      \colvec{x_{p(1)} \\ x_{p(2)} \\ \vdots \\ x_{p(n)}}
+    \end{equation*}
+    dapat dijalankan sebagai komposisi pemetaan-pemetaan yang masing-masing hanya
+    menukar satu pasangan koordinat.
+    \textit{Petunjuk:} Anda dapat menggunakan induksi pada $n$.
+    (\textit{Catatan:}~dalam bab keempat kita akan menunjukkan hasil ini dan juga
+    menunjukkan bahwa paritas banyak pertukaran yang digunakan ditentukan oleh
+    $p$. Artinya, meskipun suatu permutasi dapat dinyatakan dengan dua cara yang
+    menggunakan banyak pertukaran berbeda, kedua cara itu sama-sama menggunakan
+    banyak pertukaran genap atau sama-sama menggunakan banyak pertukaran ganjil.)
+    \begin{answer}
+      Kita dapat menunjukkannya dengan induksi pada banyak komponen vektor.
+      Dalam kasus dasar $n=1$, satu-satunya permutasi adalah permutasi trivial,
+      dan pemetaan
+      \begin{equation*}
+        \colvec{x_1}
+        \mapsto
+        \colvec{x_1}
+      \end{equation*}
+      dapat dinyatakan sebagai komposisi pertukaran\Dash yaitu nol pertukaran.
+      Untuk langkah induksi, kita mengasumsikan bahwa pemetaan yang diinduksi oleh
+      sebarang permutasi atas kurang dari $n$ bilangan dapat dinyatakan hanya
+      dengan pertukaran, lalu meninjau pemetaan yang diinduksi oleh permutasi $p$
+      atas $n$ bilangan.
+      \begin{equation*}
+        \colvec{x_1 \\ x_2 \\ \vdots \\ x_n}
+        \mapsto
+        \colvec{x_{p(1)} \\ x_{p(2)} \\ \vdots \\ x_{p(n)}}
+      \end{equation*}
+      Tinjau bilangan~$i$ sedemikian sehingga $p(i)=n$.
+      Pemetaan
+      \begin{equation*}
+        \colvec{x_1      \\ x_2      \\ \vdots \\ x_i      \\ \vdots \\ x_n}
+        \mapsunder{\hat{p}}
+        \colvec{x_{p(1)} \\ x_{p(2)} \\ \vdots \\ x_{p(n)} \\ \vdots  \\ x_{n}}
+      \end{equation*}
+      jika diikuti dengan pertukaran komponen ke-$i$ dan ke-$n$, akan menghasilkan
+      pemetaan~$p$.
+      Hipotesis induksi menyatakan bahwa $\hat{p}$ dapat diwujudkan sebagai
+      komposisi pertukaran.
+    \end{answer}
+\end{exercises}
+\index{geometri pemetaan linear|)}
+\endinput

@@ -1,0 +1,388 @@
+% Chapter 4, Section 1 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\chapter{Keserupaan}
+Kita telah menunjukkan bahwa bagi sebarang homomorfisme terdapat basis $B$
+dan~$D$ sehingga matriks yang merepresentasikan pemetaan tersebut memiliki
+bentuk blok identitas parsial.
+\begin{equation*}
+  \rep{h}{B,D}
+  =
+    \begin{pmat}{c|c}
+       \text{\textit{Identitas}}  &\text{\textit{Nol}}   \\
+       \hline
+       \text{\textit{Nol}}      &\text{\textit{Nol}}
+    \end{pmat}
+\end{equation*}
+Representasi ini mendeskripsikan pemetaan yang membawa
+\( c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n \) ke
+\(c_1\vec{\delta}_1+\dots+c_k\vec{\delta}_k+\zero+\dots+\zero \), dengan $n$
+sebagai dimensi domain dan \( k \) sebagai dimensi daerah hasil.
+Dalam representasi ini, tindakan pemetaan mudah dipahami karena sebagian besar
+entri matriks bernilai nol.
+
+Bab ini meninjau kasus khusus ketika domain dan kodomain sama.
+Dalam hal ini, wajar jika kita menghendaki basis domain dan basis kodomain juga
+sama.
+Artinya, kita menginginkan basis \( B \) sehingga \( \rep{t}{B,B} \) sesederhana
+mungkin, dengan `sederhana' berarti memiliki banyak entri nol.
+Kita akan mendapati bahwa matriks berbentuk blok identitas parsial seperti di
+atas tidak selalu dapat diperoleh, tetapi kita akan mengembangkan bentuk yang
+mendekatinya, yaitu representasi yang hampir diagonal.
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Ruang Vektor Kompleks}
+\index{ruang vektor!di atas bilangan kompleks}
+%<*ReasonForShiftToComplexNumbers>
+Dalam bab ini kita perlu memfaktorkan polinomial.
+Namun, banyak polinomial tidak dapat difaktorkan di atas bilangan real.
+Sebagai contoh, \( x^2+1 \) tidak dapat difaktorkan menjadi hasil kali dua
+polinomial linear berkoefisien real; untuk itu diperlukan bilangan kompleks,
+$x^2+1=(x-i)(x+i)$.
+
+Karena itu, dalam bab ini kita akan menggunakan bilangan kompleks sebagai
+skalar, termasuk sebagai entri vektor dan matriks.
+Artinya, kita beralih dari mempelajari ruang vektor di atas bilangan real ke
+ruang vektor di atas bilangan kompleks.\index{bilangan kompleks!ruang vektor di atas}
+Setiap bilangan real merupakan bilangan kompleks dan sebagian besar contoh
+dalam bab ini hanya menggunakan bilangan real. Meskipun demikian, teorema
+pentingnya mengharuskan skalar berupa bilangan kompleks.
+%</ReasonForShiftToComplexNumbers>
+Jadi, bagian pertama ini merupakan tinjauan bilangan kompleks.
+
+Dalam buku ini, kita beralih ke konteks yang lebih umum dengan menggunakan
+skalar kompleks karena alasan pragmatis:~peralihan tersebut diperlukan untuk
+melanjutkan pembahasan.
+Namun, gagasan membentuk ruang vektor dengan mengambil skalar dari struktur
+selain bilangan real juga menarik dan berguna.
+Penyajian menarik yang menggunakan pendekatan ini sejak awal terdapat dalam
+\cite{Halmos} dan \cite{HoffmanKunze}.
+
+
+
+
+
+
+\subsectionoptional{Faktorisasi Polinomial dan Bilangan Kompleks}
+\textit{Subbagian ini hanya merupakan tinjauan.
+  Untuk pembahasan lengkap, termasuk pembuktian, lihat \cite{Ebbinghaus}.}
+
+%<*PolynomialReview0>
+Tinjau suatu polinomial\index{polinomial}
+$p(x)=c_nx^n+\dots+c_1x+c_0$ dengan
+koefisien utama\index{polinomial!koefisien utama}
+$c_n\neq 0$.
+Kita menyebutnya polinomial \definend{berderajat}~$n$
+\index{polinomial!derajat}\index{derajat polinomial}.
+Jika $n=0$, maka $p$ merupakan polinomial konstan
+\index{polinomial!konstan}\index{polinomial konstan}, $p(x)=c_0$.
+Polinomial konstan yang bukan polinomial nol, yaitu $c_0\neq 0$, berderajat
+nol.
+Kita definisikan polinomial nol berderajat $-\infty$.
+%</PolynomialReview0>
+
+\begin{remark}
+Mendefinisikan derajat polinomial nol sebagai $-\infty$ %, which most authors do, 
+membuat persamaan $\text{derajat}(fg)=\text{derajat}(f)+\text{derajat}(g)$
+berlaku bagi semua polinomial.
+\end{remark}
+
+%<*PolynomialReview1>
+Seperti bilangan bulat, polinomial juga memiliki operasi pembagian; misalnya,
+`\( 4 \) termuat \( 5 \) kali dalam \( 21 \) dengan sisa \( 1 \)'.
+%</PolynomialReview1>
+
+\begin{theorem}[Teorema Pembagian bagi Polinomial] \label{th:EuclidForPolys}
+\index{teorema pembagian}\index{polinomial!teorema pembagian}
+%<*th:EuclidForPolys>
+Misalkan \( p(x) \) suatu polinomial.
+Jika \( d(x) \) merupakan polinomial tak nol, maka terdapat polinomial
+\definend{hasil bagi} dan \definend{sisa}, yaitu \( q(x) \) dan \( r(x) \),
+sedemikian sehingga
+\begin{equation*}
+  p(x)=d(x)\cdot q(x)+r(x)
+\end{equation*}
+dengan derajat \( r(x) \) lebih kecil secara ketat daripada derajat \( d(x) \).
+%</th:EuclidForPolys>
+\end{theorem}
+
+Inti pernyataan bilangan bulat `\( 4 \) termuat \( 5 \) kali dalam \( 21 \)
+dengan sisa \( 1 \)' adalah bahwa sisanya lebih kecil daripada \( 4 \):~walaupun
+\( 4 \) termuat \( 5 \) kali, bilangan itu tidak termuat \( 6 \) kali.
+Demikian pula, klausa terakhir dalam pernyataan pembagian polinomial sangat
+penting.
+
+\begin{example}
+Jika \( p(x)=2x^3-3x^2+4x \) dan \( d(x)=x^2+1 \), maka \( q(x)=2x-3 \) dan
+\( r(x)=2x+3 \).
+Perhatikan bahwa derajat \( r(x) \) lebih kecil daripada derajat \( d(x) \).
+\end{example}
+
+\begin{corollary} \label{co:PolyDividedByLinearPolyIsConstant}
+%<*co:PolyDividedByLinearPolyIsConstant>
+Sisa pembagian \( p(x) \) oleh \( x-\lambda \) adalah polinomial konstan
+\( r(x)=p(\lambda) \).
+%</co:PolyDividedByLinearPolyIsConstant>
+\end{corollary}
+
+\begin{proof}
+%<*pf:PolyDividedByLinearPolyIsConstant>
+Sisa tersebut harus berupa polinomial konstan karena derajatnya lebih kecil
+daripada derajat pembagi \( x-\lambda \).
+Untuk menentukan konstantanya, ambil pembagi $d(x)$ dalam teorema sebagai
+$x-\lambda$, lalu substitusikan \( \lambda\/ \) bagi $x$.
+%</pf:PolyDividedByLinearPolyIsConstant>
+\end{proof}
+
+%<*PolynomialFactor>
+Jika suatu pembagi \( d(x) \) membagi habis polinomial yang dibagi \( p(x) \),
+yang berarti bahwa \( r(x) \) merupakan polinomial nol, maka \( d(x) \) disebut
+faktor\index{faktor}\index{polinomial!faktor} dari \( p(x) \).
+Setiap akar\index{akar}\index{polinomial!akar} faktor tersebut, yaitu
+setiap \( \lambda\in\Re \) yang memenuhi \( d(\lambda)=0 \), juga merupakan akar
+\( p(x) \), sebab \( p(\lambda)=d(\lambda)\cdot q(\lambda)=0 \).
+%</PolynomialFactor>
+
+\begin{corollary}  \label{co:RootOfPolyIsAssocLinearFactor}
+%<*co:RootOfPolyIsAssocLinearFactor>
+Jika \( \lambda \) merupakan akar polinomial \( p(x) \), maka \( x-\lambda \)
+membagi habis \( p(x) \); artinya, $x-\lambda$ merupakan faktor $p(x)$.
+%</co:RootOfPolyIsAssocLinearFactor>
+\end{corollary}
+
+\begin{proof}
+%<*pf:RootOfPolyIsAssocLinearFactor>
+Menurut korolari di atas, $p(x)=(x-\lambda)\cdot q(x)+p(\lambda)$.
+Karena $\lambda$ merupakan akar, $p(\lambda)=0$, sehingga $x-\lambda$
+merupakan faktor.
+%</pf:RootOfPolyIsAssocLinearFactor>
+\end{proof}
+
+Akar berulang suatu polinomial adalah bilangan $\lambda$ sedemikian sehingga
+polinomial tersebut habis dibagi oleh $(x-\lambda)^n$ untuk suatu pangkat yang
+lebih besar daripada satu.
+Pangkat terbesar seperti itu disebut \definend{multiplisitas}
+\index{multiplisitas akar}\index{polinomial!multiplisitas} dari~$\lambda$.
+
+Mencari akar dan faktor polinomial berderajat tinggi dapat menjadi sulit.
+Namun, bagi polinomial berderajat dua kita memiliki rumus kuadrat:~akar-akar
+\( ax^2+bx+c \) adalah
+\begin{equation*}
+   \lambda_1=\frac{-b+\sqrt{b^2-4ac}}{2a}
+   \qquad
+   \lambda_2=\frac{-b-\sqrt{b^2-4ac}}{2a}
+\end{equation*}
+(jika diskriminan \( b^2-4ac \) negatif, polinomial tersebut tidak memiliki
+akar bilangan real).
+Polinomial yang tidak dapat difaktorkan menjadi dua polinomial berderajat lebih
+rendah dengan koefisien real disebut tak tereduksi di atas bilangan real.
+\index{polinomial tak tereduksi}\index{polinomial!tak tereduksi}
+
+\begin{theorem}  \label{th:CubicsAndHigherFactor}
+%<*th:CubicsAndHigherFactor>
+Setiap polinomial konstan atau linear tak tereduksi di atas bilangan real.
+Suatu polinomial kuadrat tak tereduksi di atas bilangan real jika dan hanya jika
+diskriminannya negatif.
+Tidak ada polinomial kubik atau berderajat lebih tinggi yang tak tereduksi di
+atas bilangan real.
+%</th:CubicsAndHigherFactor>
+\end{theorem}
+
+\begin{corollary}  \label{co:RealPolysFactorIntoLinearsAndQuads}
+%<*co:RealPolysFactorIntoLinearsAndQuads>
+Setiap polinomial berkoefisien real dapat difaktorkan menjadi hasil kali
+polinomial linear dan polinomial kuadrat tak tereduksi berkoefisien real.
+Faktorisasi tersebut unik; sebarang dua faktorisasi memiliki faktor-faktor yang
+sama dengan pangkat yang sama pula.
+%</co:RealPolysFactorIntoLinearsAndQuads>
+\end{corollary}
+
+Perhatikan analoginya dengan faktorisasi prima bilangan bulat.
+Dalam kedua kasus, klausa keunikan sangat berguna.
+
+\begin{example}
+Karena keunikan, tanpa mengalikan semua faktornya kita mengetahui bahwa
+\( (x+3)^2(x^2+1)^3 \) tidak sama dengan \( (x+3)^4(x^2+x+1)^2 \).
+\end{example}
+
+\begin{example}
+Menurut keunikan, jika \( c(x)=m(x)\cdot q(x) \), dengan
+\( c(x)=(x-3)^2(x+2)^3 \) dan \( m(x)=(x-3)(x+2)^2 \), maka kita mengetahui
+bahwa \( q(x)=(x-3)(x+2) \).
+\end{example}
+
+%<*ComplexNumbers>
+Walaupun \( x^2+1 \) tidak memiliki akar real sehingga tidak dapat difaktorkan
+di atas bilangan real, andaikan terdapat suatu akar\Dash yang secara tradisional
+dilambangkan dengan \( i \)\Dash sedemikian sehingga \( i^2+1=0 \). Dengan
+demikian, \( x^2+1 \) dapat difaktorkan menjadi hasil kali polinomial linear,
+\( (x-i)(x+i) \).
+Jika akar \( i \) ini kita tambahkan pada bilangan real dan sistem baru tersebut
+kita tutup terhadap penjumlahan dan perkalian, kita memperoleh bilangan
+kompleks,\index{bilangan kompleks}
+\( \C=\set{a+bi\suchthat \text{$a,b\in\R$ dan $i^2=-1$}} \).
+%</ComplexNumbers>
+
+Bagi skalar $z\in\C$, dengan $z=a+bi$, kita menyebut $a$ sebagai
+\definend{bagian riil} dari~$z$ dan~$b$ sebagai \definend{bagian imajiner}.
+Bilangan kompleks sering kita gambarkan pada \definend{bidang kompleks}
+\index{bidang kompleks}, dengan $a$ digambar pada \definend{sumbu riil}
+\index{sumbu riil}, yaitu sumbu horizontal, dan $b$ digambar pada
+\definend{sumbu imajiner}\index{sumbu imajiner}, yaitu sumbu vertikal.
+Perhatikan bahwa jarak titik tersebut dari titik asal adalah panjangnya,
+$|a+bi|=\sqrt{a^2+b^2}$.
+
+%<*ComplexOperations>
+Ingat kembali definisi penjumlahan bilangan kompleks dan perkalian skalar,
+\begin{equation*}
+   (a+bi)\,+\,(c+di)=(a+c)+(b+d)i                  
+  \qquad
+  r\cdot(a+bi)=(ra)+(rb)i
+\end{equation*}
+(sehingga pengurangannya adalah $(a+bi)-(c+di)=(a-c)+(b-d)i$).
+Ingat pula definisi perkalian dua bilangan kompleks.
+\begin{align*}
+     (a+bi)(c+di) &=ac+adi+bci+bd(-1)  \\
+                  &=(ac-bd)+(ad+bc)i
+\end{align*}
+%</ComplexOperations>
+
+\begin{example}
+Sebagai contoh,
+% \( (1-2i)\,+\,(5+4i)=6+2i \) and
+\( (2-3i)(4-0.5i)=6.5-13i \).
+\end{example}
+
+Di atas bilangan kompleks, setiap polinomial kuadrat dapat difaktorkan menjadi
+polinomial-polinomial linear.
+\begin{equation*}
+   ax^2+bx+c=
+   a\cdot \big(x-\frac{-b+\sqrt{b^2-4ac}}{2a}\big)
+    \cdot \big(x-\frac{-b-\sqrt{b^2-4ac}}{2a}\big)
+\end{equation*}
+
+\begin{example}
+Polinomial berderajat dua \( x^2+x+1 \) dapat difaktorkan di atas bilangan
+kompleks menjadi hasil kali dua polinomial berderajat satu.
+\begin{equation*}
+   \big(x-\frac{-1+\sqrt{-3}}{2}\big)
+   \big(x-\frac{-1-\sqrt{-3}}{2}\big)
+   =
+   \big(x-(-\frac{1}{2}+\frac{\sqrt{3}}{2}i)\big)
+   \big(x-(-\frac{1}{2}-\frac{\sqrt{3}}{2}i)\big)
+\end{equation*}
+\end{example}
+
+Berbeda dengan di atas bilangan real, dalam \( \C \) tidak ada polinomial
+kuadrat yang tak tereduksi.
+Semua polinomial dapat difaktorkan sepenuhnya menjadi polinomial linear.
+
+\begin{theorem}[Teorema Dasar Aljabar] \label{th:FundThmAlg}\index{Teorema Dasar!Aljabar}
+\hspace*{0em plus2em}
+%<*th:FundThmAlg>
+Polinomial berkoefisien kompleks dapat difaktorkan menjadi polinomial linear
+berkoefisien kompleks.
+Faktorisasi tersebut unik.
+%</th:FundThmAlg>
+\end{theorem}
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Representasi Kompleks}
+Dengan definisi bilangan kompleks di atas, semua operasi yang telah kita
+gunakan bagi ruang vektor real berlaku tanpa perubahan bagi ruang vektor dengan
+skalar kompleks.
+
+\begin{example}
+Perkalian matriks tetap sama, walaupun perhitungannya dapat melibatkan lebih
+banyak operasi aritmetika.
+\begin{multline*}
+  \begin{mat}
+     1+1i  &2-0i  \\
+      i    &-2+3i
+  \end{mat}
+  \begin{mat}
+     1+0i  &1-0i  \\
+     3i    &-i
+  \end{mat}             \\
+ \begin{aligned}
+  &=\begin{mat}
+     (1+1i)\cdot(1+0i)+(2-0i)\cdot(3i)   &(1+1i)\cdot(1-0i)+(2-0i)\cdot(-i) \\
+     (i)\cdot(1+0i)+(-2+3i)\cdot(3i)     &(i)\cdot(1-0i)+(-2+3i)\cdot(-i)
+  \end{mat}                                                  \\
+  &=\begin{mat}
+     1+7i  &1-1i  \\
+    -9-5i  &3+3i
+  \end{mat}
+ \end{aligned}
+\end{multline*}
+\end{example}
+
+Sebisa mungkin, kita akan menggunakan tanpa perubahan segala sesuatu dari
+bab-bab sebelumnya.
+Sebagai contoh, kita akan menyebut
+\begin{equation*}
+   \sequence{\colvec{1+0i \\ 0+0i \\ \vdots \\ 0+0i},
+             \dots,
+             \colvec{0+0i \\ 0+0i \\ \vdots \\ 1+0i}}
+\end{equation*}
+sebagai \definend{basis standar}\index{basis standar}\index{basis!standar}%
+\index{basis standar!skalar bilangan kompleks}
+bagi \( \C^n \) sebagai ruang vektor di atas $\C$ dan kembali melambangkannya
+dengan \( \stdbasis_n \).
+Sebagai contoh lain, $\polyspace_n$ akan menyatakan ruang vektor polinomial
+berderajat~$n$ dengan koefisien kompleks.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

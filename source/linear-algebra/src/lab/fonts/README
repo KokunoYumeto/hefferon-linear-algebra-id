@@ -1,0 +1,53 @@
+README for src/lab/fonts
+
+2019-Nov-04 JH  From Linear Algebra by Jim Hefferon
+     Nov-05 JH  Copied micto glyph to glyph for Greek mu
+
+The lab uses the programming font ProggyClean for code, from
+https://proggyfonts.net/.  The author is Tristan Grimmer and License.txt
+says I can restribute it.
+
+Sage lowers asterisks, so I modified it to a new font ProggyCleanSage,
+by moving the asterisk up 350 units.  I also copied the micro symbol at
+code point 00B5 to the code point 03BC, greek small letter mu, because
+Sage mistakenly uses the latter.
+
+
+INSTALLING
+
+I put the relevant files in the system-wide local directory.
+
+  $ kpsewhich TEXMFLOCAL
+  /usr/local/share/texmf
+  $ cd /usr/local/share/texmf
+  $ sudo cp ~/Documents/linear-algebra/src/lab/fonts/ProggyCleanSageTree.zip .
+  $ sudo unzip ProggyCleanSageTree.zip
+
+I let the TeX system know the stuff is here.
+
+  $ sudo texhash
+  $ cd fonts/map/dvips/ProggyCleanSage
+  $ sudo updmap-sys --force --enable Map=ProggyCleanSage.map
+  $ sudo texhash
+
+Now try running a test file to see if it works.
+
+  \documentclass{article}
+  \usepackage{ProggyCleanSage}
+  \usepackage{lipsum}
+  \start{document}
+  \lipsum[1]
+
+  \textt{ABCDE}
+  \end{document}
+
+
+DEVELOPING
+
+As described above, I used FontForge to modify ProggyClean.  Then I
+changed the name of the font.  Then I generated the font.  This
+created ProggyCleanSage.ttf
+
+Next, I used
+  autoinst -encoding T1 -dryrun ProggyCleanSage
+to create autoinst_output that contains the desired file tree.

@@ -1,0 +1,425 @@
+% Chapter 5, Topic _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2016-Jun-17
+% \documentclass{article}
+% \usepackage{graphicx}
+% \usepackage{amsmath}
+
+% \newcommand{\definend}[1]{\textit{#1}}
+\topic{Osilator Terkopel}
+\index{Osilator terkopel|(}
+% \begin{document}
+
+Ini adalah sebuah \definend{bandul Wilberforce}.\index{bandul Wilberforce}
+Pada pegasnya tergantung sebuah massa, atau bandul.
+Dorong bandul itu sedikit ke atas lalu lepaskan; bandul akan berosilasi naik turun.
+\begin{center}
+  \includegraphics{jc/asy/wilber.pdf}
+\end{center}
+Namun, jika perangkat disetel dengan tepat, sesuatu yang menakjubkan terjadi.
+Setelah beberapa detik, selain bergerak naik
+turun, massa mulai berputar
+mengelilingi sumbu yang melalui tengah pegas.
+Putaran ini membesar sampai geraknya  
+hampir seluruhnya berupa rotasi, dengan sangat sedikit gerak naik turun.
+Mungkin lima detik kemudian, geraknya kembali berkembang menjadi gabungan keduanya.
+Setelah beberapa waktu lagi, keteraturan muncul kembali.
+Yang mengagumkan, kini
+geraknya hampir seluruhnya vertikal.
+Hal ini terus berulang: perangkat berganti-ganti antara
+selang gerak vertikal murni dan selang gerak rotasi murni,
+dengan gerak campuran di antaranya. 
+(Carilah ``wilberforce pendulum video'' di internet untuk melihat 
+beberapa peragaan yang sangat bagus.) 
+
+Setiap keadaan gerak murni merupakan \definend{modus normal} osilasi.
+Kita akan menganalisis perilaku perangkat ini ketika berada dalam modus normal. 
+Semuanya berkaitan dengan nilai eigen.
+
+\begin{center}
+  \includegraphics{jc/asy/wilber001.pdf}
+\end{center}
+
+Tuliskan~$x(t)$ untuk gerak vertikal terhadap waktu dan 
+$\theta(t)$ untuk gerak rotasinya.
+Tetapkan sistem koordinat sehingga pada posisi diam $x=0$ dan~$\theta=0$, 
+nilai $x$ positif mengarah ke atas, dan nilai $\theta$ positif
+menunjukkan arah berlawanan jarum jam bila dilihat dari atas.
+
+Kita mulai dengan memodelkan gerak sebuah massa pada 
+pegas yang dibatasi agar tidak terpuntir.
+Kasus ini lebih sederhana karena hanya ada satu gerak, yakni satu derajat kebebasan.
+Letakkan massa pada posisi diam, lalu 
+dorong ke atas untuk memampatkan pegas.
+Hukum Hooke menyatakan bahwa untuk simpangan kecil,
+gaya pemulih 
+sebanding dengan simpangan tersebut, $F=-k\cdot x$.
+Konstanta~$k$ adalah
+\definend{kekakuan} pegas.
+
+Hukum Newton menyatakan bahwa gaya sebanding dengan 
+percepatan yang ditimbulkannya, $F=m\cdot d^2\,x(t)/dt^2$.
+Konstanta kesebandingan $m$ adalah \definend{massa}
+benda.
+Menggabungkan Hukum Hooke dan Hukum Newton 
+menghasilkan persamaan diferensial yang menyatakan 
+gerak massa, $m\cdot d^2\,x(t)/dt^2=-k\cdot x(t)$.
+Kita memilih bentuk dengan semua variabel pada satu ruas.
+\begin{equation*}
+  m\cdot \frac{d^2\,x(t)}{dt^2}+k\cdot x(t)=0
+  \tag{$*$}
+\end{equation*}
+
+Intuisi fisis kita mengatakan bahwa bandul berosilasi seiring waktu.
+Bandul mulai dari posisi tinggi, sehingga 
+grafiknya akan tampak seperti ini.
+\begin{center}
+  \includegraphics{jc/asy/wilber003.pdf}
+\end{center}
+Tentu saja, bentuk ini menyerupai grafik kosinus, dan kita melihat 
+bahwa persamaan diferensial gerak~($*$) dipenuhi oleh
+$x(t)=\cos \omega t$, dengan $\omega=\sqrt{k/m}$,
+karena $dx/dt=-\omega\cdot \sin \omega t$
+dan $d^2x/dt^2=-\omega^2\cdot \cos \omega t$.
+Di sini, $\omega$ adalah \definend{frekuensi sudut}.
+Besaran ini menentukan periode osilasi: jika $\omega=1$, maka
+periodenya~$2\pi$, sedangkan jika $\omega=2$, periodenya~$\pi$, dan seterusnya.
+
+Kita dapat memberikan solusi yang lebih umum untuk~($*$).
+Untuk amplitudo umum, kita menambahkan faktor~$A$ di depan,
+$x(t)=A\cdot \cos \omega t$.
+Kita juga dapat memasukkan pergeseran fase, 
+sehingga pencatatan waktu tidak harus dimulai ketika
+massa berada di posisi tinggi, yaitu 
+$x(t)=A\cos (\omega t+\phi)$.
+Inilah persamaan \definend{gerak harmonik sederhana}.
+
+Sekarang kita kembali meninjau pasangan gerak yang terkopel, 
+yaitu gerak vertikal dan rotasi.
+Keduanya saling berinteraksi karena pegas yang terpuntir akan 
+sedikit memanjang atau memendek;
+misalnya, pengaruhnya dapat berlangsung seperti pada gambar ini atau sebaliknya,
+bergantung pada pegasnya.  
+\begin{center}
+  \includegraphics{jc/asy/wilber002.pdf}
+\end{center}
+Selain itu, pegas yang diregangkan atau dimampatkan dari posisi
+diamnya akan sedikit terpuntir.
+Interaksi keduanya menghasilkan \definend{osilasi terkopel}.
+
+Untuk memahami bagaimana interaksi ini dapat menghasilkan perilaku dramatis
+yang kita lihat dalam modus normal,
+bayangkan massa berputar ke arah yang 
+membuat pegas memanjang.
+Jika pada saat yang sama gerak vertikal membuat pegas 
+memendek, 
+maka penumpangtindihan kedua gerak tersebut
+dapat membuat keduanya hampir saling meniadakan.
+Akibatnya, bandul hampir tidak bergerak secara vertikal dan hanya terpuntir.
+Pada perangkat yang disetel dengan tepat, keadaan ini dapat berlangsung selama beberapa detik.
+
+``Disetel dengan tepat'' berarti bahwa  
+periode gerak vertikal murni sama dengan, 
+atau mendekati, periode gerak rotasi murni.
+Dengan demikian, peniadaan tersebut akan berlangsung selama beberapa waktu. 
+
+Interaksi antargerak juga dapat menghasilkan perilaku modus normal yang lain, 
+yakni bandul bergerak terutama secara vertikal tanpa banyak berotasi,
+jika gerak pegas~$x(t)$ 
+menghasilkan puntiran yang melawan puntiran bandul~$\theta(t)$.
+Bandul hampir berhenti berotasi, sehingga
+geraknya hampir seluruhnya vertikal.
+
+Untuk memperoleh persamaan gerak pada kasus dua derajat kebebasan ini,
+kita membuat asumsi yang sama seperti pada kasus satu derajat kebebasan,
+yaitu bahwa untuk simpangan kecil, gaya pemulih
+sebanding dengan simpangannya. 
+Namun, kini kita menerapkan asumsi itu pada
+gerak vertikal maupun gerak rotasi.
+Misalkan konstanta kesebandingan untuk gerak rotasi adalah~$\kappa$.
+Serupa dengan itu, kita juga menggunakan Hukum Newton bahwa gaya sebanding dengan 
+percepatan untuk gerak rotasi, dan mengambil
+konstanta kesebandingannya sebagai~$I$. 
+
+Yang paling penting, kita menambahkan kopling antara kedua
+gerak, yang kita anggap sebanding dengan masing-masing gerak dengan konstanta 
+kesebandingan~$\epsilon/2$.
+
+Dengan demikian, kita memperoleh sistem dua persamaan diferensial:
+persamaan pertama untuk gerak vertikal dan persamaan kedua
+untuk rotasi.
+Persamaan-persamaan ini mendeskripsikan perilaku sistem terkopel pada setiap waktu~$t$.
+\begin{equation*}
+  \begin{split}
+  m\cdot\frac{d^2\,x(t)}{dt^2}
+      +k\cdot x(t)+\frac{\epsilon}{2}\cdot \theta(t) 
+      &=0  \\
+  I\cdot\frac{d^2\,\theta(t)}{dt^2}
+      +\kappa\cdot \theta(t)+\frac{\epsilon}{2}\cdot x(t)  
+      &=0
+  \end{split}
+  \tag{$**$}
+\end{equation*}
+Kita akan menggunakannya untuk menganalisis
+perilaku sistem ketika berada dalam modus normal.
+
+Pertama-tama, tinjau gerak-gerak tak terkopel, yaitu gerak yang diberikan oleh
+persamaan tanpa suku~$\epsilon$.
+Tanpa suku tersebut, persamaan ini mendeskripsikan fungsi harmonik sederhana;
+kita menuliskan~$\omega_x^2$ untuk~$k/m$ dan $\omega_\theta^2$ untuk $\kappa/I$.
+Di atas kita telah berargumen bahwa untuk mengamati perilaku hampir diam tersebut,
+perangkat harus disetel agar periodenya sama, $\omega_x^2=\omega_\theta^2$. 
+Tuliskan~$\omega_0^2$ untuk nilai bersama itu.
+
+Sekarang tinjau gerak terkopel $x(t)$ dan~$\theta(t)$.
+Berdasarkan prinsip yang sama, untuk mengamati perilaku hampir diam tersebut, kita ingin keduanya 
+selaras; misalnya, rotasi mencapai
+puncaknya ketika regangan mencapai puncaknya.
+Artinya, dalam modus normal, kedua osilasi mempunyai
+frekuensi sudut~$\omega$ yang sama.
+Mengenai pergeseran fase, seperti yang juga telah kita bahas, ada dua
+kasus: puntiran yang ditimbulkan gerak pegas searah
+dengan puntiran akibat osilasi rotasi, atau kedua puntiran itu berlawanan arah.
+Dalam kedua kasus, agar diperoleh modus normal, puncak-puncaknya harus berimpit.
+\begin{align*}
+  x(t) &= A_1\cos(\omega t+\phi)  
+       &x(t) &= A_1\cos(\omega t+\phi)   \\  
+  \theta(t) &= A_2\cos(\omega t+\phi)  
+       &\theta(t) &= A_2\cos(\omega t+(\phi+\pi))    
+\end{align*}
+Kita akan mengerjakan kasus di sebelah kiri dan menyerahkan kasus lainnya sebagai latihan.
+
+Kita ingin mencari nilai~$\omega$ yang mungkin.
+Hitung turunan kedua masing-masing: 
+\begin{equation*}
+  \frac{d^2\,x(t)}{dt^2}=-A_1\omega^2\cos(\omega t+\phi)
+  \qquad
+  \frac{d^2\,\theta(t)}{dt^2}=-A_2\omega^2\cos(\omega t+\phi)
+\end{equation*}
+dan substitusikan ke persamaan gerak~($**$).
+\begin{align*}
+  m\cdot(-A_1\omega^2\cos(\omega t+\phi))
+      +k\cdot (A_1\cos(\omega t+\phi))
+      +\frac{\epsilon}{2}\cdot (A_2\cos(\omega t+\phi)) 
+      &=0  \\
+  I\cdot(-A_2\omega^2\cos(\omega t+\phi))
+      +\kappa\cdot (A_2\cos(\omega t+\phi))
+      +\frac{\epsilon}{2}\cdot (A_1\cos(\omega t+\phi))  
+      &=0  
+\end{align*}
+Keluarkan faktor $\cos(\omega t+\phi)$, lalu bagi persamaan pertama dengan~$m$
+dan persamaan kedua dengan~$I$.
+\begin{align*}
+  \big(\frac{k}{m}-\omega^2\big)\cdot A_1 
+      +\frac{\epsilon}{2m}\cdot A_2 
+      &=0  \\
+  \big(\frac{\kappa}{I}-\omega^2\big)\cdot A_2
+      +\frac{\epsilon}{2I}\cdot A_1  
+      &=0  
+\end{align*}
+Kita mengasumsikan bahwa $k/m=\omega_{x}^2$ dan
+$\kappa/I=\omega_{\theta}^2$ sama, serta menuliskan $\omega_0^2$
+untuk nilai bersama itu.
+Lakukan substitusi tersebut, lalu nyatakan kembali sebagai persamaan matriks.
+\begin{equation*}
+  \begin{mat}
+    \omega_0^2-\omega^2    &\epsilon/2m  \\
+    \epsilon/2I &\omega_0^2-\omega^2 
+  \end{mat}
+  \colvec{
+    A_1 \\
+    A_2}
+  =
+  \begin{mat}
+    0 \\
+    0
+  \end{mat}
+\end{equation*}
+Jelas bahwa sistem ini memiliki solusi trivial~$A_1=0$, $A_2=0$,
+yang bersesuaian dengan keadaan ketika massa diam.
+Kita ingin mengetahui frekuensi~$\omega$ yang membuat sistem ini memiliki
+solusi nontrivial. 
+\begin{equation*}
+  \begin{mat}
+    \omega_0^2    &\epsilon/2m  \\
+    \epsilon/2I &\omega_0^2
+  \end{mat}
+  \colvec{
+    A_1 \\
+    A_2}
+  =
+  \omega^2
+  \begin{mat}
+    A_1 \\
+    A_2
+  \end{mat}
+\end{equation*}
+Kuadrat frekuensi sudut modus normal, yakni~$\omega^2$, merupakan nilai eigen matriks tersebut.
+
+Untuk menghitungnya,
+ambil determinannya dan samakan dengan nol.
+\begin{equation*}
+  \begin{vmatrix}
+    \omega_0^2-\omega^2    &\epsilon/2m  \\
+    \epsilon/2I &\omega_0^2-\omega^2
+  \end{vmatrix}=0 \quad\Longrightarrow\quad
+  \omega^4-(2\omega_0^2)\,\omega^2 +(\omega_0^4
+  -\frac{\epsilon^2}{4mI})=0
+\end{equation*}
+Persamaan itu berbentuk kuadrat dalam~$\omega^2$.  
+Terapkan rumus penyelesaian persamaan kuadrat, $(-b\pm\sqrt{b^2-4ac})/(2a)$.
+\begin{equation*}   % \rule[-.3\baselineskip]{0pt}{\baselineskip}
+  \omega^2 
+  =\frac{2\omega_0^2
+    \pm\sqrt{\smash[b]{\strut} 4\omega_0^4
+      -4(\omega_0^4-\epsilon^2/4mI)}}{2}
+  =\omega_0^2\pm\frac{\epsilon}{2\sqrt{mI}}
+\end{equation*}
+Nilai $\epsilon/\sqrt{mI}$ sering dituliskan sebagai
+$\omega_B$, sehingga
+$
+\omega^2 =\omega_0^2\pm\omega_B/2
+$.
+Besaran ini adalah \definend{frekuensi layangan}; nilainya sama dengan selisih
+antara kuadrat kedua frekuensi modus normal.
+
+Walaupun penjelasannya berada di luar cakupan kita, rumus umum untuk 
+gerak bandul merupakan kombinasi linear dari gerak-gerak pada 
+modus normal.
+Jadi, gerak bandul sepenuhnya ditentukan oleh nilai-nilai eigen
+matriks di atas.
+Lihat \cite{BergMarshall}.
+
+\begin{exercises}
+\item Gunakan rumus kosinus jumlah sudut untuk memperoleh rumus gerak
+  harmonik sederhana yang lebih umum lagi.
+  \begin{answer}
+    Rumus jumlah sudut untuk fungsi kosinus adalah
+    $\cos(\alpha+\beta)=\cos(\alpha)\cos(\beta)-\sin(\alpha)\sin(\beta)$.
+    Uraikan $A\cos(\omega t+\phi)$ menjadi $A\cdot[\cos(\omega
+    t)\cos(\phi)-\sin(\omega t)\sin(\phi)]$.  Karena $\cos(\phi)$ dan
+    $\sin(\phi)$ tidak berubah terhadap~$t$, kita memperoleh solusi umum
+    $x(t)=B\cos(\omega t)+C\sin(\omega t)$.
+  \end{answer}
+\item Carilah vektor-vektor eigen yang terkait dengan nilai-nilai eigen tersebut.
+  \begin{answer}
+    Kita akan mengerjakan akar pertama; akar kedua dikerjakan dengan cara serupa.  
+    Kita mempunyai persamaan berikut.
+    \begin{equation*}
+      \begin{mat}
+        \omega_0^2-\omega^2  &\epsilon/2m \\
+        \epsilon/2I         &\omega_0^2-\omega^2
+      \end{mat}
+      \colvec{A_1 \\ A_2}
+      =\colvec{0 \\ 0}
+    \end{equation*}
+    Substitusikan akar pertama~$\omega^2=\omega_0^2+\epsilon/(2\sqrt{mI})$.
+    Kedua persamaan itu memberikan syarat yang sama, jadi kita cukup meninjau persamaan pertama.
+    \begin{equation*}
+      -\frac{\epsilon}{2\sqrt{mI}}\cdot A_1+\frac{\epsilon}{2m}\cdot A_2=0
+    \end{equation*}
+    Ini adalah garis yang melalui titik asal pada bidang, sehingga untuk menentukannya kita
+    hanya perlu mencari rasio antara variabel pertama dan kedua.
+    \begin{equation*}
+      \frac{A_2}{A_1}=\frac{\epsilon/(2\sqrt{mI})}{\epsilon/(2m)}
+                     =\sqrt{\frac{m}{I}}
+    \end{equation*}
+    Jadi, inilah ruang eigen yang terkait dengan nilai eigen pertama.
+    \begin{equation*}
+      \set{\colvec{A_1 \\ \sqrt{m/I}\cdot A_1}\suchthat A_1\in\C}
+    \end{equation*}
+  \end{answer}
+\item Carilah nilai-nilai $\omega$ untuk kasus ketika 
+  $x(t)=A_1\cos(\omega t+\phi)$
+  dan $\theta(t)=A_2\cos(\omega t+(\phi+\pi))$.
+  \begin{answer}
+    Perhatikan bahwa $\cos(\omega t+(\phi+\pi))=-\cos(\omega t+\phi)$.
+    Hitung turunan untuk~$x(t)$: 
+    \begin{equation*}
+      \frac{d\,x(t)}{dt}=-A_1\omega\cdot\sin(\omega t+\phi)
+      \qquad
+      \frac{d^2\,x(t)}{dt^2}=-A_1\omega^2\cdot\cos(\omega t+\phi)
+    \end{equation*}
+    dan untuk~$\theta(t)$: 
+    \begin{equation*}
+      \frac{d\,\theta(t)}{dt}=A_2\omega\cdot\sin(\omega t+\phi)
+      \qquad
+      \frac{d^2\,\theta(t)}{dt^2}=A_2\omega^2\cdot\cos(\omega t+\phi)
+    \end{equation*}
+    lalu substitusikan ke persamaan gerak~($**$).
+    \begin{align*}
+      mA_1\cdot(-\omega^2\cos(\omega t+\phi))
+          +kA_1\cdot (\cos(\omega t+\phi))
+          +\frac{\epsilon}{2}A_2\cdot (-\cos(\omega t+\phi)) 
+          &=0  \\
+      IA_2\cdot(\omega^2\cos(\omega t+\phi))
+          +\kappa A_2\cdot (-\cos(\omega t+\phi))
+          +\frac{\epsilon}{2}A_1\cdot (\cos(\omega t+\phi))  
+          &=0  
+    \end{align*}
+    Keluarkan faktor $\cos(\omega t+\phi)$: 
+    \begin{align*}
+     \big(m(-\omega^2)\big)\cdot A_1
+         +kA_1 
+         -\frac{\epsilon}{2}\cdot A_2 
+         &=0  \\
+     \big(I\omega^2\big)\cdot A_2
+         -\kappa A_2
+         +\frac{\epsilon}{2}\cdot A_1  
+         &=0  
+   \end{align*}
+    lalu bagi persamaan pertama dengan~$m$ dan persamaan kedua dengan~$I$.
+    \begin{align*}
+     \big(\frac{k}{m}-\omega^2\big)\cdot A_1 
+         -\frac{\epsilon}{2m}\cdot A_2 
+         &=0  \\
+     \frac{\epsilon}{2I}\cdot A_1  
+     -\big(\frac{\kappa}{I}-\omega^2\big)\cdot A_2
+         &=0  
+   \end{align*}
+   Kita mengasumsikan bahwa $k/m=\omega_{x}^2$ dan
+   $\kappa/I=\omega_{\theta}^2$ sama, serta menuliskan $\omega_0^2$
+   untuk nilai bersama itu.
+   Lakukan substitusi tersebut, lalu nyatakan kembali sebagai persamaan matriks.
+   \begin{equation*}
+     \begin{mat}
+       \omega_0^2-\omega^2    &-\epsilon/2m  \\
+       \epsilon/2I &\omega^2-\omega_0^2 
+     \end{mat}
+     \colvec{
+       A_1 \\
+       A_2}
+     =
+     \colvec{
+       0 \\
+       0}
+   \end{equation*}
+   Kita mencari frekuensi~$\omega$ yang membuat sistem ini memiliki
+   solusi nontrivial. 
+   \begin{equation*}
+      \begin{vmatrix}
+       \omega_0^2-\omega^2    &-\epsilon/2m  \\
+       \epsilon/2I           &\omega^2-\omega_0^2 
+      \end{vmatrix}
+      =0
+    \end{equation*}
+    Determinan ini sama dengan yang kita hitung dalam uraian utama topik ini,
+    kecuali bahwa kolom keduanya dikalikan dengan~$-1$.
+    Mengalikan sebuah baris atau kolom dengan suatu skalar akan mengalikan seluruh determinan
+    dengan skalar tersebut.
+    Jadi, determinan ini adalah negatif dari determinan dalam uraian utama topik ini.
+    Namun, karena determinannya disamakan dengan nol, perbedaan itu tidak berpengaruh.
+    Akar-akarnya sama dengan yang diperoleh dalam uraian utama topik ini. 
+  \end{answer}
+\item Buatlah bandul Wilberforce dari Slinky Jr dan sebuah kaleng sup.
+  Anda dapat mengebor dua atau empat lubang pada kaleng untuk memasang baut,
+  yang dapat digunakan untuk menyesuaikan
+  momen inersia kaleng agar periode gerak vertikal dan 
+  gerak rotasi berimpit.
+  \begin{answer}
+    Lihat \cite{Mewes}.
+  \end{answer}
+\end{exercises}
+\index{Osilator terkopel|)}
+\endinput
+% \end{document}

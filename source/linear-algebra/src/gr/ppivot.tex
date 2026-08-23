@@ -1,0 +1,389 @@
+% Chapter 1, Topic from _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-09
+\topic{Keakuratan Perhitungan}
+\index{keakuratan!Metode Gauss|(}
+\index{Metode Gauss!keakuratan|(}
+Metode Gauss mudah diimplementasikan pada komputer.
+Kode di bawah ini memberikan ilustrasinya.
+Kode tersebut bekerja pada matriks $\nbyn{n}$ bernama~\lstinline[style=inline]!a!, 
+dengan melakukan kombinasi baris menggunakan baris pertama, kemudian
+baris kedua, dan seterusnya.
+\begin{lstlisting}
+for(row=1; row<=n-1; row++){
+  for(row_below=row+1; row_below<=n; row_below++){
+    multiplier=a[row_below,row]/a[row,row];
+    for(col=row; col<=n; col++){
+      a[row_below,col]-=multiplier*a[row,col];
+    }
+  }
+}
+\end{lstlisting}
+Kode ini ditulis dalam bahasa~C.\index{bahasa C}
+Perulangan 
+\lstinline[style=inline]!for(row=1; row<=n-1; row++){ .. }!
+memberi nilai awal~$1$ pada \lstinline[style=inline]!row!, lalu berulang selama
+\lstinline[style=inline]!row! kurang dari atau sama dengan $n-1$; pada setiap
+putaran, nilai \lstinline[style=inline]!row! dinaikkan satu dengan operasi 
+\lstinline[style=inline]!++!.
+Konstruksi bahasa lain yang tidak langsung terlihat jelas adalah bahwa
+\lstinline[style=inline]!-=! pada perulangan terdalam menghasilkan kode berikut.
+\begin{lstlisting}[breaklines=true]
+a[row_below,col]=-1*multiplier*a[row,col]+a[row_below,col]
+\end{lstlisting}
+
+Meskipun kode itu merupakan upaya awal untuk mengotomatisasi Metode Gauss,
+kode tersebut masih naif.
+Salah satu masalahnya adalah bahwa kode itu mengasumsikan entri pada posisi
+\lstinline[style=inline]!row,row! tidak nol.
+Jadi, salah satu perluasannya harus menangani kasus ketika ditemukannya nol
+pada posisi tersebut mengharuskan pertukaran baris atau menghasilkan
+kesimpulan bahwa matriks itu singular.
+
+Kita dapat menambahkan beberapa pernyataan \lstinline[style=inline]!if! untuk
+menangani kasus-kasus tersebut, tetapi kita akan membahas segi lain yang
+membuat kode ini naif.
+Kode ini rentan terhadap masalah yang timbul akibat ketergantungan komputer
+pada aritmetika titik mengambang.
+
+Sebagai contoh, di atas kita telah melihat bahwa sistem singular harus
+ditangani sebagai kasus tersendiri.
+Namun, sistem yang hampir singular juga perlu ditangani dengan hati-hati.
+Perhatikan sistem berikut (digit tambahannya berada di tempat signifikan
+kesembilan).
+\begin{equation*}
+   \begin{linsys}{2}
+                   x &+ &2y &= &3\hfill\hbox{}  \\
+     1.000\,000\,01x &+ &2y &= &3.000\,000\,01
+   \end{linsys}
+   \tag{$*$}
+\end{equation*}
+Dengan mengamatinya saja, kita mudah menemukan solusi $x=1$, $y=1$.
+Komputer lebih sulit menanganinya.
+Jika komputer merepresentasikan bilangan real hingga delapan tempat signifikan,
+yang disebut \definend{presisi tunggal}\index{presisi tunggal}, 
+maka secara internal komputer itu akan merepresentasikan persamaan kedua
+sebagai $1.000\,000\,0x+2y=3.000\,000\,0$, sehingga digit di tempat
+kesembilan hilang.
+Alih-alih melaporkan solusi yang benar, komputer ini akan menganggap kedua
+persamaan sama dan melaporkan bahwa sistem tersebut singular.
+
+Untuk memperoleh gambaran intuitif tentang bagaimana komputer dapat memberikan
+hasil yang menyimpang sejauh itu, perhatikan grafik sistem berikut.
+\begin{center}
+  \includegraphics{gr/mp/ch1.33}
+\end{center}
+Kita tidak dapat membedakan kedua garis tersebut;
+sistem ini hampir singular dalam arti bahwa kedua garisnya hampir sama.
+Hal ini membuat sistem~($*$) memiliki sifat bahwa perubahan kecil pada sebuah
+persamaan dapat menyebabkan perubahan besar pada solusinya.
+Misalnya, mengubah $3.000\,000\,01$ menjadi $3.000\,000\,03$ 
+mengubah titik potong dari $(1,1)$ menjadi $(3,0)$.
+Solusinya berubah drastis bergantung pada digit kesembilan, dan ini menjelaskan
+mengapa komputer dengan delapan tempat mengalami kesulitan.
+Masalah yang sangat peka terhadap ketidakakuratan atau ketidakpastian pada nilai
+masukan disebut \definend{berkondisi buruk}.\index{masalah berkondisi buruk}
+
+Contoh di atas memperlihatkan satu alasan sebuah sistem dapat sulit diselesaikan
+dengan komputer.
+Kelebihan contoh tersebut adalah bahwa gambar dua garis yang hampir sama
+memberikan gambaran yang mudah diingat tentang salah satu cara terjadinya
+kesulitan numerik.
+Sayangnya, gambaran ini tidak berguna ketika kita ingin menyelesaikan suatu
+sistem yang besar.
+Biasanya kita tidak memahami geometri suatu sistem besar yang sembarang.
+
+Selain kecilnya sudut antara beberapa permukaan linear, ada alasan lain yang
+dapat membuat hasil komputer tidak dapat diandalkan.
+Sebagai contoh, perhatikan sistem berikut (dari \cite{Hamming}).
+\begin{equation*}
+  \begin{linsys}{2}
+     0.001x  &+  &y  &=  &1  \\
+          x  &-  &y  &=  &0
+  \end{linsys}
+\tag*{($**$)}\end{equation*}
+Persamaan kedua memberikan $x=y$, sehingga $x=y=1/1.001$ dan dengan demikian
+nilai kedua variabel sedikit lebih kecil dari $1$.
+Komputer yang menggunakan dua digit merepresentasikan sistem ini secara
+internal sebagai berikut (demi kejelasan, kita akan mengerjakan contoh ini
+dengan aritmetika titik mengambang dua digit, tetapi contoh serupa dengan
+delapan digit atau lebih mudah dibuat).
+\begin{equation*}
+  \begin{linsys}{2}
+    (1.0\times 10^{-3})\cdot x  &+  &(1.0\times 10^{0})\cdot y  &=  &1.0\times 10^{0}  \\
+    (1.0\times 10^{0})\cdot x   &-  &(1.0\times 10^{0})\cdot y  &=  &0.0\times 10^{0}
+  \end{linsys}
+\end{equation*}
+Langkah reduksi baris $-1000\rho_1+\rho_2$ menghasilkan persamaan kedua
+$-1001y=-1000$, yang dibulatkan komputer ini menjadi dua tempat sebagai
+$(-1.0\times 10^{3})y=-1.0\times 10^{3}$.
+Dari persamaan kedua, komputer menyimpulkan bahwa $y=1$, lalu dari persamaan
+pertama menyimpulkan bahwa $x=0$.
+Nilai~$y$ cukup dekat, tetapi nilai~$x$ buruk\Dash
+rasio antara jawaban sebenarnya dan jawaban komputer adalah
+tak berhingga.\index{keakuratan!galat pembulatan}
+Singkatnya, penyebab lain dari keluaran yang tidak dapat diandalkan adalah
+ketergantungan komputer pada aritmetika titik mengambang ketika kode
+penyelesaian sistem menggunakan entri utama yang kecil. 
+
+Pemrogram berpengalaman mungkin menanggapinya dengan menggunakan
+\definend{presisi ganda},\index{presisi ganda} %
+yang mempertahankan enam belas digit signifikan, atau mungkin menggunakan
+ukuran yang lebih besar lagi.
+Cara ini memang akan menyelesaikan banyak masalah.
+Namun, presisi ganda membutuhkan lebih banyak memori, dan kita jelas dapat
+memodifikasi contoh di atas agar menimbulkan masalah yang sama pada digit
+ketujuh belas, sehingga presisi ganda bukanlah solusi mujarab.
+Kita memerlukan strategi untuk meminimalkan masalah numerik, sekaligus panduan
+tentang seberapa jauh solusi yang dilaporkan dapat dipercaya.
+
+Perbaikan mendasar terhadap kode naif di atas adalah tidak menentukan faktor
+untuk kombinasi baris hanya dengan mengambil entri pada posisi
+\lstinline[style=inline]!row,row!, tetapi dengan memeriksa semua entri pada
+kolom \lstinline[style=inline]!row! di bawah entri
+\lstinline[style=inline]!row,row! dan mengambil entri yang kemungkinan besar
+memberikan hasil andal karena tidak terlalu kecil.
+Cara ini disebut \definend{pemivotan parsial}.%
+\index{pemivotan parsial}\index{pemivotan!parsial} 
+
+Sebagai contoh, untuk menyelesaikan sistem bermasalah~($**$) di atas, mula-mula
+kita memeriksa kedua persamaan untuk mencari entri terbaik yang akan digunakan,
+dan memilih~$1$ pada persamaan kedua karena lebih mungkin memberikan hasil yang
+baik.
+Langkah kombinasi $-.001\rho_2+\rho_1$ menghasilkan persamaan pertama
+$1.001y=1$, yang akan direpresentasikan komputer sebagai
+$(1.0\times 10^{0})y=1.0\times 10^{0}$, sehingga diperoleh kesimpulan bahwa
+$y=1$ dan, setelah substitusi balik, bahwa $x=1$; keduanya mendekati nilai yang
+benar.  
+Kita dapat menyesuaikan kode di atas untuk melakukan hal ini.
+\begin{lstlisting}
+for(row=1; row<=n-1; row++){
+/* cari entri terbesar pada kolom ini (di baris max) */
+  max=row;
+  for(row_below=row+1; row_below<=n; row_below++){
+    if (abs(a[row_below,row]) > abs(a[max,row]))
+      max = row_below;
+  }
+/* tukar baris agar entri terbesar itu berpindah ke atas */
+  for(col=row; col<=n; col++){
+    temp=a[row,col];
+    a[row,col]=a[max,col];
+    a[max,col]=temp;
+  }
+/* lanjutkan seperti sebelumnya */
+  for(row_below=row+1; row_below<=n; row_below++){
+    multiplier=a[row_below,row]/a[row,row];
+     for(col=row; col<=n; col++){
+       a[row_below,col]-=multiplier*a[row,col];
+    }
+  }
+}
+\end{lstlisting}
+
+Analisis lengkap mengenai cara terbaik untuk mengimplementasikan Metode Gauss
+berada di luar cakupan buku ini (lihat \cite{Wilkinson65}), tetapi metode yang
+dianjurkan oleh kebanyakan ahli mula-mula mencari entri terbaik di antara para
+kandidat, lalu menskalakannya menjadi bilangan yang lebih kecil kemungkinannya
+untuk menimbulkan masalah.
+Cara ini disebut
+\definend{pemivotan parsial berskala}.\index{pemivotan parsial berskala}\index{pemivotan!parsial!berskala}
+
+Selain memberikan hasil yang kemungkinan besar dapat diandalkan, kebanyakan
+kode yang disusun dengan baik juga akan memberikan
+\definend{bilangan kondisi}%
+\index{bilangan kondisi}\index{matriks!bilangan kondisi}
+yang menyatakan faktor pengali yang dapat memperbesar ketidakpastian pada
+bilangan masukan hingga menjadi ketidakakuratan pada hasil yang dikembalikan
+(lihat \cite{Rice}).
+
+Pelajarannya adalah bahwa fakta bahwa Metode Gauss selalu berhasil secara
+teoretis, dan bahwa kode komputer mengimplementasikan metode itu dengan benar,
+tidak dengan sendirinya berarti bahwa jawabannya dapat diandalkan.
+Dalam praktik, selalu gunakan paket perangkat lunak yang dikembangkan dengan
+cermat oleh para ahli untuk menanggulangi hal-hal yang dapat bermasalah.
+
+\begin{exercises}
+  \item 
+    Dengan menggunakan dua digit signifikan, jumlahkan $253$ dan $2/3$.
+    \begin{answer}
+      Notasi ilmiah memudahkan kita menyatakan pembatasan dua digit:
+      $.25\times 10^{3}+.67\times 10^{0}=.25\times 10^{3}$.
+      Perhatikan bahwa penambahan $2/3$ tidak berpengaruh pada jumlahnya.
+    \end{answer}
+  \item 
+    Soal perpotongan garis ini berbeda dengan contoh yang dibahas di atas.
+    \begin{center}
+      \vcenteredhbox{\includegraphics{gr/mp/ch1.34}}
+      \qquad
+      $\displaystyle \begin{linsys}{2}
+            x &+ &2y &= &3  \\
+            3x &- &2y &= &1
+      \end{linsys}$
+    \end{center}
+    Tunjukkan bahwa dalam sistem ini, perubahan kecil pada bilangan-bilangannya
+    hanya akan menghasilkan perubahan kecil pada solusi dengan mengubah
+    konstanta pada persamaan bawah menjadi $1.008$, lalu menyelesaikannya.
+    Bandingkan hasilnya dengan solusi sistem yang tidak diubah.
+    \begin{answer}
+      Reduksi
+      \begin{equation*}
+        \grstep{-3\rho_1+\rho_2}
+        \begin{linsys}{2}
+          x  &+  &2y   &=  &3  \\
+             &   &-8y  &=  &-7.992
+        \end{linsys}
+      \end{equation*}
+      memberikan \( (x,y)=(1.002,0.999) \).
+      Jadi, untuk sistem ini, perubahan kecil pada konstanta hanya menghasilkan
+      perubahan kecil pada solusi.
+    \end{answer}
+  \item 
+    Perhatikan sistem berikut (\cite{Rice}).
+    \begin{equation*}
+      \begin{linsys}{2}
+        0.000\,3x  &+  &1.556y  &=  &1.559 \\
+        0.345\,4x  &-  &2.346y  &=  &1.108
+      \end{linsys}
+    \end{equation*}
+    \begin{exparts*}
+      \partsitem Selesaikan sistem tersebut.
+      \partsitem Selesaikan sistem tersebut dengan
+         melakukan pembulatan hingga empat digit pada setiap langkah. 
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Solusi dengan keakuratan penuh adalah $x=10$ dan $y=1$.
+        \partsitem Reduksi empat digit
+          \begin{equation*}
+            \grstep{-(.3454/.0003)\rho_1+\rho_2}
+            \begin{amat}{2}
+              .0003  &1.556  &1.569  \\
+              0      &-1794   &-1805
+            \end{amat}
+          \end{equation*}
+          memberikan kesimpulan bahwa~$y=1.006$, yang tidak terlalu buruk,
+          dan bahwa $x=12.21$. 
+          Tentu saja, nilai ini berbeda dua puluh persen dari jawaban yang benar.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Pembulatan di dalam komputer sering memengaruhi hasil.
+    Anggaplah mesin Anda memiliki delapan digit signifikan.
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa mesin akan menghitung
+         $(2/3)+((2/3)-(1/3))$ sebagai nilai yang tidak sama dengan
+         $((2/3)+(2/3))-(1/3)$.
+         Jadi, aritmetika komputer tidak bersifat asosiatif.
+      \partsitem Bandingkan versi komputer dari $(1/3)x+y=0$
+        dan $(2/3)x+2y=0$.
+        Apakah dua kali persamaan pertama sama dengan persamaan kedua?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Untuk bentuk pertama, mula-mula, $(2/3)-(1/3)$ adalah
+          $.666\,666\,67-.333\,333\,33=.333\,333\,34$,
+          sehingga
+          $(2/3)+((2/3)-(1/3))=.666\,666\,67+.333\,333\,34=1.000\,000\,0$.
+
+          Untuk bentuk lainnya, mula-mula
+          $((2/3)+(2/3))=.666\,666\,67+.666\,666\,67=1.333\,333\,3$,
+          sehingga
+          $((2/3)+(2/3))-(1/3)=1.333\,333\,3-.333\,333\,33=.999\,999\,97$.
+        \partsitem Persamaan pertama adalah
+          $.333\,333\,33\cdot x+1.000\,000\,0\cdot y=0$,
+          sedangkan persamaan kedua adalah
+          $.666\,666\,67\cdot x+2.000\,000\,0\cdot y=0$.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Kondisi buruk tidak hanya bergantung pada matriks koefisien.
+    Contoh dari \cite{Hamming} ini menunjukkan bahwa kondisi buruk dapat timbul
+    akibat interaksi antara ruas kiri dan ruas kanan sistem.
+    Misalkan $\varepsilon$ adalah bilangan real kecil.
+    \begin{equation*}
+      \begin{linsys}{3}
+        3x  &+  &2y           &+  &z            &=  &6\hfill   \\
+        2x  &+  &2\varepsilon y  &+  &2\varepsilon z  
+                                          &=  &2+4\varepsilon\hfill \\
+         x  &+  &2\varepsilon y  &-  &\varepsilon z   
+                                          &=  &1+\varepsilon\hfill
+      \end{linsys}
+    \end{equation*}
+    \begin{exparts}
+      \partsitem Selesaikan sistem tersebut dengan tangan.
+        Perhatikan bahwa faktor-faktor $\varepsilon$ hanya dapat dibagi habis
+        karena bagian-bagian bulat pada ruas kanan saling meniadakan tepat,
+        demikian pula pada ruas kiri. 
+      \partsitem Selesaikan sistem tersebut dengan tangan, dengan membulatkan
+        hingga dua digit dan menggunakan $\varepsilon=0.001$.
+%      \partsitem If you have access to a computer package for solving
+%        linear systems, see if you can find an $\varepsilon$ small enough
+%        to get your package to give incorrect results.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Perhitungan berikut
+          \begin{align*}
+            &\grstep[-(1/3)\rho_1+\rho_3]{-(2/3)\rho_1+\rho_2}
+            \begin{amat}{3}
+              3  &2                   &1                   &6               \\
+              0  &-(4/3)+2\varepsilon &-(2/3)+2\varepsilon &-2+4\varepsilon \\
+              0  &-(2/3)+2\varepsilon &-(1/3)-\varepsilon  &-1+\varepsilon 
+            \end{amat}                                                    \\
+            &\grstep{-(1/2)\rho_2+\rho_3}
+            \begin{amat}{3}
+              3  &2                   &1                   &6               \\
+              0  &-(4/3)+2\varepsilon &-(2/3)+2\varepsilon &-2+4\varepsilon \\
+              0  &\varepsilon         &-2\varepsilon       &-\varepsilon 
+            \end{amat}
+          \end{align*}
+          menghasilkan persamaan ketiga $y-2z=-1$.
+          Substitusi ke persamaan kedua memberikan
+          $((-10/3)+6\varepsilon)\cdot z=(-10/3)+6\varepsilon$,
+          sehingga $z=1$ dan kemudian $y=1$.
+          Dengan nilai-nilai tersebut, persamaan pertama menyatakan bahwa
+          $x=1$. 
+        \partsitem 
+          Seperti di atas, notasi ilmiah memudahkan kita menyatakan pembatasan
+          jumlah digit.
+
+          Solusi dengan mempertahankan dua digit adalah
+          $z=2.1$, $y=.46$, dan $x=.99$.
+          \begin{multline*}
+            \begin{amat}{3}
+              .30\times 10^{1}  &.20\times 10^{1}  &.10\times 10^{1} 
+                 &.60\times 10^{1}        \\
+              .20\times 10^{1}  &.20\times 10^{-3} &.20\times 10^{-3} 
+                 &.20\times 10^{1}        \\
+              .10\times 10^{1}  &.20\times 10^{-3}  &-.10\times 10^{-3} 
+                 &.10\times 10^{1}        
+            \end{amat}                                           \\
+            \begin{aligned}
+            &\grstep[-(1/3)\rho_1+\rho_3]{-(2/3)\rho_1+\rho_2}
+            \begin{amat}{3}
+              .30\times 10^{1}  &.20\times 10^{1}  &.10\times 10^{1} 
+                 &.60\times 10^{1}        \\
+              0                 &-.13\times 10^{1} &-.67\times 10^{0} 
+                 &-.20\times 10^{1}        \\
+              0                 &-.67\times 10^{0}  &-.33\times 10^{0} 
+                 &-.10\times 10^{1}        
+            \end{amat}                                          \\
+            &\grstep{-(.67/1.3)\rho_2+\rho_3}
+            \begin{amat}{3}
+              .30\times 10^{1}  &.20\times 10^{1}  &.10\times 10^{1} 
+                 &.60\times 10^{1}        \\
+              0                 &-.13\times 10^{1} &-.67\times 10^{0} 
+                 &-.20\times 10^{1}        \\
+              0                 &0                  &.15\times 10^{-1} 
+                 &.31\times 10^{-1}        
+            \end{amat}
+            \end{aligned}
+          \end{multline*}
+      \end{exparts}
+    \end{answer}
+\end{exercises}
+\index{keakuratan!Metode Gauss|)}
+\index{Metode Gauss!keakuratan|)}
+
+\endinput
+

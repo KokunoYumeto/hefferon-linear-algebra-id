@@ -1,0 +1,44 @@
+% Repository-owned default map for the Hefferon id-ID pdfTeX readers.
+% This file is loaded without a pdfmapfile modifier, so pdfTeX does not read
+% the mutable system pdftex.map.  The component maps are then appended by
+% bookjhconcrete.sty.  Entries are copied unchanged from the pinned TeX map.
+cmex10 CMEX10 <cmex10.pfb
+cmmi10 CMMI10 <cmmi10.pfb
+cmmi5 CMMI5 <cmmi5.pfb
+cmmi7 CMMI7 <cmmi7.pfb
+cmr10 CMR10 <cmr10.pfb
+cmsy10 CMSY10 <cmsy10.pfb
+cmsy5 CMSY5 <cmsy5.pfb
+cmsy7 CMSY7 <cmsy7.pfb
+euex10 EUEX10 <euex10.pfb
+eufm10 EUFM10 <eufm10.pfb
+eufm5 EUFM5 <eufm5.pfb
+eufm6 EUFM7 <eufm7.pfb
+eufm7 EUFM7 <eufm7.pfb
+eufm8 EUFM7 <eufm7.pfb
+eufm9 EUFM10 <eufm10.pfb
+eurb10 EURB10 <eurb10.pfb
+eurb9 EURB10 <eurb10.pfb
+eurbo10 EURB10 " .167 SlantFont " <eurb10.pfb
+eurm10 EURM10 <eurm10.pfb
+eurm5 EURM5 <eurm5.pfb
+eurm6 EURM7 <eurm7.pfb
+eurm7 EURM7 <eurm7.pfb
+eurm8 EURM7 <eurm7.pfb
+eurm9 EURM10 <eurm10.pfb
+eurmo10 EURM10 " .167 SlantFont " <eurm10.pfb
+eusm10 EUSM10 <eusm10.pfb
+eusm6 EUSM7 <eusm7.pfb
+eusm7 EUSM7 <eusm7.pfb
+eusm8 EUSM7 <eusm7.pfb
+eusm9 EUSM10 <eusm10.pfb
+lcircle10 LCIRCLE10 <lcircle1.pfb
+line10 LINE10 <line10.pfb
+linew10 LINEW10 <linew10.pfb
+msam10 MSAM10 <msam10.pfb
+msam7 MSAM7 <msam7.pfb
+msbm10 MSBM10 <msbm10.pfb
+msbm7 MSBM7 <msbm7.pfb
+rrsfso10 rsfs10 " -.4 SlantFont " <rsfs10.pfb
+rsfs10 rsfs10 <rsfs10.pfb
+uhvr8r NimbusSanL-Regu " TeXBase1Encoding ReEncodeFont " <8r.enc <uhvr8a.pfb

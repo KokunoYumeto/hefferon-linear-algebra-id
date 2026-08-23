@@ -1,0 +1,4713 @@
+% Chapter 4, Section 4 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\section{Bentuk Jordan}
+\index{bentuk Jordan|(}
+\noindent\textit{Bagian ini menggunakan materi dari tiga subbagian opsional:
+Menggabungkan Subruang, Determinan Ada, dan Ekspansi Laplace.}
+
+Kita mengawali bab ini
+dengan mengingat bahwa setiap pemetaan linear $\map{h}{V}{W}$ dapat
+direpresentasikan terhadap suatu
+basis $B\subset V$ dan $D\subset W$ oleh matriks identitas parsial.
+Dengan kata lain, bentuk identitas parsial merupakan bentuk kanonik untuk
+ekuivalensi matriks.
+Bab ini membahas kasus ketika
+kodomain sama dengan domain, sehingga
+wajar bila kita bertanya apa yang mungkin dilakukan ketika
+kedua basisnya sama, yakni ketika kita mempunyai $\rep{t}{B,B}$.
+Singkatnya, kita menginginkan bentuk kanonik untuk keserupaan matriks.
+
+Kita telah mencatat bahwa dalam kasus $B,B$,
+matriks identitas parsial tidak selalu dapat diperoleh.
+Karena itu, kita memperluas bentuk matriks
+yang diminati ke generalisasi alaminya,
+yaitu matriks diagonal, dan
+menunjukkan bahwa suatu transformasi atau matriks persegi dapat didiagonalkan
+jika nilai eigennya berbeda-beda.
+Namun, kita juga memberikan contoh
+matriks persegi yang tidak dapat didiagonalkan
+karena nilpoten,
+sehingga bentuk diagonal tidak memadai sebagai bentuk kanonik
+untuk keserupaan matriks.
+
+Bagian sebelumnya mengembangkan contoh itu
+untuk memperoleh bentuk kanonik bagi matriks nilpoten, yaitu bentuk subdiagonal.
+
+Bagian ini menuntaskan program kita dengan
+menunjukkan bahwa untuk setiap transformasi linear terdapat
+basis~\( B \)
+sedemikian sehingga representasi matriks $\rep{t}{B,B}$ merupakan jumlah
+sebuah matriks diagonal dan sebuah matriks nilpoten.
+Inilah bentuk kanonik Jordan.
+
+
+
+
+
+
+
+
+
+\subsectionoptional{Polinomial Pemetaan dan Matriks}\index{polinomial!pemetaan dan matriks}
+Ingatlah bahwa himpunan matriks persegi~\( \matspace_{\nbyn{n}} \)
+merupakan ruang vektor terhadap penjumlahan entri demi entri dan perkalian skalar,
+dan bahwa
+%the unit matrices\Dash all entries are zero except
+%for a single entry, which is one\Dash form a basis, so 
+ruang ini berdimensi \( n^2 \).
+Jadi, untuk setiap matriks \( \nbyn{n} \) $T$, himpunan beranggotakan
+\( n^2+1 \), yaitu \( \set{I,T,T^2,\dots,T^{n^2} } \), bergantung
+linear, sehingga terdapat skalar \( c_0,\dots,c_{n^2} \),
+yang tidak semuanya nol, sedemikian sehingga
+\begin{equation*}
+  c_{n^2}T^{n^2}+\dots+c_1T+c_0I
+\end{equation*}
+merupakan matriks nol.
+Dengan demikian, setiap transformasi memiliki semacam
+nilpotensi tergeneralisasi\Dash pangkat-pangkat
+sebuah matriks persegi tidak dapat terus meningkat tanpa suatu bentuk pengulangan.
+
+\begin{definition}
+Misalkan \( t \) adalah transformasi linear pada ruang vektor~\( V \).
+Jika \( f(x)=c_nx^n+\dots+c_1x+c_0 \) adalah sebuah polinomial,
+maka \( f(t) \) adalah
+transformasi \( c_nt^n+\dots+c_1t+c_0(\identity) \) pada~\( V \).
+Dengan cara yang sama, jika \( T \) adalah matriks persegi,
+maka
+\( f(T) \) adalah matriks \( c_nT^n+\dots+c_1T+c_0I \).
+\end{definition}
+
+\noindent Polinomial matriks merepresentasikan polinomial pemetaan:~jika
+\( T=\rep{t}{B,B} \), maka \( f(T)=\rep{f(t)}{B,B} \).
+Ini karena \( T^j=\rep{t^j}{B,B} \),
+\( cT=\rep{ct}{B,B} \), dan \( T_1+T_2 =\rep{t_1+t_2}{B,B} \).
+
+\begin{remark}
+Kita akan menuliskan polinomial matriks sedikit berbeda dari
+polinomial pemetaan.
+Sebagai contoh, jika \( f(x)=x-3 \), maka
+kita akan menuliskan matriks identitas, seperti pada~\( f(T)=T-3I \),
+tetapi tidak menuliskan pemetaan identitas, seperti pada~\( f(t)=t-3 \).
+\end{remark}
+
+\begin{example}  \label{ex:PolySendRotMatToZ}
+Rotasi vektor bidang sebesar \( \pi/3 \)~radian berlawanan arah jarum jam
+direpresentasikan terhadap basis standar oleh
+\begin{equation*}
+  T=
+  \begin{mat}[r]
+     \cos(\pi/3)  &-\sin(\pi/3)  \\
+     \sin(\pi/3)   &\cos(\pi/3)
+  \end{mat}
+  =
+  \begin{mat}[r]
+     1/2        &-\sqrt{3}/2  \\
+     \sqrt{3}/2  &1/2
+  \end{mat}
+\end{equation*}
+dan verifikasi bahwa \( T^2-T+I=Z \) bersifat rutin.
+(Secara geometris, \( T^2 \) merotasi sebesar \( 2\pi/3\).
+Pada vektor basis standar~\( \vec{e}_1 \), tindakan
+$T^2-T$ menghasilkan selisih antara vektor satuan bersudut
+\( 2\pi/3\) dan vektor satuan bersudut \( \pi/3\),
+yaitu \( \binom{-1}{0} \).
+Pada \( \vec{e}_2 \), hasilnya adalah \( \binom{0}{-1} \).
+Jadi, \( T^2-T=-I \).)
+\end{example}
+
+Ruang $\matspace_{\nbyn{2}}$ berdimensi empat, sehingga kita mengetahui bahwa
+untuk setiap matriks \( \nbyn{2} \)~\( T \), terdapat polinomial derajat empat
+\( f \) sedemikian sehingga \( f(T)=Z \).
+Namun, dalam contoh itu kita memperlihatkan polinomial derajat dua yang berhasil.
+Jadi, meskipun derajat~$n^2$ selalu memadai, dalam beberapa kasus
+polinomial berderajat lebih kecil sudah cukup.
+
+\begin{definition}
+\definend{polinomial minimal}\index{polinomial!minimal}%
+\index{polinomial minimal}
+\( m(x) \) dari transformasi \( t \)\index{transformasi!polinomial minimal}
+atau matriks persegi \( T \)\index{matriks!polinomial minimal} adalah
+polinomial tak nol berderajat terkecil dengan koefisien utama~\( 1 \)
+sedemikian sehingga \( m(t) \) merupakan pemetaan nol atau \( m(T) \) merupakan matriks nol.
+\end{definition}
+
+\noindent Polinomial minimal
+tidak dapat berupa polinomial konstan karena
+pembatasan pada koefisien utamanya.
+Jadi, polinomial minimal
+harus berderajat sekurang-kurangnya satu.
+Matriks nol memiliki polinomial minimal $p(x)=x$, sedangkan
+matriks identitas memiliki polinomial minimal $\hat{p}(x)=x-1$.
+
+\begin{lemma}
+Setiap transformasi atau matriks persegi memiliki polinomial minimal yang unik.
+\end{lemma}
+
+\begin{proof}
+Pertama-tama kita membuktikan keberadaannya.
+Berdasarkan pengamatan sebelumnya bahwa
+derajat~$n^2$ memadai, terdapat sekurang-kurangnya satu
+polinomial tak nol $p(x)=c_kx^k+\cdots+c_0$ yang
+mengirim pemetaan atau matriks tersebut ke nol.
+Di antara semua polinomial semacam itu,
+ambil salah satu yang berderajat terkecil.
+Bagi polinomial ini dengan koefisien utamanya~$c_k$ agar koefisien utamanya menjadi~$1$.
+Dengan demikian, setiap pemetaan atau matriks memiliki setidaknya satu polinomial minimal.
+
+Sekarang untuk keunikannya.
+Misalkan
+\( m(x) \) dan \( \hat{m}(x) \) sama-sama mengirim pemetaan atau matriks tersebut ke nol,
+keduanya berderajat
+minimal sehingga berderajat sama,
+dan keduanya memiliki koefisien utama~$1$.
+Perhatikan selisih \( m(x)-\hat{m}(x) \).
+Jika selisih itu bukan polinomial nol, maka ia memiliki koefisien utama tak nol.
+Membaginya dengan
+koefisien utama tersebut akan menghasilkan polinomial yang mengirim
+pemetaan atau matriks itu ke nol, memiliki koefisien utama~\( 1\), dan
+berderajat lebih kecil daripada $m$ dan $\hat{m}$
+(karena dalam pengurangan itu, kedua koefisien utama \( 1\) saling meniadakan).
+Hal ini bertentangan dengan minimalitas derajat
+$m$ dan $\hat{m}$.
+Jadi, \( m(x)-\hat{m}(x) \) adalah polinomial nol dan
+keduanya sama.
+\end{proof}
+
+\begin{example}  \label{ex:MinPolyForRotMat}
+Salah satu cara menghitung polinomial minimal matriks pada
+\nearbyexample{ex:PolySendRotMatToZ} adalah mencari pangkat-pangkat $T$
+hingga $n^2=4$.
+\begin{equation*}
+   T^2=
+   \begin{mat}[r]
+      -1/2         &-\sqrt{3}/2  \\
+      \sqrt{3}/2   &-1/2
+   \end{mat} 
+   \quad
+   T^3=
+   \begin{mat}[r]
+      -1    &0           \\
+       0    &-1
+   \end{mat}
+   \quad
+   T^4=
+   \begin{mat}[r]
+      -1/2         &\sqrt{3}/2  \\
+      -\sqrt{3}/2  &-1/2
+   \end{mat}
+\end{equation*}
+Samakan \( c_4T^4+c_3T^3+c_2T^2+c_1T+c_0I \) dengan matriks nol.
+\begin{equation*}
+  \begin{linsys}{5}
+     -(1/2)c_4  
+         &-  &c_3           
+         &- &(1/2)c_2
+         &+ &(1/2)c_1  
+         &+  &c_0  &=  &0      \\
+      (\sqrt{3}/2)c_4  
+         &  &   
+         &- &(\sqrt{3}/2)c_2
+         &- &(\sqrt{3}/2)c_1  
+         &   &     &=  &0        \\
+     -(\sqrt{3}/2)c_4  
+         &   &    
+         &+ &(\sqrt{3}/2)c_2
+         &+ &(\sqrt{3}/2)c_1  
+        &   &            &=  &0      \\
+     -(1/2)c_4  
+         &-  &c_3             
+         &- &(1/2)c_2
+         &+ &(1/2)c_1  
+         &+  &c_0  &=  &0
+   \end{linsys}
+\end{equation*}
+Terapkan Metode Gauss.
+\begin{equation*}
+  \begin{linsys}{5}
+     -(1/2)c_4  
+         &- &c_3             
+         &- &(1/2)c_2
+         &+ &(1/2)c_1  
+         &+  &c_0  &=  &0      \\
+         &  &-(\sqrt{3})c_3 
+         &- &\sqrt{3}c_2
+         &  &    
+         &+ &\sqrt{3}c_0 &=  &0
+   \end{linsys} 
+\end{equation*}
+Dengan tujuan membuat derajat polinomial sekecil mungkin,
+perhatikan bahwa menetapkan \( c_4 \), \( c_3 \), dan \( c_2 \) sama dengan nol
+memaksa \( c_1 \) dan \( c_0 \) juga sama dengan nol,
+sehingga persamaan-persamaan itu tidak memungkinkan polinomial minimal derajat satu.
+Sebagai gantinya, tetapkan \( c_4 \) dan \( c_3 \) sama dengan nol.
+Sistem
+\begin{equation*}
+  \begin{linsys}{3}           
+         -(1/2)c_2
+         &+ &(1/2)c_1  
+         &+  &c_0  &=  &0      \\
+         -\sqrt{3}c_2
+         &  &    
+         &+ &\sqrt{3}c_0 &=  &0
+   \end{linsys} 
+\end{equation*}
+memiliki himpunan solusi \( c_1=-c_0 \) dan \( c_2=c_0 \).
+Dengan mengambil koefisien utama~\( c_2=1 \), kita memperoleh
+polinomial minimal $x^2-x+1$.
+\end{example}
+
+% Using the method of that example to find the minimal polynomial of a
+% \( \nbyn{3} \) matrix 
+% would mean doing Gaussian reduction on
+% a system with nine equations in ten unknowns.
+Perhitungan itu tidak praktis.
+Kita akan mengembangkan cara lain.
+% To begin, note that we can break a polynomial of a map or a matrix into
+% its components.
+% (For this lemma, recall that we are using complex numbers in this chapter
+% so all polynomials break completely into linear factors.)
+
+\begin{lemma} \label{le:PolyMapsFactor}
+Misalkan polinomial \( f(x)=c_nx^n+\dots+c_1x+c_0 \) difaktorkan sebagai
+\( k(x-\lambda_1)^{q_1}\cdots(x-\lambda_z)^{q_z} \).
+Jika \( t \) adalah transformasi linear, maka kedua bentuk berikut merupakan pemetaan yang sama.
+\begin{equation*}
+  c_nt^n+\dots+c_1t+c_0
+  =
+  k\cdot\composed{\composed{(t-\lambda_1)^{q_1}}{\cdots}}{
+      (t-\lambda_z)^{q_z}} 
+\end{equation*}
+Akibatnya, jika \( T \) adalah matriks persegi, maka \( f(T) \) dan
+\( k\cdot(T-\lambda_1I)^{q_1}\cdots(T-\lambda_z I)^{q_z} \)
+merupakan matriks yang sama.
+\end{lemma}
+
+\begin{proof}
+Kita menggunakan induksi pada derajat polinomial.
+Kasus ketika polinomial berderajat
+nol dan berderajat satu sudah jelas.
+Argumen induksi lengkap diberikan dalam \nearbyexercise{exer:PolyMapsFactor},
+tetapi gagasannya akan kita tunjukkan melalui kasus derajat~dua.
+
+Sebuah polinomial kuadrat dapat difaktorkan menjadi dua
+faktor linear \( f(x)=k(x-\lambda_1)\cdot(x-\lambda_2)
+                    =k(x^2+(-\lambda_1-\lambda_2)x+\lambda_1\lambda_2) \).
+% (the roots $\lambda_1$ and $\lambda_2$ could be equal).
+Menyubstitusikan \( t \)
+untuk \( x \) dalam bentuk terfaktor dan
+bentuk tak terfaktor menghasilkan pemetaan yang sama.
+\begin{align*}
+   \bigl(k\cdot\composed{(t-\lambda_1)}{(t-\lambda_2)}\bigr)\>(\vec{v})
+   &=\bigl(k\cdot(t-\lambda_1)\bigr)\,(t(\vec{v})-\lambda_2\vec{v})    \\
+   &=k\cdot\bigl(t(t(\vec{v}))-t(\lambda_2\vec{v})
+      -\lambda_1 t(\vec{v})+\lambda_1\lambda_2\vec{v}\bigr)    \\
+   &=k\cdot \bigl(\composed{t}{t}\,(\vec{v})-(\lambda_1+\lambda_2)t(\vec{v})
+          +\lambda_1\lambda_2\vec{v}\bigr)                    \\
+   &=k\cdot(t^2-(\lambda_1+\lambda_2)t+\lambda_1\lambda_2)\>(\vec{v})
+\end{align*}
+Kesamaan ketiga menggunakan linearitas \( t \) untuk mengeluarkan $\lambda_2$ dari
+suku kedua.
+\end{proof}
+
+% In particular, if a minimal polynomial for a transformation $t$ 
+% factors as
+% $m(x)=(x-\lambda_1)^{q_1}\cdots (x-\lambda_z)^{q_z}$
+% then 
+% \( m(t)=\composed{\composed{(t-\lambda_1)^{q_1}}{\cdots}}{
+%       (t-\lambda_z)^{q_z}} \) 
+% is the zero map. 
+% Since \( m(t) \) sends every vector to zero, at least
+% one of the maps \( t-\lambda_i \)  sends some
+% nonzero vectors to zero.
+% Exactly the same holds in the matrix case\Dash if $m$ is minimal for $T$ then
+% \( m(T)=(T-\lambda_1I)^{q_1}\cdots (T-\lambda_z I)^{q_z} \)
+% is the zero matrix and at least one of the matrices $T-\lambda_iI$
+% sends some nonzero vectors to zero. 
+% That is, in both cases at least some of the \( \lambda_i \) are eigenvalues.
+% (\nearbyexercise{exer:SomeRootsMinPolyAreEigs} expands on this.)
+
+Hasil berikutnya menyatakan bahwa
+setiap akar polinomial minimal merupakan nilai eigen dan
+setiap nilai eigen merupakan akar polinomial minimal.
+(Artinya, hasil tersebut menyatakan `$1\leq q_i$',
+bukan sekadar `$0\leq q_i$'.)
+Untuk itu, ingatlah bahwa untuk mencari nilai eigen,
+kita menyelesaikan $\deter{T-xI}=0$, dan
+determinan ini menghasilkan polinomial dalam $x$,
+yaitu polinomial karakteristik,
+yang akar-akarnya merupakan nilai eigen.
+
+\begin{theorem}[Cayley-Hamilton]
+\label{th:CayHam}
+\index{Teorema Cayley--Hamilton}
+\hspace*{0em plus2em}
+Jika polinomial karakteristik suatu transformasi atau matriks persegi
+difaktorkan menjadi
+\begin{equation*}
+  k\cdot (x-\lambda_1)^{p_1}(x-\lambda_2)^{p_2}\cdots(x-\lambda_z)^{p_z}
+\end{equation*}
+maka polinomial minimalnya difaktorkan menjadi
+\begin{equation*}
+  (x-\lambda_1)^{q_1}(x-\lambda_2)^{q_2}\cdots(x-\lambda_z)^{q_z}
+\end{equation*}
+dengan \( 1\leq q_i \leq p_i \) untuk setiap \( i \) antara \( 1 \) dan \( z \).
+\end{theorem}
+
+\noindent Pembuktiannya menggunakan tiga lema berikutnya.
+Kita akan menyatakannya dalam istilah matriks
+karena versi itu lebih praktis
+untuk pembuktian pertama, tetapi semuanya berlaku sama baiknya
+untuk pemetaan.
+
+Hasil pertama merupakan kuncinya.
+Untuk pembuktiannya, amati bahwa kita dapat memandang
+matriks berentri polinomial sebagai polinomial dengan
+koefisien berupa matriks.
+\begin{equation*}
+   \begin{mat}
+     2x^2+3x-1  &x^2+2    \\
+     3x^2+4x+1  &4x^2+x+1
+   \end{mat}
+ = \begin{mat}[r]
+    2  &1  \\
+    3  &4
+  \end{mat}x^2
+ + \begin{mat}[r]
+    3  &0  \\
+    4  &1
+  \end{mat}x
+ + \begin{mat}[r]
+   -1  &2  \\
+    1  &1
+  \end{mat}
+\end{equation*}
+
+\begin{lemma}   \label{le:MatSatItsCharPoly}
+Jika \( T \) adalah matriks persegi dengan polinomial karakteristik \( c(x) \),
+maka \( c(T) \) adalah matriks nol.
+\end{lemma}
+
+\begin{proof}
+Misalkan \( C \) adalah \( T-xI \),
+yaitu matriks yang determinannya merupakan polinomial karakteristik
+\( c(x)=c_nx^n+\dots+c_1x+c_0 \).
+\begin{equation*}
+  C=\begin{mat}
+    t_{1,1}-x        &t_{1,2}   &\ldots        \\
+    t_{2,1}          &t_{2,2}-x               \\
+    \vdots           &          &\ddots       \\
+                     &          &       &t_{n,n}-x
+  \end{mat}
+\end{equation*}
+Ingat Teorema~Empat.III.\ref{th:MatTimesAdjEqDiagDets},
+yang menyatakan bahwa hasil kali suatu matriks dengan adjoinnya sama dengan
+determinan matriks tersebut dikalikan identitas.
+\begin{equation*}
+  c(x)\cdot I
+  =\adj (C)C
+  =\adj (C)(T-xI)
+  =\adj (C)T- \adj(C)\cdot x
+\tag*{($*$)}
+\end{equation*}
+Ruas kiri~($*$) adalah
+$c_nIx^n+c_{n-1}Ix^{n-1}+\cdots+c_1Ix+c_0I$.
+Untuk ruas kanan,
+entri-entri \( \adj (C) \) adalah polinomial yang masing-masing berderajat
+paling tinggi \( n-1 \), karena minor suatu matriks menghapus satu baris dan satu kolom.
+Seperti disarankan sebelum pembuktian, tuliskan kembali sebagai polinomial dengan
+koefisien matriks:
+\( \adj (C)=C_{n-1}x^{n-1}+\cdots+C_1x+C_0 \)
+dengan setiap \( C_i \) merupakan matriks skalar.
+Sekarang, berikutlah ruas kanan~($*$).
+\begin{equation*}
+  [(C_{n-1}T)x^{n-1}+\cdots+(C_1T)x+C_0T]  
+   -[C_{n-1}x^n+C_{n-2}x^{n-1}+\cdots+C_0x]
+\end{equation*}
+Samakan koefisien \( x^n \), $x^{n-1}$, dan seterusnya
+pada ruas kiri dan kanan ($*$).
+\begin{align*}
+  c_nI
+  &=-C_{n-1}    \\
+  c_{n-1}I
+  &=-C_{n-2}+C_{n-1}T    \\
+  &\vdotswithin{=}             \\
+  c_{1}I
+  &=-C_{0}+C_{1}T    \\
+  c_{0}I
+  &=C_{0}T
+\end{align*}
+Kalikan dari kanan kedua ruas persamaan pertama dengan \( T^n \),
+kedua ruas persamaan kedua dengan \( T^{n-1} \), dan seterusnya.
+\begin{align*}
+  c_nT^n
+  &=-C_{n-1}T^n    \\
+  c_{n-1}T^{n-1}
+  &=-C_{n-2}T^{n-1}+C_{n-1}T^n    \\
+  &\vdotswithin{=}             \\
+  c_{1}T
+  &=-C_{0}T+C_{1}T^2    \\
+  c_{0}I
+  &=C_{0}T
+\end{align*}
+Jumlahkan.
+Ruas kirinya adalah
+\( c_nT^n+c_{n-1}T^{n-1}+\cdots+c_0I \).
+Ruas kanannya saling meniadakan secara berantai;
+misalnya, $-C_{n-1}T^n$ dari baris pertama berpadu dengan
+bagian $C_{n-1}T^n$ dari baris kedua.
+Jumlah pada ruas kanan adalah matriks nol.
+\end{proof}
+
+Kita merujuk hasil tersebut dengan mengatakan bahwa suatu
+matriks atau pemetaan
+\definend{memenuhi}\index{karakteristik!polinomial!dipenuhi oleh}
+polinomial karakteristiknya.
+
+\begin{lemma} \label{le:tSatisImpMinPolyDivides}
+Setiap polinomial yang dipenuhi oleh \( T \) habis dibagi oleh
+polinomial minimal \( T \).
+Artinya, untuk suatu polinomial \( f(x) \), jika \( f(T) \) merupakan matriks nol,
+maka \( f(x) \) habis dibagi oleh polinomial minimal \( T \).
+\end{lemma}
+
+\begin{proof}
+Misalkan \( m(x) \) adalah polinomial minimal untuk \( T \).
+Teorema Pembagian Polinomial memberikan
+\( f(x)=q(x)\cdot m(x)+r(x) \)
+dengan derajat \( r \) lebih kecil secara ketat daripada derajat \( m \).
+Karena $T$ memenuhi $f$ maupun $m$, penyubstitusian $T$ ke persamaan itu
+menunjukkan bahwa \( r(T) \) adalah matriks nol.
+Hal ini bertentangan dengan minimalitas \( m \), kecuali jika \( r \)
+adalah polinomial nol.
+\end{proof}
+
+Menggabungkan dua lema sebelumnya menunjukkan bahwa polinomial minimal
+membagi polinomial karakteristik.
+Jadi,
+setiap akar polinomial minimal juga merupakan akar polinomial
+karakteristik.
+
+Jadi, sejauh ini kita telah memperoleh bahwa jika polinomial minimal difaktorkan sebagai
+\( m(x)=(x-\lambda_1)^{q_1}\cdots(x-\lambda_i)^{q_i} \), maka
+polinomial karakteristik juga memiliki akar \( \lambda_1\), \ldots,
+\( \lambda_i \).
+Namun, berdasarkan apa yang telah kita buktikan sampai titik ini,
+polinomial karakteristik mungkin memiliki akar tambahan:
+\( c(x)=(x-\lambda_1)^{p_1}\cdots(x-\lambda_i)^{p_i}
+     (x-\lambda_{i+1})^{p_{i+1}}\cdots(x-\lambda_z)^{p_z} \), dengan
+\( 1\leq q_j\leq p_j \) untuk \( 1\leq j \leq i \).
+Kita menyelesaikan pembuktian Teorema Cayley-Hamilton dengan menunjukkan bahwa
+polinomial karakteristik tidak memiliki akar tambahan, sehingga
+tidak ada $\lambda_{i+1}$, $\lambda_{i+2}$, dan seterusnya.
+
+\begin{lemma}
+Setiap faktor linear dari polinomial karakteristik suatu matriks persegi
+juga merupakan faktor linear dari polinomial minimalnya.
+\end{lemma}
+
+\begin{proof}
+Misalkan \( T \) adalah matriks persegi dengan polinomial minimal \( m(x) \)
+berderajat~\( n \), dan
+andaikan \( x-\lambda \) merupakan faktor polinomial karakteristik
+\( T \), sehingga \( \lambda \) adalah nilai eigen \( T \).
+Kita akan menunjukkan bahwa $m(\lambda)=0$, yakni bahwa $x-\lambda$ merupakan faktor $m$.
+
+Andaikan $\lambda$ berkaitan dengan vektor eigen~$\vec{v}$, dan
+perhatikan pangkat-pangkat $T^2(\vec{v})$, \ldots, \( T^n(\vec{v}) \).
+Kita mempunyai
+$T^2(\vec{v})
+=T\cdot\lambda\vec{v}=\lambda\cdot T\vec{v}=\lambda^2\vec{v}$.
+Hal yang sama berlaku untuk semua pangkat:
+$T^i\vec{v}=\lambda^i\vec{v}\,$ untuk \( 1\leq i \leq n \).
+Dengan demikian,
+untuk setiap fungsi polinomial \( p(x) \), penerapan matriks \( p(T) \)
+pada \( \vec{v} \) sama dengan hasil perkalian \( \vec{v} \) oleh skalar
+\( p(\lambda) \).
+\begin{multline*}
+  p(T)\,\vec{v}
+  =(c_kT^k+\dots+c_1T+c_0I)\,\vec{v}
+  =c_kT^k\vec{v}+\dots+c_1T\vec{v}+c_0\vec{v}  \\
+  =c_k\lambda^k\vec{v}+\dots+c_1\lambda\vec{v}+c_0\vec{v}
+  =p(\lambda)\cdot\vec{v}
+\end{multline*}
+Karena \( m(T) \) adalah matriks nol,
+\( \zero=m(T)(\vec{v})=m(\lambda)\cdot\vec{v} \), sehingga
+\( m(\lambda)=0 \), sebab \( \vec{v}\neq\zero \)
+karena ia merupakan vektor eigen.
+\end{proof}
+
+Ini menuntaskan pembuktian Teorema Cayley-Hamilton.
+
+\begin{example} \label{ex:MinPolyUsingCH}
+Kita dapat menggunakan Teorema Cayley-Hamilton untuk mencari polinomial minimal
+matriks berikut.
+\begin{equation*}
+   T=
+   \begin{mat}[r]
+      2  &0  &0  &1  \\
+      1  &2  &0  &2  \\
+      0  &0  &2  &-1 \\
+      0  &0  &0  &1
+   \end{mat}
+\end{equation*}
+Pertama, kita mencari polinomial karakteristiknya \( c(x)=(x-1)(x-2)^3 \)
+dengan determinan biasa $\deter{T-xI}$.
+Dari sini, Teorema Cayley-Hamilton menyatakan bahwa
+polinomial minimal \( T \) adalah salah satu dari
+\( (x-1)(x-2) \), atau
+\( (x-1)(x-2)^2 \), atau
+\( (x-1)(x-2)^3 \).
+Kita dapat memilih di antara kemungkinan itu cukup dengan menghitung
+\begin{equation*}
+   (T-1I)(T-2I)=\!
+   \begin{mat}[r]
+      1  &0  &0  &1  \\
+      1  &1  &0  &2  \\
+      0  &0  &1  &-1 \\
+      0  &0  &0  &0
+   \end{mat}
+   \begin{mat}[r]
+      0  &0  &0  &1  \\
+      1  &0  &0  &2  \\
+      0  &0  &0  &-1 \\
+      0  &0  &0  &-1
+   \end{mat}
+   =
+   \begin{mat}[r]
+      0  &0  &0  &0  \\
+      1  &0  &0  &1  \\
+      0  &0  &0  &0  \\
+      0  &0  &0  &0
+   \end{mat}
+\end{equation*}
+dan
+\begin{equation*}
+   (T-1I)(T-2I)^2=
+   \begin{mat}[r]
+      0  &0  &0  &0  \\
+      1  &0  &0  &1  \\
+      0  &0  &0  &0  \\
+      0  &0  &0  &0
+   \end{mat}
+   \begin{mat}[r]
+      0  &0  &0  &1  \\
+      1  &0  &0  &2  \\
+      0  &0  &0  &-1 \\
+      0  &0  &0  &-1
+   \end{mat}
+   =
+   \begin{mat}[r]
+      0  &0  &0  &0  \\
+      0  &0  &0  &0  \\
+      0  &0  &0  &0  \\
+      0  &0  &0  &0
+   \end{mat}
+\end{equation*}
+sehingga \( m(x)=(x-1)(x-2)^2 \).
+\end{example}
+
+
+% ==================================
+\begin{exercises}
+  \recommended \item 
+    Apa saja polinomial minimal yang mungkin jika suatu matriks memiliki
+    polinomial karakteristik yang diberikan?
+    \begin{exparts*}
+      \partsitem $(x-3)^4$
+      \partsitem $(x+1)^3(x-4)$
+      \partsitem $(x-2)^2(x-5)^2$
+      \partsitem  \( (x+3)^2(x-1)(x-2)^2 \)
+    \end{exparts*}
+    Berapakah derajat setiap kemungkinan?
+    \begin{answer} 
+      Teorema Cayley-Hamilton \nearbytheorem{th:CayHam} menyatakan bahwa
+      polinomial minimal harus memuat faktor-faktor linear yang sama
+      dengan polinomial karakteristik, meskipun mungkin berpangkat lebih rendah,
+      tetapi tidak berpangkat nol.
+      \begin{exparts}
+        \partsitem Kemungkinannya adalah
+          $m_1(x)=x-3$, $m_2(x)=(x-3)^2$, $m_3(x)=(x-3)^3$,
+          dan $m_4(x)=(x-3)^4$.
+          Yang pertama adalah polinomial derajat satu, yang kedua berderajat dua,
+          yang ketiga berderajat tiga, dan yang keempat berderajat empat.
+        \partsitem Kemungkinannya adalah $m_1(x)=(x+1)(x-4)$,
+          $m_2(x)=(x+1)^2(x-4)$, dan $m_3(x)=(x+1)^3(x-4)$.
+          Yang pertama merupakan polinomial kuadrat, yakni berderajat dua.
+          Yang kedua berderajat tiga, dan yang ketiga berderajat empat.
+        \partsitem Kita mempunyai $m_1(x)=(x-2)(x-5)$, $m_2(x)=(x-2)^2(x-5)$,
+          $m_3(x)=(x-2)(x-5)^2$, dan $m_4(x)=(x-2)^2(x-5)^2$.
+          Polinomial-polinomial itu berturut-turut berderajat dua, tiga, tiga, dan empat.
+        \partsitem Kemungkinannya adalah \( m_1(x)=(x+3)(x-1)(x-2) \),
+          \( m_2(x)=(x+3)^2(x-1)(x-2) \),
+          \( m_3(x)=(x+3)(x-1)(x-2)^2 \),
+          dan \( m_4(x)=(x+3)^2(x-1)(x-2)^2 \).
+          Derajat $m_1$ adalah tiga, derajat $m_2$ adalah empat,
+          derajat $m_3$ adalah empat, dan derajat $m_4$ adalah lima.
+      \end{exparts}
+    \end{answer}
+  \item Untuk matriks berikut,
+    \begin{equation*}
+      \begin{mat}
+        0 &1 &0 &1 \\
+        1 &0 &1 &0 \\
+        0 &1 &0 &1 \\
+        1 &0 &1 &0 \\
+      \end{mat}
+    \end{equation*}
+    carilah polinomial karakteristik dan polinomial minimalnya.
+    \begin{answer}
+    Polinomial karakteristik
+    \begin{equation*}
+      \deter{T-xI}=
+      \begin{vmat}
+        -x &1  &0  &1 \\
+         1 &-x &1  &0 \\
+         0 &1  &-x &1 \\
+         1 &0  &1  &-x \\
+      \end{vmat}
+    \end{equation*}
+    adalah $x^2(x^2-4)$.
+
+    Berdasarkan Teorema Cayley-Hamilton, semua akar berbeda dari
+    polinomial karakteristik juga merupakan akar polinomial minimal, sehingga
+    polinomial minimal berakar $0$, $2$, dan~$-2$.
+    Jadi, polinomial minimalnya adalah $x(x^2-4)$ atau $x^2(x^2-4)$.
+    
+    Salah satu cara mencari polinomial minimal adalah menyubstitusikan matriks itu
+    ke kedua bentuk hingga kita memperoleh matriks nol.
+    \begin{equation*}
+      T(T^2-4I)=
+      \begin{mat}
+        0 &1 &0 &1 \\
+        1 &0 &1 &0 \\
+        0 &1 &0 &1 \\
+        1 &0 &1 &0 \\
+      \end{mat}
+      \begin{mat}
+        -2 &0  &1  &0 \\
+        0  &-2 &0  &2 \\
+        2  &0  &-2 &0 \\
+        0  &2  &0  &-2 \\
+      \end{mat}
+      =
+      \begin{mat}
+        0 &0 &0 &0 \\
+        0 &0 &0 &0 \\
+        0 &0 &0 &0 \\
+        0 &0 &0 &0 \\
+      \end{mat}
+    \end{equation*}
+    Jadi, polinomial minimalnya adalah $x(x^2-4)$.
+    \end{answer}
+   \item 
+     Carilah polinomial minimal matriks berikut.
+     \begin{equation*}
+        \begin{mat}[r]
+           0  &1  &0  \\
+           0  &0  &1  \\
+           1  &0  &0
+        \end{mat}
+     \end{equation*}
+     \begin{answer}
+       Polinomial karakteristiknya memiliki akar kompleks.
+       \begin{equation*}
+          \begin{vmat}
+                   -x  &1  &0  \\
+                    0  &-x &1  \\
+                    1  &0  &-x
+          \end{vmat}
+          =(1-x)\cdot (x-(-\frac{1}{2}+\frac{\sqrt{3}}{2}i))
+                \cdot (x-(-\frac{1}{2}-\frac{\sqrt{3}}{2}i))
+       \end{equation*}
+       Karena akar-akarnya berbeda, polinomial karakteristik sama dengan
+       polinomial minimal.
+     \end{answer}
+  \recommended \item 
+    Carilah polinomial minimal setiap matriks.
+    \begin{exparts*}
+       \partsitem \( \begin{mat}[r]
+                   3  &0  &0  \\
+                   1  &3  &0  \\
+                   0  &0  &4
+                \end{mat} \)
+       \partsitem \( \begin{mat}[r]
+                   3  &0  &0  \\
+                   1  &3  &0  \\
+                   0  &0  &3
+                \end{mat} \)
+       \partsitem \( \begin{mat}[r]
+                   3  &0  &0  \\
+                   1  &3  &0  \\
+                   0  &1  &3
+                \end{mat} \)
+       \partsitem \( \begin{mat}[r]
+                   2  &0  &1  \\
+                   0  &6  &2  \\
+                   0  &0  &2
+                \end{mat} \)
+       \partsitem \( \begin{mat}[r]
+                   2  &2  &1  \\
+                   0  &6  &2  \\
+                   0  &0  &2
+                \end{mat} \)
+       \partsitem \( \begin{mat}[r]
+                   -1 &4  &0  &0  &0  \\
+                    0 &3  &0  &0  &0  \\
+                    0 &-4 &-1 &0  &0  \\
+                    3 &-9 &-4 &2  &-1 \\
+                    1 &5  &4  &1  &4
+                \end{mat} \)
+    \end{exparts*}
+    \begin{answer}
+      Dalam setiap kasus, kita akan menggunakan metode pada \nearbyexample{ex:MinPolyUsingCH}.
+      \begin{exparts}
+       \partsitem Karena $T$ berbentuk segitiga, $T-xI$ juga berbentuk segitiga,
+         \begin{equation*}
+           T-xI=
+           \begin{mat}
+             3-x  &0    &0   \\
+             1    &3-x  &0   \\
+             0    &0    &4-x
+           \end{mat}
+         \end{equation*}
+         sehingga polinomial karakteristiknya mudah dihitung,
+         $c(x)=\deter{T-xI}=(3-x)^2(4-x)=-1\cdot (x-3)^2(x-4)$.
+         Hanya ada dua kemungkinan untuk polinomial minimal,
+         $m_1(x)=(x-3)(x-4)$ dan $m_2(x)=(x-3)^2(x-4)$.
+         (Perhatikan bahwa polinomial karakteristik bertanda negatif,
+         sedangkan polinomial minimal tidak, karena polinomial minimal harus
+         memiliki koefisien utama satu.)
+         Karena $m_1(T)$ bukan matriks nol,
+         \begin{equation*}
+           (T-3I)(T-4I)
+           =
+           \begin{mat}[r]
+             0  &0  &0  \\
+             1  &0  &0  \\
+             0  &0  &1
+           \end{mat}
+           \begin{mat}[r]
+             -1  &0  &0  \\
+              1  &-1 &0  \\
+              0  &0  &0
+           \end{mat}
+           =
+           \begin{mat}[r]
+             0  &0  &0  \\
+            -1  &0  &0  \\
+             0  &0  &0
+           \end{mat}
+         \end{equation*}
+         polinomial minimalnya adalah $m(x)=m_2(x)$.
+         \begin{multline*}
+           (T-3I)^2(T-4I)
+           =(T-3I)\cdot\bigl((T-3I)(T-4I)\bigr)              \\
+           =
+           \begin{mat}
+             0  &0  &0  \\
+             1  &0  &0  \\
+             0  &0  &1
+           \end{mat}
+           \begin{mat}[r]
+              0  &0  &0  \\
+             -1  &0  &0  \\
+              0  &0  &0
+           \end{mat}
+           =
+           \begin{mat}[r]
+             0  &0  &0  \\
+             0  &0  &0  \\
+             0  &0  &0
+           \end{mat}
+         \end{multline*}
+       \partsitem Seperti pada butir sebelumnya, karena matriksnya berbentuk
+        segitiga, polinomial karakteristik mudah dihitung.
+        \begin{equation*}
+          c(x)=\deter{T-xI}
+              =
+              \begin{vmat}
+                3-x  &0   &0   \\
+                1    &3-x &0   \\
+                0    &0   &3-x
+              \end{vmat}
+              =(3-x)^3=-1\cdot (x-3)^3
+        \end{equation*}
+        Ada tiga kemungkinan untuk polinomial minimal,
+        $m_1(x)=(x-3)$, $m_2(x)=(x-3)^2$, dan $m_3(x)=(x-3)^3$.
+        Kita menentukannya dengan menghitung $m_1(T)$
+        \begin{equation*}
+          T-3I=
+          \begin{mat}[r]
+            0  &0  &0  \\
+            1  &0  &0  \\
+            0  &0  &0
+          \end{mat}
+        \end{equation*}
+        dan $m_2(T)$.
+        \begin{equation*}
+          (T-3I)^2=
+          \begin{mat}[r]
+            0  &0  &0  \\
+            1  &0  &0  \\
+            0  &0  &0
+          \end{mat}
+          \begin{mat}[r]
+            0  &0  &0  \\
+            1  &0  &0  \\
+            0  &0  &0
+          \end{mat}
+          =          
+          \begin{mat}[r]
+            0  &0  &0  \\
+            0  &0  &0  \\
+            0  &0  &0
+          \end{mat}
+        \end{equation*}
+        Karena $m_2(T)$ adalah matriks nol, $m_2(x)$ merupakan polinomial
+        minimal.
+       \partsitem Sekali lagi, matriksnya berbentuk segitiga.
+        \begin{equation*}
+          c(x)=\deter{T-xI}
+              =
+              \begin{vmat}
+                3-x  &0   &0   \\
+                1    &3-x &0   \\
+                0    &1   &3-x
+              \end{vmat}
+              =(3-x)^3=-1\cdot (x-3)^3
+        \end{equation*}
+        Sekali lagi, ada tiga kemungkinan untuk polinomial minimal,
+        $m_1(x)=(x-3)$, $m_2(x)=(x-3)^2$, dan $m_3(x)=(x-3)^3$.
+        Kita menghitung $m_1(T)$
+        \begin{equation*}
+          T-3I=
+          \begin{mat}[r]
+            0  &0  &0  \\
+            1  &0  &0  \\
+            0  &1  &0
+          \end{mat}
+        \end{equation*}
+        dan $m_2(T)$
+        \begin{equation*}
+          (T-3I)^2=
+          \begin{mat}[r]
+            0  &0  &0  \\
+            1  &0  &0  \\
+            0  &1  &0
+          \end{mat}
+          \begin{mat}[r]
+            0  &0  &0  \\
+            1  &0  &0  \\
+            0  &1  &0
+          \end{mat}
+          =          
+          \begin{mat}[r]
+            0  &0  &0  \\
+            0  &0  &0  \\
+            1  &0  &0
+          \end{mat}
+        \end{equation*}
+        serta $m_3(T)$.
+        \begin{equation*}
+          (T-3I)^3
+          =(T-3I)^2(T-3I)
+          =
+          \begin{mat}[r]
+            0  &0  &0  \\
+            0  &0  &0  \\
+            1  &0  &0
+          \end{mat}
+          \begin{mat}[r]
+            0  &0  &0  \\
+            1  &0  &0  \\
+            0  &1  &0
+          \end{mat}
+          =          
+          \begin{mat}[r]
+            0  &0  &0  \\
+            0  &0  &0  \\
+            0  &0  &0
+          \end{mat}
+        \end{equation*}
+        Jadi, polinomial minimalnya adalah $m(x)=m_3(x)=(x-3)^3$.
+       \partsitem Kasus ini juga berbentuk segitiga, kali ini segitiga atas.
+         \begin{equation*}
+           c(x)=\deter{T-xI}=
+           \begin{vmat}
+             2-x  &0   &1     \\
+             0    &6-x &2     \\
+             0    &0   &2-x
+           \end{vmat}
+           =(2-x)^2(6-x)=-(x-2)^2(x-6)
+         \end{equation*}
+         Ada dua kemungkinan untuk polinomial minimal,
+         $m_1(x)=(x-2)(x-6)$ dan $m_2(x)=(x-2)^2(x-6)$.
+         Perhitungan menunjukkan bahwa polinomial minimalnya bukan $m_1(x)$.
+         \begin{equation*}
+           (T-2I)(T-6I)=
+           \begin{mat}[r]
+             0  &0  &1  \\
+             0  &4  &2  \\
+             0  &0  &0  
+           \end{mat}
+           \begin{mat}[r]
+             -4  &0  &1  \\
+              0  &0  &2  \\
+              0  &0  &-4
+           \end{mat}
+           =
+           \begin{mat}[r]
+             0  &0  &-4  \\
+             0  &0  &0   \\
+             0  &0  &0
+           \end{mat}
+         \end{equation*}
+         Karena itu, haruslah $m(x)=m_2(x)=(x-2)^2(x-6)$.
+         Berikut verifikasinya.
+         \begin{multline*}
+           (T-2I)^2(T-6I)=(T-2I)\cdot\bigl((T-2I)(T-6I)\bigr)             \\
+           =
+           \begin{mat}[r]
+             0  &0  &1  \\
+             0  &4  &2  \\
+             0  &0  &0  
+           \end{mat}
+           \begin{mat}[r]
+              0  &0  &-4   \\
+              0  &0  &0   \\
+              0  &0  &0
+           \end{mat}
+           =
+           \begin{mat}[r]
+             0  &0  &0  \\
+             0  &0  &0   \\
+             0  &0  &0
+           \end{mat}
+         \end{multline*}
+       \partsitem Polinomial karakteristiknya adalah
+         \begin{equation*}
+           c(x)=\deter{T-xI}=
+           \begin{vmat}
+             2-x  &2   &1     \\
+             0    &6-x &2     \\
+             0    &0   &2-x
+           \end{vmat}
+           =(2-x)^2(6-x)=-(x-2)^2(x-6)
+         \end{equation*}
+         dan ada dua kemungkinan untuk polinomial minimal,
+         $m_1(x)=(x-2)(x-6)$ dan $m_2(x)=(x-2)^2(x-6)$.
+         Dengan memeriksa kemungkinan pertama,
+         \begin{equation*}
+           (T-2I)(T-6I)=
+           \begin{mat}[r]
+             0  &2  &1  \\
+             0  &4  &2  \\
+             0  &0  &0  
+           \end{mat}
+           \begin{mat}[r]
+             -4  &2  &1  \\
+              0  &0  &2  \\
+              0  &0  &-4
+           \end{mat}
+           =
+           \begin{mat}[r]
+             0  &0  &0  \\
+             0  &0  &0   \\
+             0  &0  &0
+           \end{mat}
+         \end{equation*}
+         terlihat bahwa polinomial minimalnya adalah
+         $m(x)=m_1(x)=(x-2)(x-6)$.
+       \partsitem Berikut polinomial karakteristiknya.
+         \begin{equation*}
+           c(x)=\deter{T-xI}=
+           \begin{vmat} 
+              -1-x &4    &0    &0    &0    \\
+               0   &3-x  &0    &0    &0    \\
+               0   &-4   &-1-x &0    &0    \\
+               3   &-9   &-4   &2-x  &-1   \\
+               1   &5    &4    &1    &4-x
+           \end{vmat}     
+           =-(x-3)^3(x+1)^2
+         \end{equation*}
+         Berikut kemungkinan untuk polinomial minimalnya,
+         diurutkan menurut derajat yang meningkat:
+         $m_1(x)=(x-3)(x+1)$, $m_2(x)=(x-3)^2(x+1)$, $m_3(x)=(x-3)(x+1)^2$,
+         $m_4(x)=(x-3)^3(x+1)$, $m_5(x)=(x-3)^2(x+1)^2$,
+         dan $m_6(x)=(x-3)^3(x+1)^2$.
+         Kemungkinan pertama tidak berhasil,
+         \begin{align*}
+           (T-3I)(T+1I)
+           &=
+           \begin{mat}[r] 
+              -4   &4    &0    &0    &0    \\
+               0   &0    &0    &0    &0    \\
+               0   &-4   &-4   &0    &0    \\
+               3   &-9   &-4   &-1   &-1   \\
+               1   &5    &4    &1    &1  
+           \end{mat}     
+           \begin{mat}[r] 
+               0   &4    &0    &0    &0    \\
+               0   &4    &0    &0    &0    \\
+               0   &-4   &0    &0    &0    \\
+               3   &-9   &-4   &3    &-1   \\
+               1   &5    &4    &1    &5  
+           \end{mat}                           \\     
+           &=
+           \begin{mat}[r] 
+               0   &0    &0    &0    &0    \\
+               0   &0    &0    &0    &0    \\
+               0   &0    &0    &0    &0    \\
+              -4   &-4   &0    &-4   &-4   \\
+               4   &4    &0    &4    &4  
+           \end{mat}           
+         \end{align*}
+         tetapi kemungkinan kedua berhasil.
+         \begin{multline*}
+           (T-3I)^2(T+1I)=(T-3I)\bigl((T-3I)(T+1I)\bigr) \\
+           \begin{aligned}
+           &=
+           \begin{mat}[r] 
+              -4   &4    &0    &0    &0    \\
+               0   &0    &0    &0    &0    \\
+               0   &-4   &-4   &0    &0    \\
+               3   &-9   &-4   &-1   &-1   \\
+               1   &5    &4    &1    &1  
+           \end{mat}     
+           \begin{mat}[r] 
+               0   &0    &0    &0    &0    \\
+               0   &0    &0    &0    &0    \\
+               0   &0    &0    &0    &0    \\
+              -4   &-4   &0    &-4   &-4   \\
+               4   &4    &0    &4    &4  
+           \end{mat}                          \\          
+           &=
+           \begin{mat}[r] 
+               0   &0    &0    &0    &0    \\
+               0   &0    &0    &0    &0    \\
+               0   &0    &0    &0    &0    \\
+               0   &0    &0    &0    &0    \\
+               0   &0    &0    &0    &0  
+           \end{mat}  
+           \end{aligned}         
+         \end{multline*}
+         Polinomial minimalnya adalah \( m(x)=(x-3)^2(x+1) \).
+      \end{exparts} 
+    \end{answer}
+  \recommended \item 
+     Apa polinomial minimal operator diferensiasi
+     $d/dx$ pada \( \polyspace_n \)?
+     \begin{answer}
+       Kita mengetahui bahwa $\polyspace_n$ merupakan ruang berdimensi $n+1$ dan
+       operator diferensiasi bersifat
+       nilpoten dengan indeks~$n+1$ (misalnya, dengan mengambil $n=3$,
+       $\polyspace_3=\set{c_3x^3+c_2x^2+c_1x+c_0\suchthat c_3,\ldots,c_0\in\C}$
+       dan turunan keempat suatu polinomial kubik adalah polinomial nol).
+       Representasikan operator ini menggunakan bentuk kanonik
+       untuk transformasi nilpoten.
+       \begin{equation*}
+         \begin{mat}
+           0  &0  &0  &\ldots &  &0  \\
+           1  &0  &0  &       &  &0  \\
+           0  &1  &0  &       &  &   \\
+              &   &\ddots            \\
+           0  &0  &0  &       &1 &0 
+         \end{mat}
+       \end{equation*}
+       Ini adalah matriks $\nbyn{(n+1)}$ dengan polinomial
+       karakteristik yang mudah dihitung,
+        $c(x)=(-x)^{n+1}$.
+       (\textit{Catatan:} matriks ini adalah $\rep{d/dx}{B,B}$ dengan
+        $B=\sequence{x^n,nx^{n-1},n(n-1)x^{n-2},\ldots,n!}$.)
+       Untuk mencari polinomial minimal seperti dalam \nearbyexample{ex:MinPolyUsingCH},
+       kita memperhatikan pangkat-pangkat $T-0I=T$.
+       Namun, tentu saja, pangkat pertama $T$ yang menghasilkan matriks nol
+       adalah pangkat $n+1$.
+       Jadi, polinomial minimalnya adalah \( m(x)=x^{n+1} \).
+     \end{answer}
+  \recommended \item 
+    Carilah polinomial minimal matriks berbentuk berikut,
+    \begin{equation*}
+      \begin{mat}
+        \lambda  &0        &0          &\ldots  &        &0  \\
+        1        &\lambda  &0          &        &        &0  \\
+        0        &1        &\lambda                          \\
+                 &         &           &\ddots                \\
+                 &         &           &        &\lambda &0   \\
+        0        &0        &\ldots     &        &1       &\lambda
+      \end{mat}
+    \end{equation*}
+    dengan skalar $\lambda$ tetap (yakni bukan variabel).
+    \begin{answer}
+      Namakan matriks itu $T$ dan andaikan ukurannya \( \nbyn{n} \).
+      Karena $T$ berbentuk segitiga, maka $T-xI$ juga berbentuk segitiga,
+       dan polinomial karakteristiknya adalah
+       $c(x)=(\lambda-x)^n=(-1)^n(x-\lambda)^n$.
+       Untuk melihat bahwa polinomial minimalnya adalah bentuk monik yang
+       bersesuaian, $m(x)=(x-\lambda)^n$, perhatikan
+      $T-\lambda I$.
+      \begin{equation*}
+        \begin{mat}
+          0        &0        &0          &\ldots  &0  \\
+          1        &0        &0          &\ldots  &0  \\
+          0        &1        &0                       \\
+                   &         &\ddots                  \\
+          0        &0        &\ldots     &1       &0      
+        \end{mat}
+      \end{equation*}
+      Kenali matriks ini sebagai bentuk kanonik untuk transformasi yang
+      nilpoten berderajat~$n$; pangkat $(T-\lambda I)^j$ pertama kali menjadi nol
+      ketika $j$ sama dengan $n$.
+    \end{answer}
+  \item 
+    Apa polinomial minimal transformasi pada
+    \( \polyspace_n \) yang mengirim \( p(x) \) ke \( p(x+1) \)?
+    \begin{answer}
+      Kasus $n=3$ memberikan petunjuk.
+      Basis alami untuk $\polyspace_3$ adalah
+      $B=\sequence{1,x,x^2,x^3}$.
+      Tindakan transformasinya adalah
+      \begin{equation*}
+        1\mapsto 1
+        \quad
+        x\mapsto x+1
+        \quad
+        x^2\mapsto x^2+2x+1
+        \quad
+        x^3\mapsto x^3+3x^2+3x+1
+      \end{equation*}
+      sehingga representasi $\rep{t}{B,B}$ adalah matriks segitiga atas berikut.
+      \begin{equation*}
+        \begin{mat}[r]
+          1  &1  &1  &1  \\
+          0  &1  &2  &3  \\
+          0  &0  &1  &3  \\
+          0  &0  &0  &1
+        \end{mat}
+      \end{equation*}
+      Karena matriks itu berbentuk segitiga, jelas bahwa polinomial karakteristiknya
+      adalah $c(x)=(x-1)^4$.
+      Untuk polinomial minimal, kandidatnya adalah $m_1(x)=(x-1)$,
+      \begin{equation*}
+        T-1I=
+        \begin{mat}[r]
+          0  &1  &1  &1  \\
+          0  &0  &2  &3  \\
+          0  &0  &0  &3  \\
+          0  &0  &0  &0
+        \end{mat}
+      \end{equation*}
+      $m_2(x)=(x-1)^2$, 
+      \begin{equation*}
+        (T-1I)^2=
+        \begin{mat}[r]
+          0  &0  &2  &6  \\
+          0  &0  &0  &6  \\
+          0  &0  &0  &0  \\
+          0  &0  &0  &0
+        \end{mat}
+      \end{equation*}
+      $m_3(x)=(x-1)^3$,
+      \begin{equation*}
+        (T-1I)^3=
+        \begin{mat}[r]
+          0  &0  &0  &6  \\
+          0  &0  &0  &0  \\
+          0  &0  &0  &0  \\
+          0  &0  &0  &0
+        \end{mat}
+      \end{equation*}
+      dan $m_4(x)=(x-1)^4$.
+      Karena $m_1$, $m_2$, dan $m_3$ tidak tepat, $m_4$ pasti tepat,
+      sebagaimana mudah diverifikasi.
+      
+      Dalam kasus $n$ umum, representasinya adalah matriks segitiga
+      atas dengan satu pada diagonalnya.
+       Jadi, polinomial karakteristiknya adalah $c(x)=(1-x)^{n+1}$.
+       Salah satu cara memverifikasi bahwa polinomial minimalnya adalah bentuk
+       monik yang bersesuaian, $m(x)=(x-1)^{n+1}$, ialah menggunakan argumen berikut:
+      sebutlah matriks segitiga atas sebagai segitiga-atas-$0$ jika
+      terdapat entri tak nol pada diagonal, sebagai segitiga-atas-$1$ jika
+      diagonalnya hanya memuat nol dan terdapat entri tak nol tepat di atas
+      diagonal, dan seterusnya.
+      Seperti diperlihatkan oleh contoh di atas, argumen induksi akan
+      menunjukkan bahwa jika $T$ hanya memiliki entri tak negatif,
+      maka $T^j$ berbentuk segitiga-atas-$j$.
+      % We leave that argument to the reader.
+    \end{answer}
+   \item 
+     Apa polinomial minimal dari
+     pemetaan \( \map{\pi}{\C^3}{\C^3} \)
+     yang memproyeksikan ke dua koordinat pertama?
+      \begin{answer}
+        Penerapan pemetaan dua kali sama dengan penerapannya sekali:~$\composed{\pi}{\pi}=\pi$,
+        yakni $\pi^2=\pi$, sehingga polinomial minimal berderajat
+        paling tinggi dua karena \( m(x)=x^2-x \) dapat digunakan.
+        Fakta bahwa tidak ada polinomial linear yang dapat digunakan diperoleh dengan menerapkan
+        pemetaan pada ruas kiri dan kanan
+        $c_1\cdot \pi+c_0\cdot \identity=z$ (dengan $z$ merupakan pemetaan nol)
+        pada kedua vektor berikut.
+        \begin{equation*}
+          \colvec[r]{0 \\ 0 \\ 1}
+          \qquad
+          \colvec[r]{1 \\ 0 \\ 0}
+        \end{equation*}
+        Jadi, polinomial minimalnya adalah $m(x)=x^2-x$.
+      \end{answer}
+   \item 
+     Carilah matriks \( \nbyn{3} \) yang polinomial
+     minimalnya adalah \( x^2 \).
+     \begin{answer}
+        Berikut salah satu jawabannya.
+        \begin{equation*}
+            \begin{mat}[r]
+              0  &0  &0  \\
+              1  &0  &0  \\
+              0  &0  &0
+            \end{mat}
+        \end{equation*} 
+      \end{answer}
+  \item 
+     Apa yang salah dalam pembuktian yang diklaim berikut untuk
+     \nearbylemma{le:MatSatItsCharPoly}:
+      ``jika \( c(x)=\deter{T-xI} \), maka \( c(T)=\deter{T-TI}=0 \,\)''\,?
+     \cite{Cullen}
+     \begin{answer}
+       \( x \) harus berupa skalar, bukan matriks.
+     \end{answer}
+  \item 
+    Verifikasikan \nearbylemma{le:MatSatItsCharPoly} untuk matriks
+    \( \nbyn{2} \) melalui perhitungan langsung.
+    \begin{answer}
+      Polinomial karakteristik dari
+      \begin{equation*}
+         T=\begin{mat}
+              a  &b  \\
+              c  &d
+           \end{mat}
+      \end{equation*}
+      adalah \( (a-x)(d-x)-bc=x^2-(a+d)x+(ad-bc) \).
+      Substitusikan
+      \begin{multline*}
+         \begin{mat}
+              a  &b  \\
+              c  &d
+         \end{mat}^2
+         -
+         (a+d)\begin{mat}
+            a  &b  \\
+            c  &d
+         \end{mat}
+         +
+         (ad-bc)\begin{mat}[r]
+            1  &0  \\
+            0  &1
+         \end{mat}                            \\
+         =                     
+         \begin{mat}
+            a^2+bc  &ab+bd  \\
+            ac+cd   &bc+d^2
+         \end{mat}
+         -
+         \begin{mat}
+            a^2+ad  &ab+bd   \\
+            ac+cd   &ad+d^2
+         \end{mat}
+         +
+         \begin{mat}
+            ad-bc  &0      \\
+            0      &ad-bc
+         \end{mat}
+      \end{multline*}
+      lalu periksa jumlah pada setiap entri untuk melihat bahwa hasilnya adalah matriks nol.
+    \end{answer}
+  \recommended \item
+    Buktikan bahwa polinomial minimal matriks \( \nbyn{n} \) berderajat
+    paling tinggi \( n \) (bukan \( n^2 \), seperti yang mungkin diduga dari
+    pembukaan subbagian ini).
+    Verifikasikan bahwa nilai maksimum \( n \) ini dapat terjadi.
+    \begin{answer}
+      Berdasarkan Teorema Cayley-Hamilton, derajat polinomial minimal
+      kurang dari atau sama dengan derajat polinomial karakteristik, yaitu
+      \( n \).
+      \nearbyexample{ex:MinPolyForRotMat} menunjukkan bahwa \( n \) dapat terjadi.
+    \end{answer}
+   \recommended \item 
+     Tunjukkan bahwa pada ruang vektor nontrivial, suatu transformasi linear
+     nilpoten jika dan hanya jika satu-satunya nilai eigennya adalah nol.
+     \begin{answer}
+       Misalkan transformasi linearnya adalah $\map{t}{V}{V}$.
+       Jika $t$ nilpoten, maka terdapat $n$ sedemikian sehingga $t^n$ merupakan pemetaan nol,
+       sehingga $t$ memenuhi polinomial $p(x)=x^n=(x-0)^n$.
+       Berdasarkan \nearbylemma{le:tSatisImpMinPolyDivides}, polinomial minimal
+       $t$ membagi $p$, sehingga satu-satunya akar polinomial minimal adalah nol.
+       Berdasarkan Cayley-Hamilton, \nearbytheorem{th:CayHam},
+       satu-satunya akar polinomial karakteristik adalah nol.
+       Jadi, satu-satunya nilai eigen $t$ adalah nol.
+
+       Sebaliknya, jika transformasi \( t \) pada ruang berdimensi
+       \( n \) hanya memiliki nilai eigen nol,
+       maka polinomial karakteristiknya adalah \( x^n \).
+       Teorema Cayley-Hamilton menyatakan bahwa suatu pemetaan memenuhi
+       polinomial karakteristiknya, sehingga \( t^n \) merupakan pemetaan nol.
+       Jadi, $t$ nilpoten.
+     \end{answer}
+   \item 
+       Apa polinomial minimal suatu pemetaan atau matriks nol?
+       Bagaimana dengan pemetaan atau matriks identitas?
+       \begin{answer}
+         Polinomial minimal harus memiliki koefisien utama $1$,
+         sehingga jika polinomial minimal suatu pemetaan atau matriks
+         berderajat nol, maka polinomial itu adalah $m(x)=1$.
+         Namun, pemetaan atau matriks identitas sama dengan pemetaan atau matriks nol
+         hanya pada ruang vektor trivial.
+
+         Jadi, dalam kasus nontrivial, polinomial minimal harus berderajat
+         setidaknya satu.
+         Pemetaan atau matriks nol memiliki polinomial minimal \( m(x)=x \), sedangkan
+         pemetaan atau matriks identitas memiliki polinomial minimal \( m(x)=x-1 \).
+       \end{answer}
+   \recommended \item 
+     Apa polinomial minimal suatu matriks diagonal?
+     \begin{answer}
+       Untuk matriks diagonal
+       \begin{equation*}
+          T=
+          \begin{mat}
+             t_{1,1}   &0        \\
+             0         &t_{2,2}  \\
+                       &        &\ddots  \\
+                       &        &      &t_{n,n}
+          \end{mat}
+       \end{equation*}
+       polinomial karakteristiknya adalah
+       $(t_{1,1}-x)(t_{2,2}-x)\cdots (t_{n,n}-x)$.     
+       Tentu saja, sebagian faktor itu mungkin berulang; misalnya, matriksnya mungkin
+       memenuhi $t_{1,1}=t_{2,2}$.
+       Sebagai contoh, polinomial karakteristik dari
+       \begin{equation*}
+          D=
+          \begin{mat}[r]
+             3 &0 &0  \\
+             0 &3 &0  \\
+             0 &0 &1
+          \end{mat}
+       \end{equation*}
+       adalah \( (3-x)^2(1-x)=-1\cdot (x-3)^2(x-1) \).
+
+       Untuk membentuk polinomial minimal,
+       ambil faktor-faktor \( x-t_{i,i} \), buang pengulangannya,
+       lalu kalikan semuanya.
+       Sebagai contoh, polinomial minimal $D$
+       adalah \( (x-3)(x-1) \).
+       Untuk memeriksanya, pertama-tama perhatikan bahwa \nearbytheorem{th:CayHam},
+       Teorema Cayley-Hamilton, mengharuskan setiap faktor linear dalam
+       polinomial karakteristik muncul setidaknya sekali dalam polinomial
+       minimal.
+       Salah satu cara memeriksa arah sebaliknya\Dash bahwa dalam kasus
+       matriks diagonal,
+       setiap faktor linear hanya perlu muncul paling banyak sekali\Dash adalah
+       menggunakan argumen matriks.
+       Ketika mengalikan dari kiri, matriks diagonal menskalakan baris-baris
+       menurut entri pada diagonal.
+       Namun, dalam hasil kali $(T-t_{1,1}I)\cdots\hbox{}$, bahkan tanpa faktor
+       berulang, setiap baris bernilai nol pada setidaknya salah satu faktor.
+
+       Sebagai contoh, dalam hasil kali
+       \begin{equation*}
+         (D-3I)(D-1I)=(D-3I)(D-1I)I=
+         \begin{mat}[r]
+           0  &0  &0  \\
+           0  &0  &0  \\
+           0  &0  &-2        
+         \end{mat}
+         \begin{mat}[r]
+           2  &0  &0  \\
+           0  &2  &0  \\
+           0  &0  &0
+         \end{mat}
+         \begin{mat}[r]
+           1  &0  &0  \\
+           0  &1  &0  \\
+           0  &0  &1
+         \end{mat}
+       \end{equation*}
+       karena baris pertama dan kedua matriks pertama $D-3I$
+       bernilai nol, seluruh hasil kali akan memiliki baris pertama dan kedua
+       yang bernilai nol.
+       Dan karena baris ketiga matriks tengah $D-1I$ bernilai nol,
+       seluruh hasil kali memiliki baris ketiga yang bernilai nol.
+    \end{answer}
+  \recommended \item 
+    Suatu \definend{proyeksi}\index{proyeksi}%
+    \index{transformasi!proyeksi} 
+    adalah sebarang transformasi \( t \) sedemikian sehingga \( t^2=t \).
+    (Sebagai contoh, perhatikan transformasi pada bidang $\Re^2$ yang memproyeksikan
+    setiap vektor ke koordinat pertamanya.
+    Jika kita memproyeksikan dua kali, hasilnya sama seperti jika kita memproyeksikan sekali.)
+    Apa polinomial minimal suatu proyeksi?
+    \begin{answer}
+      Subbagian ini diawali dengan pengamatan bahwa pangkat-pangkat
+      suatu transformasi linear tidak dapat terus meningkat tanpa ``pengulangan'',
+      yakni bahwa untuk suatu pangkat~$n$ terdapat hubungan linear
+      $c_n\cdot t^n+\dots+c_1\cdot t+c_0\cdot \identity=z$ dengan $z$ sebagai
+      transformasi nol.
+      Definisi proyeksi menyatakan bahwa untuk pemetaan semacam itu,
+      salah satu hubungan linearnya bersifat kuadratik, $t^2-t=z$.
+      Untuk menyelesaikannya, kita hanya perlu mempertimbangkan apakah hubungan ini
+      mungkin tidak minimal; yakni, adakah proyeksi yang polinomial minimalnya
+      konstan atau linear?
+
+      Agar polinomial minimalnya konstan, pemetaan harus memenuhi
+      $c_0\cdot\identity=z$, dengan $c_0=1$ karena koefisien utama
+      polinomial minimal adalah $1$.
+      Persamaan ini hanya dipenuhi oleh transformasi nol pada ruang trivial.
+      Ini memang suatu proyeksi, tetapi bukan proyeksi yang menarik.
+
+      Jika polinomial minimal suatu transformasi linear, kita memperoleh
+      $c_1\cdot t+c_0\cdot\identity=z$ dengan $c_1=1$.
+      Persamaan ini memberikan $t=-c_0\cdot \identity$.
+      Menggabungkannya dengan syarat $t^2=t$ memberikan
+      $t^2=(-c_0)^2\cdot\identity=-c_0\cdot\identity$, yang menghasilkan
+      $c_0=0$ dan $t$ merupakan transformasi nol, atau $c_0=1$ dan
+      $t$ merupakan identitas.
+
+      Jadi, kecuali ketika proyeksinya merupakan pemetaan nol atau
+      pemetaan identitas, polinomial minimalnya adalah $m(x)=x^2-x$.
+    \end{answer}
+  \item \label{exer:SomeRootsMinPolyAreEigs}
+    \textit{Dua butir pertama soal ini merupakan tinjauan ulang.}
+    \begin{exparts}
+      \partsitem Buktikan bahwa komposisi pemetaan satu-satu juga
+        satu-satu.
+      \partsitem Buktikan bahwa jika suatu pemetaan linear tidak satu-satu,
+        maka setidaknya satu vektor tak nol dari domain dipetakan ke
+        vektor nol dalam kodomain.
+      \partsitem Verifikasikan pernyataan berikut, yang dikutip dari bagian
+         sebelum \nearbytheorem{th:CayHam}.
+         \begin{quotation}
+           \noindent \ldots{} 
+           jika polinomial minimal $m(x)$ untuk transformasi $t$
+           difaktorkan sebagai
+           $m(x)=(x-\lambda_1)^{q_1}\cdots (x-\lambda_z)^{q_z}$
+           maka
+           \( m(t)=\composed{\composed{(t-\lambda_1)^{q_1}}{\cdots}}{
+                                                        (t-\lambda_z)^{q_z}} \) 
+          merupakan pemetaan nol.
+          Karena \( m(t) \) mengirim setiap vektor ke nol, setidaknya
+          salah satu pemetaan \( t-\lambda_i \) mengirim beberapa
+          vektor tak nol ke nol. \ldots{}
+          Artinya, \ldots{}
+          setidaknya sebagian dari \( \lambda_i \) merupakan nilai eigen.
+        \end{quotation}
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+       \partsitem \textit{Ini merupakan sifat fungsi secara umum,
+          bukan hanya fungsi linear.}
+          Misalkan $f$ dan $g$ adalah fungsi satu-satu sedemikian sehingga
+          $\composed{f}{g}$ terdefinisi.
+          Misalkan $\composed{f}{g}(x_1)=\composed{f}{g}(x_2)$, sehingga
+          $f(g(x_1))=f(g(x_2))$.
+          Karena $f$ satu-satu, ini mengakibatkan $g(x_1)=g(x_2)$.
+          Karena $g$ juga satu-satu, hal ini selanjutnya mengakibatkan
+          $x_1=x_2$.
+          Jadi, singkatnya, $\composed{f}{g}(x_1)=\composed{f}{g}(x_2)$
+          mengakibatkan $x_1=x_2$, sehingga $\composed{f}{g}$ satu-satu.
+        \partsitem Jika pemetaan linear $h$
+          tidak satu-satu, maka terdapat vektor berbeda
+          $\vec{v}_1$, $\vec{v}_2$ yang dipetakan ke nilai yang sama,
+          $h(\vec{v}_1)=h(\vec{v}_2)$.
+          Karena $h$ linear, kita mempunyai
+          $\zero=h(\vec{v}_1)-h(\vec{v}_2)=h(\vec{v}_1-\vec{v}_2)$
+          sehingga $\vec{v}_1-\vec{v}_2$ merupakan vektor tak nol dari domain
+          yang dipetakan $h$ ke vektor nol dalam kodomain
+          ($\vec{v}_1-\vec{v}_2$
+          tidak sama dengan vektor nol domain karena $\vec{v}_1$
+          tidak sama dengan $\vec{v}_2$).
+        \partsitem Polinomial minimal
+          $m(t)$ mengirim setiap vektor dalam domain ke
+          nol, sehingga tidak satu-satu (kecuali dalam ruang trivial, yang
+          kita abaikan).
+          Berdasarkan butir pertama soal ini,
+          karena komposisi $m(t)$ tidak satu-satu,
+          setidaknya salah satu komponennya $t-\lambda_i$ tidak satu-satu.
+          Berdasarkan butir kedua, $t-\lambda_i$ memiliki ruang nol nontrivial.
+          Karena $(t-\lambda_i)(\vec{v})=\zero$ berlaku jika dan hanya jika
+          $t(\vec{v})=\lambda_i\cdot\vec{v}$, kalimat sebelumnya menunjukkan bahwa
+          $\lambda_i$ merupakan nilai eigen (ingat bahwa definisi
+          nilai eigen mensyaratkan hubungan tersebut berlaku untuk setidaknya satu
+          $\vec{v}$ tak nol).
+      \end{exparts}
+    \end{answer}
+  \item 
+    Benar atau salah:~untuk transformasi pada ruang berdimensi
+    \( n \), jika polinomial minimal berderajat \( n \),
+    maka pemetaannya dapat didiagonalkan.
+    \begin{answer}
+      Pernyataan ini salah.
+      Contoh alami transformasi yang tidak dapat didiagonalkan dapat digunakan di sini.
+      Perhatikan transformasi pada $\C^2$ yang direpresentasikan terhadap
+      basis standar oleh matriks berikut.
+      \begin{equation*}
+        N=
+        \begin{mat}[r]
+          0  &1  \\
+          0  &0
+        \end{mat}
+      \end{equation*}
+      Polinomial karakteristiknya adalah $c(x)=x^2$.
+      Jadi, polinomial minimalnya adalah $m_1(x)=x$ atau $m_2(x)=x^2$.
+      Kemungkinan pertama tidak tepat karena $N-0\cdot I$ bukan matriks nol;
+      dengan demikian, dalam contoh ini polinomial minimal berderajat sama dengan
+      dimensi ruang dasarnya, dan seperti telah disebutkan,
+      kita mengetahui bahwa matriks ini tidak dapat didiagonalkan karena nilpoten.
+    \end{answer}
+   \item 
+     Misalkan $f(x)$ adalah sebuah polinomial.
+     Buktikan bahwa jika $A$ dan $B$ merupakan matriks serupa, maka $f(A)$
+     serupa dengan $f(B)$.
+     \begin{exparts}
+       \partsitem Selanjutnya tunjukkan bahwa matriks-matriks serupa memiliki
+         polinomial karakteristik yang sama.
+       \partsitem Tunjukkan bahwa matriks-matriks serupa memiliki polinomial minimal yang sama.
+       \partsitem Tentukan apakah kedua matriks berikut serupa.
+          \begin{equation*}
+            \begin{mat}[r]
+              1  &3  \\
+              2  &3
+            \end{mat}
+            \qquad
+            \begin{mat}[r]
+              4  &-1 \\
+              1  &1
+            \end{mat}
+          \end{equation*}
+     \end{exparts}
+     \begin{answer}
+       Misalkan \( A \) dan \( B \) serupa, \( A=PBP^{-1} \).
+       Dari fakta bahwa
+       \begin{multline*}
+           A^n=(PBP^{-1})^n=(PBP^{-1})(PBP^{-1})\cdots(PBP^{-1})   \\
+                           =PB(P^{-1}P)B(P^{-1}P)\cdots (P^{-1}P)BP^{-1}
+                           =PB^nP^{-1}
+       \end{multline*}
+       dan $c\cdot A=c\cdot(PBP^{-1})=P(c\cdot B)P^{-1}$, diperoleh
+       fakta yang diperlukan bahwa untuk setiap fungsi polinomial $f$, kita mempunyai
+       \( f(A)=P\,f(B)\,P^{-1} \).
+       Sebagai contoh, jika $f(x)=x^2+2x+3$, maka
+       \begin{multline*}
+         A^2+2A+3I=(PBP^{-1})^2+2\cdot PBP^{-1}+3\cdot I           \\
+                  =(PBP^{-1})(PBP^{-1})+P(2B)P^{-1}+3\cdot PP^{-1}
+                  =P(B^2+2B+3I)P^{-1}
+       \end{multline*}
+       menunjukkan bahwa $f(A)$ serupa dengan $f(B)$.
+       \begin{exparts}
+         \partsitem Dengan mengambil $f$ sebagai polinomial linear, kita memperoleh bahwa
+           $A-xI$ serupa dengan $B-xI$.
+           Matriks-matriks serupa memiliki determinan yang sama (karena
+           $\deter{A}=\deter{PBP^{-1}}
+               =\deter{P}\cdot\deter{B}\cdot\deter{P^{-1}}
+               =1\cdot\deter{B}\cdot 1=\deter{B}$).
+           Jadi, polinomial karakteristiknya sama.
+         \partsitem 
+           Karena \( P \) dan \( P^{-1} \) invertibel, \( f(A) \) merupakan
+           matriks nol jika dan hanya jika \( f(B) \) merupakan matriks nol.
+         \partsitem Keduanya tidak mungkin serupa karena tidak memiliki
+           polinomial karakteristik yang sama.
+           Polinomial karakteristik matriks pertama adalah
+           $x^2-4x-3$, sedangkan polinomial karakteristik matriks
+           kedua adalah $x^2-5x+5$.
+       \end{exparts}  
+     \end{answer}
+   \item 
+    \begin{exparts}
+     \partsitem Tunjukkan bahwa suatu matriks invertibel jika dan hanya jika
+       suku konstan
+       dalam polinomial minimalnya bukan $0$.
+     \partsitem Tunjukkan bahwa jika matriks persegi \( T \) tidak invertibel,
+       maka terdapat
+       matriks tak nol \( S \) sedemikian sehingga \( ST \) dan \( TS \) keduanya
+       sama dengan matriks nol.
+     \end{exparts}
+     \begin{answer}
+      Misalkan \( m(x)=x^n+m_{n-1}x^{n-1}+\dots+m_1x+m_0 \)
+      merupakan polinomial minimal untuk \( T \).
+      \begin{exparts}
+       \partsitem 
+         Untuk argumen `jika',
+         karena \( T^n+\dots+m_1T+m_0I \) adalah matriks nol, kita
+         mempunyai \( I=(T^n+\dots+m_1T)/(-m_0)=
+         T\cdot (T^{n-1}+\dots+m_1I)/(-m_0) \), sehingga
+         matriks $(-1/m_0)\cdot (T^{n-1}+\dots+m_1I)$ merupakan invers $T$.
+         Untuk argumen `hanya jika', andaikan \( m_0=0 \)
+         (kita sisihkan kasus \( n=1 \), yang mudah), sehingga
+         \( T^n+\dots+m_1T=(T^{n-1}+\dots+m_1I)T \) adalah matriks nol.
+         Perhatikan bahwa \( T^{n-1}+\dots+m_1I \) bukan matriks nol karena
+         derajat polinomial minimal adalah \( n \).
+         Jika \( T^{-1} \) ada, maka mengalikan dari kanan baik
+         \( (T^{n-1}+\dots+m_1I)T \) maupun matriks nol
+         dengan $T^{-1}$ menghasilkan kontradiksi.
+       \partsitem Jika \( T \) tidak invertibel, maka suku konstan dalam
+         polinomial minimalnya adalah nol.
+         Jadi,
+         \begin{equation*}
+            T^n+\dots+m_1T=(T^{n-1}+\dots+m_1I)T=T(T^{n-1}+\dots+m_1I)
+         \end{equation*}
+         adalah matriks nol.
+       \end{exparts} 
+     \end{answer}
+   \recommended \item \label{exer:PolyMapsFactor}
+      \begin{exparts}
+        \partsitem Selesaikan pembuktian \nearbylemma{le:PolyMapsFactor}.
+        \partsitem Berikan contoh yang menunjukkan bahwa hasil tersebut tidak berlaku
+          jika $t$ tidak linear.
+      \end{exparts}
+      \begin{answer}
+        \begin{exparts}
+          \partsitem
+            Untuk langkah induksi, andaikan \nearbylemma{le:PolyMapsFactor}
+            benar untuk polinomial
+            berderajat \( i,\ldots,k-1 \), dan perhatikan polinomial \( f(x) \)
+            berderajat \( k \).
+            Faktorkan $f(x)=k(x-\lambda_1)^{q_1}\cdots(x-\lambda_z)^{q_z}$,
+            dan misalkan
+            \( k(x-\lambda_1)^{q_1-1}\cdots(x-\lambda_z)^{q_z} \)
+            adalah \( c_{n-1}x^{n-1}+\cdots+c_1x+c_0 \).
+            Substitusikan:
+            \begin{align*}
+               k\composed{\composed{(t-\lambda_1)^{q_1}}{\cdots}}{
+                                            (t-\lambda_z)^{q_z}}(\vec{v})
+               &=
+               \composed{(t-\lambda_1)}{
+                  \composed{\composed{(t-\lambda_1)^{q_1}}{\cdots}}{
+                  (t-\lambda_z)^{q_z}} }
+                          (\vec{v})    \\
+               &=
+               (t-\lambda_1)\,(c_{n-1}t^{n-1}(\vec{v})+\cdots+c_0\vec{v}) \\
+               &=
+               f(t)(\vec{v})
+            \end{align*}
+           (kesamaan kedua diperoleh dari hipotesis induksi, dan
+           kesamaan ketiga dari linearitas \( t \)).
+         \partsitem Salah satu contohnya adalah pemetaan kuadrat
+            $\map{s}{\Re}{\Re}$ yang diberikan oleh $s(x)=x^2$.
+            Pemetaan ini tidak linear.
+            Tindakan yang didefinisikan oleh polinomial $f(t)=t^2-1$
+            mengubah $s$ menjadi $f(s)=s^2-1$, yaitu pemetaan berikut.
+            \begin{equation*} 
+              x\mapsunder{s^2-1} \composed{s}{s}(x)-1=x^4-1
+            \end{equation*}
+            Amati bahwa pemetaan ini berbeda dari pemetaan
+            $\composed{(s-1)}{(s+1)}$; misalnya, pemetaan pertama mengirim
+            $x=5$ ke $624$, sedangkan pemetaan kedua mengirim $x=5$ ke $675$.
+       \end{exparts} 
+     \end{answer}
+%  \item
+%    Give an example of two \( \nbyn{4} \) matrices that have the 
+%    same characteristic polynomial and the same minimal polynomial but
+%    nonetheless are not similar.
+%    \begin{answer}
+%      These two have the same characteristic polynomial,
+%      $c_S(x)=c_T(x)=(x-2)^4$.
+%      \begin{equation*}
+%        S=
+%        \begin{mat}[r]
+%          2  &0  &0  &0  \\
+%          1  &2  &0  &0  \\
+%          0  &0  &2  &0  \\
+%          0  &0  &0  &2
+%        \end{mat}
+%        \qquad
+%        T=
+%        \begin{mat}[r]
+%          2  &0  &0  &0  \\
+%          1  &2  &0  &0  \\
+%          0  &0  &2  &0  \\
+%          0  &0  &1  &2
+%        \end{mat}
+%      \end{equation*}
+%      For each of the two
+%      the candidates for the minimal polynomial are 
+%      $m_1(x)=(x-2)$, $m_2(x)=(x-2)^2$, $m_3(x)=(x-2)^3$, and 
+%      $m_4(x)=(x-2)^4$.
+%      We have 
+%      \begin{equation*}
+%        S-2I=
+%        \begin{mat}[r]
+%          0  &0  &0  &0  \\
+%          1  &0  &0  &0  \\
+%          0  &0  &0  &0  \\
+%          0  &0  &0  &0
+%        \end{mat}
+%        \qquad
+%        T-2I=
+%        \begin{mat}[r]
+%          0  &0  &0  &0  \\
+%          1  &0  &0  &0  \\
+%          0  &0  &0  &0  \\
+%          0  &0  &1  &0
+%        \end{mat}
+%      \end{equation*}
+%      and
+%      \begin{equation*}
+%        (S-2I)^2=
+%        \begin{mat}[r]
+%          0  &0  &0  &0  \\
+%          0  &0  &0  &0  \\
+%          0  &0  &0  &0  \\
+%          0  &0  &0  &0
+%        \end{mat}
+%        =
+%        (T-2I)^2
+%      \end{equation*}
+%      and so the minimal polynomial for each is $m_2$.
+%    \end{answer}
+  \item
+    Setiap transformasi atau matriks persegi memiliki polinomial minimal.
+    Apakah konversnya berlaku?
+    \begin{answer}
+      Ya.
+      Lakukan ekspansi sepanjang kolom terakhir untuk memeriksa bahwa
+      \( x^n+m_{n-1}x^{n-1}+\dots+m_1x+m_0 \) sama dengan, mungkin hingga tanda,
+      determinan matriks berikut.
+      \begin{equation*}
+         \begin{mat}
+            -x  &0  &0  &      &    &m_0    \\
+             0  &1-x&0  &      &    &m_1    \\
+             0  &0  &1-x&      &    &m_2    \\
+                &   &   &\ddots             \\
+                &   &   &      &1-x &m_{n-1}
+         \end{mat}
+      \end{equation*} 
+     \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+\subsectionoptional{Bentuk Kanonik Jordan}
+Kita sedang mencari bentuk kanonik untuk keserupaan matriks.
+Subbagian ini menuntaskan program tersebut dengan beralih
+dari bentuk kanonik untuk kelas-kelas
+matriks nilpoten ke
+bentuk kanonik untuk semua kelas.
+
+\begin{lemma} \label{le:NilIffOnlyEigenZero}
+Suatu transformasi linear pada ruang vektor nontrivial
+nilpoten jika dan hanya jika satu-satunya nilai eigennya adalah nol.
+\end{lemma}
+
+\begin{proof}
+Jika transformasi linear $t$ pada ruang vektor nontrivial
+nilpoten, maka terdapat
+$n$ sedemikian sehingga $t^n$ merupakan pemetaan nol,
+sehingga $t$ memenuhi polinomial $p(x)=x^n=(x-0)^n$.
+Berdasarkan \nearbylemma{le:tSatisImpMinPolyDivides}, polinomial minimal
+$t$ membagi $p$, sehingga satu-satunya akar polinomial minimal adalah nol.
+Berdasarkan Cayley-Hamilton, \nearbytheorem{th:CayHam},
+satu-satunya akar polinomial karakteristik adalah nol.
+Jadi, satu-satunya nilai eigen $t$ adalah nol.
+
+Sebaliknya, jika transformasi \( t \) pada ruang
+berdimensi \( n \) hanya memiliki nilai eigen nol,
+maka polinomial karakteristiknya adalah \( x^n \).
+\nearbylemma{le:MatSatItsCharPoly} menyatakan bahwa suatu pemetaan memenuhi
+polinomial karakteristiknya, sehingga \( t^n \) merupakan pemetaan nol.
+Jadi, $t$ nilpoten.
+\end{proof}
+
+\noindent Frasa `ruang vektor nontrivial' terdapat dalam pernyataan
+lema itu karena pada ruang trivial
+$\set{\zero}$, satu-satunya transformasi adalah pemetaan nol, yang tidak memiliki
+nilai eigen karena tidak ada vektor eigen tak nol yang terkait.
+
+\begin{corollary} \label{cor:tMinLambdaNilpotent}
+Transformasi $t-\lambda$ nilpoten jika dan hanya jika
+satu-satunya nilai eigen $t$ adalah $\lambda$.
+\end{corollary}
+
+\begin{proof}
+Transformasi \( t-\lambda \) nilpoten jika dan hanya jika
+satu-satunya nilai eigen $t-\lambda$ adalah \( 0 \).
+Hal ini berlaku jika dan hanya jika satu-satunya nilai eigen $t$ adalah $\lambda$, karena
+\( t(\vec{v})=\lambda\vec{v} \,\) jika dan
+hanya jika \( (t-\lambda)\,(\vec{v})=0\cdot\vec{v} \).
+\end{proof}
+
+\begin{lemma}   \label{le:SimRespAddScalar}
+Jika matriks \( T-\lambda I \) dan \( N \) serupa,
+maka \( T \) dan \( N+\lambda I \) juga serupa,
+melalui matriks perubahan basis yang sama.
+\end{lemma}
+
+\begin{proof}
+Dari \( N=P(T-\lambda I)P^{-1}=PTP^{-1}-P(\lambda I)P^{-1} \),
+kita memperoleh $N=PTP^{-1}-PP^{-1}(\lambda I)$
+karena matriks diagonal \( \lambda I \) berkomutasi dengan sebarang matriks.
+Jadi, \( N=PTP^{-1}-\lambda I \),
+dan dengan demikian \( N+\lambda I=PTP^{-1} \).
+\end{proof}
+
+Kita telah memiliki bentuk kanonik untuk
+kasus matriks nilpoten,
+yakni untuk kasus matriks yang satu-satunya nilai eigennya adalah nol.
+Berdasarkan Korolari~III.\ref{cor:NilpotentMatCanonForm}, setiap
+matriks semacam itu serupa dengan matriks yang semua entrinya
+nol kecuali blok-blok satu pada subdiagonal.
+% (To make this representation unique we can fix some arrangement of
+% the blocks, perhaps from longest to shortest.)
+Hasil sebelumnya memungkinkan kita memperluas ini ke semua
+matriks yang memiliki satu nilai eigen~$\lambda$.
+Dalam bentuk baru,
+selain blok-blok satu pada subdiagonal, semua entri pada diagonal
+bernilai~$\lambda$.
+(Lihat \nearbydefinition{def:JordanBlock} di bawah.)
+
+\begin{example}   \label{ex:SingJordBlock}
+Polinomial karakteristik dari
+\begin{equation*}
+  T=\begin{mat}[r]
+      2  &-1  \\
+      1  &4
+    \end{mat}
+\end{equation*}
+adalah \( (x-3)^2 \), sehingga \( T \) memiliki satu nilai eigen, yaitu \( 3 \).
+% We can find a matrix similar to $T$ that is simple in 
+% the way that our canonical form for nilpotent matrices is simple.
+% The form is described in \nearbydefinition{def:JordanBlock} below but
+% as a preview here the new matrix.
+% \begin{equation*}
+%   \begin{mat}[r]
+%       3  &0  \\
+%       1  &3
+%     \end{mat}
+% \end{equation*}
+
+Karena $3$ adalah satu-satunya nilai eigen,
+$T-3I$ hanya memiliki nilai eigen \( 0 \), sehingga nilpoten.
+Untuk memperoleh bentuk kanonik~$T$, mulailah dengan
+mencari basis rantai untuk $T-3I$
+seperti pada bagian sebelumnya, dengan menghitung pangkat-pangkat matriks ini
+dan ruang nol pangkat-pangkat tersebut.
+\begin{center}
+  \begin{tabular}{c|cc}
+    \multicolumn{1}{c}{\textit{pangkat} \( p \)}  &\( (T-3I)^p \)  &\( \nullspace{(T-3I)^p}  \)   \\  
+    \hline
+    \( 1 \)
+    &\(  
+       \matrixvenlarge{\begin{mat}[r]
+         -1  &-1 \\
+         1   &1   \\
+       \end{mat}}  \)
+    &\( \set{\matrixvenlarge{\colvec{-y \\ y}}\suchthat
+                               y\in\C}  \)   \\
+    \( 2 \)
+    &\(  
+       \matrixvenlarge{\begin{mat}[r]
+         0  &0  \\
+         0  &0   \\
+       \end{mat}}  \)
+    &\( \set{\matrixvenlarge{\colvec{x \\ y}}\suchthat
+                               x,y\in\C}  \)   \\
+  \end{tabular}
+\end{center}
+Ruang nol $t-3$ berdimensi satu,
+dan ruang nol $(t-3)^2$ berdimensi dua.
+Jadi, berikut adalah matriks representasi kanonik dan bentuk
+basis rantai~$B$ yang terkait untuk $t-3$.
+\begin{equation*}
+  \rep{t-3}{B,B}
+  =N=
+  \begin{mat}[r]
+      0  &0   \\
+      1  &0
+  \end{mat}
+  \qquad
+  \begin{array}{r}
+    \vec{\beta}_1\xmapsto{t-3}\vec{\beta}_2\xmapsto{t-3}\zero  \\
+  \end{array}  
+\end{equation*}
+Carilah basis semacam itu
+dengan terlebih dahulu memilih $\vec{\beta}_2$ yang dipetakan ke~$\zero$
+oleh $t-3$ (yakni, pilih sebuah anggota
+ruang nol $\nullspace{t-3}$ yang diberikan dalam tabel).
+Kemudian pilih $\vec{\beta}_1$ yang dipetakan ke~$\zero$ oleh $(t-3)^2$.
+Satu-satunya batasan pada pilihan tersebut, selain keanggotaan dalam ruang nol,
+adalah bahwa $\vec{\beta}_1$ dan $\vec{\beta}_2$
+harus membentuk himpunan bebas linear.
+Berikut salah satu pilihan yang mungkin.
+\begin{equation*}
+  \vec{\beta}_1=\colvec[r]{1 \\ 1}
+  \quad
+  \vec{\beta}_2=\colvec[r]{-2 \\ 2}
+\end{equation*}
+Dari sini, \nearbylemma{le:SimRespAddScalar} menyatakan bahwa \( T \) serupa dengan
+matriks berikut.
+\begin{equation*}
+  \rep{t}{B,B}=
+  N+3I=
+  \begin{mat}[r]
+     3  &0  \\
+     1  &3
+  \end{mat}
+\end{equation*}
+
+Kita dapat memperlihatkan perhitungan keserupaannya.
+Ambil
+$T$ sebagai representasi transformasi $\map{t}{\C^2}{\C^2}$ terhadap
+basis standar (seperti yang akan kita lakukan sepanjang sisa bab ini).
+% Recall how to find the change of
+% basis matrices $P$ and $P^{-1}$ to express \( N \) as \( P(T-3I)P^{-1} \).
+Diagram keserupaan
+\begin{equation*}
+  \begin{CD}
+    \C^2_{\wrt{\stdbasis_2}}      @>t-3>T-3I>      \C^2_{\wrt{\stdbasis_2}}     \\
+    @V\scriptstyle\identity V\scriptstyle PV  
+                                 @V\scriptstyle\identity V\scriptstyle PV \\
+    \C^2_{\wrt{B}}                 @>t-3>N>         \C^2_{\wrt{B}}
+  \end{CD}
+\end{equation*}
+menjelaskan bahwa untuk berpindah dari kiri bawah ke kiri atas, kita mengalikan dengan
+\begin{equation*}
+  P^{-1}=\bigl(\rep{\identity}{\stdbasis_2,B}\bigr)^{-1}
+    =\rep{\identity}{B,\stdbasis_2}
+    =\begin{mat}[r]
+        1  &-2  \\
+        1  &2
+     \end{mat}
+\end{equation*}
+dan untuk berpindah dari kanan atas ke kanan bawah, kita mengalikan dengan
+matriks berikut.
+\begin{equation*}
+  P=\begin{mat}[r]
+      1  &-2  \\
+      1  &2
+     \end{mat}^{-1}\!\!
+   =\begin{mat}[r]
+      1/2  &1/2  \\
+      -1/4 &1/4
+   \end{mat}
+\end{equation*}
+Jadi, persamaan berikut memperlihatkan keserupaannya.
+\begin{equation*}
+  \begin{mat}[r]
+      1/2  &1/2  \\
+      -1/4 &1/4
+   \end{mat}
+   \begin{mat}[r]
+      2  &-1  \\
+      1  &4
+    \end{mat}
+    \begin{mat}[r]
+        1  &-2  \\
+        1  &2
+     \end{mat}
+  =
+  \begin{mat}[r]
+     3  &0  \\
+     1  &3
+  \end{mat}
+\end{equation*}
+\end{example}
+
+\begin{example}  \label{ex:FullNilpotentCase}
+Matriks berikut
+\begin{equation*}
+  T=
+  \begin{mat}[r]
+    4  &1  &0  &-1  \\
+    0  &3  &0  &1   \\
+    0  &0  &4  &0   \\
+    1  &0  &0  &5
+   \end{mat}
+\end{equation*}
+memiliki polinomial karakteristik \( (x-4)^4 \),
+sehingga hanya memiliki nilai eigen~$4$.
+\begin{center}
+  \begin{tabular}{c|cc}
+    \multicolumn{1}{c}{\textit{pangkat} \( p \)}  &\( (T-4I)^p \)  &\( \nullspace{(T-4I)^p}  \)   \\  
+    \hline
+    \( 1 \)
+    &\(  
+       \matrixvenlarge{\begin{mat}[r]
+         0  &1  &0  &-1  \\
+         0  &-1 &0  &1   \\
+         0  &0  &0  &0   \\
+         1  &0  &0  &1
+       \end{mat}}  \)
+    &\( \set{\matrixvenlarge{\colvec{-w \\ w \\ z \\ w}}\suchthat
+                               z,w\in\C}  \)   \\
+    \( 2 \)
+    &\(  
+       \matrixvenlarge{\begin{mat}[r]
+         -1  &-1 &0  &0  \\
+          1  &1  &0  &0   \\
+          0  &0  &0  &0   \\
+          1  &1  &0  &0
+       \end{mat}}  \)
+    &\( \set{\matrixvenlarge{\colvec{-y \\ y \\ z \\ w}}\suchthat
+                               y,z,w\in\C}  \)   \\
+    \( 3 \)
+    &\(  
+       \matrixvenlarge{\begin{mat}[r]
+          0  &0   &0  &0  \\
+          0  &0  &0  &0   \\
+          0  &0  &0  &0   \\
+          0  &0  &0  &0   \\
+       \end{mat}}  \)
+    &\( \set{\matrixvenlarge{\colvec{x \\ y \\ z \\ w}}\suchthat
+                               x,y,z,w\in\C}  \)   \\
+  \end{tabular}
+% sage: T=matrix(QQ, [[4,1,0,-1], [0,3,0,1], [0,0,4,0], [1,0,0,5]])
+% sage: S=T-4*identity_matrix(4)
+% sage: S^2
+% [-1 -1  0  0]
+% [ 1  1  0  0]
+% [ 0  0  0  0]
+% [ 1  1  0  0]
+% sage: S^3
+% [0 0 0 0]
+% [0 0 0 0]
+% [0 0 0 0]
+% [0 0 0 0]
+% sage: S
+% [ 0  1  0 -1]
+% [ 0 -1  0  1]
+% [ 0  0  0  0]
+% [ 1  0  0  1]
+% sage: S*vector(QQ, [-1,1, 0, 1])
+% (0, 0, 0, 0)
+\end{center}
+Ruang nol $t-4$ berdimensi dua, ruang nol $(t-4)^2$
+berdimensi tiga, dan ruang nol $(t-4)^3$ berdimensi empat.
+Ini memberikan bentuk kanonik untuk $t-4$.
+\begin{equation*}
+  N=\rep{t-4}{B,B}=
+  \begin{mat}[r]
+    0  &0  &0  &0   \\
+    1  &0  &0  &0   \\
+    0  &1  &0  &0   \\
+    0  &0  &0  &0
+   \end{mat}
+   \qquad
+  \begin{array}{r}
+    \vec{\beta}_{1}\xmapsto{t-4}\vec{\beta}_{2}
+       \xmapsto{t-4}\vec{\beta}_{3}\xmapsto{t-4}\zero \\
+   \vec{\beta}_{4}\xmapsto{t-4}\zero \\
+  \end{array}  
+\end{equation*}
+Untuk menghasilkan basis semacam itu, pilih
+$\vec{\beta}_3$ dan~$\vec{\beta}_4$ yang dipetakan ke~$\zero$
+oleh~$t-4$.
+Pilih pula~$\vec{\beta}_2$ yang dipetakan ke~$\zero$ oleh~$(t-4)^2$
+dan $\vec{\beta}_1$ yang dipetakan ke~$\zero$ oleh~$(t-4)^3$.
+\begin{equation*}
+  \vec{\beta}_1=\colvec{1 \\ 0 \\ 0 \\ 0}
+  \quad
+  \vec{\beta}_2=\colvec{-1 \\ 1 \\ 0 \\ 0}
+  \quad
+  \vec{\beta}_3=\colvec{-1 \\ 1 \\ 0 \\ 1}
+  \quad
+  \vec{\beta}_4=\colvec{0 \\ 0 \\ 1 \\ 0}
+\end{equation*}
+Perhatikan bahwa keempat vektor ini dipilih agar tidak memiliki kebergantungan linear.
+Berikut matriks bentuk kanonik yang serupa dengan~$T$.
+\begin{equation*}
+  \rep{t}{B,B}
+  =N+4I=
+  \begin{mat}[r]
+    4  &0  &0  &0   \\
+    1  &4  &0  &0   \\
+    0  &1  &4  &0   \\
+    0  &0  &0  &4
+   \end{mat}
+\end{equation*}
+\end{example}
+
+\begin{definition}  \label{def:JordanBlock}
+Suatu \definend{blok Jordan}\index{blok Jordan}
+adalah matriks persegi, atau blok persegi entri-entri di dalam suatu matriks,
+yang seluruh entrinya nol kecuali bahwa
+terdapat bilangan $\lambda\in\C$ sedemikian sehingga
+setiap entri diagonal adalah $\lambda$,
+dan setiap entri subdiagonal adalah~$1$.
+(Jika bloknya berukuran $\nbyn{1}$, maka blok itu tidak memiliki entri subdiagonal~$1$.)
+\end{definition}
+
+Rantai-rantai dalam basis terkait disebut
+\definend{untaian Jordan}\index{untaian Jordan}\index{basis!untaian Jordan}
+atau \definend{rantai Jordan}.\index{rantai Jordan}\index{basis!rantai Jordan}
+
+Contoh-contoh di atas memperlihatkan bahwa untuk matriks
+dengan satu nilai eigen, matriks-matriks blok Jordan merupakan
+wakil kanonik kelas-kelas keserupaan.
+Kita dapat membuat bentuk matriks ini unik dengan
+menyusun elemen basis sehingga blok-blok satu pada subdiagonal berurutan dari
+yang terpanjang ke yang terpendek, dibaca dari kiri ke kanan.
+
+\begin{example}
+Matriks-matriks \( \nbyn{3} \) yang satu-satunya nilai eigennya adalah \( 1/2 \)
+terbagi menjadi tiga kelas keserupaan.
+Ketiga kelas itu memiliki wakil kanonik berikut.
+\begin{equation*}
+  \begin{mat}[r]
+     1/2  &0    &0  \\
+     0    &1/2  &0  \\
+     0    &0    &1/2
+   \end{mat}
+   \qquad 
+   \begin{mat}[r]
+     1/2  &0    &0  \\
+     1    &1/2  &0  \\
+     0    &0    &1/2
+   \end{mat}
+   \qquad 
+   \begin{mat}[r]
+     1/2  &0    &0  \\
+     1    &1/2  &0  \\
+     0    &1    &1/2
+   \end{mat}
+\end{equation*}
+Secara khusus, matriks berikut
+\begin{equation*}
+   \begin{mat}[r]
+     1/2  &0    &0    \\
+     0    &1/2  &0    \\
+     0    &1    &1/2
+   \end{mat}
+\end{equation*}
+termasuk dalam kelas keserupaan yang diwakili oleh matriks tengah, karena
+konvensi pengurutan blok-blok satu pada subdiagonal.
+\end{example}
+
+Sekarang kita siap menuntaskan program bab ini.
+Pertama, kita meninjau apa yang sejauh ini telah kita ketahui tentang
+transformasi $\map{t}{\C^n}{\C^n}$.
+
+Kasus yang dapat didiagonalkan terjadi ketika
+$t$ memiliki~$n$ nilai eigen berbeda
+$\lambda_1$, \ldots, $\lambda_n$, yakni ketika banyaknya nilai eigen
+sama dengan dimensi ruang.
+Dalam kasus ini terdapat basis
+$\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_n}$ dengan
+$\vec{\beta}_i$ merupakan vektor eigen yang terkait dengan nilai eigen~$\lambda_i$.
+Contoh di bawah memiliki
+$n=3$, dan ketiga nilai eigennya adalah $\lambda_1=1$, $\lambda_2=3$,
+dan $\lambda_3=-1$.
+Contoh tersebut memperlihatkan matriks wakil kanonik dan basis terkait.
+\begin{equation*}
+  T_1=\begin{mat}
+    1  &0  &0  \\
+    0  &3  &0  \\
+    0  &0  &-1
+  \end{mat}
+  \qquad
+    \begin{array}{r}
+    \vec{\beta}_1\mapsunder{t-1}\zero  \\
+    \vec{\beta}_2\mapsunder{t-3}\zero  \\
+    \vec{\beta}_3\mapsunder{t+1}\zero
+    \end{array}  
+\end{equation*}
+Salah satu contoh diagonalisasi adalah
+Lima.II.\ref{ex:SummaryOfDiagonalizable}.
+
+Kasus ketika $t$ memiliki satu nilai eigen memanfaatkan
+hasil-hasil tentang nilpotensi untuk memperoleh basis
+vektor eigen terkait yang membentuk rantai-rantai saling lepas.
+Contoh ini memiliki $n=10$, satu nilai eigen~$\lambda=2$,
+dan lima blok Jordan.
+\begin{equation*}
+  T_2=\begin{mat}
+    2  &0  &0  &0 &0 &0 &0 &0 &0 &0 \\
+    1  &2  &0  &0 &0 &0 &0 &0 &0 &0 \\
+    0  &1  &2  &0 &0 &0 &0 &0 &0 &0 \\
+    0  &0  &0  &2 &0 &0 &0 &0 &0 &0 \\
+    0  &0  &0  &1 &2 &0 &0 &0 &0 &0 \\
+    0  &0  &0  &0 &1 &2 &0 &0 &0 &0 \\
+    0  &0  &0  &0 &0 &0 &2 &0 &0 &0 \\
+    0  &0  &0  &0 &0 &0 &1 &2 &0 &0 \\
+    0  &0  &0  &0 &0 &0 &0 &0 &2 &0 \\
+    0  &0  &0  &0 &0 &0 &0 &0 &0 &2 \\
+  \end{mat}
+  \qquad
+  {\renewcommand{\arraystretch}{1.75}
+    \begin{array}{r}
+    \vec{\beta}_1\mapsunder{t-2}\vec{\beta}_2\mapsunder{t-2}\vec{\beta}_3\mapsunder{t-2}\zero  \\
+    \vec{\beta}_4\mapsunder{t-2}\vec{\beta}_5\mapsunder{t-2}\vec{\beta}_6\mapsunder{t-2}\zero  \\
+    \vec{\beta}_7\mapsunder{t-2}\vec{\beta}_8\mapsunder{t-2}\zero  \\
+    \vec{\beta}_9\mapsunder{t-2}\zero  \\
+    \vec{\beta}_{10}\mapsunder{t-2}\zero
+    \end{array}}  
+\end{equation*}
+Kita telah melihat contoh lengkap dalam
+\nearbyexample{ex:FullNilpotentCase}.
+
+\nearbytheorem{th:JordanForm} di bawah memperluas kedua kasus ini
+ke sebarang transformasi
+$\map{t}{\C^n}{\C^n}$.
+Bentuk kanoniknya terdiri atas
+blok-blok Jordan yang memuat nilai eigen.
+Berikut ilustrasi matriks semacam itu untuk $n=6$ dengan
+nilai eigen $3$, $2$, dan~$-1$
+(contoh-contoh dengan perhitungan lengkap diberikan setelah teorema).
+\begin{equation*}
+  T_3=\begin{mat}
+    3  &0  &0  &0 &0 &0 \\
+    1  &3  &0  &0 &0 &0  \\
+    0  &0  &3  &0 &0 &0  \\
+    0  &0  &0  &2 &0 &0  \\
+    0  &0  &0  &1 &2 &0  \\
+    0  &0  &0  &0 &0 &-1  \\
+  \end{mat}
+  \qquad
+  {\renewcommand{\arraystretch}{1.5}
+    \begin{array}{r}
+    \vec{\beta}_1\mapsunder{t-3}\vec{\beta}_2\mapsunder{t-3}\zero  \\
+    \vec{\beta}_3\mapsunder{t-3}\zero  \\
+    \vec{\beta}_4\mapsunder{t-2}\vec{\beta}_5\mapsunder{t-2}\zero  \\
+    \vec{\beta}_6\mapsunder{t+1}\zero  \\
+    \end{array}}  
+\end{equation*}
+Matriks tersebut memiliki empat blok, dua
+terkait dengan nilai eigen~$3$, serta masing-masing satu dengan \( 2 \) dan~\( -1 \).
+
+ 
+\begin{theorem}  \label{th:JordanForm}
+\index{serupa!bentuk kanonik}%
+\index{bentuk kanonik!untuk keserupaan}\index{transformasi!bentuk Jordan untuk}
+Setiap transformasi $\map{t}{\C^n}{\C^n}$ dapat direpresentasikan dalam
+\definend{bentuk Jordan},\index{bentuk Jordan!merepresentasikan kelas keserupaan}\index{bentuk Jordan!definisi}
+dengan setiap $J_{\lambda}$ merupakan blok Jordan.\index{blok Jordan}
+\begin{equation*}
+  \begin{mat}
+    J_{\lambda_1}  &            &\text{\textit{--nol--}}                 \\
+               &J_{\lambda_2}                                              \\
+               &     &\ddots                                     \\
+             %    &     &                           &J_{\lambda_{k-1}} &     \\
+               &     &\text{\textit{--nol--}} &            &J_{\lambda_{k}}
+  \end{mat}
+\end{equation*}
+Dengan kata lain, setiap matriks $\nbyn{n}$ serupa dengan matriks berbentuk ini.
+\end{theorem} 
+
+Dalam contoh sebelumnya, jika kita menerapkan
+$t-3$ pada basis, maka ia mengirim dua elemen,
+$\vec{\beta}_2$ dan~$\vec{\beta}_3$, ke~$\zero$.
+Ini menyarankan pembuktian dengan induksi
+karena dimensi daerah hasil~$\rangespace{t-3}$
+lebih kecil daripada dimensi ruang semula.
+
+\begin{proof}
+% This proof is closely related to that of
+% Five.III.\ref{th:NilMapHasStrBas}, that any nilpotent transformation
+% has a basis of disjoint $t$-strings.
+%
+Kita akan menggunakan induksi pada~$n$.
+Kasus dasar $n=1$ bersifat trivial karena setiap matriks $\nbyn{1}$ sudah berbentuk Jordan.
+Untuk langkah induksi, andaikan bahwa
+setiap transformasi pada $\C^1$, \ldots, $\C^{n-1}$ memiliki representasi
+bentuk Jordan,
+dan tetapkan $\map{t}{\C^n}{\C^n}$.
+
+Setiap transformasi memiliki setidaknya satu nilai eigen~$\lambda_1$ karena
+ia memiliki polinomial minimal, yang
+memiliki setidaknya satu akar atas bilangan kompleks.
+Nilai eigen tersebut memiliki vektor eigen
+tak nol~$\vec{v}$, sehingga $(t-\lambda_1)(\vec{v})=\zero$.
+% and so the null space of $t-\lambda_1$ is nontrivial.
+Jadi, dimensi $\nullspace{t-\lambda_1}$, yaitu nulitas pemetaan,
+lebih besar dari nol.
+Karena jumlah peringkat dan nulitas sama dengan dimensi domain,
+peringkat $t-\lambda_1$
+lebih kecil secara ketat daripada~$n$.
+Tuliskan $W$ untuk daerah hasil $\rangespace{t-\lambda_1}$ dan
+$r$ untuk peringkat, yaitu dimensinya.
+
+Jika
+$\vec{w}\in W=\rangespace{t-\lambda_1}$, maka $\vec{w}\in\C^n$, sehingga
+$(t-\lambda_1)(\vec{w})\in\rangespace{t-\lambda_1}$.
+Jadi, restriksi $t-\lambda_1$ ke~$W$ menginduksi suatu transformasi pada~$W$,
+yang juga akan kita sebut $t-\lambda_1$.
+Dimensi~$W$ lebih kecil daripada~$n$,
+sehingga hipotesis induksi berlaku dan
+kita memperoleh basis untuk~$W$ yang terdiri atas rantai-rantai saling lepas,
+yang terkait dengan nilai-nilai eigen $t-\lambda_1$
+pada~$W$.
+Untuk setiap $\lambda$ yang merupakan nilai eigen~$t-\lambda_1$,
+transformasi pada elemen-elemen basis adalah
+$(t-\lambda_1)-\lambda=t-(\lambda_1+\lambda)$,
+yang akan kita tulis sebagai $t-\lambda_s$.
+Diagram berikut memperlihatkan beberapa rantai untuk $t-\lambda_1$, yakni
+ketika $\lambda=0$;
+argumen ini tetap berlaku jika tidak ada rantai semacam itu.
+\begin{equation*}
+\begin{strings}{*{10}{l}}
+  \vec{w}_{1,n_1} &\xmapsto{t-\lambda_1} &\cdots 
+     &\xmapsto{t-\lambda_1} &\vec{w}_{1,1} &\xmapsto{t-\lambda_1} &\zero \\
+     \vdotswithin{\xmapsto{t-\lambda_1}}                   \\
+  \vec{w}_{q,n_q} &\xmapsto{t-\lambda_1} &\cdots 
+     &\xmapsto{t-\lambda_1} &\vec{w}_{q,1} &\xmapsto{t-\lambda_1} &\zero \\
+  \vec{w}_{q+1,n_{q+1}} &\xmapsto{t-\lambda_2} &\cdots 
+     &\xmapsto{t-\lambda_2} &\vec{w}_{q+1,1} &\xmapsto{t-\lambda_2} &\zero \\
+     \vdotswithin{\xmapsto{t-\lambda_1}}                              \\
+  \vec{w}_{k,n_k} &\xmapsto{t-\lambda_i} &\cdots 
+     &\xmapsto{t-\lambda_i} &\vec{w}_{k,1} &\xmapsto{t-\lambda_i} &\zero \\
+\end{strings}
+\end{equation*}
+Rantai-rantai ini mungkin memiliki panjang berbeda;
+misalnya, mungkin $n_1\neq n_k$.
+
+Vektor-vektor tak-$\zero$ paling kanan,
+$\vec{w}_{1,1}$, \ldots, 
+$\vec{w}_{k,1}$
+berada dalam ruang nol pemetaan yang terkait,
+$(t-\lambda_1)(\vec{w}_{1,1})=\zero$, \ldots,
+$(t-\lambda_i)(\vec{w}_{k,1})=\zero$.
+Jadi, banyaknya rantai yang terkait dengan $t-\lambda_1$,
+yang dinotasikan $q$ dalam diagram di atas,
+sama dengan dimensi $W\cap\nullspace{t-\lambda_1}$.
+
+Basis rantai di atas merupakan basis ruang $W=\rangespace{t-\lambda_1}$.
+Sekarang kita memperluasnya menjadi basis seluruh~$\C^n$.
+Pertama, karena
+setiap vektor $\vec{w}_{1,n_1}$, \ldots,~$\vec{w}_{q,n_q}$
+merupakan anggota~$\rangespace{t-\lambda_1}$, masing-masing adalah citra
+suatu vektor dari~$\C^n$.
+Tambahkan satu vektor semacam itu di depan setiap rantai,
+\( \vec{x}_1 \), \ldots, \( \vec{x}_q \),
+seperti diperlihatkan di bawah.
+Kedua, dimensi $W\cap\nullspace{t-\lambda_1}$ adalah~$q$,
+sedangkan nulitasnya adalah~$n-r$,
+sehingga pencacahannya mengharuskan adanya subruang
+$Y\subseteq\nullspace{t-\lambda_1}$ berdimensi $n-r-q$
+yang irisannya dengan $W$ adalah~$\set{\zero}$.
+Karena itu,
+pilih $n-r-q$ vektor bebas linear
+$\vec{y}_1$, \ldots, $\vec{y}_{n-r-q}\in\nullspace{t-\lambda_1}$,
+dan masukkan semuanya ke daftar rantai,
+sekali lagi seperti diperlihatkan di bawah.
+\begin{equation*}
+\begin{strings}{*{10}{c}}
+  \vec{x}_1  &\xmapsto{t-\lambda_1} 
+     &\vec{w}_{1,n_1} &\xmapsto{t-\lambda_1} &\cdots 
+     &\xmapsto{t-\lambda_1} &\vec{w}_{1,1} &\xmapsto{t-\lambda_1} &\zero \\
+     \vdotswithin{\xmapsto{t-\lambda_1}}                   \\
+  \vec{x}_q  &\xmapsto{t-\lambda_1}  
+     &\vec{w}_{q,n_q} &\xmapsto{t-\lambda_1} &\cdots 
+     &\xmapsto{t-\lambda_1} &\vec{w}_{q,1} &\xmapsto{t-\lambda_1} &\zero \\
+  &&\vec{w}_{q+1,n_{q+1}} &\xmapsto{t-\lambda_2} &\cdots 
+     &\xmapsto{t-\lambda_2} &\vec{w}_{q+1,1} &\xmapsto{t-\lambda_2} &\zero \\
+     &&\vdotswithin{\xmapsto{t-\lambda_1}}                              \\
+  &&\vec{w}_{k,n_k} &\xmapsto{t-\lambda_i} &\cdots 
+     &\xmapsto{t-\lambda_i} &\vec{w}_{k,1} &\xmapsto{t-\lambda_i} &\zero \\
+     &&&&&&\vec{y}_1  &\xmapsto{t-\lambda_1} &\zero \\
+     &&&&&&\vdotswithin{\xmapsto{t-\lambda_1}}                              \\
+     &&&&&&\vec{y}_{n-r-q}  &\xmapsto{t-\lambda_1} &\zero \\
+\end{strings}
+\end{equation*}
+Kita akan menunjukkan bahwa inilah basis yang diinginkan untuk~$\C^n$.
+
+Karena pencacahan tersebut, banyaknya vektor dalam himpunan
+sama dengan dimensi ruang, sehingga
+cukup kita verifikasikan bahwa elemen-elemennya bebas linear.
+Andaikan bentuk berikut sama dengan~$\zero$.
+\begin{equation*}
+  a_1\vec{x}_1+\cdots+a_q\vec{x}_q   
+    +b_{1,n_1}\vec{w}_{1,n_1}+\cdots+b_{k,1}\vec{w}_{k,1} 
+    +c_1\vec{y}_1+\cdots+c_{n-r-q}\vec{y}_{n-r-q}
+  \tag{$*$}
+\end{equation*}
+Pertama-tama kita menunjukkan bahwa sebagai akibatnya,
+semua $a$ bernilai nol.
+Terapkan $t-\lambda_1$ pada~($*$).
+Vektor-vektor $\vec{y}_1$, \ldots, $\vec{y}_{n-r-q}$
+dipetakan ke~$\zero$.
+Setiap vektor $\vec{x}_i$ dikirim ke
+$\vec{w}_{i,n_i}$.
+Adapun vektor-vektor $\vec{w}$, semuanya memiliki sifat
+$(t-\lambda_k)\,\vec{w}_{i,j}=\vec{w}_{i,j-1}$ 
+untuk suatu~$\lambda_k$.
+Tuliskan $\hat{\lambda}$ untuk $\lambda_k-\lambda_1$ agar diperoleh
+\begin{equation*}
+  (t-\lambda_1)(\vec{w}_{i,j})
+    =(t-(\lambda_1+\hat{\lambda})+\hat{\lambda})(\vec{w}_{i,j})
+    =\vec{w}_{i,j-1}+\hat{\lambda}\cdot\vec{w}_{i,j} 
+  \tag{$**$}
+\end{equation*}
+Jadi, penerapan $t-\lambda_1$ pada~($*$) menghasilkan
+kombinasi linear vektor-vektor $\vec{w}$.
+Vektor-vektor ini bebas linear karena
+membentuk basis~$W$, sehingga dalam kombinasi linear ini
+semua koefisiennya bernilai~$0$.
+Untuk menunjukkan bahwa $a_i=0$ bagi $i=1,\ldots,q$, cukup
+kita verifikasikan bahwa setelah menerapkan $t-\lambda_1$ pada~($*$),
+koefisien $\vec{w}_{i,n_i}$ adalah $a_i$.
+Hal itu benar karena untuk $i=1,\ldots,q$,
+persamaan~($**$) memiliki $\hat{\lambda}=0$,
+sehingga $\vec{w}_{i,n_i}$ merupakan citra $x_{i}$ saja.
+% Thus $a_1$, \ldots, $a_q$ are zero. 
+
+Dengan semua $a$ sama dengan nol, yang tersisa dari~($*$) adalah
+\begin{equation*}
+  \zero
+  =
+    b_{1,n_1}\vec{w}_{1,n_1}+\cdots+b_{k,1}\vec{w}_{k,1}
+    +c_1\vec{y}_1+\cdots+c_{n-r-q}\vec{y}_{n-r-q}
+\end{equation*}
+Tuliskan kembali sebagai $-(b_{1,n_1}\vec{w}_{1,n_1}+\cdots+b_{k,1}\vec{w}_{k,1})=
+    c_1\vec{y}_1+\cdots+c_{n-r-q}\vec{y}_{n-r-q}$.
+Vektor-vektor $\vec{w}$ berasal dari~$W$, sedangkan vektor-vektor $\vec{y}$ berasal dari~$Y$,
+dan kedua ruang itu hanya memiliki irisan trivial.
+Karena itu, $b_{1,n_1}\vec{w}_{1,n_1}+\cdots+b_{k,1}\vec{w}_{k,1}=\zero$
+dan $c_1\vec{y}_1+\cdots+c_{n-r-q}\vec{y}_{n-r-q}=\zero$,
+serta semua $b$ dan $c$ bernilai nol.
+\end{proof}
+
+
+
+
+% Recall that Lemma~III.\ref{le:RangeAndNullChains} shows that for any
+% transformation~$t$ on an $n$~dimensional space
+% the range spaces of iterates are stable 
+% \begin{equation*}
+%   \rangespace{t^n}=\rangespace{t^{n+1}}=\cdots=\genrangespace{t}
+% \end{equation*} 
+% as are the null spaces. 
+% \begin{equation*}
+%   \nullspace{t^n}=\nullspace{t^{n+1}}=\cdots=\gennullspace{t}
+% \end{equation*} 
+% Thus,
+% the generalized null space $\gennullspace{t}$ and the generalized range space
+% $\genrangespace{t}$ are $t$~invariant.
+% % For the generalized null space, if $\vec{v}\in\gennullspace{t}$ then
+% % $t^n(\vec{v})=\zero$ where $n$ is the dimension of the underlying space
+% % and so $t(\vec{v})\in\gennullspace{t}$ because
+% % $t^n(\,t(\vec{v})\,)$ is zero also.
+% % For the generalized rangespace, if $\vec{v}\in\genrangespace{t}$ then
+% % $\vec{v}=t^n(\vec{w})$ for some $\vec{w}$ and then 
+% % $t(\vec{v})=t^{n+1}(\vec{w})=t^n(\,t(\vec{w})\,)$ 
+% % shows that $t(\vec{v})$ is also a member of $\genrangespace{t}$.
+% Also, 
+% $\gennullspace{t-\lambda_i}$ and $\genrangespace{t-\lambda_i}$
+% are $t-\lambda_i$~invariant.
+
+% The action of the transformation $t-\lambda_i$ on $\gennullspace{t-\lambda_i}$
+% is especially easy to understand.
+% Observe that any transformation~$t$ is nilpotent on $\gennullspace{t}$, 
+% because if $\vec{v}\in\gennullspace{t}$ then 
+% by definition $t^n(\vec{v})=\zero$. 
+% Thus $t-\lambda_i$ is nilpotent on 
+% $\gennullspace{t-\lambda_i}$.
+
+% % Thus, the generalized null space $\gennullspace{t-\lambda_i}$ is a part of
+% % the space on which the action of $t-\lambda_i$ is easy to understand.
+
+% We shall take three steps to prove this section's major result. 
+% The next result is the first.
+% % It establishes that if $j=neq i$ then \( t-\lambda_j \) leaves
+% % \( t-\lambda_i \)'s part unchanged.
+
+% \begin{lemma} \label{le:tInvIfftMinLambdaInv}
+% A subspace is \( t \) invariant if and only if 
+% it is \( t-\lambda \) invariant for all scalars \( \lambda \).
+% In particular, 
+% if \( \lambda_i \) is an eigenvalue of  a linear transformation
+% \( t \) then for any other eigenvalue $\lambda_j$
+% the spaces \( \gennullspace{t-\lambda_i} \) 
+% and \( \genrangespace{t-\lambda_i} \)
+% are \( t-\lambda_j \) invariant.
+% \end{lemma}
+
+% \begin{proof}
+% For the first sentence we check the two implications separately.
+% The `if' half is easy: if the subspace is $t-\lambda$ invariant for 
+% all scalars $\lambda$ then using $\lambda=0$ shows that it is $t$ invariant.
+% For `only if' suppose that the subspace is $t$ invariant,
+% so that if $\vec{m}\in M$ then $t(\vec{m})\in M$, and let $\lambda$ be 
+% a scalar.
+% The subspace $M$ is closed under linear combinations and so if 
+% $t(\vec{m})\in M$ then $t(\vec{m})-\lambda\vec{m}\in M$.
+% Thus if $\vec{m}\in M$ then $(t-\lambda)\,(\vec{m})\in M$.
+
+% The lemma's second sentence follows from its first.
+% The
+% two spaces are $t-\lambda_i$~invariant so they are \( t \)~invariant.
+% Apply the first sentence again to
+% conclude that they are also \( t-\lambda_j \) invariant.
+% \end{proof}
+
+% The second step of the three that we will take to prove this
+% section's major result makes use of an additional property of 
+% \( \gennullspace{t-\lambda_i} \) and
+% \( \genrangespace{t-\lambda_i} \), that they are complementary.
+% Recall that if a space is the direct sum of two others 
+% \( V=\mathscr{N}\directsum \mathscr{R} \) 
+% then any vector \( \vec{v} \) in the space breaks into
+% two parts \( \vec{v}=\vec{n}+\vec{r} \) where \( \vec{n}\in \mathscr{N} \) and
+% \( \vec{r}\in \mathscr{R} \), and recall also 
+% that if \( B_{\mathscr{N}} \) and \( B_{\mathscr{R}} \) are bases for
+% \( \mathscr{N} \) and \( \mathscr{R} \) then the concatenation
+% \( \cat{B_{\mathscr{N}}}{B_{\mathscr{R}}} \) is linearly independent.
+% The next result says that for any subspaces
+% \( \mathscr{N} \) and \( \mathscr{R} \) that are complementary 
+% as well as \( t \)~invariant,
+% the action
+% of \( t \) on \( \vec{v} \) breaks into the actions of
+% \( t \) on \( \vec{n} \) and on \( \vec{r} \).
+
+% \begin{lemma} \label{le:InvCompSubspSplitTrans}
+% Let \( \map{t}{V}{V} \) be a transformation and let \( \mathscr{N} \) and 
+% \( \mathscr{R} \) be
+% \( t \) invariant complementary subspaces of \( V \).
+% Then we can represent \( t \) by a matrix with
+% blocks of square submatrices $T_1$ and $T_2$
+% \begin{equation*} \renewcommand{\arraystretch}{1.2}
+%   \begin{pmat}{c|c}
+%       T_1   &Z_2  \\  \cline{1-2}
+%       Z_1 &T_2
+%    \end{pmat}
+%    \begin{array}{@{}l}
+%      \} \text{\ $\dim(\mathscr{N})$-many rows}  \\
+%      \} \text{\ $\dim(\mathscr{R})$-many rows}
+%    \end{array}
+% \end{equation*}
+% where \( Z_1 \) and \( Z_2 \) are blocks of zeroes.
+% \end{lemma}
+
+% \begin{proof}
+% Since the two subspaces are complementary, the concatenation of a basis
+% for \( \mathscr{N} \) with a basis for \( \mathscr{R} \) makes a basis
+% \( B=\sequence{\vec{\nu}_1,\dots,\vec{\nu}_p,
+%         \vec{\mu}_1,\ldots,\vec{\mu}_q}  \)
+% for \( V \).
+% We shall show that the matrix
+% \begin{equation*}
+%   \rep{t}{B,B}=
+%   \begin{pmat}{c@{\hspace*{1em}}c@{\hspace*{1em}}c}
+%      \vdots                   &        &\vdots     \\
+%      \rep{t(\vec{\nu}_1)}{B}  &\cdots  &\rep{t(\vec{\mu}_q)}{B}  \\
+%      \vdots                   &        &\vdots     \\
+%   \end{pmat}
+% \end{equation*}
+% has the desired form.
+
+% Any vector \( \vec{v}\in V \) is a member of \( \mathscr{N} \) 
+% if and only if when it is represented with respect to \( B \)
+% the final \( q \)
+% coefficients are zero.
+% As \( \mathscr{N} \) is \( t \)~invariant, each of the vectors
+% \( \rep{t(\vec{\nu}_1)}{B} \),
+% \ldots, \( \rep{t(\vec{\nu}_p)}{B} \) has this form.
+% Hence the lower left of \( \rep{t}{B,B} \) is all zeroes.
+% The argument for the upper right is similar.
+% \end{proof}
+
+% To see that we have decomposed \( t \) into its action on the parts, 
+% let $B_{\mathscr{N}}=\sequence{\vec{\nu}_1,\dots,\vec{\nu}_p}$ and 
+% $B_{\mathscr{R}}=\sequence{\vec{\mu}_1,\ldots,\vec{\mu}_q}$.
+% The restrictions of \( t \) to the subspaces \( \mathscr{N} \) 
+% and~\( \mathscr{R} \) 
+% are represented
+% with respect to the bases $B_{\mathscr{N}},B_{\mathscr{N}}$
+% and $B_{\mathscr{R}},B_{\mathscr{R}}$
+% by the matrices \( T_1 \) and \( T_2 \).
+% So with subspaces that are invariant and complementary 
+% we can split the problem of examining
+% a linear transformation into two lower-dimensional subproblems.
+% The next result illustrates this decomposition into blocks.
+
+% \begin{lemma} \label{le:DetIsProdOfSubDets}
+% If $T$ is a matrix with square submatrices $T_1$ and $T_2$
+% \begin{equation*} \renewcommand{\arraystretch}{1.2}
+%   T=
+%   \begin{pmat}{c|c}
+%       T_1   &Z_2  \\  \cline{1-2}
+%       Z_1   &T_2
+%    \end{pmat}
+% \end{equation*}
+% where the \( Z \)'s are blocks of zeroes,
+% then \( \deter{T}=\deter{T_1}\cdot\deter{T_2} \).
+% \end{lemma}
+
+% \begin{proof}
+% Suppose that \( T \) is \( \nbyn{n} \),
+% that \( T_1 \) is \( \nbyn{p} \),
+% and that \( T_2 \) is \( \nbyn{q} \).
+% In the permutation formula for the determinant
+% \begin{equation*}
+%   \deter{T}=
+%   \sum_{\text{\scriptsize permutations\ }\phi}
+%           t_{1,\phi(1)}t_{2,\phi(2)}\cdots t_{n,\phi(n)}\sgn(\phi)
+% \end{equation*}
+% each term comes from a rearrangement of the column numbers
+% \( 1,\dots,n \) into a new order \( \phi(1),\dots,\phi(n) \).
+% The upper right block $Z_2$ is all zeroes, so if a
+% \( \phi \) has at least one of \( p+1,\dots,n \) among its first
+% \( p \) column numbers \( \phi(1),\dots,\phi(p) \) then the term arising
+% from \( \phi \) does not contribute to the sum because it is zero,
+% e.g., if \( \phi(1)=n \) then
+% \( t_{1,\phi(1)}t_{2,\phi(2)}\dots t_{n,\phi(n)}
+%    =0\cdot t_{2,\phi(2)}\dots t_{n,\phi(n)}=0 \).
+
+% So the above formula reduces to a sum over all permutations with 
+% two halves:~any contributing $\phi$ is the composition of a $\phi_1$ that
+% rearranges only \( 1,\dots,p \) 
+% and a $\phi_2$ that rearranges only \( p+1,\dots,p+q \).
+% Now, the distributive law 
+% and the fact that the signum of a composition is the product
+% of the signums gives that this
+% \begin{multline*}
+%    \deter{T_1}\cdot\deter{T_2}=
+%    \bigg(\sum_{\begin{subarray}{c}
+%                 \text{\scriptsize perms\ }\phi_1 \\
+%                 \text{\scriptsize of\ } 1,\dots,p
+%                \end{subarray}}
+%        \!\!\! t_{1,\phi_1(1)}\cdots t_{p,\phi_1(p)}\sgn(\phi_1) \bigg)  \\
+%    \cdot
+%    \bigg(\sum_{\begin{subarray}{c}
+%                 \text{\scriptsize perms\ }\phi_2 \\
+%                 \text{\scriptsize of\ } p+1,\dots,p+q
+%                \end{subarray}}
+%        \!\!\! t_{p+1,\phi_2(p+1)}\cdots t_{p+q,\phi_2(p+q)}\sgn(\phi_2) 
+%         \bigg)
+% \end{multline*}
+% equals
+%   $\deter{T}=
+%   \sum_{\text{\scriptsize contributing\ }\phi}
+%           t_{1,\phi(1)}t_{2,\phi(2)}\cdots t_{n,\phi(n)}\sgn(\phi)$.
+% \end{proof}
+
+% \begin{example}
+% \begin{equation*}
+%     \begin{vmat}[r]
+%        2  &0  &0  &0  \\
+%        1  &2  &0  &0  \\
+%        0  &0  &3  &0  \\
+%        0  &0  &0  &3
+%     \end{vmat}
+%    =\begin{vmat}[r]
+%        2  &0  \\
+%        1  &2
+%     \end{vmat}
+%     \cdot
+%     \begin{vmat}[r]
+%        3  &0  \\
+%        0  &3
+%     \end{vmat}
+%    =36
+% \end{equation*}
+% \end{example}
+
+% From \nearbylemma{le:DetIsProdOfSubDets} we conclude that
+% if two subspaces 
+% are complementary and \( t \)~invariant then
+% \( t \) is one-to-one if and only if its 
+% restriction %\appendrefs{restrictions}
+% to each subspace is nonsingular.
+
+% Now for the promised third, and final, step to the main result.
+
+% \begin{lemma}
+% If a linear transformation \( \map{t}{V}{V} \) has the 
+% characteristic polynomial
+% \( (x-\lambda_1)^{p_1}\dots(x-\lambda_k)^{p_k} \) then
+% (1)~\( V=\gennullspace{t-\lambda_1}\directsum\cdots
+%              \directsum\gennullspace{t-\lambda_k} \) 
+% and
+% (2)~\( \dim(\gennullspace{t-\lambda_i})=p_i  \).
+% \end{lemma}
+
+% \begin{proof}
+% This argument consists of proving
+% two preliminary claims, followed by proofs of clauses~(1) and~(2).
+
+% The first claim is that
+% \( \gennullspace{t-\lambda_i}\intersection\gennullspace{t-\lambda_j}=\set{\zero} \)
+% when \( i\neq j \).
+% By \nearbylemma{le:tInvIfftMinLambdaInv}
+% both \( \gennullspace{t-\lambda_i} \) and 
+% \( \gennullspace{t-\lambda_j} \) are \( t \)~invariant.
+% The intersection of \( t \) invariant subspaces is \( t \)
+% invariant and so the restriction of \( t \) to
+% \( \gennullspace{t-\lambda_i}\intersection\gennullspace{t-\lambda_j} \)
+% is a linear transformation.
+% Now,
+% $t-\lambda_i$ is nilpotent on \( \gennullspace{t-\lambda_i} \)
+% and  
+% $t-\lambda_j$ is nilpotent on \( \gennullspace{t-\lambda_j} \),
+% so both \( t-\lambda_i \) and \( t-\lambda_j \) are 
+% nilpotent on the intersection.
+% Therefore by \nearbylemma{le:NilIffOnlyEigenZero} and the observation
+% following it, if \( t \) has any eigenvalues on the intersection 
+% then the ``only'' eigenvalue is both
+% \( \lambda_i \) and \( \lambda_j \).
+% This cannot be, so the restriction has no eigenvalues:
+% \( \gennullspace{t-\lambda_i}\intersection\gennullspace{t-\lambda_j} \)
+% is the trivial space
+% (\nearbylemma{le:MapNonTrivSpHasEigen} shows that 
+% the only transformation that is without any eigenvalues is 
+% the transformation on the trivial space).
+
+% The second claim is that  when \( i\neq j \) then
+% \( \gennullspace{t-\lambda_i} \subseteq \genrangespace{t-\lambda_j} \).
+% To verify it we will show that \( t-\lambda_j \) is one-to-one on
+% \( \gennullspace{t-\lambda_i} \).
+% This will imply, 
+% since \( \gennullspace{t-\lambda_i} \) is \( t-\lambda_j \) invariant
+% by \nearbylemma{le:tInvIfftMinLambdaInv},
+% that the map \( t-\lambda_j \) is an automorphism of the subspace
+% \( \gennullspace{t-\lambda_i} \),
+% and therefore that 
+% \( \gennullspace{t-\lambda_i} \)  is a subset of each
+% \( \rangespace{t-\lambda_j} \), \( \rangespace{(t-\lambda_j)^2} \), etc.
+% To verify that the map is one-to-one,
+% suppose that \( \vec{v}\in\gennullspace{t-\lambda_i} \) is in the 
+% null space of \( t-\lambda_j \), aiming to show that \( \vec{v}=\zero \).
+% Consider the map 
+% \( [(t-\lambda_i)-(t-\lambda_j)]^n \).
+% On the one hand, the only
+% vector that \( (t-\lambda_i)-(t-\lambda_j)=\lambda_i-\lambda_j \) maps to 
+% zero is the zero vector itself.
+% On the other hand, as in the proof of 
+% \nearbylemma{le:PolyMapsFactor}
+% the binomial expansion gives this.
+% \begin{equation*}
+%   (t-\lambda_i)^n(\vec{v})
+%     +\binom{n}{1}(t-\lambda_i)^{n-1}(t-\lambda_j)^1(\vec{v})
+%     +\binom{n}{2}(t-\lambda_i)^{n-2}(t-\lambda_j)^2(\vec{v})
+%     +\cdots 
+% \end{equation*}
+% The first term is the zero vector 
+% because \( \vec{v}\in\gennullspace{t-\lambda_i} \).
+% The remaining terms are the zero vector because
+% \( \vec{v} \) is in the null space of \( t-\lambda_j \).
+% Therefore \( \vec{v}=\zero \). 
+
+% With those two preliminary claims done 
+% we can prove clause~(1), that the space is the direct sum of the
+% generalized null spaces.
+% By Corollary~III.\ref{GenRngNullDirSumToSp} the space is the direct sum
+% \( V=\gennullspace{t-\lambda_1}\directsum\genrangespace{t-\lambda_1} \).
+% By the second claim
+% \( \gennullspace{t-\lambda_2}\subseteq\genrangespace{t-\lambda_1} \)
+% and so we can get a basis for \( \genrangespace{t-\lambda_1} \) by
+% starting with a basis for \( \gennullspace{t-\lambda_2} \) and adding
+% extra basis elements taken from
+% \( \genrangespace{t-\lambda_1}\intersection\genrangespace{t-\lambda_2} \). 
+% Thus \( V=\gennullspace{t-\lambda_1}\directsum\gennullspace{t-\lambda_2}
+%           \directsum 
+%        (\genrangespace{t-\lambda_1}\intersection\genrangespace{t-\lambda_2}) \).
+% Continuing in this way we get this.
+% \begin{equation*}
+%   V=\gennullspace{t-\lambda_1}\directsum\cdots\directsum\gennullspace{t-\lambda_k}
+%           \directsum 
+%        (\genrangespace{t-\lambda_1}\intersection\cdots\intersection\genrangespace{t-\lambda_k})
+% \end{equation*}
+% The first claim above shows that the final space is trivial. 
+
+% We finish by verifying clause~(2).
+% Decompose \( V \) as 
+% \( \gennullspace{t-\lambda_i}\directsum\genrangespace{t-\lambda_i} \)
+% %with basis $B=\cat{B_{\mathscr{N}}}{B_{\mathscr{R}}}$
+% and apply \nearbylemma{le:InvCompSubspSplitTrans}.
+% \begin{equation*}   \renewcommand{\arraystretch}{1.2}
+%   T=
+% %  \rep{t}{B,B}=
+%   \begin{pmat}{c|c}
+%       T_1   &Z_2  \\  \cline{1-2}
+%       Z_1   &T_2
+%    \end{pmat}
+%    \begin{array}{@{}l}
+%      \} \text{\ $\dim(\,\gennullspace{t-\lambda_i}\,)$-many rows}  \\
+%      \} \text{\ $\dim(\,\genrangespace{t-\lambda_i}\,)$-many rows}
+%    \end{array}
+% \end{equation*}
+% \nearbylemma{le:DetIsProdOfSubDets} says that
+% \( \deter{T-xI}=\deter{T_1-xI}\cdot\deter{T_2-xI} \).
+% By the uniqueness clause of the Fundamental Theorem of Algebra, 
+% Theorem~I.\ref{th:FundThmAlg},
+% the determinants of the blocks have the same factors as the
+% characteristic polynomial
+% \( \deter{T_1-xI}=(x-\lambda_1)^{q_1}\cdots(x-\lambda_z)^{q_k} \)
+% and
+% \( \deter{T_2-xI}=(x-\lambda_1)^{r_1}\cdots(x-\lambda_z)^{r_k} \),
+% where
+% \( q_1+r_1=p_1 \), \dots, \( q_k+r_k=p_k \).
+% We will finish by establishing that (i)~$q_j=0$ for all $j\neq i$,
+% and (ii)~$q_i=p_i$.
+% Together these prove clause~(2) because they show that the degree of 
+% the polynomial $\deter{T_1-xI}$ is $q_i$ and
+% the degree of that polynomial equals 
+% the dimension of the
+% generalized null space $\gennullspace{t-\lambda_i}$. 
+
+% For (i),
+% because the restriction of \( t-\lambda_i \) to \( \gennullspace{t-\lambda_i} \)
+% is nilpotent on that space,
+% $t$'s only eigenvalue on that space is \( \lambda_i \),
+% by \nearbylemma{cor:tMinLambdaNilpotent}.
+% So $q_j=0$ for $j\neq i$.
+
+% For (ii),
+% consider the restriction of \( t \) to \( \genrangespace{t-\lambda_i} \).
+% By Lemma~III.\ref{lem:RestONeToOne}, the map
+% \( t-\lambda_i \) is one-to-one on
+% \( \genrangespace{t-\lambda_i} \) and so \( \lambda_i \) is not an
+% eigenvalue of \( t \) on that subspace.
+% Therefore \( x-\lambda_i \) is not a factor of \( \deter{T_2-xI} \),
+% so $r_i=0$, and so \( q_i=p_i \).
+% \end{proof}
+
+% Recall the goal of this chapter, to give a canonical form for matrix similarity.
+% That result is next.
+% It 
+% translates the above steps into matrix terms.
+
+% \begin{theorem}
+% \index{Jordan form!represents similarity classes}\index{similar!canonical form}
+% \index{canonical form!for similarity}\index{transformation!Jordan form for}
+% Any square matrix is similar to one in \definend{Jordan form}
+% \begin{equation*}
+%   \begin{mat}
+%     J_{\lambda_1}  &            &\text{\textit{--zeroes--}}                 \\
+%                &J_{\lambda_2}                                              \\
+%                &     &\ddots                                     \\
+%                 &     &                           &J_{\lambda_{k-1}} &     \\
+%                &     &\text{\textit{--zeroes--}} &            &J_{\lambda_{k}}
+%   \end{mat}
+% \end{equation*}
+% where each \( J_{\lambda} \) is the Jordan block associated with an
+% eigenvalue $\lambda$ of the original matrix (that is, each \( J_{\lambda} \)
+% is all zeroes except for
+% \( \lambda \)'s down the diagonal and some subdiagonal ones).
+% \end{theorem}
+
+% \begin{proof}
+% Given an \( \nbyn{n} \) matrix \( T \), consider the linear map
+% \( \map{t}{\C^n}{\C^n} \) that it represents
+% with respect to the standard bases.
+% Use the prior lemma to write
+% \( \C^n=\gennullspace{t-\lambda_1}\directsum\cdots
+%         \directsum\gennullspace{t-\lambda_k} \)
+% where \( \lambda_1 \), \ldots, \(\lambda_k \) are the eigenvalues of \( t \).
+% Because each \( \gennullspace{t-\lambda_i} \)  is \( t \) invariant,
+% \nearbylemma{le:InvCompSubspSplitTrans} and the prior lemma show
+% that \( t \) is represented by a matrix that is all zeroes except for square
+% blocks along the diagonal.
+% To make those blocks into Jordan blocks, pick each \( B_{\lambda_i} \)
+% to be a string basis for the action of \( t-\lambda_i \) on
+% \( \gennullspace{t-\lambda_i} \). 
+% \end{proof}
+
+% \begin{corollary}
+% Every square matrix is similar to the sum of a diagonal matrix and a nilpotent
+% matrix.
+% \end{corollary}
+
+\begin{remark}
+Secara teknis, agar menjadi bentuk kanonik untuk
+keserupaan matriks,\index{wakil!kelas keserupaan}
+bentuk Jordan harus unik.
+Artinya, untuk setiap matriks persegi harus ada tepat satu
+matriks berbentuk Jordan yang serupa dengannya.
+Kita dapat membuat bentuk dalam teorema itu unik
+dengan menyusun blok-blok Jordan sehingga nilai eigennya mengikuti
+suatu urutan yang ditetapkan, lalu menyusun
+blok-blok satu pada subdiagonal dari
+yang terpanjang ke yang terpendek.
+Dalam contoh-contoh di bawah, kita tidak akan membahas hal itu.
+\end{remark}
+
+% As in the nilpotent cases earlier in this section,
+% to find the structure of the basis 
+% associated with~$T_3$ we apply
+% the maps $t-3$ and~$(t-3)^2$, the maps $t-2$ and~$(t-2)^2$, and 
+% the map~$t+1$.
+% For instance,
+% the basis has a total of three elements that are mapped to~$\zero$
+% when we apply $t-3$ twice.
+% It has two elements
+% that are sent to~$\zero$ on two applications of~$t-2$.
+% And it has one element sent to~$\zero$ by~$t+1$.
+% That is, to find the elements of this basis we want to
+% iterate the maps, so we look in  
+% the generalized null spaces $\gennullspace{t-3}$, $\gennullspace{t-2}$,
+% and~$\gennullspace{t+1}$.
+
+Contoh-contoh berikut dimulai dengan sebuah matriks dan menghitung
+matriks berbentuk Jordan yang serupa dengannya.
+Sebelumnya, kita akan mengemukakan satu hal lagi.
+Sebagai contoh, pada contoh pertama di bawah kita memperoleh nilai eigen $2$
+dan~$6$.
+Untuk memilih elemen basis yang berkaitan dengan~\( 2\), kita mencari ruang nol
+$t-2$, \( (t-2)^2 \), dan~\( (t-2)^3\).
+Artinya, untuk mencari elemen-elemen basis dalam contoh ini, kita akan
+melihat ruang nol tergeneralisasi $\gennullspace{t-2}$
+dan~$\gennullspace{t-6}$.
+Namun, kita perlu memastikan bahwa perhitungan untuk setiap pemetaan tidak
+memengaruhi perhitungan untuk pemetaan lainnya.
+
+% So before those examples, 
+% suppose that $\map{t}{\C^n}{\C^n}$ is a transformation and 
+% that $\lambda\in\C$ is an eigenvalue.
+% Note that the generalized null space~$\gennullspace{t-\lambda}$ 
+% and range space~$\genrangespace{t-\lambda}$ are $t-\lambda$
+% invariant spaces.
+% For the generalized null space, 
+% if $\vec{v}\in\gennullspace{t-\lambda}$ then 
+% $(t-\lambda)^n(\vec{v})=\zero$ and it follows that
+% $(t-\lambda)^n(\,(t-\lambda)(\vec{v})\,)=(t-\lambda)^{n+1}(\vec{v})=\zero$ 
+% also. 
+% As to the generalized range space,
+% Lemma Five.III.\ref{le:RangeAndNullChains} and its proof show that
+% $\genrangespace{t-\lambda}
+%   =\rangespace{(t-\lambda)^n}
+%   =\rangespace{(t-\lambda)^{n+1}}$ 
+% and so $\vec{v}\in\genrangespace{t-\lambda}$ implies that
+% $(t-\lambda)(\vec{v})\in\genrangespace{t-\lambda}$ also.
+
+% Before the theorem, we first will show that applying $t-\lambda$ 
+% won't do something awkward to the basis elements not in 
+% $\gennullspace{t-\lambda}$.
+% For instance, in the prior example we want that applying
+% $t-3$ won't do something awkward to~$\vec{\beta}_4$, 
+% $\vec{\beta}_5$, and~$\vec{\beta}_6$. 
+% Here, awkward means that
+% where \( \map{t}{V}{V} \) is a linear transformation,
+% the restriction\appendrefs{restrictions of functions}\spacefactor=1000  %
+% of \( t \) to a subspace \( M\subseteq V \) 
+% need not be a linear transformation on \( M \):~there
+% may be an \( \vec{m}\in M \)
+% with \( t(\vec{m})\not\in M \). 
+% An example is where $t$ is the transformation 
+% that rotates the plane by
+% a quarter turn and $M$ is the $x=y$ line; the vector $\binom{1}{1}$
+% is rotated away from the subspace.
+% We next show this does not happen in the special case of 
+% eigenvalues;~if $j\neq i$ then 
+% application of \( t-\lambda_j \) leaves 
+% \( t-\lambda_i \)'s part unchanged.
+
+\begin{definition} \label{def:invariant}
+Misalkan \( \map{t}{V}{V} \) adalah suatu transformasi.
+Subruang \( M\subseteq V \) disebut \definend{invarian terhadap $t$}%
+\index{subruang invarian}\index{subruang!invarian}
+jika setiap kali \( \vec{m}\in M \), berlaku \( t(\vec{m})\in M \)
+(secara ringkas: \( t(M)\subseteq M \)).
+\end{definition}
+
+\begin{lemma} \label{le:tInvIfftMinLambdaInv}
+Suatu subruang invarian terhadap \( t \) jika dan hanya jika
+subruang itu invarian terhadap \( t-\lambda \) untuk semua skalar \( \lambda \).
+Secara khusus,
+jika \( \lambda_i,\lambda_j\in\C \) merupakan nilai eigen berbeda dari
+\( t \), maka
+ruang \( \gennullspace{t-\lambda_i} \)
+dan \( \genrangespace{t-\lambda_i} \)
+invarian terhadap \( t-\lambda_j \).
+\end{lemma}
+
+\begin{proof}
+Implikasi dari kanan ke kiri pada kalimat pertama bersifat trivial:~jika
+subruang invarian terhadap $t-\lambda$ untuk
+semua skalar $\lambda$, maka mengambil $\lambda=0$
+menunjukkan bahwa subruang itu invarian terhadap $t$.
+Untuk implikasi lainnya, andaikan subruang tersebut invarian terhadap $t$,
+sehingga jika $\vec{m}\in M$, maka $t(\vec{m})\in M$, dan misalkan $\lambda$
+suatu skalar.
+Subruang $M$ tertutup terhadap kombinasi linear, sehingga jika
+$t(\vec{m})\in M$, maka $t(\vec{m})-\lambda\vec{m}\in M$.
+Jadi, jika $\vec{m}\in M$, maka $(t-\lambda)\,(\vec{m})\in M$.
+
+Kalimat kedua mengikuti kalimat pertama.
+Kedua ruang tersebut invarian terhadap $t-\lambda_i$, sehingga invarian terhadap \( t \).
+Menerapkan kembali kalimat pertama menunjukkan bahwa
+keduanya juga invarian terhadap \( t-\lambda_j \).
+\end{proof}
+
+\begin{example} \label{ex:FirstJordForm}
+Matriks berikut
+\begin{equation*}
+   T=
+   \begin{mat}[r]
+     2  &0  &1  \\
+     0  &6  &2  \\
+     0  &0  &2
+   \end{mat}
+\end{equation*}
+memiliki polinomial karakteristik \( -(x-2)^2(x-6) \).
+\begin{equation*}
+   |T-xI|=
+   \begin{vmat}
+     2-x  &0    &1  \\
+     0    &6-x  &2  \\
+     0    &0    &2-x
+   \end{vmat}
+   =-(x-2)^2(x-6)
+\end{equation*}
+Pertama-tama kita menangani nilai eigen~$2$.
+Perhitungan pangkat-pangkat $T-2I$, serta ruang nol dan nulitasnya,
+bersifat rutin.
+(Ingat konvensi kita untuk
+mengambil $T$ sebagai representasi transformasi $\map{t}{\C^3}{\C^3}$
+terhadap basis standar.)
+\begin{center}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{r|ccc} 
+    \multicolumn{1}{c}{\( p \)}  
+         &\( (T-2I)^p \) &\( \nullspace{(t-2)^p}  \) 
+         &\textit{nulitas}                                            \\  
+    \hline
+    \( 1 \)
+    &\matrixvenlarge{\begin{mat}[r]
+          0  &0  &1  \\
+          0  &4  &2  \\
+          0  &0  &0
+        \end{mat}}
+    &\( \set{\matrixvenlarge{\colvec{x \\ 0 \\ 0}}
+         \suchthat x\in\C}  \)  
+    &$1$                                                   \\
+    \( 2 \)
+    &\matrixvenlarge{\begin{mat}[r]
+          0  &0  &0  \\
+          0  &16 &8  \\
+          0  &0  &0
+        \end{mat}}
+    &\( \set{\matrixvenlarge{\colvec{x \\ -z/2 \\  z}}
+               \suchthat x,z\in\C}  \) 
+    &$2$                                                   \\
+    \( 3 \)
+    &\matrixvenlarge{\begin{mat}[r]
+          0  &0  &0  \\
+          0  &64 &32 \\
+          0  &0  &0
+        \end{mat}}
+    &\textit{--sama--}
+    &\textit{--sama--}
+  \end{tabular}
+\end{center}
+Jadi, ruang nol tergeneralisasi $\gennullspace{t-2}$ berdimensi dua.
+Kita mengetahui bahwa restriksi $t-2$ nilpoten pada subruang ini.
+Dari pola pertumbuhan nulitas, kita mengetahui bahwa tindakan
+$t-2$ pada suatu basis rantai adalah
+$\vec{\beta}_1\mapsto\vec{\beta}_2\mapsto\zero$.  
+Jadi, kita dapat merepresentasikan restriksi itu dalam bentuk kanonik
+\begin{equation*}
+  N_2=
+  \begin{mat}[r]
+    0  &0  \\
+    1  &0  
+  \end{mat}
+  =\rep{t-2}{B,B}
+  \qquad
+   B_2=\sequence{\colvec[r]{1 \\ 1 \\ -2},
+                 \colvec[r]{-2 \\ 0 \\ 0}}  
+\end{equation*}
+(pilihan basis lain juga mungkin).
+Akibatnya, tindakan restriksi $t$ pada
+$\gennullspace{t-2}$ direpresentasikan oleh blok Jordan berikut.
+\begin{equation*}
+  J_2=N_2+2I=\rep{t}{B_2,B_2}=
+  \begin{mat}[r]
+    2  &0  \\
+    1  &2
+  \end{mat}
+\end{equation*}
+
+Nilai eigen kedua adalah $6$.
+Perhitungannya lebih mudah.
+Karena pangkat $x-6$ dalam polinomial karakteristik adalah satu,
+restriksi $t-6$ pada $\gennullspace{t-6}$
+harus nilpoten berindeks satu
+(indeksnya tidak mungkin kurang dari satu, dan karena $x-6$ merupakan
+faktor polinomial karakteristik berpangkat satu, indeksnya juga tidak mungkin
+lebih dari satu).
+Tindakannya pada basis rantai harus berupa $\vec{\beta}_3\mapsto\zero$, dan
+karena merupakan pemetaan nol, bentuk kanoniknya $N_6$
+adalah matriks nol $\nbyn{1}$.
+Akibatnya, bentuk kanonik $J_6$ untuk tindakan $t$ pada
+$\gennullspace{t-6}$ adalah matriks blok Jordan $\nbyn{1}$
+dengan satu-satunya entri $6$.
+Untuk basisnya, kita dapat menggunakan sebarang vektor tak nol dari ruang nol tergeneralisasi.
+\begin{equation*}
+   B_6=\sequence{\colvec[r]{0 \\ 1 \\ 0}}
+\end{equation*}
+
+Jika digabungkan, keduanya memberikan
+bentuk Jordan \( T \), yaitu
+\begin{equation*}
+   \rep{t}{B,B}=
+   \begin{mat}[r]
+      2  &0  &0  \\
+      1  &2  &0  \\
+      0  &0  &6
+   \end{mat}
+\end{equation*}
+dengan \( B \) merupakan konkatenasi $B_2$ dan $B_6$.
+(Jika kita ingin cermat memperoleh bentuk Jordan yang unik,
+kita dapat, misalnya, menyusun ulang elemen basis agar nilai eigennya
+berurutan menurun.
+Namun, urutan meningkat juga boleh.)
+\end{example}
+
+\begin{example}  \label{SecJordanForm}
+Matriks berikut
+memiliki polinomial karakteristik yang sama
+dengan contoh sebelumnya, \( -(x-2)^2(x-6) \).
+\begin{equation*}
+   T=
+   \begin{mat}[r]
+     2  &2  &1  \\
+     0  &6  &2  \\
+     0  &0  &2
+   \end{mat}
+\end{equation*}
+Namun, di sini
+tindakan $t-2$ stabil setelah satu kali penerapan saja\Dash restriksi
+$t-2$ pada $\gennullspace{t-2}$ nilpoten berindeks satu.
+\begin{center}
+  % \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{r|ccc}
+    \multicolumn{1}{c}{\( p \)}  &\( (T-2I)^p \)  &\( \nullspace{(t-2)^p}  \)  
+       &\textit{nulitas} \\                                     \hline
+   \( 1 \)
+   &\matrixvenlarge{\begin{mat}[r]
+         0  &2  &1  \\
+         0  &4  &2  \\
+         0  &0  &0
+       \end{mat}}
+   &\( \set{\matrixvenlarge{\colvec{x \\ (-1/2)z \\ z}}\suchthat x,z\in\C}  \) 
+   &$2$                                                     \\
+   \( 2 \)
+   &\matrixvenlarge{\begin{mat}[r]
+         0  &8  &4 \\
+         0  &16 &8 \\
+         0  &0  &0
+       \end{mat}}
+   &\textit{--sama--}
+   &\textit{--sama--}
+ \end{tabular}
+\end{center}
+Jadi, restriksi $t-2$ pada ruang nol tergeneralisasi bertindak pada basis
+rantai melalui dua rantai $\vec{\beta}_1\mapsto\zero$
+dan $\vec{\beta}_2\mapsto\zero$.
+Kita memperoleh blok Jordan berikut yang terkait dengan nilai eigen~$2$.
+\begin{equation*}
+  J_2=
+  \begin{mat}[r]
+    2  &0  \\
+    0  &2  
+  \end{mat}
+\end{equation*}
+
+Jadi, perbedaannya dengan contoh sebelumnya adalah bahwa meskipun
+polinomial karakteristik memberi tahu kita untuk melihat
+tindakan $t-2$ pada ruang nol tergeneralisasinya, polinomial karakteristik
+tidak sepenuhnya menggambarkan tindakan $t-2$.
+Kita harus melakukan beberapa perhitungan untuk memperoleh bahwa
+polinomial minimalnya adalah \( (x-2)(x-6) \).
+
+Untuk nilai eigen $6$, argumen bagi nilai eigen kedua pada
+contoh sebelumnya kembali berlaku:~karena pangkat $x-6$ dalam
+polinomial karakteristik adalah satu,
+restriksi $t-6$ pada $\gennullspace{t-6}$
+harus nilpoten berindeks satu.
+Sebagai alternatif, kita dapat langsung menghitungnya.
+\begin{center}
+  \begin{tabular}{r|ccc}
+    \multicolumn{1}{c}{\( p \)}  &\( (T-6I)^p \)  &\( \nullspace{(t-6)^p}  \)  
+       &\textit{nulitas} \\                                     \hline
+   \( 1 \)
+   &\matrixvenlarge{\begin{mat}[r]
+        -4  &2  &1  \\
+         0  &0  &2  \\
+         0  &0  &-4
+       \end{mat}}
+   &\( \set{\matrixvenlarge{\colvec{x \\ 2x \\ 0}}\suchthat x\in\C}  \) 
+   &$1$                                                     \\
+   \( 2 \)
+   &\matrixvenlarge{\begin{mat}[r]
+        16  &-8 &-4 \\
+         0  &0  &-8 \\
+         0  &0  &16
+       \end{mat}}
+   &\textit{--sama--}
+   &\textit{--sama--}
+ \end{tabular}
+\end{center}
+Bagaimanapun caranya, pada $\gennullspace{t-6}$, bentuk kanonik $N_6$
+dari restriksi $t-6$ adalah matriks nol $\nbyn{1}$.
+Blok Jordan $J_6$ adalah matriks $\nbyn{1}$ dengan entri $6$.
+ 
+Dengan demikian, bentuk Jordan $T$ adalah matriks diagonal, sehingga~\( t \)
+merupakan transformasi yang dapat didiagonalkan.
+\begin{equation*}
+  \rep{t}{B,B}=
+  \begin{mat}[r]
+    2  &0  &0  \\
+    0  &2  &0  \\
+    0  &0  &6
+  \end{mat}
+  \qquad
+  B=\cat{B_2}{B_6}
+   =\sequence{\colvec[r]{1 \\ 0 \\ 0},
+              \colvec[r]{0 \\ 1 \\ -2},
+              \colvec[r]{1 \\ 2 \\ 0}}
+\end{equation*}
+Dari ketiga vektor basis, dua yang pertama berasal dari ruang nol
+$t-2$, dan yang ketiga berasal dari ruang nol~$t-6$.
+\end{example}
+
+\begin{example} \label{ThirdJordanForm}
+Sedikit perhitungan dengan
+\begin{equation*}
+   T=
+   \begin{mat}[r]
+     -1  &4  &0  &0  &0  \\
+      0  &3  &0  &0  &0  \\
+      0  &-4 &-1 &0  &0  \\
+      3  &-9 &-4 &2  &-1 \\
+      1  &5  &4  &1  &4
+   \end{mat}
+\end{equation*}
+menunjukkan bahwa polinomial karakteristiknya
+adalah \( -(x-3)^3(x+1)^2 \).
+Tabel berikut
+\begin{center}
+  % \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{@{}r|c@{}c@{}c@{}}
+    \multicolumn{1}{c}{\( p \)}  
+            &\( (T-3I)^p \)  &\( \nullspace{(t-3)^p}  \)
+             &\textit{nulitas}
+    \\  \hline
+    \( 1 \)
+    &\matrixvenlarge{\begin{mat}[r]
+         -4  &4  &0  &0  &0  \\
+          0  &0  &0  &0  &0  \\
+          0  &-4 &-4 &0  &0  \\
+          3  &-9 &-4 &-1 &-1 \\
+          1  &5  &4  &1  &1
+       \end{mat}}
+    &\( \set{\matrixvenlarge{\colvec{-(u+v)/2 \\
+                     -(u+v)/2 \\
+                      (u+v)/2 \\
+                       u      \\
+                       v}}\suchthat u,v\in\C}  \) 
+    &$2$                                            \\
+    \( 2 \)
+    &\matrixvenlarge{\begin{mat}[r]
+         16  &-16&0  &0  &0  \\
+          0  &0  &0  &0  &0  \\
+          0  &16 &16 &0  &0  \\
+        -16  &32 &16 &0  &0  \\
+          0  &-16&-16&0  &0
+       \end{mat}}
+    &\( \set{\matrixvenlarge{\colvec{ -z      \\
+                      -z      \\
+                       z      \\
+                       u      \\
+                       v}}\suchthat z,u,v\in\C}  \) 
+    &$3$                                              \\
+    \( 3 \)
+    &\matrixvenlarge{\begin{mat}[r]
+        -64  &64   &0   &0   &0  \\
+          0  &0    &0   &0   &0  \\
+          0  &-64  &-64 &0   &0  \\
+         64  &-128 &-64 &0   &0  \\
+          0  &64   &64  &0   &0
+       \end{mat}}
+    &\textit{--sama--}
+    &\textit{--sama--}
+  \end{tabular}
+\end{center}
+menunjukkan bahwa restriksi $t-3$ pada $\gennullspace{t-3}$ bertindak pada
+basis rantai melalui dua rantai
+$\vec{\beta}_1\mapsto\vec{\beta}_2\mapsto\zero$
+dan
+$\vec{\beta}_3\mapsto\zero$.
+
+Perhitungan serupa untuk nilai eigen lainnya,
+\begin{center}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{r|ccc}
+    \multicolumn{1}{c}{\( p \)}  
+         &\( (T+1I)^p \)  &\( \nullspace{(t+1)^p}  \) 
+         &\textit{nulitas}  \\  
+    \hline
+    \( 1 \)
+    &\matrixvenlarge{\begin{mat}[r]
+          0  &4  &0  &0  &0  \\
+          0  &4  &0  &0  &0  \\
+          0  &-4 &0  &0  &0  \\
+          3  &-9 &-4 &3  &-1 \\
+          1  &5  &4  &1  &5
+       \end{mat}}
+    &\( \set{\matrixvenlarge{\colvec{-(u+v)   \\
+                       0      \\
+                      -v      \\
+                       u      \\
+                       v}}\suchthat u,v\in\C}  \)  
+    &$2$                                              \\
+    \( 2 \)
+    &\matrixvenlarge{\begin{mat}[r]
+          0  &16 &0  &0  &0  \\
+          0  &16 &0  &0  &0  \\
+          0  &-16&0  &0  &0  \\
+          8  &-40&-16&8  &-8 \\
+          8  &24 &16 &8  &24
+       \end{mat}}
+    &\textit{--sama--}
+    &\textit{--sama--}
+  \end{tabular}
+\end{center}
+memberikan bahwa restriksi $t+1$ pada ruang nol tergeneralisasinya
+bertindak pada basis rantai melalui dua rantai terpisah,
+$\vec{\beta}_4\mapsto\zero$ dan $\vec{\beta}_5\mapsto\zero$.
+
+Dengan demikian,
+\( T \) serupa dengan matriks berbentuk Jordan berikut.
+\begin{equation*}
+   \begin{mat}[r]
+     -1  &0  &0  &0  &0  \\
+      0  &-1 &0  &0  &0  \\    
+      0  &0  &3  &0  &0  \\
+      0  &0  &1  &3  &0  \\
+      0  &0  &0  &0  &3  
+   \end{mat}
+\end{equation*}
+\end{example}
+
+
+
+
+
+\begin{exercises}
+  \item 
+    Lakukan pemeriksaan untuk \nearbyexample{ex:SingJordBlock}.
+    \begin{answer}
+      Kita harus memeriksa bahwa
+      \begin{equation*}
+         \begin{mat}[r]
+           3  &0  \\
+           1  &3
+         \end{mat}
+         =
+         N+3I=PTP^{-1}
+         =
+         \begin{mat}[r]
+           1/2  &1/2  \\
+          -1/4 &1/4
+         \end{mat}
+         \begin{mat}[r]
+           2  &-1  \\
+           1  &4
+         \end{mat}
+         \begin{mat}[r]
+           1  &-2  \\
+           1  &2
+         \end{mat}
+      \end{equation*}
+      Perhitungan itu mudah.
+    \end{answer}
+  \item 
+    Setiap matriks berikut berbentuk Jordan.
+    Nyatakan polinomial karakteristik dan polinomial minimalnya.
+    \begin{exparts*}
+      \partsitem 
+        $\begin{mat}[r]
+           3  &0  \\
+           1  &3        
+         \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+           -1  &0  \\
+            0  &-1 
+         \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+           2  &0  &0  \\
+           1  &2  &0  \\
+           0  &0  &-1/2
+         \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+           3  &0  &0  \\
+           1  &3  &0  \\
+           0  &1  &3  \\ 
+         \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+           3  &0  &0  &0  \\
+           1  &3  &0  &0  \\
+           0  &0  &3  &0  \\
+           0  &0  &1  &3 
+         \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+           4  &0  &0  &0  \\
+           1  &4  &0  &0  \\
+           0  &0  &-4 &0  \\
+           0  &0  &1  &-4
+         \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+           5  &0  &0  \\
+           0  &2  &0  \\
+           0  &0  &3  
+         \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+           5  &0  &0  &0  \\
+           0  &2  &0  &0  \\
+           0  &0  &2  &0  \\
+           0  &0  &0  &3 
+         \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+           5  &0  &0  &0  \\
+           0  &2  &0  &0  \\
+           0  &1  &2  &0  \\
+           0  &0  &0  &3 
+         \end{mat}$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Polinomial karakteristiknya adalah $c(x)=(x-3)^2$, dan
+          polinomial minimalnya sama.
+        \partsitem Polinomial karakteristiknya adalah $c(x)=(x+1)^2$.
+          Polinomial minimalnya adalah $m(x)=x+1$.
+        \partsitem Polinomial karakteristiknya adalah
+          $c(x)=-(x+(1/2))(x-2)^2$, dan
+          polinomial minimalnya sama.
+        \partsitem Polinomial karakteristiknya adalah $c(x)=-(x-3)^3$.
+          Polinomial minimalnya sama.
+        \partsitem Polinomial karakteristiknya adalah $c(x)=(x-3)^4$.
+          Polinomial minimalnya adalah $m(x)=(x-3)^2$.
+        \partsitem Polinomial karakteristiknya adalah $c(x)=(x+4)^2(x-4)^2$, dan
+          polinomial minimalnya sama.
+        \partsitem Polinomial karakteristiknya adalah
+          $c(x)=-(x-5)(x-2)(x-3)$, dan polinomial minimalnya sama.
+        \partsitem Polinomial karakteristiknya adalah
+          $c(x)=(x-2)^2(x-3)(x-5)$, dan
+          polinomial minimalnya adalah $m(x)=(x-2)(x-3)(x-5)$.
+        \partsitem Polinomial karakteristiknya adalah
+          $c(x)=(x-2)^2(x-3)(x-5)$, dan
+          polinomial minimalnya sama.
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+    Carilah bentuk Jordan dari data yang diberikan.
+    \begin{exparts}
+       \partsitem Matriks
+         \( T \) berukuran \( \nbyn{5} \) dengan satu nilai eigen $3$.
+         Nulitas pangkat-pangkatnya adalah:
+         \( T-3I \) bernulitas dua, \( (T-3I)^2 \) bernulitas tiga,
+         \( (T-3I)^3 \) bernulitas empat, dan \( (T-3I)^4 \) bernulitas
+         lima.
+       \partsitem Matriks \( S \) berukuran \( \nbyn{5} \) dengan dua nilai eigen.
+         Untuk nilai eigen $2$, nulitasnya adalah:
+         \( S-2I \) bernulitas dua, dan \( (S-2I)^2 \) bernulitas empat.
+         Untuk nilai eigen $-1$, nulitasnya adalah:
+         \( S+1I \) bernulitas satu.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+         \partsitem Transformasi $t-3$ nilpoten
+          (yakni, $\gennullspace{t-3}$ adalah seluruh ruang)
+          dan bertindak pada basis rantai melalui dua rantai,
+          $\vec{\beta}_1\mapsto\vec{\beta}_2\mapsto\vec{\beta}_3
+            \mapsto\vec{\beta}_4\mapsto\zero$
+          dan $\vec{\beta}_5\mapsto\zero$.
+          Akibatnya, $t-3$ dapat direpresentasikan dalam bentuk kanonik berikut.
+          \begin{equation*}
+            N_3=
+            \begin{mat}[r]
+               0  &0  &0  &0  &0  \\
+               1  &0  &0  &0  &0  \\
+               0  &1  &0  &0  &0  \\
+               0  &0  &1  &0  &0  \\
+               0  &0  &0  &0  &0
+             \end{mat}
+          \end{equation*}
+          dan karena itu $T$ serupa dengan matriks bentuk kanonik berikut.
+          \begin{equation*}
+           J_3=N_3+3I=
+           \begin{mat}[r]
+               3  &0  &0  &0  &0  \\
+               1  &3  &0  &0  &0  \\
+               0  &1  &3  &0  &0  \\
+               0  &0  &1  &3  &0  \\
+               0  &0  &0  &0  &3
+             \end{mat}
+         \end{equation*} 
+         \partsitem Restriksi transformasi $s+1$ nilpoten
+          pada subruang $\gennullspace{s+1}$, dan tindakannya pada
+          basis rantai adalah $\vec{\beta}_1\mapsto\zero$.
+          Restriksi transformasi $s-2$ nilpoten
+          pada subruang $\gennullspace{s-2}$, dengan tindakan pada
+          basis rantai berupa $\vec{\beta}_2\mapsto\vec{\beta}_3\mapsto\zero$
+          dan $\vec{\beta}_4\mapsto\vec{\beta}_5\mapsto\zero$.
+          Akibatnya, bentuk Jordannya adalah berikut.
+          \begin{equation*}
+            \begin{mat}[r]
+              -1  &0  &0  &0  &0  \\
+               0  &2  &0  &0  &0  \\
+               0  &1  &2  &0  &0  \\
+               0  &0  &0  &2  &0  \\
+               0  &0  &0  &1  &2
+             \end{mat} 
+          \end{equation*}
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Carilah matriks perubahan basis untuk setiap contoh.
+    \begin{exparts*}
+      \partsitem \nearbyexample{ex:FirstJordForm}
+      \partsitem \nearbyexample{SecJordanForm}
+      \partsitem \nearbyexample{ThirdJordanForm}
+    \end{exparts*}
+    \begin{answer}
+      Untuk masing-masing contoh, karena banyak pilihan basis dimungkinkan,
+      banyak jawaban lain juga dimungkinkan.
+      Tentu saja, perhitungan untuk memeriksa apakah suatu jawaban membuat
+      $PTP^{-1}$ berbentuk Jordan merupakan penentu kebenarannya.
+      \begin{exparts}
+        \partsitem Berikut diagram panahnya.
+          \begin{equation*}
+            \begin{CD}
+              \C^3_{\wrt{\stdbasis_3}}      @>t>T>    \C^3_{\wrt{\stdbasis_3}}   \\
+                @V\scriptstyle\identity V\scriptstyle PV  
+                                    @V\scriptstyle\identity V\scriptstyle PV \\
+              \C^3_{\wrt{B}}                 @>t>J>         \C^3_{\wrt{B}}
+            \end{CD}
+          \end{equation*}
+          Matriks untuk berpindah dari kiri bawah ke kiri atas adalah berikut.
+          \begin{equation*}
+            P^{-1}=\bigl(\rep{\identity}{\stdbasis_3,B}\bigr)^{-1}
+                  =\rep{\identity}{B,\stdbasis_3}   
+                  =\begin{mat}[r]
+                     1  &-2   &0 \\
+                     1  &0   &1 \\
+                    -2  &0   &0
+                   \end{mat}
+          \end{equation*}
+          Matriks $P$ untuk berpindah dari kanan atas ke kanan
+          bawah adalah invers $P^{-1}$.
+        \partsitem Kita menginginkan matriks berikut beserta inversnya.
+          \begin{equation*}
+            P^{-1}=
+            \begin{mat}[r]
+              1  &0  &3  \\
+              0  &1  &4  \\
+              0  &-2 &0
+            \end{mat}
+          \end{equation*}
+        \partsitem Konkatenasi basis-basis untuk
+          ruang nol tergeneralisasi berikut dapat digunakan sebagai basis
+          seluruh ruang.
+          \begin{equation*}
+             B_{-1}=\sequence{\colvec[r]{-1\\ 0 \\  0 \\ 1 \\ 0},
+                 \colvec[r]{-1\\ 0 \\ -1 \\ 0 \\ 1}}
+            \qquad
+             B_3=\sequence{\colvec[r]{1 \\ 1 \\ -1 \\ 0 \\ 0},
+                 \colvec[r]{0 \\ 0 \\  0 \\-2 \\ 2},
+                 \colvec[r]{-1\\-1 \\  1 \\ 2 \\ 0}}
+          \end{equation*}
+          Matriks perubahan basisnya adalah matriks berikut beserta inversnya.
+          \begin{equation*}
+            P^{-1}=
+            \begin{mat}[r]
+              -1  &-1  &1  &0  &-1  \\
+              0   &0   &1  &0  &-1  \\
+              0   &-1  &-1 &0  &1   \\
+              1   &0   &0  &-2 &2   \\
+              0   &1   &0  &2  &0   \\
+            \end{mat}
+          \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \recommended \item 
+    Carilah bentuk Jordan dan basis Jordan untuk setiap matriks.
+    \begin{exparts*}
+      \partsitem 
+        \(
+        \begin{mat}[r]
+          -10  &4  \\
+          -25  &10
+        \end{mat} \)
+      \partsitem 
+        \(
+        \begin{mat}[r]
+           5   &-4 \\
+           9   &-7
+        \end{mat} \)
+      \partsitem 
+        \(
+        \begin{mat}[r]
+           4   &0    &0  \\
+           2   &1    &3  \\
+           5   &0    &4
+        \end{mat} \)
+      \partsitem 
+        \(
+        \begin{mat}[r]
+           5   &4    &3  \\
+          -1   &0    &-3 \\
+           1   &-2   &1
+        \end{mat} \)
+      \partsitem
+        \(
+        \begin{mat}[r]
+           9   &7    &3  \\
+          -9   &-7   &-4 \\
+           4   &4    &4
+        \end{mat} \)
+      \partsitem 
+        \(
+        \begin{mat}[r]
+           2   &2    &-1 \\
+          -1   &-1   &1  \\
+          -1   &-2   &2
+        \end{mat} \)
+      \partsitem 
+        \(
+        \begin{mat}[r]
+           7   &1    &2   &2 \\
+           1   &4    &-1  &-1\\
+          -2   &1    &5   &-1\\
+           1   &1    &2   &8
+        \end{mat} \)
+    \end{exparts*}
+    \begin{answer}
+      Prosedur umumnya adalah memfaktorkan polinomial karakteristik
+      $c(x)=(x-\lambda_1)^{p_1}(x-\lambda_2)^{p_2}\cdots$
+      untuk memperoleh nilai eigen $\lambda_1$, $\lambda_2$, dan seterusnya.
+      Kemudian, untuk setiap $\lambda_i$, kita mencari
+      basis rantai bagi tindakan transformasi $t-\lambda_i$
+      ketika direstriksi pada $\gennullspace{t-\lambda_i}$,
+      dengan menghitung pangkat-pangkat matriks $T-\lambda_iI$ dan mencari
+      ruang nol terkait hingga ruang-ruang nol tersebut stabil
+      (tidak berubah); pada saat itu, kita telah memperoleh ruang nol tergeneralisasi.
+      Dimensi ruang-ruang nol tersebut (nulitasnya) memberi tahu kita
+      tindakan $t-\lambda_i$ pada basis rantai untuk ruang nol
+      tergeneralisasi, sehingga kita dapat menuliskan pola satu pada subdiagonal
+      untuk memperoleh $N_{\lambda_i}$.
+      Dari matriks ini, blok Jordan $J_{\lambda_i}$ yang terkait
+      dengan $\lambda_i$ langsung diperoleh: $J_{\lambda_i}=N_{\lambda_i}+\lambda_iI$.
+      Terakhir, setelah melakukannya untuk setiap nilai eigen, kita menggabungkannya
+      menjadi bentuk kanonik.
+      \begin{exparts}
+        \partsitem Polinomial karakteristik matriks ini
+           adalah $c(x)=(-10-x)(10-x)+100=x^2$,
+           sehingga matriks itu hanya memiliki nilai eigen $\lambda=0$.
+           \begin{center}
+             \renewcommand{\arraystretch}{1.25}
+             \begin{tabular}{r|ccc}
+                \multicolumn{1}{c}{\textit{pangkat}~$p$}
+                    &$(T+0\cdot I)^p$ &$\nullspace{(t-0)^p}$
+                    &\textit{nulitas}                   \\ 
+                \hline
+                $1$  
+                &\matrixvenlarge{\begin{mat}[r]
+                  -10  &4  \\ 
+                  -25  &10
+                \end{mat}}
+                &$\set{\matrixvenlarge{\colvec{2y/5 \\ y}}
+                                     \suchthat
+                                     y\in\C}$
+                &$1$                                       \\
+                $2$  
+                &\matrixvenlarge{\begin{mat}[r]
+                    0  &0  \\ 
+                    0  &0
+                \end{mat}}
+                &$\C^2$
+                &$2$
+             \end{tabular}
+           \end{center}
+           (Jadi, transformasi ini nilpoten:
+           $\gennullspace{t-0}$ adalah seluruh ruang.)
+           Dari nulitasnya, kita mengetahui bahwa
+           tindakan $t$ pada basis rantai adalah
+           $\vec{\beta}_1\mapsto\vec{\beta}_2\mapsto\zero$.
+           Berikut matriks bentuk kanonik untuk tindakan $t-0$ pada
+           $\gennullspace{t-0}=\C^2$,
+           \begin{equation*}
+             N_0=
+             \begin{mat}[r]
+               0  &0  \\
+               1  &0
+            \end{mat}
+           \end{equation*}
+           dan berikut bentuk Jordan matriks tersebut.
+           \begin{equation*}
+             J_0=N_0+0\cdot I=
+             \begin{mat}[r]
+               0  &0  \\
+               1  &0
+            \end{mat}
+           \end{equation*}
+           Perhatikan bahwa jika suatu matriks nilpoten, maka bentuk kanoniknya
+           sama dengan bentuk Jordannya.
+
+           Kita dapat mencari basis rantai semacam itu menggunakan teknik-teknik pada
+           bagian sebelumnya.
+           \begin{equation*}
+                 B=\sequence{\colvec[r]{1 \\ 0},
+                             \colvec[r]{-10 \\ -25}}
+           \end{equation*}
+           Kita memilih vektor basis pertama agar berada dalam
+           ruang nol $t^2$, tetapi tidak dalam ruang nol $t$.
+           Vektor basis kedua merupakan citra vektor pertama oleh $t$.
+        \partsitem Polinomial karakteristik matriks ini
+           adalah \( c(x)=(x+1)^2 \), sehingga matriks ini hanya memiliki satu nilai eigen.
+           (Artinya, ruang nol tergeneralisasi $t+1$ adalah seluruh
+           ruang.)
+           Kita mempunyai
+           \begin{equation*}
+             \nullspace{t+1}=\set{\colvec{2y/3 \\ y}\suchthat
+                                     y\in\C} 
+             \qquad
+             \nullspace{(t+1)^2}=\C^2 
+           \end{equation*}
+           sehingga tindakan $t+1$ pada
+           basis rantai terkait adalah
+           $\vec{\beta}_1\mapsto\vec{\beta}_2\mapsto\zero$.
+           Jadi,
+           \begin{equation*}
+             N_{-1}
+             =
+             \begin{mat}[r]
+                0  &0  \\
+                1  &0 
+             \end{mat}
+           \end{equation*}
+           bentuk Jordan $T$ adalah
+           \begin{equation*}
+             J_{-1}=N_{-1}+(-1)\cdot I
+             =
+             \begin{mat}[r]
+               -1  &0  \\
+                1  &-1
+             \end{mat}
+           \end{equation*}
+           dan memilih vektor-vektor dari ruang nol di atas menghasilkan
+           basis rantai berikut (pilihan lain juga mungkin).
+           \begin{equation*}
+             B=\sequence{\colvec[r]{1 \\ 0},
+                         \colvec[r]{6 \\ 9}}
+           \end{equation*}
+        \partsitem Polinomial karakteristik
+            \( c(x)=(1-x)(4-x)^2=-1\cdot (x-1)(x-4)^2 \) memiliki dua akar,
+            yang merupakan nilai eigen $\lambda_1=1$ dan $\lambda_2=4$.
+
+            Kita menangani kedua nilai eigen secara terpisah.
+            Untuk $\lambda_1$, perhitungan pangkat-pangkat $T-1I$
+            menghasilkan
+            \begin{equation*}
+              \nullspace{t-1}=\set{\colvec{0 \\ y \\ 0}
+                                      \suchthat y\in\C}
+            \end{equation*}
+            dan ruang nol $(t-1)^2$ sama.
+            Jadi, himpunan ini merupakan ruang nol tergeneralisasi
+            $\gennullspace{t-1}$.
+            Nulitasnya menunjukkan bahwa tindakan restriksi $t-1$
+            pada ruang nol tergeneralisasi terhadap suatu basis rantai
+            adalah $\vec{\beta}_1\mapsto\zero$.
+
+            Perhitungan serupa untuk $\lambda_2=4$ memberikan ruang nol berikut.
+            \begin{equation*}
+              \nullspace{t-4}=\set{\colvec{0 \\ z \\ z}
+                                      \suchthat z\in\C}
+              \qquad
+              \nullspace{(t-4)^2}=\set{\colvec{z-y \\ y \\ z}
+                                          \suchthat y,z\in\C}
+            \end{equation*}
+            (Ruang nol $(t-4)^3$ sama, sebagaimana seharusnya karena
+            pangkat faktor yang terkait dengan $\lambda_2=4$ dalam
+            polinomial karakteristik adalah dua, sehingga restriksi
+            $t-4$ pada ruang nol tergeneralisasi $\gennullspace{t-4}$
+            nilpoten berindeks paling tinggi dua\Dash diperlukan paling banyak
+            dua penerapan $t-4$ agar ruang nol menjadi stabil.)
+            Pola pertumbuhan nulitas memberi tahu kita bahwa
+            tindakan $t-4$ pada basis rantai terkait
+            untuk $\gennullspace{t-4}$ adalah
+            $\vec{\beta}_2\mapsto\vec{\beta}_3\mapsto\zero$.
+
+            Menggabungkan informasi untuk kedua nilai eigen
+            memberikan bentuk Jordan transformasi $t$.
+            \begin{equation*}
+              \begin{mat}[r]
+                1  &0  &0  \\
+                0  &4  &0  \\
+                0  &1  &4
+              \end{mat}
+            \end{equation*}
+            Kita dapat mengambil elemen-elemen ruang nol untuk memperoleh
+            basis yang sesuai.
+            \begin{equation*}
+              B=\cat{B_{1}}{B_4}=
+               \sequence{\colvec[r]{0 \\ 1 \\ 0},
+                          \colvec[r]{1 \\ 0 \\ 1},
+                          \colvec[r]{0 \\ 5 \\ 5}}
+            \end{equation*}
+        \partsitem Polinomial karakteristiknya adalah
+            \( c(x)=(-2-x)(4-x)^2=-1\cdot (x+2)(x-4)^2 \).
+
+            Untuk nilai eigen $\lambda_{-2}$
+            (subskripnya adalah \( -2\)), perhitungan
+            pangkat-pangkat $T+2I$ menghasilkan
+            \begin{equation*}
+              \nullspace{t+2}=\set{\colvec{z \\ z \\ z}
+                                      \suchthat z\in\C}
+            \end{equation*}
+            Ruang nol $(t+2)^2$ sama, sehingga
+            inilah ruang nol tergeneralisasi $\gennullspace{t+2}$.
+            Jadi, tindakan restriksi $t+2$ pada
+            $\gennullspace{t+2}$ terhadap basis
+            rantai terkait adalah $\vec{\beta}_1\mapsto\zero$.
+
+            Untuk $\lambda_2=4$,
+            menghitung pangkat-pangkat $T-4I$ menghasilkan
+            \begin{equation*}
+              \nullspace{t-4}=\set{\colvec{z \\ -z \\ z}
+                                      \suchthat z\in\C} 
+              \qquad
+              \nullspace{(t-4)^2}=\set{\colvec{x \\ -z \\ z}
+                                           \suchthat x,z\in\C}
+            \end{equation*}
+            sehingga tindakan $t-4$ pada basis rantai untuk
+            $\gennullspace{t-4}$ adalah
+            $\vec{\beta}_2\mapsto\vec{\beta}_3\mapsto\zero$.
+
+            Dengan demikian, bentuk Jordannya adalah
+            \begin{equation*}
+              \begin{mat}[r]
+                -2  &0  &0  \\
+                 0  &4  &0  \\
+                 0  &1  &4
+              \end{mat}
+            \end{equation*}
+            dan berikut basis yang sesuai.
+            \begin{equation*}
+              B=\cat{B_{-2}}{B_4}=
+                \sequence{\colvec[r]{1 \\ 1 \\ 1},
+                          \colvec[r]{0 \\ -1 \\ 1},
+                          \colvec[r]{-1 \\ 1 \\ -1}}
+            \end{equation*}
+        \partsitem Polinomial karakteristik
+            matriks ini adalah \( c(x)=(2-x)^3=-1\cdot (x-2)^3 \).
+            Matriks ini hanya memiliki satu nilai eigen, $\lambda=2$.
+            Dengan mencari pangkat-pangkat $T-2I$, kita memperoleh
+            \begin{equation*}
+              \nullspace{t-2}=\set{\colvec{-y \\ y \\ 0}
+                                      \suchthat y\in\C} 
+              \qquad
+              \nullspace{(t-2)^2}=\set{\colvec{-y-(1/2)z \\ y \\ z}
+                                          \suchthat y,z\in\C}
+            \end{equation*}
+            dan
+            \begin{equation*} 
+              \nullspace{(t-2)^3}=\C^3
+            \end{equation*}
+            sehingga
+            tindakan $t-2$ pada
+            basis rantai terkait adalah
+            $\vec{\beta}_1\mapsto\vec{\beta}_2\mapsto
+                   \vec{\beta}_3\mapsto\zero$.
+            Bentuk Jordannya adalah berikut,
+            \begin{equation*}
+                  \begin{mat}[r]
+                    2  &0  &0  \\
+                    1  &2  &0  \\
+                    0  &1  &2
+                  \end{mat}
+            \end{equation*}
+            dan berikut salah satu pilihan basisnya.
+            \begin{equation*}
+              B=\sequence{\colvec[r]{0 \\ 1 \\ 0},
+                          \colvec[r]{7 \\ -9 \\ 4},
+                          \colvec[r]{-2 \\ 2 \\ 0}}
+            \end{equation*}
+        \partsitem Polinomial karakteristik
+            \( c(x)=(1-x)^3=-(x-1)^3 \) hanya memiliki satu akar,
+            sehingga matriks tersebut hanya memiliki satu nilai eigen $\lambda=1$.
+            Mencari pangkat-pangkat $T-1I$
+            dan menghitung ruang nol
+            \begin{equation*}
+               \nullspace{t-1}=\set{\colvec{-2y+z \\ y \\ z}
+                                      \suchthat y,z\in\C} 
+               \qquad
+               \nullspace{(t-1)^2}=\C^3 
+            \end{equation*}
+            menunjukkan bahwa tindakan pemetaan nilpoten $t-1$ pada basis
+            rantai adalah
+            $\vec{\beta}_1\mapsto\vec{\beta}_2\mapsto\zero$ dan
+            $\vec{\beta}_3\mapsto\zero$.
+            Dengan demikian, bentuk Jordannya adalah
+            \begin{equation*}
+                  J=
+                  \begin{mat}[r]
+                    1  &0  &0  \\
+                    1  &1  &0  \\
+                    0  &0  &1
+                  \end{mat}
+            \end{equation*}
+            dan basis yang sesuai (basis rantai yang terkait dengan
+            $t-1$) adalah berikut.
+            \begin{equation*}
+              B=\sequence{\colvec[r]{0 \\ 1 \\ 0},
+                          \colvec[r]{2 \\ -2 \\ -2},
+                          \colvec[r]{1 \\ 0 \\ 1}}
+            \end{equation*}
+        \partsitem Polinomial karakteristiknya agak besar untuk dihitung
+            dengan tangan, tetapi masih dapat ditangani,
+            \( c(x)=x^4-24x^3+216x^2-864x+1296=(x-6)^4 \).
+            Ini merupakan pemetaan dengan satu nilai eigen, sehingga
+            transformasi $t-6$ nilpoten.
+            Ruang-ruang nol
+            \begin{equation*}
+               \nullspace{t-6}=\set{\colvec{-z-w \\ -z-w \\ z \\ w}
+                                      \suchthat z,w\in\C} 
+               \qquad
+               \nullspace{(t-6)^2}=\set{\colvec{x \\ -z-w \\ z \\ w}
+                                      \suchthat x,z,w\in\C} 
+            \end{equation*}
+            dan
+            \begin{equation*}
+               \nullspace{(t-6)^3}=\C^4 
+            \end{equation*}
+            beserta nulitasnya
+            menunjukkan bahwa tindakan $t-6$ pada basis rantai adalah
+            $\vec{\beta}_1\mapsto\vec{\beta}_2\mapsto
+                   \vec{\beta}_3\mapsto\zero$ dan
+            $\vec{\beta}_4\mapsto\zero$.
+            Bentuk Jordannya adalah
+            \begin{equation*}
+              \begin{mat}[r]
+                6  &0  &0  &0  \\
+                1  &6  &0  &0  \\
+                0  &1  &6  &0  \\
+                0  &0  &0  &6  \\
+              \end{mat}
+            \end{equation*}
+            dan pencarian basis rantai yang sesuai bersifat rutin.
+            \begin{equation*}
+              B=\sequence{\colvec[r]{0 \\ 0 \\ 0 \\ 1},
+                          \colvec[r]{2 \\ -1 \\ -1 \\ 2},
+                          \colvec[r]{3 \\ 3 \\ -6 \\ 3},
+                          \colvec[r]{-1 \\ -1 \\ 1 \\ 0}}
+            \end{equation*}
+      \end{exparts}  
+    \end{answer}
+  \recommended \item
+    Carilah semua bentuk Jordan yang mungkin dari transformasi dengan polinomial
+    karakteristik \( (x-1)^2(x+2)^2 \).
+    \begin{answer}
+      Terdapat dua nilai eigen, $\lambda_1=-2$ dan $\lambda_2=1$.
+      Restriksi $t+2$ pada
+      $\gennullspace{t+2}$ dapat memiliki salah satu dari tindakan berikut
+      pada basis rantai terkait.
+      \begin{equation*}
+        \vec{\beta}_1\mapsto\vec{\beta}_2\mapsto\zero
+        \qquad
+        \begin{array}[t]{l}
+          \vec{\beta}_1\mapsto\zero  \\
+          \vec{\beta}_2\mapsto\zero 
+        \end{array}
+      \end{equation*}
+      Restriksi $t-1$ pada
+      $\gennullspace{t-1}$ dapat memiliki salah satu dari tindakan berikut
+      pada basis rantai terkait.
+      \begin{equation*}
+        \vec{\beta}_3\mapsto\vec{\beta}_4\mapsto\zero
+        \qquad
+        \begin{array}[t]{l}
+          \vec{\beta}_3\mapsto\zero  \\
+          \vec{\beta}_4\mapsto\zero 
+        \end{array}
+      \end{equation*}
+      Jika digabungkan, ini menghasilkan empat bentuk Jordan yang mungkin:
+      kedua tindakan pertama, tindakan kedua dan pertama, tindakan pertama dan kedua,
+      serta kedua tindakan kedua.
+      \begin{equation*}
+        \begin{mat}[r]
+          -2  &0  &0  &0  \\
+           1  &-2 &0  &0  \\
+           0  &0  &1  &0  \\
+           0  &0  &1  &1
+        \end{mat}
+        \quad
+        \begin{mat}[r]
+          -2  &0  &0  &0  \\
+           0  &-2 &0  &0  \\
+           0  &0  &1  &0  \\
+           0  &0  &1  &1
+        \end{mat}
+        \quad
+        \begin{mat}[r]
+          -2  &0  &0  &0  \\
+           1  &-2 &0  &0  \\
+           0  &0  &1  &0  \\
+           0  &0  &0  &1
+        \end{mat}
+        \quad
+        \begin{mat}[r]
+          -2  &0  &0  &0  \\
+           0  &-2 &0  &0  \\
+           0  &0  &1  &0  \\
+           0  &0  &0  &1
+        \end{mat}
+     \end{equation*}  
+    \end{answer}
+  \item 
+    Carilah semua bentuk Jordan yang mungkin dari transformasi dengan polinomial
+    karakteristik \( (x-1)^3(x+2) \).
+    \begin{answer}
+     Restriksi $t+2$ pada
+     $\gennullspace{t+2}$ hanya dapat memiliki tindakan
+     $\vec{\beta}_1\mapsto\zero$.
+     Restriksi $t-1$ pada $\gennullspace{t-1}$ dapat memiliki salah satu
+     dari ketiga tindakan berikut pada basis rantai terkait.
+     \begin{equation*}
+        \vec{\beta}_2\mapsto\vec{\beta}_3\mapsto\vec{\beta}_4\mapsto\zero
+        \qquad
+        \begin{array}[t]{l}
+          \vec{\beta}_2\mapsto\vec{\beta}_3\mapsto\zero  \\
+          \vec{\beta}_4\mapsto\zero 
+        \end{array}
+        \qquad
+        \begin{array}[t]{l}
+          \vec{\beta}_2\mapsto\zero  \\
+          \vec{\beta}_3\mapsto\zero  \\
+          \vec{\beta}_4\mapsto\zero 
+        \end{array}
+     \end{equation*}
+     Jika digabungkan, terdapat tiga bentuk Jordan yang mungkin:
+     bentuk yang berasal dari tindakan pertama $t-1$ (bersama satu-satunya
+     tindakan $t+2$), bentuk yang berasal dari tindakan kedua, dan
+     bentuk yang berasal dari tindakan ketiga.
+     \begin{equation*}
+       \begin{mat}[r]
+         -2  &0  &0  &0  \\
+          0  &1  &0  &0  \\
+          0  &1  &1  &0  \\
+          0  &0  &1  &1
+       \end{mat}
+       \quad
+       \begin{mat}[r]
+         -2  &0  &0  &0  \\
+          0  &1  &0  &0  \\
+          0  &1  &1  &0  \\
+          0  &0  &0  &1
+       \end{mat}
+       \quad
+       \begin{mat}[r]
+         -2  &0  &0  &0  \\
+          0  &1  &0  &0  \\
+          0  &0  &1  &0  \\
+          0  &0  &0  &1
+       \end{mat}
+     \end{equation*}
+    \end{answer}
+  \recommended \item
+    Carilah semua bentuk Jordan yang mungkin dari transformasi dengan polinomial
+    karakteristik \( (x-2)^3(x+1) \) dan polinomial minimal \( (x-2)^2(x+1) \).
+    \begin{answer}
+      Tindakan $t+1$ pada basis rantai untuk $\gennullspace{t+1}$
+      harus berupa $\vec{\beta}_1\mapsto\zero$.
+      Karena pangkat \( x-2 \) dalam polinomial minimal, suatu
+      rantai dalam basis rantai untuk $t-2$ memiliki panjang dua, sehingga
+      tindakan \( t-2 \) pada \( \gennullspace{t-2} \)
+      harus berbentuk berikut.
+      \begin{equation*}
+        \begin{array}[t]{l}
+          \vec{\beta}_2\mapsto\vec{\beta}_3\mapsto\zero  \\
+          \vec{\beta}_4\mapsto\zero 
+        \end{array}        
+      \end{equation*}
+      Jadi, hanya ada satu bentuk Jordan yang mungkin.
+      \begin{equation*}
+          \begin{mat}[r]
+            -1  &0  &0  &0  \\
+             0  &2  &0  &0  \\
+             0  &1  &2  &0  \\
+             0  &0  &0  &2
+          \end{mat}
+       \end{equation*}
+     \end{answer}
+  \item 
+    Carilah semua bentuk Jordan yang mungkin dari transformasi dengan polinomial
+    karakteristik \( (x-2)^4(x+1) \) dan polinomial minimal \( (x-2)^2(x+1) \).
+    \begin{answer}
+      Terdapat dua bentuk Jordan yang mungkin.
+      Tindakan $t+1$ pada basis rantai untuk $\gennullspace{t+1}$
+      harus berupa $\vec{\beta}_1\mapsto\zero$.
+      Terdapat dua tindakan $t-2$ pada basis rantai untuk
+      $\gennullspace{t-2}$ yang dimungkinkan oleh polinomial karakteristik
+      dan polinomial minimal ini.
+      \begin{equation*}
+        \begin{array}[t]{l}
+          \vec{\beta}_2\mapsto\vec{\beta}_3\mapsto\zero  \\
+          \vec{\beta}_4\mapsto\vec{\beta}_5\mapsto\zero  
+        \end{array}        
+        \qquad
+        \begin{array}[t]{l}
+          \vec{\beta}_2\mapsto\vec{\beta}_3\mapsto\zero  \\
+          \vec{\beta}_4\mapsto\zero                      \\
+          \vec{\beta}_5\mapsto\zero                      
+        \end{array}        
+      \end{equation*}
+      Matriks bentuk Jordan yang dihasilkan adalah berikut.
+      \begin{equation*}
+        \begin{mat}[r]
+          -1  &0  &0  &0  &0  \\
+           0  &2  &0  &0  &0  \\
+           0  &1  &2  &0  &0  \\
+           0  &0  &0  &2  &0  \\
+           0  &0  &0  &1  &2
+        \end{mat}
+        \qquad
+        \begin{mat}[r]
+          -1  &0  &0  &0  &0  \\
+           0  &2  &0  &0  &0  \\
+           0  &1  &2  &0  &0  \\
+           0  &0  &0  &2  &0  \\
+           0  &0  &0  &0  &2
+        \end{mat}
+     \end{equation*}  
+    \end{answer}
+  \recommended \item Diagonalkan matriks-matriks berikut.
+    \begin{exparts*}
+       \partsitem \( \begin{mat}[r]
+                  1  &1  \\
+                  0  &0
+                \end{mat}  \)
+       \partsitem \( \begin{mat}[r]
+                  0  &1  \\
+                  1  &0
+                \end{mat}  \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Polinomial karakteristiknya adalah \( c(x)=x(x-1) \).
+          Untuk $\lambda_1=0$, kita mempunyai
+          \begin{equation*}
+            \nullspace{t-0}=\set{\colvec{-y \\ y}
+                                 \suchthat y\in\C }  
+          \end{equation*} 
+          (tentu saja, ruang nol $t^2$ sama).
+          Untuk $\lambda_2=1$,
+          \begin{equation*}
+            \nullspace{t-1}=\set{\colvec{x \\ 0}
+                                     \suchthat x\in\C }  
+          \end{equation*}
+          (dan ruang nol $(t-1)^2$ sama).
+          Kita dapat mengambil basis berikut
+          \begin{equation*}
+            B=\sequence{\colvec[r]{1 \\ -1},\colvec[r]{1 \\ 0}}
+          \end{equation*}
+          untuk memperoleh diagonalisasi.
+          \begin{equation*}
+            \begin{mat}[r]
+              1  &1  \\
+             -1  &0
+            \end{mat}^{-1}
+            \begin{mat}[r]
+              1  &1  \\
+              0  &0
+            \end{mat}
+            \begin{mat}[r]
+              1  &1  \\
+             -1  &0
+            \end{mat}
+            =
+            \begin{mat}[r]
+              0  &0  \\
+              0  &1
+            \end{mat}
+          \end{equation*}
+        \partsitem Polinomial karakteristiknya adalah
+          \( c(x)=x^2-1=(x+1)(x-1) \).
+          Untuk $\lambda_1=-1$,
+          \begin{equation*}
+            \nullspace{t+1}=\set{\colvec{-y \\ y}
+                                    \suchthat y\in\C } 
+          \end{equation*}
+          dan ruang nol $(t+1)^2$ sama.
+          Untuk $\lambda_2=1$,
+          \begin{equation*}
+            \nullspace{t-1}=\set{\colvec{y \\ y}
+                                    \suchthat y\in\C } 
+          \end{equation*}
+          dan ruang nol $(t-1)^2$ sama.
+          Kita dapat mengambil basis berikut
+          \begin{equation*}
+            B=\sequence{\colvec[r]{1 \\ -1},\colvec[r]{1 \\ 1}}
+          \end{equation*}
+          untuk memperoleh suatu diagonalisasi.
+          \begin{equation*}
+            \begin{mat}[r]
+              1  &1  \\
+             -1  &1
+            \end{mat}^{-1}
+            \begin{mat}[r]
+              0  &1  \\
+              1  &0
+            \end{mat}
+            \begin{mat}[r]
+              1   &1  \\
+              -1  &1
+            \end{mat}
+            =
+            \begin{mat}[r]
+              -1  &0  \\
+              0   &1
+            \end{mat}
+          \end{equation*}
+      \end{exparts}  
+     \end{answer}
+  \recommended \item 
+    Carilah matriks Jordan yang merepresentasikan operator diferensiasi
+    pada \( \polyspace_3 \).
+    \begin{answer}
+      Transformasi $\map{d/dx}{\polyspace_3}{\polyspace_3}$
+      bersifat nilpoten.
+      Tindakannya pada basis \( B=\sequence{x^3,3x^2,6x,6} \)
+      adalah $x^3\mapsto 3x^2\mapsto 6x\mapsto 6\mapsto 0$.
+      Bentuk Jordannya sama dengan bentuk kanoniknya sebagai matriks nilpoten.
+      \begin{equation*}
+         J=
+         \begin{mat}[r]
+           0  &0  &0  &0  \\
+           1  &0  &0  &0  \\
+           0  &1  &0  &0  \\
+           0  &0  &1  &0
+         \end{mat}
+      \end{equation*}
+    \end{answer}
+   \recommended \item 
+      Tentukan apakah kedua matriks berikut serupa.
+      \begin{equation*}
+         \begin{mat}[r]
+            1  &-1 \\
+            4  &-3 \\
+         \end{mat}
+         \qquad
+         \begin{mat}[r]
+           -1  &0  \\
+            1  &-1 \\
+         \end{mat}
+      \end{equation*}
+      \begin{answer}
+        Ya.
+        Masing-masing memiliki polinomial karakteristik $(x+1)^2$.
+        Perhitungan pangkat-pangkat $T_1+1\cdot I$ dan
+        $T_2+1\cdot I$ memberikan kedua ruang berikut.
+        \begin{equation*}
+          \nullspace{t_1+1}=\set{\colvec{y/2 \\ y} \suchthat y\in\C}
+          \qquad
+          \nullspace{t_2+1}=\set{\colvec{0 \\ y} \suchthat y\in\C}
+        \end{equation*}
+        (Tentu saja, untuk masing-masing, ruang nol kuadratnya
+        adalah seluruh ruang.)
+        Pola pertumbuhan nulitas menunjukkan bahwa masing-masing
+        serupa dengan matriks berbentuk Jordan berikut,
+        \begin{equation*}
+           \begin{mat}[r]
+             -1  &0  \\
+              1  &-1 \\
+           \end{mat}
+        \end{equation*}
+        sehingga keduanya serupa satu sama lain.
+      \end{answer}
+  \item 
+     Carilah bentuk Jordan matriks berikut.
+     \begin{equation*}
+        \begin{mat}[r]
+           0  &-1  \\
+           1  &0
+        \end{mat}
+     \end{equation*}
+     Berikan pula suatu basis Jordan.
+     \begin{answer}
+       Polinomial karakteristiknya adalah
+       \( c(x)=x^2+1 \), yang memiliki akar kompleks
+       \( x^2+1=(x+i)(x-i) \).
+       Karena akar-akarnya berbeda,
+       matriks ini dapat didiagonalkan dan bentuk Jordannya adalah
+       matriks diagonal berikut.
+       \begin{equation*}
+         \begin{mat}[r]
+           -i  &0  \\
+            0  &i
+         \end{mat}
+       \end{equation*}  
+       Untuk mencari basis terkait, kita menghitung ruang nol.
+       \begin{equation*}
+         \nullspace{t+i}=\set{\colvec{-iy \\ y}
+                                        \suchthat y\in\C} 
+         \qquad
+         \nullspace{t-i}=\set{\colvec{iy \\ y}
+                                        \suchthat y\in\C} 
+       \end{equation*}
+       Sebagai contoh,
+       \begin{equation*}
+         T+i\cdot I=
+         \begin{mat}[r]
+           i  &-1  \\
+           1  &i
+         \end{mat}
+       \end{equation*}
+       sehingga kita memperoleh deskripsi ruang nol $t+i$ dengan menyelesaikan
+       sistem linear berikut.
+       \begin{equation*}
+         \begin{linsys}{2}
+           ix  &-  &y  &=  &0  \\
+            x  &+  &iy &=  &0
+         \end{linsys}
+         \grstep{i\rho_1+\rho_2}
+         \begin{linsys}{2}
+           ix  &-  &y  &=  &0  \\
+               &   &0  &=  &0
+         \end{linsys}
+       \end{equation*}
+       (Untuk mengubah hubungan $ix=y$ agar variabel utama $x$
+       dinyatakan dalam variabel bebas $y$, kita dapat mengalikan kedua
+       ruas dengan $-i$.)
+
+       Hasilnya, salah satu basis semacam itu adalah berikut.
+       \begin{equation*}
+         B=\sequence{\colvec[r]{-i \\ 1},
+                     \colvec[r]{i \\ 1}}
+       \end{equation*}  
+     \end{answer}
+  \item 
+    Berapa banyak kelas keserupaan untuk matriks \( \nbyn{3} \)
+    yang nilai eigennya hanya \( -3 \) dan \( 4 \)?
+    \begin{answer}
+     Kita dapat menghitung kelas-kelas yang mungkin dengan menghitung
+     wakil kanonik yang mungkin, yakni matriks berbentuk Jordan yang mungkin.
+     Polinomial karakteristiknya harus berupa $c_1(x)=(x+3)^2(x-4)$
+     atau $c_2(x)=(x+3)(x-4)^2$.
+     Dalam kasus $c_1$, terdapat dua kemungkinan tindakan
+     $t+3$ pada basis rantai untuk $\gennullspace{t+3}$.
+     \begin{equation*}
+       \vec{\beta}_1\mapsto\vec{\beta}_2\mapsto \zero
+       \qquad
+       \begin{array}[t]{l}
+         \vec{\beta}_1\mapsto\zero \\
+         \vec{\beta}_2\mapsto\zero 
+       \end{array}
+     \end{equation*}
+     Terdapat dua matriks berbentuk Jordan yang terkait.
+     \begin{equation*}
+        \begin{mat}[r]
+          -3  &0  &0  \\
+           1  &-3 &0  \\
+           0  &0  &4
+        \end{mat}
+        \qquad
+        \begin{mat}[r]
+          -3  &0  &0  \\
+           0  &-3 &0  \\
+           0  &0  &4
+        \end{mat}
+      \end{equation*}
+      Demikian pula, terdapat dua matriks berbentuk Jordan yang mungkin
+      timbul dari $c_2$.
+      \begin{equation*}
+        \begin{mat}[r]
+          -3  &0  &0  \\
+           0  &4  &0  \\
+           0  &1  &4
+        \end{mat}
+        \qquad
+        \begin{mat}[r]
+          -3  &0  &0  \\
+           0  &4  &0  \\
+           0  &0  &4
+        \end{mat}
+     \end{equation*}  
+     Jadi, seluruhnya terdapat empat bentuk Jordan yang mungkin.
+    \end{answer}
+  \recommended \item
+    Buktikan bahwa suatu matriks dapat didiagonalkan jika dan hanya jika
+    polinomial minimalnya hanya memiliki faktor linear tanpa pengulangan.
+    \begin{answer}
+       Bentuk Jordan bersifat unik.
+       Suatu matriks diagonal sudah berbentuk Jordan.
+       Jadi, bentuk Jordan matriks yang dapat didiagonalkan adalah diagonalisasinya.
+       Jika polinomial minimal memiliki faktor berpangkat lebih tinggi daripada satu,
+       maka bentuk Jordannya memiliki entri subdiagonal \( 1 \), sehingga tidak
+       diagonal.
+     \end{answer}
+  \item 
+    Berikan contoh transformasi linear pada ruang vektor
+    yang tidak memiliki subruang invarian nontrivial.
+    \begin{answer}
+      Salah satu contohnya adalah transformasi pada \( \C \) yang
+       mengirim \( x \) ke \( -x \).
+     \end{answer}
+  \item 
+    Tunjukkan bahwa suatu subruang invarian terhadap \( t-\lambda_1 \)
+    jika dan hanya jika invarian terhadap \( t-\lambda_2 \).
+    \begin{answer}
+      Terapkan \nearbylemma{le:tInvIfftMinLambdaInv} dua kali;
+      subruang tersebut invarian terhadap $t-\lambda_1$ jika dan hanya jika
+      invarian terhadap $t$, yang selanjutnya berlaku jika dan hanya jika
+      subruang itu invarian terhadap $t-\lambda_2$.
+    \end{answer}
+  \item 
+     Buktikan atau sangkal: dua matriks \( \nbyn{n} \)
+     serupa jika dan hanya jika memiliki polinomial karakteristik dan
+     polinomial minimal yang sama.
+     \begin{answer}
+       Salah; kedua matriks $\nbyn{4}$ berikut masing-masing memiliki $c(x)=(x-3)^4$
+       dan $m(x)=(x-3)^2$.
+       \begin{equation*}
+          \begin{mat}[r]
+             3  &0  &0  &0  \\
+             1  &3  &0  &0  \\
+             0  &0  &3  &0  \\
+             0  &0  &1  &3
+          \end{mat}
+          \quad
+          \begin{mat}[r]
+             3  &0  &0  &0  \\
+             1  &3  &0  &0  \\
+             0  &0  &3  &0  \\
+             0  &0  &0  &3
+          \end{mat}
+       \end{equation*} 
+     \end{answer}
+  \item 
+    \definend{jejak}\index{jejak}\index{matriks!jejak}
+    suatu matriks persegi adalah jumlah entri diagonalnya.
+    \begin{exparts}
+       \partsitem Carilah rumus polinomial karakteristik suatu matriks
+         $\nbyn{2}$.
+       \partsitem Tunjukkan bahwa
+         jejak invarian terhadap keserupaan, sehingga kita dapat secara bermakna
+         berbicara tentang `jejak suatu pemetaan'.\index{pemetaan linear!jejak}
+         (\textit{Petunjuk:} lihat butir sebelumnya.)
+       \partsitem Apakah jejak invarian terhadap ekuivalensi matriks?
+       \partsitem Tunjukkan bahwa jejak suatu pemetaan adalah jumlah nilai eigennya
+         (dengan memperhitungkan multiplisitas).
+       \partsitem Tunjukkan bahwa jejak suatu pemetaan nilpoten adalah nol.
+         Apakah konversnya berlaku?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+         \partsitem Berikut polinomial karakteristiknya.
+           \begin{equation*}
+             \begin{vmat}
+               a-x  &b  \\
+               c  &d-x
+             \end{vmat}
+             =(a-x)(d-x)-bc=ad-(a+d)x+x^2-bc
+             =x^2-(a+d)x+(ad-bc)
+           \end{equation*}
+           Perhatikan bahwa determinan muncul sebagai suku konstan.
+         \partsitem Ingatlah bahwa polinomial karakteristik
+            \( \deter{T-xI} \) invarian terhadap keserupaan.
+            Gunakan rumus ekspansi permutasi untuk menunjukkan bahwa setelah
+            polinomial itu dinormalkan menjadi monik, jejak adalah negatif
+            dari koefisien \( x^{n-1} \).
+         \partsitem Tidak. Terdapat matriks $T$ dan $S$ yang
+            ekuivalen, $S=PTQ$ (untuk suatu $P$ dan $Q$ nonsingular),
+            tetapi memiliki jejak berbeda.
+            Berikut contoh yang mudah.
+            \begin{equation*}
+               PTQ=
+               \begin{mat}[r]
+                  2  &0  \\
+                  0  &1
+               \end{mat}
+               \begin{mat}[r]
+                  1  &0  \\
+                  0  &1
+               \end{mat}
+               \begin{mat}[r]
+                  1  &0  \\
+                  0  &1
+               \end{mat}
+               =
+               \begin{mat}[r]
+                  2  &0  \\
+                  0  &1
+               \end{mat}
+            \end{equation*}
+            Contoh yang lebih mudah lagi dapat dibuat dengan matriks $\nbyn{1}$.
+         \partsitem Ubah matriks ke bentuk Jordan.
+            Berdasarkan butir kedua, jejak tidak berubah.
+         \partsitem Bagian pertama mudah; gunakan butir keempat.
+            Konversnya tidak berlaku:~matriks berikut
+            \begin{equation*}
+               \begin{mat}[r]
+                  1  &0  \\
+                  0  &-1
+               \end{mat}
+            \end{equation*}
+            memiliki jejak nol, tetapi tidak nilpoten.
+       \end{exparts}  
+     \end{answer}
+  \item 
+    Untuk menggunakan \nearbydefinition{def:invariant} guna memeriksa apakah suatu subruang
+    invarian terhadap $t$, tampaknya kita harus memeriksa tak terhingga banyaknya
+    vektor dalam subruang (nontrivial) untuk melihat apakah semuanya memenuhi syarat.
+    Buktikan bahwa suatu subruang invarian terhadap \( t \) jika dan hanya jika basisnya
+    memiliki sifat bahwa untuk setiap elemennya, $t(\vec{\beta})$ berada dalam
+    subruang tersebut.
+    \begin{answer}
+      Misalkan \( B_M \) adalah basis untuk suatu subruang \( M \) dari sebuah
+      ruang vektor.
+      Salah satu implikasinya jelas; jika \( M \) invarian terhadap \( t \), maka
+      secara khusus, jika \( \vec{m}\in B_M \), berlaku \( t(\vec{m})\in M \).
+      Untuk implikasi lainnya, misalkan
+      \( B_M=\sequence{\vec{\beta}_1,\dots,\vec{\beta}_q} \), dan perhatikan bahwa
+      \( t(\vec{m})=t(m_1\vec{\beta}_1+\dots+m_q\vec{\beta}_q)
+                   =m_1t(\vec{\beta}_1)+\dots+m_qt(\vec{\beta}_q) \)
+      berada dalam \( M \) karena setiap subruang tertutup terhadap kombinasi
+      linear.
+    \end{answer}
+  \recommended \item 
+    Apakah keinvarianan terhadap \( t \) terpelihara dalam irisan?
+    Dalam gabungan?
+    Komplemen?
+    Jumlah subruang?
+    \begin{answer}
+      Ya, irisan subruang-subruang yang invarian terhadap $t$
+      juga invarian terhadap $t$.
+      Andaikan \( M \) dan \( N \) invarian terhadap \( t \).
+      Jika \( \vec{v}\in M\intersection N \), maka \( t(\vec{v})\in M \)
+      berdasarkan keinvarianan \( M \), dan \( t(\vec{v})\in N \) berdasarkan
+      keinvarianan \( N \).
+
+      Tentu saja, gabungan dua subruang belum tentu merupakan subruang
+      (ingat bahwa sumbu-$x$\hbox{} dan sumbu-$y$ merupakan subruang bidang
+      $\Re^2$, tetapi gabungan kedua sumbu tidak tertutup terhadap
+      penjumlahan vektor; misalnya, gabungan itu tidak memuat
+      $\vec{e}_1+\vec{e}_2$.)
+      Namun, gabungan himpunan-himpunan invarian merupakan himpunan invarian; jika
+      \( \vec{v}\in M\union N \), maka \( \vec{v}\in M \) atau \( \vec{v}\in N \),
+      sehingga \( t(\vec{v})\in M \) atau \( t(\vec{v})\in N \).
+
+      Tidak, komplemen suatu subruang invarian belum tentu invarian.
+      Perhatikan subruang
+      \begin{equation*}
+        \set{\colvec{x \\ 0}\suchthat x\in\C}
+      \end{equation*}
+      dari \( \C^2 \) di bawah transformasi nol.
+
+      Ya, jumlah dua subruang invarian juga invarian.
+      Pemeriksaannya mudah.
+    \end{answer}
+  \item  \label{exer:OrderC}
+     Berikan cara mengurutkan blok-blok Jordan jika sebagian nilai eigennya
+     merupakan bilangan kompleks.
+     Artinya, sarankan pengurutan yang wajar untuk bilangan kompleks.
+     \begin{answer}
+       Salah satu pengurutan semacam itu adalah \definend{urutan kamus}.
+       Urutkan terlebih dahulu berdasarkan komponen real, kemudian berdasarkan koefisien \( i \).
+       Sebagai contoh, \( 3+2i<4+1i \), tetapi \( 4+1i<4+2i \).
+     \end{answer}
+  \item
+    Misalkan \( \polyspace_j(\Re) \) adalah ruang vektor atas bilangan
+    real yang terdiri atas polinomial berderajat paling tinggi \( j \).
+    Tunjukkan bahwa jika \( j\le k \), maka \( \polyspace_j(\Re) \) merupakan
+    subruang invarian dari \( \polyspace_k(\Re) \) di bawah operator diferensiasi.
+    Dalam \( \polyspace_7(\Re) \), adakah salah satu dari \( \polyspace_0(\Re) \),
+    \ldots, \( \polyspace_6(\Re) \) yang memiliki komplemen invarian?
+    \begin{answer}
+     Bagian pertama mudah\Dash turunan sebarang polinomial real adalah
+      polinomial real berderajat lebih rendah.
+      Jawaban untuk bagian kedua adalah `tidak'; setiap komplemen dari
+      \( \polyspace_j(\Re) \) harus memuat polinomial berderajat \( j+1 \),
+      dan turunan polinomial tersebut berada dalam \( \polyspace_j(\Re)\).
+     \end{answer}
+  \item
+    Dalam \( \polyspace_n(\Re) \), yaitu ruang vektor (atas bilangan
+    real) dari polinomial berderajat paling tinggi \( n \),
+    \begin{equation*}
+      \mathcal{E}=
+      \set{p(x)\in\polyspace_n(\Re)\suchthat p(-x)=p(x) \text{\ untuk semua\ }x}
+    \end{equation*}
+    dan
+    \begin{equation*}
+      \mathcal{O}=
+      \set{p(x)\in\polyspace_n(\Re)\suchthat p(-x)=-p(x) \text{\ untuk semua\ }x}
+    \end{equation*}
+    masing-masing merupakan polinomial \definend{genap}\index{polinomial genap}\index{polinomial!genap}
+    dan \definend{ganjil}\index{polinomial ganjil}\index{polinomial!ganjil};
+    \( p(x)=x^2 \) genap, sedangkan \( p(x)=x^3 \) ganjil.
+    Tunjukkan bahwa keduanya merupakan subruang.
+    Apakah keduanya saling melengkapi?
+    Apakah keduanya invarian di bawah transformasi diferensiasi?
+    \begin{answer}
+      Untuk bagian pertama, tunjukkan bahwa masing-masing merupakan subruang,
+      lalu amati bahwa setiap polinomial dapat dituliskan secara unik
+       sebagai jumlah suku berpangkat genap dan suku berpangkat ganjil (polinomial
+       nol termasuk keduanya).
+       Jawaban untuk bagian kedua adalah `tidak': \( x^2 \) genap, sedangkan
+       \( 2x \) ganjil.
+     \end{answer}
+  % Lemma gone when moved to new JF presentation
+  % \item 
+  %   \nearbylemma{le:InvCompSubspSplitTrans} says that if \( M \) and
+  %   \( N \) are
+  %   invariant complements then \( t \) has a representation in the given
+  %   block form (with respect to the same ending as starting basis, of course).
+  %   Does the implication reverse?
+  %   \begin{answer}
+  %     Yes.
+  %     If \( \rep{t}{B,B} \) has the given block form, take \( B_M \) to
+  %     be the first \( j \) vectors of \( B \), where \( J \) is the
+  %     \( \nbyn{j} \) upper left submatrix.
+  %     Take \( B_N \) to be the remaining \( k \) vectors in \( B \).
+  %     Let \( M \) and \( N \) be the spans of \( B_M \) and \( B_N \).
+  %     Clearly \( M \) and \( N \) are complementary.
+  %     To see \( M \) is invariant (\( N \) works the same way), represent
+  %     any \( \vec{m}\in M \) with respect to \( B \), note the last
+  %     \( k \) components are zeroes, and multiply by the given block
+  %     matrix.
+  %     The final \( k \) components of the result are zeroes, so that
+  %     result is again in \( M \). 
+  %    \end{answer}
+   \item 
+     Matriks \( S \) merupakan \definend{akar kuadrat}\index{akar kuadrat}
+     dari matriks lain \( T \) jika \( S^2=T \).
+     Tunjukkan bahwa setiap matriks nonsingular memiliki akar kuadrat.
+     \begin{answer}
+         Ubah matriks ke bentuk Jordan.
+         Karena nonsingular, tidak ada nilai eigen nol pada diagonal.
+         Tiru contoh berikut:
+          \begin{equation*}
+             \begin{mat}[r]
+                9  &0  &0 \\
+                1  &9  &0 \\
+                0  &0  &4
+             \end{mat}
+             =
+             \begin{mat}[r]
+                3  &0  &0 \\
+               1/6 &3  &0 \\
+                0  &0  &2
+             \end{mat}^2
+          \end{equation*}
+         untuk membangun akar kuadrat.
+         Tunjukkan bahwa hal ini terpelihara di bawah keserupaan: jika \( S^2=T \), maka
+         \( (PSP^{-1})(PSP^{-1})=PTP^{-1} \). 
+    \end{answer}
+\index{bentuk Jordan|)}
+\end{exercises}

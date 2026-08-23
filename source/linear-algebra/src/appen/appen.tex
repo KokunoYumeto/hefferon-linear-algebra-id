@@ -1,0 +1,852 @@
+\makeatletter
+\newcommand{\appendsection}[1]{\vspace{2.75ex plus .15ex minus .05ex}\noindent{\addcontentsline{toc}{subsection}{#1}\large\textbf{#1}}\vspace{.5ex plus .05ex minus .05ex}\nopagebreak[4]\par\noindent\trim@spaces}
+\makeatother
+
+\markboth{}{}
+\renewcommand{\thepage}{A-\arabic{page}}
+\setcounter{page}{1}
+%\thispagestyle{plain}
+%\noindent
+\chapter*{Lampiran}
+\addcontentsline{toc}{chapter}{Lampiran}
+Matematika tersusun dari argumen (yakni penalaran,
+bukan adu lempar pecah-belah).
+Bagian ini menguraikan secara ringkas materi latar belakang dan
+teknik berargumen yang kita gunakan dalam buku ini.
+
+Bagian ini memberikan garis besar informal tanpa menyertakan pembuktian.
+Untuk pembahasan lebih lanjut, \cite{HowToProveIt} sangat baik.
+Dua sumber lain yang tersedia daring adalah
+\cite{Hefferon} dan~\cite{Beck}.
+
+
+
+
+%\vskip .75in
+\appendsection{Pernyataan}
+%\addcontentsline{toc}{subsection}{Propositions}
+%\bigskip
+%\par\noindent
+Pernyataan matematika formal diberi label
+\definend{Teorema} % \index{theorem} 
+untuk hasil utama,
+\definend{Korolari} % \index{corollary}  
+untuk hasil yang langsung mengikuti hasil sebelumnya, atau
+\definend{Lema} %\index{lemma} 
+untuk hasil yang terutama digunakan dalam membuktikan hasil lain.
+
+Pernyataan dapat bersifat kompleks dan terdiri atas banyak bagian.
+Benar atau salahnya seluruh pernyataan bergantung pada nilai kebenaran
+bagian-bagiannya sekaligus pada cara bagian-bagian itu dirangkai.
+
+\startword{Tidak}
+Jika \( P \) adalah proposisi,
+`tidak benar bahwa \( P \)' bernilai benar apabila \( P \) bernilai
+salah.
+Sebagai contoh, `\( 6 \) bukan bilangan prima' benar karena \( 6 \)
+merupakan hasil kali bilangan-bilangan bulat positif yang lebih kecil.
+
+Untuk membuktikan pernyataan `tidak \( P \)', tunjukkan bahwa \( P \) salah.
+
+
+
+\startword{Dan}
+Agar pernyataan berbentuk `\( P \) dan \( Q \)' benar,
+kedua bagiannya harus benar:
+`\( 7 \) bilangan prima dan \( 3 \) juga bilangan prima' benar, sedangkan
+`\( 7 \) bilangan prima dan \( 3 \) bukan bilangan prima' salah.
+
+Untuk membuktikan `\( P \) dan \( Q \)', buktikan masing-masing bagiannya.
+
+
+
+
+\startword{Atau}
+Pernyataan `\( P \) atau \( Q \)' benar apabila sedikitnya salah satu
+bagiannya benar:
+`\( 7 \) bilangan prima atau \( 4 \) bilangan prima' benar, sedangkan
+`\( 8 \) bilangan prima atau \( 4 \) bilangan prima' salah.
+Jika kedua klausa pernyataan itu benar,
+seperti dalam `\( 7 \) bilangan prima atau \( 3 \) bilangan prima',
+kita menganggap pernyataan secara keseluruhan tetap benar.
+(Dalam percakapan sehari-hari orang kadang-kadang memakai `atau' secara
+eksklusif\Dash ``Hidup merdeka atau mati'' tidak dimaksudkan agar kedua
+bagiannya terjadi\Dash tetapi kita tidak akan memakai `atau' dengan cara itu.)
+
+Untuk membuktikan `\( P \) atau \( Q \)', tunjukkan bahwa dalam setiap kasus
+sekurang-kurangnya satu bagian benar (mungkin pada suatu kasus bagian yang
+satu dan pada kasus lain bagian yang lain, tetapi selalu setidaknya satu).
+
+
+
+\startword{Jika--maka}
+\index{pernyataan jika--maka}
+Pernyataan `jika \( P \), maka \( Q \)' juga dapat ditulis sebagai
+`\( P \) mengimplikasikan \( Q \)', `\( P\implies Q\)',
+`\( P \) cukup untuk menghasilkan \( Q \)', atau `$Q$ jika $P$'.
+Pernyataan itu benar kecuali ketika \( P \) benar sedangkan \( Q \) salah.
+Jadi `jika \( 7 \) bilangan prima, maka \( 4 \) bukan bilangan prima' benar,
+sedangkan `jika \( 7 \) bilangan prima, maka \( 4 \) juga bilangan prima' salah.
+(Berbeda dari pemakaiannya dalam percakapan sehari-hari, dalam matematika
+`jika \( P \), maka \( Q \)' tidak menyiratkan bahwa \( P \) mendahului
+atau menyebabkan \( Q \).)
+
+Perhatikan akibat dari paragraf sebelumnya: jika $P$ salah, maka
+`jika \( P \), maka \( Q \)' benar tanpa memandang nilai kebenaran $Q$:
+`jika \( 4 \) bilangan prima, maka \( 7 \) bilangan prima' dan
+`jika \( 4 \) bilangan prima, maka \( 7 \) bukan bilangan prima'
+keduanya merupakan pernyataan benar.
+(Keduanya \definend{benar secara hampa}.\index{benar secara hampa})
+Perhatikan pula bahwa `jika \( P \), maka \( Q \)' benar ketika $Q$ benar:
+`jika $4$ bilangan prima, maka $7$ bilangan prima' dan
+`jika $4$ bukan bilangan prima, maka $7$ bilangan prima' keduanya benar.
+
+% (We adopt this definition of implication
+% because we want statements 
+% such as `if $n$ is a perfect square then $n$ is not prime'
+% to be true no matter which 
+% number $n$ appears in that statement.
+% For instance, we want `if $5$ is a perfect square then $5$ is not prime'
+% to be true so we want that if both $P$ and~$Q$ are false then
+% $P\implies Q$ is true.)
+
+Ada dua cara utama untuk membuktikan suatu implikasi.
+Cara pertama bersifat langsung:~andaikan \( P \) benar dan gunakan
+asumsi itu untuk membuktikan \( Q \).
+Sebagai contoh, untuk menunjukkan `jika suatu bilangan habis dibagi 5,
+maka dua kali bilangan itu habis dibagi 10', kita dapat mengandaikan
+bilangan tersebut adalah \( 5n \), lalu menyimpulkan \( 2(5n)=10n \).
+Cara tidak langsung adalah membuktikan pernyataan
+\definend{kontraposisi}\index{kontraposisi}:
+`jika \( Q \) salah, maka \( P \) salah'
+(dengan kata lain, `\( Q \) hanya dapat salah ketika \( P \) juga salah').
+Jadi untuk menunjukkan `jika suatu bilangan asli prima, maka bilangan itu
+bukan kuadrat sempurna', kita dapat berargumen bahwa jika bilangan itu
+kuadrat, \( p=n^2 \), maka ia dapat difaktorkan sebagai
+\( p=n\cdot n \) dengan \( n<p \), sehingga tidak prima
+(\( p=0 \) atau \( p=1 \) tidak memenuhi \( n<p \), tetapi keduanya
+bukan bilangan prima).
+
+% Note two things about this statement form.
+
+% First, an `if \( P \) then \( Q \)' result can sometimes be improved
+% by weakening \( P \) or strengthening \( Q \).
+% Thus, `if a number is divisible by \( p^2 \) then its square is also
+% divisible by \( p^2 \)' could be upgraded either by relaxing its
+% hypothesis:~`if a number is divisible by \( p \) then its square
+% is divisible by \( p^2 \)', or by tightening its conclusion:~`if
+% a number is divisible by \( p^2 \) then its square is divisible by
+% \( p^4 \)'.
+
+% Second,
+% after showing `if \( P \) then \( Q \)' then a good next step is to look into
+% whether there are cases where \( Q \) holds but \( P \) does not.
+% The idea is to better understand the relationship between \( P \) and
+% \( Q \) with an eye toward strengthening the proposition.
+
+
+
+\startword{Pernyataan ekuivalen}
+\index{pernyataan ekuivalen}\index{proposisi!ekuivalen}
+Kadang-kadang bukan hanya \( P \) yang mengimplikasikan \( Q \), tetapi
+\( Q \) juga mengimplikasikan \( P \).
+Hubungan ini dapat dinyatakan dengan beberapa cara:
+`\( P \) jika dan hanya jika \( Q \)', `\( P \) jhj \( Q \)',
+`\( P \) dan \( Q \) ekuivalen secara logis',
+`\( P \) perlu dan cukup untuk menghasilkan \( Q \)', atau
+`\( P\iff Q \)'.
+Sebagai contoh, `suatu bilangan bulat habis dibagi sepuluh jika dan hanya
+jika angka terakhirnya adalah $0$'.
+
+Walaupun dalam argumen sederhana rantai seperti
+``\( P \) jika dan hanya jika $R$, yang berlaku jika dan hanya jika
+$S$ \ldots'' mungkin praktis, untuk membuktikan bahwa dua pernyataan
+ekuivalen kita lebih sering membuktikan kedua arah
+`jika \( P \), maka \( Q \)' dan `jika \( Q \), maka \( P \)' secara terpisah.
+
+
+
+
+
+
+
+
+\appendsection{Kuantor}\index{kuantor}%
+Bandingkan pernyataan-pernyataan tentang bilangan asli berikut:
+`terdapat bilangan asli \( x \) sehingga \( x \) habis dibagi \( x^2 \)'
+benar, sedangkan
+`untuk setiap bilangan asli \( x \), \( x \) habis dibagi \( x^2 \)'
+salah.
+Awalan `terdapat' dan `untuk setiap' disebut
+\definend{kuantor}.\index{kuantor}
+
+\startword{Untuk setiap}
+Awalan `untuk setiap' adalah
+\definend{kuantor universal},\index{kuantor!universal}
+yang dilambangkan dengan \( \forall \).
+
+Cara paling langsung untuk membuktikan bahwa suatu pernyataan berlaku
+dalam semua kasus adalah membuktikannya untuk setiap kasus.
+Jadi, untuk menunjukkan bahwa `setiap bilangan yang habis dibagi \( p \)
+memiliki kuadrat yang habis dibagi \( p^2 \)', ambil satu bilangan berbentuk
+\( pn \), lalu kuadratkan: \( (pn)^2=p^2n^2 \).
+Ini adalah pembuktian dengan \definend{unsur tipikal}.
+(Dalam argumen semacam ini, berhati-hatilah agar tidak mengasumsikan sifat
+unsur tersebut selain sifat-sifat yang terdapat dalam hipotesis.
+Argumen berikut salah:
+``Jika \( n \) habis dibagi suatu bilangan prima, katakanlah \( 2 \),
+sehingga \( n=2k \) untuk suatu bilangan asli~$k$, maka
+\( n^2=(2k)^2=4k^2 \), sehingga kuadrat $n$ habis dibagi kuadrat bilangan
+prima itu.''
+Argumen tersebut hanya membuktikan kasus khusus \( p=2 \), bukan semua
+nilai~\( p \).
+Bandingkan dengan argumen yang benar:
+``Jika \( n \) habis dibagi suatu bilangan prima sehingga \( n=pk \)
+untuk suatu bilangan asli~$k$, maka \( n^2=(pk)^2=p^2k^2 \), sehingga
+kuadrat $n$ habis dibagi kuadrat bilangan prima itu.'')
+
+
+
+
+\startword{Terdapat}
+Awalan `terdapat' adalah
+\definend{kuantor eksistensial},\index{kuantor!eksistensial}
+yang dilambangkan dengan \( \exists \).
+
+%This quantifier is in some ways the opposite of `for all'.
+%For instance, contrast these two definitions of primality
+%of an integer \( p \): (i)~for all \( n \), if
+%\( n \) is not \( 1 \) and \( n \) is not \( p \) then \( n \)
+%does not divide \( p \), and
+%(ii)~it is not the case that there exists an \( n \)
+%(with \( n\neq 1 \) and \( n\neq p \)) such that \( n \) divides \( p \).
+
+Kita dapat membuktikan proposisi keberadaan dengan memberikan sesuatu yang
+memenuhi sifat tersebut. Sebagai contoh, untuk menyelesaikan pertanyaan
+tentang keprimaan \( 2^{2^5}+1 \), Euler menunjukkan pembagi
+\( 641 \)\cite{Sandifer}.
+Namun, ada pula pembuktian yang menunjukkan bahwa sesuatu ada tanpa
+menjelaskan cara menemukannya; argumen Euclid pada subbagian berikutnya
+menunjukkan bahwa terdapat tak hingga banyak bilangan prima tanpa memberikan
+rumus yang menamai bilangan-bilangan itu.
+% In general, while demonstrating existence is better than nothing,
+% giving an example is better, and an
+% exhaustive list of all instances is ideal.
+
+Akhirnya, setelah bertanya
+``Apakah ada?''\ %\spacefactor=1000 
+kita sering bertanya ``Ada berapa?''
+Dengan kata lain, pertanyaan tentang ketunggalan sering muncul bersama
+pertanyaan tentang keberadaan.
+Kadang-kadang kedua argumen lebih sederhana jika dipisahkan. Karena itu,
+perhatikan bahwa sebagaimana membuktikan keberadaan tidak membuktikan
+ketunggalan, membuktikan ketunggalan pun tidak membuktikan keberadaan.
+
+
+
+
+
+
+
+
+
+
+\appendsection{Teknik Pembuktian}
+\index{teknik pembuktian|(}%
+Ada banyak cara untuk membuktikan pernyataan matematika.
+Di sini kita akan menguraikan dua teknik yang sering digunakan, tetapi
+mungkin tidak langsung terasa alami bahkan bagi orang yang terbiasa
+berpikir teknis.
+ 
+
+\startword{Induksi}
+\index{induksi matematika}
+Banyak pembuktian bersifat iteratif,
+``Inilah alasan pernyataan tersebut benar untuk bilangan \( 0 \),
+lalu dari sana berlaku untuk \( 1 \), kemudian \( 2 \), dan seterusnya.''
+Pembuktian semacam ini disebut pembuktian dengan
+\definend{induksi matematika}.\index{induksi matematika}\index{induksi}
+Kita akan melihat dua contoh.
+
+Pertama, kita akan membuktikan bahwa \( 1+2+3+\dots+n=n(n+1)/2 \).
+Rumus ini memiliki variabel bilangan asli bebas $n$. Artinya, menetapkan
+$n$ sama dengan $1$, $2$, dan seterusnya menghasilkan suatu keluarga kasus:
+kasus pertama $1=1(2)/2$, kasus kedua $1+2=2(3)/2$, dan seterusnya.
+Pembuktian induksi kita melibatkan pernyataan dengan satu variabel bilangan
+asli bebas.
+
+Setiap pembuktian seperti itu mempunyai dua langkah.
+Pada \definend{langkah dasar}\index{langkah dasar, pembuktian induksi}
+kita menunjukkan bahwa pernyataan berlaku untuk suatu bilangan awal
+$i\in \N$. Biasanya langkah ini merupakan verifikasi rutin.
+Langkah kedua, yaitu
+\definend{langkah induksi},\index{langkah induksi, pembuktian induksi}
+lebih halus; kita akan menunjukkan bahwa implikasi berikut berlaku:
+\begin{equation*}
+  \begin{tabular}{l}
+    \text{Jika pernyataan berlaku dari $n=i$ sampai dengan~$n=k$} 
+     \\
+    \text{\ maka pernyataan juga berlaku pada kasus $n=k+1$}
+  \end{tabular}
+  \tag{$*$}
+\end{equation*}
+(baris pertama adalah
+\definend{hipotesis induksi}\index{induksi!hipotesis induksi}\index{hipotesis induksi}).
+Menyelesaikan kedua langkah tersebut membuktikan bahwa pernyataan benar
+untuk semua bilangan asli yang lebih besar daripada atau sama dengan $i$.
+
+Untuk pernyataan tentang jumlah $n$ bilangan awal, intuisi di balik prinsip
+ini adalah sebagai berikut. Pertama, langkah dasar memverifikasi secara
+langsung pernyataan untuk bilangan awal $n=1$. Kemudian, karena langkah
+induksi membuktikan implikasi~($*$) untuk setiap $k$, penerapan implikasi
+tersebut pada $k=1$ menunjukkan bahwa pernyataan benar untuk $n=2$.
+Setelah pernyataan terbukti untuk $1$ dan $2$, terapkan ($*$) lagi untuk
+menyimpulkan bahwa pernyataan benar untuk $n=3$.
+Dengan cara ini, kita melangkah terus hingga mencakup semua $n\geq 1$.
+
+Berikut pembuktian \( 1+2+3+\dots+n=n(n+1)/2 \), dengan paragraf terpisah
+untuk langkah dasar dan langkah induksi.
+\begin{quote}\small
+Untuk langkah dasar, kita menunjukkan bahwa rumus berlaku ketika \( n=1 \).
+Ini mudah; jumlah satu bilangan asli pertama sama dengan \( 1(1+1)/2 \).
+
+Untuk langkah induksi, andaikan hipotesis induksi bahwa rumus berlaku untuk
+\( n=1 \), \( n=2 \), \ldots, \( n=k \) dengan $k\geq 1$.
+Dengan kata lain, andaikan
+$1=1(1)/2$, $1+2=2(3)/2$, $1+2+3=3(4)/2$, sampai
+$1+2+\cdots+k=k(k+1)/2$.
+Dengan demikian, rumus juga berlaku pada kasus \( n=k+1 \):
+\begin{equation*}
+  1+2+\cdots+k+(k+1)
+  =
+  \frac{k(k+1)}{2}+(k+1)
+  =
+  \frac{(k+1)(k+2)}{2}
+\end{equation*}
+(kesamaan pertama mengikuti hipotesis induksi).
+\end{quote}
+% The base case shows that the formula is true holds for \( n=1 \).
+% The inductive step shows that,  
+% because the formula holds for \( 1 \), it also holds for \( n=2 \);
+% The inductive step also shows that,  
+% because the formula holds for \( 1 \) and \( 2\), it holds for \( 3=2 \);
+% Continuing in this way, we see that the statement holds
+% for any natural number greater than or equal to \( 1 \).
+
+Berikut contoh lain yang membuktikan bahwa setiap bilangan bulat yang lebih
+besar daripada atau sama dengan \( 2 \) merupakan hasil kali bilangan prima.
+\begin{quote}\small
+Langkah dasarnya mudah: \( 2 \) adalah hasil kali satu bilangan prima.
+
+Untuk langkah induksi, andaikan masing-masing dari \( 2,3,\ldots,k \)
+merupakan hasil kali bilangan prima, dengan tujuan menunjukkan bahwa
+\( k+1 \) juga merupakan hasil kali bilangan prima.
+Ada dua kemungkinan.
+Pertama, jika \( k+1 \) tidak habis dibagi bilangan yang lebih kecil daripada
+dirinya, maka \( k+1 \) adalah bilangan prima dan dengan demikian merupakan
+hasil kali bilangan prima.
+Kemungkinan kedua adalah \( k+1 \) habis dibagi suatu bilangan yang lebih
+kecil daripada dirinya. Berdasarkan hipotesis induksi, faktor-faktornya dapat
+ditulis sebagai hasil kali bilangan prima.
+Dalam kedua kasus, \( k+1 \) dapat ditulis sebagai hasil kali bilangan prima.
+\end{quote}
+
+
+
+
+
+\startword{Kontradiksi}
+\index{kontradiksi}
+Teknik pembuktian lain menunjukkan bahwa sesuatu benar dengan menunjukkan
+bahwa sesuatu itu tidak mungkin salah.
+Pembuktian dengan kontradiksi mengandaikan proposisi tersebut salah, lalu
+menurunkan suatu pertentangan dengan fakta yang telah diketahui.
+
+Contoh klasik pembuktian dengan kontradiksi adalah argumen Euclid bahwa
+terdapat tak hingga banyak bilangan prima.
+\begin{quote}\small
+Andaikan hanya ada berhingga banyak bilangan prima \( p_1,\dots,p_k \).
+Perhatikan bilangan \( p_1\cdot p_2\dots p_k +1 \).
+Tidak satu pun bilangan prima dalam daftar yang dianggap lengkap itu membagi
+bilangan tersebut tanpa sisa, sebab masing-masing menyisakan \( 1 \).
+Namun, setiap bilangan merupakan hasil kali bilangan prima, sehingga keadaan
+ini mustahil. Jadi, banyak bilangan prima tidak mungkin berhingga.
+\end{quote}
+
+Contoh lain adalah pembuktian bahwa \( \sqrt{2} \) bukan bilangan rasional.
+\begin{quote}\small
+Andaikan \( \sqrt{2}=m/n \), sehingga $2n^2=m^2$.
+Keluarkan semua faktor \( 2 \), sehingga diperoleh
+\( n=2^{k_n}\cdot \hat{n} \)
+dan
+\( m=2^{k_m}\cdot \hat{m} \).
+Tuliskan kembali persamaan tersebut.
+\begin{equation*}
+  2\cdot (2^{k_n}\cdot \hat{n})^2
+  =
+  (2^{k_m}\cdot \hat{m})^2
+\end{equation*}
+Teorema Faktorisasi Prima menyatakan bahwa banyak faktor \( 2 \) pada kedua
+ruas harus sama. Namun, ruas kiri memiliki banyak faktor yang ganjil,
+\( 1+2k_n \), sedangkan ruas kanan memiliki banyak faktor yang genap,
+\( 2k_m \). Ini suatu kontradiksi, sehingga tidak mungkin ada bilangan
+rasional yang kuadratnya sama dengan \( 2 \).
+\end{quote}
+
+% Both of these examples aimed to prove something doesn't exist.
+% A negative proposition often suggests a proof by contradiction.
+\index{teknik pembuktian|)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\appendsection{Himpunan, Fungsi, dan Relasi}
+Materi berikut menjadi latar belakang dan kosakata bagi seluruh pembahasan
+yang kita kembangkan.
+
+\startword{Himpunan}
+\index{himpunan}
+Matematikawan sering bekerja dengan koleksi.
+Jenis koleksi yang paling umum digunakan adalah \definend{himpunan}.\index{himpunan}
+Himpunan dicirikan oleh Prinsip Ekstensionalitas: dua himpunan yang memiliki
+unsur-unsur sama adalah sama.
+Karena itu, urutan unsur tidak penting,
+\( \set{2,\pi}=\set{\pi,2} \), dan pengulangan dilebur,
+\( \set{7,7}=\set{7} \).
+
+Kita dapat mendeskripsikan himpunan dengan daftar di antara kurung kurawal,
+\( \set{1,4,9,16} \), seperti dalam paragraf sebelumnya, atau dengan
+notasi pembentuk himpunan
+\( \set{x\suchthat x^5-3x^3+2=0} \), yang dibaca ``himpunan semua \( x \)
+sedemikian sehingga \ldots''.
+Kita menamai himpunan dengan huruf Romawi kapital; misalnya, himpunan
+bilangan prima adalah \( P=\set{2,3,5,7,11,\ldots\,} \).
+Beberapa himpunan begitu penting sehingga namanya telah ditetapkan, seperti
+bilangan riil \( \Re \) dan bilangan kompleks \( \C \).
+Untuk menyatakan bahwa sesuatu merupakan
+\definend{unsur},\index{unsur}\index{himpunan!unsur}
+atau \definend{anggota}\index{anggota}\index{himpunan!anggota} suatu himpunan,
+kita memakai `\(\in\)'. Jadi \( 7\in\set{3,5,7} \), sedangkan
+\( 8\not\in\set{3,5,7} \).
+
+Kita mengatakan bahwa \( A \) adalah \definend{subhimpunan} dari \( B \),
+ditulis $A\subseteq B$, apabila $x\in A$ mengimplikasikan $x\in B$.
+Dalam buku ini, kita memakai `\( \subset \)' untuk relasi
+\definend{subhimpunan sejati}\index{himpunan!subhimpunan sejati}\index{subhimpunan sejati}\index{himpunan!subhimpunan}\index{subhimpunan!sejati} %
+bahwa \( A \) adalah subhimpunan \( B \), tetapi \( A\neq B \)
+(sebagian penulis memakai lambang ini untuk semua jenis subhimpunan,
+baik sejati maupun tidak).
+Sebagai contoh, \( \set{2,\pi}\subset\set{2,\pi,7} \).
+Lambang-lambang ini dapat dibalik; misalnya,
+\( \set{2,\pi,5}\supset\set{2,5} \).
+
+Berdasarkan Ekstensionalitas, untuk membuktikan dua himpunan sama,
+\( A=B \), tunjukkan bahwa keduanya memiliki anggota yang sama.
+Sering kali kita melakukannya dengan menunjukkan inklusi timbal balik,
+\index{inklusi timbal balik}\index{himpunan!inklusi timbal balik}
+yaitu \( A\subseteq B \) sekaligus \( A\supseteq B \).
+Pembuktian seperti itu mempunyai satu bagian yang menunjukkan bahwa jika
+$x\in A$, maka $x\in B$, dan bagian kedua yang menunjukkan bahwa jika
+$x\in B$, maka $x\in A$.
+
+Himpunan tanpa anggota disebut
+\definend{himpunan kosong}\index{himpunan kosong}\index{himpunan!kosong}
+\( \set{} \), yang dilambangkan dengan \( \emptyset \).
+Setiap himpunan memiliki himpunan kosong sebagai subhimpunan berdasarkan
+sifat `benar secara hampa' dalam definisi implikasi.
+
+
+
+
+\startword{Diagram}
+Kita menggambarkan operasi dasar himpunan dengan
+\definend{diagram Venn}.\index{diagram Venn}
+Diagram berikut menunjukkan \( x\in P \).
+\begin{center}
+  \includegraphics{appen/mp/appen.8}
+\end{center}
+Persegi panjang terluar memuat semesta $\Omega$ dari semua objek yang sedang
+dibahas. Misalnya, dalam pernyataan tentang bilangan riil, persegi panjang
+tersebut memuat semua anggota $\R$.
+Himpunan digambarkan sebagai lingkaran yang mengurung anggota-anggotanya.
+
+Berikut diagram untuk \( P\subseteq Q \).
+Diagram ini menunjukkan bahwa jika \( x\in P \), maka \( x\in Q \).
+\begin{center}
+  \includegraphics{appen/mp/appen.4}
+\end{center}
+
+
+
+
+\startword{Operasi Himpunan}
+\definend{Gabungan}\index{gabungan himpunan}\index{himpunan!gabungan}
+dua himpunan adalah
+\( P\union Q=\set{x\suchthat \text{$(x\in P)$ atau $(x\in Q)$}} \).
+Diagram menunjukkan bahwa suatu unsur berada dalam gabungan jika unsur itu
+berada dalam sedikitnya salah satu himpunan.
+\begin{center}
+  \includegraphics{appen/mp/appen.3}
+\end{center}
+\definend{Irisan}\index{irisan himpunan}\index{himpunan!irisan} adalah
+\( P\intersection Q=\set{x\suchthat \text{$(x\in P)$ dan $(x\in Q)$}} \).
+\begin{center}
+  \includegraphics{appen/mp/appen.2}
+\end{center}
+\definend{Komplemen}\index{komplemen}\index{himpunan!komplemen}
+himpunan~\( P \) adalah
+\( P^{\text{comp}}=\set{x\in\Omega\suchthat x\not\in P} \)
+\begin{center}
+  \includegraphics{appen/mp/appen.1}
+\end{center}
+
+
+
+
+\startword{Multihimpunan}\index{multihimpunan}
+Seperti dijelaskan di atas, himpunan adalah koleksi yang urutannya tidak
+penting, sehingga $\set{2,\pi}$ dan $\set{\pi,2}$ sama, dan yang
+pengulangannya dilebur, sehingga $\set{7,7}$ dan $\set{7}$ sama.
+
+Koleksi yang menyerupai himpunan karena urutannya tidak penting, tetapi
+pengulangannya tidak dilebur, disebut \definend{multihimpunan}.
+(Perhatikan bahwa kita memakai notasi kurung kurawal $\set{\ldots}$ yang
+sama seperti untuk himpunan.)
+Jadi multihimpunan $\set{1,2,2}$ berbeda dari multihimpunan $\set{1,2}$.
+Karena urutan tidak penting, multihimpunan $\set{1,2,2}$,
+$\set{2,1,2}$, dan~$\set{2,2,1}$ semuanya sama.
+Dalam buku ini multihimpunan hanya disebutkan dalam sebuah catatan, sehingga
+pembahasan tentang subhimpunan, gabungan, atau irisannya berada di luar
+cakupan kita.
+
+
+
+\startword{Barisan}
+\index{barisan}
+Selain himpunan dan multihimpunan, kita juga memakai koleksi yang urutannya
+penting dan pengulangannya tidak dilebur.
+Koleksi ini disebut \definend{barisan},\index{barisan} dan dilambangkan dengan
+kurung sudut: \( \sequence{2,3,7}\neq\sequence{2,7,3} \).
+Barisan dengan panjang \( 2 \) disebut
+\definend{pasangan terurut},\index{pasangan terurut}\index{pasangan!terurut}
+dan sering ditulis dengan tanda kurung: \( (\pi,3) \).
+Kadang-kadang kita juga mengatakan `tripel terurut', `\( 4 \)-tupel
+terurut', dan seterusnya.
+Himpunan semua \( n \)-tupel terurut dari unsur-unsur himpunan \( A \)
+dilambangkan dengan \( A^n \).
+Jadi \( \Re^2 \) adalah himpunan pasangan bilangan riil.
+
+
+
+
+\startword{Fungsi}
+\index{fungsi}
+\definend{Fungsi}\index{fungsi}
+atau \definend{pemetaan}\index{pemetaan} $\map{f}{D}{C}$ adalah
+pengaitan antara masukan
+\definend{argumen}\index{argumen, fungsi}\index{fungsi!argumen}
+$x\in D$ dan keluaran
+\definend{nilai}\index{nilai, fungsi}\index{fungsi!nilai}
+$f(x)\in C$, dengan syarat bahwa fungsi itu harus
+\definend{terdefinisi dengan baik},\index{fungsi!terdefinisi dengan baik}%
+\index{terdefinisi dengan baik}
+yaitu \( x \) cukup untuk menentukan \( f(x) \).
+Dengan kata lain, syaratnya adalah bahwa jika \( x_1=x_2 \), maka
+\( f(x_1)=f(x_2) \).
+
+Himpunan semua argumen~$D$ disebut
+\definend{domain}\index{domain}\index{fungsi!domain} dari \( f \),
+sedangkan himpunan nilai keluarannya disebut
+\definend{daerah hasil} $\rangespace{f}$.\index{daerah hasil}\index{fungsi!daerah hasil}
+Sering kali kita tidak bekerja dengan daerah hasil, melainkan dengan suatu
+superhimpunan yang lebih nyaman, yaitu
+\definend{kodomain}~$C$.\index{fungsi!kodomain}\index{kodomain}
+Misalnya, kita dapat mendeskripsikan fungsi kuadrat sebagai
+$\map{s}{\R}{\R}$ alih-alih $\map{s}{\R}{\R^+\union \set{0}}$.
+
+Kita menggambarkan fungsi dengan
+\definend{diagram kacang}.\index{diagram kacang}\index{fungsi!diagram kacang}
+\begin{center}
+  \includegraphics{appen/mp/appen.9}
+\end{center}
+Gumpalan di sebelah kiri adalah domain, sedangkan gumpalan di sebelah kanan
+adalah kodomain.
+Fungsi tersebut mengaitkan tiga titik dalam domain dengan tiga titik dalam
+kodomain.
+Perhatikan bahwa menurut definisi fungsi, setiap titik dalam domain dikaitkan
+dengan tepat satu titik dalam kodomain, tetapi kebalikannya tidak harus benar.
+
+Pengaitannya dapat bersifat sebarang; tidak diperlukan rumus atau algoritma,
+walaupun dalam buku ini biasanya ada salah satunya.
+Kita sering memakai $y$ untuk melambangkan $f(x)$.
+Kita juga memakai notasi \( x\mapsunder{f}16x^2-100 \), yang dibaca
+`\( x \) dipetakan oleh \( f \) ke \( 16x^2-100 \)' atau
+`\( 16x^2-100 \) adalah
+\definend{citra}\index{citra, oleh fungsi}\index{fungsi!citra}
+dari \( x \)'.
+
+Pemetaan seperti \( x\mapsto \sin(1/x) \) merupakan gabungan pemetaan yang
+lebih sederhana, yakni \( g(y)=\sin(y) \) diterapkan pada citra
+\( f(x)=1/x \).
+\definend{Komposisi}\index{komposisi}\index{fungsi!komposisi}
+\( \map{g}{Y}{Z} \) dengan \( \map{f}{X}{Y} \) adalah pemetaan yang
+mengirim \( x\in X \) ke \( g(\,f(x)\,)\in Z \).
+Komposisi ini dilambangkan dengan \( \map{\composed{g}{f}}{X}{Z} \).
+Definisi ini hanya bermakna apabila daerah hasil \( f \) merupakan
+subhimpunan dari domain \( g \).
+
+\definend{Pemetaan identitas}\index{identitas!fungsi}\index{fungsi!identitas}
+\( \map{\identity}{Y}{Y} \), yang didefinisikan oleh
+\( \identity(y)=y \), memiliki sifat bahwa untuk setiap
+\( \map{f}{X}{Y} \), komposisi \( \composed{\identity}{f} \) sama dengan
+\( f \).
+Jadi, terhadap komposisi fungsi, pemetaan identitas memainkan peran yang sama
+seperti bilangan \( 0 \) dalam penjumlahan bilangan riil atau \( 1 \) dalam
+perkalian.
+
+Sejalan dengan analogi tersebut, kita mendefinisikan
+\definend{invers kiri}\index{invers!fungsi!kiri}\index{invers!kiri}\index{invers kiri}
+dari pemetaan \( \map{f}{X}{Y} \) sebagai fungsi
+\( \map{g}{\text{daerah hasil}(f)}{X} \) sedemikian sehingga
+\( \composed{g}{f} \) adalah pemetaan identitas pada \( X \).
+\definend{Invers kanan}\index{invers!fungsi!kanan}\index{invers!kanan}\index{invers kanan}
+dari \( f \) adalah pemetaan \( \map{h}{Y}{X} \) sedemikian sehingga
+\( \composed{f}{h} \) adalah identitas.
+
+Untuk beberapa fungsi $f$, terdapat pemetaan yang sekaligus merupakan invers
+kiri dan invers kanan dari \( f \).
+Jika pemetaan seperti itu ada, maka pemetaan itu tunggal, sebab jika
+\( g_1 \) dan \( g_2 \) sama-sama memiliki sifat tersebut, maka
+\( g_1(x)=\composed{g_1}{ (\composed{f}{g_2}) }\,(x)
+         =\composed{ (\composed{g_1}{f}) }{g_2}\,(x)
+         =g_2(x) \)
+(kesamaan di tengah berasal dari sifat asosiatif komposisi fungsi).
+Karena itu, kita menyebutnya \definend{invers dua sisi}, atau cukup
+\definend{``invers''},\index{invers}\index{invers!dua sisi}\index{fungsi!invers}\index{invers!fungsi}\index{fungsi invers}\index{penginversan}
+dan melambangkannya dengan \( f^{-1} \).
+Sebagai contoh, invers fungsi \( \map{f}{\Re}{\Re} \) yang diberikan oleh
+\( f(x)=2x-3 \) adalah fungsi \( \map{f^{-1}}{\Re}{\Re} \) yang diberikan
+oleh \( f^{-1}(x)=(x+3)/2 \).
+
+Notasi superskrip untuk invers fungsi, `\( f^{-1} \)', merupakan bagian dari
+suatu pola yang lebih luas.
+Fungsi yang domain dan kodomainnya sama, $\map{f}{X}{X}$, dapat diiterasikan,
+sehingga kita dapat meninjau komposisi $f$ dengan dirinya sendiri:
+\( \composed{f}{f} \), \( \composed{f}{\composed{f}{f}} \), dan seterusnya.
+Kita menulis $\composed{f}{f}$ sebagai \( f^2 \) dan
+$\composed{\composed{f}{f}}{f}$ sebagai \( f^3 \), dan seterusnya.
+Perhatikan bahwa aturan pangkat yang dikenal untuk bilangan riil berlaku:
+\( \composed{f^i}{f^j}=f^{i+j} \) dan \( (f^i)^j=f^{i\cdot j} \).
+Jika \( f \) dapat diinverskan, penulisan \( f^{-1} \) untuk inversnya dan
+\( f^{-2} \) untuk invers dari \( f^2 \), dan seterusnya, membuat aturan
+pangkat tersebut tetap berlaku karena kita mendefinisikan \( f^0 \) sebagai
+pemetaan identitas.
+
+Definisi fungsi mensyaratkan bahwa untuk setiap masukan terdapat tepat satu
+nilai keluaran yang terkait.
+Jika fungsi $\map{f}{D}{C}$ memiliki sifat tambahan bahwa untuk setiap nilai
+keluaran terdapat sedikitnya satu nilai masukan yang terkait\Dash dengan kata
+lain, kodomain $f$ sama dengan daerah hasilnya,
+\( C=\rangespace{f} \)\Dash maka fungsi itu
+\definend{surjektif}.\index{fungsi!surjektif}\index{fungsi surjektif}
+\begin{center}
+  \includegraphics{appen/mp/appen.14}
+\end{center}
+Suatu fungsi memiliki invers kanan jika dan hanya jika fungsi itu surjektif.
+(Fungsi $f$ pada gambar di atas mempunyai invers kanan $\map{g}{C}{D}$ yang
+diperoleh dengan mengikuti panah ke arah sebaliknya, dari kanan ke kiri.
+Untuk titik kodomain teratas, pilih salah satu dari dua panah yang dapat
+diikuti. Dengan demikian, menerapkan $g$ lalu $f$ membawa setiap unsur
+$y\in C$ kembali kepada dirinya sendiri, sehingga komposisinya adalah fungsi
+identitas.)
+
+Jika fungsi $\map{f}{D}{C}$ memiliki sifat bahwa untuk setiap nilai keluaran
+terdapat paling banyak satu nilai masukan yang terkait\Dash yakni tidak ada
+dua argumen yang memiliki citra sama, sehingga \( f(x_1)=f(x_2) \)
+mengimplikasikan \( x_1=x_2 \)\Dash maka fungsi tersebut
+\definend{injektif}.\index{fungsi!injektif}\index{fungsi injektif}
+Diagram kacang sebelumnya menggambarkan sifat ini.
+\begin{center}
+  \includegraphics{appen/mp/appen.9}
+\end{center}
+Suatu fungsi memiliki invers kiri jika dan hanya jika fungsi itu injektif.
+(Pada gambar, definisikan $\map{g}{C}{D}$ dengan mengikuti panah ke arah
+sebaliknya bagi $y\in C$ yang berada di ujung suatu panah, dan mengirim titik
+tersebut ke unsur sebarang dalam $D$ pada kasus lainnya.
+Menerapkan $f$ lalu~$g$ pada unsur-unsur $D$ kemudian bertindak sebagai
+identitas.)
+
+Berdasarkan paragraf-paragraf sebelumnya, suatu pemetaan memiliki invers dua
+sisi jika dan hanya jika pemetaan itu surjektif sekaligus injektif.
+Fungsi seperti itu merupakan suatu
+\definend{korespondensi}.\index{korespondensi}\index{fungsi!korespondensi}
+Fungsi tersebut mengaitkan tepat satu unsur domain dengan setiap unsur
+kodomain.
+Karena komposisi pemetaan injektif bersifat injektif dan komposisi pemetaan
+surjektif bersifat surjektif, komposisi korespondensi juga merupakan
+korespondensi.
+
+Kadang-kadang kita ingin memperkecil domain suatu fungsi.
+Sebagai contoh, kita dapat mengambil fungsi \( \map{f}{\Re}{\Re} \) yang
+diberikan oleh \( f(x)=x^2 \), lalu, agar memiliki invers, membatasi argumen
+masukan pada bilangan riil tak negatif,
+\( \map{\hat{f}}{\Re^+\union\set{0}}{\Re} \).
+Fungsi \( \hat{f} \) kemudian disebut
+\definend{restriksi}\index{fungsi!restriksi}\index{restriksi} dari \( f \)
+pada domain yang lebih kecil.
+
+
+
+
+
+
+
+
+\startword{Relasi}
+\index{relasi}
+Beberapa objek matematika yang dikenal, seperti `\( < \)' atau `\( = \)',
+paling alami dipahami sebagai relasi antarobjek.
+\definend{Relasi biner} pada himpunan \( A \) adalah himpunan pasangan
+terurut dari unsur-unsur \( A \).
+Sebagai contoh, beberapa unsur himpunan yang merupakan relasi `$<$' pada
+bilangan bulat adalah \( (3,5) \), \( (3,7) \), dan \( (1,100) \).
+Relasi biner lain pada bilangan bulat adalah kesamaan; relasi ini merupakan
+himpunan \( \set{\ldots,(-1,-1),(0,0),(1,1),\ldots} \).
+Contoh lain adalah `berjarak kurang dari \( 10 \)', yaitu himpunan
+\( \set{(x,y)\suchthat |x-y|<10} \).
+Beberapa anggota relasi ini adalah \( (1,10) \), \( (10,1) \), dan
+\( (42,44) \). Baik \( (11,1) \) maupun \( (1,11) \) bukan anggotanya.
+
+Contoh-contoh tersebut memperlihatkan luasnya cakupan definisi ini.
+Segala jenis hubungan tercakup, misalnya `kedua bilangan genap' atau
+`bilangan pertama diperoleh dengan membalik urutan angka bilangan kedua'.
+
+
+
+
+\startword{Relasi Ekuivalensi}
+\index{relasi!ekuivalensi}\index{relasi ekuivalensi}\index{ekuivalensi}
+Kita perlu menyatakan bahwa dua objek serupa dalam suatu hal.
+Keduanya tidak identik, tetapi saling berelasi
+(misalnya, dua bilangan bulat yang memberikan sisa sama ketika dibagi \( 2 \)).
+
+Relasi biner \( \set{(a,b),\ldots} \) disebut
+\definend{relasi ekuivalensi}\index{ekuivalensi!relasi}\index{relasi!ekuivalensi}
+apabila memenuhi
+(1)~\definend{refleksivitas}:\index{refleksivitas, relasi}\index{relasi!refleksif}
+     setiap objek berelasi dengan dirinya sendiri,
+(2)~\definend{simetri}:\index{simetri, relasi}\index{relasi!simetris}
+     jika \( a \) berelasi dengan \( b \), maka \( b \) berelasi dengan
+     \( a \), dan
+(3)~\definend{transitivitas}:\index{transitivitas, relasi}\index{relasi!transitif}
+     jika \( a \) berelasi dengan \( b \) dan \( b \) berelasi dengan
+     \( c \), maka \( a \) berelasi dengan \( c \).
+Beberapa contoh pada bilangan bulat: `\( = \)' merupakan relasi ekuivalensi;
+`\( < \)' tidak memenuhi simetri; `bertanda sama' merupakan relasi
+ekuivalensi; sedangkan `berjarak kurang dari \( 10 \)' tidak memenuhi
+transitivitas.
+
+
+
+
+
+
+\startword{Partisi}
+\index{partisi|(}
+Dalam relasi `bertanda sama'
+\( \set{(1,3),(-5,-7),(0,0),\ldots} \), terdapat tiga jenis pasangan:
+pasangan yang kedua bilangannya positif, pasangan yang keduanya negatif,
+dan satu pasangan yang keduanya nol.
+Jadi, setiap bilangan bulat berada tepat dalam salah satu dari tiga kelas:
+positif, negatif, atau nol.
+
+\definend{Partisi}\index{partisi} dari himpunan \( \Omega \) adalah koleksi
+subhimpunan \( \set{S_0,S_1,S_2,\ldots} \) sedemikian sehingga setiap unsur
+\( \Omega \) menjadi anggota suatu bagian,
+\( S_0\union S_1\union S_2\union\cdots{}=\Omega \), dan bagian-bagian yang
+beririsan adalah sama: jika \( S_i\intersection S_j\neq\emptyset \), maka
+$S_i=S_j$.
+Bayangkan \( \Omega \) diuraikan menjadi bagian-bagian yang tidak tumpang tindih.
+\begin{center}
+  \includegraphics{appen/mp/appen.10}
+\end{center}
+Dengan demikian, paragraf sebelumnya menyatakan bahwa `bertanda sama'
+memartisi bilangan bulat menjadi himpunan bilangan positif, himpunan bilangan
+negatif, dan himpunan yang hanya berisi nol.
+Demikian pula, relasi ekuivalensi `=' memartisi bilangan bulat menjadi
+himpunan-himpunan beranggota satu.
+
+Contoh lain adalah himpunan untai yang terdiri atas suatu bilangan, diikuti
+garis miring, lalu bilangan tak nol,
+$\Omega=\set{n/d\suchthat \text{$n,d\in\Z$ dan $d\neq 0$}}$.
+Definisikan $S_{n,d}$ dengan: $\hat{n}/\hat{d}\in S_{n,d}$ jika
+$\hat{n}d=n\hat{d}$.
+Mengecek bahwa ini merupakan partisi dari $\Omega$ adalah pekerjaan rutin
+(misalnya, perhatikan bahwa $S_{4,3}=S_{8,6}$).
+Gambar berikut menunjukkan beberapa bagian, dengan mencantumkan dua dari tak
+hingga banyak anggotanya pada setiap bagian.
+\begin{center}
+  \includegraphics{appen/mp/appen.11}
+\end{center}
+
+Setiap relasi ekuivalensi menginduksi suatu partisi, dan setiap partisi
+diinduksi oleh suatu relasi ekuivalensi.
+(Hal ini mudah diperiksa.)
+Berikut dua contoh.
+
+Tinjau relasi ekuivalensi pada dua bilangan bulat `memberikan sisa yang sama
+ketika dibagi \( 2 \)', yaitu himpunan
+\( P=\set{(-1,3),(2,4),(0,0),\ldots} \).
+Dalam himpunan $P$ terdapat dua jenis pasangan: pasangan yang kedua anggotanya
+genap dan pasangan yang kedua anggotanya ganjil.
+Ekuivalensi ini menginduksi suatu partisi dengan bagian-bagian yang ditentukan
+sebagai berikut: untuk setiap \( x \), definisikan himpunan bilangan yang
+berelasi dengannya, \( S_x=\set{y\suchthat (x,y)\in P} \).
+Bagian-bagiannya adalah
+\( \set{\ldots,-3,-1,1,3,\ldots} \) dan
+\( \set{\ldots,-2,0,2,4,\ldots} \).
+Setiap bagian dapat dinamai dengan banyak cara; misalnya,
+\( \set{\ldots,-3,-1,1,3,\ldots} \) adalah \( S_1 \) sekaligus \( S_{-3} \).
+
+Sekarang tinjau partisi bilangan asli dengan dua bilangan berada dalam bagian
+yang sama apabila keduanya menyisakan sisa yang sama ketika dibagi $10$,
+yaitu apabila keduanya memiliki angka satuan yang sama.
+Partisi ini diinduksi oleh relasi ekuivalensi $R$ yang didefinisikan sebagai
+berikut: dua bilangan $n$ dan $m$ berelasi apabila keduanya berada dalam
+bagian yang sama.
+Sebagai contoh, $3$ berelasi dengan $33$, tetapi $3$ tidak berelasi dengan
+$102$.
+Memverifikasi ketiga syarat dalam definisi ekuivalensi adalah pekerjaan mudah.
+
+Setiap bagian dari suatu partisi disebut \definend{kelas ekuivalensi}.%
+\index{ekuivalensi!kelas}\index{kelas!ekuivalensi}
+Kadang-kadang kita memilih satu unsur dari setiap kelas ekuivalensi sebagai
+\definend{wakil kelas}.%
+\index{ekuivalensi!wakil}\index{kelas!wakil}\index{wakil!kelas}
+\begin{center}
+  \includegraphics{appen/mp/appen.13}
+\end{center}
+Biasanya, ketika memilih wakil kita mempertimbangkan suatu aturan yang alami.
+Dalam hal itu, wakil tersebut disebut wakil
+\definend{kanonik}.%
+\index{wakil alami}\index{wakil kanonik}%
+\index{ekuivalensi!kelas!wakil kanonik}%
+\index{wakil!kanonik}
+Sebagai contoh, pecahan \( 3/5 \) dan \( 9/15 \) ekuivalen.
+Dalam penggunaan sehari-hari, kita sering memilih pecahan dalam `bentuk
+paling sederhana' atau `bentuk tersederhanakan', $3/5$, sebagai wakil kelas.
+\begin{center}
+  \includegraphics{appen/mp/appen.12}
+\end{center}
+\index{partisi|)}
+%
+%\end{document}

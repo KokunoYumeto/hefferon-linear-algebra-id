@@ -1,0 +1,20 @@
+\thispagestyle{empty} %
+% \covergraphic{}
+\newcommand{\titlepagetext}[2]{%
+  \color{black}\fontsize{#1pt}{8pt}{\fontfamily{ugq}\selectfont #2}%
+}
+\newpage
+\setlength{\unitlength}{1in}
+\noindent\begin{picture}(0,0)
+  \put(0.75,-2){\centering{\begin{tabular}{c}
+                          \titlepagetext{36}{Aljabar Linear} \\[.40in]
+                          \titlepagetext{20}{Jim Hef{}feron} \\[.15in]
+                          \titlepagetext{14}{Saint Michael's College}
+                        \end{tabular}}}
+  \put(2.75,-7){\begin{tabular}{l}
+                  Edisi keempat, \input{publicationdate} \\
+                  \texttt{hefferon.net/linearalgebra}
+               \end{tabular}}
+\end{picture}
+\newpage
+\input symlist

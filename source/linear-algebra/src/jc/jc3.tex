@@ -1,0 +1,2142 @@
+% Chapter 4, Section 1 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\section{Nilpotensi}
+Bab ini menunjukkan bahwa setiap matriks persegi serupa dengan suatu matriks
+yang merupakan jumlah dari dua jenis matriks sederhana.
+Bagian sebelumnya berfokus pada jenis sederhana yang pertama, yaitu matriks
+diagonal.
+Sekarang kita meninjau jenis yang lain.
+
+
+
+
+
+
+
+
+
+\subsectionoptional{Komposisi Diri}\index{komposisi diri!pemetaan}\index{pemetaan!komposisi diri}\index{transformasi!dikomposisikan dengan dirinya sendiri}\index{komposisi!diri}
+% \noindent\textit{This subsection is optional, although it is necessary
+% for later material in this section and in the next one.}
+
+Karena transformasi linear $\map{t}{V}{V}$ memiliki domain dan kodomain yang
+sama, kita dapat mengomposisikan $t$ dengan dirinya sendiri:
+\( t^2=\composed{t}{t} \), 
+  dan \( t^3=\composed{t}{\composed{t}{t}} \), 
+dan seterusnya.\appendrefs{iterasi fungsi}\spacefactor=1000 %
+\begin{center}
+  \includegraphics{jc/mp/ch5.1}
+\end{center}
+Notasi pangkat superskrip $t^j$ bagi iterasi transformasi sesuai dengan notasi
+yang telah kita gunakan bagi representasi matriks perseginya, sebab jika
+$\rep{t}{B,B}=T$, maka \( \rep{t^j}{B,B}=T^j \).
+
+
+\begin{example} \label{ex:DerivIter}
+Bagi pemetaan turunan \( \map{d/dx}{\polyspace_3}{\polyspace_3} \) yang
+diberikan oleh
+\begin{equation*}
+  a+bx+cx^2+dx^3\xmapsunder{d/dx} b+2cx+3dx^2
+\end{equation*}
+pangkat keduanya adalah turunan kedua,
+\begin{equation*}
+  a+bx+cx^2+dx^3\xmapsunder{d^2/dx^2} 2c+6dx 
+\end{equation*}
+pangkat ketiganya adalah turunan ketiga,
+\begin{equation*}
+  a+bx+cx^2+dx^3\xmapsunder{d^3/dx^3} 6d 
+\end{equation*}
+dan setiap pangkat yang lebih tinggi adalah pemetaan nol.
+\end{example}
+
+\begin{example}
+Transformasi pada ruang $\matspace_{\nbyn{2}}$ yang terdiri atas matriks
+$\nbyn{2}$ ini
+\begin{equation*}
+  \begin{mat}
+    a  &b  \\
+    c  &d
+  \end{mat}
+  \mapsunder{t}
+  \begin{mat}
+    b  &a  \\
+    d  &0
+  \end{mat}
+\end{equation*}
+memiliki pangkat kedua berikut
+\begin{equation*}
+  \begin{mat}
+    a  &b  \\
+    c  &d
+  \end{mat}
+  \mapsunder{t^2}
+  \begin{mat}
+    a  &b  \\
+    0  &0
+  \end{mat}
+\end{equation*}
+dan pangkat ketiga berikut.
+\begin{equation*}
+  \begin{mat}
+    a  &b  \\
+    c  &d
+  \end{mat}
+  \mapsunder{t^3}
+  \begin{mat}
+    b  &a  \\
+    0  &0
+  \end{mat}
+\end{equation*}
+Setelah itu, $t^4=t^2$ dan $t^5=t^3$, dan seterusnya.
+\end{example}
+
+\begin{example}
+Tinjau transformasi geser $\map{t}{\C^3}{\C^3}$.
+\begin{equation*}
+  \colvec{x \\ y \\ z} \mapsunder{t} \colvec{0 \\ x \\ y}
+\end{equation*}
+Kita memperoleh
+\begin{equation*}
+  \colvec{x \\ y \\ z} \mapsunder{t} \colvec{0 \\ x \\ y}
+                       \mapsunder{t} \colvec{0 \\ 0 \\ x}
+                       \mapsunder{t} \colvec{0 \\ 0 \\ 0}
+\end{equation*}
+sehingga ruang-ruang hasilnya turun menuju subruang trivial.
+\begin{equation*}
+  \rangespace{t}=\set{\colvec{0 \\ a \\ b}\suchthat a,b\in\C}
+  \qquad
+  \rangespace{t^2}=\set{\colvec{0 \\ 0 \\ c}\suchthat c\in\C}
+  \qquad
+  \rangespace{t^3}=\set{\colvec{0 \\ 0 \\ 0}}  
+\end{equation*}
+\end{example}
+
+Contoh-contoh ini mengisyaratkan bahwa setelah sejumlah iterasi, pemetaan
+tersebut menjadi stabil.
+
+\begin{lemma}  \label{le:RangeAndNullChains}
+Bagi sebarang transformasi \( \map{t}{V}{V} \), ruang hasil dari
+pangkat-pangkatnya membentuk rantai menurun
+\begin{equation*}
+  V\supseteq \rangespace{t}\supseteq\rangespace{t^2}\supseteq\cdots
+\end{equation*}
+dan ruang nolnya membentuk rantai menaik.
+\begin{equation*}
+  \set{\vec{0}}\subseteq\nullspace{t}\subseteq\nullspace{t^2}\subseteq\cdots
+\end{equation*}
+Lebih lanjut, terdapat \( k>0 \) sedemikian sehingga bagi pangkat-pangkat yang
+lebih kecil daripada $k$, himpunan bagiannya bersifat sejati:~jika
+$j<k$, maka $\rangespace{t^j}\supset\rangespace{t^{j+1}}$
+dan 
+$\nullspace{t^j}\subset\nullspace{t^{j+1}}$,
+sedangkan
+jika $j\geq k$, maka $\rangespace{t^j}=\rangespace{t^{j+1}}$
+dan
+$\nullspace{t^j}=\nullspace{t^{j+1}}$.  
+\end{lemma}
+
+\noindent (Kasus $k=1$ dapat terjadi, misalnya jika $t$ adalah pemetaan
+identitas, sehingga tidak ada himpunan bagian sejati dalam kedua rantai.)
+
+\begin{proof}
+Pertama, ingat bahwa bagi sebarang pemetaan, dimensi ruang hasil ditambah dimensi
+ruang nol sama dengan dimensi domainnya.
+Jadi, jika dimensi ruang hasil berkurang, dimensi ruang nol harus bertambah.
+Di sini kita akan membuktikan bagian mengenai ruang hasil dan menyerahkan sisanya
+kepada
+\nearbyexercise{exer:RangeAndNullChains}.
+
+Kita mulai dengan menunjukkan bahwa ruang-ruang hasil tersebut membentuk suatu
+rantai.
+Jika $\vec{w}\in\rangespace{t^{j+1}}$, sehingga
+$\vec{w}=t^{j+1}(\vec{v})$ bagi suatu $\vec{v}$, maka
+$\vec{w}=t^{j}(\,t(\vec{v})\,)$.
+Jadi, $\vec{w}\in\rangespace{t^{j}}$.
+
+Berikutnya kita membuktikan pernyataan ``lebih lanjut'':~pada awalnya
+inklusi-inklusi dalam rantai bersifat sejati, lalu mulai suatu pangkat $k$
+ruang-ruang hasil tersebut sama.
+Pertama kita tunjukkan bahwa jika sepasang ruang hasil yang bersebelahan dalam
+rantai sama, \( \rangespace{t^{k}}=\rangespace{t^{k+1}} \), maka semua ruang
+hasil sesudahnya juga sama:
+\( \rangespace{t^{k+1}}=\rangespace{t^{k+2}} \), dan seterusnya.
+Hal ini berlaku karena
+\( \map{t}{\rangespace{t^{k+1}}}{\rangespace{t^{k+2}}} \)
+adalah pemetaan yang sama, dengan domain yang sama, seperti
+\( \map{t}{\rangespace{t^{k}}}{\rangespace{t^{k+1}}} \), dan
+karena itu mempunyai hasil yang sama,
+\( \rangespace{t^{k+1}}=\rangespace{t^{k+2}} \)
+(pernyataan ini berlaku bagi semua pangkat yang lebih tinggi melalui induksi).
+Jadi, jika rantai ruang hasil berhenti menurun secara ketat, mulai titik itu
+rantai tersebut stabil.
+
+Terakhir, kita tunjukkan bahwa rantai tersebut pada akhirnya harus berhenti
+menurun.
+Setiap ruang hasil merupakan subruang dari ruang sebelumnya.
+Agar menjadi subruang sejati, dimensinya harus benar-benar lebih rendah
+(lihat \nearbyexercise{exer:PropSubspStrictLowerDimen}).
+Ruang-ruang ini berdimensi hingga, sehingga rantai hanya dapat turun sebanyak
+berhingga langkah.
+Artinya, pangkat $k$ paling besar sama dengan dimensi $V$.
+\end{proof}
+
+\begin{example}
+Pemetaan turunan $a+bx+cx^2+dx^3\xmapsunder{d/dx} b+2cx+3dx^2$ pada
+$\polyspace_3$ memiliki rantai ruang hasil berikut.
+\begin{equation*}
+  \rangespace{t^0}=\polyspace_3
+    \:\supset\:\rangespace{t^1}=\polyspace_2
+    \:\supset\:\rangespace{t^2}=\polyspace_1
+    \:\supset\:\rangespace{t^3}=\polyspace_0
+    \:\supset\:\rangespace{t^4}=\set{\zero}
+    % =\rangespace{t^5}=\set{\zero}=
+    % \,=\,\cdots
+\end{equation*}
+Semua unsur rantai sesudahnya adalah ruang trivial.
+Pemetaan tersebut memiliki rantai ruang nol berikut.
+\begin{equation*}
+  \nullspace{t^0}=\set{\zero}
+  \:\subset\: \nullspace{t^1}=\polyspace_0
+  \:\subset\:\nullspace{t^2}=\polyspace_1
+  \:\subset\:\nullspace{t^3}=\polyspace_2
+  \:\subset\:\nullspace{t^4}=\polyspace_3
+\end{equation*}
+Unsur-unsur sesudahnya adalah seluruh ruang.
+\end{example}
+
+\begin{example} \label{exam:PolyRankFalls}
+Misalkan \( \map{t}{\polyspace_2}{\polyspace_2} \) adalah pemetaan
+\( d_0+d_1x+d_2x^2 \mapsto 2d_0+d_2x. \)
+Seperti dinyatakan lema, melalui iterasi ruang hasilnya menyusut
+\begin{equation*}
+  \rangespace{t^0}=\polyspace_2
+    \quad
+  \rangespace{t}=\set{a_0+a_1x\suchthat a_0,a_1\in\C}
+    \quad
+  \rangespace{t^2}=\set{a_0\suchthat a_0\in\C}
+\end{equation*}
+kemudian stabil, sehingga $\rangespace{t^2}=\rangespace{t^3}=\cdots$.
+Ruang nolnya membesar
+\begin{equation*}
+  \nullspace{t^0}=\set{0}
+    \quad
+  \nullspace{t}=\set{b_1x\suchthat b_1\in\C}
+    \quad
+  \nullspace{t^2}=\set{b_1x+b_2x^2\suchthat b_1,b_2\in\C}
+\end{equation*}
+kemudian stabil, $\nullspace{t^2}=\nullspace{t^3}=\cdots$.
+\end{example}
+
+\begin{example}
+Transformasi \( \map{\pi}{\C^3}{\C^3} \) yang memproyeksikan ke dua koordinat
+pertama,
+\begin{equation*}
+   \colvec{c_1 \\ c_2 \\ c_3}
+     \mapsunder{\pi}
+   \colvec{c_1 \\ c_2 \\ 0}
+\end{equation*}
+memiliki \( \C^3\supset\rangespace{\pi}=\rangespace{\pi^2}=\cdots \) dan
+\( \set{\zero}\subset\nullspace{\pi}=\nullspace{\pi^2}=\cdots\, \), dengan
+ruang hasil dan ruang nol berikut.
+\begin{equation*}
+  \rangespace{\pi}=\set{\colvec{a \\ b \\ 0}\suchthat a,b\in\C}
+  \qquad
+  \nullspace{\pi}=\set{\colvec{0 \\ 0 \\ c}\suchthat c\in\C}
+\end{equation*}
+\end{example}
+
+\begin{definition}
+Misalkan \( t \) adalah transformasi pada ruang berdimensi \( n \).
+\definend{Ruang hasil tergeneralisasi}\index{ruang hasil tergeneralisasi}%
+\index{ruang hasil!tergeneralisasi}
+(atau \definend{penutupan ruang hasil\/}\index{penutupan!ruang hasil}%
+\index{ruang hasil!penutupan})
+adalah $\genrangespace{t}=\rangespace{t^n}$.
+\definend{Ruang nol tergeneralisasi}\index{ruang nol tergeneralisasi}%
+\index{ruang nol!tergeneralisasi}
+(atau \definend{penutupan ruang nol\/}\index{penutupan!ruang nol}%
+\index{ruang nol!penutupan})
+adalah $\gennullspace{t}=\nullspace{t^n}$.
+\end{definition}
+
+Grafik berikut menggambarkannya.
+Sumbu horizontal menunjukkan pangkat~$j$ suatu transformasi.
+Sumbu vertikal menunjukkan dimensi ruang hasil $t^j$ sebagai jarak di atas nol,
+dan dengan demikian juga menunjukkan dimensi ruang nol karena jumlah keduanya
+sama dengan dimensi $n$ domain.
+\begin{center}
+  % \includegraphics{jc/mp/ch5.2}
+  \includegraphics{jc/mp/ch5.8}
+\end{center}
+Melalui iterasi, peringkat turun dan nulitas naik hingga terdapat suatu $k$ yang
+membuat pemetaan mencapai keadaan stabil,
+$\rangespace{t^k}=\rangespace{t^{k+1}}=\genrangespace{t}$
+dan $\nullspace{t^k}=\nullspace{t^{k+1}}=\gennullspace{t}$.
+Hal ini harus terjadi paling lambat pada iterasi ke-$n$.
+% The steady state's distance above zero is the dimension of the 
+% generalized range space
+% and its distance below $n$ is the dimension of
+% the generalized null space.
+
+\begin{exercises}
+  \recommended \item 
+    Berikan rantai ruang hasil dan ruang nol bagi transformasi nol dan
+    transformasi identitas.
+    \begin{answer}
+      Bagi transformasi nol, apa pun ruangnya, rantai ruang hasil adalah
+      \( V\supset\set{\vec{0}}=\set{\vec{0}}=\cdots\, \), sedangkan rantai
+      ruang nol adalah \( \set{\vec{0}}\subset V=V=\cdots\, \).
+      Bagi transformasi identitas, kedua rantai tersebut adalah
+      \( V=V=V=\cdots \) dan
+      \( \set{\vec{0}}=\set{\vec{0}}=\cdots\, \).
+    \end{answer}
+  \recommended\item 
+     Bagi setiap pemetaan, berikan rantai ruang hasil, rantai ruang nol, ruang
+     hasil tergeneralisasi, dan ruang nol tergeneralisasi.
+     \begin{exparts}
+       \partsitem $\map{t_0}{\polyspace_2}{\polyspace_2}$, 
+         $a+bx+cx^2\mapsto b+cx^2$ 
+       \partsitem $\map{t_1}{\Re^2}{\Re^2}$,
+         \begin{equation*}
+           \colvec{a \\ b}\mapsto\colvec{0 \\ a}
+         \end{equation*}
+       \partsitem $\map{t_2}{\polyspace_2}{\polyspace_2}$, 
+         $a+bx+cx^2\mapsto b+cx+ax^2$
+       \partsitem $\map{t_3}{\Re^3}{\Re^3}$,
+         \begin{equation*}
+           \colvec{a \\ b \\ c}\mapsto\colvec{a \\ a \\ b}
+         \end{equation*}
+     \end{exparts}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem Mengiterasikan $t_0$ dua kali,
+           $a+bx+cx^2\mapsto b+cx^2\mapsto cx^2$
+           memberikan
+           \begin{equation*}
+             a+bx+cx^2\mapsunder{t_0^2}cx^2
+           \end{equation*}
+           dan setiap iterasi yang lebih tinggi merupakan pemetaan yang sama.
+           Jadi, $\rangespace{t_0}$ adalah ruang polinomial kuadrat tanpa suku
+           linear $\set{p+rx^2\suchthat p,r\in \C}$, sedangkan
+           $\rangespace{t_0^2}$ adalah ruang polinomial kuadrat murni
+           $\set{rx^2\suchthat r\in \C}$; di sinilah rantai menjadi stabil,
+           $\genrangespace{t_0}=\set{rx^2\suchthat r\in \C}$.
+ 
+           Bagi ruang nol, $\nullspace{t_0}$ adalah ruang polinomial konstan
+           $\set{p\suchthat p\in \C}$, sedangkan $\nullspace{t_0^2}$ adalah
+           ruang polinomial linear $\set{p+qx\suchthat p,q\in \C}$.
+           Inilah akhirnya: $\gennullspace{t_0}=\nullspace{t_0^2}$.
+         \partsitem Pangkat kedua
+           \begin{equation*}
+             \colvec{a \\ b}
+              \mapsunder{t_1}\colvec{0 \\ a}
+              \mapsunder{t_1}\colvec{0 \\ 0}
+           \end{equation*}
+           adalah pemetaan nol.
+           Akibatnya, rantai ruang hasil
+           \begin{equation*}
+             \Re^2
+               \supset\set{\colvec{0 \\ p}\suchthat p\in\Re}
+               \supset\set{\zero}
+               =\cdots
+           \end{equation*}
+           dan rantai ruang nol
+           \begin{equation*}
+             \set{\zero}
+               \subset\set{\colvec{0 \\ q}\suchthat q\in\Re}
+               \subset\Re^2
+               =\cdots
+           \end{equation*}
+           masing-masing memiliki panjang dua.
+           Ruang hasil tergeneralisasinya adalah subruang trivial, sedangkan
+           ruang nol tergeneralisasinya adalah seluruh ruang.
+         \partsitem Iterasi pemetaan ini berputar dalam siklus
+           \begin{equation*}
+             a+bx+cx^2
+               \mapsunder{t_2} b+cx+ax^2            
+               \mapsunder{t_2} c+ax+bx^2            
+               \mapsunder{t_2} a+bx+cx^2
+               \;\cdots            
+           \end{equation*}
+           dan rantai ruang hasil serta ruang nolnya bersifat trivial.
+           \begin{equation*}
+             \polyspace_2=\polyspace_2=\cdots
+              \qquad
+              \set{\zero}=\set{\zero}=\cdots  
+           \end{equation*}
+           Jadi, jelas bahwa ruang-ruang tergeneralisasinya adalah
+           $\genrangespace{t_2}=\polyspace_2$ dan
+           $\gennullspace{t_2}=\set{\zero}$.
+         \partsitem Kita memperoleh
+           \begin{equation*}
+             \colvec{a \\ b \\ c}
+                \mapsto\colvec{a \\ a \\ b}
+                \mapsto\colvec{a \\ a \\ a}
+                \mapsto\colvec{a \\ a \\ a}
+                \mapsto\cdots
+           \end{equation*}
+           sehingga rantai ruang hasil
+           \begin{equation*}
+             \Re^3
+               \supset\set{\colvec{p \\ p \\ r}\suchthat p,r\in\Re}
+               \supset\set{\colvec{p \\ p \\ p}\suchthat p\in\Re}
+               =\cdots
+           \end{equation*}
+           dan rantai ruang nol
+           \begin{equation*}
+             \set{\zero}
+                 \subset\set{\colvec{0 \\ 0 \\ r}\suchthat r\in \Re}
+                 \subset\set{\colvec{0 \\ q \\ r}\suchthat q,r\in \Re}
+                =\cdots
+           \end{equation*}
+           masing-masing memiliki panjang dua.
+           Ruang-ruang tergeneralisasinya adalah ruang terakhir yang ditampilkan
+           pada masing-masing rantai di atas.
+      \end{exparts}
+     \end{answer}
+  \item 
+    Buktikan bahwa komposisi fungsi bersifat asosiatif,
+    \( \composed{(\composed{t}{t})}{t}=\composed{t}{(\composed{t}{t})} \)
+    sehingga kita dapat menulis $t^3$ tanpa menentukan pengelompokan.
+    \begin{answer}
+      Keduanya memetakan \( x\mapsto t(t(t(x))) \).
+    \end{answer}
+  \item \label{exer:PropSubspStrictLowerDimen}
+    Periksa bahwa dimensi suatu subruang harus kurang dari atau sama dengan
+    dimensi ruang yang memuatnya.
+    Periksa bahwa jika subruang itu sejati (subruang tersebut tidak sama dengan
+    ruang yang memuatnya), maka dimensinya benar-benar lebih kecil.
+    \textit{(Hal ini digunakan dalam bukti
+             \nearbylemma{le:RangeAndNullChains}.)}
+    \begin{answer}
+      Ingat bahwa jika $W$ adalah subruang dari $V$, kita dapat memperluas
+      sebarang basis $B_W$ bagi $W$ menjadi basis $B_V$ bagi $V$.
+      Pernyataan pertama langsung mengikuti fakta ini.
+      Pernyataan kedua juga tidak sulit:~$W$ adalah rentang $B_W$, dan jika $W$
+      merupakan subruang sejati, maka $V$ bukan rentang $B_W$. Karena itu,
+      $B_V$ harus memiliki sekurang-kurangnya satu vektor lebih banyak daripada
+      $B_W$.
+    \end{answer}
+  \recommended\item 
+    Buktikan bahwa ruang hasil tergeneralisasi $\genrangespace{t}$ adalah seluruh
+    ruang dan ruang nol tergeneralisasi $\gennullspace{t}$ bersifat trivial jika
+    transformasi $t$ nonsingular.
+    Apakah pernyataan ``hanya jika'' juga berlaku?
+    \begin{answer}
+      Pernyataan ``jika'' dan ``hanya jika'' keduanya berlaku.
+      Suatu pemetaan linear nonsingular jika dan hanya jika mempertahankan
+      dimensi, yaitu jika dimensi hasilnya sama dengan dimensi domainnya.
+      Bagi transformasi $\map{t}{V}{V}$, ini berarti pemetaan nonsingular jika
+      dan hanya jika surjektif:~$\rangespace{t}=V$ (dan karena itu
+      $\rangespace{t^2}=V$, dan seterusnya).
+    \end{answer}
+  \item \label{exer:RangeAndNullChains} 
+    Buktikan bagian mengenai ruang nol dari
+    \nearbylemma{le:RangeAndNullChains}.
+    \begin{answer}
+      Ruang-ruang nol membentuk rantai karena jika
+      $\vec{v}\in\nullspace{t^j}$, maka $t^j(\vec{v})=\zero$ dan
+      $t^{j+1}(\vec{v})=t(\,t^j(\vec{v})\,)=t(\zero)=\zero$, sehingga
+      $\vec{v}\in\nullspace{t^{j+1}}$.
+
+      Selanjutnya, sifat ``lebih lanjut'' bagi ruang nol mengikuti fakta bahwa
+      sifat itu berlaku bagi ruang hasil, bersama dengan latihan sebelumnya.
+      Karena dimensi $\rangespace{t^j}$ ditambah dimensi
+      $\nullspace{t^j}$ sama dengan dimensi~$n$ ruang awal~$V$, ketika dimensi
+      ruang hasil berhenti menurun, dimensi ruang nol juga berhenti meningkat.
+      Latihan sebelumnya menunjukkan bahwa mulai titik~$k$ ini, inklusi dalam
+      rantai tidak lagi sejati\Dash ruang-ruang nol tersebut sama.
+    \end{answer}
+  \recommended\item
+    Berikan contoh transformasi pada ruang berdimensi tiga yang hasilnya
+    berdimensi dua.
+    Apakah ruang nolnya?
+    Iterasikan contoh Anda hingga ruang hasil dan ruang nolnya stabil.
+    \begin{answer}
+      (Banyak contoh yang benar; berikut salah satunya.)
+      Salah satu contoh adalah operator geser pada tripel bilangan real,
+      \( (x,y,z)\mapsto (0,x,y) \).
+      Ruang nolnya terdiri atas semua tripel yang diawali dua nol.
+      Pemetaan tersebut stabil setelah tiga iterasi.
+     \end{answer}
+  \item 
+      Tunjukkan bahwa ruang hasil dan ruang nol suatu transformasi linear tidak
+      harus saling lepas.
+      Apakah keduanya pernah saling lepas?
+      \begin{answer}
+        Operator diferensiasi \( \map{d/dx}{\polyspace_1}{\polyspace_1} \)
+        memiliki ruang hasil yang sama dengan ruang nolnya.
+        Sebagai contoh ketika keduanya saling lepas\Dash kecuali pada vektor
+        nol\Dash tinjau pemetaan identitas atau sebarang pemetaan nonsingular.
+      \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsectionoptional{Untaian}
+\index{nilpoten|(}
+\noindent\textit{Bagian ini memerlukan materi dari subbagian opsional
+    Menggabungkan Subruang.}
+
+Subbagian sebelumnya menunjukkan bahwa ketika \( j \) bertambah, dimensi
+$\rangespace{t^j}$ turun sedangkan dimensi $\nullspace{t^j}$ naik, sedemikian
+rupa sehingga peringkat dan nulitas tersebut bersama-sama membagi dimensi $V$.
+Dapatkah kita mengatakan lebih banyak; apakah keduanya membagi suatu basis\Dash
+apakah
+\( V=\rangespace{t^j}\directsum\nullspace{t^j} \)?
+
+Jawabannya ya bagi pangkat terkecil $j=0$, sebab
+\( V=\rangespace{t^0}\directsum\nullspace{t^0}=V\directsum\set{\zero} \).
+Jawabannya juga ya pada ujung yang lain.
+
+\begin{lemma} \label{lem:RestONeToOne}
+Bagi sebarang transformasi linear \( \map{t}{V}{V} \), fungsi
+\( \map{t}{\genrangespace{t}}{\genrangespace{t}} \) bersifat satu-satu.
+\end{lemma}
+
+\begin{proof}
+Misalkan dimensi $V$ adalah $n$.
+Karena \( \rangespace{t^n}=\rangespace{t^{n+1}} \), pemetaan
+\( \map{t}{\genrangespace{t}}{\genrangespace{t}} \) merupakan homomorfisme
+yang mempertahankan dimensi.
+Karena itu, menurut Teorema~Tiga.II.\ref{th:OOHomoEquivalence}, pemetaan tersebut
+bersifat satu-satu.
+\end{proof}
+
+\begin{corollary} \label{GenRngNullDirSumToSp}
+Jika \( \map{t}{V}{V} \) adalah transformasi linear, ruang tersebut merupakan
+jumlah langsung
+\( V=\genrangespace{t}\directsum\gennullspace{t} \).
+Artinya, berlaku (1)~\( \dim(V)=\dim(\genrangespace{t})+\dim(\gennullspace{t}) \)
+dan (2)~\( \genrangespace{t}\intersection\gennullspace{t}=\set{\zero} \).
+\end{corollary}
+
+\begin{proof}
+Misalkan dimensi $V$ adalah $n$.
+Kita akan membuktikan kalimat kedua, yang ekuivalen dengan kalimat pertama.
+Klausul~(1) benar karena setiap transformasi memenuhi bahwa rank ditambah
+nulitasnya sama dengan dimensi ruang, dan secara khusus hal ini berlaku bagi
+transformasi $t^n$.
+
+Bagi klausul~(2), andaikan
+\( \vec{v}\in\genrangespace{t}\intersection\gennullspace{t} \)
+%               =\rangespace{t^n}\intersection\nullspace{t^n} \)
+dan kita akan membuktikan bahwa $\vec{v}=\zero$.
+Karena \( \vec{v} \) berada dalam ruang nol tergeneralisasi,
+\( t^n(\vec{v})=\zero \).
+Di sisi lain, menurut lema,
+\( \map{t}{\genrangespace{t}}{\genrangespace{t}} \)
+bersifat satu-satu. Karena komposisi pemetaan-pemetaan satu-satu juga bersifat
+satu-satu, \( \map{t^n}{\genrangespace{t}}{\genrangespace{t}} \) bersifat
+satu-satu.
+Hanya \( \zero \) yang dipetakan ke \( \zero \) oleh pemetaan linear
+satu-satu, sehingga fakta bahwa \( t^n(\vec{v})=\zero \) menyiratkan
+\( \vec{v}=\zero \).
+\end{proof}
+
+\begin{remark}
+Secara teknis terdapat perbedaan antara pemetaan $\map{t}{V}{V}$ dan pemetaan
+pada subruang \( \map{t}{\genrangespace{t}}{\genrangespace{t}} \) jika ruang
+hasil tergeneralisasi tidak sama dengan $V$, sebab domainnya berbeda.
+Namun, perbedaannya kecil karena pemetaan kedua merupakan
+pembatasan % \index{restriction}\index{map!restriction}\appendrefs{map restrictions}\spacefactor=1000 %
+pemetaan pertama pada $\genrangespace{t}$.
+\end{remark}
+
+Bagi pangkat antara $j=0$ dan~$j=n$, ruang $V$ mungkin bukan jumlah langsung
+$\rangespace{t^j}$ dan $\nullspace{t^j}$.
+Contoh berikut menunjukkan bahwa keduanya dapat memiliki irisan nontrivial.
+
+\begin{example}   \label{FirstNilMap}
+Tinjau transformasi pada \( \C^2 \) yang didefinisikan oleh
+aksi berikut pada anggota-anggota basis standar.
+\begin{equation*}
+  \colvec[r]{1 \\ 0}
+    \mapsunder{n}
+    \colvec[r]{0 \\ 1}
+  \quad
+  \colvec[r]{0 \\ 1}
+    \mapsunder{n}
+    \colvec[r]{0 \\ 0}
+  \qquad
+  N=\rep{n}{\stdbasis_2,\stdbasis_2}=\begin{mat}[r]
+    0  &0  \\
+    1  &0
+  \end{mat}
+\end{equation*}
+Ini adalah \definend{pemetaan geser}\index{geser}\index{transformasi!geser}
+karena pemetaan tersebut menggeser entri-entri ke bawah, dan entri paling bawah
+bergeser sepenuhnya keluar dari vektor.  
+\begin{equation*}
+  \colvec{x \\ y}\mapsto \colvec{0 \\ x}
+\end{equation*}
+Pada basis tersebut, aksi pemetaan ini menghasilkan suatu
+\definend{untaian}.\index{untaian!vektor-vektor basis}
+\begin{equation*}
+  \begin{strings}{ccccc}
+     \colvec{1 \\ 0} &\mapsto &\colvec{0 \\ 1} &\mapsto &\colvec{0 \\ 0}
+  \end{strings}
+  \qquad\text{yakni}\qquad
+  \begin{strings}{ccccc}
+     \vec{e}_1 &\mapsto &\vec{e}_2 &\mapsto &\zero
+  \end{strings}
+\end{equation*}
+Pemetaan ini memberikan cara alami untuk memperoleh suatu vektor yang berada
+sekaligus dalam ruang hasil dan ruang nol; gambaran untaian tersebut menunjukkan
+salah satu vektor demikian.
+\begin{equation*}
+  \vec{e}_2=\colvec[r]{0 \\ 1}
+\end{equation*}
+Perhatikan pula bahwa walaupun $n$ bukan pemetaan nol,
+fungsi $n^2=\composed{n}{n}$ merupakan pemetaan nol.
+\end{example}
+
+\begin{example}  \label{NilIndexFourOnCFour}
+Fungsi linear \( \map{\hat{n}}{\C^4}{\C^4} \) yang aksinya pada
+\( \stdbasis_4 \) diberikan oleh untaian
+\begin{equation*}
+  \begin{strings}{ccccccccc}
+     \vec{e}_1 &\mapsto &\vec{e}_2
+          &\mapsto &\vec{e}_3
+          &\mapsto &\vec{e}_4
+          &\mapsto &\zero
+  \end{strings}
+\end{equation*}
+memiliki
+\( \rangespace{\hat{n}}\intersection\nullspace{\hat{n}} \) yang sama dengan
+rentang \( \spanof{\set{\vec{e}_4}} \),
+memiliki \( \rangespace{\hat{n}^2}\intersection\nullspace{\hat{n}^2}=
+  \spanof{\set{\vec{e}_3,\vec{e}_4}} \),
+dan memiliki \( \rangespace{\hat{n}^3}\intersection\nullspace{\hat{n}^3}=
+    \spanof{\set{\vec{e}_4}} \).
+Representasi matriksnya seluruhnya nol, kecuali beberapa entri satu pada
+subdiagonal.
+\begin{equation*}
+  \hat{N}=\rep{\hat{n}}{\stdbasis_4,\stdbasis_4}
+  =\begin{mat}[r]
+    0  &0  &0  &0 \\
+    1  &0  &0  &0 \\
+    0  &1  &0  &0 \\
+    0  &0  &1  &0 \\
+  \end{mat}
+\end{equation*}
+Walaupun $\hat{n}$ bukan pemetaan nol, demikian pula $\hat{n}^2$ dan
+$\hat{n}^3$, fungsi $\hat{n}^4$ merupakan fungsi nol.
+\end{example}
+
+\begin{example} \label{ThirdNilMap}
+Transformasi dapat bertindak melalui lebih dari satu untaian.
+Transformasi \( t \) bertindak pada basis
+\( B=\sequence{\vec{\beta}_1,\dots,\vec{\beta}_5} \) menurut
+\begin{equation*}
+   \begin{strings}{ccccccc}
+    \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto &\vec{\beta}_3
+        &\mapsto &\zero \\
+    \vec{\beta}_4 &\mapsto &\vec{\beta}_5 &\mapsto &\zero
+  \end{strings}
+\end{equation*}
+dan, misalnya, memiliki $\vec{\beta}_3$ dalam irisan ruang hasil dan ruang
+nolnya.
+Untaian-untaian tersebut memperjelas bahwa $t^3$ merupakan pemetaan nol.
+Pemetaan ini direpresentasikan oleh matriks yang seluruhnya nol, kecuali
+blok-blok entri satu pada subdiagonal,
+\begin{equation*}
+  \rep{t}{B,B}=
+  \begin{pmat}{rrr|rr}
+     0  &0  &0  &0  &0  \\
+     1  &0  &0  &0  &0  \\
+     0  &1  &0  &0  &0  \\ \hline
+     0  &0  &0  &0  &0  \\
+     0  &0  &0  &1  &0
+  \end{pmat}
+\end{equation*}
+(garis-garisnya hanya mengatur blok-blok tersebut secara visual).
+\end{example}
+
+Dalam contoh-contoh tersebut, semua vektor pada akhirnya ditransformasikan
+menjadi nol.
+
+\begin{definition} \label{def:nilpotent} \index{nilpoten!definisi}
+Transformasi \definend{nilpoten}\index{transformasi!nilpoten}%
+\index{nilpoten!transformasi}
+adalah transformasi yang suatu pangkatnya merupakan pemetaan nol.
+\definend{Matriks nilpoten}\index{matriks!nilpoten}%
+\index{nilpoten!matriks}
+adalah matriks yang suatu pangkatnya merupakan matriks nol.
+Dalam kedua kasus, pangkat terkecil demikian disebut
+\definend{indeks nilpotensi}.%
+\index{nilpotensi!indeks}\index{indeks nilpotensi}
+\end{definition}
+
+\begin{example}
+Dalam \nearbyexample{FirstNilMap}, indeks nilpotensinya adalah dua.
+Dalam \nearbyexample{NilIndexFourOnCFour}, indeksnya empat.
+Dalam \nearbyexample{ThirdNilMap}, indeksnya tiga.
+\end{example}
+
+\begin{example}
+Pemetaan diferensiasi \( \map{d/dx}{\polyspace_2}{\polyspace_2} \)
+nilpoten dengan indeks tiga karena turunan ketiga sebarang polinomial
+kuadrat adalah nol.
+Aksi pemetaan ini dideskripsikan oleh untaian
+$x^2\mapsto 2x\mapsto 2\mapsto 0$
+dan pemilihan basis \( B=\sequence{x^2,2x,2} \)
+memberikan representasi berikut.
+\begin{equation*}
+  \rep{d/dx}{B,B}=
+  \begin{mat}[r]
+     0  &0  &0  \\
+     1  &0  &0  \\
+     0  &1  &0
+  \end{mat}
+\end{equation*}
+\end{example}
+
+Tidak semua matriks nilpoten seluruhnya nol kecuali blok-blok entri satu pada
+subdiagonal.
+
+\begin{example} \label{ex:NilMatNotCanon}
+Untuk matriks $\hat{N}$ dari \nearbyexample{NilIndexFourOnCFour}
+dan basis empat vektor berikut,
+\begin{equation*}
+  D=\sequence{\colvec[r]{1 \\ 0 \\ 1 \\ 0},
+              \colvec[r]{0 \\ 2 \\ 1 \\ 0},
+              \colvec[r]{1 \\ 1 \\ 1 \\ 0},
+              \colvec[r]{0 \\ 0 \\ 0 \\ 1}}
+\end{equation*}
+operasi perubahan basis menghasilkan representasi berikut terhadap \( D,D \).
+\begin{equation*}
+  \begin{mat}[r]
+    1  &0  &1 &0 \\
+    0  &2  &1 &0 \\
+    1  &1  &1 &0 \\
+    0  &0  &0 &1
+  \end{mat}
+  \begin{mat}[r]
+    0  &0  &0 &0 \\
+    1  &0  &0 &0 \\
+    0  &1  &0 &0 \\
+    0  &0  &1 &0
+  \end{mat}
+  \begin{mat}[r]
+    1  &0  &1 &0 \\
+    0  &2  &1 &0 \\
+    1  &1  &1 &0 \\
+    0  &0  &0 &1
+  \end{mat}^{-1}\!\!
+  =
+  \begin{mat}[r]
+   -1  &0  &1   &0 \\
+   -3  &-2 &5   &0 \\
+   -2  &-1  &3  &0 \\
+    2  &1   &-2 &0
+  \end{mat}
+\end{equation*}
+Matriks baru tersebut nilpoten; pangkat keempatnya adalah matriks nol.
+Kita dapat memverifikasinya dengan perhitungan yang melelahkan, atau cukup
+mengamati bahwa matriks itu nilpoten karena pangkat keempatnya serupa dengan
+\( \hat{N}^4 \), yaitu matriks nol, dan satu-satunya matriks yang serupa dengan
+matriks nol adalah matriks nol itu sendiri.
+\begin{equation*}
+   (P\hat{N}P^{-1})^4
+   =P\hat{N}P^{-1}\cdot P\hat{N}P^{-1}\cdot P\hat{N}P^{-1}\cdot P\hat{N}P^{-1}
+   =P\hat{N}^4P^{-1}
+\end{equation*}
+\end{example}
+
+Tujuan subbagian ini adalah menunjukkan bahwa contoh sebelumnya bersifat
+prototipikal: setiap matriks nilpoten serupa dengan suatu matriks yang seluruhnya
+nol, kecuali blok-blok entri satu pada subdiagonal.
+
+\begin{definition}
+Misalkan \( t \) suatu transformasi nilpoten pada \( V \).
+Suatu \definend{untaian \( t \) yang dihasilkan oleh
+\( \vec{v}\in V \)}\index{untaian}
+adalah barisan
+\( \sequence{\vec{v},t(\vec{v}),\ldots,t^{k-1}(\vec{v})} \)
+sedemikian sehingga $t^k(\vec{v})=\zero$.
+Suatu \definend{basis untaian \( t \)}\index{basis!untaian}\index{untaian!basis}
+adalah basis yang merupakan konkatenasi untaian-untaian \( t \).
+\end{definition}
+
+\noindent (Untaian-untaian tidak dapat membentuk basis melalui konkatenasi
+kecuali jika saling lepas, karena sebuah basis tidak dapat memuat vektor yang berulang.)
+
+\begin{example}
+Pemetaan linear \( \map{t}{\C^3}{\C^3} \)
+\begin{equation*}
+  \colvec{x \\ y \\ z}\mapsunder{t}\colvec{y \\ z \\ 0}
+\end{equation*}
+bersifat nilpoten dengan indeks~$3$.
+\begin{equation*}
+  \colvec{x \\ y \\ z}
+  \mapsunder{t}\colvec{y \\ z \\ 0}
+  \mapsunder{t}\colvec{z \\ 0 \\ 0}
+  \mapsunder{t}\colvec{0 \\ 0 \\ 0}
+\end{equation*}
+Berikut ini adalah suatu untaian~$t$.
+\begin{equation*}
+  \sequence{\colvec{0 \\ 0 \\ 1},
+            \colvec{0 \\ 1 \\ 0},
+            \colvec{1 \\ 0 \\ 0}}
+\end{equation*}
+Karena barisan tersebut merupakan basis,
+barisan itu adalah basis untaian~$t$ bagi ruang~$\C^3$.
+\end{example}
+
+Jika barisan pada contoh sebelumnya adalah
+$\sequence{\vec{\beta}_1,
+             \vec{\beta}_2,
+             \vec{\beta}_3}$,
+untaian~$t$ lainnya adalah
+$\sequence{\vec{\beta}_2,
+             \vec{\beta}_3}$.
+Namun, tentu saja barisan kedua bukan basis bagi~$\C^3$.
+Dalam pengertian ini, untaian-untaian~$t$ dalam suatu basis untaian~$t$
+harus maksimal.
+
+\begin{example}
+Pemetaan linear diferensiasi
+\( \map{d/dx}{\polyspace_2}{\polyspace_2} \)
+bersifat nilpoten.
+Barisan
+\( \sequence{x^2, 2x, 2} \)
+adalah untaian \( d/dx \) dengan panjang~\( 3 \);
+khususnya, untaian ini memenuhi syarat $d/dx(2)=0$.
+Karena merupakan basis, barisan tersebut
+adalah basis untaian \( d/dx \) bagi \( \polyspace_2\).
+\end{example}
+
+\begin{example}
+Dalam \nearbyexample{ThirdNilMap}, kita dapat mengonkatkan untaian-untaian~$t$
+$\sequence{\vec{\beta}_1,\vec{\beta}_2,\vec{\beta}_3}$ dan
+$\sequence{\vec{\beta}_4,\vec{\beta}_5}$
+untuk membentuk basis bagi domain~$t$.
+\end{example}
+
+\begin{lemma}  \label{le:LongestTowerIsIndex}
+Jika suatu ruang mempunyai basis untaian \( t \), maka indeks nilpotensi~$t$
+sama dengan panjang untaian terpanjang dalam basis tersebut.
+\end{lemma}
+
+\begin{proof}
+Misalkan ruang tersebut mempunyai basis untaian~$t$ dan indeks
+nilpotensi~$t$ adalah~$k$.
+Maka \( t^k \) memetakan setiap vektor ke \( \zero \).
+Hal ini berlaku pula bagi
+vektor awal setiap untaian,
+sehingga setiap untaian dalam basis untaian itu panjangnya paling besar~$k$.
+
+Sebaliknya, andaikan ruang tersebut mempunyai basis untaian~$t$, yaitu~$B$,
+yang semua untaiannya lebih pendek daripada~\( k \).
+Karena indeks nilpotensi~$t$ adalah~$k$, terdapat \( \vec{v} \)
+sedemikian sehingga \( t^{k-1}(\vec{v})\neq\zero \).
+Nyatakan $\vec{v}$ sebagai kombinasi linear unsur-unsur~$B$
+lalu terapkan \( t^{k-1} \).
+Menurut pengandaian kita, \( t^{k-1} \) memetakan setiap unsur~$B$ ke \( \zero \).
+Karena itu, pemetaan tersebut membawa setiap suku dalam kombinasi linear ke~$\zero$,
+bertentangan dengan fakta bahwa \( \vec{v} \) tidak dipetakan ke \( \zero \).
+\end{proof}
+
+Kita akan menunjukkan bahwa setiap
+pemetaan nilpoten mempunyai basis untaian yang terkait, yakni basis yang
+terdiri atas untaian-untaian saling lepas.
+% Then our goal theorem, that every
+% nilpotent matrix is similar to one that is
+% all zeros except for blocks of subdiagonal ones, is immediate,
+ %as in \nearbyexample{ThirdNilMap}.
+
+Untuk memahami gagasan utama argumen ini, bayangkan bahwa
+kita ingin membuat suatu contoh tandingan, yakni pemetaan yang nilpoten tetapi
+tidak mempunyai basis untaian saling lepas yang terkait.
+Kita mungkin mencoba membuat pemetaan seperti
+\( \map{t}{\C^5}{\C^5} \) dengan aksi berikut.
+\begin{center}
+  \begin{minipage}{1in}
+  \setlength{\unitlength}{1pt}
+  $\begin{strings}{ccccc}
+     \begin{picture}(4,15)
+       \put(0,14){$\vec{e}_1$}
+       \put(0,-12){$\vec{e}_2$}
+     \end{picture}
+     &\begin{picture}(8,10)
+       \put(0,8){\rotatebox{-30}{$\mapsto$}}%  
+       \put(0,-8){\rotatebox{30}{$\mapsto$}}
+     \end{picture}
+     &\vec{e}_3 &\mapsto &\zero  \\[4ex]
+     \vec{e}_4 &\mapsto &\vec{e}_5 &\mapsto &\zero  
+  \end{strings}$
+  \end{minipage}
+  \hspace*{3em}
+  $\rep{t}{\stdbasis_5,\stdbasis_5}=
+  \begin{mat}[r]
+    0  &0  &0  &0  &0  \\
+    0  &0  &0  &0  &0  \\
+    1  &1  &0  &0  &0  \\
+    0  &0  &0  &0  &0  \\
+    0  &0  &0  &1  &0
+  \end{mat}$
+\end{center}
+Namun, fakta bahwa basis yang ditampilkan tidak saling lepas tidak berarti
+bahwa tidak ada basis lain yang terdiri atas untaian-untaian saling lepas.
+
+Untuk menghasilkan basis semacam itu bagi pemetaan ini,
+mula-mula kita tentukan banyak dan panjang untaiannya.
+Perhatikan bahwa indeks nilpotensi~$t$ adalah dua.
+\nearbylemma{le:LongestTowerIsIndex} menyatakan bahwa dalam suatu basis
+untaian saling lepas, sedikitnya satu untaian mempunyai panjang dua.
+Ada lima unsur basis, sehingga jika terdapat basis untaian saling lepas,
+pemetaan tersebut harus beraksi dengan salah satu dari cara berikut.
+\begin{equation*}
+  \begin{strings}{ccccc}
+    \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto &\zero  \\
+    \vec{\beta}_3 &\mapsto &\vec{\beta}_4 &\mapsto &\zero  \\
+    \vec{\beta}_5 &\mapsto &\zero
+  \end{strings}
+  \hspace*{3em}
+  \begin{strings}{ccccc}
+    \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto &\zero  \\
+    \vec{\beta}_3 &\mapsto &\zero   \\
+    \vec{\beta}_4 &\mapsto &\zero   \\
+    \vec{\beta}_5 &\mapsto &\zero
+  \end{strings}
+\end{equation*}
+Sekarang, inilah titik kuncinya.
+Transformasi dengan aksi di sebelah kiri mempunyai
+ruang nol berdimensi tiga, karena sebanyak itulah vektor basis yang
+dipetakan ke nol.
+Transformasi dengan aksi di sebelah kanan mempunyai ruang nol
+berdimensi empat.
+Dengan representasi matriks di atas, kita dapat menentukan bentuk mana
+di antara dua kemungkinan tersebut yang benar.
+\begin{equation*}
+  \nullspace{t}=
+  \set{\colvec{x \\ -x \\ z \\ 0 \\ r}\suchthat x,z,r\in\C }
+\end{equation*}
+Ruang ini berdimensi tiga,
+yang berarti bahwa dari dua bentuk basis untaian saling lepas di atas,
+basis bagi \( t \) mempunyai bentuk di sebelah kiri.
+
+Untuk menghasilkan basis untaian bagi~$t$, mula-mula
+pilih \( \vec{\beta}_2 \) dan \( \vec{\beta}_4 \) dari
+\( \rangespace{t}\intersection\nullspace{t} \).
+\begin{equation*}
+  \vec{\beta}_2=\colvec[r]{0 \\ 0 \\ 1 \\ 0 \\ 0}\qquad
+  \vec{\beta}_4=\colvec[r]{0 \\ 0 \\ 0 \\ 0 \\ 1}
+\end{equation*}
+(Pilihan lain juga dimungkinkan; pastikan saja bahwa himpunan
+\( \set{\vec{\beta}_2,\vec{\beta}_4} \) bebas linear.)
+Untuk \( \vec{\beta}_5 \), pilih suatu vektor dari \( \nullspace{t} \)
+yang tidak berada dalam rentang \( \set{ \vec{\beta}_2,\vec{\beta}_4 } \).
+\begin{equation*}
+  \vec{\beta}_5=\colvec[r]{1 \\ -1 \\ 0 \\ 0 \\ 0}
+\end{equation*}
+Terakhir, ambil \( \vec{\beta}_1 \) dan \( \vec{\beta}_3 \) sedemikian sehingga
+\( t(\vec{\beta}_1)=\vec{\beta}_2 \) dan
+\( t(\vec{\beta}_3)=\vec{\beta}_4 \).
+\begin{equation*}
+  \vec{\beta}_1=\colvec[r]{0 \\ 1 \\ 0 \\ 0 \\ 0}\qquad
+  \vec{\beta}_3=\colvec[r]{0 \\ 0 \\ 0 \\ 1 \\ 0}
+\end{equation*}
+Dengan demikian, kita memperoleh basis untaian
+\( B=\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_5} \)
+dan, terhadap basis tersebut,
+matriks~$t$ mempunyai blok-blok entri~$1$ pada subdiagonal.
+\begin{equation*}
+  \rep{t}{B,B}=
+  \begin{pmat}{rr|rr|r}
+    0  &0  &0  &0  &0  \\
+    1  &0  &0  &0  &0  \\  \hline
+    0  &0  &0  &0  &0  \\
+    0  &0  &1  &0  &0  \\  \hline
+    0  &0  &0  &0  &0
+  \end{pmat}
+\end{equation*}
+
+\begin{theorem}
+\label{th:NilMapHasStrBas}
+Setiap transformasi nilpoten~$t$ mempunyai suatu basis untaian \( t \) yang terkait.
+Meskipun basisnya tidak unik, banyak
+dan panjang untaiannya ditentukan oleh \( t \).
+\end{theorem}
+
+Gambar berikut mengilustrasikan bukti, yang menjelaskan tiga jenis
+vektor basis.
+Vektor tersebut berada dalam persegi jika merupakan anggota
+ruang nol, dan dalam lingkaran jika bukan.
+\begin{equation*}
+   \begin{strings}{ccccccccccccccccccc}
+     \digitincirc{3}
+         &\mapsto &\digitincirc{1} &\mapsto
+         &\cdots &  &  &  &  &  &  &  &\cdots
+         &\mapsto &\digitincirc{1}
+         &\mapsto &\digitinsq{1} &\mapsto &\zero  \\[.75ex]
+     \digitincirc{3}
+         &\mapsto &\digitincirc{1} &\mapsto
+         &\cdots &  &  &  &  &  &  &  &\cdots
+         &\mapsto &\digitincirc{1}
+         &\mapsto &\digitinsq{1} &\mapsto &\zero  \\[.75ex]
+         &\smash{\vdotswithin{\mapsto}}  \\
+     \digitincirc{3}
+         &\mapsto &\digitincirc{1} &\mapsto
+         &\cdots &
+         &\mapsto &\digitincirc{1}
+         &\mapsto &\digitinsq{1} &\mapsto &\zero  \\[1ex]
+     \digitinsq{2} &\mapsto &\zero \\[.75ex]
+         &\smash{\vdotswithin{\mapsto}}  \\
+     \digitinsq{2} &\mapsto &\zero
+   \end{strings}
+\end{equation*}
+
+\begin{proof}
+Tetapkan suatu ruang vektor~$V$.
+Kita akan berargumen dengan induksi pada indeks nilpotensi.
+Jika pemetaan $\map{t}{V}{V}$
+mempunyai indeks nilpotensi~\( 1 \), maka pemetaan itu adalah pemetaan nol
+dan sebarang basis merupakan basis untaian,
+$\vec{\beta}_1\mapsto\zero$, \ldots,
+$\vec{\beta}_n\mapsto\zero$.
+
+Untuk langkah induksi, andaikan teorema berlaku bagi setiap transformasi
+$\map{t}{V}{V}$
+dengan indeks nilpotensi dari~$1$ sampai dengan~\( k-1 \) (dengan $k>1$),
+dan tinjau kasus berindeks~$k$.
+
+Pengamatan yang menjalankan induksi adalah bahwa
+pembatasan~$t$ pada ruang hasil~\( \rangespace{t} \)
+juga nilpoten, dengan indeks \( k-1 \).
+Karena itu, terapkan hipotesis induksi untuk memperoleh basis untaian bagi
+\( \rangespace{t} \),
+yang banyak dan panjang untaiannya ditentukan oleh \( t \).
+\begin{equation*}
+  B=\cat{\cat{\sequence{\vec{\beta}_1,t(\vec{\beta}_1),\dots,
+     t^{h_1}(\vec{\beta}_1)}}{
+  \cat{\sequence{\vec{\beta}_2,\ldots,t^{h_2}(\vec{\beta}_2)}}}{\cdots}}{
+  \sequence{\vec{\beta}_i,\ldots,t^{h_i}(\vec{\beta}_i)} }
+\end{equation*}
+Kita memakai~$i$ untuk menyatakan banyak untaian.
+Pada gambar di atas, vektor-vektor ini adalah vektor jenis~\( 1 \).
+
+Mengambil vektor terakhir dari setiap untaian
+menghasilkan basis
+\( C=\sequence{t^{h_1}(\vec{\beta}_1),\dots,t^{h_i}(\vec{\beta}_i)} \)
+bagi irisan \( \rangespace{t}\intersection\nullspace{t} \).
+Hal ini karena suatu anggota \( \rangespace{t} \) dipetakan ke nol jika dan
+hanya jika ia merupakan kombinasi linear vektor-vektor basis yang dipetakan
+ke nol.
+Pada gambar, vektor-vektor ini ditunjukkan sebagai \( 1 \) di dalam persegi.
+
+Sekarang perluas \( C \) menjadi basis bagi seluruh ruang nol, \( \nullspace{t} \).
+\begin{equation*}
+  \hat{C}=\cat{C}{\sequence{\vec{\xi}_1,\dots,\vec{\xi}_p}}
+\end{equation*}
+Meskipun vektor-vektor \( \vec{\xi} \) tidak ditentukan secara unik oleh~$t$,
+banyaknya ditentukan secara unik, yakni dimensi
+\( \nullspace{t} \) dikurangi dimensi
+\( \rangespace{t}\intersection\nullspace{t} \).
+Pada gambar, vektor-vektor~$\vec{\xi}$ adalah vektor jenis~\( 2 \),
+sehingga \( \hat{C} \) adalah himpunan vektor dalam persegi.
+
+Terakhir, \( \cat{B}{\sequence{\vec{\xi}_1,\dots,\vec{\xi}_p}} \)
+adalah basis bagi \( \rangespace{t}+\nullspace{t} \).
+Hal ini karena jumlah suatu unsur ruang hasil dengan suatu unsur ruang nol
+dapat direpresentasikan menggunakan unsur-unsur \( B \) untuk bagian ruang
+hasil, bersama vektor-vektor~$\xi$ untuk setiap bagian yang berasal dari
+\( \nullspace{t}-\rangespace{t} \).
+Perhatikan bahwa
+\begin{align*}
+  \dim\big(\rangespace{t}+\nullspace{t}\big)
+  &=
+  \dim (\rangespace{t})+\dim (\nullspace{t})
+    -\dim\big(\rangespace{t}\intersection\nullspace{t}\big)  \\
+  &=
+  \rank (t)+\nullity (t)-i          \\
+  &=
+  \dim (V)-i
+\end{align*}
+sehingga kita dapat memperluas basis
+\( \cat{B}{\sequence{\vec{\xi}_1,\dots,\vec{\xi}_p}} \) 
+menjadi basis untaian~$t$ bagi seluruh
+\( V \) dengan menambahkan~\( i \) vektor lagi.
+Untuk menghasilkannya,
+ingat bahwa setiap \( \vec{\beta}_1,\dots,\vec{\beta}_i \) berada
+di ruang hasil, \( \rangespace{t} \),
+sehingga gunakan vektor-vektor
+\( \vec{v}_1,\dots,\vec{v}_i\in V \) sedemikian sehingga
+\( t(\vec{v}_1)=\vec{\beta}_1,\dots,t(\vec{v}_i)=\vec{\beta}_i \).
+Pemeriksaan bahwa perluasan ini mempertahankan kebebasan linear terdapat dalam
+\nearbyexercise{exer:NilMapWillHaveStrBas}.
+Pada gambar, \( \vec{v}_1,\dots,\vec{v}_i \) adalah vektor-vektor \( 3 \).
+\end{proof}
+
+\begin{corollary} \label{cor:NilpotentMatCanonForm}
+\index{nilpoten!bentuk kanonik untuk}
+\index{transformasi!nilpoten!wakil kanonik}
+\index{bentuk kanonik!untuk matriks nilpoten}
+Setiap matriks nilpoten serupa dengan matriks yang seluruh entrinya nol,
+kecuali blok-blok entri satu pada subdiagonal.
+Artinya, setiap pemetaan nilpoten direpresentasikan terhadap suatu basis
+oleh matriks semacam itu.
+\end{corollary}
+
+Bentuk ini unik dalam arti bahwa jika suatu matriks nilpoten serupa dengan dua
+matriks semacam itu, maka kedua matriks tersebut hanya berbeda dalam urutan bloknya.
+Jadi, bentuk ini merupakan
+bentuk kanonik bagi kelas-kelas keserupaan matriks nilpoten,
+asalkan kita mengurutkan blok-bloknya, misalnya dari yang terpanjang ke yang terpendek.
+
+\begin{example}
+Matriks
+\begin{equation*}
+  M=\begin{mat}[r]
+      1  &-1  \\
+      1  &-1
+    \end{mat}
+\end{equation*}
+mempunyai indeks nilpotensi dua, sebagaimana ditunjukkan oleh perhitungan berikut.
+\begin{center}
+  \begin{tabular}{c|cc}
+    \multicolumn{1}{c}{\textit{pangkat} \( p \)}  &\( M^p \)  &\( \nullspace{M^p}  \)   \\  
+    \hline
+    \( 1 \)
+    &\(  
+       M=\matrixvenlarge{\begin{mat}[r]
+         1  &-1  \\
+         1  &-1
+       \end{mat}}  \)
+    &\( \set{\matrixvenlarge{\colvec{x \\ x}}\suchthat
+                               x\in\C}  \)   \\
+    \( 2 \)
+    &\(  M^2=\matrixvenlarge{\begin{mat}[r]
+         0  &0   \\
+         0  &0
+       \end{mat}}  \)
+    &\( \C^2  \)
+  \end{tabular}
+\end{center}
+Karena matriks itu berukuran $\nbyn{2}$, setiap transformasi yang
+direpresentasikannya bekerja pada ruang berdimensi dua.
+Ruang nol setelah pemetaan diterapkan satu kali,
+$\nullspace{m}$, berdimensi satu, sedangkan
+ruang nol setelah diterapkan dua kali, $\nullspace{m^2}$, berdimensi dua.
+Jadi, aksi $m$ pada suatu basis untaian adalah
+$\vec{\beta}_1\mapsto\vec{\beta}_2\mapsto\zero$ 
+dan bentuk kanonik matriksnya adalah berikut ini.
+\begin{equation*}
+  N=\begin{mat}[r]
+    0  &0  \\
+    1  &0
+  \end{mat}
+\end{equation*}
+
+Kita dapat memperlihatkan basis untaian semacam itu,
+beserta matriks-matriks perubahan basis yang membuktikan keserupaan matriks
+antara $M$ dan~$N$.
+Andaikan \( M \) merepresentasikan $\map{m}{\C^2}{\C^2}$
+terhadap basis standar.
+(Kita dapat saja memilih $M$ sebagai representasi terhadap basis lain,
+tetapi basis standar lebih mudah digunakan.)
+Pilih \( \vec{\beta}_2\in\nullspace{m} \).
+Pilih pula \( \vec{\beta}_1 \)
+sedemikian sehingga \( m(\vec{\beta}_1)=\vec{\beta}_2 \).
+\begin{equation*}
+  \vec{\beta}_2=\colvec[r]{1 \\ 1}
+  \qquad
+  \vec{\beta}_1=\colvec[r]{1 \\ 0}
+\end{equation*}
+Untuk matriks perubahan basis, ingat kembali diagram keserupaan berikut.
+\begin{equation*}
+  \begin{CD}
+    \C^2_{\wrt{\stdbasis_2}}      @>m>M>        \C^2_{\wrt{\stdbasis_2}}     \\
+    @V\scriptstyle\identity V\scriptstyle PV  @V\scriptstyle\identity V\scriptstyle PV \\
+    \C^2_{\wrt{B}}                 @>m>N>         \C^2_{\wrt{B}}
+  \end{CD}
+\end{equation*}
+Bentuk kanoniknya adalah \( \rep{m}{B,B}=PMP^{-1} \), dengan
+\begin{equation*}
+   P^{-1} %=\bigl(\rep{\identity}{\stdbasis_2,B}\bigr)^{-1}
+         =\rep{\identity}{B,\stdbasis_2}
+         =\begin{mat}[r]
+            1  &1  \\
+            0  &1
+          \end{mat}
+   \qquad
+   P=(P^{-1})^{-1}
+         =\begin{mat}[r]
+            1  &-1  \\
+            0  &1
+          \end{mat}
+\end{equation*}
+dan verifikasi perhitungan matriksnya bersifat rutin.
+\begin{equation*}
+  \begin{mat}[r]
+    1  &-1  \\
+    0  &1
+  \end{mat}
+  \begin{mat}[r]
+    1  &-1  \\
+    1  &-1
+  \end{mat}
+  \begin{mat}[r]
+    1  &1  \\
+    0  &1
+  \end{mat}=
+  \begin{mat}[r]
+    0  &0  \\
+    1  &0
+  \end{mat}
+\end{equation*}
+%which does indeed describe the effect of $m$ on the string basis.
+\end{example}
+
+\begin{example} \label{ex:FiveByNilStrBas}
+Matriks berikut
+\begin{equation*}
+  \begin{mat}[r]
+     0  &0  &0  &0  &0  \\
+     1  &0  &0  &0  &0  \\
+     -1 &1  &1  &-1 &1  \\
+     0  &1  &0  &0  &0  \\
+     1  &0  &-1 &1  &-1
+  \end{mat}
+\end{equation*}
+bersifat nilpoten dengan indeks~$3$.
+% \newlength{\extramatrixvspace}
+% \setlength{\extramatrixvspace}{.75ex}
+% \newcommand{\matrixvenlarge}[1]{\raisebox{-0.5\height}{\vbox{
+%        \vspace*{\extramatrixvspace}
+%        \hbox{$#1$}
+%         \vspace*{\extramatrixvspace}
+%         }}}
+\begin{center} 
+  \begin{tabular}{c|cc}
+    \multicolumn{1}{c}{\textit{pangkat} \( p \)}  &\( N^p \)  &\( \nullspace{N^p}  \)   \\  
+    \hline
+    \( 1 \)
+    &\matrixvenlarge{
+         \begin{mat}[r]
+         0  &0  &0  &0  &0  \\
+         1  &0  &0  &0  &0  \\
+         -1 &1  &1  &-1 &1  \\
+         0  &1  &0  &0  &0  \\
+         1  &0  &-1 &1  &-1
+         \end{mat}}
+    &\( 
+        \set{\matrixvenlarge{\colvec{0 \\ 0 \\ u-v \\ u \\ v}} 
+           \suchthat u,v\in\C}  \)                      \\
+    \( 2 \)
+    &\(
+       \matrixvenlarge{\begin{mat}[r]
+         0  &0  &0  &0  &0  \\
+         0  &0  &0  &0  &0  \\
+         1  &0  &0  &0  &0  \\
+         1  &0  &0  &0  &0  \\
+         0  &0  &0  &0  &0
+       \end{mat}}  \)
+    &\( 
+        \set{\matrixvenlarge{\colvec{0 \\ y \\ z \\ u \\ v}}
+                       \suchthat y,z,u,v\in\C}  \)  \\
+    \( 3 \)
+    &\textit{--matriks nol--}
+    &\( \C^5 \)
+  \end{tabular}
+\end{center}
+Tabel tersebut memberi tahu kita hal berikut tentang sebarang basis untaian:~ruang
+nol setelah satu kali penerapan pemetaan berdimensi dua, sehingga dua vektor
+basis dipetakan langsung ke nol; ruang nol setelah penerapan kedua berdimensi
+empat, sehingga dua vektor basis tambahan dipetakan ke nol pada iterasi kedua;
+dan ruang nol setelah tiga kali penerapan berdimensi lima, sehingga satu vektor
+basis yang tersisa dipetakan ke nol dalam tiga langkah.
+\begin{equation*}
+  \begin{strings}{ccccccc}
+    \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto &\vec{\beta}_3
+       &\mapsto &\zero  \\
+    \vec{\beta}_4 &\mapsto &\vec{\beta}_5 &\mapsto &\zero
+  \end{strings}
+\end{equation*}
+Untuk menghasilkan basis semacam itu, mula-mula pilih dua vektor dari
+\( \nullspace{n} \) yang membentuk himpunan bebas linear.
+\begin{equation*}
+   \vec{\beta}_3=\colvec[r]{0 \\ 0 \\ 1 \\ 1 \\ 0} \quad
+   \vec{\beta}_5=\colvec[r]{0 \\ 0 \\ 0 \\ 1 \\ 1}
+\end{equation*}
+Kemudian tambahkan \( \vec{\beta}_2,\vec{\beta}_4\in\nullspace{n^2} \)
+sedemikian sehingga \( n(\vec{\beta}_2)=\vec{\beta}_3 \) dan
+\( n(\vec{\beta}_4)=\vec{\beta}_5 \).
+\begin{equation*}
+   \vec{\beta}_2=\colvec[r]{0 \\ 1 \\ 0 \\ 0 \\ 0} \quad
+   \vec{\beta}_4=\colvec[r]{0 \\ 1 \\ 0 \\ 1 \\ 0}
+\end{equation*}
+Akhiri dengan menambahkan \( \vec{\beta}_1 \)
+sedemikian sehingga \( n(\vec{\beta}_1)=\vec{\beta}_2 \).
+\begin{equation*}
+   \vec{\beta}_1=\colvec[r]{1 \\ 0 \\ 1 \\ 0 \\ 0}
+\end{equation*}
+\end{example}
+
+
+
+
+
+
+\begin{exercises}
+   \recommended \item \label{exer:IndNilLftShift}
+     Berapakah indeks nilpotensi operator \definend{geser ke kanan},
+     yang di sini bekerja pada ruang tripel bilangan real?
+      \begin{equation*}
+         (x,y,z)\mapsto(0,x,y)
+      \end{equation*}
+      \begin{answer}
+        Tiga.
+        Indeksnya sedikitnya tiga karena $\ell^2(\,(1,1,1)\,)=(0,0,1)\neq \zero$.
+        Indeksnya paling besar tiga karena
+        $(x,y,z)\mapsto (0,x,y)\mapsto (0,0,x)\mapsto (0,0,0)$.
+      \end{answer}
+  \recommended \item 
+    Untuk setiap basis untaian, nyatakan indeks nilpotensinya dan
+    berikan dimensi ruang hasil serta
+    ruang nol pada setiap iterasi pemetaan nilpoten tersebut.
+    \begin{exparts}
+      \partsitem $
+        \begin{strings}{ccccccc}
+           \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto &\zero  \\
+           \vec{\beta}_3 &\mapsto &\vec{\beta}_4 &\mapsto &\zero  
+         \end{strings}$
+      \partsitem $
+        \begin{strings}{ccccccc}
+           \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto &\vec{\beta}_3
+                &\mapsto &\zero  \\
+           \vec{\beta}_4 &\mapsto &\zero \\
+           \vec{\beta}_5 &\mapsto &\zero \\
+           \vec{\beta}_6 &\mapsto &\zero
+         \end{strings}$
+      \partsitem $
+        \begin{strings}{ccccccccc}
+           \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto &\vec{\beta}_3
+                &\mapsto &\zero  
+         \end{strings}$
+    \end{exparts}
+    Berikan pula bentuk kanonik matriksnya.
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Domainnya berdimensi empat.
+          Aksi pemetaan tersebut membawa setiap vektor dalam ruang
+          $c_1\cdot \vec{\beta}_1+c_2\cdot \vec{\beta}_2
+            +c_3\cdot \vec{\beta}_3+c_4\cdot \vec{\beta}_4$
+          ke
+          $c_1\cdot \vec{\beta}_2+c_2\cdot \zero
+            +c_3\cdot \vec{\beta}_4+c_4\cdot \zero
+           =c_1\cdot \vec{\beta}_2+c_3\cdot\vec{\beta}_4$.
+          Penerapan pertama pemetaan
+          membawa dua vektor basis $\vec{\beta}_2$ dan
+          $\vec{\beta}_4$ ke nol,
+          sehingga ruang nol berdimensi dua dan ruang hasil
+          berdimensi dua.
+          Pada penerapan kedua, keempat vektor basis menuju
+          nol; karena itu, ruang nol dari pangkat kedua berdimensi empat,
+          sedangkan ruang hasil dari pangkat kedua berdimensi nol.
+          Jadi, indeks nilpotensinya adalah dua.
+          Berikut bentuk kanoniknya.
+          \begin{equation*}
+            \begin{mat}[r]
+              0  &0  &0  &0  \\
+              1  &0  &0  &0  \\
+              0  &0  &0  &0  \\
+              0  &0  &1  &0
+            \end{mat}
+          \end{equation*}
+        \partsitem Dimensi domain pemetaan ini adalah enam.
+          Untuk pangkat pertama, dimensi ruang nol adalah empat
+          dan dimensi ruang hasil adalah dua.
+          Untuk pangkat kedua, dimensi ruang nol adalah lima
+          dan dimensi ruang hasil adalah satu.
+          Kemudian iterasi ketiga menghasilkan ruang nol berdimensi
+          enam dan ruang hasil berdimensi nol.
+          Indeks nilpotensinya adalah tiga, dan berikut
+          bentuk kanoniknya.
+          \begin{equation*}
+            \begin{mat}[r]
+              0  &0  &0  &0  &0  &0  \\
+              1  &0  &0  &0  &0  &0  \\
+              0  &1  &0  &0  &0  &0  \\
+              0  &0  &0  &0  &0  &0  \\              
+              0  &0  &0  &0  &0  &0  \\              
+              0  &0  &0  &0  &0  &0  
+            \end{mat}
+          \end{equation*}
+        \partsitem Dimensi domain adalah tiga, dan indeks
+          nilpotensinya adalah tiga.
+          Ruang nol dari pangkat pertama berdimensi satu dan ruang hasilnya
+          berdimensi dua.
+          Ruang nol dari pangkat kedua berdimensi dua dan ruang hasilnya
+          berdimensi satu.
+          Terakhir, ruang nol dari pangkat ketiga berdimensi tiga
+          dan ruang hasilnya
+          berdimensi nol.
+          Berikut matriks bentuk kanoniknya.
+          \begin{equation*}
+            \begin{mat}[r]
+              0  &0  &0  \\
+              1  &0  &0  \\
+              0  &1  &0 
+            \end{mat}
+          \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \item 
+    Tentukan matriks-matriks berikut yang nilpoten.
+    \begin{exparts*}
+      \partsitem 
+        $\begin{mat}[r]
+           -2  &4  \\
+           -1  &2
+        \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+          3  &1  \\
+          1  &3
+        \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+          -3  &2  &1  \\
+          -3  &2  &1  \\
+          -3  &2  &1
+        \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+           1  &1  &4  \\
+           3  &0  &-1 \\
+           5  &2  &7
+        \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+           45  &-22  &-19  \\
+           33  &-16  &-14  \\
+           69  &-34  &-29
+        \end{mat}$
+    \end{exparts*}
+    \begin{answer}
+      Menurut \nearbylemma{le:RangeAndNullChains}, nulitas telah mencapai
+      nilai sebesar mungkin pada iterasi ke-$n$, dengan $n$ dimensi domain.
+      Jadi, untuk matriks $\nbyn{2}$,
+      kita hanya perlu memeriksa apakah kuadratnya merupakan matriks nol.
+      Untuk matriks $\nbyn{3}$, kita hanya perlu memeriksa kubiknya.
+      \begin{exparts}
+        \partsitem Ya, matriks ini nilpoten karena
+          kuadratnya merupakan matriks nol.
+        \partsitem Tidak, kuadratnya bukan matriks nol.
+          \begin{equation*}
+            \begin{mat}[r]
+               3  &1  \\
+               1  &3
+            \end{mat}^2
+            =\begin{mat}[r]
+               10  &6  \\
+               6   &10
+            \end{mat}
+          \end{equation*}
+        \partsitem Ya, kubiknya merupakan matriks nol.
+          Bahkan, kuadratnya nol.
+        \partsitem Tidak, pangkat tiganya bukan matriks nol.
+          \begin{equation*}
+            \begin{mat}[r]
+              1  &1  &4  \\
+              3  &0  &-1 \\
+              5  &2  &7
+            \end{mat}^3
+            =\begin{mat}[r]
+              206  &86  &304  \\
+               26  &8   &26   \\
+              438  &180 &634
+            \end{mat}
+          \end{equation*}
+        \partsitem Ya, kubik matriks ini merupakan matriks nol.
+      \end{exparts}
+      Cara lain untuk melihat bahwa matriks kedua dan keempat tidak nilpoten
+      adalah dengan memperhatikan bahwa keduanya nonsingular.
+    \end{answer}
+  \recommended \item 
+    Tentukan bentuk kanonik matriks berikut.
+    \begin{equation*}
+      \begin{mat}[r]
+        0  &1  &1  &0  &1  \\
+        0  &0  &1  &1  &1  \\
+        0  &0  &0  &0  &0  \\
+        0  &0  &0  &0  &0  \\
+        0  &0  &0  &0  &0
+      \end{mat}
+    \end{equation*}
+    \begin{answer} Tabel perhitungan
+      \begin{center}
+          \begin{tabular}{c|cc}
+             \multicolumn{1}{c}{\( p \)}  &\( N^p \)  &\( \nullspace{N^p}  \) \\
+             \hline
+             \( 1 \)
+               &\matrixvenlarge{\begin{mat}[r]
+                   0  &1  &1  &0  &1  \\
+                   0  &0  &1  &1  &1  \\
+                   0  &0  &0  &0  &0  \\
+                   0  &0  &0  &0  &0  \\
+                   0  &0  &0  &0  &0
+                  \end{mat}}
+               &\( \set{\matrixvenlarge{\colvec{r \\ u \\ -u-v \\ u \\ v}} 
+                              \suchthat r,u,v\in\C}  \) \\
+             \( 2 \)
+               &\matrixvenlarge{\begin{mat}[r]
+                   0  &0  &1  &1  &1  \\
+                   0  &0  &0  &0  &0  \\
+                   0  &0  &0  &0  &0  \\
+                   0  &0  &0  &0  &0  \\
+                   0  &0  &0  &0  &0
+                  \end{mat}}
+               &\( \set{\matrixvenlarge{\colvec{r \\ s \\ -u-v \\ u \\ v}} 
+                              \suchthat r,s,u,v\in\C}  \) \\
+             \( 3 \)
+               &\textit{--matriks nol--}
+               &\( \C^5 \)
+          \end{tabular}
+        \end{center}
+        memberikan syarat-syarat berikut bagi basis untaian:~tiga vektor basis
+        dipetakan langsung ke nol, satu vektor basis lagi dipetakan ke nol
+        pada penerapan kedua, dan vektor basis terakhir
+        dipetakan ke nol pada penerapan ketiga.
+        Jadi, basis untaiannya mempunyai bentuk berikut.
+        \begin{equation*}
+          \begin{strings}{ccccccc}
+            \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto 
+              &\vec{\beta}_3 &\mapsto &\zero               \\
+            \vec{\beta}_4 &\mapsto &\zero                  \\
+            \vec{\beta}_5 &\mapsto &\zero  
+          \end{strings}
+        \end{equation*}
+        Dari sini, bentuk kanoniknya langsung diperoleh.
+        \begin{equation*}
+          \begin{mat}[r]
+            0  &0  &0  &0  &0  \\
+            1  &0  &0  &0  &0  \\
+            0  &1  &0  &0  &0  \\
+            0  &0  &0  &0  &0  \\
+            0  &0  &0  &0  &0
+          \end{mat}
+        \end{equation*}
+    \end{answer}
+  \recommended \item 
+    Tinjau matriks dari \nearbyexample{ex:FiveByNilStrBas}.
+    \begin{exparts}
+      \partsitem Gunakan aksi pemetaan pada basis untaian untuk
+        memberikan bentuk kanoniknya.
+      \partsitem Tentukan matriks-matriks perubahan basis yang membawa matriks
+        tersebut ke bentuk kanonik.
+      \partsitem Gunakan jawaban pada butir sebelumnya untuk memeriksa jawaban
+        pada butir pertama.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Bentuk kanoniknya mempunyai satu blok $\nbyn{3}$ dan satu
+          blok $\nbyn{2}$
+          \begin{equation*}
+            \begin{pmat}{rrr|rr}
+              0  &0  &0  &0  &0  \\
+              1  &0  &0  &0  &0  \\
+              0  &1  &0  &0  &0  \\ \hline
+              0  &0  &0  &0  &0  \\
+              0  &0  &0  &1  &0  \\
+            \end{pmat}
+          \end{equation*}
+          yang masing-masing bersesuaian dengan untaian berpanjang tiga dan
+          untaian berpanjang dua dalam basis tersebut.
+        \partsitem Andaikan $N$ adalah representasi pemetaan yang mendasarinya
+          terhadap basis standar.
+          Misalkan $B$ adalah basis tujuan perubahan.
+          Menurut diagram keserupaan
+          \begin{equation*}
+            \begin{CD}
+              \C^5_{\wrt{\stdbasis_5}}      
+                  @>n>N>        
+                  \C^5_{\wrt{\stdbasis_5}}     \\
+             @V\scriptstyle\identity V\scriptstyle PV  
+                 @V\scriptstyle\identity V\scriptstyle PV \\
+             \C^5_{\wrt{B}}                 
+                 @>n>>         
+             \C^5_{\wrt{B}}
+           \end{CD}
+         \end{equation*}
+         kita memperoleh bahwa matriks bentuk kanoniknya adalah $PNP^{-1}$, dengan
+         \begin{equation*}
+           P^{-1}
+           =\rep{\identity}{B,\stdbasis_5}
+           =\begin{mat}[r]
+              1 &0 &0 &0 &0 \\              
+              0 &1 &0 &1 &0 \\
+              1 &0 &1 &0 &0 \\
+              0 &0 &1 &1 &1 \\
+              0 &0 &0 &0 &1
+            \end{mat}
+         \end{equation*}
+         dan $P$ adalah invers matriks tersebut.
+         \begin{equation*}
+           P=\rep{\identity}{\stdbasis_5,B}
+            =(P^{-1})^{-1}
+           =\begin{mat}[r]
+              1 &0 &0 &0 &0 \\              
+             -1 &1 &1 &-1&1 \\
+             -1 &0 &1 &0 &0 \\
+              1 &0 &-1&1 &-1\\
+              0 &0 &0 &0 &1
+            \end{mat}
+         \end{equation*}
+        \partsitem Perhitungan untuk memeriksa hal ini bersifat rutin.
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+    Setiap matriks berikut bersifat nilpoten.
+    \begin{exparts*}
+      \partsitem \(
+        \begin{mat}[r]
+          1/2  &-1/2  \\
+          1/2  &-1/2
+        \end{mat}        \)
+      \partsitem \(
+        \begin{mat}[r]
+          0  &0  &0  \\
+          0  &-1 &1  \\
+          0  &-1 &1
+        \end{mat}        \)
+      \partsitem \(
+        \begin{mat}[r]
+         -1  &1  &-1 \\
+          1  &0  &1  \\
+          1  &-1 &1
+        \end{mat}        \)
+    \end{exparts*}
+    Nyatakan masing-masing dalam bentuk kanonik.
+    \begin{answer}
+      \begin{exparts}
+      \partsitem Perhitungan
+        \begin{center}
+          \begin{tabular}{c|cc}
+             \multicolumn{1}{c}{\( p \)}  &\( N^p \)  &\( \nullspace{N^p} \) \\
+            \hline
+             \( 1 \)
+               &\matrixvenlarge{\begin{mat}[r]
+                    1/2  &-1/2  \\
+                    1/2  &-1/2 
+                  \end{mat}}
+               &\( \set{\matrixvenlarge{\colvec{u \\ u}} 
+                              \suchthat u\in\C}  \) \\
+            \( 2 \)
+               &\textit{--matriks nol--}
+               &\( \C^2 \)
+          \end{tabular}
+        \end{center}
+        menunjukkan bahwa setiap pemetaan yang direpresentasikan oleh matriks
+        tersebut harus beraksi pada basis untaian dengan cara berikut.
+        \begin{equation*}
+          \begin{strings}{ccccccc}
+            \vec{\beta}_1 &\mapsto &\vec{\beta}_2  &\mapsto &\zero  
+          \end{strings}
+        \end{equation*}
+        karena ruang nol setelah satu kali penerapan berdimensi satu
+        dan tepat satu vektor basis, $\vec{\beta}_2$, dipetakan ke nol.
+        Oleh karena itu, representasi terhadap
+        $\sequence{\vec{\beta}_1,\vec{\beta}_2}$ ini merupakan bentuk kanonik.
+        \begin{equation*}
+          \begin{mat}[r]
+            0    &0   \\
+            1    &0
+          \end{mat}        
+        \end{equation*}
+      \partsitem Perhitungan di sini serupa dengan perhitungan sebelumnya.
+        \begin{center}
+          \begin{tabular}{c|cc}
+             \multicolumn{1}{c}{\( p \)}  &\( N^p \)  &\( \nullspace{N^p} \) \\
+             \hline
+             \( 1 \)
+               &\matrixvenlarge{\begin{mat}[r]
+                    0  &0  &0  \\
+                    0  &-1 &1  \\
+                    0  &-1 &1  
+                  \end{mat}}
+               &\( \set{\matrixvenlarge{\colvec{u \\ v \\ v}} 
+                              \suchthat u,v\in\C}  \) \\
+           \( 2 \)
+               &\textit{--matriks nol--}
+               &\( \C^3 \)
+          \end{tabular}
+       \end{center}
+       Tabel tersebut menunjukkan bahwa basis untaiannya berbentuk
+        \begin{equation*}
+          \begin{strings}{ccccccc}
+            \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto &\zero  \\
+            \vec{\beta}_3 &\mapsto &\zero
+          \end{strings}
+        \end{equation*}
+        karena ruang nol setelah satu kali penerapan pemetaan berdimensi
+        dua\Dash $\vec{\beta}_2$ dan $\vec{\beta}_3$ keduanya dipetakan ke
+        nol\Dash dan satu iterasi lagi membuat vektor tambahan tersebut
+        dipetakan ke nol.
+      \partsitem Perhitungan
+        \begin{center}
+          \begin{tabular}{c|cc}
+             \multicolumn{1}{c}{\( p \)}  &\( N^p \)  &\( \nullspace{N^p} \) \\
+             \hline
+             \( 1 \)
+               &\matrixvenlarge{\begin{mat}[r]
+                    -1  &1  &-1  \\
+                     1  &0  &1   \\
+                     1  &-1 &1 
+                  \end{mat}}
+               &\( \set{\matrixvenlarge{\colvec{u \\ 0 \\ -u}} 
+                              \suchthat u\in\C}  \) \\
+             \( 2 \)
+               &\matrixvenlarge{\begin{mat}[r]
+                     1  &0  &1   \\
+                     0  &0  &0   \\
+                    -1  &0  &-1
+                  \end{mat}}
+               &\( \set{\matrixvenlarge{\colvec{u \\ v \\ -u}} 
+                              \suchthat u,v\in\C}  \) \\
+            \( 3 \)
+               &\textit{--matriks nol--}
+               &\( \C^3 \)
+          \end{tabular}
+        \end{center}
+        menunjukkan bahwa setiap pemetaan yang direpresentasikan oleh matriks
+        ini harus beraksi pada basis untaian dengan cara berikut.
+        \begin{equation*}
+          \begin{strings}{ccccccc}
+            \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto 
+              &\vec{\beta}_3 &\mapsto &\zero  
+          \end{strings}
+        \end{equation*}
+        Oleh karena itu, berikut ini adalah bentuk kanoniknya.
+        \begin{equation*}
+          \begin{mat}[r]
+            0    &0   &0   \\
+            1    &0   &0   \\
+            0    &1   &0
+          \end{mat}        
+        \end{equation*}
+      \end{exparts}  
+     \end{answer}
+  \item 
+    Jelaskan pengaruh perkalian kiri atau kanan dengan suatu matriks yang
+    berada dalam bentuk kanonik untuk matriks nilpoten.
+    \begin{answer}
+      Dua contoh berikut
+      \begin{equation*}
+        \begin{mat}[r]
+          0  &0  \\
+          1  &0
+        \end{mat}
+        \begin{mat}
+          a  &b  \\
+          c  &d
+        \end{mat}
+        =
+        \begin{mat}
+          0  &0  \\
+          a  &b  
+        \end{mat}
+        \qquad
+        \begin{mat}[r]
+          0  &0  &0 \\
+          1  &0  &0 \\
+          0  &1  &0
+        \end{mat}
+        \begin{mat}
+          a  &b  &c \\
+          d  &e  &f \\
+          g  &h  &i
+        \end{mat}
+        =
+        \begin{mat}
+          0  &0  &0 \\
+          a  &b  &c \\
+          d  &e  &f
+        \end{mat}
+      \end{equation*}
+      menunjukkan bahwa perkalian kiri dengan suatu blok entri satu pada
+      subdiagonal menggeser baris-baris matriks ke bawah.
+      Blok-blok yang berbeda
+      \begin{equation*}
+        \begin{mat}[r]
+          0  &0  &0  &0  \\
+          1  &0  &0  &0  \\
+          0  &0  &0  &0  \\
+          0  &0  &1  &0
+        \end{mat}
+        \begin{mat}
+          a  &b  &c  &d  \\
+          e  &f  &g  &h  \\
+          i  &j  &k  &l  \\
+          m  &n  &o  &p
+        \end{mat}
+        =
+        \begin{mat}
+          0  &0  &0  &0  \\
+          a  &b  &c  &d  \\       
+          0  &0  &0  &0  \\
+          i  &j  &k  &l  
+        \end{mat}
+      \end{equation*}
+      menggeser bagian-bagian berbeda dari matriks ke bawah.
+
+      Perkalian kanan memberikan efek yang analog pada kolom.
+      Lihat \nearbyexercise{exer:IndNilLftShift}.
+    \end{answer}
+  \item 
+    Apakah sifat nilpoten invarian terhadap keserupaan?
+    Artinya, apakah matriks yang serupa dengan matriks nilpoten juga harus nilpoten?
+    Jika ya, apakah indeksnya sama?
+    \begin{answer}
+      Ya.
+      Generalisasikan kalimat terakhir dalam \nearbyexample{ex:NilMatNotCanon}.
+      Mengenai indeksnya, kalimat terakhir yang sama menunjukkan bahwa indeks
+      matriks baru kurang dari atau sama dengan indeks $\hat{N}$; dengan
+      menukar peran kedua matriks, diperoleh pertidaksamaan dalam arah sebaliknya.
+
+      Jawaban lain adalah menunjukkan bahwa suatu matriks
+      nilpoten jika dan hanya jika setiap pemetaan terkaitnya nilpoten,
+      dengan indeks yang sama.
+      Karena matriks-matriks serupa merepresentasikan pemetaan yang sama,
+      kesimpulan tersebut pun mengikuti.
+      Inilah isi \nearbyexercise{exer:MatNilIffMapNil} di bawah.
+    \end{answer}  
+  \recommended \item
+    Tunjukkan bahwa satu-satunya nilai eigen matriks nilpoten adalah nol.
+    \begin{answer}
+      Perhatikan bahwa matriks nilpoten dalam bentuk kanonik hanya mempunyai
+      nilai eigen nol; misalnya, determinan matriks segitiga bawah berikut
+      \begin{equation*}
+         \begin{mat}
+           -x  &0  &0  \\
+            1  &-x &0  \\
+            0  &1  &-x
+         \end{mat}
+      \end{equation*}
+      adalah \( (-x)^3 \), yang satu-satunya akarnya adalah nol.
+      Namun, matriks-matriks serupa mempunyai nilai eigen yang sama dan setiap
+      matriks nilpoten serupa dengan matriks dalam bentuk kanonik.
+
+      Cara lain untuk melihatnya adalah dengan mengamati bahwa matriks nilpoten
+      membawa semua vektor ke nol setelah sejumlah iterasi, tetapi hal ini
+      bertentangan dengan aksi pada ruang eigen
+      $\vec{v}\mapsto \lambda\vec{v}$ kecuali jika $\lambda$ nol.
+    \end{answer}
+  \item 
+    Adakah transformasi nilpoten berindeks tiga pada ruang
+    berdimensi dua?
+    \begin{answer}
+      Tidak. Menurut \nearbylemma{le:RangeAndNullChains}, untuk pemetaan pada
+      ruang berdimensi dua, nulitas telah mencapai nilai sebesar mungkin
+      pada iterasi kedua.
+    \end{answer}
+  \item 
+    Dalam bukti \nearbytheorem{th:NilMapHasStrBas}, mengapa kasus dasar
+    buktinya bukan indeks nilpotensi nol?
+    \begin{answer}
+      Indeks nilpotensi suatu transformasi hanya dapat bernilai nol ketika
+      vektor awal untaian harus berupa $\zero$, yakni hanya ketika $V$
+      merupakan ruang trivial.
+    \end{answer}
+  \recommended \item
+    Misalkan \( \map{t}{V}{V} \) suatu transformasi linear dan andaikan
+    \( \vec{v}\in V \) sedemikian sehingga \( t^k(\vec{v})=\zero \), tetapi
+    \( t^{k-1}(\vec{v})\neq\zero \).
+    Tinjau untaian~$t$
+    $\sequence{\vec{v},t(\vec{v}),\dots,t^{k-1}(\vec{v})}$.
+    \begin{exparts}
+      \partsitem Buktikan bahwa \( t \) merupakan transformasi pada rentang
+        himpunan vektor dalam untaian tersebut; yakni, buktikan bahwa
+        pembatasan \( t \) pada rentang itu mempunyai ruang hasil yang
+        merupakan himpunan bagian rentang tersebut.
+        Kita mengatakan bahwa rentang tersebut merupakan subruang
+        \definend{invarian terhadap \( t \)}.\index{subruang invarian}
+      \partsitem Buktikan bahwa pembatasan tersebut nilpoten.
+      \partsitem Buktikan bahwa untaian~$t$ tersebut
+        bebas linear, sehingga merupakan basis bagi rentangnya.
+      \partsitem Representasikan pemetaan pembatasan terhadap
+        basis untaian~$t$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Setiap anggota $\vec{w}$ dari rentang tersebut merupakan
+          kombinasi linear
+          $\vec{w}=c_0\cdot \vec{v}+c_1\cdot t(\vec{v})+\dots
+           +c_{k-1}\cdot t^{k-1}(\vec{v})$.
+          Maka, berdasarkan linearitas pemetaan,
+          $t(\vec{w})=c_0\cdot t(\vec{v})+c_1\cdot t^2(\vec{v})+\dots
+           +c_{k-2}\cdot t^{k-1}(\vec{v})+c_{k-1}\cdot \zero$
+          juga berada dalam rentang tersebut.
+        \partsitem Operasi pada butir sebelumnya, bila diiterasikan $k$ kali,
+          akan menghasilkan kombinasi linear vektor-vektor nol.
+        \partsitem Hipotesis \(t^{k-1}(\vec v)\neq\zero\) memastikan bahwa
+          \(\vec v\neq\zero\). Tuliskan
+          \( c_0\vec{v}+\dots+c_{k-1}t^{k-1}(\vec{v})=\zero \)
+          dan terapkan \( t^{k-1} \) pada kedua ruas.
+          Ruas kanan menghasilkan \( \zero \), sedangkan ruas kiri menghasilkan
+          \( c_0t^{k-1}(\vec{v}) \); simpulkan bahwa \( c_0=0 \).
+          Lanjutkan dengan cara ini, dengan menerapkan \( t^{k-2} \) pada
+          kedua ruas, dan seterusnya.
+        \partsitem Tentu saja, $t$ beraksi pada rentang tersebut dengan beraksi
+          pada basis ini sebagai satu untaian~$t$ berpanjang~$k$.
+          \begin{equation*}
+            \begin{mat}
+              0 &0 &0 &0 &\ldots &0 &0 \\
+              1 &0 &0 &0 &\ldots &0 &0 \\
+              0 &1 &0 &0 &\ldots &0 &0 \\
+              0 &0 &1 &0 &       &0 &0 \\
+                &  &  &\ddots          \\
+              0 &0 &0 &0 &       &1 &0 \\
+            \end{mat}
+          \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \item \label{exer:NilMapWillHaveStrBas}
+    Selesaikan bukti \nearbytheorem{th:NilMapHasStrBas}.
+    \begin{answer}
+      Kita harus memeriksa bahwa
+      \( B\union\set{\vec{\xi}_1,\dots,\vec{\xi}_p}
+         \union\set{\vec{v}_1,\dots,\vec{v}_i} \) bebas linear,
+      dengan \( B \) basis untaian \( t \) bagi \( \rangespace{t} \),
+      dengan
+      \( \hat C=\cat{C}{\sequence{\vec\xi_1,\dots,\vec\xi_p}} \)
+      basis bagi \( \nullspace{t} \), dan dengan
+      \( t(\vec{v}_1)=\vec{\beta}_1,\dots,t(\vec{v}_i)=\vec{\beta}_i \).
+      Tuliskan
+      \begin{equation*}
+        \zero=
+        \sum_{r=1}^{i}\left(c_{r,-1}\vec v_r
+          +\sum_{s=0}^{h_r}c_{r,s}t^s(\vec\beta_r)\right)
+          +\sum_{q=1}^{p}d_q\vec\xi_q
+      \end{equation*}
+      lalu terapkan \( t \).
+      \begin{multline*}
+        \zero=
+        \sum_{r=1}^{i}\left(c_{r,-1}\vec\beta_r
+          +\sum_{s=0}^{h_r-1}c_{r,s}t^{s+1}(\vec\beta_r)\right),
+      \end{multline*}
+      Karena \(B\) adalah basis, semua
+      \(c_{r,-1},c_{r,0},\dots,c_{r,h_r-1}\) bernilai nol.
+      Substitusi kembali ke persamaan pertama menyisakan kombinasi linear
+      vektor-vektor dalam \(\hat C\). Karena \(\hat C\) adalah basis,
+      semua \(c_{r,h_r}\) dan \(d_q\) juga nol.
+    \end{answer}
+  \item \label{exer:MatNilIffMapNil} 
+    Tunjukkan bahwa istilah `transformasi nilpoten' dan `matriks nilpoten',
+    sebagaimana diberikan dalam \nearbydefinition{def:nilpotent}, saling
+    bersesuaian:~suatu pemetaan nilpoten jika dan hanya jika direpresentasikan
+    oleh matriks nilpoten.
+    (Apakah suatu transformasi nilpoten jika dan hanya jika ada basis yang
+    terhadapnya representasi pemetaan merupakan matriks nilpoten, ataukah
+    setiap representasinya merupakan matriks nilpoten?)
+    \begin{answer}
+      Untuk sebarang basis $B$,
+      transformasi~$n$ nilpoten jika dan hanya jika
+      $N=\rep{n}{B,B}$ merupakan matriks nilpoten.
+      Hal ini karena hanya matriks nol yang merepresentasikan pemetaan nol,
+      sehingga \( n^j \) merupakan pemetaan nol jika dan hanya jika \( N^j \)
+      merupakan matriks nol.
+    \end{answer}
+  \item 
+    Misalkan \( T \) nilpoten dengan indeks empat.
+    Seberapa besar dimensi ruang hasil \( T^3 \) yang mungkin?
+    \begin{answer}
+      Dimensinya dapat berupa sebarang bilangan yang lebih besar dari atau
+      sama dengan satu.
+      Untuk memperoleh transformasi nilpoten berindeks empat yang kubiknya
+      mempunyai ruang hasil berdimensi~$k$, ambil suatu ruang vektor,
+      suatu basis bagi ruang tersebut, dan suatu transformasi yang beraksi
+      pada basis itu dengan cara berikut.
+      \begin{equation*}
+         \begin{strings}{ccccccccc}
+            \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto &\vec{\beta}_3
+              &\mapsto &\vec{\beta}_4 &\mapsto &\zero  \\
+            \vec{\beta}_5 &\mapsto &\vec{\beta}_6 &\mapsto &\vec{\beta}_7
+              &\mapsto &\vec{\beta}_8 &\mapsto &\zero  \\
+            &\vdotswithin{\vec{\beta}_{4k-3}}                       \\
+            \vec{\beta}_{4k-3} &\mapsto &\vec{\beta}_{4k-2} 
+              &\mapsto &\vec{\beta}_{4k-1}
+              &\mapsto &\vec{\beta}_{4k} &\mapsto &\zero  \\
+            &\vdotswithin{\vec{\beta}_{4k-3}}              \\
+            \multicolumn{8}{l}{%
+              \text{\textit{--mungkin ada untaian lain yang lebih pendek--}}}
+         \end{strings}
+      \end{equation*}
+      Jadi, dimensi ruang hasil $T^3$ dapat sebesar yang diinginkan.
+      Nilai terkecilnya adalah satu\Dash harus ada sedikitnya satu untaian;
+      jika tidak, indeks nilpotensi pemetaan tersebut tidak akan bernilai empat.
+    \end{answer}
+  \item 
+    Ingat bahwa matriks-matriks serupa mempunyai nilai eigen yang sama.
+    Tunjukkan bahwa konversnya tidak berlaku.
+    \begin{answer}
+      Kedua matriks berikut hanya mempunyai nol sebagai nilai eigen:
+      \begin{equation*}
+        \begin{mat}
+          0  &0  \\
+          0  &0
+        \end{mat}
+        \qquad
+        \begin{mat}
+          0  &0  \\
+          1  &0
+        \end{mat}
+      \end{equation*}
+      tetapi keduanya tidak serupa (wakil kanoniknya berbeda, yakni
+      masing-masing matriks itu sendiri).
+    \end{answer}
+  \item \nearbylemma{lem:RestONeToOne} menunjukkan bahwa untuk sebarang
+    transformasi linear \( \map{t}{V}{V} \), pembatasan
+    \( \map{t}{\genrangespace{t}}{\genrangespace{t}} \)
+    bersifat satu-satu.
+    Tunjukkan bahwa pembatasan itu juga pada, sehingga merupakan automorfisme.
+    Haruskah pembatasan tersebut berupa pemetaan identitas?
+    \begin{answer}
+      Pemetaan itu pada menurut \nearbylemma{le:RangeAndNullChains}.
+      Pemetaan tersebut tidak harus berupa identitas; tinjau pemetaan
+      $\map{t}{\Re^2}{\Re^2}$ berikut.
+      \begin{equation*}
+        \colvec{x \\ y}\mapsunder{t}\colvec{y \\ x}
+      \end{equation*}
+      Untuk pemetaan ini $\genrangespace{t}=\Re^2$, dan $t$ bukan identitas.
+    \end{answer}
+  \item 
+    Buktikan bahwa suatu matriks nilpoten serupa dengan matriks yang seluruh
+    entrinya nol, kecuali blok-blok entri satu pada superdiagonal.
+    \begin{answer}
+      Cukup lakukan pengurutan ulang sederhana pada basis untaian.
+      Sebagai contoh, suatu pemetaan yang terkait dengan basis untaian berikut
+      \begin{equation*}
+         \begin{strings}{ccccccc}
+            \vec{\beta}_1 &\mapsto &\vec{\beta}_2 &\mapsto &\zero  
+         \end{strings}
+      \end{equation*}
+      direpresentasikan terhadap
+      $B=\sequence{\vec{\beta}_1,\vec{\beta}_2}$ oleh matriks berikut,
+      \begin{equation*}
+        \begin{mat}
+          0  &0  \\
+          1  &0          
+        \end{mat}
+      \end{equation*}
+      tetapi direpresentasikan terhadap
+      $B=\sequence{\vec{\beta}_2,\vec{\beta}_1}$ dengan cara berikut.
+      \begin{equation*}
+        \begin{mat}
+          0  &1  \\
+          0  &0          
+        \end{mat}
+      \end{equation*}
+    \end{answer}
+  \recommended \item
+    Buktikan bahwa jika suatu transformasi mempunyai ruang hasil yang sama
+    dengan ruang nolnya, maka dimensi domainnya genap.
+    \begin{answer}
+      Misalkan $\map{t}{V}{V}$ adalah transformasi tersebut.
+      Jika \( \rank (t)=\nullity (t) \), maka persamaan
+      \( \rank(t)+\nullity(t)=\dim (V) \) menunjukkan bahwa
+      \( \dim (V) \) genap.
+    \end{answer}
+  \item 
+    Buktikan bahwa jika dua matriks nilpoten saling komutatif, maka hasil kali
+    dan jumlah keduanya juga nilpoten.
+    \begin{answer}
+      Agar nilpoten, kedua matriks harus persegi.
+      Agar saling komutatif, keduanya harus berukuran sama.
+      Jadi, hasil kali dan jumlahnya terdefinisi.
+
+      Namai kedua matriks itu \( A \) dan \( B \).
+      Untuk melihat bahwa \( AB \) nilpoten, hitung
+      $
+         (AB)^2=ABAB=AABB=A^2B^2$,
+      serta
+         $(AB)^3=A^3B^3$, dan seterusnya.
+      Karena \( A \) nilpoten, hasil kali tersebut pada akhirnya bernilai nol.
+
+      Untuk jumlah, argumennya serupa; gunakan Teorema Binomial.
+     \end{answer}
+  % 2014-Dec-19 These two questions and answers are fine; I commented them to make the pages fit better.
+  % \item 
+  %   Consider the transformation of \( \matspace_{\nbyn{n}} \) given
+  %   by \( t_S(T)=ST-TS \) where \( S \) is an \( \nbyn{n} \) matrix.
+  %   Prove that if \( S \) is nilpotent then so is \( t_S \).
+  %   \begin{answer}
+  %     Some experimentation gives the idea for the proof.
+  %     Expansion of the second power
+  %     \begin{equation*}
+  %       t^2_S(T)=S(ST-TS)-(ST-TS)S=S^2-2STS+TS^2
+  %     \end{equation*}
+  %     the third power
+  %     \begin{align*}
+  %       t^3_S(T)
+  %         &=S(S^2-2STS+TS^2)-(S^2-2STS+TS^2)S  \\
+  %         &=S^3T-3S^2TS+3STS^2-TS^3
+  %     \end{align*}
+  %     and the fourth power
+  %     \begin{align*}
+  %       t^4_S(T)
+  %         &=S(S^3T-3S^2TS+3STS^2-TS^3)-(S^3T-3S^2TS+3STS^2-TS^3)S  \\
+  %         &=S^4T-4S^3TS+6S^2TS^2-4STS^3+TS^4
+  %     \end{align*}
+  %     suggest that the expansions follow the Binomial Theorem.
+  %     Verifying this by induction on the power of $t_S$ is routine.
+  %     This answers the question because, where the index of nilpotency of 
+  %     $S$ is $k$, in the expansion of $t^{2k}_S$  
+  %     \begin{equation*}
+  %       t^{2k}_S(T)=\sum_{0\leq i\leq 2k}(-1)^i\binom{2k}{i} S^iTS^{2k-i}
+  %     \end{equation*}
+  %     for any $i$ at least one of the $S^i$ and $S^{2k-i}$ 
+  %     has a power higher than $k$, and so the term gives the zero matrix. 
+  %   \end{answer}
+  % \item 
+  %   Show that if \( N \) is nilpotent then \( I-N \) is
+  %   invertible.
+  %   Is that `only if' also?
+  %   \begin{answer}
+  %     Use the geometric series:
+  %     $
+  %        I-N^{k+1}=(I-N)(N^k+N^{k-1}+\cdots+I)
+  %     $.
+  %     If \( N^{k+1} \) is the zero matrix then we have a right inverse for
+  %     \( I-N \).
+  %     It is also a left inverse.
+
+  %     This statement is not `only if' since
+  %     \begin{equation*}
+  %        \begin{mat}[r]
+  %           1  &0  \\
+  %           0  &1
+  %        \end{mat}
+  %        -\begin{mat}[r]
+  %           -1  &0  \\
+  %           0  &-1
+  %        \end{mat}
+  %     \end{equation*}
+  %     is invertible.  
+  %    \end{answer}
+%  \recommended \item 
+%    Show that when a nilpotent matrix \( T \) is in canonical form 
+%    then the number of
+%    blocks of \( \nbyn{(k+1)} \) matrices that are all zeros
+%    except for subdiagonal ones is
+%    \( 2\,(\nullity (T^k))
+%      -\nullity (T^{k+1})-\nullity (T^{k-1}) \).
+\index{nilpoten|)}
+\end{exercises}

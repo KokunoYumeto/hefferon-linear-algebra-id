@@ -1,0 +1,191 @@
+\chapter*{Prakata}\pagestyle{preface}\thispagestyle{preface}
+\setlength{\parskip}{.25ex}
+
+
+Kumpulan ini melengkapi buku \nocite{Hefferon12}
+\textit{Aljabar Linear}.\footnote{Lihat
+\protect\url{hefferon.net/linearalgebra}
+untuk PDF yang dapat diunduh secara bebas, materi pendamping, dan
+sumber \protect\LaTeX{}.}
+Kumpulan ini membantu mahasiswa memperkuat dan memperluas pemahaman mereka
+tentang aljabar linear dengan menggunakan perangkat lunak matematika
+\Sage{}.% \footnote{See 
+% \url{http://www.sagemath.org} for the software and documentation.}
+
+Salah satu tujuan utama setiap program sarjana Matematika adalah membawa
+mahasiswa menuju pemahaman yang lebih tinggi tentang bidang tersebut.
+Pada awal studi, mereka mengikuti mata kuliah Kalkulus yang mengurangi
+kelengkapan dan keketatan demi latihan algoritmik, sedangkan mata kuliah
+selanjutnya mencurahkan lebih banyak perhatian pada konsep dan pembuktian.
+\textit{Aljabar Linear} sesuai dengan rencana perkembangan ini.
+Buku tersebut berupaya membawa mahasiswa pada pemahaman yang lebih dalam,
+sekaligus mengakui bahwa pada tahap ini cukup banyak perhitungan membantu
+proses tersebut dengan memperkuat konsep-konsepnya.
+
+Wajar jika buku menggunakan contoh dan soal pekerjaan rumah yang kecil dengan
+bilangan yang mudah dikelola\Dash tugas mengalikan dua matriks tiga kali tiga
+berentri bilangan bulat kecil dengan tangan akan membangun intuisi, sedangkan
+meminta mahasiswa melakukan hal yang sama pada matriks dua puluh kali dua
+puluh dengan bilangan sepuluh angka desimal hanya akan menyiksa mereka.
+Namun, seorang pengajar dapat khawatir bahwa pendekatan ini melewatkan
+kesempatan untuk memperdalam pemahaman mahasiswa melalui eksplorasi yang tidak
+dibatasi kertas dan pensil, atau untuk menunjukkan bahwa bidang ini diterapkan
+secara luas, sebab perhitungan dalam contoh penerapan realistis biasanya
+sulit.
+
+Perangkat lunak matematika dapat memperluas apa yang wajar dikerjakan hingga
+mencakup sistem yang lebih besar, bilangan yang lebih rumit, dan perhitungan
+yang lebih panjang.
+Manual ini memperluas kemampuan mahasiswa ke arah tersebut.
+Selain membantu memperkuat pemahaman konsep, mempelajari cara mengotomatiskan
+pekerjaan dan menangani tugas yang lebih besar membuat pengalaman mahasiswa
+lebih menyerupai pekerjaan seorang profesional dalam praktik.
+Keuntungan lain adalah mahasiswa menjumpai gagasan baru, seperti ukuran
+pertumbuhan waktu jalan.
+
+Kalau begitu, mengapa tidak langsung mengajar dengan komputer?
+
+Tujuan kita adalah mengembangkan pemahaman yang lebih tinggi tentang bidang
+ini. Untuk itu, kita mempertahankan fokus pada ruang vektor dan pemetaan
+linear. Uraian di sini memperlakukan komputasi sebagai alat untuk membangun
+pemahaman tersebut, bukan sebagai objek utama.
+
+Sebagian pengajar mendapati bahwa mahasiswa mereka paling terbantu dengan
+tetap berpegang pada materi inti.
+Pengajar lain memiliki mahasiswa yang akan memperoleh manfaat dari jenis
+pekerjaan yang kita lakukan di sini.
+Karena manual ini merupakan pendamping, pengajar yang berbeda dapat membuat
+pilihan yang berbeda pula.
+
+
+\section{Mengapa \Sage?}
+Dalam
+\textit{Open Source Mathematical Software}
+\citep{JoynerStein07},\footnote{Teks lengkap tersedia di
+\protect\url{www.ams.org/notices/200710/tx071001279p.pdf}.}
+para penulis berpendapat bahwa jalan terbaik bagi Matematika adalah
+memperhatikan lisensi perangkat lunak yang kita gunakan.
+
+\begin{quotation}\small
+Andaikan Jane adalah matematikawan terkenal yang mengumumkan bahwa ia telah
+membuktikan suatu teorema. Kita mungkin akan memercayainya, tetapi ia tahu
+bahwa ia harus memberikan pembuktian jika diminta. Sekarang andaikan Jane
+menyatakan suatu teorema benar dengan sebagian dasar berupa hasil perangkat
+lunak. Tanpa gagasan baru, hal terdekat yang secara masuk akal dapat kita
+harapkan dari pembuktian yang ketat adalah kemampuan untuk memeriksa secara
+terbuka dan menggunakan seluruh kode komputer yang mendasari hasil tersebut.
+Jika programnya berpemilik, hal ini tidak mungkin. Kita sepenuhnya berhak
+bersikap tidak percaya, bukan hanya karena ketidakpercayaan samar terhadap
+komputer, tetapi karena pemrogram terbaik pun rutin melakukan kesalahan.
+
+Jika seseorang membaca pembuktian teorema Jane dengan harapan memperluas
+gagasannya atau menerapkannya dalam konteks baru, tidak memiliki akses ke
+cara kerja internal perangkat lunak yang mendasari hasil Jane merupakan
+suatu batasan.
+\end{quotation}  
+Para profesional memilih alat dengan menyeimbangkan banyak faktor, tetapi
+argumen ini meyakinkan.
+Di sini kita memakai \Sage{} karena kemampuannya yang tinggi dan karena
+perangkat lunak ini Bebas, yang berarti bukan sekadar tersedia tanpa biaya,
+melainkan juga bahwa kode sumbernya terbuka untuk diperiksa oleh siapa pun.
+\footnote{Lihat \protect\url{www.gnu.org/philosophy/free-sw.html}
+untuk latar belakang dan definisinya.}
+
+
+
+\section{Manual ini}
+Manual ini Bebas.
+Lihat \url{hefferon.net/linearalgebra} untuk lisensinya.
+Secara khusus, mahasiswa bebas mengunduhnya dan pengajar bebas
+mendistribusikannya kembali, misalnya melalui situs intranet mata kuliah.
+
+%% I am glad to get feedback, especially from instructors
+%% who have class tested the material.
+%% That same link gives my current contact information.
+
+Sistem perangkat lunak yang kita gunakan untuk menjelajahi bidang ini,
+\python{} dan \Sage{}, juga Bebas.
+Pengguna mungkin sudah memilikinya pada sistem operasi masing-masing;
+jika belum, keduanya tersedia dari
+\href{http://www.python.org}{\url{www.python.org}}
+dan
+\href{https://www.sagemath.org}{\url{www.sagemath.org}}.
+Keduanya merupakan sistem perangkat lunak yang kuat dan cakap, yang telah
+digunakan dalam lingkungan produksi oleh ribuan profesional selama bertahun-tahun.
+
+\textbf{Catatan tentang ketepatan contoh:}~kita sering menampilkan kode
+masukan untuk \python{} dan \Sage{} beserta tanggapan komputer.
+Tampilan tersebut tidak disalin-tempel.
+Sebaliknya, interaksi itu direkam sebagai bagian dari proses pembuatan
+dokumen ini. Karena itu, yang Anda lihat seharusnya tepat, kecuali versi
+perangkat lunak Anda sangat berbeda dari versi yang saya gunakan.
+Berikut versi \Sage{} saya.
+\begin{sagecommandline}
+sage: version()  
+\end{sagecommandline}
+Berikut versi \python{} saya.
+\begin{pythonconsole}
+import sys
+print(sys.version)
+\end{pythonconsole}
+
+
+
+
+\section{Membaca manual ini}
+Karena manual ini melengkapi buku \textit{Aljabar Linear}, kita tidak
+mendefinisikan istilah atau membuktikan hasil di sini.
+Sebaliknya, mahasiswa sebaiknya mempelajari materi ini setelah menyelesaikan
+bab terkait dalam buku dan memakai bab tersebut sebagai rujukan.
+
+Kaitan antara materi di sini dan buku adalah sebagai berikut:
+\textit{Python dan Sage} tidak bergantung pada buku;
+\textit{Metode Gauss} berkaitan dengan Bab Satu;
+\textit{Ruang Vektor} untuk Bab Dua;
+\textit{Matriks}, \textit{Pemetaan}, dan
+\textit{Dekomposisi Nilai Singular} berkaitan dengan Bab Tiga;
+\textit{Geometri Pemetaan Linear} paling sesuai dengan Bab Empat; dan
+\textit{Nilai Eigen} sesuai dengan Bab Lima
+(bagian itu menyebut Bentuk Jordan, tetapi hanya bergantung pada materi
+sampai diagonalisasi).
+
+%% An instructor may want to write Jupyter notebooks for the chapters here
+%% since they do not have stand-alone exercises.
+
+
+
+
+\section{Ucapan Terima Kasih}
+Saya senang mendapat kesempatan untuk berterima kasih kepada tim pengembang
+\python{} dan \Sage{}.
+Secara khusus, karya ini tidak akan terwujud tanpa \citep{SageTeam19ref}.
+Saya juga senang dapat menyebut \citep{Beezer11} sebagai sumber inspirasi.
+Terakhir, saya berterima kasih kepada Saint Michael's College atas waktu yang
+diberikan untuk menulis dokumen ini.
+
+
+
+
+
+\vspace{.5in}
+\noindent\begin{tabular}[t]{@{}l}
+\textit{Kami menekankan latihan.} \\
+\quotefrom{Suzuki}  \\[2ex]
+\textit{Penyajian yang teratur tidak selalu buruk} \\
+\quad\textit{tetapi mungkin tidak memadai jika berdiri sendiri.} \\
+\quotefrom{Brandt}  
+\end{tabular}
+
+\vspace*{.25in}
+\hbox{}
+\hfill
+\begin{tabular}[t]{l@{}}
+Jim Hef{}feron \\
+Matematika, Saint Michael's College \\
+Colchester, Vermont, AS \\
+2021-Oct-12
+\end{tabular}
+\vspace{1ex}
+\endinput
+
+TODO

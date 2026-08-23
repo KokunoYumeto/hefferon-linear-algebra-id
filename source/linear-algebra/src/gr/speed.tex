@@ -1,0 +1,170 @@
+%\documentclass{article}
+%\usepackage{verbatim}
+%
+%\begin{document}
+\topic{Kecepatan Metode Gauss}
+Kita menggunakan Metode Gauss untuk menyelesaikan sistem linear dalam buku ini
+karena metode ini mudah dipahami, mudah dibuktikan memberikan jawaban yang
+benar, dan cepat.
+Metode ini cepat dalam arti bahwa, dalam semua perhitungan manual yang kita
+perlukan, kita memperoleh jawabannya hanya dalam beberapa langkah yang memakan
+waktu beberapa menit.
+Namun,
+ilmuwan dan insinyur yang dalam praktiknya menyelesaikan sistem linear harus
+memiliki metode yang cukup cepat untuk sistem besar, dengan 1.000 persamaan,
+10.000 persamaan, atau bahkan 100.000 persamaan.
+Sistem-sistem ini diselesaikan dengan komputer, sehingga kecepatan mesin
+membantu, tetapi kecepatan metode yang digunakan tetap menjadi pertimbangan
+utama dan kadang-kadang menjadi faktor yang membatasi masalah mana yang dapat
+diselesaikan.
+
+Kecepatan suatu algoritma biasanya diukur dengan melihat bagaimana waktu yang
+diperlukan untuk menyelesaikan masalah bertambah seiring bertambahnya ukuran
+himpunan data masukan.
+Dengan kata lain, berapa banyak waktu tambahan yang diperlukan algoritma jika
+ukuran data masukan kita perbesar dengan faktor sepuluh, misalnya dari sistem
+dengan 1.000 persamaan menjadi sistem dengan 10.000 persamaan, atau dari 10.000
+menjadi 100.000?
+Apakah waktu yang diperlukan menjadi sepuluh kali,
+seratus kali, atau seribu kali lebih lama?
+Apakah waktu yang diperlukan algoritma sebanding dengan ukuran himpunan data,
+dengan kuadrat ukuran tersebut, dengan pangkat tiga ukuran tersebut, dan
+seterusnya?
+
+Berikut adalah penggalan kode Metode Gauss yang diimplementasikan dalam bahasa
+komputer FORTRAN.
+Koefisien sistem linear disimpan dalam larik $\nbyn{N}$ \textit{A}, sedangkan
+konstantanya disimpan dalam larik $\nbym{N}{1}$ \textit{B}.
+Untuk setiap \textit{ROW} antara $1$ dan $N$, program ini telah menemukan entri
+utama $A(ROW,COL)$.
+Selanjutnya, program akan menggabungkan baris-baris.
+\begin{equation*}
+  -\text{\textit{LEINV}}\cdot \rho_{\text{\textit{ROW}}}
+      +\rho_{\text{\textit{i}}}
+\end{equation*}
+(Penggalan kode ini hanya untuk ilustrasi dan belum lengkap.
+Sebagai contoh, lihat topik selanjutnya tentang Akurasi Metode Gauss.
+Meskipun demikian, penggalan ini memadai untuk tujuan kita karena
+analisis versi yang lengkap, termasuk semua pengujian
+dan subkasus, lebih rumit tetapi pada dasarnya memberikan hasil yang sama.)
+\begin{center}{\small
+\begin{verbatim}
+       DO 10 I=ROW+1, N
+               LEINV=A(I,COL)/A(ROW,COL)
+               DO 20 J=COL, N
+                    A(I,J)=A(I,J)-LEINV*A(ROW,J)
+                  20 CONTINUE
+               B(I)=B(I)-LEINV*B(ROW)
+          10 CONTINUE
+\end{verbatim} 
+}\end{center}
+
+Perulangan terluar (tidak ditampilkan) melintasi $N-1$ baris.
+Untuk setiap baris tersebut,
+perulangan yang ditampilkan menjalankan operasi aritmetika pada entri-entri
+dalam \textit{A} yang berada di bawah dan di sebelah kanan entri utama
+(dan juga pada entri-entri dalam \textit{B}, tetapi untuk menyederhanakan
+analisis, operasi tersebut tidak akan kita hitung---lihat \nearbyexercise{}).
+Kita akan mengasumsikan bahwa entri utama ditemukan di posisi yang lazim,
+yaitu
+$\text{\textit{COL}}=\text{\textit{ROW}}$
+(seperti di atas, analisis kasus umum lebih rumit tetapi pada dasarnya
+memberikan hasil yang sama).
+Ini berarti terdapat $(N-\text{\textit{ROW}})^2$ entri yang harus dikenai
+operasi aritmetika.
+Secara rata-rata, \textit{ROW} akan bernilai $N/2$.
+Dengan demikian, kita memperkirakan perulangan bersarang di atas akan
+dijalankan kira-kira $(N/2)^2$ kali,
+yakni dalam waktu yang sebanding dengan kuadrat jumlah persamaan.
+Dengan memperhitungkan perulangan terluar yang tidak ditampilkan, kita
+memperoleh perkiraan bahwa waktu eksekusi algoritma sebanding dengan pangkat
+tiga jumlah persamaan.
+
+Algoritma yang berjalan dalam waktu yang berbanding lurus dengan ukuran
+himpunan data tergolong cepat, algoritma yang berjalan dalam waktu yang
+sebanding dengan kuadrat ukuran himpunan data lebih lambat tetapi biasanya
+masih cukup layak digunakan, dan algoritma yang berjalan dalam waktu yang
+sebanding dengan pangkat tiga ukuran himpunan data pun masih memiliki
+kecepatan yang wajar.
+
+Perkiraan kecepatan seperti ini merupakan cara yang baik untuk memahami
+seberapa cepat atau lambat suatu algoritma diperkirakan berjalan secara
+rata-rata.
+Namun, pada beberapa sistem khusus, kode Metode Gauss di atas berjalan sangat
+cepat. Karena itu, mungkin ada ciri-ciri suatu masalah yang menjadikannya
+sangat cocok untuk jenis penyelesaian ini.
+
+Dalam praktiknya, kode yang terdapat dalam sistem aljabar komputer atau paket
+standar menerapkan suatu varian Metode Gauss yang disebut faktorisasi
+segitiga.
+Untuk menyatakan metode ini diperlukan bahasa aljabar matriks, yang baru akan
+kita pelajari pada Bab Tiga.
+Meskipun demikian, secara konseptual kode di atas cukup dekat dengan kode yang
+biasanya digunakan dalam penerapan.
+
+Ada beberapa percepatan teoretis dalam penyelesaian sistem linear.
+Algoritma selain Metode Gauss telah diciptakan yang memerlukan waktu yang
+sebanding bukan dengan pangkat tiga ukuran himpunan data, melainkan dengan
+pangkat (kira-kira) $2.7$
+(bidang ini masih aktif diteliti, sehingga eksponen tersebut mungkin akan
+sedikit menurun seiring waktu).
+Namun, peningkatan teoretis ini belum digunakan secara luas,
+sebagian karena metode-metode baru tersebut memerlukan himpunan data yang
+cukup besar sebelum dapat mengungguli Metode Gauss
+(meskipun akan mengungguli Metode Gauss pada himpunan yang sangat besar,
+terdapat biaya awal tertentu yang membuat metode-metode tersebut tidak lebih
+cepat pada sistem yang, sejauh ini, telah diselesaikan dalam praktik).
+
+
+
+\begin{exercises}
+  \item Sistem komputer memungkinkan pembangkitan bilangan acak
+    (tentu saja, bilangan-bilangan ini hanya acak semu karena dihasilkan
+    oleh suatu algoritma, tetapi urutan bilangan yang diperoleh lolos
+    sejumlah uji statistik yang wajar sehingga tampak acak).
+    \begin{exparts}
+      \partsitem Isi sebuah larik $\nbyn{5}$ dengan bilangan acak (misalnya,
+        dalam rentang $[0..1)$).
+        Terapkan Metode Gauss untuk menentukan apakah larik itu singular.
+        Ulangi percobaan tersebut sepuluh kali.
+        Apakah matriks singular sering atau jarang ditemukan (dalam pengertian
+        ini)?
+      \partsitem Ukur waktu yang dibutuhkan komputer untuk menyelesaikan
+        sepuluh larik $\nbyn{5}$ berisi bilangan acak.
+        Hitung waktu rata-ratanya.
+        (Perhatikan bahwa beberapa sistem dapat diketahui singular dengan
+        cukup cepat, misalnya jika baris pertama sama dengan baris kedua.
+        Dengan mempertimbangkan bagian pertama, apakah Anda memperkirakan
+        bahwa sistem singular berperan besar dalam rata-rata tersebut?)
+      \partsitem Ulangi butir sebelumnya untuk larik $\nbyn{15}$.
+      \partsitem Ulangi butir sebelumnya untuk larik $\nbyn{25}$.
+      \partsitem Ulangi butir sebelumnya untuk larik $\nbyn{35}$.
+      \partsitem Buat grafik ukuran masukan terhadap waktu rata-rata.
+    \end{exparts}
+  \item Larik $\nbyn{10}$ seperti apa yang dapat Anda rancang agar sistem
+    komputer Anda memerlukan waktu paling lama untuk mereduksinya?
+    Bagaimana dengan yang memerlukan waktu paling singkat?
+  \item Lengkapi program FORTRAN untuk membuat implementasi langsung Metode
+    Gauss.
+    Bandingkan kecepatan kode Anda dengan kode yang digunakan dalam sistem
+    aljabar komputer.
+    Manakah yang lebih cepat?
+    (Kebanyakan sistem aljabar komputer akan menerapkan beberapa teknik
+    aljabar matriks yang akan kita pelajari nanti, pada Bab Tiga.)
+  \item Perluas penggalan kode agar menangani kasus ketika larik \textit{B}
+    memiliki lebih dari satu kolom.
+    Dengan demikian, lebih dari satu sistem dapat diselesaikan sekaligus
+    (semuanya dengan matriks koefisien \textit{A} yang sama).
+  \item Spesifikasi bahasa FORTRAN mengharuskan larik disimpan ``berdasarkan
+    kolom'', yaitu, seluruh kolom pertama disimpan secara kontigu, kemudian
+    kolom kedua, dan seterusnya.
+    Apakah penggalan kode yang diberikan memanfaatkan hal ini,
+    atau dapatkah kode itu ditulis ulang agar lebih cepat (dengan memanfaatkan
+    fakta bahwa pengambilan data oleh komputer berlangsung lebih cepat dari
+    lokasi-lokasi yang kontigu)?
+  \item Perkirakan waktu eksekusi reduksi Gauss-Jordan.
+    Uji perkiraan Anda dengan mengimplementasikan reduksi Gauss-Jordan
+    dalam suatu bahasa komputer dan menjalankannya pada matriks $\nbyn{5}$,
+    $\nbyn{15}$, dan $\nbyn{25}$ dengan entri acak.
+\end{exercises}
+\endinput

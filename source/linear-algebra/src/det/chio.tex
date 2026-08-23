@@ -1,0 +1,490 @@
+% Chapter 4, Topic _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2012-Jun-18
+\topic{Metode Chi\`o}
+\index{metode Chi\`o|(}
+
+Saat menerapkan Metode Gauss pada matriks yang hanya memuat bilangan bulat,
+orang sering ingin agar semua entrinya tetap berupa bilangan bulat.
+Untuk menghindari pecahan dalam reduksi matriks ini,
+\begin{equation*}
+  A=
+  \begin{mat}
+    2 &1 &1 \\
+    3 &4 &-1 \\
+    1 &5 &1 
+  \end{mat}
+\end{equation*}
+mereka dapat memulai dengan mengalikan baris-baris bawah dengan~$2$,
+\begin{equation*}
+  \grstep[2\rho_3]{2\rho_2}
+  \begin{mat}
+    2 &1 &1 \\
+    6 &8 &-2 \\
+    2 &10 &2 
+  \end{mat}
+  \tag{$*$}
+\end{equation*}
+sehingga eliminasi pada kolom pertama berlangsung sebagai berikut.
+\begin{equation*}
+  \grstep[-\rho_1+\rho_3]{-3\rho_1+\rho_2}
+  \begin{mat}
+    2 &1 &1 \\
+    0 &5 &-5 \\
+    0 &9 &1
+  \end{mat}
+  \tag{$**$}
+\end{equation*}
+Pendekatan bilangan bulat sepenuhnya ini lebih mudah untuk perhitungan mental.
+Selain itu, penggunaan aritmetika bilangan bulat pada komputer menghindari
+sejumlah persoalan rumit yang melibatkan perhitungan titik-mengambang
+\cite{Kahan}.
+Jadi, pendekatan ini memiliki alasan yang kuat.
+
+Keuntungan lain pendekatan ini adalah kita dapat dengan mudah menerapkan
+ekspansi Laplace pada kolom pertama~($**$), lalu memperoleh determinannya
+dengan mengingat bahwa hasil tersebut harus dibagi dengan $4$ karena~($*$).
+
+Berikut kasus umum $\nbyn{3}$ bagi pendekatan ini untuk mencari determinan.
+Pertama, dengan mengasumsikan $a_{1,1}\neq 0$, kita dapat mengalikan
+baris-baris bawah dengan suatu skalar.
+\begin{equation*}
+  A=
+  \begin{mat}
+    a_{1,1} &a_{1,2} &a_{1,3}  \\
+    a_{2,1} &a_{2,2} &a_{2,3}  \\
+    a_{3,1} &a_{3,2} &a_{3,3}  
+  \end{mat}
+  \grstep[a_{1,1}\rho_3]{a_{1,1}\rho_2}
+  \begin{mat}
+    a_{1,1}       &a_{1,2}       &a_{1,3}        \\
+    a_{2,1}a_{1,1} &a_{2,2}a_{1,1} &a_{2,3}a_{1,1}   \\
+    a_{3,1}a_{1,1} &a_{3,2}a_{1,1} &a_{3,3}a_{1,1}   
+  \end{mat}
+\end{equation*}
+Langkah ini mengalikan determinan dengan $a_{1,1}^2$.
+Sekarang lakukan eliminasi ke bawah sepanjang kolom pertama.
+\begin{equation*}
+   \grstep[-a_{3,1}\rho_1+\rho_3]{-a_{2,1}\rho_1+\rho_2}
+  \begin{mat}
+    a_{1,1}       &a_{1,2}       &a_{1,3}       \\
+    0 
+       &a_{2,2}a_{1,1}-a_{2,1}a_{1,2} 
+       &a_{2,3}a_{1,1}-a_{2,1}a_{1,3}               \\
+    0 
+       &a_{3,2}a_{1,1}-a_{3,1}a_{1,2} 
+       &a_{3,3}a_{1,1}-a_{3,1}a_{1,3}                   
+  \end{mat}
+\end{equation*}
+Misalkan $C$ adalah minor $1,1$.
+Menurut ekspansi Laplace, determinan matriks di atas adalah
+$a_{1,1}\det(C)$.
+Dengan demikian, $a_{1,1}^2\det(A)=a_{1,1}\det(C)$, dan karena
+$a_{1,1}\neq 0$, kita memperoleh $\det(A)=\det(C)/a_{1,1}$.
+
+Untuk menangani matriks yang lebih besar, kita harus melihat cara menghitung
+entri-entri minornya.
+Pola di atas menunjukkan bahwa setiap unsur minor merupakan determinan
+$\nbyn{2}$.
+Sebagai contoh, entri kiri atas minor,
+$a_{2,2}a_{1,1}-a_{2,1}a_{1,2}$, yang merupakan entri $2,2$ pada matriks di
+atas, adalah determinan matriks yang dibentuk oleh keempat unsur $A$ berikut.
+\begin{equation*}
+  \begin{mat}
+    \highlight{$a_{1,1}$} &\highlight{$a_{1,2}$} &a_{1,3}  \\
+    \highlight{$a_{2,1}$} &\highlight{$a_{2,2}$} &a_{2,3}  \\
+    a_{3,1}               &a_{3,2}               &a_{3,3}  
+  \end{mat}
+\end{equation*}
+Demikian pula, entri kiri bawah minor, yaitu entri $3,2$ di atas, merupakan
+determinan matriks yang dibentuk oleh keempat unsur berikut.
+\begin{equation*}
+  \begin{mat}
+    \highlight{$a_{1,1}$} &\highlight{$a_{1,2}$} &a_{1,3}  \\
+    a_{2,1}               &a_{2,2}               &a_{2,3}  \\
+    \highlight{$a_{3,1}$} &\highlight{$a_{3,2}$} &a_{3,3}  
+  \end{mat}
+\end{equation*}
+
+Jadi, jika $A$ berukuran~$\nbyn{n}$ dengan $n\geq 3$, kita definisikan matriks
+Chi\`o $C$ sebagai matriks $\nbyn{(n-1)}$ yang entri $i,j$-nya adalah determinan
+\begin{equation*}
+  \begin{vmat}
+    a_{1,1}  &a_{1,j+1} \\
+    a_{i+1,1}    &a_{i+1,j+1}
+  \end{vmat}
+\end{equation*}
+untuk $1\leq i,j\leq n-1$.
+\definend{Metode Chi\`o}\index{metode Chi\`o}
+untuk mencari determinan $A$ menyatakan bahwa jika $a_{1,1}\neq 0$, maka
+$\det(A)=\det(C)/a_{1,1}^{n-2}$.
+(Perhatikan bahwa rumus Chi\`o tidak mensyaratkan bilangan bulat; rumus tersebut
+juga berlaku bagi bilangan riil.)
+
+Sebagai ilustrasi, kita cari determinan matriks $\nbyn{3}$ berikut.
+\begin{equation*} 
+  A=
+  \begin{mat}
+    2 &1 &1 \\
+    3 &4 &-1 \\
+    1 &5 &1 
+  \end{mat}
+\end{equation*}
+Berikut matriks Chi\`o-nya.
+\begin{equation*}
+  C=
+  \begin{mat}
+    \begin{vmat}
+      2 &1 \\
+      3 &4
+    \end{vmat}
+   &
+   \begin{vmat}
+     2 &1 \\
+     3 &-1
+   \end{vmat}        \\[3ex]      
+   \begin{vmat}
+     2 &1 \\
+     1 &5
+   \end{vmat}
+   &
+   \begin{vmat}
+     2 &1 \\
+     1 &1
+   \end{vmat}
+  \end{mat}
+  =
+  \begin{mat}
+    5  &-5  \\
+    9  &1
+  \end{mat}
+\end{equation*}
+Rumus bagi matriks $\nbyn{3}$,
+$\det(A)=\det(C)/a_{1,1}$, memberikan $\det(A)=(50/2)=25$.
+
+Untuk determinan yang lebih besar, kita harus menjalankan beberapa langkah,
+tetapi setiap langkah hanya melibatkan determinan $\nbyn{2}$.
+Karena itu, kita sering dapat menghitung determinan dengan menuliskan hanya
+sedikit hasil antara.
+Sebagai contoh, untuk matriks $\nbyn{4}$ berikut,
+\begin{equation*}
+  A=
+  \begin{mat}
+    3  &0  &1  &1  \\
+    1  &2  &0  &1  \\
+    2  &-1 &0  &3  \\
+    1  &0  &0  &1
+  \end{mat} 
+\end{equation*}
+kita dapat mengerjakan setiap perhitungan $\nbyn{2}$ secara mental dan hanya
+menuliskan hasil $\nbyn{3}$.
+\begin{equation*}
+  C_3=
+  \begin{mat}
+    \begin{vmat}
+      3 &0 \\
+      1 &2
+    \end{vmat}
+    &\begin{vmat}
+     3 &1 \\
+     1 &0 
+    \end{vmat}
+    &\begin{vmat}
+     3 &1 \\
+     1 &1
+    \end{vmat}                \\[3ex]
+    \begin{vmat}
+     3 &0 \\
+     2 &-1
+    \end{vmat}
+    &\begin{vmat}
+     3 &1 \\
+     2 &0
+    \end{vmat}
+    &\begin{vmat}
+     3 &1 \\
+     2 &3
+    \end{vmat}             \\[3ex]
+    \begin{vmat}
+     3 &0 \\
+     1 &0
+    \end{vmat}
+    &\begin{vmat}
+     3 &1 \\
+     1 &0
+    \end{vmat}
+    &\begin{vmat}
+     3 &1 \\
+     1 &1
+    \end{vmat}
+  \end{mat}
+  =
+  \begin{mat}
+    6  &-1  &2 \\
+   -3 &-2  &7 \\
+    0  &-1  &2
+  \end{mat}
+\end{equation*}
+Perhatikan bahwa determinan matriks ini adalah
+$a_{1,1}^{4-2}=3^2$ kali determinan~$A$.
+
+Untuk menyelesaikannya, ulangi proses tersebut.
+Berikut matriks Chi\`o dari $C_3$.
+\begin{equation*}
+  C_2=
+  \begin{mat}    
+    \begin{vmat}
+      6 &-1 \\
+     -3 &-2 
+    \end{vmat}
+    &\begin{vmat}
+      6 &2 \\
+     -3 &7
+    \end{vmat}           \\[3ex]
+    \begin{vmat}
+      6 &-1 \\
+      0 &-1
+    \end{vmat}
+    &\begin{vmat}
+      6 &2 \\
+      0 &2
+    \end{vmat}          
+  \end{mat}
+  =
+  \begin{mat}
+    -15 &48 \\
+    -6 &12
+  \end{mat}
+\end{equation*}
+Determinan matriks ini adalah $6$~kali determinan~$C_3$.
+Determinan $C_2$ adalah $108$.
+Jadi,
+$\det(A)=108/(3^2\cdot 6)=2$.
+
+Rumus ekspansi Laplace mengurangi perhitungan determinan~$\nbyn{n}$ menjadi
+evaluasi sejumlah determinan~$\nbyn{(n-1)}$.
+Rumus Chi\`o juga bersifat rekursif, tetapi mengurangi determinan~$\nbyn{n}$
+menjadi satu determinan~$\nbyn{(n-1)}$ yang dihitung dari sejumlah determinan
+$\nbyn{2}$.
+Namun, bagi matriks besar, Metode Gauss lebih baik daripada keduanya; sebagai
+contoh, metode tersebut memerlukan kira-kira setengah dari jumlah operasi yang
+diperlukan Metode Chi\`o~\cite{FullerLogan}.
+
+
+\begin{exercises}
+  \item 
+    Gunakan Metode Chi\`o untuk mencari setiap determinan.
+    \begin{exparts*}
+      \partsitem 
+        $
+        \begin{vmat}
+          1  &2  &3  \\
+          4  &5  &6  \\
+          7  &8  &9  
+        \end{vmat}
+        $
+      \partsitem 
+        $
+        \begin{vmat}
+          2  &1  &4  &0  \\
+          0  &1  &4  &0  \\
+          1  &1  &1  &1  \\
+          0  &2  &1  &1  
+        \end{vmat}
+        $
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts*}
+        \partsitem Matriks Chi\`o-nya adalah
+        \begin{equation*}
+          C=
+          \begin{mat}
+            -3 &-6 \\
+            -6 &-12
+          \end{mat}
+        \end{equation*}
+        dan determinannya adalah $0$.
+        \partsitem Mulailah dengan
+        \begin{equation*}
+          C_3=
+          \begin{mat}
+            2 &8  &0 \\
+            1 &-2 &2 \\
+            4 &2  &2
+          \end{mat}
+        \end{equation*}
+        lalu langkah berikutnya memberikan
+        \begin{equation*}
+          C_2=
+          \begin{mat}
+            -12 &4 \\
+            -28 &4
+          \end{mat}
+        \end{equation*}
+        dengan determinan $\det(C_2)=64$.
+        Dengan demikian, determinan matriks semula adalah
+        $64/(2^2\cdot 2^1)=8$.
+      \end{exparts*} 
+    \end{answer}
+  \item Bagaimana jika $a_{1,1}$ bernilai nol?
+    \begin{answer}
+      Jika matriks memiliki entri tak nol $a_{i,j}$, tukarkan baris~$i$ dengan
+      baris pertama dan kolom~$j$ dengan kolom pertama untuk membentuk matriks
+      $A'=(a'_{p,q})$ dengan $a'_{1,1}\neq 0$.
+      Setiap pertukaran membalik tanda determinan; setelah tanda ini dicatat,
+      terapkan konstruksi biasa pada $A'$.
+      Entri $c_{p,q}$ matriks Chi\`o bagi $A'$ adalah
+      \begin{equation*}
+        \begin{vmat}
+          a'_{1,1}    &a'_{1,q+1} \\
+          a'_{p+1,1}  &a'_{p+1,q+1}
+        \end{vmat}
+      \end{equation*}
+      untuk $1\leq p,q\leq n-1$.
+      Jika semua entri $A$ bernilai nol, maka tentu saja $\det(A)=0$.
+    \end{answer}
+  \item \definend{Aturan Sarrus}\index{Sarrus, Aturan}\index{Aturan Sarrus}
+    merupakan alat bantu ingatan yang banyak dipelajari orang untuk rumus
+    determinan $\nbyn{3}$.
+    Di sebelah kanan matriks, salin dua kolom pertama.
+    \begin{equation*}
+      \begin{array}{ccc|cc}
+        a &b &c &a &b \\
+        d &e &f &d &e \\
+        g &h &i &g &h
+      \end{array}
+    \end{equation*}
+    Determinannya kemudian merupakan jumlah tiga diagonal dari kiri atas ke
+    kanan bawah dikurangi jumlah tiga diagonal dari kiri bawah ke kanan atas,
+    $aei+bfg+cdh-gec-hfa-idb$.
+   Hitung banyak operasi yang terlibat dalam rumus Sarrus dan rumus Chi\`o.
+   \begin{answer}
+     Rumus Sarrus menggunakan $12$~perkalian dan $5$ penjumlahan (dengan
+     pengurangan dihitung bersama penjumlahan).
+     Rumus Chi\`o menggunakan dua perkalian dan satu penjumlahan
+     (yang sebenarnya berupa pengurangan) bagi masing-masing dari empat
+     determinan $\nbyn{2}$, lalu dua perkalian dan satu penjumlahan lagi bagi
+     determinan Chi\`o $\nbyn{2}$, serta pembagian terakhir dengan $a_{1,1}$.
+     Jumlahnya sebelas perkalian atau pembagian dan lima penjumlahan atau
+     pengurangan. Jadi, Chi\`o unggul.
+   \end{answer}
+  \item Buktikan rumus Chi\`o.
+    \begin{answer}
+      Tinjau matriks $\nbyn{n}$.
+      \begin{equation*}
+        A=
+        \begin{mat}
+           a_{1,1}  &a_{1,2}   &\cdots &a_{1,n-1}  &a_{1,n} \\
+           a_{2,1}  &a_{2,2}   &\cdots &a_{2,n-1}  &a_{2,n} \\
+                  &\vdots                         \\
+           a_{n-1,1} &a_{n-1,2} &\cdots &a_{n-1,n-1} &a_{n-1,n}  \\ 
+           a_{n,1}  &a_{n,2}   &\cdots &a_{n,n-1}  &a_{n,n} 
+        \end{mat}
+      \end{equation*}
+      Kalikan setiap baris selain baris pertama dengan~$a_{1,1}$.
+      \begin{equation*}
+        \grstep[a_{1,1}\rho_3 \\ \vdots \\ a_{1,1}\rho_{n}]{a_{1,1}\rho_2}  
+        \begin{mat}
+          a_{1,1}         &a_{1,2}        &\cdots &a_{1,n-1}        &a_{1,n} \\
+          a_{2,1}a_{1,1}   &a_{2,2}a_{1,1}  &\cdots &a_{2,n-1}a_{1,1}  &a_{2,n}a_{1,1} \\
+                        &\vdots                         \\
+          a_{n-1,1}a_{1,1} &a_{n-1,2}a_{1,1} &\cdots &a_{n-1,n-1}a_{1,1} &a_{n-1,n}a_{1,1}\\
+          a_{n,1}a_{1,1}  &a_{n,2}a_{1,1}   &\cdots &a_{n,n-1}a_{1,1}  &a_{n,n}a_{1,1} 
+        \end{mat}
+      \end{equation*}
+      Langkah tersebut mengalikan determinan dengan faktor~$a_{1,1}^{n-1}$.
+
+      Selanjutnya, lakukan operasi baris $-a_{i,1}\rho_1+\rho_i$ pada setiap
+      baris~$i>1$.
+      Operasi-operasi baris ini tidak mengubah determinan.
+      \begin{equation*}
+        \grstep[-a_{3,1}\rho_1+\rho_3 \\ \vdotswithin{-a_{3,1}\rho_1+\rho_3} \\ -a_{n,1}\rho_1+\rho_n]{-a_{2,1}\rho_1+\rho_2}         
+      \end{equation*}
+      Hasilnya adalah matriks~$B$ yang baris pertamanya tidak berubah, kolom
+      pertamanya seluruhnya nol (kecuali entri $1,1$, yaitu $a_{1,1}$), dan
+      entri-entri sisanya adalah sebagai berikut.
+      \begin{equation*}
+        \begin{mat}
+              a_{1,2}  
+              &\cdots 
+              &a_{1,n-1}  
+              &a_{1,n} 
+              \\
+              a_{2,2}a_{1,1}-a_{2,1}a_{1,2}  
+              &\cdots 
+              &a_{2,n-1}a_{1,1}-a_{2,1}a_{1,n-1}
+              &a_{2,n}a_{1,1}-a_{2,1}a_{1,n}
+              \\
+              \vdots                         \\
+             a_{n,2}a_{1,1}-a_{n,1}a_{1,2} 
+             &\cdots 
+             &a_{n,n-1}a_{1,1}-a_{n,1}a_{1,n-1} 
+             &a_{n,n}a_{1,1}-a_{n,1}a_{1,n}  
+        \end{mat}
+      \end{equation*}
+       Determinan matriks $\nbyn{n}$ ini, yaitu $B$, adalah
+       $a_{1,1}^{n-1}$~kali determinan~$A$.
+
+     Nyatakan minor $1,1$ dari matriks $B$ dengan~$C$, yaitu submatriks yang
+     terdiri atas baris~$2$ sampai~$n$ dan kolom~$2$ sampai~$n$.
+     Ekspansi Laplace sepanjang kolom pertama $B$ memberikan
+     $\det(B) = (-1)^{1+1}a_{1,1}\det(C)$.
+
+      Jika $a_{1,1}\neq 0$, menyamakan kedua ekspresi bagi $\det(B)$ dan
+      mencoret faktor yang sama memberikan
+      $\det(A)=\det(C)/a_{1,1}^{n-2}$.
+    \end{answer}
+\end{exercises}
+
+\announcecomputercode
+Kode berikut mengimplementasikan Metode Chi\`o.
+Kode ini ditulis dalam bahasa komputer Python.
+%  (to make it more readable 
+% the code avoids some Python facilities).
+% Note the recursive call in the final line of 
+% \lstinline!chio_det!. 
+\begin{lstlisting}
+#!/usr/bin/env python3
+# chio.py
+#  Hitung determinan menggunakan metode Chio.
+# Jim Hefferon; Domain Publik
+# Hanya untuk demonstrasi; misalnya, tidak menangani kasus M[0][0]=0
+
+def det_two(a,b,c,d):
+    """Kembalikan determinan matriks 2x2 [[a,b], [c,d]]"""
+    return a*d-b*c
+
+def chio_mat(M):
+    """Kembalikan matriks Chio sebagai daftar baris
+        M  matriks nxn, berupa daftar baris"""
+    dim=len(M)
+    C=[]
+    for row in range(1,dim):
+        C.append([])
+        for col in range(1,dim):  
+            C[-1].append(det_two(M[0][0], M[0][col], M[row][0], M[row][col]))
+    return C
+
+def chio_det(M,show=None):
+    """Cari determinan M dengan metode Chio
+        M  matriks mxm, berupa daftar baris"""
+    dim=len(M)
+    key_elet=M[0][0]
+    if dim==1:
+        return key_elet
+    return chio_det(chio_mat(M))//(key_elet**(dim-2))
+
+
+if __name__=='__main__':
+    M=[[2,1,1], [3,4,-1], [1,5,1]]
+    print("M=", M)
+    print("Determinan =", chio_det(M))
+\end{lstlisting}
+Berikut hasil pemanggilan program dari baris perintah.
+\begin{lstlisting}
+$ python3 chio.py
+M= [[2, 1, 1], [3, 4, -1], [1, 5, 1]]
+Determinan = 25
+\end{lstlisting}
+\index{metode Chi\`o|)}
+\endinput

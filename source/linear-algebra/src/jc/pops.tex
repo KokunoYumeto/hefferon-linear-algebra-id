@@ -1,0 +1,263 @@
+% Chapter 4, Topic _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\topic{Populasi Stabil}
+\index{populasi stabil|(}
+\index{populasi!stabil|(}
+Bayangkan sebuah taman suaka bagi satwa dari suatu spesies yang hendak kita
+lindungi. Taman itu tidak berpagar sehingga satwa melintasi batasnya, baik dari
+dalam ke luar maupun dari luar ke dalam. Setiap tahun, $10\%$ satwa di dalam
+taman pergi dan $1\%$ satwa di luar taman masuk. Dapatkah dicapai tingkat
+populasi yang stabil? Adakah populasi di dalam taman dan di seluruh wilayah
+lain yang tetap konstan dari waktu ke waktu, dengan jumlah satwa yang pergi
+sama dengan jumlah satwa yang masuk?
+
+Misalkan $p_n$ adalah populasi di dalam taman pada tahun ke-$n$ dan $r_n$
+adalah populasi di seluruh wilayah lain.
+\begin{align*}
+  p_{n+1} 
+  &=.90p_n+.01r_n    \\
+  r_{n+1}
+  &=.10p_n+.99r_n 
+\end{align*}
+Kita memperoleh persamaan matriks berikut.
+\begin{equation*}
+  \colvec{p_{n+1} \\ r_{n+1}}
+  =\begin{mat}[r]
+    .90  &.01  \\
+    .10  &.99
+  \end{mat}
+  \colvec{p_{n} \\ r_{n}}
+\end{equation*}
+Populasi akan stabil jika $p_{n+1}=p_n$ dan $r_{n+1}=r_n$, sehingga persamaan
+matriks $\vec{v}_{n+1}=T\vec{v}_{n}$ menjadi $\vec{v}=T\vec{v}$.
+Jadi, kita mencari vektor eigen $T$ yang terkait dengan nilai eigen
+$\lambda=1$. Persamaan $\zero=(\lambda I-T)\vec{v}=(I-T)\vec{v}$ adalah
+\begin{equation*}
+  \begin{mat}[r]
+      0.10  &-0.01  \\
+      -0.10  &0.01
+  \end{mat}
+  \colvec{p \\ r}=
+  \colvec[r]{0 \\ 0}
+\end{equation*}
+dan memberikan ruang eigen yang terdiri atas vektor-vektor dengan syarat
+$p=.1r$. Sebagai contoh, jika mula-mula populasi di dalam taman adalah
+$p=10\,000$ satwa dan populasi di seluruh wilayah lain adalah $r=100\,000$
+satwa, maka setiap tahun sepuluh persen satwa di dalam taman pergi (seribu
+satwa), sedangkan satu persen satwa dari luar masuk (juga seribu satwa).
+Populasi tersebut stabil dan mempertahankan dirinya sendiri.
+
+Sekarang bayangkan bahwa kita hendak meningkatkan populasi total spesies ini
+sebesar $1\%$ per tahun. Dalam suatu pengertian, tingkat populasinya akan stabil
+secara dinamis, berbeda dari tingkat populasi statis pada kasus $\lambda=1$.
+Persamaan $\vec{v}_{n+1}=1.01\cdot\vec{v}_n=T\vec{v}_{n}$ mengarah pada
+$(1.01 I-T)\vec{v}=\zero$, yang memberikan sistem berikut.
+\begin{equation*}
+  \begin{mat}[r]
+     0.11   &-0.01  \\
+     -0.10  &0.02
+  \end{mat}
+  \colvec{p \\ r}=
+  \colvec[r]{0 \\ 0}
+\end{equation*}
+Matriks ini nonsingular sehingga satu-satunya solusi adalah $p=0$, $r=0$.
+Jadi, tidak ada populasi awal tak trivial yang menghasilkan laju pertumbuhan
+tahunan tetap sebesar satu persen pada $p$ dan $r$.
+
+Kita dapat mencari laju yang memungkinkan suatu populasi awal menghasilkan
+perilaku pertumbuhan yang tetap. Tinjau $\lambda\vec{v}=T\vec{v}$ dan
+selesaikan untuk $\lambda$.
+\begin{equation*}
+  0=\begin{vmat}
+    \lambda-.9  &-.01  \\
+    -.10        &\lambda-.99
+  \end{vmat}
+  =(\lambda-.9)(\lambda-.99)-(.10)(.01)
+  =\lambda^2-1.89\lambda+.89
+\end{equation*}
+Kita telah mengetahui bahwa $\lambda=1$ merupakan salah satu solusi persamaan
+karakteristik ini. Solusi lainnya adalah $0.89$. Namun, ruang eigen untuk
+$\lambda=0.89$ memenuhi $p=-r$, sehingga tidak memuat populasi nonnegatif tak
+trivial. Karena itu, satu-satunya keadaan stabil yang bermakna sebagai populasi
+adalah kasus $\lambda=1$, dengan populasi total yang tidak bertambah atau
+berkurang.
+ 
+Jadi, salah satu cara memandang nilai eigen dan vektor eigen adalah sebagai
+pemberi keadaan stabil suatu sistem. Jika nilai eigennya satu, sistem tersebut
+statis; jika nilainya bukan satu, kestabilannya bersifat dinamis---asalkan
+vektor eigennya memang berada dalam domain keadaan yang bermakna.
+
+
+
+
+
+\begin{exercises}
+  \item 
+    Untuk taman yang dibahas di atas, berapakah populasi awal di dalam taman
+    jika kedua populasi hendak berkurang sebesar $11\%$ setiap tahun?
+    \begin{answer}
+      Persamaan 
+      \begin{equation*}
+         0.89I-T
+         =
+         \begin{mat}
+           0.89 &0 \\
+           0 &0.89
+         \end{mat}
+         -
+         \begin{mat}
+           .90  &.01  \\
+           .10  &.99
+         \end{mat}
+         =
+         \begin{mat}
+           -.01  &-.01  \\
+           -.10  &-.10
+         \end{mat}
+      \end{equation*} 
+      mengarah pada sistem berikut.
+      \begin{equation*}
+        \begin{mat}
+          -.01  &-.01  \\
+          -.10  &-.10
+        \end{mat}
+        \colvec{p \\ r}
+        =
+        \colvec{0  \\ 0}
+      \end{equation*}
+      Jadi, vektor eigennya memenuhi $p=-r$. Tidak ada populasi awal nonnegatif
+      tak trivial yang memenuhi syarat ini; satu-satunya keadaan populasi yang
+      mungkin adalah $p=r=0$.
+    \end{answer}
+  \item 
+    Apa yang terjadi pada populasi taman jika populasi di luar taman bertambah
+    sebesar $1\%$ per tahun?
+    Apakah laju pertumbuhan taman tertinggal atau mendahului laju di luar taman?
+    Andaikan populasi awal taman sepuluh ribu dan populasi awal di luar taman
+    seratus ribu, lalu hitung selama sepuluh tahun.
+    \begin{answer}
+      Dengan memperlakukan populasi luar sebagai besaran yang diberikan oleh
+      $r_n=100\,000(1.01)^n$ dan menggunakan
+      $p_{n+1}=0.90p_n+0.01r_n$, \Sage{} memberikan hasil berikut.
+\begin{lstlisting}
+sage: p, r0 = 10000.0, 100000.0
+sage: for y in range(11):
+....:     r = r0*(1.01)^y
+....:     print(y, p, r)
+....:     p = 0.90*p + 0.01*r
+0 10000.0 100000.0
+1 10000.0 101000.0
+2 10010.0 102010.0
+3 10029.1 103030.1
+4 10056.491 104060.401
+5 10091.44591 105101.00501
+6 10133.311369 106152.01506
+7 10181.500383 107213.535211
+8 10235.485697 108285.670563
+9 10294.793833 109368.527268
+10 10358.999722 110462.212541
+\end{lstlisting}
+      Jadi, selama sepuluh tahun populasi di dalam taman bertambah sekitar
+      $3.59\%$, sedangkan populasi di luar taman bertambah sekitar $10.46\%$.
+      Laju pertumbuhan di dalam taman tertinggal.
+    \end{answer}
+  \item 
+    Taman yang dibahas di atas kini dipagari sebagian, sehingga setiap tahun
+    hanya $5\%$ satwa di dalam taman yang pergi (sementara sekitar $1\%$ satwa
+    dari luar tetap masuk). Dalam keadaan apa taman tersebut sekarang dapat
+    mempertahankan populasi yang stabil?
+    \begin{answer}
+      Kita menginginkan populasi taman tahun berikutnya merupakan gabungan
+      satwa yang tetap tinggal dan satwa yang masuk dari luar,
+      $p_{n+1}=0.95p_n+0.01r_n$.
+      Populasi tahun berikutnya di wilayah lain merupakan gabungan satwa yang
+      meninggalkan taman dan satwa yang tetap berada di luar,
+      $r_{n+1}=0.05p_n+0.99r_n$. 
+      Persamaan matriks 
+      \begin{equation*}
+        \colvec{p_{n+1}  \\ r_{n+1}}
+        =
+        \begin{mat}
+          0.95  &0.01  \\
+          0.05  &0.99
+        \end{mat}
+        \colvec{p_n  \\ r_n}
+      \end{equation*}
+      berarti bahwa untuk menentukan nilai eigen kita harus menyelesaikan
+      persamaan berikut.
+      \begin{equation*}
+        0
+        =
+        \begin{vmat}
+          \lambda-0.95  &-0.01  \\
+          -0.05         &\lambda-0.99
+        \end{vmat}
+        =\lambda^2-1.94\lambda+0.94
+      \end{equation*}
+      \Sage{} memberikan hasil berikut.
+\begin{lstlisting}
+sage: x = var('x')
+sage: qe = (x^2 - 1.94*x + .94 == 0)
+sage: print solve(qe, x)
+[
+x == 47/50,
+x == 1
+]
+\end{lstlisting}
+      Untuk nilai eigen $1$, persamaan $(I-T)\vec v=\zero$ memberikan
+      $0.05p=0.01r$, atau $r=5p$. Jadi, populasi stabil ketika populasi di luar
+      taman lima kali populasi di dalam taman. Nilai eigen $0.94$ kembali
+      menghasilkan $p=-r$ dan tidak memberikan populasi nonnegatif tak trivial.
+    \end{answer}
+  \item 
+    Andaikan suatu spesies burung hanya hidup di Kanada, Amerika Serikat, atau
+    Meksiko. Setiap tahun, $4\%$ burung Kanada berpindah ke Amerika Serikat dan
+    $1\%$ berpindah ke Meksiko. Setiap tahun, $6\%$ burung Amerika Serikat
+    berpindah ke Kanada dan $4\%$ ke Meksiko. Dari Meksiko, setiap tahun $10\%$
+    berpindah ke Amerika Serikat dan $0\%$ ke Kanada.
+    \begin{exparts}
+      \partsitem Berikan matriks transisinya.
+      \partsitem Adakah keadaan yang membuat populasi di ketiga negara
+         tersebut konstan?  
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Berikut rekurensinya.
+          \begin{equation*}
+            \colvec{c_{n+1} \\ u_{n+1} \\ m_{n+1}}
+            =
+            \begin{mat}
+              .95  &.06  &0  \\
+              .04  &.90  &.10  \\
+              .01  &.04  &.90
+            \end{mat}
+            \colvec{c_n \\ u_n  \\ m_n}
+          \end{equation*}
+        \partsitem Sistem
+          \begin{equation*}
+            \begin{linsys}{3}
+              .05c &- &.06u &  &     &= &0  \\
+             -.04c &+ &.10u &- &.10m &= &0  \\
+             -.01c &- &.04u &+ &.10m &= &0
+            \end{linsys}
+          \end{equation*}
+          memiliki tak hingga banyak solusi.
+\begin{lstlisting}
+sage: var('c,u,m')
+(c, u, m)
+sage: eqns = [ .05*c-.06*u  == 0,
+....:         -.04*c+.10*u-.10*m == 0,
+....:         -.01*c-.04*u+.10*m == 0 ]
+sage: solve(eqns, c,u,m)
+[[c == 30/13*r1, u == 25/13*r1, m == r1]]            
+\end{lstlisting}
+      \end{exparts}
+    \end{answer}
+\end{exercises}
+\index{populasi!stabil|)}
+\index{populasi stabil|)}
+\endinput
+
+
+

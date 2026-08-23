@@ -1,0 +1,3776 @@
+% Chapter 3, Section 6 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linalg.html
+%  2001-Jun-12
+\section{Proyeksi}
+\index{proyeksi}
+\noindent\textit{Bagian ini bersifat opsional.
+     Bagian ini hanya menjadi prasyarat bagi
+     dua bagian terakhir Bab Lima dan beberapa Topik.}
+
+Kita telah mendeskripsikan proyeksi dari $\Re^3$ ke dalam
+subruang bidang~\( xy \) sebagai pemetaan bayangan.
+Gambar pertama menunjukkan alasannya,
+tetapi gambar kedua juga menunjukkan bahwa sebagian bayangan jatuh ke atas.
+\begin{center}  \small
+  \raisebox{20.8163bp}{\includegraphics{map/mp/ch3.25}}
+  \hspace*{4em}
+  \raisebox{0bp}{\includegraphics{map/mp/ch3.26}}
+\end{center}
+\vspace*{1ex}  % graphic is poorly drawn and sticks down into text
+Jadi, deskripsi yang mungkin lebih baik ialah:~proyeksi $\vec{v}$
+adalah vektor $\vec{p}$ pada bidang yang memiliki sifat bahwa
+seseorang yang berdiri di atas $\vec{p}$ dan memandang lurus ke atas atau
+ke bawah\Dash yaitu, memandang secara ortogonal terhadap bidang\Dash
+akan melihat ujung $\vec{v}$.
+Dalam bagian ini kita akan memperumumnya ke proyeksi-proyeksi lain,
+baik yang ortogonal maupun yang tidak ortogonal.
+
+% The first subsection develops orthogonal projection of a vector
+% into a line, which is used often in applications.
+% The second subsection shows how the definition of orthogonal
+% projection into a line allows us to calculate especially convenient bases
+% for vector spaces, again something that often appears in applications.
+% The final subsection completely generalizes projection, orthogonal or not, 
+% into any subspace at all.
+
+
+
+
+
+
+
+
+\subsectionoptional{Proyeksi Ortogonal ke Sebuah Garis}
+Pertama-tama kita membahas proyeksi ortogonal
+vektor \( \vec{v} \) ke garis $\ell$.
+% We darken a point on the line if someone at that point
+% looking straight up or down (that is, looking orthogonal to the line)
+% will see \( \vec{v} \).
+%<*PictureOrthogonalProjectionIntoALine0>
+Gambar ini memperlihatkan seseorang berjalan menyusuri garis
+menuju titik $\vec{p}\/$ sedemikian sehingga
+ujung $\vec{v}$ tepat berada di atasnya; di sini ``di atas'' tidak berarti
+sejajar dengan sumbu~$y$, melainkan ortogonal terhadap garis.
+%</PictureOrthogonalProjectionIntoALine0>
+\begin{center}  \small
+  \includegraphics{map/mp/ch3.28}
+\end{center}
+%<*PictureOrthogonalProjectionIntoALine1>
+Karena garis tersebut merupakan rentang suatu vektor,
+$\ell=\set{c\cdot\vec{s}\suchthat c\in\Re}$,
+terdapat koefisien $c_{\vec{p}}\,$
+dengan sifat bahwa $\vec{v}-c_{\vec{p}}\vec{s}\,$ ortogonal terhadap
+$c_{\vec{p}}\vec{s}$.
+%</PictureOrthogonalProjectionIntoALine1>
+\begin{center}  \small
+  \includegraphics{map/mp/ch3.29}
+\end{center}
+%<*PictureOrthogonalProjectionIntoALine2>
+Untuk menentukan koefisien ini, perhatikan bahwa karena
+$\vec{v}-c_{\vec{p}}\vec{s}\,$ ortogonal terhadap suatu kelipatan skalar
+dari $\vec{s}$, vektor itu pasti ortogonal terhadap $\vec{s}\,$ sendiri.
+Dengan demikian,
+$(\vec{v}-c_{\vec{p}}\vec{s})\dotprod \vec{s}=0$ memberikan
+$c_{\vec{p}}=\vec{v}\dotprod \vec{s}/\vec{s}\dotprod \vec{s}$.
+%</PictureOrthogonalProjectionIntoALine2>
+
+\begin{definition}  \label{def:ProjIntoLine}
+%<*df:ProjIntoLine>
+\definend{Proyeksi ortogonal \( \vec{v} \) ke garis yang direntang oleh
+\( \vec{s}\, \) tak nol}\index{proyeksi!ortogonal}%
+\index{proyeksi!ke sebuah garis} adalah vektor berikut.
+\begin{equation*}
+  \proj{\vec{v}}{\spanof{\vec{s}\,}}=
+  \frac{ \vec{v}\dotprod\vec{s} }{ \vec{s}\dotprod\vec{s} }\cdot\vec{s}
+\end{equation*}
+%</df:ProjIntoLine>
+\end{definition}
+
+% \noindent \nearbyexercise{exer:LineProjFormIndOfVec} checks that the 
+% outcome of the calculation depends only on the line and not on which vector 
+% \( \vec{s}\, \) we used to describe that line.
+\noindent (Di sini digunakan ungkapan `direntang oleh \( \vec{s}\, \)'
+alih-alih ungkapan yang lebih formal `rentang himpunan \( \set{\vec{s}\,} \)'.
+Ungkapan yang lebih santai ini lazim digunakan.)
+
+\begin{example}
+Untuk memproyeksikan secara ortogonal
+vektor $\binom{2}{3}$ ke garis \( y=2x \),
+pertama-tama pilih suatu vektor arah bagi garis tersebut.
+\begin{equation*}
+  \vec{s}=\colvec[r]{1 \\ 2}
+\end{equation*}
+Perhitungannya mudah.
+\begin{center}  \small
+  \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.30}\end{tabular}
+  \qquad
+  $\frac{ \colvec[r]{2 \\ 3}\dotprod\colvec[r]{1 \\ 2} }{% 
+          \colvec[r]{1 \\ 2}\dotprod\colvec[r]{1 \\ 2} }
+     \cdot\colvec[r]{1 \\ 2}
+    ={\displaystyle \frac{8}{5}}\cdot\colvec[r]{1 \\ 2}=\colvec[r]{8/5 \\ 16/5}$
+\end{center}
+\end{example}
+
+\begin{example}
+Dalam \( \Re^3 \), proyeksi ortogonal vektor umum
+\begin{equation*}
+  \colvec{x \\ y \\ z}
+\end{equation*}
+ke sumbu~\( y \) adalah
+\begin{equation*}
+  \frac{ \colvec{x \\ y \\ z}\dotprod\colvec[r]{0 \\ 1 \\ 0} }{
+         \colvec[r]{0 \\ 1 \\ 0}\dotprod\colvec[r]{0 \\ 1 \\ 0} }
+          \cdot\colvec[r]{0 \\ 1 \\ 0}=\colvec{0 \\ y \\ 0}
+\end{equation*}
+yang sesuai dengan dugaan intuitif kita.
+\end{example}
+
+Gambar di atas, yang memperlihatkan seseorang berjalan menyusuri garis hingga
+ujung $\vec{v}$ berada tepat di atasnya, merupakan salah satu cara memandang
+proyeksi ortogonal suatu vektor ke sebuah garis.
+Kita menutup subbagian ini dengan dua cara pandang lain.
+
+
+\begin{example} \label{exam:RailCar}
+Sebuah gerbong kereta yang dibiarkan tanpa rem pada jalur timur--barat didorong
+angin yang bertiup ke timur laut dengan kecepatan lima belas mil per jam;
+berapakah kecepatan yang akan dicapai gerbong tersebut?
+\begin{center}  \small
+  \includegraphics{map/mp/ch3.31}
+\end{center}
+Untuk angin tersebut kita gunakan vektor dengan panjang $15$ yang menunjuk ke
+timur laut.
+\begin{equation*}
+  \vec{v}=\colvec[r]{15\sqrt{1/2} \\ 15\sqrt{1/2}}
+\end{equation*}
+Gerbong hanya dipengaruhi oleh bagian angin yang bertiup dalam arah
+timur--barat\Dash bagian $\vec{v}$ dalam arah sumbu~$x$ adalah berikut ini
+(gambar ini menggunakan sudut pandang yang sama dengan gambar gerbong di atas).
+\begin{center}
+  \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.32}\end{tabular}
+  \qquad
+  $\displaystyle \vec{p}=\colvec{15\sqrt{1/2} \\ 0}$
+\end{center}
+Jadi, gerbong akan mencapai kecepatan
+\( 15\sqrt{1/2} \) mil per jam ke arah timur.
+\end{example}
+
+Jadi, cara lain memandang
+gambar sebelum definisi adalah bahwa gambar itu memperlihatkan
+$\vec{v}$ yang diuraikan menjadi dua bagian: bagian $\vec{p}$ yang searah
+dengan garis, dan bagian yang ortogonal terhadap garis
+(ditunjukkan di atas pada sumbu utara--selatan).
+Kedua bagian ini tidak saling berinteraksi,
+dalam arti bahwa gerbong timur--barat sama sekali tidak dipengaruhi oleh
+bagian angin utara--selatan (lihat \nearbyexercise{exer:PerpAreInd}).
+Jadi, proyeksi ortogonal \( \vec{v} \) ke garis yang direntang oleh
+\( \vec{s}\, \) dapat dipandang sebagai bagian dari \( \vec{v}\, \)
+yang terletak dalam arah \( \vec{s} \).
+
+Cara berguna lain untuk memandang proyeksi ortogonal ke sebuah garis
+adalah dengan meminta orang tersebut berdiri di atas vektor, bukan di atas garis.
+Orang ini memegang tali yang dilingkarkan mengitari garis.
+Ketika ia menariknya, lingkaran tali bergeser pada garis.
+\begin{center}  \small
+  \includegraphics{map/mp/ch3.33}
+\end{center}
+Ketika tali menegang, tali itu ortogonal terhadap garis.
+Artinya, proyeksi \( \vec{p}\, \) dapat dipandang sebagai vektor pada garis
+yang paling dekat dengan \( \vec{v} \)
+(lihat \nearbyexercise{exer:ProjMinimizesDist}).
+
+\begin{example}
+Sebuah kapal selam melacak kapal yang bergerak sepanjang garis \( y=3x+2 \).
+Jangkauan torpedonya setengah mil.
+Jika kapal selam tetap berada di tempatnya, yakni di titik asal pada peta di
+bawah, apakah kapal tersebut akan melintas dalam jangkauan?
+\begin{center}  \small
+  \includegraphics{map/mp/ch3.34}
+\end{center} 
+Rumus proyeksi
+ke sebuah garis tidak langsung berlaku karena garis itu tidak melalui
+titik asal, sehingga bukan merupakan rentang dari suatu $\vec{s}$.
+Untuk menyesuaikannya, mula-mula kita geser seluruh peta dua satuan ke bawah.
+Kini garisnya adalah $y=3x$, suatu subruang.
+Kita melakukan proyeksi untuk memperoleh
+titik $\vec{p}$ pada garis yang paling dekat dengan
+\begin{equation*}
+  \vec{v}=\colvec[r]{0 \\ -2}
+\end{equation*}
+posisi kapal selam setelah digeser.
+\begin{equation*}
+  \vec{p}=\frac{\colvec[r]{0 \\ -2}\dotprod\colvec[r]{1 \\ 3}}{
+                \colvec[r]{1 \\ 3}\dotprod\colvec[r]{1 \\ 3}}
+          \cdot \colvec[r]{1 \\ 3}=\colvec[r]{-3/5 \\ -9/5}
+\end{equation*}
+Jarak antara $\vec{v}$ dan $\vec{p}$ kira-kira
+\( 0.63 \)~mil.
+Kapal tersebut tidak akan pernah berada dalam jangkauan.
+\end{example}
+
+
+\begin{exercises}
+  \recommended \item
+    Proyeksikan vektor pertama secara ortogonal
+    ke garis yang direntang oleh vektor kedua.
+    \begin{exparts*}
+      \partsitem \mbox{\( \colvec[r]{2 \\ 1} \), \( \colvec[r]{3 \\ -2} \)}
+      \partsitem \mbox{\( \colvec[r]{2 \\ 1} \), \( 
+            \colvec[r]{3 \\ 0} \)}
+      \partsitem \mbox{\( \colvec[r]{1 \\ 1 \\ 4} \), \( 
+         \colvec[r]{1 \\ 2 \\ -1} \)}
+      \partsitem \mbox{\( \colvec[r]{1 \\ 1 \\ 4} \), \( 
+         \colvec[r]{3 \\ 3 \\ 12} \)}
+    \end{exparts*}
+    \begin{answer}
+       % Each is a straightforward application of the formula from 
+       % \nearbydefinition{def:ProjIntoLine}.
+       \begin{exparts}
+        \partsitem 
+          $\displaystyle \frac{\colvec[r]{2 \\ 1}\dotprod\colvec[r]{3 \\ -2}}{%
+                               \colvec[r]{3 \\ -2}\dotprod\colvec[r]{3 \\ -2}}
+             \cdot\colvec[r]{3 \\ -2}
+           =\frac{4}{13}
+             \cdot\colvec[r]{3 \\ -2}
+           =\colvec[r]{12/13 \\ -8/13}$
+        \partsitem 
+          $\displaystyle \frac{\colvec[r]{2 \\ 1}\dotprod\colvec[r]{3 \\ 0}}{%
+                               \colvec[r]{3 \\ 0}\dotprod\colvec[r]{3 \\ 0}}
+             \cdot\colvec[r]{3 \\ 0}
+           =\frac{2}{3}
+             \cdot\colvec[r]{3 \\ 0}
+           =\colvec[r]{2 \\ 0}$
+        \partsitem 
+          $\displaystyle 
+             \frac{\colvec[r]{1 \\ 1 \\ 4}\dotprod\colvec[r]{1 \\ 2 \\ -1}}{%
+                   \colvec[r]{1 \\ 2 \\ -1}\dotprod\colvec[r]{1 \\ 2 \\ -1}}
+             \cdot\colvec[r]{1 \\ 2 \\ -1}
+           =\frac{-1}{6}
+             \cdot\colvec[r]{1 \\ 2 \\ -1}
+           =\colvec[r]{-1/6 \\ -1/3 \\ 1/6}$
+        \partsitem 
+          $\displaystyle 
+             \frac{\colvec[r]{1 \\ 1 \\ 4}\dotprod\colvec[r]{3 \\ 3 \\ 12}}{%
+                   \colvec[r]{3 \\ 3 \\ 12}\dotprod\colvec[r]{3 \\ 3 \\ 12}}
+             \cdot\colvec[r]{3 \\ 3 \\ 12}
+           =\frac{1}{3}
+             \cdot\colvec[r]{3 \\ 3 \\ 12}
+           =\colvec[r]{1 \\ 1 \\ 4}$
+      \end{exparts}  
+    \end{answer}
+  \recommended \item 
+    Proyeksikan vektor tersebut secara ortogonal ke garis.
+    \begin{exparts*}
+      \partsitem 
+       $\colvec[r]{2 \\ -1 \\ 4},~\set{c\colvec[r]{-3 \\ 1 \\ -3}\suchthat c\in\Re}$
+      \partsitem $\colvec[r]{-1 \\ -1}$,~garis $y=3x$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem 
+          $\displaystyle
+             \frac{\colvec[r]{2 \\ -1 \\ 4}\dotprod\colvec[r]{-3 \\ 1 \\ -3}}{%
+                   \colvec[r]{-3 \\ 1 \\ -3}\dotprod\colvec[r]{-3 \\ 1 \\ -3}}
+             \cdot\colvec[r]{-3 \\ 1 \\ -3}
+           =\frac{-19}{19}\cdot\colvec[r]{-3 \\ 1 \\ -3}
+           =\colvec[r]{3 \\ -1 \\ 3}$
+         \partsitem Dengan menuliskan garis sebagai
+           \begin{equation*} 
+             \set{c\cdot \colvec[r]{1 \\ 3}\suchthat c\in\Re}
+           \end{equation*}
+           diperoleh proyeksi berikut.
+           \begin{equation*}
+             \frac{\colvec[r]{-1 \\ -1}\dotprod\colvec[r]{1 \\ 3}}{%
+                   \colvec[r]{1 \\ 3}\dotprod\colvec[r]{1 \\ 3}}
+              \cdot\colvec[r]{1 \\ 3}
+             =\frac{-4}{10}\cdot\colvec[r]{1 \\ 3}
+             =\colvec[r]{-2/5 \\ -6/5}
+           \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \item 
+    Meskipun gambar memandu pengembangan
+    \nearbydefinition{def:ProjIntoLine}, kita tidak terbatas pada ruang yang
+    dapat kita gambar.
+    Dalam $\Re^4$, proyeksikan vektor ini ke garis berikut.
+    \begin{equation*}
+      \vec{v}=\colvec[r]{1 \\ 2 \\ 1 \\ 3}
+      \qquad
+      \ell=\set{c\cdot\colvec[r]{-1 \\ 1 \\ -1 \\ 1}\suchthat c\in\Re}
+    \end{equation*}
+    \begin{answer}
+      $\displaystyle 
+         \frac{\colvec[r]{1 \\ 2 \\ 1 \\ 3}\dotprod\colvec[r]{-1 \\ 1 \\ -1 \\ 1}}{%
+               \colvec[r]{-1 \\ 1 \\ -1 \\ 1}\dotprod\colvec[r]{-1 \\ 1 \\ -1 \\ 1}}
+         \cdot\colvec[r]{-1 \\ 1 \\ -1 \\ 1}
+       =\frac{3}{4}
+         \cdot\colvec[r]{-1 \\ 1 \\ -1 \\ 1}
+       =\colvec[r]{-3/4 \\ 3/4 \\ -3/4 \\ 3/4}$ 
+    \end{answer}
+  \recommended \item 
+    \nearbydefinition{def:ProjIntoLine} menggunakan dua vektor, $\vec{s}$ dan
+    $\vec{v}$.
+    Tinjau transformasi pada $\Re^2$ yang diperoleh dengan menetapkan
+    \begin{equation*}
+      \vec{s}=\colvec[r]{3 \\ 1}
+    \end{equation*}
+    lalu memproyeksikan $\vec{v}$ ke garis yang merupakan rentang $\vec{s}$.
+    Terapkan transformasi itu pada vektor-vektor berikut.
+    \begin{exparts*}
+      \partsitem $\colvec[r]{1 \\ 2}$
+      \partsitem $\colvec[r]{0 \\ 4}$ 
+    \end{exparts*}
+    Tunjukkan bahwa secara umum transformasi proyeksinya adalah berikut.
+    \begin{equation*}
+      \colvec{x_1 \\ x_2}
+      \mapsto
+      \colvec{(9x_1+3x_2)/10 \\ (3x_1+x_2)/10}
+    \end{equation*}
+    Nyatakan tindakan transformasi ini dengan sebuah matriks.
+    \begin{answer}
+      \begin{exparts}
+        \partsitem $\displaystyle
+          \frac{\colvec[r]{1 \\ 2}\dotprod\colvec[r]{3 \\ 1}}{%
+                 \colvec[r]{3 \\ 1}\dotprod\colvec[r]{3 \\ 1}}
+          \cdot \colvec[r]{3 \\ 1}
+          =\frac{1}{2}\cdot\colvec[r]{3 \\ 1}
+          =\colvec[r]{3/2 \\ 1/2}$
+        \partsitem $\displaystyle
+          \frac{\colvec[r]{0 \\ 4}\dotprod\colvec[r]{3 \\ 1}}{%
+                 \colvec[r]{3 \\ 1}\dotprod\colvec[r]{3 \\ 1}}
+          \cdot \colvec[r]{3 \\ 1}
+          =\frac{2}{5}\cdot\colvec[r]{3 \\ 1}
+          =\colvec[r]{6/5 \\ 2/5}$
+      \end{exparts}
+      \noindent Secara umum proyeksinya adalah berikut.
+      \begin{equation*}
+          \frac{\colvec{x_1 \\ x_2}\dotprod\colvec[r]{3 \\ 1}}{%
+                 \colvec[r]{3 \\ 1}\dotprod\colvec[r]{3 \\ 1}}
+          \cdot \colvec[r]{3 \\ 1}
+          =\frac{3x_1+x_2}{10}\cdot\colvec[r]{3 \\ 1}
+          =\colvec{(9x_1+3x_2)/10 \\ (3x_1+x_2)/10}
+      \end{equation*}
+      Matriks yang sesuai adalah berikut.
+      \begin{equation*}
+        \begin{mat}[r]
+          9/10  &3/10  \\
+          3/10  &1/10
+        \end{mat}
+      \end{equation*}  
+     \end{answer}
+  \item \label{exer:PerpAreInd}
+    \nearbyexample{exam:RailCar} menunjukkan bahwa proyeksi menguraikan
+    $\vec{v}$ menjadi dua bagian, $\proj{\vec{v}\,}{\spanof{\vec{s}\,}}$ dan
+    $\vec{v}-\proj{\vec{v}\,}{\spanof{\vec{s}\,}}$, yang tidak saling
+    berinteraksi.
+    Ingat bahwa keduanya ortogonal.
+    Tunjukkan bahwa sebarang dua vektor ortogonal tak nol membentuk himpunan
+    yang bebas linear.
+    \begin{answer}
+      Misalkan $\vec{v}_1$ dan $\vec{v}_2$ tak nol dan ortogonal.
+      Tinjau hubungan linear
+      $c_1\vec{v}_1+c_2\vec{v}_2=\zero$.
+      Ambil hasil kali titik kedua ruas persamaan dengan $\vec{v}_1$ untuk
+      memperoleh
+      \begin{multline*}
+        \vec{v}_1\dotprod(c_1\vec{v}_1+c_2\vec{v}_2)
+        =c_1\cdot(\vec{v}_1\dotprod\vec{v}_1)
+           +c_2\cdot(\vec{v}_1\dotprod\vec{v}_2)            \\
+        =c_1\cdot (\vec{v}_1\dotprod\vec{v}_1)+c_2\cdot 0
+        =c_1\cdot (\vec{v}_1\dotprod\vec{v}_1)
+      \end{multline*}
+      yang sama dengan $\vec{v}_1\dotprod\zero=\zero$.
+      Karena diasumsikan bahwa $\vec{v}_1$ tak nol, hal ini memberikan bahwa
+      $c_1$ nol.
+      Pembuktian bahwa $c_2$ nol serupa.
+    \end{answer}
+  \item    
+    \begin{exparts}
+      \partsitem Apa proyeksi ortogonal \( \vec{v} \) ke sebuah garis jika
+        \( \vec{v} \) merupakan anggota garis tersebut?
+      \partsitem Tunjukkan bahwa jika $\vec{v}$ bukan anggota garis tersebut,
+        maka himpunan
+        $\set{\vec{v},\vec{v}-\proj{\vec{v}\,}{\spanof{\vec{s}\,}}}$
+        bebas linear.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+       \partsitem Jika vektor $\vec{v}\,$ berada pada garis tersebut, maka
+         proyeksi ortogonalnya adalah \( \vec{v} \).
+         Untuk memverifikasinya melalui perhitungan, perhatikan bahwa karena
+         $\vec{v}\,$ berada pada garis tersebut, berlaku
+         \( \vec{v}=c_{\vec{v}}\cdot\vec{s}\, \) bagi suatu skalar
+         $c_{\vec{v}}$.
+         \begin{equation*}
+           \frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}\cdot\vec{s}
+           =\frac{c_{\vec{v}}\cdot \vec{s}\dotprod\vec{s}}{%
+                         \vec{s}\dotprod\vec{s}}\cdot\vec{s}
+           =c_{\vec{v}}\cdot\frac{\vec{s}\dotprod\vec{s}}{%
+                                  \vec{s}\dotprod\vec{s}}\cdot\vec{s}
+           =c_{\vec{v}}\cdot 1 \cdot\vec{s}
+           =\vec{v}
+         \end{equation*}
+          (\textit{Catatan}.
+          Jika kita mengasumsikan bahwa $\vec{v}\,$ tak nol, perhitungan di
+          atas dapat disederhanakan dengan mengambil $\vec{s}\,$ sebagai
+          $\vec{v}$.)
+       \partsitem Tuliskan $c_{\vec{p}}\vec{s}\,$ untuk proyeksi
+         $\proj{\vec{v}}{\spanof{\vec{s}\,}}$. 
+         Perhatikan bahwa, berdasarkan asumsi bahwa $\vec{v}$ tidak berada
+         pada garis, baik $\vec{v}$ maupun
+         $\vec{v}-c_{\vec{p}}\vec{s}\,$ tak nol.
+         Perhatikan pula bahwa jika $c_{\vec{p}}\,$ nol, sesungguhnya kita
+         sedang meninjau himpunan beranggota tunggal $\set{\vec{v}\,}$;
+         karena $\vec{v}$ tak nol, himpunan ini pasti bebas linear.
+         Oleh karena itu, tinggal ditinjau kasus bahwa $c_{\vec{p}}$ tak nol.
+
+         Dengan menyusun hubungan linear
+         \begin{equation*}
+           a_1(\vec{v})+a_2(\vec{v}-c_{\vec{p}}\vec{s})=\zero
+         \end{equation*}
+         diperoleh persamaan
+         $(a_1+a_2)\cdot\vec{v}=a_2c_{\vec{p}}\cdot\vec{s}$.
+         Karena $\vec{v}\,$ tidak berada pada garis, kedua skalar
+         $a_1+a_2$ dan $a_2 c_{\vec{p}}$ harus nol.
+         Kasus $c_{\vec{p}}=0$ telah ditangani di atas, sehingga pada kasus
+         yang tersisa $a_2=0$, dan ini juga memberikan $a_1=0$.
+         Jadi, himpunan tersebut bebas linear.
+     \end{exparts}
+    \end{answer}
+  \item 
+    \nearbydefinition{def:ProjIntoLine} mensyaratkan bahwa $\vec{s}\,$ tak nol.
+    Mengapa?
+    Apa definisi yang tepat bagi proyeksi ortogonal suatu vektor ke garis
+    (degenerat) yang direntang oleh vektor nol?
+    \begin{answer}
+      Jika $\vec{s}\,$ adalah vektor nol, maka ungkapan
+          \begin{equation*}
+            \proj{\vec{v}}{\spanof{\vec{s}\,}}=
+            \frac{ \vec{v}\dotprod\vec{s} }{%
+                    \vec{s}\dotprod\vec{s} }\cdot\vec{s}
+          \end{equation*}
+      memuat pembagian dengan nol sehingga tidak terdefinisi.
+      Adapun definisi yang tepat: agar proyeksi berada dalam rentang vektor
+      nol, proyeksi itu harus didefinisikan sebagai \( \zero \).
+    \end{answer}
+  \item 
+    Apakah setiap vektor merupakan proyeksi suatu vektor lain ke suatu garis?
+    \begin{answer}
+      Setiap vektor dalam \( \Re^n \) merupakan proyeksi suatu vektor lain ke
+      sebuah garis, asalkan dimensi \( n \) lebih besar dari satu.
+      (Jelas bahwa setiap vektor merupakan proyeksi dirinya sendiri ke garis
+      yang memuatnya; pertanyaannya ialah mencari suatu vektor selain
+      $\vec{v}$ yang proyeksinya adalah \( \vec{v} \).)
+
+      Misalkan \( \vec{v}\in\Re^n \) dengan \( n>1 \).
+      Jika \( \vec{v}=\zero \), ambil garis
+      \( \ell=\spanof{\vec{e}_1} \) dan vektor
+      \( \vec{w}=\vec{e}_2 \). Karena \( n>1 \), vektor ini tersedia,
+      berbeda dari \( \vec{v} \), dan proyeksinya ke \( \ell \) adalah
+      \( \zero=\vec{v} \).
+      Jadi, untuk bagian pembuktian yang tersisa, misalkan
+      \( \vec{v}\neq\zero \) dan ambil garis
+      \( \ell=\set{c\vec{v}\suchthat c\in\Re} \).
+      Misalkan \( v_1,\dots,v_n \) adalah komponen-komponen \( \vec{v} \);
+      karena \( n>1 \), setidaknya ada dua komponen.
+      Jika suatu \( v_i \) nol, maka vektor \( \vec{w}=\vec{e}_i \) tegak
+      lurus terhadap \( \vec{v} \).
+      Jika tidak ada komponennya yang nol, maka vektor \( \vec{w}\, \) yang
+      komponennya \( v_2,-v_1,0,\dots ,0 \) tegak lurus terhadap
+      \( \vec{v} \).
+      Perhatikan bahwa \( \vec{v}+\vec{w} \) tidak
+      sama dengan \( \vec{v} \), dan bahwa \( \vec{v} \) merupakan proyeksi
+      \( \vec{v}+\vec{w} \) ke \( \ell \).
+      \begin{equation*}
+        \frac{ (\vec{v}+\vec{w})\dotprod\vec{v} }{ 
+               \vec{v}\dotprod\vec{v} }\cdot\vec{v}
+        =\bigl(\frac{ \vec{v}\dotprod\vec{v} }{ 
+                     \vec{v}\dotprod\vec{v} }+
+               \frac{ \vec{w}\dotprod\vec{v} }{ \
+                      \vec{v}\dotprod\vec{v} }\bigr)\cdot\vec{v}
+        =\frac{ \vec{v}\dotprod\vec{v} }{ \vec{v}\dotprod\vec{v} }\cdot\vec{v}
+        =\vec{v}
+      \end{equation*}
+
+      Tinggal kita tangani kasus $n=0$ dan $n=1$.
+      Kasus berdimensi \( n=0 \) adalah ruang vektor trivial; di sini hanya
+      ada satu vektor sehingga vektor itu tidak dapat dinyatakan sebagai
+      proyeksi vektor yang berbeda.
+      Dalam kasus berdimensi $n=1$ hanya ada satu garis (tak degenerat), dan
+      setiap vektor berada di dalamnya; jadi setiap vektor hanya merupakan
+      proyeksi dirinya sendiri.
+    \end{answer}
+  \item 
+    Tunjukkan bahwa panjang proyeksi \( \vec{v}\, \) ke garis yang direntang
+    oleh \( \vec{s}\, \) sama dengan nilai mutlak bilangan
+    \( \vec{v}\dotprod\vec{s}\, \) dibagi panjang vektor \( \vec{s}\, \).
+    \begin{answer}
+      Buktinya berupa suatu perhitungan.
+      Ingat bahwa bagi sebarang vektor $\vec{u}$, panjangnya ditentukan oleh
+      $\absval{\vec{u}}^2=\vec{u}\dotprod\vec{u}$.
+      Jadi, berikut adalah kuadrat panjang proyeksi tersebut.
+      \begin{equation*}
+        \absval{\frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}
+              \cdot\vec{s}\,}^2
+        =
+        \bigl(\frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}
+           \cdot \vec{s}\bigr)
+        \dotprod
+        \bigl(\frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}
+           \cdot \vec{s}\bigr)
+        =
+        \bigl(\frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}\bigr)^2
+        \cdot(\vec{s}\dotprod\vec{s})
+        =
+        \frac{(\vec{v}\dotprod\vec{s})^2}{(\vec{s}\dotprod\vec{s})^2}
+        \cdot(\vec{s}\dotprod\vec{s})
+        =
+        \frac{(\vec{v}\dotprod\vec{s})^2}{\absval{\vec{s}}^2}
+      \end{equation*} 
+    \end{answer}
+  \item
+    Temukan rumus jarak dari sebuah titik ke sebuah garis.
+    \begin{answer}
+      Karena proyeksi \( \vec{v} \) ke garis yang direntang oleh
+      \( \vec{s} \) adalah
+      \begin{equation*}
+        \frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}\cdot\vec{s}
+      \end{equation*}
+      kuadrat jarak dari titik ke garis adalah sebagai berikut.
+      \begin{align*}
+        \absval{\vec{v}-
+                \frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}
+                \cdot\vec{s}\, }^2
+        &=\big( \vec{v}-
+                \frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}
+                \cdot\vec{s} \big)
+          \dotprod
+          \big( \vec{v}-
+                \frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}
+                \cdot\vec{s} \big)                                  \\
+        &=\vec{v}\dotprod\vec{v}
+        -\vec{v}\dotprod(
+              \frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}\cdot\vec{s}
+           )
+        -(
+              \frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}
+               \cdot\vec{s}\,
+         )\dotprod\vec{v}
+        +\big(\frac{\vec{v}\dotprod\vec{s}}{
+                \vec{s}\dotprod\vec{s}}\cdot\vec{s}\,\big)
+          \dotprod
+          \big(\frac{\vec{v}\dotprod\vec{s}}{
+                \vec{s}\dotprod\vec{s}}\cdot\vec{s}\,\big)     \\   
+        &=\vec{v}\dotprod\vec{v}
+        -2\cdot\big(\frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}\big)
+           \cdot\vec{v}\dotprod\vec{s}
+        +\big(\frac{\vec{v}\dotprod\vec{s}}{
+                \vec{s}\dotprod\vec{s}}\big)^2\cdot(\vec{s}\dotprod\vec{s})  \\
+        &=\frac{(\vec{v}\dotprod\vec{v}\,)\cdot(\vec{s}\dotprod\vec{s}\,)
+                 -2\cdot(\vec{v}\dotprod\vec{s}\,)^2
+                 +(\vec{v}\dotprod\vec{s}\,)^2}{%
+               \vec{s}\dotprod\vec{s}}                               \\     
+        &=\frac{(\vec{v}\dotprod\vec{v}\,)(\vec{s}\dotprod\vec{s}\,)
+                -(\vec{v}\dotprod\vec{s}\,)^2}{\vec{s}\dotprod\vec{s}}
+      \end{align*}  
+    \end{answer}
+  \item 
+    Dengan menggunakan Kalkulus, temukan skalar \( c \) sedemikian sehingga
+    titik \( (cs_1,cs_2) \) berjarak minimum dari titik \( (v_1,v_2) \)
+    (yakni, tinjau fungsi jarak, samakan turunan pertamanya dengan nol, lalu
+    selesaikan).
+    Perumum hasilnya ke \( \Re^n \).
+    \begin{answer}
+      Karena akar kuadrat merupakan fungsi yang naik secara ketat, kita dapat
+      meminimumkan \( d(c)=(cs_1-v_1)^2+(cs_2-v_2)^2 \), bukan akar kuadrat
+      dari \( d \).
+      Turunannya adalah
+      $dd/dc=2(cs_1-v_1)\cdot s_1 +2(cs_2-v_2)\cdot s_2$.
+      Menyamakannya dengan nol,
+      $2(cs_1-v_1)\cdot s_1 +2(cs_2-v_2)\cdot s_2
+        =c\cdot(2s_1^2+2s_2^2)-2(v_1s_1+v_2s_2)=0$
+      memberikan satu-satunya titik kritis.
+      \begin{equation*}
+        c=\frac{v_1s_1+v_2s_2}{{s_1}^2+{s_2}^2}
+         =\frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}
+      \end{equation*}
+      Sekarang turunan kedua terhadap $c$,
+      \begin{equation*}
+        \frac{d^2\,d}{dc^2}=2{s_1}^2+2{s_2}^2
+      \end{equation*}
+      positif secara ketat (selama \( s_1 \) dan \( s_2 \) tidak keduanya nol;
+      jika keduanya nol, soalnya trivial), sehingga titik kritis tersebut
+      merupakan suatu minimum.
+
+      Perumuman ke $\Re^n$ langsung.
+      Tinjau $d_n(c)=(cs_1-v_1)^2+\dots+(cs_n-v_n)^2$, ambil turunannya, dan
+      seterusnya.
+    \end{answer}
+  \recommended \item \label{exer:ProjMinimizesDist}
+    Misalkan $\vec{p}$ adalah proyeksi ortogonal
+    $\vec{v}\in\Re^n$ ke garis~$\ell$.
+    Tunjukkan bahwa $\vec{p}$ adalah titik pada garis yang paling dekat dengan
+    $\vec{v}$.
+    \begin{answer}
+      Misalkan $\vec{w}\in\ell$.
+      Karena ini merupakan proyeksi ortogonal, kedua vektor
+      $\vec{v}-\vec{p}$ dan $\vec{p}-\vec{w}$ saling tegak lurus.
+      Teorema Pythagoras berlaku, sehingga sisi miring
+      $\vec{v}-\vec{w}$ setidaknya sepanjang $\vec{v}-\vec{p}$.
+    \end{answer}
+  \item
+    Buktikan bahwa panjang proyeksi ortogonal suatu vektor ke sebuah garis
+    kurang dari atau sama dengan panjang vektor tersebut.
+    \begin{answer}
+      Bagi sebarang vektor $\vec{u}$, kuadrat panjangnya diberikan oleh
+      $\absval{\vec{u}}^2=\vec{u}\dotprod\vec{u}$.
+      Jadi, berikut adalah kuadrat panjang proyeksinya.
+      \begin{equation*}
+        \absval{\frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}
+              \cdot\vec{s}\,}^2
+        =
+        \bigl(\frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}
+           \cdot \vec{s}\,\bigr)
+        \dotprod
+        \bigl(\frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}
+           \cdot \vec{s}\,\bigr)
+        =
+        \bigl(\frac{\vec{v}\dotprod\vec{s}}{\vec{s}\dotprod\vec{s}}\bigr)^2
+        \cdot(\vec{s}\dotprod\vec{s})
+        =
+        \frac{(\vec{v}\dotprod\vec{s})^2}{(\vec{s}\dotprod\vec{s})^2}
+        \cdot(\vec{s}\dotprod\vec{s})
+        =
+        \frac{(\vec{v}\dotprod\vec{s})^2}{\absval{\vec{s}\,}^2}
+      \end{equation*} 
+      Dengan demikian, panjangnya adalah
+      $\absval{\vec{v}\dotprod\vec{s}}/\absval{\vec{s}\,}$, yakni nilai mutlak
+      $\vec{v}\dotprod\vec{s}$ dibagi panjang~$\vec{s}$.
+      Ketaksamaan Cauchy--Schwarz,
+      $\absval{\vec{v}\dotprod\vec{s}\,}
+         \leq\absval{\vec{v}\,}\cdot\absval{\vec{s}\,}$, 
+      memberikan
+      $\absval{\vec{v}\dotprod\vec{s}}/\absval{\vec{s}\,}\leq
+        \absval{\vec{v}\,}\cdot\absval{\vec{s}\,}/\absval{\vec{s}\,}
+        =\absval{\vec{v}\,}$.
+    \end{answer}
+  \recommended \item  \label{exer:LineProjFormIndOfVec}
+    Tunjukkan bahwa definisi proyeksi ortogonal ke sebuah garis tidak
+    bergantung pada vektor perentangnya:~jika \( \vec{s} \) merupakan kelipatan
+    tak nol dari \( \vec{q} \), maka
+    \( (\vec{v}\dotprod\vec{s}/\vec{s}\dotprod\vec{s}\,)\cdot\vec{s} \) sama dengan
+    \( (\vec{v}\dotprod\vec{q}/\vec{q}\dotprod\vec{q}\,)\cdot\vec{q} \).
+    \begin{answer}
+       Tuliskan \( c\vec{s} \) sebagai \( \vec{q} \), lalu hitung:
+       \( (\vec{v}\dotprod c\vec{s}/c\vec{s}\dotprod c\vec{s}\,)\cdot c\vec{s}=
+          (\vec{v}\dotprod \vec{s}/\vec{s}\dotprod \vec{s}\,)\cdot \vec{s} \).
+    \end{answer}
+  \item
+    Tinjau fungsi dari bidang ke dirinya sendiri yang membawa suatu vektor ke
+    proyeksinya pada garis \( y=x \).
+    Dua bagian berikut masing-masing menunjukkan bahwa pemetaan ini linear:
+    yang pertama dengan cara yang terikat koordinat (yakni, menetapkan sebuah
+    basis lalu menghitung), dan yang kedua dengan cara yang lebih konseptual.
+    \begin{exparts} 
+      \partsitem Berikan matriks yang mendeskripsikan tindakan fungsi tersebut.
+      \partsitem Tunjukkan bahwa pemetaan ini dapat diperoleh dengan mula-mula
+        memutar seluruh bidang sebesar \( \pi/4 \)~radian searah jarum jam,
+        kemudian memproyeksikannya ke sumbu~\( x \), lalu memutarnya kembali
+        sebesar \( \pi/4 \)~radian berlawanan arah jarum jam.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Dengan menetapkan
+          \begin{equation*}
+            \vec{s}=\colvec[r]{1 \\ 1}
+          \end{equation*}
+          sebagai vektor yang rentangnya adalah garis tersebut, rumusnya
+          memberikan tindakan berikut,
+          \begin{equation*}
+            \colvec{x \\ y}
+             \mapsto
+            \frac{\colvec{x \\ y}\dotprod\colvec[r]{1 \\ 1}}{%
+                  \colvec[r]{1 \\ 1}\dotprod\colvec[r]{1 \\ 1}}\cdot\colvec[r]{1 \\ 1}
+            =\frac{x+y}{2}\cdot\colvec[r]{1 \\ 1}
+            =\colvec{(x+y)/2 \\ (x+y)/2}
+          \end{equation*} 
+          yang merupakan efek matriks berikut.
+          \begin{equation*}
+            \begin{mat}[r]
+              1/2  &1/2  \\
+              1/2  &1/2
+            \end{mat}
+          \end{equation*}
+        \partsitem Memutar seluruh bidang sebesar $\pi/4$~radian searah jarum
+          jam membawa garis $y=x$ ke sumbu~$x$.
+          Memproyeksikan lalu memutarnya kembali kini memberikan efek yang
+          diinginkan.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Untuk \( \vec{a},\vec{b}\in\Re^n \), misalkan \( \vec{v}_1 \) adalah
+    proyeksi \( \vec{a} \) ke garis yang direntang oleh \( \vec{b} \),
+    \( \vec{v}_2 \) adalah proyeksi \( \vec{v}_1 \) ke garis yang direntang
+    oleh \( \vec{a} \), \( \vec{v}_3 \) adalah proyeksi \( \vec{v}_2 \) ke
+    garis yang direntang oleh \( \vec{b} \), dan seterusnya, bolak-balik antara
+    rentang $\vec{a}$ dan $\vec{b}$.
+    Artinya, $\vec{v}_{i+1}$ adalah proyeksi $\vec{v}_i$ ke rentang
+    $\vec{a}$ jika $i+1$ genap, dan ke rentang $\vec{b}$ jika $i+1$ ganjil.
+    Haruskah barisan vektor tersebut akhirnya menetap\Dash yaitu, haruskah ada
+    $i$ yang cukup besar sehingga \( \vec{v}_{i+2} \) sama dengan
+    \( \vec{v}_{i} \) dan \( \vec{v}_{i+3} \) sama dengan
+    \( \vec{v}_{i+1} \)?
+    Jika ya, berapakah nilai~$i$ paling awal seperti itu?
+    \begin{answer}
+      Barisan tersebut tidak harus menetap.
+      Dengan
+      \begin{equation*}
+        \vec{a}=\colvec[r]{1 \\ 0}
+        \qquad
+        \vec{b}=\colvec[r]{1 \\ 1}
+      \end{equation*}
+      proyeksi-proyeksinya adalah berikut.
+      \begin{equation*}
+        \vec{v}_1=\colvec[r]{1/2 \\ 1/2},
+        \quad
+        \vec{v}_2=\colvec[r]{1/2 \\ 0},
+        \quad
+        \vec{v}_3=\colvec[r]{1/4 \\ 1/4},
+        \quad
+        \ldots
+      \end{equation*}
+      Barisan ini tidak berulang.
+      \begin{center}  \small
+        \includegraphics{map/mp/ch3.82}
+      \end{center}
+      \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsectionoptional{Ortogonalisasi Gram--Schmidt}
+\index{proses Gram--Schmidt|(}
+% \noindent\textit{This subsection is optional.
+%      It is a prerequisite only for the final two sections
+%      of Chapter Five.
+%      Also, this subsection requires material from the previous subsection, 
+%      which itself was optional.}
+
+Subbagian sebelumnya menunjukkan bahwa
+memproyeksikan $\vec{v}$ ke garis yang direntang oleh \( \vec{s} \)
+menguraikan vektor tersebut menjadi dua bagian
+\begin{center}  \small
+  \vcenteredhbox{\includegraphics{map/mp/ch3.35}}
+  % \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.35}\end{tabular}
+   \qquad
+   $\displaystyle \vec{v}=\proj{\vec{v}}{\spanof{\vec{s}\,}}
+             \,+\,\left(\vec{v}-\proj{\vec{v}}{\spanof{\vec{s}\,}}\right)$
+\end{center}
+yang ortogonal sehingga ``tidak saling berinteraksi.''
+Sekarang kita kembangkan gagasan tersebut.
+
+\begin{definition}  \label{df:MutuallyOrthogonal}
+%<*df:MutuallyOrthogonal>
+Vektor-vektor \( \vec{v}_1,\dots,\vec{v}_k\in\Re^n \) disebut
+\definend{saling ortogonal\/}\index{ortogonal!saling}
+jika sebarang dua di antaranya ortogonal:~jika \( i\neq j \), maka
+hasil kali titik \( \vec{v}_i\dotprod\vec{v}_j \) adalah nol.
+%</df:MutuallyOrthogonal>
+\end{definition}
+
+\begin{theorem} \label{th:OrthoIsInd}
+%<*th:OrthoIsInd>
+Jika vektor-vektor dalam himpunan
+\( \set{\vec{v}_1,\dots,\vec{v}_k}\subset\Re^n \) saling ortogonal dan tak
+nol, maka himpunan tersebut bebas linear.
+%</th:OrthoIsInd>
+\end{theorem}
+
+\begin{proof}
+%<*pf:OrthoIsInd>
+Tinjau
+\( \zero=c_1\vec{v}_1+c_2\vec{v}_2+\dots+c_k\vec{v}_k \).
+Untuk $i\in \set{1,..\,,k}$, ambil hasil kali titik \( \vec{v}_i \)
+dengan kedua ruas persamaan,
+$\vec{v}_i\dotprod (c_1\vec{v}_1+c_2\vec{v}_2+\dots+c_k\vec{v}_k)
+   =\vec{v}_i\dotprod\zero$,
+yang memberikan
+$c_i\cdot(\vec{v}_i\dotprod\vec{v}_i)=0$,
+Persamaan ini menunjukkan bahwa \( c_i= 0 \) karena
+\( \vec{v}_i\neq\zero \).
+%</pf:OrthoIsInd>
+\end{proof}
+
+\begin{corollary}  \label{cor:OrthAndBigEnoughIsBasis}
+%<*co:OrthAndBigEnoughIsBasis>
+Dalam ruang vektor berdimensi~$k$, jika vektor-vektor dalam suatu himpunan
+berukuran~\( k \) saling ortogonal dan tak nol, maka himpunan tersebut
+merupakan basis bagi ruang itu.
+%</co:OrthAndBigEnoughIsBasis>
+\end{corollary}
+
+\begin{proof}
+%<*pf:OrthAndBigEnoughIsBasis>
+Setiap subhimpunan bebas linear berukuran~\( k \) dari suatu ruang
+berdimensi~$k$ merupakan basis.
+%</pf:OrthAndBigEnoughIsBasis>
+\end{proof}
+
+Tentu saja, kebalikan \nearbycorollary{cor:OrthAndBigEnoughIsBasis} tidak
+berlaku\Dash tidak setiap basis dari setiap subruang $\Re^n$ memiliki
+vektor-vektor yang saling ortogonal.
+Namun, kita dapat memperoleh kebalikan parsial: bagi setiap subruang $\Re^n$
+terdapat setidaknya satu basis yang terdiri atas vektor-vektor yang saling
+ortogonal.
+
+\begin{example}
+Anggota $\vec{\beta}_1$ dan $\vec{\beta}_2$ dari basis bagi $\Re^2$ berikut
+tidak ortogonal.
+\begin{center}  \small
+  $\displaystyle 
+      B=\sequence{
+            \colvec[r]{4 \\ 2},
+            \colvec[r]{1 \\ 3} }$
+  \qquad %\hspace*{3em}
+  \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.36}\end{tabular}
+\end{center}
+Dari $B$ kita akan menurunkan basis baru
+$\sequence{\vec{\kappa}_1,\vec{\kappa}_2}$ bagi ruang tersebut, yang terdiri
+atas vektor-vektor yang saling ortogonal.
+Anggota pertama basis baru itu cukup diambil sebagai $\vec{\beta}_1$.
+\begin{equation*}
+  \vec{\kappa}_1=\colvec[r]{4 \\ 2}
+\end{equation*}
+Untuk anggota kedua basis baru, kurangkan dari $\vec{\beta}_2$ bagian yang
+searah dengan $\vec{\kappa}_1$.
+Yang tersisa adalah bagian $\vec{\beta}_2$ yang ortogonal terhadap
+$\vec{\kappa}_1$.
+% (it is orthogonal by the definition of the projection into the span of 
+% $\vec{\kappa}_1$).
+\begin{center}  \small
+   $\displaystyle \vec{\kappa}_2=\colvec[r]{1 \\ 3}
+    -\proj{\colvec[r]{1 \\ 3}}{\scriptstyle\spanof{\vec{\kappa}_1}}
+    =\colvec[r]{1 \\ 3}-\colvec[r]{2 \\ 1}=\colvec[r]{-1 \\ 2}$
+   \qquad
+  \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.37}\end{tabular}
+\end{center} 
+Berdasarkan korolari tersebut,
+$\sequence{\vec{\kappa}_1,\vec{\kappa}_2}$ merupakan basis bagi $\Re^2$.
+\end{example}
+
+\begin{definition}  \label{df:OrthogonalBasis}
+%<*df:OrthogonalBasis>
+\definend{Basis ortogonal\/}%
+\index{ortogonal!basis}\index{basis!ortogonal}
+bagi suatu ruang vektor adalah basis yang terdiri atas vektor-vektor yang
+saling ortogonal.
+%</df:OrthogonalBasis>
+\end{definition}
+
+% The next result gives a way to produce an orthogonal basis 
+% from any given starting basis.
+% We first see an example.
+
+\begin{example} \label{ex:OrthoBasisForReThree}
+Untuk menghasilkan basis ortogonal dari basis bagi $\Re^3$ berikut,
+\begin{equation*}
+  B=\sequence{
+           \colvec[r]{1 \\ 1 \\ 1},
+           \colvec[r]{0 \\ 2 \\ 0},
+           \colvec[r]{1 \\ 0 \\ 3}
+            }
+\end{equation*}
+mulailah dengan mengambil vektor pertama tanpa perubahan.
+\begin{equation*}
+   \vec{\kappa}_1=\colvec[r]{1 \\ 1 \\ 1}
+\end{equation*}
+Dapatkan \( \vec{\kappa}_2 \) dengan mengurangkan dari $\vec{\beta}_2$
+bagiannya yang searah dengan \( \vec{\kappa}_1 \).
+\begin{equation*}
+   \vec{\kappa}_2=\colvec[r]{0 \\ 2 \\ 0}
+                   -\proj{\colvec[r]{0 \\ 2 \\ 0}}{\spanof{\vec{\kappa}_1}}
+                 =\colvec[r]{0 \\ 2 \\ 0}-\colvec[r]{2/3 \\ 2/3 \\ 2/3}
+                 =\colvec[r]{-2/3 \\ 4/3 \\ -2/3}
+\end{equation*}
+Dapatkan $\vec{\kappa}_3$ dengan mengurangkan dari $\vec{\beta}_3$ bagian yang
+searah dengan \( \vec{\kappa}_1 \), serta bagian yang searah dengan
+\( \vec{\kappa}_2 \).
+\begin{equation*}
+   \vec{\kappa}_3=\colvec[r]{1 \\ 0 \\ 3}
+                   -\proj{\colvec[r]{1 \\ 0 \\ 3}}{\spanof{\vec{\kappa}_1}}
+                   -\proj{\colvec[r]{1 \\ 0 \\ 3}}{\spanof{\vec{\kappa}_2}}
+                 =\colvec[r]{-1 \\ 0 \\ 1}
+\end{equation*}
+Seperti di atas, korolari tersebut memberikan bahwa hasilnya merupakan basis
+bagi $\Re^3$.
+\begin{equation*}
+  \sequence{
+           \colvec[r]{1 \\ 1 \\ 1},
+           \colvec[r]{-2/3 \\ 4/3 \\ -2/3},
+           \colvec[r]{-1 \\ 0 \\ 1}
+           }
+\end{equation*}
+\end{example}
+
+
+\begin{theorem}[Ortogonalisasi Gram--Schmidt]
+\index{ortogonalisasi}\index{basis!ortogonalisasi}
+\label{th:GramSchmidt}
+%<*th:GramSchmidt>
+Jika \( \sequence{\vec{\beta}_1,\ldots,\vec{\beta}_k} \) merupakan basis bagi
+suatu subruang \( \Re^n \), maka vektor-vektor
+\begin{align*}
+  \vec{\kappa}_1
+  &=\vec{\beta}_1    \\
+  \vec{\kappa}_2
+  &=\vec{\beta}_2-\proj{\vec{\beta}_2}{\spanof{\vec{\kappa}_1}}    \\
+  \vec{\kappa}_3
+  &=\vec{\beta}_3
+  -\proj{\vec{\beta}_3}{\spanof{\vec{\kappa}_1}}
+  -\proj{\vec{\beta}_3}{\spanof{\vec{\kappa}_2}}    \\
+  &\vdotswithin{=}           \\
+  \vec{\kappa}_k
+  &=\vec{\beta}_k
+  -\proj{\vec{\beta}_k}{\spanof{\vec{\kappa}_1}}-\cdots
+  -\proj{\vec{\beta}_k}{\spanof{\vec{\kappa}_{k-1}}}
+\end{align*}
+membentuk basis ortogonal bagi subruang yang sama.
+%</th:GramSchmidt>
+\end{theorem}
+
+\begin{remark}
+Hasil ini terbatas pada $\Re^n$ hanya karena kita belum memberikan definisi
+keortogonalan bagi ruang-ruang lain.
+\end{remark}
+
+\begin{proof}
+%<*pf:GramSchmidt0>
+Kita akan menggunakan induksi untuk memeriksa bahwa setiap
+\( \vec{\kappa}_i \) tak nol, berada dalam rentang
+$\sequence{\vec{\beta}_1,\ldots\,\vec{\beta}_i}$, dan ortogonal terhadap semua
+vektor sebelumnya,
+\( \vec{\kappa}_1\dotprod\vec{\kappa}_i= \cdots
+   =\vec{\kappa}_{i-1}\dotprod\vec{\kappa}_{i}=0 \).
+Kemudian \nearbycorollary{cor:OrthAndBigEnoughIsBasis} memberikan bahwa
+\( \sequence{\vec{\kappa}_1,\ldots\,\vec{\kappa}_k} \) 
+merupakan basis bagi ruang yang sama dengan basis awal.
+%</pf:GramSchmidt0>
+
+%<*pf:GramSchmidt1>
+Kita hanya akan membahas kasus hingga \( i=3 \) untuk memberikan gambaran
+tentang argumennya.
+Argumen lengkapnya menjadi \nearbyexercise{exer:GramSchmidt}.
+%</pf:GramSchmidt1>
+
+%<*pf:GramSchmidt2>
+Kasus \( i=1 \) trivial; mengambil \( \vec{\kappa}_1 \) sebagai
+\( \vec{\beta}_1 \) menjadikannya vektor tak nol karena $\vec{\beta}_1$
+merupakan anggota suatu
+basis. Jelas bahwa vektor ini berada dalam rentang
+$\sequence{\vec{\beta}_1}$, dan syarat `ortogonal terhadap semua vektor
+sebelumnya' terpenuhi secara hampa.
+%</pf:GramSchmidt2>
+
+%<*pf:GramSchmidt3>
+Dalam kasus \( i=2 \), penguraian
+\begin{equation*}
+  \vec{\kappa}_2=\vec{\beta}_2
+      -\proj{\vec{\beta}_2}{\spanof{\vec{\kappa}_1}}=
+  \vec{\beta}_2
+  -\frac{\vec{\beta}_2\dotprod\vec{\kappa}_1}{
+         \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+   \cdot\vec{\kappa}_1
+  =
+  \vec{\beta}_2
+  -\frac{\vec{\beta}_2\dotprod\vec{\kappa}_1}{
+         \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+   \cdot\vec{\beta}_1
+\end{equation*}
+menunjukkan bahwa $\vec{\kappa}_2\neq \zero$; jika tidak, persamaan ini akan
+menjadi ketergantungan linear tak trivial di antara vektor-vektor
+\( \vec{\beta} \) (tak trivial karena koefisien $\vec{\beta}_2$ adalah $1$).
+Penguraian tersebut juga menunjukkan bahwa $\vec{\kappa}_2$ berada dalam
+rentang $\sequence{\vec{\beta}_1,\vec{\beta}_2}$.
+Selain itu, $\vec{\kappa}_2$ ortogonal terhadap satu-satunya vektor sebelumnya,
+\begin{equation*}
+   \vec{\kappa}_1\dotprod\vec{\kappa}_2=
+   \vec{\kappa}_1\dotprod(\vec{\beta}_2
+      -\proj{\vec{\beta}_2}{\spanof{\vec{\kappa}_1}})=0
+\end{equation*}
+karena proyeksi ini ortogonal.
+%</pf:GramSchmidt3>
+
+%<*pf:GramSchmidt4>
+Kasus \( i=3 \) sama dengan kasus $i=2$, kecuali pada satu perincian.
+Seperti dalam kasus $i=2$, uraikan definisinya.
+\begin{align*}
+  \vec{\kappa}_3
+  &=\vec{\beta}_3
+  -\frac{\vec{\beta}_3\dotprod\vec{\kappa}_1}{
+         \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+   \cdot\vec{\kappa}_1
+  -\frac{\vec{\beta}_3\dotprod\vec{\kappa}_2}{
+         \vec{\kappa}_2\dotprod\vec{\kappa}_2}
+   \cdot\vec{\kappa}_2  \\
+  &=\vec{\beta}_3
+  -\frac{\vec{\beta}_3\dotprod\vec{\kappa}_1}{
+         \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+   \cdot\vec{\beta}_1
+  -\frac{\vec{\beta}_3\dotprod\vec{\kappa}_2}{
+         \vec{\kappa}_2\dotprod\vec{\kappa}_2}
+  \cdot\bigl(\vec{\beta}_2
+  -\frac{\vec{\beta}_2\dotprod\vec{\kappa}_1}{
+         \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+   \cdot\vec{\beta}_1\bigr)
+\end{align*}
+Berdasarkan baris pertama, $\vec{\kappa}_3\neq\zero$, karena
+$\vec{\beta}_3$ tidak berada dalam rentang
+$\spanof{\vec{\beta}_1,\vec{\beta}_2}$ dan oleh karena itu, berdasarkan
+hipotesis induksi, tidak berada dalam rentang
+$\spanof{\vec{\kappa}_1,\vec{\kappa}_2}$.
+Berdasarkan baris kedua, $\vec{\kappa}_3$ berada dalam rentang tiga
+vektor~$\vec{\beta}$ pertama.
+Akhirnya, perhitungan berikut menunjukkan bahwa $\vec{\kappa}_3$ ortogonal
+terhadap $\vec{\kappa}_1$.
+%</pf:GramSchmidt4>
+%<*pf:GramSchmidt5>
+\begin{align*}
+   \vec{\kappa}_1\dotprod\vec{\kappa}_3
+   &=\vec{\kappa}_1\dotprod\bigl(\;\vec{\beta}_3
+      -\proj{\vec{\beta}_3}{\spanof{\vec{\kappa}_1}}
+      -\proj{\vec{\beta}_3}{\spanof{\vec{\kappa}_2}}\;\bigr) \\
+   &=\vec{\kappa}_1\dotprod\bigl(\vec{\beta}_3
+          -\proj{\vec{\beta}_3}{\spanof{\vec{\kappa}_1}}\bigr)
+    -\vec{\kappa}_1\dotprod\proj{\vec{\beta}_3}{\spanof{\vec{\kappa}_2}} \\
+   &=0
+\end{align*}
+(Inilah perbedaannya dengan kasus $i=2$:
+seperti pada $i=2$, suku pertama adalah~$0$ karena proyeksi ini ortogonal,
+tetapi di sini suku kedua pada baris kedua adalah~$0$ karena
+\( \vec{\kappa}_1 \) ortogonal terhadap \( \vec{\kappa}_2 \), sehingga juga
+ortogonal terhadap sebarang vektor pada garis yang direntang oleh
+\( \vec{\kappa}_2 \).)
+Pemeriksaan serupa menunjukkan bahwa $\vec{\kappa}_3$ juga ortogonal terhadap
+$\vec{\kappa}_2$.
+%</pf:GramSchmidt5>
+\end{proof}
+
+Selain membuat vektor-vektor dalam basis saling ortogonal, kita juga dapat
+\definend{menormalisasi}\index{normalisasi, vektor} setiap vektor dengan
+membaginya dengan panjangnya, sehingga akhirnya diperoleh
+\definend{basis ortonormal}.\index{basis!ortonormal}%
+\index{basis ortonormal}.
+
+\begin{example}
+Dari basis ortogonal dalam \nearbyexample{ex:OrthoBasisForReThree}, normalisasi
+menghasilkan basis ortonormal berikut.
+\begin{equation*}
+  \sequence{
+           \colvec[r]{1/\sqrt{3} \\ 1/\sqrt{3} \\ 1/\sqrt{3}},
+           \colvec[r]{-1/\sqrt{6} \\ 2/\sqrt{6} \\ -1/\sqrt{6}},
+           \colvec[r]{-1/\sqrt{2} \\ 0 \\ 1/\sqrt{2}}
+           }
+\end{equation*}
+\end{example}
+
+\noindent Selain menarik secara intuitif dan serupa dengan basis standar
+$\stdbasis_n$ bagi $\Re^n$, basis ortonormal juga menyederhanakan beberapa
+perhitungan.
+\nearbyexercise{exer:OrthoRepEasy} merupakan salah satu contohnya.
+
+
+
+
+\begin{exercises}
+  \item Normalisasikan panjang vektor-vektor berikut.
+    \begin{exparts*}
+      \partsitem $\colvec{1 \\ 2}$
+      \partsitem $\colvec{-1 \\ 3 \\ 0}$
+      \partsitem $\colvec{1 \\ -1}$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem $\colvec{1/\sqrt{5} \\ 2/\sqrt{5}}
+             =\frac{1}{\sqrt{5}}\cdot\colvec{1 \\ 2}$
+        \partsitem $\frac{1}{\sqrt{10}}\cdot\colvec{-1 \\ 3 \\ 0}$
+        \partsitem $\frac{1}{\sqrt{2}}\cdot\colvec{1 \\ -1}$
+      \end{exparts}
+    \end{answer}
+  \recommended \item Terapkan Gram--Schmidt pada basis bagi~$\Re^2$ berikut.
+    \begin{equation*}
+      \sequence{\colvec{1 \\ 1}, \colvec{-1 \\ 2}}
+    \end{equation*}
+    Periksa bahwa vektor-vektor yang dihasilkan saling ortogonal.
+    \begin{answer}
+      Namai basis yang diberikan
+      $B=\sequence{\vec{\beta}_1,\vec{\beta}_2}$.
+      Pertama, $\vec{\kappa}_1=\vec{\beta}_1$.
+      Untuk vektor lainnya,
+      $\vec{\kappa}_2=\vec{\beta}_2-\proj{\vec{\beta}_2}{\spanof{\vec{\kappa}_1}}$.
+      \begin{equation*}
+        \vec{\kappa}_2=
+        \colvec{-1 \\ 2}-\frac{\colvec{-1 \\ 2}\dotprod\colvec{1 \\ 1}}{\colvec{1 \\ 1}\dotprod\colvec{1 \\ 1}}\cdot\colvec{1 \\ 1}
+        =\colvec{-3/2 \\ 3/2}
+      \end{equation*}
+      Untuk memeriksa bahwa keduanya ortogonal, cukup perhatikan bahwa hasil
+      kali titik keduanya nol.
+    \end{answer}
+  \recommended \item 
+    Terapkan proses Gram--Schmidt pada basis bagi $\Re^3$ berikut.
+    \begin{equation*}
+      \sequence{
+                         \colvec{1 \\ 2 \\ 3},
+                         \colvec{2 \\ 1 \\ -3},
+                         \colvec{3 \\ 3 \\ 3}
+                         }  
+    \end{equation*}
+    \begin{answer}
+      Namai basis yang diberikan
+      $B=\sequence{\vec{\beta}_1,\vec{\beta}_2,\vec{\beta}_3}$.
+      Pertama, $\vec{\kappa}_1=\vec{\beta}_1$.
+
+      Selanjutnya,
+      $\vec{\kappa}_2
+          =\vec{\beta}_2-\proj{\vec{\beta}_2}{\spanof{\vec{\kappa}_1}}$.
+      \begin{equation*}
+        \vec{\kappa}_2=
+        \colvec{2 \\ 1 \\ -3}-\frac{\colvec{2 \\ 1 \\ -3}\dotprod\colvec{1 \\ 2 \\ 3}}{\colvec{1 \\ 2 \\ 3}\dotprod\colvec{1 \\ 2 \\ 3}}\cdot\colvec{1 \\ 2 \\ 3}
+        =\colvec{33/14 \\ 24/14 \\ -27/14}
+      \end{equation*}
+
+      Untuk vektor ketiga, rumusnya adalah
+      \begin{equation*}
+         \vec{\kappa}_3
+          =\vec{\beta}_3
+           -\proj{\vec{\beta}_3}{\spanof{\vec{\kappa}_1}}
+           -\proj{\vec{\beta}_3}{\spanof{\vec{\kappa}_2}}    
+      \end{equation*} 
+      dan berikut perhitungannya.
+      \begin{equation*}
+        \colvec{3 \\ 3 \\ 3}
+        -\frac{\colvec{3 \\ 3 \\ 3}\dotprod\colvec{1 \\ 2 \\ 3}}{\colvec{1 \\ 2 \\ 3}\dotprod\colvec{1 \\ 2 \\ 3}}\cdot\colvec{1 \\ 2 \\ 3}
+        -\frac{\colvec{3 \\ 3 \\ 3}\dotprod\colvec{33/14 \\ 24/14 \\ -27/14}}{\colvec{33/14 \\ 24/14 \\ -27/14}\dotprod\colvec{33/14 \\ 24/14 \\ -27/14}}\cdot\colvec{33/14 \\ 24/14 \\ -27/14}
+       =\colvec{9/19 \\ -9/19 \\ 3/19}
+      \end{equation*}
+      % 1 - 18/14-(0/14)/(1274/196) times \colvec{3 \\ 3 \\ 3}
+    \end{answer}
+  \recommended \item 
+    Terapkan Gram--Schmidt pada setiap basis bagi $\Re^2$ berikut.
+    \begin{exparts*}
+      \partsitem \( \sequence{
+                         \colvec[r]{1 \\ 1},
+                         \colvec[r]{2 \\ 1}
+                         }  \)
+      \partsitem \( \sequence{
+                         \colvec[r]{0 \\ 1},
+                         \colvec[r]{-1 \\ 3}
+                         }  \)
+      \partsitem \( \sequence{
+                         \colvec[r]{0 \\ 1},
+                         \colvec[r]{-1 \\ 0}
+                         }  \)
+    \end{exparts*}
+    Kemudian ubah basis-basis ortogonal tersebut menjadi basis ortonormal.
+    \begin{answer}
+      \begin{exparts}
+       \partsitem 
+        \begin{align*}
+          \vec{\kappa}_1 &= \colvec[r]{1 \\ 1}           \\
+          \vec{\kappa}_2
+            &=
+            \colvec[r]{2 \\ 1}
+            -\proj{\colvec[r]{2 \\ 1}}{\spanof{\vec{\kappa}_1}}  
+            =
+            \colvec[r]{2 \\ 1}
+            -\frac{\colvec[r]{2 \\ 1}\dotprod\colvec[r]{1 \\ 1}}{%
+                    \colvec[r]{1 \\ 1}\dotprod\colvec[r]{1 \\ 1}}
+            \cdot\colvec[r]{1 \\ 1}                                \\
+            &\quad=
+            \colvec[r]{2 \\ 1}
+            -\frac{3}{2}
+            \cdot\colvec[r]{1 \\ 1}                                
+            =\colvec[r]{1/2 \\ -1/2}
+        \end{align*}
+        Berikut basis ortonormal yang bersesuaian.
+        \begin{equation*}
+          \sequence{
+              \colvec[r]{1/\sqrt{2} \\ 1/\sqrt{2}},
+              \colvec[r]{\sqrt{2}/2 \\ -\sqrt{2}/2}
+                }
+        \end{equation*}
+       \partsitem 
+        \begin{align*}
+          \vec{\kappa}_1 &= \colvec[r]{0 \\ 1}           \\
+          \vec{\kappa}_2
+            &=
+            \colvec[r]{-1 \\ 3}
+            -\proj{\colvec[r]{-1 \\ 3}}{\spanof{\vec{\kappa}_1}}  
+            =
+            \colvec[r]{-1 \\ 3}
+            -\frac{\colvec[r]{-1 \\ 3}\dotprod\colvec[r]{0 \\ 1}}{%
+                    \colvec[r]{0 \\ 1}\dotprod\colvec[r]{0 \\ 1}}
+            \cdot\colvec[r]{0 \\ 1}                                \\
+            &\quad=
+            \colvec[r]{-1 \\ 3}
+            -\frac{3}{1}
+            \cdot\colvec[r]{0 \\ 1}                              
+            =\colvec[r]{-1 \\ 0}
+        \end{align*}
+        Berikut basis ortonormalnya.
+        \begin{equation*}
+          \sequence{
+                \colvec[r]{0 \\ 1},
+                \colvec[r]{-1 \\ 0}
+                }
+        \end{equation*}
+       \partsitem 
+        \begin{align*}
+          \vec{\kappa}_1 &= \colvec[r]{0 \\ 1}           \\
+          \vec{\kappa}_2
+            &=
+            \colvec[r]{-1 \\ 0}
+            -\proj{\colvec[r]{-1 \\ 0}}{\spanof{\vec{\kappa}_1}}  
+            =
+            \colvec[r]{-1 \\ 0}
+            -\frac{\colvec[r]{-1 \\ 0}\dotprod\colvec[r]{0 \\ 1}}{%
+                    \colvec[r]{0 \\ 1}\dotprod\colvec[r]{0 \\ 1}}
+            \cdot\colvec[r]{0 \\ 1}                               \\ 
+            &\quad=
+            \colvec[r]{-1 \\ 0}
+            -\frac{0}{1}
+            \cdot\colvec[r]{0 \\ 1}                                
+            =\colvec[r]{-1 \\ 0}
+        \end{align*}
+      \end{exparts}
+      Berikut basis ortonormal yang terkait.
+      \begin{equation*}
+        \sequence{
+              \colvec[r]{0 \\ 1},
+              \colvec[r]{-1 \\ 0}
+              }
+      \end{equation*}
+    \end{answer}
+  \item 
+    Terapkan proses Gram--Schmidt pada setiap basis bagi $\Re^3$ berikut.
+    \begin{exparts*}
+      \partsitem \( \sequence{
+                         \colvec[r]{2 \\ 2 \\ 2},
+                         \colvec[r]{1 \\ 0 \\ -1},
+                         \colvec[r]{0 \\ 3 \\ 1}
+                         }  \)
+      \partsitem \( \sequence{
+                         \colvec[r]{1 \\ -1 \\ 0},
+                         \colvec[r]{0 \\ 1 \\ 0},
+                         \colvec[r]{2 \\ 3 \\ 1}
+                         }  \)
+    \end{exparts*}
+    Kemudian ubah basis-basis ortogonal tersebut menjadi basis ortonormal.
+    \begin{answer} 
+      \begin{exparts}
+       \partsitem Vektor basis pertama tidak berubah.
+        \begin{equation*}
+          \vec{\kappa}_1 = \colvec[r]{2 \\ 2 \\ 2}          
+        \end{equation*}
+        Vektor kedua diperoleh dari perhitungan berikut.
+        \begin{align*}
+          \vec{\kappa}_2
+            &=
+            \colvec[r]{1 \\ 0 \\ -1}
+            -\proj{\colvec[r]{1 \\ 0 \\ -1}}{\spanof{\vec{\kappa}_1}}  
+            =
+            \colvec[r]{1 \\ 0 \\ -1}
+            -\frac{\colvec[r]{1 \\ 0 \\ -1}\dotprod\colvec[r]{2 \\ 2 \\ 2}}{%
+                    \colvec[r]{2 \\ 2 \\ 2}\dotprod\colvec[r]{2 \\ 2 \\ 2}}
+            \cdot\colvec[r]{2 \\ 2 \\ 2}                                   \\
+            &=
+            \colvec[r]{1 \\ 0 \\ -1}
+            -\frac{0}{12}
+            \cdot\colvec[r]{2 \\ 2 \\ 2}                                
+            =\colvec[r]{1 \\ 0 \\ -1}                              
+        \end{align*}
+        Untuk vektor ketiga, aritmetikanya lebih rumit tetapi perhitungannya
+        langsung.
+        \begin{align*}
+          \vec{\kappa}_3
+            &=
+            \colvec[r]{0 \\ 3 \\ 1}
+            -\proj{\colvec[r]{0 \\ 3 \\ 1}}{\spanof{\vec{\kappa}_1}}  
+            -\proj{\colvec[r]{0 \\ 3 \\ 1}}{\spanof{\vec{\kappa}_2}}   \\ 
+            &=
+            \colvec[r]{0 \\ 3 \\ 1}
+            -\frac{\colvec[r]{0 \\ 3 \\ 1}\dotprod\colvec[r]{2 \\ 2 \\ 2}}{%
+                    \colvec[r]{2 \\ 2 \\ 2}\dotprod\colvec[r]{2 \\ 2 \\ 2}}
+            \cdot\colvec[r]{2 \\ 2 \\ 2}                                
+            -\frac{\colvec[r]{0 \\ 3 \\ 1}\dotprod\colvec[r]{1 \\ 0 \\ -1}}{%
+                    \colvec[r]{1 \\ 0 \\ -1}\dotprod\colvec[r]{1 \\ 0 \\ -1}}
+            \cdot\colvec[r]{1 \\ 0 \\ -1}                                   \\
+            &\hbox{}\quad=
+            \colvec[r]{0 \\ 3 \\ 1}
+            -\frac{8}{12}
+            \cdot\colvec[r]{2 \\ 2 \\ 2}                                
+            -\frac{-1}{2}
+            \cdot\colvec[r]{1 \\ 0 \\ -1}                              
+            =\colvec[r]{-5/6 \\ 5/3 \\ -5/6}
+        \end{align*}
+        Berikut basis ortonormalnya.
+        \begin{equation*}
+          \sequence{
+              \colvec[r]{1/\sqrt{3} \\ 1/\sqrt{3} \\ 1/\sqrt{3}},
+              \colvec[r]{1/\sqrt{2} \\ 0 \\ -1/\sqrt{2}},
+              \colvec[r]{-1/\sqrt{6} \\ 2/\sqrt{6} \\ -1/\sqrt{6}}
+                }
+        \end{equation*}
+       \partsitem Vektor basis pertama adalah vektor yang diberikan.
+        \begin{equation*}
+          \vec{\kappa}_1 = \colvec[r]{1 \\ -1 \\ 0}           
+        \end{equation*}
+        Berikut vektor keduanya.
+        \begin{align*}
+          \vec{\kappa}_2
+            &=
+            \colvec[r]{0 \\ 1 \\ 0}
+            -\proj{\colvec[r]{0 \\ 1 \\ 0}}{\spanof{\vec{\kappa}_1}}  
+            =
+            \colvec[r]{0 \\ 1 \\ 0}
+            -\frac{\colvec[r]{0 \\ 1 \\ 0}\dotprod\colvec[r]{1 \\ -1 \\ 0}}{%
+                    \colvec[r]{1 \\ -1 \\ 0}\dotprod\colvec[r]{1 \\ -1 \\ 0}}
+            \cdot\colvec[r]{1 \\ -1 \\ 0}                                   \\ 
+            &=
+            \colvec[r]{0 \\ 1 \\ 0}
+            -\frac{-1}{2}
+            \cdot\colvec[r]{1 \\ -1 \\ 0}                                
+            =\colvec[r]{1/2 \\ 1/2 \\ 0}                                  
+         \end{align*}
+         Berikut vektor ketiganya.
+        \begin{align*}
+          \vec{\kappa}_3
+            &=
+            \colvec[r]{2 \\ 3 \\ 1}
+            -\proj{\colvec[r]{2 \\ 3 \\ 1}}{\spanof{\vec{\kappa}_1}}  
+            -\proj{\colvec[r]{2 \\ 3 \\ 1}}{\spanof{\vec{\kappa}_2}}       \\ 
+            &=
+            \colvec[r]{2 \\ 3 \\ 1}
+            -\frac{\colvec[r]{2 \\ 3 \\ 1}\dotprod\colvec[r]{1 \\ -1 \\ 0}}{%
+                    \colvec[r]{1 \\ -1 \\ 0}\dotprod\colvec[r]{1 \\ -1 \\ 0}}
+            \cdot\colvec[r]{1 \\ -1 \\ 0}                                
+            -\frac{\colvec[r]{2 \\ 3 \\ 1}\dotprod\colvec[r]{1/2 \\ 1/2 \\ 0}}{%
+                    \colvec[r]{1/2 \\ 1/2 \\ 0}\dotprod\colvec[r]{1/2 \\ 1/2 \\ 0}}
+            \cdot\colvec[r]{1/2 \\ 1/2 \\ 0}                   \\
+            &=
+            \colvec[r]{2 \\ 3 \\ 1}
+            -\frac{-1}{2}
+            \cdot\colvec[r]{1 \\ -1 \\ 0}                                
+            -\frac{5/2}{1/2}
+            \cdot\colvec[r]{1/2 \\ 1/2 \\ 0} 
+            =\colvec[r]{0 \\ 0 \\ 1}
+        \end{align*}
+        Berikut basis ortonormal yang terkait.
+        \begin{equation*}
+          \sequence{
+              \colvec[r]{1/\sqrt{2} \\ -1/\sqrt{2} \\ 0},
+              \colvec[r]{1/\sqrt{2} \\ 1/\sqrt{2} \\ 0},
+              \colvec[r]{0 \\ 0 \\ 1}
+                }
+        \end{equation*}
+      \end{exparts}
+    \end{answer}
+   \recommended \item 
+       Temukan basis ortonormal bagi subruang $\Re^3$ berikut:~bidang
+       $x-y+z=0$.
+       \begin{answer}
+         Kita dapat memparameterkan ruang yang diberikan dengan cara berikut.
+         \begin{equation*}
+           \set{\colvec{x \\ y \\ z} \suchthat x=y-z}
+           =\set{\colvec[r]{1 \\ 1 \\ 0}\cdot y+\colvec[r]{-1 \\ 0 \\ 1}\cdot z 
+                     \suchthat y,z\in\Re}
+         \end{equation*}
+         Jadi, kita ambil basis
+         \begin{equation*}
+           \sequence{\colvec[r]{1 \\ 1 \\ 0},
+                     \colvec[r]{-1 \\ 0 \\ 1}}
+         \end{equation*}
+         lalu terapkan proses Gram--Schmidt untuk memperoleh vektor basis
+         pertama berikut
+         \begin{equation*}
+           \vec{\kappa}_1 = \colvec[r]{1 \\ 1 \\ 0}             
+         \end{equation*}
+         dan vektor kedua berikut.
+         \begin{align*}
+           \vec{\kappa}_2
+           &=
+           \colvec[r]{-1 \\ 0 \\ 1}-\proj{\colvec[r]{-1 \\ 0 \\ 1}}{%
+                                        \spanof{\vec{\kappa}_1}} 
+           =
+           \colvec[r]{-1 \\ 0 \\ 1}
+            -\frac{\colvec[r]{-1 \\ 0 \\ 1}\dotprod\colvec[r]{1 \\ 1 \\ 0}}{%
+                    \colvec[r]{1 \\ 1 \\ 0}\dotprod\colvec[r]{1 \\ 1 \\ 0}}
+              \cdot\colvec[r]{1 \\ 1 \\ 0}                                \\
+           &=
+           \colvec[r]{-1 \\ 0 \\ 1}
+            -\frac{-1}{2}\cdot\colvec[r]{1 \\ 1 \\ 0}                  
+           =\colvec[r]{-1/2 \\ 1/2 \\ 1}
+         \end{align*}
+         lalu lakukan normalisasi.
+         \begin{equation*}
+           \sequence{
+                    \colvec[r]{1/\sqrt{2} \\ 1/\sqrt{2} \\ 0},
+                    \colvec[r]{-1/\sqrt{6} \\ 1/\sqrt{6} \\ 2/\sqrt{6}}
+                    }
+         \end{equation*}
+       \end{answer}
+   \item 
+     Temukan basis ortonormal bagi subruang $\Re^4$ berikut.
+     \begin{equation*}
+       \set{\colvec{x \\ y \\ z \\ w}\suchthat x-y-z+w=0\text{\ dan\ }x+z=0}
+     \end{equation*}
+     \begin{answer}
+       Mereduksi sistem linear
+       \begin{equation*}
+         \begin{linsys}{4}
+           x  &-  &y  &-  &z  &+  &w  &=  &0  \\
+           x  &   &   &+  &z  &   &   &=  &0
+         \end{linsys}
+         \grstep{-\rho_1+\rho_2}
+         \begin{linsys}{4}
+           x  &-  &y  &-  &z  &+  &w  &=  &0  \\
+              &   &y  &+  &2z &-  &w  &=  &0
+         \end{linsys}
+       \end{equation*}
+       dan memparameterkannya memberikan deskripsi subruang berikut.
+       \begin{equation*}
+         \set{\colvec[r]{-1 \\ -2 \\ 1 \\ 0}\cdot z
+              +\colvec[r]{0 \\ 1 \\ 0 \\ 1}\cdot w
+              \suchthat z,w\in\Re}
+       \end{equation*}
+       Jadi, kita ambil basis
+       \begin{equation*}
+         \sequence{
+                  \colvec[r]{-1 \\ -2 \\ 1 \\ 0},
+                  \colvec[r]{0 \\ 1 \\ 0 \\ 1}
+                  }
+       \end{equation*}
+       lalu menjalankan proses Gram--Schmidt dengan vektor basis pertama
+       \begin{equation*}
+         \vec{\kappa}_1 = \colvec[r]{-1 \\ -2 \\ 1 \\ 0}   
+       \end{equation*}
+       dan vektor basis kedua
+       \begin{align*}
+         \vec{\kappa}_2
+          &=
+          \colvec[r]{0 \\ 1 \\ 0 \\ 1}
+          -\proj{\colvec[r]{0 \\ 1 \\ 0 \\ 1}}{\spanof{\vec{\kappa}_1}}   
+          =
+          \colvec[r]{0 \\ 1 \\ 0 \\ 1}
+         -\frac{\colvec[r]{0 \\ 1 \\ 0 \\ 1}\dotprod\colvec[r]{-1 \\ -2 \\ 1 \\ 0}}{%
+             \colvec[r]{-1 \\ -2 \\ 1 \\ 0}\dotprod\colvec[r]{-1 \\ -2 \\ 1 \\ 0}} 
+          \cdot\colvec[r]{-1 \\ -2 \\ 1 \\ 0}                            \\
+          &=
+          \colvec[r]{0 \\ 1 \\ 0 \\ 1}
+         -\frac{-2}{6} 
+          \cdot\colvec[r]{-1 \\ -2 \\ 1 \\ 0}  
+          =\colvec[r]{-1/3 \\ 1/3 \\ 1/3 \\ 1}
+       \end{align*}
+       dan mengakhirinya dengan normalisasi.
+       \begin{equation*}
+         \sequence{
+               \colvec[r]{-1/\sqrt{6} \\ -2/\sqrt{6} \\ 1/\sqrt{6} \\ 0},
+               \colvec[r]{-\sqrt{3}/6 \\ \sqrt{3}/6 \\ \sqrt{3}/6 \\ \sqrt{3}/2}
+                  }
+       \end{equation*}
+     \end{answer}
+  \item 
+     Tunjukkan bahwa sebarang subhimpunan bebas linear dari \( \Re^n \) dapat
+     diortogonalisasi tanpa mengubah rentangnya.
+     \begin{answer} 
+       Suatu subhimpunan bebas linear dari $\Re^n$ merupakan basis bagi
+       rentangnya sendiri.
+       Terapkan \nearbytheorem{th:GramSchmidt}.
+
+       \textit{Catatan}.
+       Berikut alasan frasa `bebas linear' dicantumkan dalam soal.
+       Menghilangkan frasa tersebut mengharuskan kita memperhatikan dua hal.
+       Hal pertama ialah bahwa ketika kita menjalankan proses Gram--Schmidt
+       pada suatu himpunan yang bergantung linear, kita memperoleh beberapa
+       vektor nol.
+       Sebagai contoh, dengan
+       \begin{equation*}
+         S=\set{\colvec[r]{1 \\ 2},\colvec[r]{3 \\ 6}}
+       \end{equation*}
+       kita akan memperoleh
+       \begin{equation*}
+         \vec{\kappa}_1   =   \colvec[r]{1 \\ 2}
+         \qquad 
+         \vec{\kappa}_2
+           =
+           \colvec[r]{3 \\ 6}-\proj{\colvec[r]{3 \\ 6}}{\spanof{\vec{\kappa}_1}} 
+           =
+           \colvec[r]{0 \\ 0}
+       \end{equation*}
+       Hal pertama ini tidak terlalu buruk karena vektor nol menurut definisi
+       ortogonal terhadap setiap vektor lain. Jadi, kita dapat menerima situasi
+       ini sebagai penghasil himpunan ortogonal (meskipun tentu tidak dapat
+       dinormalisasi), atau cukup mengubah prosedur Gram--Schmidt agar membuang
+       setiap vektor nol.
+       Hal kedua yang perlu diperhatikan jika frasa `bebas linear' dihilangkan
+       dari soal adalah bahwa himpunannya mungkin tak hingga.
+       Tentu saja, setiap subruang dari $\Re^n$ yang berdimensi hingga juga
+       berdimensi hingga, sehingga hanya berhingga banyak anggotanya yang dapat
+       bebas linear. Meskipun demikian, suatu ``proses'' yang memeriksa satu
+       demi satu vektor dalam himpunan tak hingga setidaknya memerlukan
+       penjelasan tambahan dalam soal ini.
+       Subhimpunan bebas linear dari $\Re^n$ otomatis berhingga\Dash bahkan
+       berukuran paling besar~$n$\Dash sehingga frasa `bebas linear'
+       meniadakan persoalan-persoalan tersebut.
+     \end{answer}
+  \item Apa yang terjadi jika kita mencoba menerapkan proses Gram--Schmidt pada
+    suatu himpunan berhingga yang bukan basis?
+    \begin{answer}
+      Jika himpunan itu tidak bebas linear, kita memperoleh vektor nol.
+      Jika tidak (jika himpunan kita bebas linear tetapi tidak merentang
+      ruang), kita menjalankan Gram--Schmidt pada himpunan yang merupakan basis
+      bagi suatu subruang, sehingga kita memperoleh basis ortogonal bagi
+      subruang tersebut.
+    \end{answer}
+   \recommended \item
+     Apa yang terjadi jika kita menerapkan proses Gram--Schmidt pada basis yang
+     sudah ortogonal?
+     \begin{answer}
+       Proses tersebut tidak mengubah basis.
+     \end{answer}
+  \item 
+     Misalkan $\sequence{\vec{\kappa}_1,\dots,\vec{\kappa}_k}$ merupakan
+     himpunan vektor-vektor yang saling ortogonal dalam $\Re^n$.
+     \begin{exparts}
+       \partsitem Buktikan bahwa bagi sebarang $\vec{v}$ dalam ruang tersebut,
+         vektor
+         $\vec{v}-(\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+           +\dots+\proj{\vec{v}\,}{\spanof{\vec{\kappa}_k}})$
+         ortogonal terhadap setiap $\vec{\kappa}_1$, \ldots,
+         $\vec{\kappa}_k$.
+       \partsitem Ilustrasikan bagian sebelumnya dalam $\Re^3$ dengan
+         menggunakan $\vec{e}_1$ sebagai $\vec{\kappa}_1$, $\vec{e}_2$ sebagai
+         $\vec{\kappa}_2$, dan mengambil $\vec{v}$ dengan komponen $1$, $2$,
+         dan $3$.
+       \partsitem Tunjukkan bahwa
+         $\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+         +\dots+\proj{\vec{v}\,}{\spanof{\vec{\kappa}_k}}$ adalah vektor
+         dalam rentang himpunan vektor-vektor $\vec{\kappa}$ yang paling dekat
+         dengan $\vec{v}$.
+         \textit{Petunjuk}. Pada ilustrasi yang dibuat untuk bagian sebelumnya,
+         tambahkan vektor $d_1\vec{\kappa}_1+d_2\vec{\kappa}_2$, lalu terapkan
+         Teorema Pythagoras pada segitiga yang dihasilkan.
+     \end{exparts}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem Argumennya sama seperti kasus $i=3$ dalam bukti
+           \nearbytheorem{th:GramSchmidt}.
+           Hasil kali titik
+           \begin{equation*}
+             \vec{\kappa}_i\dotprod
+             \left(\vec{v}-\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+               -\dots-\proj{\vec{v}\,}{\spanof{\vec{v}_k}}\right)
+           \end{equation*}
+           dapat dituliskan sebagai jumlah suku-suku berbentuk
+           $-\vec{\kappa}_i\dotprod\proj{\vec{v}\,}{\spanof{\vec{\kappa}_j}}$ 
+           dengan $j\neq i$, serta suku
+           $\vec{\kappa}_i\dotprod(\vec{v}-
+                                 \proj{\vec{v}\,}{\spanof{\vec{\kappa}_i}})$.
+           Suku jenis pertama sama dengan nol karena vektor-vektor
+           $\vec{\kappa}$ saling ortogonal.
+           Suku lainnya nol karena proyeksi ini ortogonal
+           (yakni, definisi proyeksi membuatnya nol:
+           $\vec{\kappa}_i\dotprod(\vec{v}
+               -\proj{\vec{v}\,}{\spanof{\vec{\kappa}_i}})
+            =\vec{\kappa}_i\dotprod\vec{v}-
+              \vec{\kappa}_i\dotprod
+               \left((\vec{v}\dotprod\vec{\kappa}_i)/(%
+                      \vec{\kappa}_i\dotprod\vec{\kappa}_i)\right)
+                   \cdot\vec{\kappa}_i$
+           setelah semua pencoretan dilakukan, hasilnya sama dengan nol).
+         \partsitem Vektor $\vec{v}$ berwarna hitam, sedangkan vektor
+           vektor $\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+                    +\proj{\vec{v}\,}{\spanof{\vec{\kappa}_2}}
+                   =1\cdot\vec{e}_1+2\cdot\vec{e}_2$ berwarna abu-abu.
+           \begin{center}  \small
+             \includegraphics{map/mp/ch3.83}
+              \end{center}
+              Vektor
+              $\vec{v}-(\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+                    +\proj{\vec{v}\,}{\spanof{\vec{\kappa}_2}})$
+              terletak pada garis putus-putus yang menghubungkan vektor hitam
+              dengan vektor abu-abu; artinya, vektor itu ortogonal terhadap
+              bidang~$xy$.
+          \partsitem Dengan mengikuti petunjuk, kita memperoleh diagram berikut.
+           \begin{center}  \small
+             \includegraphics{map/mp/ch3.84}
+            \end{center}
+            Segitiga putus-putus bersudut siku-siku pada tempat vektor abu-abu
+            $1\cdot\vec{e}_1+2\cdot\vec{e}_2$ bertemu garis putus-putus vertikal
+            $\vec{v}-(1\cdot\vec{e}_1+2\cdot\vec{e}_2)$; inilah yang dibuktikan
+            oleh bagian pertama soal ini.
+            Teorema Pythagoras kemudian memberikan bahwa sisi miring\Dash ruas
+            dari $\vec{v}$ ke sebarang vektor lain\Dash setidaknya sepanjang
+            garis putus-putus vertikal.
+       
+            Secara lebih formal, tuliskan
+            $\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+                 +\dots+\proj{\vec{v}\,}{\spanof{\vec{\kappa}_k}}$ sebagai
+            $c_1\cdot\vec{\kappa}_1+\dots+c_k\cdot\vec{\kappa}_k$, lalu tinjau
+            sebarang vektor lain dalam rentang tersebut,
+            $d_1\cdot\vec{\kappa}_1+\dots+d_k\cdot\vec{\kappa}_k$. 
+            Perhatikan bahwa
+            \begin{multline*}
+              \vec{v}-(d_1\cdot\vec{\kappa}_1+\dots+d_k\cdot\vec{\kappa}_k)  \\
+              \begin{aligned}
+              &=
+              \bigl(\vec{v}
+                    -(c_1\cdot\vec{\kappa}_1+\dots+c_k\cdot\vec{\kappa}_k)
+              \bigr)                                                     \\
+              &\quad+\bigl((c_1\cdot\vec{\kappa}_1+\dots+c_k\cdot\vec{\kappa}_k)
+                     -(d_1\cdot\vec{\kappa}_1+\dots+d_k\cdot\vec{\kappa}_k)
+               \bigr)
+              \end{aligned}
+            \end{multline*}
+            dan bahwa
+            $
+              \bigl(\vec{v}
+                 -(c_1\cdot\vec{\kappa}_1+\dots+c_k\cdot\vec{\kappa}_k)
+              \bigr)
+              \dotprod
+              \bigl((c_1\cdot\vec{\kappa}_1+\dots+c_k\cdot\vec{\kappa}_k)
+                     -(d_1\cdot\vec{\kappa}_1+\dots+d_k\cdot\vec{\kappa}_k)
+              \bigr)                                                      
+              =0
+            $
+            (karena bagian pertama menunjukkan bahwa $\vec{v}
+                 -(c_1\cdot\vec{\kappa}_1+\dots+c_k\cdot\vec{\kappa}_k)$
+            ortogonal terhadap setiap $\vec{\kappa}$ sehingga juga ortogonal
+            terhadap kombinasi linear vektor-vektor $\vec{\kappa}$ ini).
+            Sekarang terapkan Teorema Pythagoras.
+       \end{exparts}
+     \end{answer}
+   \item 
+     Temukan vektor tak nol dalam \( \Re^3 \) yang ortogonal terhadap kedua
+     vektor berikut.
+     \begin{equation*}
+       \colvec[r]{1 \\ 5 \\ -1}
+       \qquad
+       \colvec[r]{2 \\ 2 \\ 0}
+     \end{equation*}
+     \begin{answer} 
+       Salah satu caranya ialah mencari vektor ketiga sehingga ketiganya
+       bersama-sama membentuk basis bagi $\Re^3$, misalnya,
+       \begin{equation*}
+         \vec{\beta}_3=\colvec[r]{1 \\ 0 \\ 0}  
+       \end{equation*} 
+       (vektor kedua tidak bergantung pada vektor ketiga karena memiliki
+       komponen kedua yang tak nol, dan vektor pertama tidak bergantung pada
+       vektor kedua dan ketiga karena komponen ketiganya tak nol), lalu terapkan
+       proses Gram--Schmidt.
+       Anggota pertama basis baru adalah berikut.
+       \begin{equation*}
+         \vec{\kappa}_1 = \colvec[r]{1 \\ 5 \\ -1}  
+       \end{equation*}
+       Berikut anggota keduanya.
+       \begin{align*}
+         \vec{\kappa}_2
+           &=
+           \colvec[r]{2 \\ 2 \\ 0}
+           -\proj{\colvec[r]{2 \\ 2 \\ 0}}{\spanof{\vec{\kappa}_1}}
+           =\colvec[r]{2 \\ 2 \\ 0}
+           -\frac{\colvec[r]{2 \\ 2 \\ 0}\dotprod\colvec[r]{1 \\ 5 \\ -1}}{%
+                  \colvec[r]{1 \\ 5 \\ -1}\dotprod\colvec[r]{1 \\ 5 \\ -1}}
+            \cdot\colvec[r]{1 \\ 5 \\ -1}                               \\
+           &\hbox{}\quad=
+           \colvec[r]{2 \\ 2 \\ 0}
+           -\frac{12}{27}\cdot\colvec[r]{1 \\ 5 \\ -1}
+           =\colvec[r]{14/9 \\ -2/9 \\ 4/9}                        
+       \end{align*}
+       Berikut anggota terakhirnya.
+       \begin{align*}
+        \vec{\kappa}_3    
+           &=  
+           \colvec[r]{1 \\ 0 \\ 0}
+             -\proj{\colvec[r]{1 \\ 0 \\ 0}}{\spanof{\vec{\kappa}_1}}
+             -\proj{\colvec[r]{1 \\ 0 \\ 0}}{\spanof{\vec{\kappa}_2}}       \\
+           &\hbox{}\quad=
+           \colvec[r]{1 \\ 0 \\ 0}
+           -\frac{\colvec[r]{1 \\ 0 \\ 0}\dotprod\colvec[r]{1 \\ 5 \\ -1}}{%
+                    \colvec[r]{1 \\ 5 \\ -1}\dotprod\colvec[r]{1 \\ 5 \\ -1}}
+             \cdot\colvec[r]{1 \\ 5 \\ -1}
+           -\frac{\colvec[r]{1 \\ 0 \\ 0}\dotprod\colvec[r]{14/9 \\ -2/9 \\  4/9}}{%
+            \colvec[r]{14/9 \\ -2/9 \\ 4/9}\dotprod\colvec[r]{14/9 \\ -2/9 \\ 4/9}}
+            \cdot\colvec[r]{14/9 \\ -2/9 \\ 4/9}              \\
+         &=
+         \colvec[r]{1 \\ 0 \\ 0}
+           -\frac{1}{27}\cdot\colvec[r]{1 \\ 5 \\ -1}
+           -\frac{7}{12}\cdot\colvec[r]{14/9 \\ -2/9 \\ 4/9}
+         =\colvec[r]{1/18 \\ -1/18  \\ -4/18}
+       \end{align*}
+       Hasil $\vec{\kappa}_3$ ortogonal terhadap $\vec{\kappa}_1$ dan
+       $\vec{\kappa}_2$.
+       Karena itu, vektor tersebut ortogonal terhadap setiap vektor dalam
+       rentang himpunan $\set{\vec{\kappa}_1,\vec{\kappa}_2}$, termasuk kedua
+       vektor yang diberikan dalam soal.
+     \end{answer}
+  \recommended \item \label{exer:OrthoRepEasy} 
+    Salah satu keunggulan basis ortogonal ialah bahwa basis tersebut
+    menyederhanakan pencarian representasi suatu vektor terhadap basis itu.
+    \begin{exparts}
+      \partsitem Untuk vektor dan basis tak ortogonal bagi $\Re^2$ berikut,
+        \begin{equation*}
+          \vec{v}=\colvec[r]{2 \\ 3}
+          \qquad
+          B=\sequence{\colvec[r]{1 \\ 1},
+                    \colvec[r]{1 \\ 0}}
+        \end{equation*}
+        mula-mula representasikan vektor terhadap basis tersebut.
+        Kemudian proyeksikan vektor itu ke rentang setiap vektor basis,
+        $\spanof{\smash{\vec{\beta}_1}}$ dan
+        $\spanof{\smash{\vec{\beta}_2}}$.
+      \partsitem Dengan basis ortogonal bagi $\Re^2$ berikut,
+        \begin{equation*}
+          K=\sequence{\colvec[r]{1 \\ 1},
+                    \colvec[r]{1 \\ -1}}
+        \end{equation*}
+        representasikan vektor $\vec{v}$ yang sama terhadap basis tersebut.
+        Kemudian proyeksikan vektor itu ke rentang setiap vektor basis.
+        Perhatikan bahwa koefisien dalam representasi dan proyeksi sama.
+      \partsitem Misalkan
+        $K=\sequence{\vec{\kappa}_1,\ldots,\vec{\kappa}_k}$
+        merupakan basis ortogonal bagi suatu subruang $\Re^n$.
+        Buktikan bahwa bagi sebarang $\vec{v}$ dalam subruang tersebut,
+        komponen ke-$i$ dari representasi $\rep{\vec{v}\,}{K}$ adalah
+        koefisien skalar $(\vec{v}\dotprod\vec{\kappa}_i)/
+               (\vec{\kappa}_i\dotprod\vec{\kappa}_i)$
+        dari $\proj{\vec{v}\,}{\spanof{\vec{\kappa}_i}}$.
+      \partsitem Buktikan bahwa
+        $\vec{v}=\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+                   +\dots+\proj{\vec{v}\,}{\spanof{\vec{\kappa}_k}}$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Representasinya dapat kita tentukan langsung.
+          \begin{equation*}
+            \colvec[r]{2 \\ 3}=3\cdot\colvec[r]{1 \\ 1}+(-1)\cdot\colvec[r]{1 \\ 0}
+            \qquad
+            \rep{\vec{v}\,}{B}=\colvec[r]{3 \\ -1}_B
+          \end{equation*}
+          Kedua proyeksinya juga mudah.
+          \begin{align*}
+            \proj{\colvec[r]{2 \\ 3}}{\spanof{\vec{\beta}_1}}
+            &=\frac{\colvec[r]{2 \\ 3}\dotprod\colvec[r]{1 \\ 1}}{%
+                   \colvec[r]{1 \\ 1}\dotprod\colvec[r]{1 \\ 1}}
+              \cdot\colvec[r]{1 \\ 1}
+            =\frac{5}{2}\cdot\colvec[r]{1 \\ 1}            \\
+            \proj{\colvec[r]{2 \\ 3}}{\spanof{\vec{\beta}_2}}
+            &=\frac{\colvec[r]{2 \\ 3}\dotprod\colvec[r]{1 \\ 0}}{%
+                   \colvec[r]{1 \\ 0}\dotprod\colvec[r]{1 \\ 0}}
+              \cdot\colvec[r]{1 \\ 0}
+            =\frac{2}{1}\cdot\colvec[r]{1 \\ 0}
+          \end{align*}
+        \partsitem Seperti di atas, representasinya dapat kita tentukan langsung,
+          \begin{equation*}
+            \colvec[r]{2 \\ 3}=(5/2)\cdot\colvec[r]{1 \\ 1}
+                             +(-1/2)\cdot\colvec[r]{1 \\ -1}
+          \end{equation*}
+          dan kedua proyeksinya mudah.
+          \begin{align*}
+            \proj{\colvec[r]{2 \\ 3}}{\spanof{\vec{\kappa}_1}}
+            &=\frac{\colvec[r]{2 \\ 3}\dotprod\colvec[r]{1 \\ 1}}{%
+                   \colvec[r]{1 \\ 1}\dotprod\colvec[r]{1 \\ 1}}
+              \cdot\colvec[r]{1 \\ 1}
+            =\frac{5}{2}\cdot\colvec[r]{1 \\ 1}                    \\
+            \proj{\colvec[r]{2 \\ 3}}{\spanof{\vec{\kappa}_2}}
+            &=\frac{\colvec[r]{2 \\ 3}\dotprod\colvec[r]{1 \\ -1}}{%
+                   \colvec[r]{1 \\ -1}\dotprod\colvec[r]{1 \\ -1}}
+              \cdot\colvec[r]{1 \\ -1}
+            =\frac{-1}{2}\cdot\colvec[r]{1 \\ -1}
+          \end{align*}
+          Perhatikan kemunculan kembali $5/2$ dan $-1/2$.
+        \partsitem Representasikan $\vec{v}$ terhadap basis
+          \begin{equation*}
+            \rep{\vec{v}\,}{K}=\colvec{r_1 \\ \vdots \\ r_k}
+          \end{equation*}
+          sehingga
+          $\vec{v}=r_1\vec{\kappa}_1+\dots+r_k\vec{\kappa}_k$.
+          Untuk menentukan $r_i$, ambil hasil kali titik kedua ruas dengan
+          $\vec{\kappa}_i$.
+          \begin{equation*}
+            \vec{v}\dotprod\vec{\kappa}_i
+               =\left(r_1\vec{\kappa}_1+\dots+r_k\vec{\kappa}_k\right)
+                 \dotprod\vec{\kappa}_i
+               =r_1\cdot 0+\dots+r_i\cdot(\vec{\kappa}_i\dotprod\vec{\kappa}_i)
+                    +\dots+r_k\cdot 0
+          \end{equation*}
+          Menyelesaikannya untuk $r_i$ menghasilkan koefisien yang diinginkan.
+        \partsitem Ini merupakan pernyataan ulang bagian sebelumnya.
+      \end{exparts}
+    \end{answer}
+  \item 
+     \textit{Ketaksamaan Bessel}.
+     Tinjau himpunan-himpunan ortonormal berikut,
+     \begin{equation*}
+          B_1=\set{\vec{e}_1}
+          \quad
+          B_2=\set{\vec{e}_1,\vec{e}_2}
+          \quad
+          B_3=\set{\vec{e}_1,\vec{e}_2,\vec{e}_3}
+          \quad
+          B_4=\set{\vec{e}_1,\vec{e}_2,\vec{e}_3,\vec{e}_4}
+     \end{equation*}
+     beserta vektor $\vec{v}\in\Re^4$ yang komponennya $4$, $3$, $2$, dan $1$.
+    \begin{exparts}
+      \partsitem 
+        Temukan koefisien $c_1$ bagi proyeksi $\vec{v}$ ke rentang vektor
+        dalam $B_1$.
+        Periksa bahwa $\absval{\vec{v}\,}^2\geq \absval{c_1}^2$.
+      \partsitem 
+        Temukan koefisien $c_1$ dan $c_2$ bagi proyeksi $\vec{v}$ ke rentang
+        kedua vektor dalam $B_2$.
+        Periksa bahwa $\absval{\vec{v}\,}^2\geq \absval{c_1}^2+\absval{c_2}^2$.
+      \partsitem Temukan $c_1$, $c_2$, dan $c_3$ yang terkait dengan
+        vektor-vektor dalam $B_3$, serta $c_1$, $c_2$, $c_3$, dan $c_4$ bagi
+        vektor-vektor dalam $B_4$.
+        Periksa bahwa
+        $\absval{\vec{v}\,}^2\geq \absval{c_1}^2+\dots+\absval{c_3}^2$ dan
+        bahwa
+        $\absval{\vec{v}\,}^2\geq \absval{c_1}^2+\dots+\absval{c_4}^2$.
+    \end{exparts}
+    Tunjukkan bahwa ini berlaku secara umum:~jika
+    $\set{\vec{\kappa}_1,\ldots,\vec{\kappa}_k}$
+    merupakan himpunan ortonormal dan $c_i$ adalah koefisien proyeksi suatu
+    vektor $\vec{v}$ dari ruang tersebut, maka
+    $\absval{\vec{v}\,}^2\geq \absval{c_1}^2+\dots+\absval{c_k}^2$.
+    \textit{Petunjuk}. Salah satu caranya ialah meninjau ketaksamaan
+      $0\leq\absval{\vec{v}-(c_1\vec{\kappa}_1+\dots+c_k\vec{\kappa}_k)}^2$
+      lalu menguraikan suku-suku $c$.
+    \begin{answer}
+      Pertama, $\absval{\vec{v}\,}^2=4^2+3^2+2^2+1^2=50$.
+      \begin{exparts*}
+        \partsitem $c_1=4$
+        \partsitem $c_1=4$, $c_2=3$
+        \partsitem $c_1=4$, $c_2=3$, $c_3=2$, $c_4=1$
+      \end{exparts*}
+      Untuk pembuktiannya, kita hanya akan mengerjakan kasus $k=2$ karena kasus
+      yang sepenuhnya umum lebih rumit tetapi tidak lebih mencerahkan.
+      Kita mengikuti petunjuk
+      (ingat bahwa bagi sebarang vektor $\vec{w}$ berlaku
+      $\absval{\vec{w}\,}^2=\vec{w}\dotprod\vec{w}$).
+      \begin{align*}
+        0
+         &\leq
+         \left(\vec{v}-\bigl(\frac{\vec{v}\dotprod\vec{\kappa}_1}{%
+                              \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+                          \cdot\vec{\kappa}_1
+                         +\frac{\vec{v}\dotprod\vec{\kappa}_2}{%
+                              \vec{\kappa}_2\dotprod\vec{\kappa}_2}
+                          \cdot\vec{\kappa}_2
+                       \bigr)
+         \right)
+         \dotprod
+         \left(\vec{v}-\bigl(\frac{\vec{v}\dotprod\vec{\kappa}_1}{%
+                              \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+                          \cdot\vec{\kappa}_1
+                         +\frac{\vec{v}\dotprod\vec{\kappa}_2}{%
+                              \vec{\kappa}_2\dotprod\vec{\kappa}_2}
+                          \cdot\vec{\kappa}_2
+                       \bigr)
+         \right)                                                       \\
+         &=\begin{aligned}[t]
+            &\vec{v}\dotprod\vec{v}
+             -2\cdot\vec{v}
+              \dotprod\left(\frac{\vec{v}\dotprod\vec{\kappa}_1}{%
+                              \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+                          \cdot\vec{\kappa}_1
+                       +\frac{\vec{v}\dotprod\vec{\kappa}_2}{%
+                              \vec{\kappa}_2\dotprod\vec{\kappa}_2}
+                          \cdot\vec{\kappa}_2\right)               \\
+            &+\left(\frac{\vec{v}\dotprod\vec{\kappa}_1}{%
+                              \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+                          \cdot\vec{\kappa}_1
+                       +\frac{\vec{v}\dotprod\vec{\kappa}_2}{%
+                              \vec{\kappa}_2\dotprod\vec{\kappa}_2}
+                          \cdot\vec{\kappa}_2\right)
+           \dotprod
+           \left(\frac{\vec{v}\dotprod\vec{\kappa}_1}{%
+                              \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+                          \cdot\vec{\kappa}_1
+                       +\frac{\vec{v}\dotprod\vec{\kappa}_2}{%
+                              \vec{\kappa}_2\dotprod\vec{\kappa}_2}
+                          \cdot\vec{\kappa}_2\right)               
+          \end{aligned}                                              \\
+         &=
+          \vec{v}\dotprod\vec{v}
+          -2\cdot
+             \left(\frac{\vec{v}\dotprod\vec{\kappa}_1}{%
+                              \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+                          \cdot(\vec{v}\dotprod\vec{\kappa}_1)
+                       +\frac{\vec{v}\dotprod\vec{\kappa}_2}{%
+                              \vec{\kappa}_2\dotprod\vec{\kappa}_2}
+                          \cdot(\vec{v}\dotprod\vec{\kappa}_2)\right)  \\
+          &\quad+\left((\frac{\vec{v}\dotprod\vec{\kappa}_1}{%
+                              \vec{\kappa}_1\dotprod\vec{\kappa}_1})^2
+                          \cdot(\vec{\kappa}_1\dotprod\vec{\kappa}_1)
+                       +(\frac{\vec{v}\dotprod\vec{\kappa}_2}{%
+                              \vec{\kappa}_2\dotprod\vec{\kappa}_2})^2
+                          \cdot(\vec{\kappa}_2\dotprod\vec{\kappa}_2)\right)
+      \end{align*}
+      (Kedua suku silang pada bagian ketiga dari baris ketiga bernilai nol
+      karena $\vec{\kappa}_1$ dan $\vec{\kappa}_2$ ortogonal.)
+      Hasilnya kini diperoleh dengan menggabungkan suku-suku sejenis dan
+      memperhatikan bahwa
+      $\vec{\kappa}_1\dotprod\vec{\kappa}_1=1$ dan
+      $\vec{\kappa}_2\dotprod\vec{\kappa}_2=1$ karena vektor-vektor ini
+      merupakan anggota suatu himpunan ortonormal.
+    \end{answer}
+  \item
+    Buktikan atau sangkal:~setiap vektor dalam \( \Re^n \) termuat dalam suatu
+    basis ortogonal.
+    \begin{answer}
+      Pernyataan ini benar, kecuali bagi vektor nol.
+      Setiap vektor dalam \( \Re^n \), selain vektor nol, termuat dalam suatu
+      basis, dan basis tersebut dapat diortogonalisasi.
+     \end{answer}
+  \item 
+    Tunjukkan bahwa kolom-kolom suatu matriks \( \nbyn{n} \) membentuk himpunan
+    ortonormal jika dan hanya jika invers matriks tersebut adalah transposnya.
+    Berikan sebuah matriks semacam itu.
+    \begin{answer} 
+      Kasus $\nbyn{3}$ memberikan gagasannya.
+      Himpunan
+      \begin{equation*}
+        \set{\colvec{a \\ d \\ g},\colvec{b \\ e \\ h},\colvec{c \\ f \\ i}}
+      \end{equation*}
+      ortonormal jika dan hanya jika kesembilan syarat berikut semuanya berlaku,
+      \begin{equation*}
+        \begin{array}{ccc}
+          \rowvec{a &d &g}\dotprod\colvec{a \\ d \\ g}=1
+            &\rowvec{a &d &g}\dotprod\colvec{b \\ e \\ h}=0
+            &\rowvec{a &d &g}\dotprod\colvec{c \\ f \\ i}=0    \\
+          \rowvec{b &e &h}\dotprod\colvec{a \\ d \\ g}=0
+            &\rowvec{b &e &h}\dotprod\colvec{b \\ e \\ h}=1
+            &\rowvec{b &e &h}\dotprod\colvec{c \\ f \\ i}=0    \\
+          \rowvec{c &f &i}\dotprod\colvec{a \\ d \\ g}=0
+            &\rowvec{c &f &i}\dotprod\colvec{b \\ e \\ h}=0
+            &\rowvec{c &f &i}\dotprod\colvec{c \\ f \\ i}=1    
+        \end{array}
+      \end{equation*}
+      (ketiga syarat di kiri bawah berlebih, tetapi tetap benar).
+      Syarat-syarat tersebut, pada gilirannya, berlaku jika dan hanya jika
+      \begin{equation*}
+        \begin{mat}
+          a &d &g \\
+          b &e &h \\
+          c &f &i
+        \end{mat}
+        \begin{mat}
+          a &b &c  \\
+          d &e &f  \\
+          g &h &i
+        \end{mat}
+        =
+        \begin{mat}
+          1 &0 &0  \\
+          0 &1 &0  \\
+          0 &0 &1
+        \end{mat}
+      \end{equation*}
+      sebagaimana yang disyaratkan.
+
+      Berikut sebuah contoh; invers matriks ini adalah transposnya.
+      \begin{equation*}
+        \begin{mat}[r]
+          1/\sqrt{2}  &1/\sqrt{2}  &0  \\
+         -1/\sqrt{2}  &1/\sqrt{2}  &0  \\
+          0           &0           &1
+        \end{mat}
+      \end{equation*}
+    \end{answer}
+  \item 
+    Apakah bukti \nearbytheorem{th:OrthoIsInd} gagal mempertimbangkan
+    kemungkinan bahwa himpunan vektornya kosong (yakni, $k=0$)?
+    \begin{answer}
+      Jika himpunannya kosong, maka penjumlahan di ruas kiri merupakan
+      kombinasi linear himpunan vektor kosong, yang menurut definisi berjumlah
+      vektor nol.
+      Dalam kalimat kedua, tidak ada $i$ seperti itu, sehingga implikasi
+      `jika \ldots maka \ldots' benar secara hampa.
+    \end{answer}
+  \item 
+    \nearbytheorem{th:GramSchmidt} mendeskripsikan perubahan basis dari
+    sebarang basis \( B=\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_k} \)
+    menjadi basis ortogonal
+    \( K=\sequence{\vec{\kappa}_1,\ldots,\vec{\kappa}_k} \).
+    Tinjau matriks perubahan basis $\rep{\identity}{B,K}$.
+    \begin{exparts}
+      \partsitem Buktikan bahwa matriks $\rep{\identity}{K,B}$, yang mengubah
+        basis dalam arah yang berlawanan dengan arah dalam teorema, berbentuk
+        segitiga atas\Dash semua entri di bawah diagonal utamanya nol.
+      \partsitem Buktikan bahwa invers matriks segitiga atas juga segitiga atas
+        (tentu saja jika matriks tersebut dapat diinverskan).
+        Ini menunjukkan bahwa matriks $\rep{\identity}{B,K}$, yang mengubah
+        basis dalam arah yang dideskripsikan teorema, berbentuk segitiga atas.
+    \end{exparts}
+    \begin{answer} 
+      \begin{exparts}
+        \partsitem Sebagian argumen induksi yang membuktikan
+          \nearbytheorem{th:GramSchmidt} memeriksa bahwa $\vec{\kappa}_i$
+          berada dalam rentang
+          $\sequence{\vec{\beta}_1,\dots,\vec{\beta}_i}$.
+          (Kasus $i=3$ dalam bukti menjadi ilustrasi.)
+          Jadi, dalam matriks perubahan basis $\rep{\identity}{K,B}$, kolom
+          ke-$i$, yakni $\rep{\vec{\kappa}_i}{B}$, memiliki komponen
+          $i+1$ hingga $k$ yang bernilai nol.
+        \partsitem Salah satu cara melihatnya ialah mengingat kembali prosedur
+          komputasi yang digunakan untuk mencari invers.
+          Kita menuliskan matriks, menuliskan matriks identitas di sebelahnya,
+          lalu melakukan reduksi Gauss--Jordan.
+          Jika matriks pada awalnya berbentuk segitiga atas, reduksi
+          Gauss--Jordan hanya melibatkan bagian Jordan, dan langkah-langkah ini,
+          ketika diterapkan pada matriks identitas, akan menghasilkan matriks
+          invers segitiga atas.
+      \end{exparts}
+    \end{answer}
+ \item \label{exer:GramSchmidt} 
+    Lengkapi argumen induksi dalam bukti \nearbytheorem{th:GramSchmidt}.
+    \begin{answer}
+      Untuk langkah induksi, kita mengasumsikan bahwa bagi semua $j$ dalam
+      $[1..i]$, ketiga syarat berikut berlaku bagi setiap $\vec{\kappa}_j$:
+      (i)~setiap $\vec{\kappa}_j$ tak nol,
+      (ii)~setiap $\vec{\kappa}_j$ merupakan kombinasi linear vektor-vektor
+         $\vec{\beta}_1,\dots,\vec{\beta}_j$, dan
+      (iii)~setiap $\vec{\kappa}_j$ ortogonal terhadap semua
+         $\vec{\kappa}_m$ sebelumnya (yakni, dengan $m<j$).
+      Dengan hipotesis-hipotesis induksi tersebut, tinjau
+      $\vec{\kappa}_{i+1}$.
+      \begin{align*}
+        \vec{\kappa}_{i+1}
+         &=
+        \vec{\beta}_{i+1}
+          -\proj{\vec{\beta}_{i+1}}{\spanof{\vec{\kappa}_1}}
+          -\proj{\vec{\beta}_{i+1}}{\spanof{\vec{\kappa}_2}}
+          -\dots
+          -\proj{\vec{\beta}_{i+1}}{\spanof{\vec{\kappa}_i}}  \\
+         &=
+        \vec{\beta}_{i+1}
+          -\frac{\vec{\beta}_{i+1}\dotprod\vec{\kappa}_1}{%
+                  \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+              \cdot\vec{\kappa}_1
+          -\frac{\vec{\beta}_{i+1}\dotprod\vec{\kappa}_2}{%
+                  \vec{\kappa}_2\dotprod\vec{\kappa}_2}
+              \cdot\vec{\kappa}_2
+          -\dots
+          -\frac{\vec{\beta}_{i+1}\dotprod\vec{\kappa}_i}{%
+                  \vec{\kappa}_i\dotprod\vec{\kappa}_i}
+              \cdot\vec{\kappa}_i
+       \end{align*}
+       Berdasarkan asumsi induksi~(ii), kita dapat menguraikan setiap
+       $\vec{\kappa}_j$ menjadi kombinasi linear
+       $\vec{\beta}_1,\ldots,\vec{\beta}_j$,
+       \begin{align*}
+         &=
+        \vec{\beta}_{i+1}
+          -\frac{\vec{\beta}_{i+1}\dotprod\vec{\kappa}_1}{%
+                  \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+              \cdot\vec{\beta}_1                          \\
+          &\quad-\frac{\vec{\beta}_{i+1}\dotprod\vec{\kappa}_2}{%
+                  \vec{\kappa}_2\dotprod\vec{\kappa}_2}
+              \cdot
+                 \left(\text{
+                    kombinasi linear $\vec{\beta}_1,\vec{\beta}_2$}
+                 \right)                                                 \\
+          &\quad-\;\cdots\;
+          -\frac{\vec{\beta}_{i+1}\dotprod\vec{\kappa}_i}{%
+                  \vec{\kappa}_i\dotprod\vec{\kappa}_i}
+              \cdot
+                 \left(\text{
+                    kombinasi linear $\vec{\beta}_1,\dots,\vec{\beta}_i$}
+                 \right)
+       \end{align*}
+       Pecahan-pecahan tersebut adalah skalar, sehingga ini merupakan kombinasi
+       linear dari kombinasi-kombinasi linear
+       $\vec{\beta}_1,\dots,\vec{\beta}_{i+1}$.
+       Jadi, ini hanyalah kombinasi linear
+       $\vec{\beta}_1,\dots,\vec{\beta}_{i+1}$.
+       Sekarang, (i)~hasilnya tidak mungkin vektor nol, karena persamaan itu
+       akan mendeskripsikan hubungan linear tak trivial di antara
+       vektor-vektor $\vec{\beta}$ yang diberikan sebagai anggota suatu basis
+       (hubungannya tak trivial karena koefisien $\vec{\beta}_{i+1}$ adalah
+       $1$).
+       Selain itu, (ii)~persamaan tersebut memberikan $\vec{\kappa}_{i+1}$
+       sebagai kombinasi $\vec{\beta}_1,\dots,\vec{\beta}_{i+1}$.
+       Akhirnya, untuk~(iii), tinjau
+       $\vec{\kappa}_j\dotprod\vec{\kappa}_{i+1}$; seperti dalam kasus $i=3$,
+       hasil kali titik $\vec{\kappa}_j$ dengan
+       $\vec{\kappa}_{i+1}=\vec{\beta}_{i+1}
+          -\proj{\vec{\beta}_{i+1}}{\spanof{\vec{\kappa}_1}}
+          -\dots
+          -\proj{\vec{\beta}_{i+1}}{\spanof{\vec{\kappa}_i}}$
+         dapat ditulis ulang sehingga memberikan dua jenis suku,
+       $\vec{\kappa}_j\dotprod
+           \left(\vec{\beta}_{i+1}
+                  -\proj{\vec{\beta}_{i+1}}{\spanof{\vec{\kappa}_j}}
+           \right)$
+       (yang bernilai nol karena proyeksinya ortogonal), dan
+       $\vec{\kappa}_j\dotprod
+               \proj{\vec{\beta}_{i+1}}{\spanof{\vec{\kappa}_m}}$
+       dengan $m\neq j$ dan $m<i+1$
+       (yang bernilai nol karena berdasarkan hipotesis~(iii), vektor
+       $\vec{\kappa}_j$ dan $\vec{\kappa}_m$ ortogonal).
+     \end{answer}
+\index{proses Gram--Schmidt|)}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsectionoptional{Proyeksi ke Sebuah Subruang}
+\noindent\textit{Subbagian ini menggunakan materi dari subbagian opsional
+     sebelumnya tentang Menggabungkan Subruang.}
+
+Subbagian-subbagian sebelumnya memproyeksikan suatu vektor ke sebuah garis
+dengan menguraikannya menjadi dua bagian:~bagian pada garis,
+$\proj{\vec{v}\,}{\spanof{\vec{s}\,}}$, dan sisanya,
+$\vec{v}-\proj{\vec{v}\,}{\spanof{\vec{s}\,}}$.
+Untuk memperumum proyeksi ke subruang sebarang, kita akan mengikuti gagasan
+penguraian ini.
+
+\begin{definition}
+\label{def:ProjIntoMAlongN}
+Misalkan suatu ruang vektor merupakan jumlah langsung \( V=M\directsum N \).
+Untuk sebarang \( \vec{v}\in V \) dengan $\vec{v}=\vec{m}+\vec{n}$, di mana
+\( \vec{m}\in M,\,\vec{n}\in N \),
+\definend{proyeksi \( \vec{v} \) ke \( M \) sepanjang \( N \)}%
+\index{proyeksi!ke sebuah subruang}\index{proyeksi!sepanjang sebuah subruang}
+adalah
+$\proj{\vec{v}\,}{M,N}=\vec{m}$.
+\end{definition}
+
+Definisi ini berlaku pada ruang-ruang yang belum memiliki definisi ortogonal
+yang siap digunakan.
+(Definisi keortogonalan bagi ruang selain $\Re^n$ sangat mungkin dibuat,
+tetapi kita belum menjumpainya dalam buku ini.)
+
+\begin{example} \label{ex:OrthProjOne}
+Ruang \( \matspace_{\nbyn{2}} \) yang terdiri atas matriks-matriks
+$\nbyn{2}$ merupakan jumlah langsung kedua subruang berikut.
+\begin{equation*}
+   M=\set{\begin{mat}
+              a  &b  \\
+              0  &0
+            \end{mat} \suchthat a,b\in\Re }
+  \qquad
+   N=\set{\begin{mat}
+              0  &0  \\
+              c  &d
+            \end{mat} \suchthat c,d\in\Re }
+\end{equation*}
+Untuk memproyeksikan
+\begin{equation*}
+  A=\begin{mat}[r]
+          3  &1  \\
+          0  &4
+  \end{mat}
+\end{equation*}
+ke $M$ sepanjang $N$, pertama-tama kita tetapkan basis bagi kedua subruang.
+\begin{equation*}
+  B_{M}=\sequence{
+    \begin{mat}[r]
+      1  &0  \\
+      0  &0      
+    \end{mat},
+    \begin{mat}[r]
+      0  &1  \\
+      0  &0
+    \end{mat}
+                   }
+  \qquad
+  B_{N}=\sequence{
+    \begin{mat}[r]
+      0  &0  \\
+      1  &0      
+    \end{mat},
+    \begin{mat}[r]
+      0  &0  \\
+      0  &1
+    \end{mat}
+                   }
+\end{equation*}
+Konkatenasi keduanya,
+\begin{equation*}
+  B=\cat{B_{M}}{B_{N}}=\sequence{
+    \begin{mat}[r]
+      1  &0  \\
+      0  &0      
+    \end{mat},
+    \begin{mat}[r]
+      0  &1  \\
+      0  &0
+    \end{mat},
+    \begin{mat}[r]
+      0  &0  \\
+      1  &0      
+    \end{mat},
+    \begin{mat}[r]
+      0  &0  \\
+      0  &1
+    \end{mat}
+                   }
+\end{equation*}
+merupakan basis bagi seluruh ruang karena \( \matspace_{\nbyn{2}} \)
+merupakan jumlah langsung tersebut.
+Jadi, kita dapat menggunakannya untuk merepresentasikan $A$.
+\begin{equation*}
+  \begin{mat}[r]
+          3  &1  \\
+          0  &4
+  \end{mat}=
+    3\cdot\begin{mat}[r]
+      1  &0  \\
+      0  &0      
+    \end{mat}
+    +1\cdot\begin{mat}[r]
+      0  &1  \\
+      0  &0
+    \end{mat}
+    +0\cdot\begin{mat}[r]
+      0  &0  \\
+      1  &0      
+    \end{mat}
+    +4\cdot\begin{mat}[r]
+      0  &0  \\
+      0  &1
+    \end{mat}
+\end{equation*}
+Proyeksi $A$ ke $M$ sepanjang $N$ mempertahankan bagian $M$ dan membuang
+bagian $N$.
+\begin{equation*}
+  \proj{\begin{mat}[r]
+          3  &1  \\
+          0  &4
+  \end{mat} }{M,N}
+  =
+    3\cdot\begin{mat}[r]
+      1  &0  \\
+      0  &0      
+    \end{mat}
+    +1\cdot\begin{mat}[r]
+      0  &1  \\
+      0  &0
+    \end{mat}
+    =\begin{mat}[r]
+      3  &1  \\
+      0  &0      
+    \end{mat}
+\end{equation*}
+\end{example}
+
+\begin{example}  \label{ex:ProjIntoMAlongNGener}
+Kedua subskrip pada $\proj{\vec{v}\,}{M,N}$ sama-sama penting.
+Subskrip pertama, $M$, penting karena hasil proyeksi merupakan anggota $M$.
+Sebagai contoh yang menunjukkan pentingnya subskrip kedua, tetapkan subruang
+bidang dari $\Re^3$ berikut beserta basisnya.
+\begin{equation*}
+  M=\set{\colvec{x \\ y \\ z}\suchthat y-2z=0}
+  \qquad
+  B_M=\sequence{
+                \colvec[r]{1 \\ 0 \\ 0},
+                \colvec[r]{0 \\ 2 \\ 1} }
+\end{equation*}
+Kita akan membandingkan proyeksi elemen~$\Re^3$ berikut
+\begin{equation*}
+  \vec{v}=\colvec[r]{2 \\ 2 \\ 5}
+\end{equation*}
+ke $M$ sepanjang kedua subruang berikut
+(verifikasi bahwa \( \Re^3=M\directsum N \) dan
+\( \Re^3=M\directsum \hat{N} \) bersifat rutin).
+\begin{equation*}
+  N=\set{k\colvec[r]{0 \\ 0 \\ 1}\suchthat k\in\Re}
+  \qquad
+  \hat{N}=\set{k\colvec[r]{0 \\ 1 \\ -2}\suchthat k\in\Re}
+\end{equation*}
+Berikut basis alami bagi $N$ dan $\hat{N}$.
+\begin{equation*}
+  B_N=\sequence{
+                \colvec[r]{0 \\ 0 \\ 1} }
+  \qquad
+  B_{\hat{N}}=\sequence{
+                \colvec[r]{0 \\ 1 \\ -2} }
+\end{equation*}
+Untuk memproyeksikan ke $M$ sepanjang~$N$, representasikan $\vec{v}$ terhadap
+konkatenasi $\cat{B_M}{B_N}$,
+\begin{equation*}
+  \colvec[r]{2 \\ 2 \\ 5}=
+  2\cdot\colvec[r]{1 \\ 0 \\ 0}+
+  1\cdot\colvec[r]{0 \\ 2 \\ 1}+
+  4\cdot\colvec[r]{0 \\ 0 \\ 1}
+\end{equation*}
+dan buang suku $N$.
+\begin{equation*}
+  \proj{\vec{v}\,}{M,N}
+  =2\cdot\colvec[r]{1 \\ 0 \\ 0}+
+  1\cdot\colvec[r]{0 \\ 2 \\ 1}
+  =\colvec[r]{2 \\ 2 \\ 1}
+\end{equation*}
+Untuk memproyeksikan ke~$M$ sepanjang~$\hat{N}$, representasikan $\vec{v}$
+terhadap $\cat{B_M}{B_{\hat{N}}}$,
+\begin{equation*}
+  \colvec[r]{2 \\ 2 \\ 5}=
+  2\cdot\colvec[r]{1 \\ 0 \\ 0}
+  +(9/5)\cdot\colvec[r]{0 \\ 2 \\ 1}
+  -(8/5)\cdot\colvec[r]{0 \\ 1 \\ -2}
+\end{equation*}
+dan hilangkan bagian $\hat{N}$.
+\begin{equation*}
+  \proj{\vec{v}\,}{M,\hat{N}}
+  =
+  2\cdot\colvec[r]{1 \\ 0 \\ 0}
+  +(9/5)\cdot\colvec[r]{0 \\ 2 \\ 1}
+  =\colvec[r]{2 \\ 18/5 \\ 9/5}
+\end{equation*}
+Jadi, memproyeksikan sepanjang subruang yang berbeda dapat memberikan hasil
+yang berbeda.
+
+Gambar-gambar berikut membandingkan kedua pemetaan.
+Keduanya menunjukkan bahwa proyeksi tersebut benar-benar `ke' bidang dan
+`sepanjang' garis.
+\begin{center}  \small
+  \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.38}\end{tabular}
+  \qquad
+  \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.39}\end{tabular}
+\end{center}
+Perhatikan bahwa proyeksi sepanjang $N$ tidak ortogonal karena ada anggota
+bidang $M$ yang tidak ortogonal terhadap garis putus-putus.
+Namun, proyeksi sepanjang $\hat{N}$ bersifat ortogonal.
+\end{example}
+
+Kita telah melihat dua operasi proyeksi: proyeksi ortogonal ke sebuah garis,
+serta proyeksi dalam subbagian ini ke suatu~$M$ sepanjang suatu~$N$; wajar jika
+kita bertanya apakah keduanya berkaitan.
+Gambar sebelah kanan di atas menunjukkan jawabannya\Dash proyeksi ortogonal ke
+sebuah garis merupakan kasus khusus proyeksi dalam subbagian ini; proyeksi itu
+berlangsung sepanjang subruang yang tegak lurus terhadap garis.
+\begin{center}  \small
+  \includegraphics{map/mp/ch3.40}
+\end{center}
+% In addition to pointing out that projection along a subspace is a 
+% generalization, this scheme shows how to define orthogonal projection into
+% any subspace of $\Re^n$, of any dimension. 
+
+\begin{definition} \label{def:OrthComp}
+\definend{Komplemen ortogonal\/}\index{ortogonal!komplemen}%
+\index{subruang komplementer!ortogonal}\index{perp, dari suatu subruang}
+dari suatu subruang \( M \) dalam $\Re^n$ adalah
+\begin{equation*}
+  M^\perp=\set{\vec{v}\in\Re^n\suchthat
+                 \vec{v} \text{ tegak lurus terhadap semua vektor dalam }M}
+\end{equation*}
+(dibaca ``\( M \) perp'').
+\definend{Proyeksi ortogonal}\index{ortogonal!proyeksi}%
+\index{proyeksi!ortogonal} \( \proj{\vec{v}\,}{M} \) dari suatu vektor adalah
+proyeksinya ke $M$ sepanjang \( M^\perp \).
+\end{definition}
+
+
+\begin{example} \label{ex:OrthoCompOne}
+Dalam \( \Re^3 \), untuk mencari komplemen ortogonal bidang
+\begin{equation*}
+   P=\set{\colvec{x \\ y \\ z}\suchthat 3x+2y-z=0 }
+\end{equation*}
+kita mulai dengan suatu basis bagi \( P \).
+\begin{equation*}
+   B=\sequence{\colvec[r]{1 \\ 0 \\ 3},
+               \colvec[r]{0 \\ 1 \\ 2} }
+\end{equation*}
+Setiap \( \vec{v} \) yang tegak lurus terhadap semua vektor dalam $B$ juga
+tegak lurus terhadap setiap vektor dalam rentang $B$
+(buktinya menjadi \nearbyexercise{exer:PerpOnBasisImplPerp}).
+Oleh karena itu, subruang $P^\perp$ terdiri atas vektor-vektor yang memenuhi
+kedua syarat berikut.
+\begin{equation*}
+  \colvec[r]{1 \\ 0 \\ 3}\dotprod\colvec{v_1 \\ v_2 \\ v_3}=0
+  \qquad
+  \colvec[r]{0 \\ 1 \\ 2}\dotprod\colvec{v_1 \\ v_2 \\ v_3}=0
+\end{equation*}
+Syarat-syarat tersebut memberikan suatu sistem linear.
+\begin{equation*}
+  P^\perp
+    =\set{\colvec{v_1 \\ v_2 \\ v_3}\suchthat \begin{mat}[r]
+                                                      1  &0  &3  \\
+                                                      0  &1  &2
+                                                    \end{mat}
+                                                    \colvec{v_1 \\ v_2 \\ v_3}
+                                                    =\colvec[r]{0 \\ 0} }
+\end{equation*}
+Jadi, tinggal dicari ruang nol dari pemetaan yang direpresentasikan oleh
+matriks tersebut, yakni menghitung himpunan solusi sistem linear homogen.
+\begin{equation*}
+  \begin{linsys}{3}
+    v_1 &  &    &+ &3v_3 &= &0 \\
+        &  &v_2 &+ &2v_3 &= &0
+  \end{linsys}
+  \quad\Longrightarrow\quad
+  P^\perp=\set{k\colvec[r]{-3 \\ -2 \\ 1}\suchthat k\in\Re}
+\end{equation*}
+% Instead of the term orthogonal complement,
+% this is sometimes called the line \definend{normal}\index{normal} %
+% to the plane.
+\end{example}
+
+\begin{example} \label{ex:OrthoCompTwo}
+Jika \( M \) adalah subruang bidang~\( xy \) dari \( \Re^3 \), apa bentuk
+\( M^\perp \)?
+Tanggapan awal yang lazim adalah bahwa \( M^\perp \) merupakan bidang~\( yz \),
+tetapi itu tidak benar karena beberapa vektor dari bidang~\( yz \) tidak tegak
+lurus terhadap setiap vektor dalam bidang~\( xy \).
+\begin{center}  \small
+    {\small $\colvec[r]{1 \\ 1 \\ 0} \not\perp \colvec[r]{0 \\ 3 \\ 2}$}
+   \quad
+  \begin{tabular}{@{}c@{}}\includegraphics{map/mp/ch3.41}\end{tabular}
+   \quad
+   {\small $\displaystyle 
+       \theta=\arccos(\frac{1\cdot 0+1\cdot 3+0\cdot 2}{
+                            \sqrt{2}\cdot\sqrt{13}})
+    \approx\text{$0.94$~rad}$}
+\end{center}
+Sebaliknya, \( M^\perp \) adalah sumbu~\( z \), karena dengan mengikuti contoh
+sebelumnya dan mengambil basis alami bagi bidang~$xy$ diperoleh
+\begin{equation*}
+  M^\perp
+  =
+  \set{\colvec{x \\ y \\ z}\suchthat \begin{mat}[r]
+                                         1  &0  &0  \\
+                                         0  &1  &0
+                                       \end{mat}
+                                       \colvec{x \\ y \\ z}=
+                                       \colvec[r]{0 \\ 0} \;}
+  =
+  \set{\colvec{x \\ y \\ z}\suchthat x=0 \text{\ dan\ }y=0  }
+\end{equation*}
+\end{example}
+
+% The two examples that we've seen since \nearbydefinition{def:OrthComp}
+% illustrate the first sentence in that definition.
+% The next result justifies the second sentence.
+
+\begin{lemma} \label{le:OrthoProjWellDefd}
+Jika $M$ merupakan subruang $\Re^n$, maka komplemen ortogonalnya $M^\perp$ juga
+merupakan subruang.
+Ruang tersebut merupakan jumlah langsung keduanya,
+\( \Re^n=M\directsum M^\perp \).
+Bagi sebarang $\vec{v}\in\Re^n$, vektor
+$\vec{v}-\proj{\vec{v}\,}{M}$ tegak lurus terhadap setiap vektor dalam $M$.
+\end{lemma}
+
+\begin{proof}
+Pertama, komplemen ortogonal $M^\perp$ merupakan subruang $\Re^n$:
+vektor nol berada di dalamnya, dan jika $\vec{u},\vec{w}\in M^\perp$ serta
+$a,b\in\Re$, maka bagi setiap $\vec{m}\in M$ berlaku
+$(a\vec{u}+b\vec{w})\dotprod\vec{m}
+=a(\vec{u}\dotprod\vec{m})+b(\vec{w}\dotprod\vec{m})=0$.
+ 
+Untuk menunjukkan bahwa ruang~$\R^n$ merupakan jumlah langsung keduanya,
+mulailah dengan sebarang basis
+\( B_M=\sequence{\vec{\mu}_1,\dots,\vec{\mu}_k} \) bagi \( M \).
+Perluas basis tersebut menjadi basis
+%\( B=\sequence{\vec{\mu}_1,\dots,\vec{\mu}_k,
+%   \vec{\nu}_1,\dots,\vec{\nu}_{n-k} } \)
+seluruh ruang, lalu terapkan proses Gram--Schmidt untuk memperoleh basis
+ortogonal \( K=\sequence{\vec{\kappa}_1,\dots,\vec{\kappa}_n} \) bagi
+\( \Re^n \).
+Basis $K$ ini merupakan konkatenasi dua basis:
+\( \sequence{\vec{\kappa}_1,\dots,\vec{\kappa}_k} \)
+yang beranggota sama banyak, yaitu~$k$, dengan $B_M$, dan
+\( D=\sequence{\vec{\kappa}_{k+1},\dots,\vec{\kappa}_n} \).
+Yang pertama merupakan basis bagi $M$. Jadi, jika kita menunjukkan bahwa yang
+kedua merupakan basis bagi \( M^\perp \), maka seluruh ruang merupakan jumlah
+langsung tersebut.
+
+\nearbyexercise{exer:OrthoRepEasy} dari subbagian sebelumnya membuktikan hal
+berikut tentang sebarang basis ortogonal:~setiap vektor $\vec{v}$ dalam ruang
+merupakan jumlah proyeksi ortogonalnya ke garis-garis yang direntang oleh
+vektor-vektor basis.
+\begin{equation*}
+  \vec{v}=\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+           +\dots+\proj{\vec{v}\,}{\spanof{\vec{\kappa}_n}}
+\tag*{($*$)}\end{equation*}
+Untuk memeriksanya, representasikan vektor sebagai
+$\vec{v}=r_1\vec{\kappa}_1+\dots+r_n\vec{\kappa}_n$,
+ambil hasil kali titik kedua ruas dengan $\vec{\kappa}_i$,
+$
+   \vec{v}\dotprod\vec{\kappa}_i
+      =\left(r_1\vec{\kappa}_1+\dots+r_n\vec{\kappa}_n\right)
+          \dotprod\vec{\kappa}_i
+      =r_1\cdot 0+\dots+r_i\cdot(\vec{\kappa}_i\dotprod\vec{\kappa}_i)
+            +\dots+r_n\cdot 0
+$,
+lalu selesaikan untuk memperoleh
+$r_i=(\vec{v}\dotprod\vec{\kappa}_i)/(\vec{\kappa}_i\dotprod\vec{\kappa}_i)$,
+sebagaimana yang diinginkan.
+
+Setiap anggota rentang
+\( D \) %\sequence{\vec{\kappa}_{k+1},\dots,\vec{\kappa}_n} \)
+ortogonal terhadap sebarang vektor dalam $M$, sehingga rentang \( D \)
+merupakan subhimpunan \( M^\perp \).
+Untuk menunjukkan bahwa \( D \) merupakan basis bagi $M^\perp$, kita hanya
+perlu menunjukkan inklusi sebaliknya, yaitu bahwa setiap
+$\vec{w}\in M^\perp$ merupakan elemen rentang~\( D \).
+Paragraf sebelumnya dapat digunakan untuk ini.
+Setiap $\vec{w}\in M^\perp$ memberikan proyeksi-proyeksi berikut ke
+vektor-vektor basis dari $M$:
+$\proj{\vec{w}\,}{\spanof{\vec{\kappa}_1}}=\zero,
+\dots,\,\proj{\vec{w}\,}{\spanof{\vec{\kappa}_k}}=\zero$.
+Oleh karena itu, persamaan~($*$) memberikan bahwa $\vec{w}$ merupakan kombinasi
+linear \( \vec{\kappa}_{k+1},\dots,\vec{\kappa}_n \).
+Jadi, \( D \) merupakan basis bagi $M^\perp$ dan $\Re^n$ merupakan jumlah
+langsung keduanya.
+
+Kalimat terakhir lema dibuktikan dengan cara yang hampir sama.
+Tuliskan $\vec{v}=\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+           +\dots+\proj{\vec{v}\,}{\spanof{\vec{\kappa}_n}}$.
+Kemudian $\proj{\vec{v}\,}{M}$ hanya mempertahankan bagian $M$ dan membuang
+bagian $M^\perp$:
+$\proj{\vec{v}\,}{M}=\proj{\vec{v}\,}{\spanof{\vec{\kappa}_{1}}}
+                       +\dots+\proj{\vec{v}\,}{\spanof{\vec{\kappa}_k}}$.
+Oleh karena itu, $\vec{v}-\proj{\vec{v}\,}{M}$ merupakan kombinasi linear
+elemen-elemen $M^\perp$, sehingga tegak lurus terhadap setiap vektor dalam $M$.
+\end{proof}
+
+Untuk suatu subruang, kita dapat menghitung proyeksi ortogonal ke subruang
+tersebut dengan mengikuti langkah-langkah bukti tadi: mencari sebuah basis,
+memperluasnya menjadi basis bagi seluruh ruang, menerapkan Gram--Schmidt untuk
+memperoleh basis ortogonal, dan memproyeksikan ke setiap subruang linear.
+Namun, sebagai gantinya kita akan menggunakan rumus yang praktis.
+
+\begin{theorem} \label{th:OrthProjMat}
+Misalkan \( M \) merupakan subruang \( \Re^n \) dengan basis
+\( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_k} \), dan misalkan \( A \)
+adalah matriks yang kolom-kolomnya merupakan vektor-vektor \( \vec{\beta} \).
+Bagi sebarang $\vec{v}\in\Re^n$, proyeksi ortogonalnya adalah
+$\proj{\vec{v}\,}{M}=c_1\vec{\beta}_1+\dots+c_k\vec{\beta}_k$,
+di mana koefisien-koefisien $c_i$ merupakan entri-entri vektor
+$(\trans{A}A)^{-1}\trans{A}\cdot\vec{v}$.
+Artinya,
+$\proj{\vec{v}\,}{M}=A(\trans{A}A)^{-1}\trans{A}\cdot\vec{v}$.
+\end{theorem}
+
+\begin{proof}
+Vektor \( \proj{\vec{v}}{M} \) merupakan anggota \( M \), sehingga merupakan
+kombinasi linear vektor-vektor basis,
+\( c_1\cdot\vec{\beta}_1+\dots+c_k\cdot\vec{\beta}_k \).
+Karena kolom-kolom $A$ adalah vektor-vektor $\vec{\beta}$, terdapat
+\( \vec{c}\in\Re^k \) sedemikian sehingga
+\( \proj{\vec{v}\,}{M}=A\vec{c} \).
+% (this is expressed compactly with matrix
+% multiplication as in
+% \nearbyexample{ex:OrthoCompOne} and~\ref{ex:OrthoCompTwo}).
+Untuk mencari $\vec{c}$, perhatikan bahwa vektor
+\( \vec{v}-\proj{\vec{v}\,}{M} \) tegak lurus terhadap setiap anggota basis,
+sehingga
+ % (again, expressed compactly).
+\begin{equation*}
+  \zero
+  =\trans{A}\bigl( \vec{v}-A\vec{c} \bigr) 
+  =\trans{A}\vec{v}-\trans{A}A\vec{c}
+\end{equation*}
+dan menyelesaikannya memberikan berikut
+(menunjukkan bahwa \( \trans{A}A \) dapat diinverskan menjadi sebuah latihan).
+\begin{equation*}
+  \vec{c}=\bigl( \trans{A}A\bigr)^{-1}\trans{A}\cdot\vec{v}
+\end{equation*}
+Oleh karena itu,
+$\proj{\vec{v}\,}{M}=A\cdot\vec{c}=A(\trans{A}A)^{-1}\trans{A}\cdot\vec{v}$,
+sebagaimana yang disyaratkan.
+\end{proof}
+
+\begin{example}
+Untuk memproyeksikan secara ortogonal vektor ini ke subruang berikut,
+\begin{equation*}
+  \vec{v}=\colvec[r]{1 \\ -1 \\ 1}
+  \qquad
+  P=\set{\colvec{x \\ y \\ z}\suchthat x+z=0}
+\end{equation*}
+mula-mula susun matriks yang kolom-kolomnya merupakan basis bagi subruang,
+\begin{equation*}
+  A=\begin{mat}[r]
+      0  &1  \\
+      1  &0  \\
+      0  &-1
+    \end{mat}
+\end{equation*}
+lalu hitung.
+\begin{align*}
+  A\bigl(\trans{A}A\bigr)^{-1}\trans{A}
+  &=\begin{mat}[r]
+      0  &1  \\
+      1  &0  \\
+      0  &-1
+    \end{mat}
+    \begin{mat}[r]
+      1    &0  \\
+      0    &1/2
+    \end{mat}
+    \begin{mat}[r]
+      0   &1  &0  \\
+      1   &0  &-1 
+    \end{mat}             \\
+    &=
+    \begin{mat}[r]
+      1/2     &0  &-1/2  \\
+      0     &1    &0   \\
+      -1/2  &0    &1/2
+    \end{mat}
+\end{align*}
+Dengan matriks tersebut, menghitung proyeksi ortogonal sebarang vektor ke $P$
+menjadi mudah.
+\begin{equation*}
+  \proj{\vec{v}}{P}=
+    \begin{mat}[r]
+      1/2     &0  &-1/2  \\
+      0     &1    &0   \\
+      -1/2  &0    &1/2
+    \end{mat}
+    \colvec[r]{1 \\ -1 \\ 1}
+    =\colvec[r]{0 \\ -1 \\ 0}
+\end{equation*}
+Sebagai pemeriksaan, perhatikan bahwa hasil ini memang berada dalam $P$.
+\end{example}
+
+\begin{exercises}
+  \recommended \item
+    Proyeksikan vektor-vektor ke \( M \) sepanjang \( N \).
+     \begin{exparts}
+       \partsitem \( \colvec[r]{3 \\ -2},\quad
+                M=\set{\colvec{x \\ y}\suchthat x+y=0},\quad
+                N=\set{\colvec{x \\ y}\suchthat -x-2y=0} \)
+       \partsitem \( \colvec[r]{1 \\ 2},\quad
+                M=\set{\colvec{x \\ y}\suchthat x-y=0},\quad
+                N=\set{\colvec{x \\ y}\suchthat 2x+y=0} \)
+       \partsitem \( \colvec[r]{3 \\ 0 \\ 1},\quad
+                M=\set{\colvec{x \\ y \\ z}\suchthat x+y=0},\quad
+                N=\set{c\cdot\colvec[r]{1 \\ 0 \\ 1}\suchthat c\in\Re} \)
+     \end{exparts}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem Ketika basis-basis bagi subruang
+           \begin{equation*}
+             B_M=\sequence{\colvec[r]{1 \\ -1}}
+             \qquad
+             B_N=\sequence{\colvec[r]{2 \\ -1}}
+           \end{equation*}
+           dikonkatenasikan,
+           \begin{equation*}
+             B=\cat{B_M}{B_N}=\sequence{\colvec[r]{1 \\ -1},
+                                        \colvec[r]{2 \\ -1}}
+           \end{equation*}
+           dan vektor yang diberikan direpresentasikan,
+           \begin{equation*}
+             \colvec[r]{3 \\ -2}=1\cdot\colvec[r]{1 \\ -1}+1\cdot\colvec[r]{2 \\ -1}
+           \end{equation*}
+           jawabannya diperoleh dengan mempertahankan bagian~$M$ dan membuang
+           bagian~$N$.
+           \begin{equation*}
+             \proj{\colvec[r]{3 \\ -2}}{M,N}
+             =\colvec[r]{1 \\ -1}
+           \end{equation*}
+         \partsitem Ketika basis-basis
+           \begin{equation*}
+             B_M=\sequence{\colvec[r]{1 \\ 1}}
+             \qquad
+             B_N=\sequence{\colvec[r]{1 \\ -2}}
+           \end{equation*}
+           dikonkatenasikan dan vektornya direpresentasikan,
+           \begin{equation*}
+             \colvec[r]{1 \\ 2}
+               =(4/3)\cdot\colvec[r]{1 \\ 1}
+                -(1/3)\cdot\colvec[r]{1 \\ -2}
+           \end{equation*}
+           mempertahankan hanya bagian~$M$ memberikan jawaban berikut.
+           \begin{equation*}
+             \proj{\colvec[r]{1 \\ 2}}{M,N}=\colvec[r]{4/3 \\ 4/3}
+           \end{equation*}
+         \partsitem Dengan basis-basis berikut,
+           \begin{equation*}
+             B_M=\sequence{\colvec[r]{1 \\ -1 \\ 0},
+                           \colvec[r]{0 \\ 0 \\ 1}}
+             \qquad
+             B_N=\sequence{\colvec[r]{1 \\ 0 \\ 1}}
+           \end{equation*}
+           representasi terhadap konkatenasinya adalah berikut.
+           \begin{equation*}
+             \colvec[r]{3 \\ 0 \\ 1}
+               =0\cdot\colvec[r]{1 \\ -1 \\ 0}
+                -2\cdot\colvec[r]{0 \\ 0 \\ 1}
+                +3\cdot\colvec[r]{1 \\ 0 \\ 1}
+           \end{equation*}
+           sehingga proyeksinya adalah berikut.
+           \begin{equation*}
+             \proj{\colvec[r]{3 \\ 0 \\ 1}}{M,N}=\colvec[r]{0 \\ 0 \\ -2}
+           \end{equation*}
+       \end{exparts}
+     \end{answer}
+  \recommended \item 
+     Temukan \( M^\perp \).
+     \begin{exparts*}
+       \partsitem \( M=\set{\colvec{x \\ y}\suchthat x+y=0 } \)
+       \partsitem \( M=\set{\colvec{x \\ y}\suchthat -2x+3y=0 } \)
+       \partsitem \( M=\set{\colvec{x \\ y}\suchthat x-y=0 } \)
+       \partsitem \( M=\set{\zero\,} \)
+       \partsitem \( M=\set{\colvec{x \\ y}\suchthat x=0 } \)
+       \partsitem \( M=\set{\colvec{x \\ y \\ z}\suchthat -x+3y+z=0 } \)
+       \partsitem \( M=\set{\colvec{x \\ y \\ z}\suchthat 
+                          \text{$x=0$ dan $y+z=0$} } \)
+     \end{exparts*}
+     \begin{answer}
+       Seperti dalam \nearbyexample{ex:OrthoCompOne}, kita dapat menyederhanakan
+       perhitungan dengan cukup mencari ruang vektor yang tegak lurus terhadap
+       semua vektor dalam basis $M$.
+       \begin{exparts}
+         \partsitem Parameterisasi yang memberikan
+           \begin{equation*}
+             M=\set{c\cdot\colvec[r]{-1 \\ 1}\suchthat c\in\Re}
+           \end{equation*}
+           menghasilkan
+           \begin{equation*}
+             M^\perp=
+              \set{\colvec{u \\ v}
+                   \suchthat 
+                      0=\colvec{u \\ v}\dotprod\colvec[r]{-1 \\ 1}}
+              =\set{\colvec{u \\ v}\suchthat 0=-u+v}
+           \end{equation*}
+           Memparameterkan sistem linear satu-persamaan tersebut memberikan
+           deskripsi berikut.
+           \begin{equation*}
+             M^\perp=\set{k\cdot\colvec[r]{1 \\ 1}\suchthat k\in\Re}
+           \end{equation*}
+         \partsitem Seperti dalam jawaban bagian sebelumnya, kita dapat
+           mendeskripsikan $M$ sebagai suatu rentang,
+           \begin{equation*}
+             M=\set{c\cdot\colvec[r]{3/2 \\ 1}\suchthat c\in\Re}
+             \qquad
+             B_M=\sequence{\colvec[r]{3/2 \\ 1}}
+           \end{equation*}
+           lalu $M^\perp$ adalah himpunan vektor yang tegak lurus terhadap satu
+           vektor dalam basis ini.
+           \begin{equation*}
+             M^\perp
+             =\set{\colvec{u \\ v}\suchthat (3/2)\cdot u+1\cdot v=0}
+             =\set{k\cdot\colvec[r]{-2/3 \\ 1}\suchthat k\in\Re}
+           \end{equation*}
+         \partsitem Memparameterkan syarat linear dalam deskripsi $M$
+            memberikan basis berikut.
+            \begin{equation*}
+              M=\set{c\cdot\colvec[r]{1 \\ 1}\suchthat c\in\Re}
+              \qquad
+              B_M=\sequence{\colvec[r]{1 \\ 1}}
+            \end{equation*}
+            Sekarang, $M^\perp$ adalah himpunan vektor yang tegak lurus terhadap
+            (satu-satunya vektor dalam) $B_M$.
+            \begin{equation*}
+              M^\perp
+              =\set{\colvec{u \\ v}\suchthat u+v=0}
+              =\set{k\cdot\colvec[r]{-1 \\ 1}\suchthat k\in\Re}
+            \end{equation*}
+            (Kebetulan, jawaban ini sesuai dengan bagian pertama soal ini.)
+          \partsitem Setiap vektor dalam ruang tegak lurus terhadap vektor nol,
+            sehingga $M^\perp=\Re^n$.
+          \partsitem Deskripsi dan basis yang sesuai bagi $M$ bersifat rutin.
+            \begin{equation*}
+              M=\set{y\cdot\colvec[r]{0 \\ 1}\suchthat y\in\Re}
+              \qquad
+              B_M=\sequence{\colvec[r]{0 \\ 1}}
+            \end{equation*}
+            Kemudian
+            \begin{equation*}
+              M^\perp
+              =\set{\colvec{u \\ v}\suchthat 0\cdot u+1\cdot v=0}
+              =\set{k\cdot\colvec[r]{1 \\ 0}\suchthat k\in\Re}
+            \end{equation*}
+            sehingga $(\text{sumbu~$y$})^\perp=\text{sumbu~$x$}$.
+          \partsitem Deskripsi $M$ mudah ditemukan melalui parameterisasi.
+            \begin{equation*}
+              M=\set{c\cdot\colvec[r]{3 \\ 1 \\ 0}
+                     +d\cdot\colvec[r]{1 \\ 0 \\ 1}\suchthat c,d\in\Re}
+              \qquad
+              B_M=\sequence{\colvec[r]{3 \\ 1 \\ 0},\colvec[r]{1 \\ 0 \\ 1}}
+            \end{equation*}
+            Mencari $M^\perp$ di sini hanya memerlukan penyelesaian sistem
+            linear dengan dua persamaan,
+            \begin{equation*}
+              \begin{linsys}{3}
+                3u  &+  &v  &   &   &=  &0  \\
+                 u  &   &   &+  &w  &=  &0
+              \end{linsys}
+              \grstep{-(1/3)\rho_1+\rho_2}
+              \begin{linsys}{3}
+                3u  &+  &v         &   &   &=  &0  \\
+                    &   &-(1/3)v   &+  &w  &=  &0
+              \end{linsys}
+            \end{equation*}
+            lalu parameterisasi.
+            \begin{equation*}
+              M^\perp
+              =\set{k\cdot\colvec[r]{-1 \\ 3 \\ 1}\suchthat k\in\Re}
+            \end{equation*}
+          \partsitem Di sini, $M$ berdimensi satu,
+            \begin{equation*}
+              M=\set{c\cdot\colvec[r]{0 \\ -1 \\ 1}\suchthat c\in\Re}
+              \qquad
+              B_M=\sequence{\colvec[r]{0 \\ -1 \\ 1}}
+            \end{equation*}
+            sehingga $M^\perp$ berdimensi dua.
+            \begin{equation*}
+              M^\perp
+              =\set{\colvec{u \\ v \\ w}
+                     \suchthat 0\cdot u-1\cdot v+1\cdot w=0}
+              =\set{j\cdot\colvec[r]{1 \\ 0 \\ 0}
+                    +k\cdot\colvec[r]{0 \\ 1 \\ 1}\suchthat j,k\in\Re}
+            \end{equation*}
+       \end{exparts}
+     \end{answer}
+  \recommended \item Temukan proyeksi ortogonal vektor tersebut ke subruang.
+    \begin{equation*}
+      \colvec{1 \\ 2 \\ 0} 
+      \qquad
+      S=\spanof{\,\set{\colvec{0 \\ 2 \\ 0},\colvec{1 \\ -1 \\ 1}}\,}
+    \end{equation*}
+    \begin{answer}
+      Dengan
+      \begin{equation*}
+        A=
+        \begin{mat}
+          0 &1 \\
+          2 &-1 \\
+          0 &1
+        \end{mat}
+      \end{equation*}
+      perhitungan yang langsung, meskipun melelahkan, memberikan
+      % sage: A = matrix(QQ, [[0,1], [2,-1], [0,1]])
+      % sage: A*(A.transpose()*A).inverse()*A.transpose()
+      % [1/2    0  1/2]
+      % [  0    1    0]
+      % [1/2    0  1/2]
+      \begin{equation*}
+        A\bigl(\trans{A}A\bigr)^{-1}\trans{A}=
+        \begin{mat}
+          1/2 &0 &1/2 \\
+           0  &1 &0    \\
+          1/2 &0 &1/2
+        \end{mat}
+      \end{equation*}
+      Ketika diterapkan pada vektor, kita memperoleh proyeksinya.
+      \begin{equation*}
+        \begin{mat}
+          1/2 &0 &1/2 \\
+           0  &1 &0    \\
+          1/2 &0 &1/2
+        \end{mat}
+        \colvec{1 \\ 2 \\ 0}
+        =
+        \colvec{1/2 \\ 2 \\  1/2}        
+      \end{equation*}
+      % sage: v = vector(QQ, [1, 2, 0])
+      % sage: v
+      % (1, 2, 0)
+      % sage: A*(A.transpose()*A).inverse()*A.transpose()*v
+      % (1/2, 2, 1/2)
+    \end{answer}
+  \recommended \item Dengan subruang yang sama seperti dalam soal sebelumnya,
+    temukan proyeksi ortogonal vektor berikut.
+    \begin{equation*}
+      \colvec{1 \\ 2 \\ -1}
+    \end{equation*}
+    \begin{answer}
+      Dengan menggunakan perhitungan matriks dari jawaban sebelumnya,
+      \begin{equation*}
+        \begin{mat}
+          1/2 &0 &1/2 \\
+           0  &1 &0    \\
+          1/2 &0 &1/2
+        \end{mat}
+        \colvec{1 \\ 2 \\ -1}
+        =
+        \colvec{0 \\ 2 \\ 0}
+      \end{equation*}
+      menunjukkan proyeksi vektor tersebut.
+    \end{answer}
+  \recommended \item \label{exer:ProjMinimizesDistSubspace}
+    Misalkan $\vec{p}$ adalah proyeksi ortogonal
+    $\vec{v}\in\Re^n$ ke subruang~$S$.
+    Tunjukkan bahwa $\vec{p}$ adalah titik dalam subruang yang paling dekat
+    dengan~$\vec{v}$.
+    \begin{answer}
+      Misalkan $\vec{w}\in S$.
+      Karena ini merupakan proyeksi ortogonal, kedua vektor
+      $\vec{v}-\vec{p}$ dan $\vec{p}-\vec{w}$ saling tegak lurus.
+      Teorema Pythagoras berlaku, sehingga sisi miring $\vec{v}-\vec{w}$
+      setidaknya sepanjang $\vec{v}-\vec{p}$.
+    \end{answer}
+  \item 
+    Subbagian ini menunjukkan dua cara melakukan proyeksi ortogonal: metode
+    \nearbyexample{ex:OrthProjOne} dan~\ref{ex:ProjIntoMAlongNGener}, serta
+    metode \nearbytheorem{th:OrthProjMat}.
+    Untuk membandingkan keduanya, tinjau bidang $P$ yang ditentukan oleh
+    $3x+2y-z=0$ dalam $\Re^3$.
+    \begin{exparts}
+      \partsitem Temukan basis bagi $P$.
+      \partsitem Temukan $P^\perp$ dan basis bagi $P^\perp$.
+      \partsitem Representasikan vektor berikut terhadap konkatenasi kedua
+        basis dari bagian sebelumnya.
+        \begin{equation*}
+          \vec{v}=\colvec[r]{1 \\ 1 \\ 2}
+        \end{equation*}
+      \partsitem Temukan proyeksi ortogonal $\vec{v}$ ke $P$ dengan hanya
+        mempertahankan bagian $P$ dari bagian sebelumnya.
+      \partsitem Bandingkan hasil itu dengan hasil penerapan
+        \nearbytheorem{th:OrthProjMat}.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Memparameterkan persamaan tersebut menghasilkan basis bagi
+          $P$ berikut.
+          \begin{equation*}
+            B_P=\sequence{\colvec[r]{1 \\ 0 \\ 3},
+                          \colvec[r]{0 \\ 1 \\ 2} }
+          \end{equation*}
+        \partsitem Karena $\Re^3$ berdimensi tiga dan $P$ berdimensi dua,
+          komplemen $P^\perp$ pasti berupa garis.
+          Perhitungan seperti dalam \nearbyexample{ex:OrthoCompOne},
+          \begin{equation*}
+            P^\perp=\set{\colvec{x \\ y \\ z}
+                         \suchthat
+                         \begin{mat}[r]
+                           1  &0 &3  \\
+                           0  &1 &2
+                         \end{mat}
+                         \colvec{x \\ y \\ z}
+                         =\colvec[r]{0 \\ 0}\;}
+          \end{equation*}
+          memberikan basis bagi $P^\perp$ berikut.
+          \begin{equation*}
+            B_{P^\perp}=\sequence{\colvec[r]{3 \\ 2 \\ -1} }
+          \end{equation*}
+        \partsitem $ \displaystyle       
+             \colvec[r]{1 \\ 1 \\ 2}=
+             (5/14)\cdot\colvec[r]{1 \\ 0 \\ 3}+
+             (8/14)\cdot\colvec[r]{0 \\ 1 \\ 2}+
+             (3/14)\cdot\colvec[r]{3 \\ 2 \\ -1}$
+        \partsitem $\proj{\colvec[r]{1 \\ 1 \\ 2}}{P}
+          =\colvec[r]{5/14 \\ 8/14 \\ 31/14}$
+        \partsitem Matriks proyeksinya,
+          \begin{multline*}
+            \begin{mat}[r]
+              1  &0 \\
+              0  &1 \\
+              3  &2
+            \end{mat}
+            \bigl(
+              \begin{mat}[r]
+                1  &0  &3 \\
+                0  &1  &2 
+              \end{mat}
+              \begin{mat}[r]
+                1  &0 \\
+                0  &1 \\
+                3  &2
+              \end{mat}
+            \bigr)^{-1}
+            \begin{mat}[r]
+              1  &0  &3 \\
+              0  &1  &2 
+            \end{mat}                               \\
+            \begin{aligned}
+            &=
+            \begin{mat}[r]
+              1  &0 \\
+              0  &1 \\
+              3  &2
+            \end{mat}
+              \begin{mat}[r]
+                10  &6  \\
+                6   &5
+              \end{mat}^{-1}
+            \begin{mat}[r]
+              1  &0  &3 \\
+              0  &1  &2 
+            \end{mat}                                     \\
+            &=
+            \frac{1}{14}
+            \begin{mat}[r]
+              5  &-6 &3  \\
+             -6  &10 &2  \\
+              3  &2  &13
+            \end{mat}
+            \end{aligned}
+          \end{multline*}
+          ketika diterapkan pada vektor, menghasilkan hasil yang diharapkan.
+          \begin{equation*}
+            \frac{1}{14}
+            \begin{mat}[r]
+              5  &-6 &3  \\
+             -6  &10 &2  \\
+              3  &2  &13
+            \end{mat}
+            \colvec[r]{1 \\ 1 \\ 2}
+            =\colvec[r]{5/14 \\ 8/14 \\ 31/14}
+          \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \item 
+    Kita memiliki tiga cara untuk mencari proyeksi ortogonal suatu vektor ke
+    sebuah garis: cara \nearbydefinition{def:ProjIntoLine} dari subbagian
+    pertama bagian ini; cara \nearbyexample{ex:OrthProjOne}
+    dan~\ref{ex:ProjIntoMAlongNGener}, yaitu merepresentasikan vektor terhadap
+    suatu basis bagi ruang lalu mempertahankan bagian~$M$; dan cara
+    \nearbytheorem{th:OrthProjMat}.
+    Untuk kasus-kasus berikut, gunakan ketiga cara tersebut.
+     \begin{exparts}
+       \partsitem \( \vec{v}=\colvec[r]{1 \\ -3},\quad
+                M=\set{\colvec{x \\ y}\suchthat x+y=0} \)
+       \partsitem \( \vec{v}=\colvec[r]{0 \\ 1 \\ 2},\quad
+                M=\set{\colvec{x \\ y \\ z}
+                        \suchthat \text{$x+z=0$ dan $y=0$}} \)
+     \end{exparts}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem Parameterisasi memberikan
+           \begin{equation*}
+             M=\set{c\cdot\colvec[r]{-1 \\ 1}\suchthat c\in\Re}
+           \end{equation*}
+           
+           Untuk cara pertama, kita ambil vektor yang merentang garis $M$ sebagai
+           \begin{equation*}
+             \vec{s}=\colvec[r]{-1 \\ 1}
+           \end{equation*}
+           dan rumus \nearbydefinition{def:ProjIntoLine} memberikan
+           \begin{equation*}
+             \proj{\colvec[r]{1 \\ -3}}{\spanof{\vec{s}\,}}
+              =\frac{\colvec[r]{1 \\ -3}\dotprod\colvec[r]{-1 \\ 1}}{
+                     \colvec[r]{-1 \\ 1}\dotprod\colvec[r]{-1 \\ 1}}
+                \cdot\colvec[r]{-1 \\ 1}
+              =\frac{-4}{2}
+                \cdot\colvec[r]{-1 \\ 1}
+              =\colvec[r]{2 \\ -2}
+           \end{equation*}
+
+           Untuk cara kedua, kita tetapkan
+           \begin{equation*}
+             B_M=\sequence{\colvec[r]{-1 \\ 1}}
+           \end{equation*}
+           sehingga (seperti dalam \nearbyexample{ex:OrthoCompOne}
+           dan~\ref{ex:OrthoCompTwo}, kita cukup mencari vektor-vektor yang
+           tegak lurus terhadap semua anggota basis)
+           \begin{equation*}
+             M^\perp
+             =\set{\colvec{u \\ v}\suchthat -1\cdot u+1\cdot v=0}
+             =\set{k\cdot\colvec[r]{1 \\ 1}\suchthat k\in\Re}
+             \qquad
+             B_{M^\perp}=\sequence{\colvec[r]{1 \\ 1}}
+           \end{equation*}
+           dan merepresentasikan vektor terhadap konkatenasi tersebut
+           memberikan
+           \begin{equation*}
+             \colvec[r]{1 \\ -3}=-2\cdot\colvec[r]{-1 \\ 1}-1\cdot\colvec[r]{1 \\ 1}
+           \end{equation*}
+           Mempertahankan bagian~$M$ menghasilkan jawabannya.
+           \begin{equation*}
+             \proj{\colvec[r]{1 \\ -3}}{M,M^\perp}=\colvec[r]{2 \\ -2}
+           \end{equation*}
+
+           Cara ketiga juga berupa perhitungan sederhana
+           (terdapat matriks $\nbyn{1}$ di tengah, dan inversnya juga
+           berukuran $\nbyn{1}$),
+           \begin{multline*}
+             A\left(\trans{A}A\right)^{-1}\trans{A}           \\
+             \begin{aligned}
+             &=
+             \begin{mat}[r]
+               -1 \\ 1
+             \end{mat}
+             \left(
+               \begin{mat}[r]
+                 -1  &1
+               \end{mat}
+               \begin{mat}[r]
+                 -1  \\
+                  1
+               \end{mat}
+             \right)^{-1}
+             \begin{mat}[r]
+               -1  &1
+             \end{mat}
+             =
+             \begin{mat}[r]
+               -1 \\ 1
+             \end{mat}
+               \begin{mat}[r]
+                 2
+               \end{mat}^{-1}
+             \begin{mat}[r]
+               -1  &1
+             \end{mat}               \\
+             &=
+             \begin{mat}[r]
+               -1 \\ 1
+             \end{mat}
+               \begin{mat}[r]
+                 1/2
+               \end{mat}
+             \begin{mat}[r]
+               -1  &1
+             \end{mat}               
+             =
+             \begin{mat}[r]
+               -1 \\ 1
+             \end{mat}
+             \begin{mat}[r]
+               -1/2  &1/2
+             \end{mat}               
+             =
+             \begin{mat}[r]
+               1/2  &-1/2  \\
+              -1/2  &1/2  
+             \end{mat}
+             \end{aligned}
+           \end{multline*}
+           yang tentu saja memberikan jawaban yang sama.
+           \begin{equation*}
+             \proj{\colvec[r]{1 \\ -3}}{M}
+             =
+             \begin{mat}[r]
+               1/2  &-1/2  \\
+              -1/2  &1/2  
+             \end{mat}
+             \colvec[r]{1 \\ -3}
+             =\colvec[r]{2 \\ -2}
+           \end{equation*}
+         \partsitem Parameterisasi memberikan
+           \begin{equation*}
+             M=\set{c\cdot\colvec[r]{-1 \\ 0 \\ 1}\suchthat c\in\Re}
+           \end{equation*}
+           Dengan itu, rumus bagi cara pertama memberikan
+           \begin{equation*}
+             \frac{\colvec[r]{0 \\ 1 \\ 2}\dotprod\colvec[r]{-1 \\ 0 \\ 1}}{
+                   \colvec[r]{-1 \\ 0 \\ 1}\dotprod\colvec[r]{-1 \\ 0 \\ 1}}
+               \cdot\colvec[r]{-1 \\ 0 \\ 1}
+             =\frac{2}{2}
+               \cdot\colvec[r]{-1 \\ 0 \\ 1}
+             =\colvec[r]{-1 \\ 0 \\ 1}
+           \end{equation*}
+           Untuk melanjutkan dengan metode kedua, kita mencari $M^\perp$,
+           \begin{equation*}
+             M^\perp
+             =\set{\colvec{u \\ v \\ w}\suchthat -u+w=0}
+             =\set{j\cdot\colvec[r]{1 \\ 0 \\ 1}
+                   +k\cdot\colvec[r]{0 \\ 1 \\ 0}\suchthat j,k\in\Re}
+           \end{equation*}
+           mencari representasi vektor yang diberikan terhadap konkatenasi
+           basis $B_M$ dan $B_{M^\perp}$,
+           \begin{equation*}
+             \colvec[r]{0 \\ 1 \\ 2}
+              =1\cdot\colvec[r]{-1 \\ 0 \\ 1}
+               +1\cdot\colvec[r]{1 \\ 0 \\ 1}
+               +1\cdot\colvec[r]{0 \\ 1 \\ 0}
+           \end{equation*}
+           dan hanya mempertahankan bagian~$M$.
+           \begin{equation*}
+             \proj{\colvec[r]{0 \\ 1 \\ 2}}{M}=1\cdot\colvec[r]{-1 \\ 0 \\ 1}
+                       =\colvec[r]{-1 \\ 0 \\ 1}
+           \end{equation*}
+           Akhirnya, untuk metode ketiga, perhitungan matriks
+           \begin{multline*}
+             A\left(\trans{A}A\right)^{-1}\trans{A}                 \\
+             \begin{aligned}
+             &=
+             \begin{mat}[r]
+               -1 \\ 0  \\  1
+             \end{mat}
+             \bigl(
+               \begin{mat}[r]
+                 -1  &0  &1
+               \end{mat}
+               \begin{mat}[r]
+                 -1  \\
+                  0  \\
+                  1
+               \end{mat}
+             \bigr)^{-1}
+             \begin{mat}[r]
+               -1  &0  &1
+             \end{mat}
+             =
+             \begin{mat}[r]
+               -1 \\ 0  \\  1
+             \end{mat}
+               \begin{mat}[r]
+                 2
+               \end{mat}^{-1}
+             \begin{mat}[r]
+               -1  &0  &1
+             \end{mat}              \\
+             &=
+             \begin{mat}[r]
+               -1 \\ 0  \\  1
+             \end{mat}
+               \begin{mat}[r]
+                 1/2
+               \end{mat}
+             \begin{mat}[r]
+               -1  &0  &1
+             \end{mat}
+             =
+             \begin{mat}[r]
+               -1 \\ 0  \\  1
+             \end{mat}
+             \begin{mat}[r]
+               -1/2  &0  &1/2
+             \end{mat}                                 \\
+             &=
+             \begin{mat}[r]
+               1/2  &0  &-1/2  \\
+               0    &0  &0     \\
+              -1/2  &0  &1/2
+             \end{mat}
+             \end{aligned}
+           \end{multline*}
+           yang diikuti oleh perkalian matriks-vektor
+           \begin{equation*}
+             \proj{\colvec[r]{0 \\ 1 \\ 2}}{M}=
+             \begin{mat}[r]
+               1/2  &0  &-1/2  \\
+               0    &0  &0     \\
+              -1/2  &0  &1/2
+             \end{mat}
+             \colvec[r]{0 \\ 1 \\ 2}
+             =\colvec[r]{-1 \\ 0 \\ 1}
+           \end{equation*}
+           memberikan jawabannya.
+       \end{exparts}
+     \end{answer}
+  \item 
+    Periksa bahwa operasi dalam \nearbydefinition{def:ProjIntoMAlongN}
+    terdefinisi dengan baik.
+    Artinya, dalam \nearbyexample{ex:OrthProjOne}
+    dan~\ref{ex:ProjIntoMAlongNGener}, bukankah jawabannya bergantung pada
+    pilihan basis?
+    \begin{answer}
+      Tidak. Penguraian vektor $\vec{v}=\vec{m}+\vec{n}$ menjadi
+      $\vec{m}\in M$ dan $\vec{n}\in N$ tidak bergantung pada basis yang dipilih
+      bagi subruang tersebut, seperti yang kita tunjukkan dalam subbagian
+      Jumlah Langsung.
+    \end{answer}
+  \item 
+    Apa hasil proyeksi ortogonal ke subruang trivial?
+    \begin{answer}
+      Proyeksi ortogonal suatu vektor ke sebuah subruang merupakan anggota
+      subruang tersebut.
+      Karena subruang trivial hanya memiliki satu anggota, $\zero$, proyeksi
+      sebarang vektor harus sama dengan $\zero$.
+    \end{answer}
+  \item 
+    Apa hasil proyeksi \( \vec{v} \) ke \( M \) sepanjang \( N \) jika
+    \( \vec{v}\in M \)?
+    \begin{answer}
+      Proyeksi suatu $\vec{v}\in M$ ke $M$ sepanjang $N$ adalah $\vec{v}$.
+      Menguraikan $\vec{v}=\vec{m}+\vec{n}$ memberikan $\vec{m}=\vec{v}$ dan
+      $\vec{n}=\zero$; membuang bagian~$N$ tetapi mempertahankan bagian~$M$
+      menghasilkan proyeksi $\vec{m}=\vec{v}$.
+    \end{answer}
+  \item
+    Tunjukkan bahwa jika \( M\subseteq\Re^n \) merupakan subruang dengan basis
+    ortonormal \( \basis{\kappa}{k} \), maka proyeksi ortogonal
+    \( \vec{v} \) ke \( M \) adalah berikut.
+    \begin{equation*}
+      (\vec{v}\dotprod\vec{\kappa}_1)\cdot\vec{\kappa}_1+
+      \dots+
+      (\vec{v}\dotprod\vec{\kappa}_k)\cdot\vec{\kappa}_k
+    \end{equation*}
+    \begin{answer}
+      Bukti \nearbylemma{le:OrthoProjWellDefd} menunjukkan bahwa setiap vektor
+      $\vec{v}\in\Re^n$ merupakan jumlah proyeksi ortogonalnya ke garis-garis
+      yang direntang oleh vektor-vektor basis.
+      \begin{equation*}
+        \vec{v}=\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+                 +\dots+\proj{\vec{v}\,}{\spanof{\vec{\kappa}_k}}
+               =\frac{\vec{v}\dotprod\vec{\kappa}_1}{
+                      \vec{\kappa}_1\dotprod\vec{\kappa}_1}
+                   \cdot\vec{\kappa}_1
+               +\dots
+               +\frac{\vec{v}\dotprod\vec{\kappa}_k}{
+                      \vec{\kappa}_k\dotprod\vec{\kappa}_k}
+                   \cdot\vec{\kappa}_k
+      \end{equation*}
+      Karena basisnya ortonormal, penyebut setiap pecahan memenuhi
+      $\vec{\kappa}_i\dotprod\vec{\kappa}_i=1$.
+    \end{answer}
+  \recommended \item
+    Buktikan bahwa pemetaan \( \map{p}{V}{V} \) merupakan proyeksi ke \( M \)
+    sepanjang \( N \) jika dan hanya jika pemetaan \( \identity-p \) merupakan
+    proyeksi ke \( N \) sepanjang \( M \).
+    (Ingat definisi selisih dua pemetaan:
+    $(\identity-p)\,(\vec{v})=\identity(\vec{v})-p(\vec{v})
+     =\vec{v}-p(\vec{v})$.)
+     \begin{answer}
+       Jika $V=M\directsum N$, maka setiap vektor terurai secara tunggal sebagai
+       $\vec{v}=\vec{m}+\vec{n}$.
+       Bagi semua $\vec{v}$, pemetaan $p$ memberikan
+       $p(\vec{v})=\vec{m}$ jika dan hanya jika
+       $\vec{v}-p(\vec{v})=\vec{n}$, sebagaimana yang disyaratkan.
+     \end{answer}
+  \item \label{exer:PerpOnBasisImplPerp} 
+    Tunjukkan bahwa jika suatu vektor tegak lurus terhadap setiap vektor dalam
+    suatu himpunan, maka vektor itu tegak lurus terhadap setiap vektor dalam
+    rentang himpunan tersebut.
+    \begin{answer}
+      Misalkan $\vec{v}$ tegak lurus terhadap setiap $\vec{w}\in S$.
+      Maka
+      $\vec{v}\dotprod(c_1\vec{w}_1+\dots+c_n\vec{w}_n)
+       =\vec{v}\dotprod(c_1\vec{w}_1)
+          +\dots+\vec{v}\dotprod (c_n\vec{w}_n)
+       =c_1(\vec{v}\dotprod\vec{w}_1)
+          +\dots+c_n(\vec{v}\dotprod\vec{w}_n)
+       =c_1\cdot 0+\dots+c_n\cdot 0=0$.
+    \end{answer}
+  \item
+    Benar atau salah:~irisan suatu subruang dan komplemen ortogonalnya bersifat
+    trivial.
+    \begin{answer}
+      Benar; satu-satunya vektor yang ortogonal terhadap dirinya sendiri adalah
+      vektor nol.
+    \end{answer}
+  \item 
+    Tunjukkan bahwa jumlah dimensi komplemen-komplemen ortogonal sama dengan
+    dimensi seluruh ruang.
+    \begin{answer}
+      Ini langsung mengikuti pernyataan dalam
+      \nearbylemma{le:OrthoProjWellDefd} bahwa ruang merupakan jumlah langsung
+      keduanya.
+    \end{answer}
+  \item
+    Misalkan \( \vec{v}_1,\vec{v}_2\in\Re^n \) sedemikian sehingga bagi semua
+    subruang komplementer \( M,N\subseteq\Re^n \), proyeksi \( \vec{v}_1 \)
+    dan \( \vec{v}_2 \) ke \( M \) sepanjang \( N \) sama.
+    Haruskah \( \vec{v}_1 \) sama dengan \( \vec{v}_2 \)?
+    (Jika ya, bagaimana jika syaratnya diperlonggar menjadi:~semua proyeksi
+     ortogonal keduanya sama?)
+    \begin{answer}
+      Keduanya harus sama, bahkan hanya di bawah syarat yang tampaknya lebih
+      lemah bahwa keduanya menghasilkan hasil yang sama pada semua proyeksi
+      ortogonal.
+      Tinjau subruang $M$ yang direntang oleh himpunan
+      $\set{\vec{v}_1,\vec{v}_2}$.
+      Karena keduanya berada dalam $M$, proyeksi ortogonal $\vec{v}_1$ ke $M$
+      adalah $\vec{v}_1$, dan proyeksi ortogonal $\vec{v}_2$ ke $M$ adalah
+      $\vec{v}_2$.
+      Agar proyeksi keduanya ke $M$ sama, keduanya harus sama.
+    \end{answer}
+  \recommended \item \label{exer:AlgOfPerps}
+    Misalkan \( M,N \) merupakan subruang-subruang \( \Re^n \).
+    Operator perp bertindak pada subruang; kita dapat menanyakan bagaimana
+    operator ini berinteraksi dengan operasi-operasi lain semacam itu.
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa dua perp saling meniadakan:
+        \( (M^\perp)^\perp=M \).
+      \partsitem %Schaums p331 #114
+        Buktikan bahwa \( M\subseteq N \) mengakibatkan
+           bahwa \( N^\perp\subseteq M^\perp \).
+      \partsitem Tunjukkan bahwa
+        \( (M+N)^\perp=M^\perp\intersection N^\perp \).
+      %\partsitem Show that \( (M\intersection N)^\perp=M^\perp +N^\perp \).
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem 
+          Kita akan menunjukkan bahwa kedua himpunan saling memuat,
+          $M\subseteq (M^\perp)^\perp$ dan $(M^\perp)^\perp \subseteq M$.
+          Untuk inklusi pertama, jika $\vec{m}\in M$, maka berdasarkan definisi
+          operasi perp, $\vec{m}$ tegak lurus terhadap setiap
+          $\vec{v}\in M^\perp$, dan oleh karena itu (sekali lagi berdasarkan
+          definisi operasi perp)
+          $\vec{m}\in (M^\perp)^\perp$.
+          Untuk arah lainnya, tinjau $\vec{v}\in (M^\perp)^\perp$.
+          Bukti \nearbylemma{le:OrthoProjWellDefd} menunjukkan bahwa
+          $\Re^n=M\directsum M^\perp$ dan bahwa
+          kita dapat memberikan basis ortogonal bagi ruang tersebut,
+          $\sequence{\vec{\kappa}_1,\dots,\vec{\kappa}_k,
+                        \vec{\kappa}_{k+1},\dots,\vec{\kappa}_n}$
+          sedemikian sehingga bagian pertama
+          $\sequence{\vec{\kappa}_1,\dots,\vec{\kappa}_k}$ merupakan basis
+          bagi $M$, dan bagian kedua merupakan basis bagi $M^\perp$.
+          Bukti tersebut juga memeriksa bahwa setiap vektor dalam ruang
+          merupakan jumlah proyeksi ortogonalnya ke garis-garis yang direntang
+          oleh vektor-vektor basis ini.
+          \begin{equation*}
+             \vec{v}=\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+                          +\dots+\proj{\vec{v}\,}{\spanof{\vec{\kappa}_n}}
+          \end{equation*}
+          Karena $\vec{v}\in (M^\perp)^\perp$, vektor itu tegak lurus terhadap
+          setiap vektor dalam $M^\perp$, sehingga semua proyeksi pada bagian
+          kedua bernilai nol.
+          Jadi, $\vec{v}=\proj{\vec{v}\,}{\spanof{\vec{\kappa}_1}}
+                          +\dots+\proj{\vec{v}\,}{\spanof{\vec{\kappa}_k}}$,
+          yang merupakan kombinasi linear vektor-vektor dari $M$, sehingga
+          $\vec{v}\in M$.
+          (\textit{Catatan}.
+           Berikut cara yang lebih ringkas untuk mengerjakan inklusi kedua:
+           tuliskan ruang sebagai $M\directsum M^\perp$ dan juga sebagai
+           $M^\perp\directsum (M^\perp)^\perp$.
+           Karena bagian pertama menunjukkan bahwa
+           $M\subseteq (M^\perp)^\perp$ dan kalimat sebelumnya menunjukkan
+           bahwa kedua subruang $M$ dan $(M^\perp)^\perp$ berdimensi sama,
+           dapat disimpulkan bahwa $M$ sama dengan $(M^\perp)^\perp$.)
+        \partsitem Karena $M\subseteq N$, setiap $\vec{v}$ yang tegak lurus
+           terhadap setiap vektor dalam $N$ juga tegak lurus terhadap setiap
+           vektor dalam $M$.
+           Namun, kalimat itu tepat menyatakan bahwa
+           $N^\perp\subseteq M^\perp$.
+        \partsitem Sekali lagi kita akan menunjukkan kesamaan kedua himpunan
+           melalui inklusi dua arah.
+           Arah pertama mudah; setiap $\vec{v}$ yang tegak lurus terhadap
+           setiap vektor dalam
+           $M+N=\set{\vec{m}+\vec{n}\suchthat \vec{m}\in M,\, \vec{n}\in N}$
+           tegak lurus terhadap setiap vektor berbentuk $\vec{m}+\zero$
+           (yakni, setiap vektor dalam $M$) dan setiap vektor berbentuk
+           $\zero+\vec{n}$ (setiap vektor dalam $N$), sehingga
+           $(M+N)^\perp\subseteq M^\perp\intersection N^\perp$. 
+           Arah kedua juga rutin; sebarang vektor
+           $\vec{v}\in M^\perp\intersection N^\perp$ 
+           tegak lurus terhadap sebarang vektor berbentuk
+           $c\vec{m}+d\vec{n}$ karena
+           $\vec{v}\dotprod (c\vec{m}+d\vec{n})
+             =c\cdot(\vec{v}\dotprod\vec{m})+d\cdot(\vec{v}\dotprod\vec{n})
+             =c\cdot 0+d\cdot 0
+             =0$.
+      \end{exparts}
+    \end{answer}
+  \recommended \item 
+    Materi dalam subbagian ini memungkinkan kita menyatakan suatu hubungan
+    geometris antara ruang hasil dan ruang nol suatu pemetaan linear yang belum
+    pernah kita lihat.
+    \begin{exparts}
+      \partsitem Representasikan $\map{f}{\Re^3}{\Re}$ yang diberikan oleh
+        \begin{equation*}
+          \colvec{v_1 \\ v_2 \\ v_3}
+          \mapsto
+          1v_1+2v_2+ 3v_3
+        \end{equation*}
+        terhadap basis-basis standar, lalu tunjukkan bahwa
+        \begin{equation*}
+          \colvec[r]{1 \\ 2 \\ 3}
+        \end{equation*}
+        merupakan anggota perp dari ruang nol.
+        Buktikan bahwa $\nullspace{f}^\perp$ sama dengan rentang vektor ini.
+      \partsitem Perumum hasil tersebut agar berlaku bagi sebarang
+        $\map{f}{\Re^n}{\Re}$.
+      \partsitem Representasikan $\map{f}{\Re^3}{\Re^2}$,
+        \begin{equation*}
+          \colvec{v_1 \\ v_2 \\ v_3}
+          \mapsto
+          \colvec{1v_1+2v_2+ 3v_3 \\
+                  4v_1+5v_2+ 6v_3}   
+        \end{equation*}
+        terhadap basis-basis standar, lalu tunjukkan bahwa
+        \begin{equation*}
+          \colvec[r]{1 \\ 2 \\ 3},
+          \;\colvec[r]{4 \\ 5 \\ 6}
+        \end{equation*}
+        keduanya merupakan anggota perp dari ruang nol.
+        Buktikan bahwa $\nullspace{f}^\perp$ merupakan rentang keduanya.
+        (\textit{Petunjuk}.
+         Lihat bagian ketiga \nearbyexercise{exer:AlgOfPerps}.)
+      \partsitem Perumum hasil tersebut agar berlaku bagi sebarang
+        $\map{f}{\Re^n}{\Re^m}$.
+    \end{exparts}
+    Dalam \cite{Strang93}
+    hasil ini disebut
+    \definend{Teorema Fundamental Aljabar Linear}%
+    \index{Teorema Fundamental!Aljabar Linear}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Representasi
+          \begin{equation*}
+            \colvec{v_1 \\ v_2 \\ v_3}
+            \mapsunder{f}
+            1v_1+2v_2+ 3v_3    
+          \end{equation*}
+          adalah berikut.
+          \begin{equation*}
+            \rep{f}{\stdbasis_3,\stdbasis_1}
+            =\begin{mat}[r]
+               1  &2  &3
+             \end{mat}
+          \end{equation*}
+          Berdasarkan definisi $f$,
+          \begin{equation*}
+            \nullspace{f}
+            =\set{\colvec{v_1 \\ v_2 \\ v_3}
+                  \suchthat 1v_1+2v_2+3v_3=0}
+            =\set{\colvec{v_1 \\ v_2 \\ v_3}
+                  \suchthat 
+                   \colvec[r]{1 \\ 2 \\ 3}\dotprod\colvec{v_1 \\ v_2 \\ v_3}=0}
+          \end{equation*}
+          dan deskripsi kedua ini tepat menyatakan
+          \begin{equation*}
+            \nullspace{f}^\perp
+            =\spanof{\set{\colvec[r]{1 \\ 2 \\ 3}}}
+          \end{equation*}
+        \partsitem Perumumannya ialah bahwa bagi sebarang
+           $\map{f}{\Re^n}{\Re}$ terdapat vektor $\vec{h}$ sedemikian sehingga
+           \begin{equation*}
+             \colvec{v_1 \\ \vdots \\ v_n}
+             \mapsunder{f}
+             h_1v_1+\dots+h_nv_n
+           \end{equation*}
+           dan
+           $\nullspace{f}^\perp=\spanof{\set{\vec{h}}}$.
+           Seperti dalam bagian sebelumnya, kita dapat membuktikannya dengan
+           merepresentasikan $f$ terhadap basis-basis standar dan mengambil
+           $\vec{h}$ sebagai vektor kolom yang diperoleh dengan mentransposkan
+           satu baris dari representasi matriks tersebut.
+         \partsitem Tentu saja,
+           \begin{equation*}
+             \rep{f}{\stdbasis_3,\stdbasis_2}
+             =
+             \begin{mat}[r]
+               1  &2  &3  \\
+               4  &5  &6
+             \end{mat}
+           \end{equation*}
+           sehingga ruang nolnya adalah himpunan berikut.
+           \begin{equation*}
+             \nullspace{f}=
+             \set{\colvec{v_1 \\ v_2 \\ v_3}
+                  \suchthat
+                   \;\begin{mat}[r]
+                     1  &2  &3  \\
+                     4  &5  &6
+                   \end{mat}
+                   \colvec{v_1 \\ v_2 \\ v_3}
+                   =\colvec[r]{0  \\ 0}\;}
+           \end{equation*}
+           Deskripsi tersebut memperjelas bahwa
+           \begin{equation*}
+             \colvec[r]{1 \\ 2 \\ 3},
+              \,\colvec[r]{4 \\ 5 \\ 6}\in\nullspace{f}^\perp
+           \end{equation*}
+           dan karena $\nullspace{f}^\perp$ merupakan subruang $\Re^n$,
+           rentang kedua vektor tersebut merupakan subruang dari perp ruang
+           nol.
+           Untuk melihat bahwa inklusi ini merupakan kesamaan, ambil
+           \begin{equation*}
+             M=\spanof{\set{\colvec[r]{1 \\ 2 \\ 3}}}
+             \qquad
+             N=\spanof{\set{\colvec[r]{4 \\ 5 \\ 6}}}
+           \end{equation*}
+           dalam bagian ketiga \nearbyexercise{exer:AlgOfPerps}, seperti yang
+           disarankan dalam petunjuk.
+        \partsitem Seperti di atas, memperumum dari kasus khusus ini mudah:~bagi
+           sebarang $\map{f}{\Re^n}{\Re^m}$, matriks $H$ yang merepresentasikan
+           pemetaan terhadap basis-basis standar mendeskripsikan tindakan
+           \begin{equation*}
+             \colvec{v_1 \\ \vdots \\ v_n}
+             \mapsunder{f}
+             \colvec{h_{1,1}v_1+h_{1,2}v_2+\dots+h_{1,n}v_n \\
+                     \vdots                                 \\
+                     h_{m,1}v_1+h_{m,2}v_2+\dots+h_{m,n}v_n}
+           \end{equation*}
+           dan deskripsi ruang nol memberikan bahwa dengan mentransposkan
+           $m$~baris $H$,
+           \begin{equation*}
+             \vec{h}_1=\colvec{h_{1,1} \\ h_{1,2} \\ \vdots \\ h_{1,n}},
+              \dots
+             \vec{h}_m=\colvec{h_{m,1} \\ h_{m,2} \\ \vdots \\ h_{m,n}}
+           \end{equation*}
+           diperoleh $\nullspace{f}^\perp
+                    =\spanof{\set{\vec{h}_1,\dots,\vec{h}_m}}$.
+           (\cite{Strang93} mendeskripsikan ruang ini sebagai transpos ruang
+           baris $H$.)
+      \end{exparts}
+    \end{answer}
+  \item
+    Definisikan suatu \definend{proyeksi\/}\index{proyeksi} sebagai transformasi
+    linear \( \map{t}{V}{V} \) dengan sifat bahwa mengulangi proyeksi tidak
+    menghasilkan apa pun selain yang dihasilkan oleh satu kali proyeksi:
+    \( (\composed{t}{t})\,(\vec{v})=t(\vec{v}) \) bagi semua
+    \( \vec{v}\in V \).
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa proyeksi ortogonal ke sebuah garis memiliki
+        sifat tersebut.
+      \partsitem Tunjukkan bahwa proyeksi sepanjang suatu subruang memiliki
+        sifat tersebut.
+      \partsitem Tunjukkan bahwa bagi setiap $t$ semacam itu, terdapat basis
+        \( B=\basis{\beta}{n} \) bagi \( V \) sedemikian sehingga
+        \begin{equation*}
+          t(\vec{\beta}_i)=
+          \begin{cases}
+                  \vec{\beta}_i  &i=1,2,\dots,\,r  \\
+                  \zero          &i=r+1,r+2,\dots,\,n
+                \end{cases}
+        \end{equation*}
+        di mana \( r \) adalah rank \( t \).
+      \partsitem Simpulkan bahwa setiap proyeksi merupakan proyeksi sepanjang
+        suatu subruang.
+      \partsitem Simpulkan pula bahwa setiap proyeksi memiliki representasi
+        \begin{equation*}
+          \rep{t}{B,B}=
+          \begin{pmat}{c|c}
+            I   &Z  \\ \hline
+            Z   &Z
+          \end{pmat}
+        \end{equation*}
+        dalam bentuk identitas-parsial blok.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Pertama, perhatikan bahwa jika vektor $\vec{v}$ sudah berada
+          pada garis, maka proyeksi ortogonal menghasilkan $\vec{v}$ sendiri.
+          Salah satu cara memverifikasinya ialah menerapkan rumus proyeksi ke
+          garis yang direntang oleh vektor $\vec{s}$, yaitu
+          $(\vec{v}\dotprod\vec{s}/\vec{s}\dotprod\vec{s})\cdot\vec{s}$.
+          Dengan mengambil garis sebagai
+          $\set{k\cdot\vec{v}\suchthat k\in\Re}$
+          (kasus $\vec{v}=\zero$ terpisah tetapi mudah), diperoleh
+          $(\vec{v}\dotprod\vec{v}/\vec{v}\dotprod\vec{v})\cdot\vec{v}$,
+          yang menyederhana menjadi $\vec{v}$, sebagaimana yang disyaratkan.
+ 
+          Hal itu menjawab soal karena setelah satu kali proyeksi ke garis,
+          hasil $\proj{\vec{v}}{\ell}$ berada pada garis tersebut.
+          Paragraf sebelumnya menyatakan bahwa memproyeksikannya lagi ke garis
+          yang sama tidak akan memberikan efek apa pun.
+        \partsitem Argumen di sini serupa dengan argumen pada bagian sebelumnya.
+          Dengan $V=M\directsum N$, proyeksi $\vec{v}=\vec{m}+\vec{n}$ adalah
+          $\proj{\vec{v}\,}{M,N}=\vec{m}$.
+          Mengulangi proyeksi kini memberikan
+          $\proj{\vec{m}}{M,N}=\vec{m}$, sebagaimana yang disyaratkan, karena
+          penguraian anggota $M$ menjadi jumlah anggota $M$ dan anggota $N$
+          adalah $\vec{m}=\vec{m}+\zero$.
+          Jadi, memproyeksikan dua kali ke $M$ sepanjang $N$ memiliki efek yang
+          sama dengan memproyeksikan sekali.
+        \partsitem Seperti yang ditunjukkan bagian-bagian sebelumnya, syarat
+          tersebut membuat $t$ tidak mengubah vektor-vektor dalam ruang hasil,
+          dan menunjukkan bahwa kita sebaiknya mengambil
+          $\vec{\beta}_1$, \ldots, $\vec{\beta}_r$ sebagai vektor-vektor basis
+          bagi ruang hasil; artinya, kita mengambil ruang hasil $t$ sebagai
+          $M$ (sehingga $\dim(M)=r$).
+          Untuk komplemennya, tuliskan $N$ sebagai ruang nol $t$, dan kita akan
+          menunjukkan bahwa $V=M\directsum N$.
+
+          Untuk menunjukkannya, kita dapat menunjukkan bahwa irisan keduanya
+          trivial, $M\intersection N=\set{\zero}$, dan jumlah keduanya adalah
+          seluruh ruang, $M+N=V$.
+          Untuk yang pertama, jika vektor $\vec{m}$ berada dalam ruang hasil,
+          maka terdapat $\vec{v}\in V$ dengan $t(\vec{v})=\vec{m}$, dan syarat
+          pada $t$ memberikan
+          $t(\vec{m})=(\composed{t}{t})\,(\vec{v})=t(\vec{v})=\vec{m}$.
+          Jika vektor yang sama juga berada dalam ruang nol, maka
+          $t(\vec{m})=\zero$, sehingga irisan ruang hasil dan ruang nol trivial.
+          Untuk yang kedua, guna menuliskan sebarang $\vec{v}$ sebagai jumlah
+          suatu vektor dari ruang hasil dan suatu vektor dari ruang nol, fakta
+          bahwa syarat $t(\vec{v})=t(t(\vec{v}))$ dapat ditulis ulang sebagai
+          $t(\vec{v}-t(\vec{v}))=\zero$ menunjukkan agar kita mengambil
+          $\vec{v}=t(\vec{v})+(\vec{v}-t(\vec{v}))$.
+  
+          Untuk menyelesaikannya, ambil basis
+          $B=\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_n}$ bagi $V$, dengan
+          $\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_r}$ sebagai basis bagi
+          ruang hasil $M$, dan
+          $\sequence{\vec{\beta}_{r+1},\ldots,\vec{\beta}_n}$ sebagai basis
+          bagi ruang nol $N$.
+        \partsitem Setiap proyeksi (sebagaimana didefinisikan dalam latihan
+          ini) merupakan proyeksi ke ruang hasilnya sepanjang ruang nolnya.
+        \partsitem Ini juga langsung mengikuti bagian ketiga.
+      \end{exparts}
+    \end{answer}
+%  \item 
+%    Show that projection into a plane followed by projection from the plane
+%    to a line in the plane equals the single operation of projection into the
+%    line.
+%  \item 
+%    Assume that \( V \) decomposes as \( M_1\directsum N_1 \) and also as
+%    \( M_2\directsum N_2 \).
+%    Let the function \( p_1 \) 
+%    be the  projection into \( M_1 \) along \( N_1 \) and let
+%    \( p_2 \) be the projection into \( M_2 \) along \( N_2 \).
+%    Prove that if \( \composed{p_1}{p_2} \) and \( \composed{p_2}{p_1} \) are
+%    both the zero map then \( p_1+p_2 \) projects into \( M_1+M_2 \) along
+%    \( N_1\intersection N_2 \).
+%  \item 
+%    Why does the definition of projection into \( M \) along \( N \)
+%    require that the subspaces be complements?
+%    Can we relax that requirement and just have
+%    \( N \intersection M=\set{\zero} \) (but not have the span of
+%    \( N\union M \) be the whole space)?
+%    Describe the projection of \( \vec{v} \) into \( M \) along \( N \)
+%    if \( M=N \).
+%    What if \( M\intersection N \) is nontrivial?
+%    What if it is trivial?
+%  \item 
+%    \begin{exparts}
+%      \partsitem Show that if the columns of a matrix \( A \) form a linearly
+%        independent set then \( \trans{A}A \) is invertible.
+%      \partsitem Show that if the columns of \( A \) are mutually 
+%        orthogonal and
+%        nonzero then \( \trans{A}A \) is the identity matrix.
+%    \end{exparts}
+  \item 
+    Suatu matriks persegi disebut \definend{simetris\/}%\index{symmetric!matrix}%
+    \index{matriks!simetris} jika setiap entri \( i,j \) sama dengan entri
+    \( j,i \) (yakni, jika matriks sama dengan transposnya).
+    Tunjukkan bahwa matriks proyeksi \( A(\trans{A}A)^{-1}\trans{A} \)
+    simetris.
+    \cite{Strang}
+    \textit{Petunjuk}. Temukan sifat-sifat transpos dengan melihat indeks di
+      bawah `transpos'.
+    \begin{answer}
+      Bagi sebarang matriks $M$ berlaku
+      $\trans{(M^{-1})}=(\trans{M})^{-1}$, dan bagi sebarang dua matriks $M$,
+      $N$ berlaku $\trans{MN}=\trans{N}\trans{M}$ (tentu saja asalkan invers
+      dan hasil kalinya terdefinisi).
+      Menerapkan kedua sifat ini memberikan bahwa matriks tersebut sama dengan
+      transposnya.
+      \begin{multline*}
+         \trans{\bigl(A(\trans{A}A)^{-1}\trans{A}\bigr)}
+         =(\trans{\trans{A}})
+           (\trans{\bigl((\trans{A}A)^{-1}\bigr)})
+           (\trans{A})                               \\
+         =(\trans{\trans{A}})
+           ( \bigl(\trans{(\trans{A}A)}\bigr)^{-1} )
+           (\trans{A})                    
+         =A
+           (\trans{A}\trans{\trans{A}})^{-1}
+           \trans{A}
+         =A
+           (\trans{A}A)^{-1}
+           \trans{A}
+      \end{multline*}
+    \end{answer}
+\end{exercises}

@@ -1,0 +1,721 @@
+\chapter{\python{} dan \Sage{}}
+
+\Sage{} dibangun di atas \python{}, jadi kita akan mulai dari sana.
+\python{} adalah bahasa populer\footnote{Dibuat oleh seorang penggemar
+Monty Python.} 
+dengan gaya sederhana dan pustaka yang andal.
+Bahasa ini sering dipakai untuk membuat skrip, sebagai perekat yang menyatukan bagian-bagian terpisah.
+% \Sage{} uses it in this way.
+
+Bagian ini mengasumsikan 
+bahwa Anda sudah memahami sedikit pemrograman, jadi
+di sini Anda hanya akan mempelajari \python{} secukupnya untuk mulai bekerja. 
+Untuk pengantar yang lebih menyeluruh, pelajari tutorial \python{} yang sangat baik,
+\cite{PythonTeam19b}.
+
+
+
+\section{Dasar-dasar Python}
+Jalankan \python, misalnya dengan memberikan perintah
+\inlinecode{python3}
+di terminal.
+Beberapa baris informasi awal akan muncul,
+diikuti oleh prompt berupa tiga tanda
+lebih besar.
+\begin{lstlisting}[style=python]
+>>>   
+\end{lstlisting}
+Inilah interpreter \python{}.
+Jika Anda mengetik kode 
+\python{} lalu menekan \keyboardkey{Enter}, sistem akan
+membaca kode tersebut, mengevaluasinya, dan mencetak hasilnya.
+Di bawah nanti kita akan melihat cara menulis dan menjalankan program utuh,
+tetapi untuk sementara kita akan bereksperimen di dalam interpreter.
+Setelah selesai, Anda dapat 
+keluar dari prompt ini dengan \textit{\keyboardkey{Ctrl}-D}.
+
+Cobalah memasukkan ekspresi-ekspresi berikut.
+\python{} menanggapinya dengan hasil yang ditampilkan
+(bintang ganda menyatakan perpangkatan).
+\begin{pythonconsole}
+2 - (-1)
+1 + 2*3
+2**3  
+\end{pythonconsole}
+
+Salah satu daya tarik \python{} ialah bahwa hal sederhana biasanya tetap sederhana.
+Berikut cara mencetak sesuatu ke layar.\footnote{%
+  \protect\python{} tersedia dalam dua versi.
+  Kita menggunakan versi~3.
+  Versi~2 sudah cukup tua, tetapi Anda mungkin masih menjumpainya, misalnya ketika
+  mencari kode melalui mesin pencari.
+  Salah satu perbedaan keduanya ialah bahwa pada versi~2 pernyataan
+  print tidak memakai tanda kurung.}
+\begin{pythonconsole}
+print(1, "ditambah", 2, "sama dengan", 3)
+\end{pythonconsole}
+% Often you can debug just by putting in commands to print things, 
+% and having a straightforward print operator helps with that. 
+
+Seperti dalam bahasa komputer lain, 
+variabel menyediakan tempat bernama untuk menyimpan nilai.
+Baris pertama di bawah menaruh $1$ di tempat yang bernama \inlinecode{i},
+sedangkan baris kedua mengambil kembali $1$ tersebut.
+\begin{pythonconsole}
+i = 1
+i + 1
+\end{pythonconsole}
+Dalam sebagian bahasa pemrograman, Anda harus mendeklarasikan `tipe' suatu variabel
+sebelum menggunakannya; misalnya, pada contoh di atas Anda harus menyatakan 
+bahwa \inlinecode{i} adalah bilangan bulat sebelum dapat menetapkan \inlinecode{i=1}.
+Sebaliknya, \python{} menyimpulkan tipe 
+dari cara Anda memakai variabel itu\Dash di atas kita menetapkan $1$ kepadanya,
+sehingga \python{} menyimpulkan bahwa \inlinecode{i} harus menjadi tempat untuk menyimpan bilangan bulat.
+Jika cara pemakaian suatu variabel berubah, \python{} akan 
+menyimpulkannya kembali; di sini kita mengubah isi $x$ dari bilangan bulat menjadi string.
+\begin{pythonconsole}
+x = 1
+x
+x = 'a'
+x
+\end{pythonconsole}
+
+Anda dapat melakukan beberapa hal dalam satu baris.
+\begin{pythonconsole}
+first_day, last_day = 0, 365
+first_day
+last_day   
+\end{pythonconsole}
+\python{} menghitung ruas kanan dari kiri ke kanan, lalu menetapkan 
+nilai-nilai tersebut kepada variabel di ruas kiri.
+
+Jika Anda melakukan sesuatu yang tidak diperbolehkan, 
+\python{} akan mengeluh: sistem menandai masalah dengan 
+memunculkan pengecualian dan, pada baris terakhir, menampilkan pesan 
+galat.
+\begin{pythonconsole}
+"a" + 1
+\end{pythonconsole}
+
+Selain bilangan bulat, 
+\python{} menyediakan bilangan real dan bilangan kompleks.\footnote{%
+  Operasi-operasi ini
+  dilakukan dengan bilangan titik-mengambang, yaitu sistem 
+  yang tertanam dalam perangkat keras komputer Anda untuk
+  memodelkan bilangan real.
+  Pada contoh ini, perbedaannya tampak
+  karena representasi desimal $0.3$ tidak sepenuhnya akurat.
+  Walaupun persoalan yang ditimbulkan oleh representasi titik-mengambang sangat menarik\protect\Dash
+  lihat \protect\cite{PythonTeam19a} dan \protect\cite{Goldberg91}\protect\Dash
+  kita akan mengabaikannya agar perhatian tetap tertuju pada 
+  aljabar linear.}
+\begin{pythonconsole}
+1/5
+0.1 + 0.2
+(3+2j) - (1-4j)
+\end{pythonconsole}
+Seperti para insinyur, \python{} menggunakan huruf~$j$ untuk akar
+kuadrat dari~$-1$, bukan~$i$ sebagaimana lazimnya dalam matematika.
+(Meskipun demikian, \protect\Sage{} mengizinkan Anda memakai~$i$.)
+
+Variabel juga dapat menyatakan nilai kebenaran.
+\begin{pythonconsole}
+yankees_buruk = True
+yankees_buruk
+\end{pythonconsole}
+Huruf awalnya harus kapital:~bentuknya
+\inlinecode{True}
+atau \inlinecode{False}, bukan
+\inlinecode{true}
+atau \inlinecode{false}.
+ 
+Di atas kita melihat beberapa string yang terdiri atas teks di antara tanda petik.
+(String-string itu hanya berisi satu karakter, \inlinecode{'a'},
+tetapi \python{} tidak mempersoalkan perbedaan antara sebuah karakter
+dan string dengan panjang satu.)
+Untuk membuat string, Anda dapat memakai tanda petik ganda maupun tunggal, asalkan
+tanda pada kedua ujungnya sama. 
+Di sini \inlinecode{x} dan \inlinecode{y}
+diapit tanda petik ganda, yang dapat dipakai karena masing-masing memuat
+tanda petik tunggal, sedangkan string koma dan titik juga diapit tanda petik tunggal. 
+\begin{pythonconsole}
+x = "Aku berkata, 'Aku Popeye si pelaut'"
+y = "Katanya, 'Aku ya aku, dan hanya itulah aku'"
+x + ', ' + y + '.'
+\end{pythonconsole}
+Baris terakhir memperlihatkan bahwa~\inlinecode{+} 
+melakukan konkatenasi string.
+Baris itu juga memperlihatkan bahwa Anda dapat mencampurkan string bertanda petik tunggal
+dengan string bertanda petik ganda.
+
+Untuk membuat baris baru, Anda dapat memakai garis miring-n, \inlinecode{\\n}, 
+di dalam string bertanda petik ganda.
+Jika Anda membutuhkan banyak baris baru,
+masukkan pemisah baris secara langsung ke dalam string yang diapit tiga tanda petik ganda.
+\begin{pythonconsole}
+a = """JALAN MENUJU KEBIJAKSANAAN
+ 
+Jalan menuju kebijaksanaan?
+-- Ya, caranya jelas
+dan mudah diucapkan:
+Berbuat salah
+dan salah
+dan salah lagi
+tetapi makin sedikit
+dan makin sedikit
+dan makin sedikit. --Piet Hein"""
+\end{pythonconsole} 
+Tiga titik yang mengawali baris-baris setelah baris pertama
+adalah cara interpreter
+\python{} memberi tahu bahwa apa yang Anda ketik belum lengkap:
+Anda sudah membuka sebuah string, tetapi belum menutupnya.
+
+\textit{Kamus} \python{} adalah fungsi hingga,
+yaitu himpunan hingga
+pasangan $\langle\textit{kunci},\textit{nilai}\rangle$,
+dengan syarat bahwa tidak ada kunci yang boleh muncul dua kali.
+Anda dapat memakai kamus sebagai basis data sederhana.
+\begin{pythonconsole}
+kata_bilangan = {'satu': 1, 'dua': 2, 'tiga': 3}
+kata_bilangan['satu']
+kata_bilangan['empat'] = 4  
+kata_bilangan
+kata_bilangan['dua'] = -1
+kata_bilangan
+\end{pythonconsole} 
+Kamus merupakan bagian penting dalam \python{}, antara lain karena pencarian nilai 
+di dalam kamus berlangsung sangat cepat berkat cara data tersebut 
+diatur secara internal.
+%% But because of that internal organization,
+%% if you ask to see a dictionary then \python{} may show its pairs in 
+%% a jumbled-up order. % This changes in 3.6 and 3.7 in Cython, but discussion of insertion order seems out of place
+
+Kamus tersusun atas pasangan, sedangkan daftar \python{} adalah urutan entri tunggal.
+\begin{pythonconsole}
+a = ['alpha', 'beta', 'gamma']
+a
+b = ['delta']
+c = []
+\end{pythonconsole}
+Daftar dapat memuat apa saja, termasuk daftar lain.
+\begin{pythonconsole}
+x = 4
+a = ['alpha', [True, x]]
+a
+len(a)
+\end{pythonconsole}
+Ambil suatu elemen dari daftar dengan menyebutkan indeksnya, yaitu posisinya di dalam daftar,
+di antara kurung siku.
+Indeks daftar dimulai dari nol; artinya, elemen pertama dalam
+daftar bernomor~$0$.
+\begin{pythonconsole}
+a = ['alpha', 'beta', 'gamma']
+a[0]
+a[1]
+a[0] = 'Alpha'
+a[0]
+\end{pythonconsole}
+Gunakan indeks negatif untuk menghitung dari belakang.
+\begin{pythonconsole}
+a = ['alpha', 'beta', 'gamma']
+a[-1]
+\end{pythonconsole}
+Menuliskan dua indeks yang dipisahkan titik dua menghasilkan suatu \textit{irisan} 
+dari daftar. 
+\begin{pythonconsole} 
+a = ['alpha', 'beta', 'gamma', 'delta']
+a[1:3]
+a[1:-1]
+a[1:1]
+\end{pythonconsole}
+Anda dapat memperpanjang sebuah daftar.
+\begin{pythonconsole}
+c = ['delta']
+c.append('epsilon')
+c
+a = ['beta', 'gamma']
+a.insert(0,'alpha')
+a+c
+\end{pythonconsole}
+
+Sebuah \textit{tupel} menyerupai daftar karena unsur-unsurnya berurutan.
+\begin{pythonconsole}
+a = ('cak', 'cek', 'cik', 'cuk')
+a[0]
+\end{pythonconsole}
+Namun, berbeda dari daftar, tupel 
+tidak dapat dimutasi; isinya tidak dapat berubah.
+\begin{pythonconsole}
+a = ('cak', 'cek', 'cik', 'cuk')
+a[0] = 'ah'
+\end{pythonconsole}
+Salah satu kegunaan sifat tidak dapat diubah ini ialah bahwa 
+tupel dapat menjadi kunci dalam kamus, sedangkan daftar tidak dapat menjadi kunci.
+\begin{pythonconsole}
+a = ['ke1az', 5418]
+b = ('ke1az', 5418)
+d = {a: 'aktif'}
+d = {b: 'aktif'}
+d
+\end{pythonconsole}
+
+\python{} mempunyai nilai khusus, \inlinecode{None}, yang
+berarti bahwa sesuatu tidak memiliki nilai yang bermakna.
+Misalnya, jika program Anda mencatat alamat seseorang dan
+memuat variabel \inlinecode{nomor_apartemen}, maka   
+untuk orang yang tidak tinggal di
+apartemen, Anda sebaiknya menuliskan \inlinecode{nomor_apartemen = None}.
+
+
+
+\subsection{Alur kendali}
+\python{} mendukung cara-cara tradisional untuk mengubah urutan 
+eksekusi pernyataan, dengan sedikit perbedaan.
+Perbedaannya ialah bahwa banyak bahasa memakai kurung kurawal atau sintaks lain untuk
+menandai suatu blok kode, sedangkan \python{} memakai indentasi.
+Selalu gunakan empat spasi untuk mengindentasi. % (Don't use tabs.)
+\begin{pythonconsole}
+x = 4
+if (x == 0):
+    delta = 1
+else:
+    delta = 0
+
+delta
+\end{pythonconsole}
+Di sini, \python{} menetapkan \inlinecode{delta} menjadi $1$ jika $x$
+sama dengan $0$; jika tidak, \python{} menetapkan \inlinecode{delta} menjadi~$0$. 
+
+Setelah \inlinecode{delta = 0}, Anda harus memasukkan 
+satu baris kosong agar \python{} mengetahui bahwa blok itu sudah berakhir.
+Perhatikan juga bahwa tanda sama dengan ganda, \inlinecode{==}, berarti `sama dengan'. 
+% (We cannot use just a single equals because, as we have already seen, 
+% \inlinecode{x = 0} 
+% means ``$x$ is assigned the value~$0$.'') 
+Untuk `tidak sama dengan', gunakan \inlinecode{!=}. 
+
+\python{} memiliki dua variasi lain dari pernyataan \inlinecode{if}.
+Pernyataan itu dapat memiliki satu cabang saja,
+\begin{pythonconsole}
+x = 0
+if (x == 0):
+    print("Pembagian dengan x tidak diperbolehkan.")
+
+\end{pythonconsole}
+atau dapat memiliki lebih dari dua cabang.
+\begin{pythonconsole}
+x = 2
+if (x == 0):
+    sgn = 0
+elif (x > 0):
+    sgn = 1
+else:
+    sgn = -1
+
+sgn
+\end{pythonconsole}
+
+Komputer sangat unggul dalam melakukan iterasi, yaitu mengulang suatu urutan pernyataan.
+Perulangan \inlinecode{for} sering melibatkan sebuah \inlinecode{range}.
+\begin{pythonconsole}
+for i in range(4):
+    print(i, "kuadratnya adalah", i**2)
+
+\end{pythonconsole}
+Secara bawaan, bilangan terkecil yang dihasilkan oleh \inlinecode{range} adalah $0$,
+sesuai dengan penomoran daftar yang dimulai dari nol.
+Ubah bilangan awal dengan memanggil \inlinecode{range} 
+menggunakan dua argumen.
+\begin{pythonconsole}
+for i in range(1, 4):
+    print(i, "pangkat tiganya adalah", i**3)
+
+\end{pythonconsole}
+Bilangan terbesar yang dihasilkan oleh \inlinecode{range} adalah satu kurangnya dari 
+masukan terakhirnya, sehingga bilangan terbesar
+yang diberikan oleh \inlinecode{range(4)} maupun \inlinecode{range(1,4)} adalah $3$.
+Hal ini memudahkan karena gabungan dua daftar
+\inlinecode{list(range(4))+list(range(4,10))} menghasilkan 
+hal yang sama dengan daftar tunggal \inlinecode{list(range(10))}.
+
+Anda dapat mengiterasi sebuah daftar dengan memakai indeks unsur-unsurnya.
+\begin{pythonconsole}
+x = [4, 0, 3, 0]
+for i in range(len(x)):
+    if (x[i] == 0):
+        print("butir", i, "bernilai nol")
+    else:
+        print("butir", i, "tidak bernilai nol")
+
+\end{pythonconsole}
+Namun, pengguna \python{} berpengalaman yang tidak sedang mencoba menjelaskan 
+perintah \inlinecode{range}
+akan mengganti \inlinecode{for i in range(len(x))}
+dengan \inlinecode{for c in x}, sebab
+\inlinecode{for} dapat mengiterasi urutan apa pun, bukan hanya
+daftar bilangan.
+Berikut pemformat teks sederhana yang mengisi sebuah baris dengan kata-kata hingga
+baris itu akan melebihi $40$ karakter, kemudian
+mencetak baris tersebut dan memulai baris baru.
+\begin{pythonconsole}
+quote = """Pejuang yang menang meraih kemenangan lebih dahulu, lalu pergi berperang, 
+sedangkan pejuang yang kalah pergi berperang lebih dahulu, lalu berusaha menang. 
+--Sun Tzu"""
+line, line_length = [], 0
+for wd in quote.split():
+    if line_length+len(wd) > 40:
+        print(" ".join(line))
+        line, line_length = [], 0
+    line_length = line_length + len(wd) + 1
+    line.append(wd)
+
+if line:
+    print(" ".join(line))
+
+\end{pythonconsole}
+\python{} memiliki banyak operasi string.
+Di atas, \inlinecode{quote.split()} membagi string menjadi kata-kata terpisah, sedangkan
+\inlinecode{" ".join(line)} membuat string dengan menyisipkan spasi di antara kata-kata dalam daftar 
+\inlinecode{line}.
+Dengan demikian, \inlinecode{if line:} terakhir di atas mengeluarkan materi yang masih tersisa
+setelah perulangan \inlinecode{for} selesai.
+
+Perulangan \inlinecode{for} dirancang untuk dijalankan sebanyak
+jumlah tertentu.
+Untuk perulangan yang jumlah pengulangannya belum Anda ketahui sebelumnya, 
+gunakan \inlinecode{while}.%% \footnote{%
+  %% The Collatz conjecture is 
+  %% that this loop will 
+  %% terminate for any starting~$n$.
+  %% No one knows if the conjecture is true.}
+\begin{pythonconsole}
+n, i = 12, 0
+while (n != 1):
+    if (n % 2 == 0):  
+        n = n // 2
+    else:
+        n = 3*n + 1
+    i = i + 1
+    print("setelah", i, "langkah, n=", n)
+    
+\end{pythonconsole}
+Operasi \inlinecode{//} membagi bilangan bulat di kiri dengan bilangan bulat di kanan, lalu mengembalikan nilai lantainya.
+
+Keluar seketika dari perulangan dengan perintah \inlinecode{break}.
+\begin{pythonconsole}
+for i in range(10):
+    if (i == 3):
+        break
+    print("di dalam perulangan: i adalah", i)
+        
+\end{pythonconsole}
+
+Pola perulangan yang umum adalah melakukan suatu tindakan
+terhadap setiap unsur daftar.
+\python{} memiliki cara ringkas untuk melakukannya, yang disebut komprehensi daftar.
+\begin{pythonconsole}
+a = [2**n for n in range(4)]
+a
+[i-1 for i in a]
+\end{pythonconsole}
+
+
+
+\subsection{Fungsi}
+Anda dapat membuat fungsi sendiri.
+Berikut implementasi rumus kuadrat.\footnote{%
+  Kode ini masih naif; misalnya, kode ini tidak menangani
+  potensi persoalan titik-mengambang.}
+\begin{pythonconsole}
+def quad_formula(a, b, c):
+    """Cari akar-akar persamaan kuadrat. 
+      a, b, c  bilangan real  Koefisien seperti pada ax^2 + bx + c
+    """
+    discriminant = (b**2 - 4*a*c)**(0.5)  # pangkat 0.5 adalah akar kuadrat
+    r1 = (-1*b-discriminant) / (2.0*a)
+    r2 = (-1*b+discriminant) / (2.0*a)
+    return (r1, r2)
+
+quad_formula(1, -6, 5)
+quad_formula(1, 2, 1)
+quad_formula(1, -1, -1)
+\end{pythonconsole}
+Ketika menulis program dalam \python{}, sebagian besar kode yang Anda tulis
+berada di dalam fungsi. 
+
+Fungsi selalu mengembalikan sesuatu; 
+jika suatu fungsi tidak pernah mengeksekusi \inlinecode{return}, fungsi itu akan
+mengembalikan nilai \inlinecode{None}.
+Fungsi juga dapat memuat beberapa pernyataan \inlinecode{return}, misalnya 
+satu untuk cabang \inlinecode{if} dan satu untuk cabang \inlinecode{else}.
+
+Mengenai komentar:~fungsi \inlinecode{quad_formula} memiliki dua jenis 
+komentar.
+Di dalam kode, komentar sebaris diawali tanda pagar, \inlinecode{\#}
+(pemrogram sering menulis komentar yang memenuhi satu baris dengan mengawali 
+baris itu menggunakan tanda pagar). 
+Jenis kedua adalah string bertanda petik tiga yang terletak
+setelah baris \inlinecode{def}; string itu
+menjelaskan secara singkat
+apa yang dilakukan fungsi dan mencantumkan parameternya.
+
+Pada akhir baris \inlinecode{def}, di dalam tanda kurung, terdapat
+parameter-parameter fungsi. 
+Parameter tersebut menerima nilai 
+yang diteruskan pemanggil kepada fungsi.
+Fungsi juga dapat mempunyai parameter opsional dengan nilai bawaan.
+\begin{pythonconsole}
+def sapa(nama="Bapak atau Ibu"):
+    """Ucapkan salam.
+      nama  string  Nama orang
+    """
+    print("Halo", nama+".")
+
+sapa("Fred")
+sapa()
+\end{pythonconsole}
+\Sage{} banyak memanfaatkan fitur \python{} ini.
+
+
+
+
+
+
+
+\subsection{Objek dan modul}
+Dalam matematika, struktur adalah himpunan objek beserta operasi yang terkait dengannya.
+Sebagai contoh, ruang vektor adalah himpunan dengan operasi
+penjumlahan dan perkalian skalar.
+\python{} berorientasi objek, yang berarti bahwa dengan cara serupa kita dapat menghimpun
+data dan tindakan menjadi satu (dalam konteks ini tindakan, yakni fungsi, 
+disebut metode).
+\begin{pythonconsole}
+class DatabaseRecord(object):
+    """Simpan informasi tentang seseorang.
+    """
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    def salutation(self):
+        print("Yth.", self.name)
+
+a = DatabaseRecord("Jim", 62)
+a.name
+a.age
+a.salutation()
+b = DatabaseRecord("Marie", 20)
+b.salutation()
+\end{pythonconsole}
+Di atas, kita membuat dua instans dari 
+\inlinecode{DatabaseRecord}, yaitu instans~\inlinecode{a} dan
+instans~\inlinecode{b}.
+Untuk memperoleh data usia instans~\inlinecode{a}, tuliskan 
+\inlinecode{a.age}.
+(Variabel \protect\inlinecode{self} 
+dapat membingungkan.
+Misalkan pada prompt Anda mengetik \inlinecode{a.name="James"}.
+Anda telah memakai nama~\inlinecode{a} 
+untuk instans itu, sehingga komputer mengetahui tempat
+perubahan tersebut harus dilakukan.
+Namun,
+di dalam kode deskripsi \inlinecode{class} tidak ada nama instans yang tetap.
+Dengan kata lain, \inlinecode{self} merujuk pada instans yang sedang dipakai. 
+Sebagai contoh, jika Anda sedang bekerja dengan instans \inlinecode{a}, maka 
+di dalam \inlinecode{salutation}, \inlinecode{self.name} merujuk
+pada \inlinecode{a.name}.)
+
+Di sini Anda tidak akan menulis kelas sendiri, 
+tetapi Anda akan memakai kelas dari
+pustaka kode yang ditulis orang lain, termasuk
+kode untuk \Sage{}. Oleh karena itu, Anda perlu mengetahui cara memakai 
+kelas yang disediakan orang lain.
+Dalam konteks ini, pustaka, yaitu kumpulan data, fungsi, dan kelas yang berkaitan,
+disebut modul.
+Sebagai contoh, \python{} menyertakan modul \inlinecode{math} yang dapat Anda gunakan.
+\begin{pythonconsole}
+import math
+math.pi
+math.factorial(5)
+math.cos(math.pi)
+\end{pythonconsole}
+Pernyataan \inlinecode{import} membuat isi
+modul tersebut tersedia.
+
+Modul lain menangani bilangan acak.
+\begin{pythonconsole}
+import random
+print(random.randint(1,10))
+print(random.randint(0,100)/100)
+\end{pythonconsole}
+
+
+
+\subsection{Program}
+Siklus baca-evaluasi-cetak sangat cocok untuk eksperimen kecil, tetapi
+untuk kode yang terdiri atas lebih dari beberapa baris, atau untuk kode yang ingin Anda
+simpan, sebaiknya pekerjaan itu ditempatkan dalam berkas terpisah.
+Di sini kita akan menguraikan cara menulis program mandiri.
+
+Untuk menulis kode, 
+jangan gunakan pengolah kata.
+Editor teks menyediakan fitur yang tepat untuk pekerjaan ini.
+Gunakan editor yang mendukung \python{}, termasuk
+indentasi otomatis dan  
+penyorotan sintaks, yaitu pewarnaan kode oleh editor agar lebih mudah
+dibaca.
+Ada banyak editor yang sangat baik; salah satunya Emacs.\footnote{%
+  Program ini mungkin sudah disertakan dalam sistem operasi Anda; jika tidak, 
+  lihat \protect\url{www.gnu.org/software/emacs}.}
+
+Berikut contoh pertama program \python{}.
+Jalankan editor Anda, buka berkas baru bernama \path{month.py}, lalu masukkan baris-baris berikut.
+(Perhatikan bahwa baris pertama menjelaskan program dalam sebuah komentar.
+Anda mungkin juga ingin mencantumkan nama penulis, tanggal, dan lisensi kode.
+Selain itu, string dokumentasi bertanda petik tiga di bagian atas berkas
+merupakan praktik yang baik.
+Sebaiknya Anda menyertakan string semacam itu dalam setiap program.)
+\begin{lstlisting}[style=python]
+# month.py
+"""Cetak nomor bulan saat ini. """
+import datetime
+saat_ini = datetime.datetime.now()  # dapatkan objek datetime, panggil metodenya
+print("Nomor bulan saat ini adalah", saat_ini.month)
+\end{lstlisting}
+Jalankan program itu melalui \python{}.
+Salah satu caranya ialah membuka terminal baris perintah,
+berpindah ke direktori yang memuat \path{month.py},  
+mengetik \inlinecode{python3 month.py}, lalu menekan \keyboardkey{Enter}. 
+Anda akan melihat
+keluaran seperti \inlinecode{Nomor bulan saat ini adalah 10}.
+
+Berikutnya adalah sebuah permainan kecil. 
+(Permainan ini memakai fungsi \python{} \inlinecode{input}, yang menampilkan prompt kepada pengguna
+lalu menerima jawaban mereka.)
+\lstinputlisting{python/guessing_game.py}
+(Fungsi \inlinecode{int} mengubah string dari \inlinecode{input} menjadi bilangan bulat.)
+Berikut keluaran ketika permainan ini dijalankan.
+\begin{lstlisting}
+$ python3 guessing_game.py
+Tebak sebuah bilangan bulat antara 1 dan 10: 3
+  Maaf, tebakan Anda terlalu kecil
+Tebak sebuah bilangan bulat antara 1 dan 10: 8
+  Maaf, tebakan Anda terlalu besar
+Tebak sebuah bilangan bulat antara 1 dan 10: 5
+  Tebakan Anda benar!
+\end{lstlisting}  % $
+
+Perhatikan string dokumentasi bertanda petik tiga, baik untuk 
+berkas secara keseluruhan maupun untuk fungsi.
+Selain berguna bagi pemrogram yang menyunting berkas tersebut, 
+string itu terintegrasi dengan sistem bantuan \python{}. 
+Masuklah ke direktori yang memuat \path{guessing_game.py}, lalu jalankan 
+interpreter \python{}.
+Pada prompt \inlinecode{>>>}, masukkan \inlinecode{import guessing_game}.
+Anda akan memainkan satu putaran permainan (ada cara untuk mencegah hal ini,
+tetapi kita akan mengabaikannya).
+Sekarang Anda sedang memakai \inlinecode{guessing_game.py} sebagai modul.
+Ketik
+\inlinecode{help("guessing_game")}.
+Anda akan melihat dokumentasi tentang \inlinecode{guessing_game}, 
+termasuk baris-baris berikut
+(untuk melihat lebih dari satu halaman, gunakan bilah spasi; untuk keluar dari penampil, tekan \textit{q}).
+\begin{lstlisting}
+Help on module guessing_game:
+
+NAME
+    guessing_game - guessing_game.py
+
+DESCRIPTION
+    Tebak bilangan antara 1 dan 10.
+
+FUNCTIONS
+    test_guess(guess)
+        Tentukan apakah tebakan benar, lalu cetak sebuah pesan.
+\end{lstlisting}
+\python{} memperoleh informasi ini dari string dokumentasi.
+Para pemrogram \Sage{} mengikuti praktik ini, sehingga 
+Anda dapat memakai \inlinecode{help(...)} 
+kapan pun Anda membutuhkan informasi lebih lanjut tentang rutin \Sage{}.
+
+
+
+
+
+%----------------------------------
+\section{Dasar-dasar \Sage{}}
+Sebagian besar manual ini bertujuan memperkenalkan kemampuan \Sage{}.
+Namun, karena \Sage{} dibangun di atas \python{}, perbandingan singkat di sini akan berguna.
+Lihat \citep{SageTeam19} untuk pengantar yang lebih luas, dan 
+ingat pula rujukan \citep{SageTeam19ref}.
+
+
+
+\subsection{Baris perintah}
+Baris perintah \Sage{} menyerupai baris perintah \python{}, tetapi disesuaikan untuk 
+pekerjaan matematika.
+Pertama-tama jalankan \Sage{},
+misalnya dengan memasukkan \inlinecode{sage} ke jendela baris perintah.
+Teks awal dan sebuah prompt akan muncul.
+\begin{lstlisting}[style=python]
+sage:  
+\end{lstlisting}
+Keluar dari prompt dengan perintah \inlinecode{exit}
+yang diikuti \keyboardkey{Enter}.
+
+Seperti pada Python, Anda dapat memakai interpreter untuk bereksperimen.
+\begin{sagecommandline}
+sage: 2**3                                                                      
+sage: 2^3
+sage: 3*1 + 4*2
+sage: 5 == 3+3
+sage: sin(pi/3)
+\end{sagecommandline}
+Ekspresi kedua 
+memperlihatkan bahwa \Sage{} menambahkan cara ringkas yang praktis untuk perpangkatan, selain
+\inlinecode{2**3} milik \python{}.
+Ekspresi terakhir
+memperlihatkan bahwa \Sage{} kadang-kadang mengembalikan hasil eksak, bukan
+hampiran.
+Anda tetap dapat memperoleh hampirannya; berikut tiga cara.
+\begin{sagecommandline}
+sage: sin(pi/3).numerical_approx()
+sage: sin(pi/3).n()
+sage: n(sin(pi/3), digits=4)  
+\end{sagecommandline}
+Cara terakhir memperlihatkan adanya opsi untuk membatasi jumlah digit
+yang ditampilkan.\footnote{%
+  Jika opsi ini tidak digunakan, jumlah digit yang terlihat sesuai dengan 
+  presisi $53$ bit, yang merupakan standar untuk  
+  bilangan titik-mengambang.}
+
+
+\subsection{Skrip}
+Anda dapat mengelompokkan perintah-perintah \Sage{} dalam sebuah berkas 
+agar dapat dipakai kembali tanpa harus mengetiknya ulang.
+Buat berkas \path{sage_normal.sage}, 
+masukkan fungsi berikut, lalu simpan.
+\lstinputlisting{sage/normal_curve.sage}
+Jalankan \Sage{}, lalu muat isinya dengan \inlinecode{load(...)}.
+\begin{sagecommandline}
+sage: load("normal_curve.sage")
+sage: normal_curve(1.0)
+\end{sagecommandline}
+
+
+\subsection{Notebook}
+Dalam manual ini kita akan tetap menggunakan interpreter.
+Namun, perlu disebutkan bahwa \Sage{} juga dapat digunakan melalui   
+antarmuka grafis berbasis peramban, 
+di dalam Jupyter Notebook, \cite{JupyterTeam19}.
+Anda dapat membuat
+lembar kerja untuk dipakai sendiri atau bersama orang lain, dengan mudah
+kembali dan menyunting perintah sebelumnya, melihat plot yang terintegrasi dengan teks, 
+serta memanfaatkan banyak fitur praktis lainnya.
+Untuk menjalankannya, alih-alih hanya memberikan perintah \inlinecode{sage},
+masukkan
+\inlinecode{sage -n jupyter}
+(tentu saja, perangkat lunak Jupyter harus sudah
+terpasang).\footnote{%
+  Jika sistem operasi Anda tidak menyediakannya, kunjungi 
+  \protect\url{https://jupyter.org}.}
+\endinput

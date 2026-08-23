@@ -1,0 +1,420 @@
+\chapter{Metode Gauss}
+
+\Sage{} dapat menyelesaikan sistem linear dengan beberapa cara.
+Program ini dapat menggunakan pemecah sistem umum, dan
+juga dapat menggunakan pemecah yang dikhususkan untuk sistem linear.
+Kita akan melihat keduanya. 
+
+
+
+\section{Sistem persamaan}
+Untuk memasukkan suatu sistem persamaan, pertama-tama Anda harus memasukkan
+persamaan-persamaan tunggal.
+Jadi, Anda harus memulai dengan variabel.
+Kita telah melihat satu jenis variabel ketika memberikan perintah seperti berikut.
+\begin{sagecommandline}
+sage: x = 3
+sage: 7*x
+\end{sagecommandline}
+Seperti dibahas dalam bab sebelumnya,
+di sini $x$ adalah nama suatu lokasi dalam memori komputer
+yang kita gunakan untuk menyimpan dan mengambil nilai.
+
+Variabel dalam persamaan berbeda; dalam persamaan
+$C=2\pi\cdot r$, kedua variabel tidak mempunyai nilai tetap dan
+tidak terikat pada lokasi memori. 
+Untuk memperlihatkan perbedaannya, ketik variabel yang belum diberi nilai,
+misalnya \inlinecode{y}, lalu tekan \keyboardkey{Enter}.
+Anda akan memperoleh pengecualian yang baris terakhirnya berbunyi
+\inlinecode{NameError: name 'y' is not defined}.
+
+Untuk menggunakan $y$ sebagai variabel simbolis, pertama-tama Anda harus
+mendeklarasikannya kepada sistem.
+\begin{sagecommandline}
+sage: var('y')
+sage: y
+sage: 2*y
+\end{sagecommandline}
+Sebelumnya, \Sage{} memperlakukan $x$ sebagai lokasi untuk menyimpan
+nilai sehingga mengevaluasi \inlinecode{7*x} (dan memperoleh nilai $21$).
+Namun, \Sage{} tidak mengevaluasi \inlinecode{2*y} karena
+Anda telah memberitahunya bahwa $y$ adalah variabel simbolis.
+
+Dengan demikian, suatu sistem persamaan merupakan sebuah daftar.
+\begin{sagecommandline}
+sage: var('x,y,z')                                  
+sage: eqns = [x-y+2*z == 4, 2*x+2*y == 12, x-4*z==5]
+\end{sagecommandline}
+Ada dua hal yang perlu diperhatikan di sini:~dalam persamaan, Anda
+harus menulis dua tanda sama dengan \inlinecode{==}, bukan
+operator penugasan \inlinecode{=},
+dan Anda harus menulis \inlinecode{2*x},
+bukan \inlinecode{2x}.
+Kedua jenis kesalahan tersebut akan memicu pesan galat yang berbunyi
+\inlinecode{SyntaxError: invalid syntax}.
+
+Salah satu cara menyelesaikan sistem ini adalah dengan pemecah umum milik \Sage{}.
+\begin{sagecommandline}
+sage: var('x,y,z')                                  
+sage: eqns = [x-y+2*z == 4, 2*x+2*y == 12, x-4*z==5]
+sage: solve(eqns, x, y, z)                            
+\end{sagecommandline}
+Hasilnya cukup baik, tetapi pemecah ini cukup canggih dan dapat memberikan
+jawaban yang bukan sekadar bilangan.
+Selanjutnya, kita menaruh parameter~\inlinecode{a} di ruas kanan. 
+\Sage{}
+menyatakan penyelesaian bagi $x$, $y$, dan~$z$ dalam parameter tersebut.
+\begin{sagecommandline}
+sage: var('x,y,z,a')                                
+sage: eqns = [x-y+2*z == a, 2*x+2*y == 12, x-4*z==5]
+sage: solve(eqns, x, y, z) 
+\end{sagecommandline}
+
+
+
+\subsection{Matriks}
+Rutin \inlinecode{solve} bersifat umum, tetapi
+untuk kasus khusus sistem linear tersedia alat yang lebih baik.
+Kita akan membahas matriks dan vektor lebih lanjut dalam bab-bab berikutnya,
+tetapi secara ringkas:~matriks \Sage{} adalah daftar baris, dengan
+setiap baris berupa daftar bilangan. 
+Kita mendeklarasikan jenis bilangannya di awal.
+Dalam buku ini, umumnya kita menganggap entri-entri sebagai bilangan real,
+tetapi contoh dan latihan menggunakan bilangan rasional yang
+lebih mudah dibaca.
+\Sage{} menggunakan \Sagecmd{QQ} untuk himpunan bilangan rasional.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
+sage: M
+sage: M.nrows()
+sage: M.ncols()
+sage: M[1,2]
+\end{sagecommandline}
+Seperti daftar \python{}, daftar \Sage{} diindeks mulai dari nol.  
+Jadi, \inlinecode{M[1,2]} meminta
+entri pada baris kedua dan kolom ketiga. 
+
+Masukkan vektor dengan cara yang hampir sama.
+\begin{sagecommandline}
+sage: v = vector(QQ, [2/3, -1/3, 1/2])
+sage: v
+sage: v[1]
+\end{sagecommandline}
+\Sage{} tidak mempermasalahkan perbedaan antara vektor baris dan
+vektor kolom.
+Di sini, \inlinecode{v} dicetak dengan tanda kurung biasa, berbeda dengan
+matriks yang dicetak dengan tanda kurung siku.
+Jika Anda perlu memastikan apakah yang dimiliki adalah baris atau kolom,
+ubahlah vektor tersebut menjadi matriks.
+\begin{sagecommandline}
+sage: v = vector(QQ, [1,3,5])
+sage: v.row()
+sage: v.column()
+\end{sagecommandline}
+
+Buku ini sering menyelesaikan sistem linear dengan memperluas matriks
+menggunakan suatu vektor.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 2, 3], [4, 5, 6], [7 ,8, 9]])
+sage: v = vector(QQ, [2/3, -1/3, 1/2])
+sage: M_prime = M.augment(v)
+sage: M_prime
+\end{sagecommandline}
+Argumen opsional membuat
+\Sage{} menampilkan pemisah antara kedua bagian
+$M^\prime$.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 2, 3], [4, 5, 6], [7 ,8, 9]])
+sage: v = vector(QQ, [2/3, -1/3, 1/2])
+sage: M_prime = M.augment(v, subdivide=True)
+sage: M_prime                              
+\end{sagecommandline}
+
+
+
+\subsection{Operasi baris}
+%% Computers are a big help with jobs that are tedious and error-prone.
+%% Row operations are both.
+Kita dapat meminta \Sage{} mengerjakan aritmetika dalam Metode Gauss.
+%% First enter an example matrix.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[0, 2, 1], [2, 0, 4], [2 ,-1/2, 3]])
+sage: v = vector(QQ, [2, 1, -1/2])                        
+sage: M_prime = M.augment(v, subdivide=True)              
+sage: M_prime                                             
+\end{sagecommandline}
+Tukarkan dua baris teratas. 
+Ingat bahwa indeks daftar dimulai dari nol,
+sehingga baris teratas adalah baris~$0$.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[0, 2, 1], [2, 0, 4], [2 ,-1/2, 3]])
+sage: v = vector(QQ, [2, 1, -1/2])                        
+sage: M_prime = M.augment(v, subdivide=True)              
+sage: M_prime.swap_rows(0,1)
+sage: M_prime
+\end{sagecommandline}
+Selanjutnya, skalakan ulang baris teratas dengan mengalikan entri-entrinya
+dengan~$1/2$.
+\begin{sagecommandline}
+sage: M_prime.rescale_row(0, 1/2)
+sage: M_prime
+\end{sagecommandline}
+Ganti baris terbawah dengan
+hasil penjumlahannya dengan
+$-2$ kali baris teratas.
+\begin{sagecommandline}
+sage: M_prime.add_multiple_of_row(2,0,-2)
+sage: M_prime
+\end{sagecommandline}
+% One more row combination operation gives echelon form.
+Terakhir, ganti baris terbawah dengan hasil penjumlahannya dengan
+$1/4$ kali baris tengah.
+\begin{sagecommandline}
+sage: M_prime.add_multiple_of_row(2,1,1/4)
+sage: M_prime                             
+\end{sagecommandline}
+Sekarang, substitusi balik secara manual akan memberikan penyelesaiannya,
+atau kita dapat menggunakan \inlinecode{solve} milik \Sage{}.
+\begin{sagecommandline}
+sage: var('x,y,z')
+sage: eqns=[-3/4*z == -1, 2*y+z == 2, x+2*z == 1/2]
+sage: solve(eqns, x, y, z)
+\end{sagecommandline}
+
+Operasi-operasi di atas
+bekerja secara langsung pada objeknya.
+Artinya, operasi tersebut mengubah matriks~$M^\prime$.
+\Sage{} mempunyai perintah terkait yang membiarkan matriks awal tidak berubah,
+tetapi mengembalikan matriks yang telah diubah.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[0, 1, -1], [1, -2, 0], [0 ,-1, 4]])
+sage: v = vector(QQ, [0, 1, -2])
+sage: M_prime = M.augment(v, subdivide=True) 
+sage: M_prime
+sage: N = M_prime.with_swapped_rows(0,1)
+sage: M_prime
+sage: N      
+\end{sagecommandline}
+Di sini, rutin tersebut tidak mengubah $M^\prime$, sedangkan $N$ adalah
+matriks hasil perubahan yang dikembalikan.
+Dua rutin lain dari jenis ini adalah \inlinecode{with_rescaled_row}
+dan \inlinecode{with_added_multiple_of_row}.
+
+
+
+
+\subsection{Sistem nonsingular dan singular}
+Langkah-langkah reduksi matriks yang kita jalani bersifat mekanis.
+Artinya, kita semestinya dapat mengotomatiskan proses dari suatu matriks
+ke bentuk eselon baris tereduksinya.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1/2, 1, -1], [1, -2, 0], [2 ,-1, 1]])
+sage: v = vector(QQ, [0, 1, -2])
+sage: M_prime = M.augment(v, subdivide=True) 
+sage: M_prime.rref()
+\end{sagecommandline}
+Jadi, kita telah memperoleh jawaban tanpa \inlinecode{solve} milik \Sage{}.
+Keuntungan menggunakan metode yang dikhususkan
+untuk sistem linear ialah metode tersebut lebih cepat dan juga dapat lebih jarang
+mengalami masalah aritmetika titik mengambang.
+
+Dalam contoh tersebut, $M$ nonsingular karena berbentuk
+persegi dan, setelah diubah ke bentuk eselon, setiap
+kolom bersesuaian dengan variabel utama.
+Contoh berikutnya mempunyai
+matriks persegi yang singular. 
+% Consequently, in the  
+% echelon form system there are columns on the left 
+% that do not have a leading variable. 
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 1, 1, 1], [1, 2, 3, 4], [2, 3, 4, 5], [0, 1, 2 ,3]]) 
+sage: v = vector(QQ, [0, 1, 1, 1]) 
+sage: M_prime = M.augment(v, subdivide=True)
+sage: M_prime
+sage: M_prime.rref()
+\end{sagecommandline}
+Ingat bahwa jika suatu sistem linear mempunyai matriks koefisien persegi
+yang singular, terdapat dua kemungkinan.
+Kemungkinan pertama tampak di atas:~dalam bentuk eselon,
+setiap baris yang seluruh entri di sebelah kirinya nol
+juga mempunyai entri nol di sebelah kanan.
+Sistem ini mempunyai tak berhingga banyak penyelesaian.
+
+Sebaliknya, dengan matriks awal yang sama,
+contoh di bawah mempunyai baris yang entri-entri di sebelah kirinya nol,
+tetapi entri di sebelah kanannya tak nol, sehingga tidak mempunyai penyelesaian.
+\begin{sagecommandline} 
+sage: v = vector(QQ, [0, 1, 2, 1])             
+sage: M_prime = M.augment(v, subdivide=True)
+sage: M_prime.rref()                        
+\end{sagecommandline}
+
+Perbedaan antara kedua kemungkinan tersebut
+berkaitan dengan hubungan di antara
+baris-baris~$M$ dan juga hubungan di antara entri-entri vektor.
+Dalam matriks itu,
+baris ketiga merupakan jumlah dua baris pertama, sedangkan baris keempat
+merupakan selisih baris kedua dan baris pertama.
+Untuk vektornya, pada kasus pertama entri-entri vektor mempunyai hubungan
+yang sama\Dash entri ketiga vektor merupakan jumlah dua entri pertama,
+dan entri keempat merupakan selisih entri kedua dan entri pertama\Dash
+sedangkan pada kasus kedua, entri-entri vektor tidak mempunyai hubungan itu.
+
+Cara mudah untuk memastikan bahwa baris nol pada matriks
+di sebelah kiri berpasangan dengan entri nol
+pada vektor di sebelah kanan adalah membuat semua entri vektor bernilai nol;
+dengan kata lain, meninjau sistem homogen yang bersesuaian.
+\begin{sagecommandline}
+sage: v = zero_vector(QQ, 4)
+sage: v
+sage: M = matrix(QQ, [[1, 1, 1, 1], [1, 2, 3, 4], [2, 3, 4, 5], [0, 1, 2 ,3]]) 
+sage: M_prime = M.augment(v, subdivide=True)
+sage: M_prime
+sage: M_prime.rref()
+\end{sagecommandline}
+
+Anda dapat memperoleh indeks kolom-kolom yang mempunyai entri utama dengan
+metode \inlinecode{pivots}.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 1, 1, 1], [1, 2, 3, 4], [2, 3, 4, 5], [0, 1, 2 ,3]]) 
+sage: v = vector(QQ, [0, 1, 1, 1])
+sage: M_prime = M.augment(v, subdivide=True)
+sage: M_prime.rref()
+sage: M_prime.pivots()         
+sage: M_prime.nonpivots()         
+\end{sagecommandline}
+
+
+
+
+
+\subsection{Parametrisasi}
+Di atas, kita menggunakan rutin umum \inlinecode{solve} milik \Sage{}.
+Rutin itu mungkin bukan cara terbaik untuk mencari penyelesaian
+suatu sistem linear karena alat khusus kemungkinan lebih cepat dan
+dapat lebih akurat. 
+Namun, \inlinecode{solve} berguna untuk memberikan himpunan penyelesaian
+sistem yang mempunyai tak berhingga banyak penyelesaian melalui parametrisasi.
+
+Sebagai ilustrasi, di bawah ini kita menyusun
+sistem dengan tak berhingga banyak penyelesaian.
+Kita memulai dengan matriks koefisien
+yang jumlah dua baris teratasnya sama dengan baris terbawah,
+lalu menggandengkan vektor yang mempunyai hubungan baris yang sama. 
+Selanjutnya, kita mencari bentuk eselon baris tereduksi.
+Kemudian, kita menyalin hasilnya menjadi sistem persamaan dan menerapkan
+\inlinecode{solve} dengan dua cara berbeda.
+\begin{sagecommandline}
+sage: M = matrix(QQ, [[1, 1, 1], [1, 2, 3], [2 , 3, 4]])    
+sage: v = vector(QQ, [1, 0, 1])                            
+sage: M_prime = M.augment(v, subdivide=True)               
+sage: M_prime.rref()
+sage: var('x,y,z')          
+sage: eqns = [x-z == 2, y+2*z == -1]
+sage: solve(eqns, x, y)   
+sage: solve(eqns, x, y, z)                                 
+\end{sagecommandline}
+Pemanggilan pertama dari kedua pemanggilan \inlinecode{solve} tersebut
+meminta penyelesaian hanya untuk $x$ dan~$y$, sehingga \Sage{} memberikan
+penyelesaian dalam parameter~$z$.
+Pada pemanggilan kedua, \Sage{} menghasilkan parameternya sendiri.   
+
+
+
+
+%========================================
+\section{Otomatisasi}
+
+Sebagai penutup, kita memberikan kode \python{} untuk dua fungsi
+yang meniru langkah-langkah yang dilakukan seseorang ketika
+mengerjakan Metode Gauss secara manual.
+
+Berkas sumber skrip tersebut terdapat di bawah. 
+Arti ``secara manual'' di sini ialah bahwa skrip tersebut
+mengasumsikan matriks-matriksnya kecil dan mempunyai entri bilangan rasional.
+Dengan demikian, kita tidak perlu mencemaskan masalah aritmetika titik mengambang.
+Singkatnya, ini adalah contoh sederhana yang
+cocok untuk pekerjaan rumah, tetapi belum siap untuk aplikasi nyata.
+
+
+\subsection{Memuat dan menjalankan}
+Pertama, berikut beberapa contoh pemanggilan.
+Jalankan \Sage{} di direktori yang memuat berkas \path{gauss_method.sage}.
+% \begin{sagecommandline}
+% sage: load("gauss_method.sage")
+% sage: M = matrix(QQ, [[1/2, 1, 4], [2, 4, -1], [1, 2, 0]])          
+% sage: v = vector(QQ, [-2, 5, 4])
+% sage: M_prime = M.augment(v, subdivide=True)  
+% sage: gauss_method(M_prime)
+% \end{sagecommandline}
+% gauss_method.sage uses print which is not captured
+\begin{lstlisting}
+sage: load("gauss_method.sage")                                                 
+sage: M = matrix(QQ, [[1/2, 1, 4], [2, 4, -1], [1, 2, 0]])                      
+sage: v = vector(QQ, [-2, 5, 4])                                                
+sage: M_prime = M.augment(v, subdivide=True)                                    
+sage: gauss_method(M_prime)                                                     
+[1/2   1   4| -2]
+[  2   4  -1|  5]
+[  1   2   0|  4]
+ ambil -4 kali baris 1 ditambah baris 2
+ ambil -2 kali baris 1 ditambah baris 3
+[1/2   1   4| -2]
+[  0   0 -17| 13]
+[  0   0  -8|  8]
+ ambil -8/17 kali baris 2 ditambah baris 3
+[  1/2     1     4|   -2]
+[    0     0   -17|   13]
+[    0     0     0|32/17]
+\end{lstlisting}
+
+Selain \inlinecode{gauss_method}\!, berkas tersebut juga memuat fungsi
+\inlinecode{gauss_jordan}
+untuk melanjutkan proses hingga mencapai bentuk eselon baris tereduksi.
+\begin{lstlisting}
+sage: load("gauss_method.sage")                                                 
+sage: M = matrix(QQ, [[1/2, 1, 4], [2, 4, -1], [1, 2, 0]])                      
+sage: v = vector(QQ, [-2, 5, 4])                                                
+sage: M_prime = M.augment(v, subdivide=True)                                    
+sage: gauss_jordan(M_prime)                                                     
+[1/2   1   4| -2]
+[  2   4  -1|  5]
+[  1   2   0|  4]
+ ambil -4 kali baris 1 ditambah baris 2
+ ambil -2 kali baris 1 ditambah baris 3
+[1/2   1   4| -2]
+[  0   0 -17| 13]
+[  0   0  -8|  8]
+ ambil -8/17 kali baris 2 ditambah baris 3
+[  1/2     1     4|   -2]
+[    0     0   -17|   13]
+[    0     0     0|32/17]
+ ambil 2 kali baris 1
+ ambil -1/17 kali baris 2
+ ambil 17/32 kali baris 3
+[     1      2      8|    -4]
+[     0      0      1|-13/17]
+[     0      0      0|     1]
+ ambil 4 kali baris 3 ditambah baris 1
+ ambil 13/17 kali baris 3 ditambah baris 2
+[1 2 8|0]
+[0 0 1|0]
+[0 0 0|1]
+ ambil -8 kali baris 2 ditambah baris 1
+[1 2 0|0]
+[0 0 1|0]
+[0 0 0|1]
+\end{lstlisting}
+
+
+
+\subsection{Sumber \protect\path{gauss_method.sage}}
+
+Berikut adalah implementasi sederhana Metode Gauss dan
+reduksi Gauss--Jordan.
+
+\lstinputlisting{gauss_method.sage}
+\endinput
+
+
+TODO:

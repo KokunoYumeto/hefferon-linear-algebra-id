@@ -1,0 +1,1956 @@
+% Chapter 2, Section 2 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-10
+\section{Kebebasan Linear}
+Bagian sebelumnya menunjukkan cara memahami suatu ruang vektor
+sebagai sebuah rentang,
+yaitu sebagai kombinasi linear tanpa pembatasan dari beberapa elemennya.
+Sebagai contoh, ruang polinomial linear $\set{a+bx\suchthat a,b\in\Re}$
+direntang oleh himpunan $\set{1,x}$.
+Bagian sebelumnya juga menunjukkan bahwa suatu ruang dapat memiliki banyak
+himpunan yang merentangnya. Dua himpunan lain yang merentang ruang
+polinomial linear adalah $\set{1,2x}$ dan $\set{1,x,2x}$.
+
+Pada akhir bagian tersebut, kita menyebut beberapa himpunan perentang sebagai
+`minimal', tetapi kita belum mendefinisikan kata itu secara tepat.
+% We could mean one of two things.
+Yang dapat kita maksud ialah bahwa suatu himpunan perentang bersifat minimal
+jika banyak anggotanya paling sedikit di antara semua himpunan dengan rentang
+yang sama. Dengan demikian, $\set{1,x,2x}$ tidak minimal karena memiliki tiga
+anggota, sedangkan ada himpunan beranggota dua yang merentang ruang yang sama.
+Atau, kita dapat memaksudkan bahwa suatu himpunan perentang bersifat minimal
+jika tidak ada elemennya yang dapat dibuang tanpa mengubah rentang.
+Menurut makna ini, $\set{1,x,2x}$ tidak minimal karena membuang \( 2x \)
+sehingga diperoleh \( \set{1,x} \) tidak mengubah rentangnya.
+
+Makna minimalitas yang pertama tampaknya merupakan persyaratan global, sebab
+untuk memeriksa apakah suatu himpunan perentang minimal, kita seolah-olah harus
+melihat semua himpunan yang merentang dan mencari yang banyak elemennya paling
+sedikit. Makna minimalitas yang kedua bersifat lokal karena kita hanya perlu
+melihat himpunan itu sendiri dan membandingkan rentangnya ketika berbagai
+elemen disertakan atau dibuang. Misalnya, dengan makna kedua, kita dapat
+membandingkan rentang $\set{1,x,2x}$ dengan rentang $\set{1,x}$ dan melihat
+bahwa $2x$ merupakan suatu ``pengulangan'', dalam arti bahwa membuangnya tidak
+memperkecil rentang.
+
+Dalam bagian ini kita akan memakai makna kedua dari `himpunan perentang
+minimal' karena kemudahan teknis tersebut. Namun, hasil terpenting dalam buku
+ini menyatakan bahwa kedua makna itu berimpit. Kita akan membuktikannya pada
+bagian berikutnya.
+
+
+ 
+
+
+
+
+
+
+\subsection{Definisi dan Contoh}
+
+Kita telah menjumpai ``pengulangan'' dalam bab pertama. Di sana, Metode Gauss
+mengubahnya menjadi persamaan $0=0$.
+
+\begin{example}  \label{ex:StaticsLIAndLD}
+Ingat kembali contoh \hyperlink{ex:Statics}{Statika} pada pembukaan Bab Satu.
+Kita memperoleh dua keadaan setimbang dengan sepasang benda bermassa tak
+diketahui: yang satu pada \( 40 \)~cm dan \( 15 \)~cm, dan yang lain pada
+\( -50 \)~cm dan \( 25 \)~cm; lalu kita menghitung nilai kedua massa tersebut.
+Seandainya keadaan setimbang kedua justru terjadi pada \( 20 \)~cm dan
+\( 7.5 \)~cm, Metode Gauss pada sistem dua persamaan dengan dua variabel yang
+dihasilkan tidak akan memberikan satu solusi. Metode itu akan menghasilkan
+persamaan $0=0$ bersama sebuah persamaan yang memuat variabel bebas.
+Secara intuitif, masalahnya ialah \( \rowvec{20 &7.5} \) merupakan setengah
+dari $\rowvec{40 &15}$; yaitu, $\rowvec{20 &7.5}$ berada dalam rentang
+himpunan $\set{\rowvec{40 &15}}$ sehingga merupakan data yang berulang.
+Kita akan mencoba menyelesaikan masalah dua variabel dengan, pada hakikatnya,
+hanya satu informasi.
+\end{example}
+ 
+Kita menyebut $\vec{v}$ sebagai suatu ``pengulangan'' dari vektor-vektor dalam
+himpunan~$S$ jika $\vec{v}\in\spanof{S}$, sehingga vektor itu bergantung pada,
+yakni dapat dinyatakan dalam suku-suku dari, elemen-elemen himpunan tersebut,
+$\vec{v}=c_1\vec{s}_1+\cdots+c_n\vec{s}_n$.
+
+\begin{lemma} \label{lm:AddVecSpanNoGrowIffVecInSpan}
+%<*lm:AddVecSpanNoGrowIffVecInSpan>
+Jika $V$ adalah ruang vektor, $S$ merupakan subhimpunan ruang tersebut, dan
+$\vec{v}$ merupakan elemen ruang tersebut, maka
+$\spanof{S\union\set{\vec{v}}} = \spanof{S}$
+berlaku jika dan hanya jika
+$\vec{v}\in\spanof{S}$.
+%</lm:AddVecSpanNoGrowIffVecInSpan>
+\end{lemma}
+
+\begin{proof}
+%<*pf:AddVecSpanNoGrowIffVecInSpan0>
+Salah satu arah dari pernyataan jika dan hanya jika ini langsung diperoleh:
+jika $\vec{v}\notin\spanof{S}$, kedua himpunan tidak sama karena
+$\vec{v}\in\spanof{S\union\set{\vec{v}}}$.
+
+Untuk arah lainnya, andaikan $\vec{v}\in\spanof{S}$ sehingga
+$\vec{v}=c_1\vec{s}_1+\cdots+c_n\vec{s}_n$ untuk sejumlah skalar~$c_i$ dan
+vektor $\vec{s}_i\in S$. Kita akan memakai ketercakupan timbal balik untuk
+menunjukkan bahwa himpunan $\spanof{S\union\set{\vec{v}}}$ dan $\spanof{S}$
+sama. Ketercakupan $\spanof{S\union\set{\vec{v}}}\supseteq\spanof{S}$ sudah
+jelas.
+%</pf:AddVecSpanNoGrowIffVecInSpan0>
+
+%<*pf:AddVecSpanNoGrowIffVecInSpan1>
+Untuk menunjukkan ketercakupan dalam arah sebaliknya, ambil $\vec{w}$ sebagai
+elemen dari~$\spanof{S\union\set{\vec{v}}}$. Maka $\vec{w}$ merupakan
+kombinasi linear dari elemen-elemen $S\union\set{\vec{v}}$, yang dapat kita
+tulis sebagai
+$\vec{w}=c_{n+1}\vec{s}_{n+1}+\cdots+c_{n+k}\vec{s}_{n+k}+c_{n+k+1}\vec{v}$.
+(Mungkin beberapa $\vec{s}_i$ dalam persamaan $\vec{w}$ sama dengan beberapa
+yang ada dalam persamaan $\vec{v}$, tetapi hal itu tidak menjadi masalah.)
+Substitusikan penjabaran $\vec{v}$.
+\begin{equation*}
+  \vec{w}=c_{n+1}\vec{s}_{n+1}+\cdots+c_{n+k}\vec{s}_{n+k}
+            +c_{n+k+1}\cdot(c_1\vec{s}_1+\cdots+c_n\vec{s}_n)
+\end{equation*}
+Ruas kanan merupakan kombinasi linear dari kombinasi-kombinasi linear
+vektor-vektor dalam~$S$. Jadi, $\vec{w}\in\spanof{S}$.
+%</pf:AddVecSpanNoGrowIffVecInSpan1>
+\end{proof}
+
+Pembahasan pada pembukaan bagian ini menyangkut pembuangan vektor, bukan
+penambahannya.
+
+\begin{corollary}  \label{cor:OmitVecNotShrinkSpanIffVecIsDep}
+%<*cor:OmitVecNotShrinkSpanIffVecIsDep>
+Untuk $\vec{v}\in S$, membuang vektor itu tidak memperkecil rentang jika dan
+hanya jika vektor tersebut bergantung pada vektor-vektor lain dalam himpunan.
+Artinya,
+$\spanof{S}=\spanof{S-\set{\vec{v}}}$
+jika dan hanya jika $\vec{v}\in\spanof{S-\set{\vec{v}}}$.
+%</cor:OmitVecNotShrinkSpanIffVecIsDep>
+\end{corollary}
+
+Jadi, untuk mengetahui apakah membuang sebuah vektor akan memperkecil rentang,
+kita perlu mengetahui apakah vektor itu merupakan kombinasi linear dari
+vektor-vektor lain dalam himpunan.
+
+\begin{definition}\label{def:LinInd}
+%<*df:LinInd>
+Dalam sebarang ruang vektor, suatu himpunan vektor disebut
+\definend{bebas linear}\index{bebas linear}%
+\index{himpunan!bergantung, bebas}
+jika tidak satu pun elemennya merupakan kombinasi linear dari elemen-elemen
+lain dalam himpunan itu.\footnote{Lihat juga
+\nearbyremark{rem:WhyLIUsesMultiset}.}\spacefactor=1000\ 
+Jika tidak, himpunan tersebut disebut
+\definend{bergantung linear}\index{bergantung linear}.
+%</df:LinInd>
+\end{definition}
+% A multiset subset of a vector space is
+% \definend{linearly independent}\index{linearly independent}%
+% \index{sets!dependent, independent}
+% if none of its elements is a linear combination of the 
+% others.\footnote{More information on multisets is in the appendix. 
+% Most of the time we won't need the 
+% set-multiset distinction and we will
+% follow the standard terminology of referring to a linearly independent or 
+% dependent `set'.
+% \nearbyremark{rem:WhyLIUsesMultiset} explains why 
+% the definition requires a multiset.}\spacefactor=1000\ 
+% Otherwise it is \definend{linearly dependent}\index{linearly dependent}.
+
+Dengan demikian, himpunan $\set{\vec{s}_0,\ldots,\vec{s}_n}$ bebas jika tidak
+ada kesamaan
+$\vec{s}_i=c_0\vec{s}_0+\ldots+c_{i-1}\vec{s}_{i-1}+c_{i+1}\vec{s}_{i+1}+\ldots+c_n\vec{s}_n$.
+Penggunaan kata `lain' dalam definisi tersebut berarti bahwa penulisan
+$\vec{s}_i$ sebagai kombinasi linear melalui $\vec{s}_i=1\cdot\vec{s}_i$
+tidak diperhitungkan.
+
+%<*LinInd>
+Perhatikan bahwa, walaupun cara menuliskan satu vektor sebagai kombinasi dari
+vektor-vektor lain ini
+\begin{equation*}
+   \vec{s}_0=\lincombo{c}{\vec{s}}
+\end{equation*}
+secara visual menonjolkan \( \vec{s}_0 \), secara aljabar tidak ada yang
+istimewa tentang vektor itu dalam persamaan tersebut. Untuk setiap
+\( \vec{s}_i \) dengan koefisien $c_i$ yang tak nol, kita dapat menulis ulang
+persamaan untuk mengisolasi \( \vec{s}_i \).
+\begin{equation*}
+   \vec{s}_i=(1/c_i)\vec{s}_0+\dots
+              +(-c_{i-1}/c_i)\vec{s}_{i-1}+(-c_{i+1}/c_i)\vec{s}_{i+1}
+              +\dots+(-c_n/c_i)\vec{s}_n
+\end{equation*}
+Jika kita tidak ingin mengistimewakan vektor mana pun, kita akan mengatakan
+bahwa \( \vec{s}_0,\vec{s}_1,\dots,\vec{s}_n \) berada dalam suatu
+\definend{relasi linear}\index{relasi linear}%
+\index{relasi!linear}
+dan menempatkan semua vektor pada ruas yang sama.
+%</LinInd>
+Hasil berikut menyatakan kembali definisi kebebasan linear dalam bentuk ini.
+Inilah cara yang biasanya kita pakai untuk menghitung apakah suatu himpunan
+hingga bergantung atau bebas.
+
+\begin{lemma}   \label{le:LDIffANonTrivLinRel}
+%<*lm:LDIffANonTrivLinRel>
+Suatu subhimpunan \( S \) dari ruang vektor bebas linear jika dan hanya jika,
+di antara elemen-elemennya, satu-satunya relasi linear
+$ c_1\vec{s}_1+\dots+c_n\vec{s}_n=\zero$
+adalah relasi trivial, \( c_1=0,\dots,\,c_n=0 \)
+(dengan $\vec{s}_i\neq\vec{s}_j$ apabila $i\neq j$).
+%</lm:LDIffANonTrivLinRel>
+\end{lemma}
+
+\begin{proof}
+%<*pf:LDIffANonTrivLinRel>
+Jika \( S \) bebas linear, tidak ada vektor $\vec{s}_i$ yang merupakan
+kombinasi linear dari vektor-vektor lain dalam $S$. Karena itu, tidak ada
+relasi linear yang beberapa vektor $\vec{s}$-nya memiliki koefisien tak nol.
+
+Jika \( S \) tidak bebas linear, maka suatu \( \vec{s}_i \) merupakan
+kombinasi linear
+$\vec{s}_i=c_1\vec{s}_1+\dots+c_{i-1}\vec{s}_{i-1}
+    +c_{i+1}\vec{s}_{i+1}+\dots+c_n\vec{s}_n$
+dari vektor-vektor lain dalam \( S \). Mengurangkan $\vec{s}_i$ dari kedua
+ruas menghasilkan suatu relasi yang melibatkan koefisien tak nol, yaitu
+\( -1 \) di depan \( \vec{s}_i \).
+%</pf:LDIffANonTrivLinRel>
+\end{proof}
+
+\begin{example}  \label{ex:StaticsLI}
+Dalam ruang vektor yang terdiri atas vektor baris berlebar dua, himpunan
+beranggota dua \( \set{ \rowvec{40 &15},\rowvec{-50 &25}} \) bebas linear.
+Untuk memeriksanya, ambil
+\begin{equation*}
+  c_1\cdot\rowvec{40 &15}+c_2\cdot\rowvec{-50 &25}=\rowvec{0 &0}
+\end{equation*}
+dan selesaikan sistem yang dihasilkan.
+\begin{equation*}
+  \begin{linsys}{2}
+    40c_1  &-  &50c_2  &=  &0  \\
+    15c_1  &+  &25c_2  &=  &0  
+   \end{linsys}
+  \grstep{-(15/40)\rho_1+\rho_2}
+  \begin{linsys}{2}
+     40c_1  &- &50c_2       &=  &0  \\
+            &  &(175/4)c_2  &=  &0  
+   \end{linsys}
+\end{equation*}
+Baik \( c_1 \) maupun \( c_2 \) sama dengan nol. Jadi, satu-satunya relasi
+linear antara kedua vektor baris yang diberikan adalah relasi trivial.
+
+Dalam ruang vektor yang sama, himpunan
+\( \set{ \rowvec{40 &15},\rowvec{20 &7.5}} \) bergantung linear karena kita
+dapat memenuhi
+% \begin{equation*}
+$c_1\cdot \rowvec{40 &15}+c_2\cdot\rowvec{20 &7.5}=\rowvec{0 &0}$
+% \end{equation*}
+dengan \( c_1=1 \) dan \( c_2=-2 \).
+\end{example}
+
+\begin{example}
+Himpunan \( \set{1+x,1-x} \) bebas linear dalam \( \polyspace_2 \), yaitu
+ruang polinomial kuadrat berkoefisien real, karena
+\begin{equation*}
+   0+0x+0x^2
+   =
+   c_1(1+x)+c_2(1-x)
+   =
+   (c_1+c_2)+(c_1-c_2)x+0x^2
+\end{equation*}
+menghasilkan
+\begin{equation*}
+  \begin{linsys}{2}
+    c_1  &+  &c_2  &=  &0  \\
+    c_1  &-  &c_2  &=  &0  
+   \end{linsys}
+  \grstep{-\rho_1+\rho_2}
+  \begin{linsys}{2}
+     c_1  &+  &c_2  &=  &0  \\
+          &   &2c_2 &=  &0
+  \end{linsys}
+\end{equation*}
+sebab polinomial sama hanya jika koefisien-koefisiennya sama. Jadi,
+satu-satunya relasi linear antara kedua anggota $\polyspace_2$ ini adalah
+relasi trivial.
+\end{example}
+
+\begin{remark}
+Lema tersebut menetapkan bahwa $\vec{s}_i\neq\vec{s}_j$ apabila $i\neq j$
+karena, tentu saja, jika suatu vektor~$\vec{s}$ muncul dua kali, kita dapat
+memperoleh relasi tak trivial $c_1\vec{s}_1+\dots+c_n\vec{s}_n=\zero$ dengan
+mengambil koefisien-koefisien terkait sebesar $1$ dan~$-1$. Selain itu, jika
+suatu vektor muncul lebih dari sekali dalam sebuah ekspresi, kita selalu dapat
+menggabungkan koefisien-koefisiennya.
+
+Perhatikan bahwa lema tersebut juga mengizinkan kebalikan dari kemunculan
+lebih dari sekali, yakni beberapa vektor dalam~$S$ tidak muncul sama sekali.
+Misalnya, jika~$S$ tak hingga, setiap relasi linear hanya melibatkan sejumlah
+hingga vektor sehingga banyak vektor dalam $S$ tidak tercantum. Namun,
+perhatikan pula bahwa jika~$S$ hingga, bila memudahkan kita dapat mengambil
+kombinasi $c_1\vec{s}_1+\dots+c_n\vec{s}_n$ yang memuat setiap vektor dalam
+$S$ tepat satu kali. Jika suatu vektor tidak tercantum, kita dapat
+menambahkannya dengan menggunakan koefisien~$0$.
+\end{remark}
+
+\begin{example}
+Baris-baris matriks ini
+\begin{equation*}
+  A=
+  \begin{mat}[r]
+    2  &3  &1  &0  \\
+    0  &-1 &0  &-2 \\
+    0  &0  &0  &1
+  \end{mat}
+\end{equation*}
+membentuk himpunan bebas linear. Hal ini mudah diperiksa untuk kasus ini,
+tetapi ingat pula bahwa Lema~Satu.III.\ref{le:EchFormNoLinCombo} menunjukkan
+bahwa baris-baris dari sebarang matriks berbentuk eselon membentuk himpunan
+bebas linear.
+\end{example}
+
+\begin{example}
+Dalam \( \Re^3 \), dengan
+\begin{equation*}
+   \vec{v}_1=\colvec{3 \\ 4 \\ 5}
+   \quad
+   \vec{v}_2=\colvec{2 \\ 9 \\ 2}
+   \quad
+   \vec{v}_3=\colvec{4 \\ 18 \\ 4}
+\end{equation*}
+himpunan \( S=\set{\vec{v}_1,\vec{v}_2,\vec{v}_3} \) bergantung linear karena
+berikut ini merupakan suatu relasi
+\begin{equation*}
+  0\cdot\vec{v}_1
+  +2\cdot\vec{v}_2
+  -1\cdot\vec{v}_3
+  =\zero
+\end{equation*}
+dengan skalar-skalar yang tidak semuanya nol (kenyataan bahwa beberapa
+skalarnya nol tidak menjadi masalah).
+\end{example}
+
+% \begin{remark}  \label{rem:WhyLIIsNonTrivLinRel}
+Contoh itu menggambarkan mengapa, walaupun \nearbydefinition{def:LinInd}
+menyatakan makna kebebasan dengan lebih jelas,
+\nearbylemma{le:LDIffANonTrivLinRel} lebih baik untuk perhitungan. Jika
+langsung memakai definisi, seseorang yang mencoba menentukan apakah $S$
+bebas linear akan mulai dengan menetapkan
+\( \vec{v}_1=c_2\vec{v}_2+c_3\vec{v}_3 \)
+dan menyimpulkan bahwa tidak ada $c_2$ dan $c_3$ semacam itu. Namun,
+mengetahui bahwa vektor pertama tidak bergantung pada kedua vektor lainnya
+belum cukup. Orang tersebut masih harus mencoba
+\( \vec{v}_2=c_1\vec{v}_1+c_3\vec{v}_3 \) untuk menemukan kebergantungan
+$c_1=0$, \( c_3=1/2 \). \nearbylemma{le:LDIffANonTrivLinRel} memperoleh
+kesimpulan yang sama hanya dengan satu perhitungan.
+% \end{remark}
+
+\begin{example} \label{ex:EmSetLI}
+Subhimpunan kosong\index{himpunan!kosong} dari suatu ruang vektor bebas linear.
+Tidak ada relasi linear tak trivial di antara anggotanya karena himpunan itu
+tidak memiliki anggota.
+\end{example}
+
+\begin{example} \label{ex:SetWithZeroVecLD}
+Dalam sebarang ruang vektor, setiap subhimpunan yang memuat vektor nol
+bergantung linear. Salah satu contohnya, dalam ruang $\polyspace_2$ yang
+terdiri atas polinomial kuadrat, ialah subhimpunan $\set{1+x,x+x^2,0}$.
+Himpunan itu bergantung linear karena
+$0\cdot\vec{v}_1+0\cdot\vec{v}_2+1\cdot\zero=\zero$ merupakan relasi tak
+trivial, sebab koefisien-koefisiennya tidak semuanya nol.
+\end{example}
+
+Ada satu hal halus yang akan kita jumpai beberapa kali dan berkaitan dengan
+contoh sebelumnya. Hal itu menyangkut jumlah trivial, yaitu jumlah himpunan
+kosong. Salah satu cara untuk melihat bagaimana jumlah trivial harus
+didefinisikan ialah mempertimbangkan urutan
+$\vec{v}_1+\vec{v}_2+\vec{v}_3$, diikuti oleh
+$\vec{v}_1+\vec{v}_2$, lalu
+$\vec{v}_1$.
+Selisih antara jumlah tiga vektor dan jumlah dua vektor adalah $\vec{v}_3$.
+Kemudian, selisih antara jumlah dua vektor dan jumlah satu vektor adalah
+$\vec{v}_2$. Ketika berikutnya beralih ke jumlah trivial, yaitu jumlah tanpa
+vektor, kita dapat mengharapkan pengurangan~$\vec{v}_1$. Karena itu, kita
+mendefinisikan jumlah tanpa vektor sebagai vektor nol.
+
+Kaitannya dengan contoh sebelumnya ialah bahwa jika vektor nol berada dalam
+suatu himpunan, himpunan tersebut memiliki elemen yang merupakan kombinasi dari
+suatu subhimpunan vektor-vektor lainnya; khususnya, vektor nol merupakan
+kombinasi dari subhimpunan kosong. Bahkan himpunan $S=\set{\zero}$ bergantung
+linear, karena $\zero$ adalah jumlah himpunan kosong dan himpunan kosong
+merupakan subhimpunan dari~$S$.
+
+\begin{remark} \label{rem:WhyLIUsesMultiset} %\cite{Velleman} 
+Definisi kebebasan linear, \nearbydefinition{def:LinInd}, merujuk pada suatu
+`himpunan' vektor. Himpunan merupakan jenis koleksi yang paling dikenal dan,
+dalam praktik, semua orang memakai kata `himpunan' dalam konteks ini. Namun,
+demi kelengkapan, kita akan mencatat bahwa himpunan bukanlah jenis koleksi yang
+sepenuhnya tepat untuk tujuan ini.
+
+Ingat bahwa suatu himpunan adalah koleksi dengan dua sifat:
+(i)~urutan tidak berpengaruh, sehingga himpunan $\set{1,2}$ sama dengan
+himpunan $\set{2,1}$, dan (ii)~duplikat melebur, sehingga himpunan
+$\set{1,1,2}$ sama dengan himpunan $\set{1,2}$.
+
+Sekarang perhatikan reduksi matriks ini.
+\begin{equation*}
+  \begin{mat}
+    1 &1 &1 \\
+    2 &2 &2 \\
+    1 &2 &3
+  \end{mat}
+  \grstep{(1/2)\rho_2}
+  \begin{mat}
+    1 &1 &1 \\
+    1 &1 &1 \\
+    1 &2 &3
+  \end{mat}
+\end{equation*}
+Di sebelah kiri, himpunan baris matriks
+$\set{\rowvec{1 &1 &1}, \rowvec{2 &2 &2}, \rowvec{1 &2 &3}}$ bergantung
+linear. Di sebelah kanan, himpunan barisnya adalah
+$\set{\rowvec{1 &1 &1}, \rowvec{1 &1 &1}, \rowvec{1 &2 &3}}$.
+Karena duplikat melebur, himpunan itu sama dengan
+$\set{\rowvec{1 &1 &1}, \rowvec{1 &2 &3}}$, yang bebas linear. Ini menjadi
+masalah karena Metode Gauss seharusnya mempertahankan kebergantungan linear.
+
+Artinya, secara tegas, kita memerlukan jenis koleksi yang duplikatnya tidak
+melebur. Koleksi yang urutannya tidak berpengaruh dan duplikatnya tidak melebur
+disebut \definend{multihimpunan}.\index{himpunan!multihimpunan}%
+\index{multihimpunan}\index{kebebasan linear!multihimpunan}
+
+Namun, meskipun bersikeras untuk sepenuhnya tepat memiliki keuntungan,
+menyimpang dari istilah baku `himpunan' juga menimbulkan kesulitannya sendiri.
+Karena itu, kita akan terus memakai kata tersebut. Kelak, kadang-kadang kita
+perlu membentuk kombinasi tanpa membiarkan duplikat melebur, dan kita akan
+melakukannya tanpa komentar lebih lanjut.
+\end{remark}
+
+\begin{corollary} \label{cor:LiSetMinSpanSet}
+%<*cor:LiSetMinSpanSet>
+Suatu himpunan $S$ bebas linear jika dan hanya jika, untuk setiap
+$\vec{v}\in S$, pembuangannya memperkecil rentang
+$\spanof{S-\set{\vec{v}}}\subsetneq\spanof{S}$.
+%</cor:LiSetMinSpanSet>
+\end{corollary}
+
+\begin{proof}
+%<*pf:LiSetMinSpanSet>
+Ini mengikuti \nearbycorollary{cor:OmitVecNotShrinkSpanIffVecIsDep}. Jika $S$
+bebas linear, tidak ada vektornya yang bergantung pada elemen-elemen lain,
+sehingga pembuangan sebarang vektor akan memperkecil rentang. Jika $S$ tidak
+bebas linear, himpunan itu memuat sebuah vektor yang bergantung pada
+elemen-elemen lain dalam himpunan, dan pembuangan vektor tersebut tidak akan
+memperkecil rentang.
+%</pf:LiSetMinSpanSet>
+\end{proof}
+
+Jadi, suatu himpunan perentang minimal jika dan hanya jika bebas linear.
+
+Hasil sebelumnya membahas pembuangan elemen dari himpunan bebas linear. Hasil
+berikutnya membahas penambahan elemen.
+
+\begin{lemma}  \label{lm:AddVecLiSetIsLiIffVecNotInSpan}
+%<*lm:AddVecLiSetIsLiIffVecNotInSpan>
+Andaikan $S$ bebas linear dan $\vec{v}\notin S$. Maka himpunan
+$S\union\set{\vec{v}}$ bebas linear jika dan hanya jika
+$\vec{v}\notin\spanof{S}$.   
+%</lm:AddVecLiSetIsLiIffVecNotInSpan>
+\end{lemma}
+
+\begin{proof}
+%<*pf:AddVecLiSetIsLiIffVecNotInSpan0>
+% Assume that $S$ is linearly independent and that $\vec{v}\notin S$.
+Kita akan menunjukkan bahwa $S\union\set{\vec{v}}$ tidak bebas linear jika dan
+hanya jika $\vec{v}\in\spanof{S}$.
+
+Pertama, andaikan $\vec{v}\in\spanof{S}$. Nyatakan $\vec{v}$ sebagai kombinasi
+$\vec{v}=c_1\vec{s}_1+\cdots+c_n\vec{s}_n$. Tulis ulang sebagai
+$\zero=c_1\vec{s}_1+\cdots+c_n\vec{s}_n-1\cdot\vec{v}$. Karena
+$\vec{v}\notin S$, vektor itu tidak sama dengan satu pun $\vec{s}_i$,
+sehingga ini merupakan kebergantungan linear tak trivial di antara elemen
+$S\union\set{\vec{v}}$. Jadi, himpunan itu tidak bebas linear.
+%</pf:AddVecLiSetIsLiIffVecNotInSpan0>
+
+%<*pf:AddVecLiSetIsLiIffVecNotInSpan1>
+Sekarang andaikan $S\union\set{\vec{v}}$ tidak bebas linear dan perhatikan
+suatu kebergantungan tak trivial di antara anggotanya,
+$\zero=c_1\vec{s}_1+\cdots+c_n\vec{s}_n+c_{n+1}\cdot\vec{v}$.
+Jika $c_{n+1}=0$, ini merupakan kebergantungan di antara elemen-elemen~$S$.
+Namun, kita mengandaikan bahwa~$S$ bebas, sehingga $c_{n+1}\neq 0$. Tulis ulang
+persamaan tersebut sebagai
+$\vec{v}=(c_1/c_{n+1})\vec{s}_1+\cdots+(c_n/c_{n+1})\vec{s}_n$ untuk
+memperoleh $\vec{v}\in\spanof{S}$.
+%</pf:AddVecLiSetIsLiIffVecNotInSpan1>
+\end{proof}
+
+
+
+\begin{example} \label{ex:LinindSetsAndSuper}
+Subhimpunan dari $\Re^3$ ini bebas linear.
+\begin{equation*}
+  S
+   =\set{\colvec{1 \\ 0 \\ 0}}
+\end{equation*}
+Rentang $S$ adalah sumbu-$x$. Berikut dua himpunan super, yang satu bergantung
+linear dan yang lain bebas.
+\begin{center}
+     bergantung:
+     \( \set{
+         \colvec{1 \\ 0 \\ 0},
+         \colvec{-3 \\ 0 \\ 0}} \)      
+     \qquad
+     bebas:
+     \( \set{
+         \colvec{1 \\ 0 \\ 0},
+         \colvec{0 \\ 1 \\ 0}} \)      
+\end{center}
+Kita memperoleh himpunan super yang bergantung dengan menambahkan vektor dari
+sumbu-$x$, sehingga rentangnya tidak membesar. Kita memperoleh himpunan super
+yang bebas dengan menambahkan vektor yang tidak berada dalam $\spanof{S}$,
+karena vektor itu memiliki komponen~$y$ tak nol, sehingga rentangnya membesar.
+
+Untuk himpunan bebas
+\begin{equation*}
+  S
+   =\set{\colvec{1 \\ 0 \\ 0},
+          \colvec{0 \\ 1 \\ 0}
+                 }
+\end{equation*}
+rentang \( \spanof{S} \) adalah bidang-\( xy \). Berikut dua himpunan super.
+\begin{center}
+     bergantung:
+     \( \set{
+         \colvec{1 \\ 0 \\ 0},
+         \colvec{0 \\ 1 \\ 0},
+         \colvec{3 \\ -2 \\ 0} } \)       
+     \qquad
+     bebas:
+     \( \set{
+         \colvec{1 \\ 0 \\ 0},
+         \colvec{0 \\ 1 \\ 0},
+         \colvec{0 \\ 0 \\ 1} } \)    
+\end{center}
+Seperti di atas, anggota tambahan pada himpunan super yang bergantung berasal
+dari $\spanof{S}$, yaitu bidang-$xy$, sedangkan anggota tambahan pada himpunan
+super yang bebas berasal dari luar rentang tersebut.
+
+Terakhir, perhatikan himpunan bebas ini
+\begin{equation*}
+   S =\set{\colvec{1 \\ 0 \\ 0},
+          \colvec{0 \\ 1 \\ 0},
+          \colvec{0 \\ 0 \\ 1}        } 
+\end{equation*}
+dengan \( \spanof{S}=\Re^3 \). Kita dapat memperoleh himpunan super yang
+bergantung linear.
+\begin{center}
+     bergantung:
+     \( \set{
+         \colvec{1 \\ 0 \\ 0},
+         \colvec{0 \\ 1 \\ 0},
+         \colvec{0 \\ 0 \\ 1},
+         \colvec{2 \\ -1 \\ 3} } \)     
+\end{center}
+Namun, tidak ada himpunan super bebas linear dari $S$. Salah satu cara untuk
+melihatnya ialah mencatat bahwa, untuk sebarang vektor yang hendak kita
+tambahkan ke $S$, persamaan
+\begin{equation*}
+  \colvec{x \\ y \\ z}
+  =c_1\colvec{1 \\ 0 \\ 0}
+   +c_2\colvec{0 \\ 1 \\ 0}
+   +c_3\colvec{0 \\ 0 \\ 1}
+\end{equation*}
+memiliki solusi $c_1=x$, $c_2=y$, dan $c_3=z$. Cara lain untuk melihatnya ialah
+bahwa kita tidak dapat menambahkan vektor apa pun dari luar rentang
+$\spanof{S}$ karena rentang itu adalah $\Re^3$.
+\end{example}
+
+\begin{corollary} \label{th:AlwaysAnLDSubset}
+%<*th:AlwaysAnLDSubset>
+Dalam suatu ruang vektor, setiap himpunan hingga memiliki subhimpunan bebas
+linear dengan rentang yang sama.
+%</th:AlwaysAnLDSubset>
+\end{corollary}
+
+\begin{proof}
+%<*pf:AlwaysAnLDSubset0>
+Jika \( S=\set{ \vec{s}_1,\dots,\vec{s}_n} \) bebas linear, maka $S$ sendiri
+memenuhi pernyataan tersebut. Jadi, andaikan $S$ bergantung linear.
+%</pf:AlwaysAnLDSubset0>
+
+%<*pf:AlwaysAnLDSubset1>
+Berdasarkan definisi kebergantungan, $S$ memuat sebuah vektor $\vec{v}_1$ yang
+merupakan kombinasi linear dari vektor-vektor lainnya. Definisikan himpunan
+\( S_1=S-\set{\vec{v}_1} \). Menurut
+\nearbycorollary{cor:OmitVecNotShrinkSpanIffVecIsDep}, % {lm:ShrinkSpanByRemovingNonRepeat} 
+rentangnya tidak mengecil: \( \spanof{S_1}=\spanof{S} \).
+%</pf:AlwaysAnLDSubset1>
+
+%<*pf:AlwaysAnLDSubset2>
+Jika \( S_1 \) bebas linear, pembuktian selesai. Jika tidak, ulangi prosesnya:
+ambil sebuah vektor $\vec{v}_2$ yang merupakan kombinasi linear dari anggota
+lain $S_1$, lalu buang vektor itu untuk memperoleh
+\( S_2=S_1-\set{\vec{v}_2} \) sedemikian sehingga
+\( \spanof{S_2}=\spanof{S_1} \). Ulangi sampai muncul suatu himpunan bebas
+linear $S_j$; himpunan itu pada akhirnya pasti muncul karena \( S \) hingga
+dan himpunan kosong bebas linear.
+%</pf:AlwaysAnLDSubset2>
+(Secara formal, argumen ini memakai induksi pada banyak elemen dalam $S$.
+\nearbyexercise{exer:FillIndDetProofSetHasLISub} meminta rinciannya.)
+\end{proof}
+
+Jadi, jika kita memiliki himpunan yang bergantung linear, kita dapat
+merampingkannya tanpa mengubah rentang dengan membuang vektor-vektor yang kita
+sebut ``pengulangan''.
+
+\begin{example}  \label{ex:ShrinkSetSameSpan}
+Himpunan ini merentang \( \Re^3 \) (pemeriksaannya rutin), tetapi tidak bebas
+linear.
+\begin{equation*}
+  S=\set{\colvec[r]{1 \\ 0 \\ 0},
+     \colvec[r]{0 \\ 2 \\ 0},
+     \colvec[r]{1 \\ 2 \\ 0},
+     \colvec[r]{0 \\ -1 \\ 1},
+     \colvec[r]{3 \\ 3 \\ 0}  }
+\end{equation*}
+Kita akan menghitung vektor mana yang harus dibuang untuk memperoleh
+subhimpunan yang bebas tetapi memiliki rentang yang sama. Relasi linear ini
+\begin{equation*}
+  c_1\colvec[r]{1 \\ 0 \\ 0}
+  +c_2\colvec[r]{0 \\ 2 \\ 0}
+  +c_3\colvec[r]{1 \\ 2 \\ 0}
+  +c_4\colvec[r]{0 \\ -1 \\ 1}
+  +c_5\colvec[r]{3 \\ 3 \\ 0}
+  =\colvec[r]{0 \\ 0 \\ 0}
+  \qquad\tag{$*$}
+\end{equation*}
+menghasilkan suatu sistem
+\begin{equation*}
+  \begin{linsys}{5}
+     c_1  &   &      &+  &c_3   &+  &    &+  &3c_5 &= &0  \\
+          &   &2c_2  &+  &2c_3  &-  &c_4 &+  &3c_5 &= &0  \\
+          &   &      &   &     &   &c_4  &   &     &= &0  
+\end{linsys}
+\end{equation*}
+yang himpunan solusinya memiliki parametrisasi berikut.
+\begin{equation*}
+  \set{\colvec{c_1 \\ c_2 \\ c_3 \\ c_4 \\ c_5}=
+     c_3\colvec[r]{-1 \\ -1 \\ 1 \\ 0 \\ 0}
+     +c_5\colvec[r]{-3 \\ -3/2 \\ 0 \\ 0 \\ 1}
+     \suchthat c_3,c_5\in\Re }
+\end{equation*}
+Tetapkan $c_5=1$ dan~$c_3=0$ untuk memperoleh satu contoh dari ($*$).
+\begin{equation*}
+  -3\cdot\colvec[r]{1 \\ 0 \\ 0}
+  -\frac{3}{2}\cdot\colvec[r]{0 \\ 2 \\ 0}
+  +0\cdot\colvec[r]{1 \\ 2 \\ 0}
+  +0\cdot\colvec[r]{0 \\ -1 \\ 1}
+  +1\cdot\colvec[r]{3 \\ 3 \\ 0}
+  =\colvec[r]{0 \\ 0 \\ 0}
+\end{equation*}
+Ini menunjukkan bahwa vektor dalam $S$ yang kita kaitkan dengan~$c_5$ berada
+dalam rentang himpunan yang terdiri atas vektor milik $c_1$ dan vektor milik
+$c_2$. Kita dapat membuang vektor kelima $S$ tanpa memperkecil rentang.
+
+Demikian pula, tetapkan $c_3=1$ dan $c_5=0$ untuk memperoleh satu contoh
+dari~($*$) yang menunjukkan bahwa kita dapat membuang vektor ketiga $S$ tanpa
+memperkecil rentang. Jadi, himpunan berikut memiliki rentang yang sama dengan
+$S$.
+\begin{equation*}
+  % \hat{S}=
+     \set{\colvec[r]{1 \\ 0 \\ 0},
+     \colvec[r]{0 \\ 2 \\ 0},
+     \colvec[r]{0 \\ -1 \\ 1}  }
+\end{equation*}
+Pemeriksaan bahwa himpunan ini bebas linear bersifat rutin.
+\end{example}
+
+\begin{corollary} \label{cor:LDMeansLC}
+%<*co:LDMeansLC>
+Suatu subhimpunan \( S=\set{\vec{s}_1,\dots,\vec{s}_n} \) dari ruang vektor
+bergantung linear jika dan hanya jika suatu \( \vec{s}_i \) merupakan
+kombinasi linear dari vektor-vektor \( \vec{s}_1 \), \ldots,
+\( \vec{s}_{i-1} \) yang tercantum sebelumnya.
+%</co:LDMeansLC>
+\end{corollary}
+
+\begin{proof}
+%<*pf:LDMeansLC>
+Perhatikan \( S_0=\set{} \), \( S_1=\set{\vec{s}_1} \),
+\( S_2=\set{\vec{s}_1,\vec{s}_2 } \), dan seterusnya. Suatu indeks
+\( i\geq 1 \) merupakan indeks pertama yang membuat
+\( S_{i-1}\union\set{\vec{s}_i } \) bergantung linear, dan pada titik itu
+\( \vec{s}_i\in\spanof{ S_{i-1} } \).
+%</pf:LDMeansLC>
+\end{proof}
+
+Pembuktian \nearbycorollary{th:AlwaysAnLDSubset} menjelaskan cara menghasilkan
+himpunan bebas linear dengan merampingkan, yakni dengan mengambil
+subhimpunan. Pembuktian \nearbycorollary{cor:LDMeansLC} menjelaskan cara
+menemukan himpunan yang bergantung linear dengan mengambil himpunan super.
+Kita mengakhiri subbagian ini dengan meninjau bagaimana kebebasan dan
+kebergantungan linear berinteraksi dengan relasi subhimpunan antarhimpunan.
+
+\begin{lemma}  \label{le:SubsetPreserveLI}
+%<*lm:SubsetPreserveLI>
+Setiap subhimpunan dari himpunan bebas linear juga bebas linear. Setiap
+himpunan super dari himpunan yang bergantung linear juga bergantung linear.
+%</lm:SubsetPreserveLI>
+\end{lemma}
+
+\begin{proof}
+%<*pf:SubsetPreserveLI>
+Keduanya jelas.
+%</pf:SubsetPreserveLI>
+\end{proof}
+
+%<*SubsetPreserveLI>
+Dengan kata lain, pengambilan subhimpunan mempertahankan kebebasan dan
+pengambilan himpunan super mempertahankan kebergantungan.
+%</SubsetPreserveLI>
+
+Itulah dua dari empat kemungkinan kasus. Kasus ketiga, apakah pengambilan
+subhimpunan mempertahankan kebergantungan linear, dibahas dalam
+\nearbyexample{ex:ShrinkSetSameSpan}, yang memberikan suatu himpunan
+bergantung linear $S$ dengan satu subhimpunan yang bergantung linear dan
+subhimpunan lain yang bebas. Kasus keempat, apakah pengambilan himpunan super
+mempertahankan kebebasan linear, dibahas dalam
+\nearbyexample{ex:LinindSetsAndSuper}, yang memberikan kasus ketika suatu
+himpunan bebas linear memiliki himpunan super yang bebas maupun yang
+bergantung. Tabel berikut merangkumnya.
+\smallskip
+%<*IndependenceAndSubsetTable>
+\begin{center} \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}[b]{r|cc} 
+                        \multicolumn{1}{c}{}
+                        &\multicolumn{1}{c}{\( \hat{S}\subset S \)}
+                        &\multicolumn{1}{c}{\( \hat{S}\supset S \)}      \\
+     \cline{2-3}\rule{0em}{12pt} % make box a bit taller
+          \textit{$S$ bebas} 
+              &\( \hat{S} \) harus bebas   &\( \hat{S} \) dapat bebas atau bergantung\\
+     % \cline{2-3}\noalign{\smallskip}
+          \textit{$S$ bergantung} 
+              &\( \hat{S} \) dapat bebas atau bergantung &\( \hat{S} \) harus bergantung    \\
+     % \cline{2-3}
+   \end{tabular}
+\end{center}
+%</IndependenceAndSubsetTable>
+\smallskip
+
+\nearbyexample{ex:LinindSetsAndSuper} juga memberi tahu kita hal lain tentang
+interaksi antara kebebasan linear dan himpunan super. Contoh itu menyebut suatu
+himpunan bebas linear yang maksimal, dalam arti tidak memiliki himpunan super
+yang bebas linear. Berdasarkan \nearbylemma{lm:AddVecLiSetIsLiIffVecNotInSpan},
+suatu himpunan bebas linear maksimal jika dan hanya jika merentang seluruh
+ruang, sebab tepat pada saat itulah semua vektor dalam ruang sudah berada
+dalam rentang. Hal ini melengkapi \nearbycorollary{cor:LiSetMinSpanSet} dengan
+indah: suatu himpunan perentang minimal jika dan hanya jika bebas linear.
+
+% In summary,
+% we have introduced the definition of linear independence to 
+% formalize the idea of the minimality of a spanning set.
+% We have developed some properties of this idea.
+% The most important is \nearbylemma{lm:AddVecLiSetIsLiIffVecNotInSpan}, which 
+% tells us that a linearly independent set is maximal when it spans the space.
+
+
+\begin{exercises}
+  \recommended \item
+    Tentukan apakah setiap subhimpunan \( \Re^3 \) berikut bergantung linear
+    atau bebas linear.
+    \begin{exparts*}
+      \partsitem \( \set{\colvec{1 \\ -3 \\ 5},
+                    \colvec{2 \\ 2 \\ 4},
+                    \colvec{4 \\ -4 \\ 14} }  \)
+      \partsitem \( \set{\colvec{1 \\ 7 \\ 7},
+                    \colvec{2 \\ 7 \\ 7},
+                    \colvec{3 \\ 7 \\ 7} }  \)
+      \partsitem \( \set{\colvec{0 \\ 0 \\ -1},
+                    \colvec{1 \\ 0 \\ 4} }  \)
+      \partsitem \( \set{\colvec{9 \\ 9 \\ 0},
+                    \colvec{2 \\ 0 \\ 1},
+                    \colvec{3 \\ 5 \\ -4},
+                    \colvec{12 \\ 12 \\ -1} }  \)
+    \end{exparts*}
+    \begin{answer}
+      Untuk masing-masing subhimpunan ini, jika subhimpunan tersebut bebas,
+      Anda harus membuktikannya; jika bergantung, Anda harus memberikan contoh
+      suatu kebergantungan.
+      \begin{exparts}
+        \partsitem Himpunan ini bergantung.
+          Dengan memperhatikan
+          \begin{equation*}
+             c_1\colvec{1 \\ -3 \\ 5}
+             +c_2\colvec{2 \\ 2 \\ 4}
+             +c_3\colvec{4 \\ -4 \\ 14}
+             =\colvec{0 \\ 0 \\ 0}
+          \end{equation*}
+          diperoleh sistem linear berikut.
+          \begin{equation*}
+            \begin{linsys}{3}
+              c_1  &+  &2c_2  &+  &4c_3  &=  &0  \\
+              -3c_1&+  &2c_2  &-  &4c_3  &=  &0  \\
+              5c_1 &+  &4c_2  &+  &14c_3 &=  &0  
+            \end{linsys}
+          \end{equation*}
+          Metode Gauss
+          \begin{equation*}
+            \begin{amat}[r]{3}
+              1  &2  &4  &0  \\
+              -3 &2  &-4 &0  \\
+              5  &4  &14 &0
+            \end{amat}
+            \grstep[-5\rho_1+\rho_3]{3\rho_1+\rho_2}
+            \repeatedgrstep{(3/4)\rho_2+\rho_3}            
+            \begin{amat}[r]{3}
+              1  &2  &4  &0  \\
+              0  &8  &8  &0  \\
+              0  &0  &0  &0
+            \end{amat}
+          \end{equation*}
+          menghasilkan sebuah variabel bebas, sehingga ada tak hingga banyak
+          solusi. Untuk contoh suatu kebergantungan tertentu, kita dapat
+          menetapkan $c_3$, misalnya, sebesar $1$. Kemudian kita memperoleh
+          \( c_2=-1 \) dan \( c_1=-2 \).
+        \partsitem Himpunan ini bergantung.
+          Sistem linear yang muncul di sini
+          \begin{equation*}
+            \begin{amat}[r]{3}
+              1  &2  &3  &0  \\
+              7  &7  &7  &0  \\
+              7  &7  &7  &0
+            \end{amat}
+            \grstep[-7\rho_1+\rho_3]{-7\rho_1+\rho_2}
+            \repeatedgrstep{-\rho_2+\rho_3}
+            \begin{amat}[r]{3}
+              1  &2  &3   &0  \\
+              0  &-7 &-14 &0  \\
+              0  &0  &0   &0
+            \end{amat}
+          \end{equation*}
+          memiliki tak hingga banyak solusi. Kita dapat memperoleh solusi
+          tertentu dengan mengambil $c_3$, misalnya, sebesar $1$, lalu
+          melakukan substitusi balik untuk mendapatkan $c_2$ dan $c_1$.
+        \partsitem Himpunan ini bebas linear.
+          Sistem
+          \begin{equation*}
+            \begin{amat}[r]{2}
+              0  &1  &0  \\
+              0  &0  &0  \\
+              -1 &4  &0
+            \end{amat}
+            \grstep{\rho_1\leftrightarrow\rho_2}
+            \repeatedgrstep{\rho_3\leftrightarrow\rho_1}
+            \begin{amat}{2}
+              -1 &4  &0  \\
+              0  &1  &0  \\
+              0  &0  &0  
+            \end{amat}
+          \end{equation*}
+          hanya memiliki solusi $c_1=0$ dan $c_2=0$. (Kita juga dapat
+          memperoleh jawaban melalui pengamatan\Dash vektor kedua jelas bukan
+          kelipatan vektor pertama, dan sebaliknya.)
+        \partsitem Himpunan ini bergantung linear.
+          Sistem linear
+          \begin{equation*}
+            \begin{amat}[r]{4}
+              9  &2  &3  &12  &0  \\
+              9  &0  &5  &12  &0  \\
+              0  &1  &-4 &-1  &0
+            \end{amat}
+          \end{equation*}
+          memiliki lebih banyak variabel tak diketahui daripada persamaan,
+          sehingga Metode Gauss harus berakhir dengan setidaknya satu variabel
+          bebas (tidak mungkin ada persamaan yang kontradiktif karena sistem
+          ini homogen, sehingga setidaknya memiliki solusi yang semuanya nol).
+          Untuk memperlihatkan suatu kombinasi, kita dapat melakukan reduksi
+          \begin{equation*}
+            \grstep{-\rho_1+\rho_2}
+            \grstep{(1/2)\rho_2+\rho_3}
+            \begin{amat}[r]{4}
+              9  &2  &3  &12  &0  \\
+              0  &-2 &2  &0   &0  \\
+              0  &0  &-3 &-1  &0
+            \end{amat}
+          \end{equation*}
+          dan mengambil, misalnya, $c_4=1$. Maka kita memperoleh
+          $c_3=-1/3$, $c_2=-1/3$, dan $c_1=-31/27$.
+      \end{exparts}  
+    \end{answer}
+  \recommended \item 
+    Manakah dari subhimpunan \( \polyspace_3 \) berikut yang bergantung linear
+    dan manakah yang bebas?
+    \begin{exparts}
+      \partsitem \( \set{3-x+9x^2,5-6x+3x^2,1+1x-5x^2} \)
+      \partsitem \( \set{-x^2,1+4x^2} \)
+      \partsitem \( \set{2+x+7x^2,3-x+2x^2,4-3x^2} \)
+      \partsitem \( \set{8+3x+3x^2,x+2x^2,2+2x+2x^2,8-2x+5x^2} \)
+    \end{exparts}
+    \begin{answer}
+      Dalam kasus kebebasan, Anda harus membuktikan bahwa himpunannya bebas.
+      Jika tidak, Anda harus memperlihatkan suatu kebergantungan. (Di sini kami
+      memberikan satu kebergantungan tertentu, tetapi yang lain juga mungkin.)
+      \begin{exparts}
+        \partsitem Himpunan ini bebas.
+          Menyusun relasi
+          \( c_1(3-x+9x^2)+c_2(5-6x+3x^2)+c_3(1+1x-5x^2)=0+0x+0x^2 \)
+          menghasilkan suatu sistem linear
+          \begin{equation*}
+            \begin{amat}[r]{3}
+              3  &5  &1  &0  \\
+              -1 &-6 &1  &0  \\
+              9  &3  &-5 &0  
+            \end{amat}
+            \grstep[-3\rho_1+\rho_3]{(1/3)\rho_1+\rho_2}
+            \repeatedgrstep{3\rho_2}
+            \repeatedgrstep{-(12/13)\rho_2+\rho_3}
+            \begin{amat}[r]{3}
+              3  &5   &1        &0  \\
+              0  &-13 &4        &0  \\
+              0  &0   &-128/13  &0  
+            \end{amat}
+          \end{equation*}
+          yang hanya memiliki satu solusi: \( c_1=0 \), \( c_2=0 \), dan
+          \( c_3=0 \).
+        \partsitem Himpunan ini bebas.
+           Kita dapat melihatnya langsung melalui pengamatan berdasarkan
+           definisi kebebasan linear. Jelas bahwa yang satu bukan kelipatan
+           dari yang lain.
+        \partsitem Himpunan ini bebas linear.
+           Sistem linearnya direduksi sebagai berikut
+           \begin{equation*}
+             \begin{amat}[r]{3}
+               2  &3  &4  &0  \\
+               1  &-1 &0  &0  \\
+               7  &2  &-3 &0  
+             \end{amat}
+             \grstep[-(7/2)\rho_1+\rho_3]{-(1/2)\rho_1+\rho_2}
+             \repeatedgrstep{-(17/5)\rho_2+\rho_3}
+             \begin{amat}[r]{3}
+               2  &3    &4      &0  \\
+               0  &-5/2 &-2     &0  \\
+               0  &0    &-51/5  &0  
+             \end{amat}
+           \end{equation*}
+           dan menunjukkan bahwa satu-satunya solusi ialah $c_1=0$, $c_2=0$,
+           dan $c_3=0$.
+        \partsitem Himpunan ini bergantung linear.
+           Sistem linear
+           \begin{equation*}
+             \begin{amat}[r]{4}
+               8  &0  &2  &8  &0  \\ 
+               3  &1  &2  &-2 &0  \\
+               3  &2  &2  &5  &0
+             \end{amat}
+           \end{equation*}
+           setelah direduksi harus berakhir dengan setidaknya satu variabel
+           bebas (ada lebih banyak variabel daripada persamaan, dan persamaan
+           yang kontradiktif tidak mungkin muncul karena sistemnya homogen).
+           Kita dapat mengambil variabel bebas sebagai parameter untuk
+           mendeskripsikan himpunan solusi. Kemudian kita dapat menetapkan
+           parameter itu pada nilai tak nol untuk memperoleh relasi linear tak
+           trivial.
+      \end{exparts}  
+     \end{answer}
+  \item Tentukan apakah setiap himpunan bebas linear dalam ruang alaminya.
+    \begin{exparts*}
+      \partsitem $\set{\colvec{1 \\ 2 \\ 0}, 
+              \colvec{-1 \\ 1 \\ 0}}$
+      \partsitem $\set{\rowvec{1 &3 &1}, \rowvec{-1 &4 &3}, \rowvec{-1 &11 &7}}$
+      \partsitem $\set{\begin{mat}
+                5 &4 \\
+                1 &2 
+              \end{mat},
+              \begin{mat}
+                0 &0 \\
+                0 &0
+              \end{mat},
+              \begin{mat}
+                1 &0 \\
+               -1 &4
+              \end{mat}
+           }$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ruang vektor alaminya adalah $\Re^3$.
+          Susun persamaan
+          \begin{equation*}
+            \colvec{0 \\ 0 \\ 0}=c_1\colvec{1 \\ 2 \\ 0}
+                                 +c_2\colvec{-1 \\ 1 \\ 0}
+          \end{equation*}
+          dan perhatikan sistem homogen yang dihasilkan.
+          \begin{equation*}
+             \begin{amat}{2}
+               1  &-1 &0  \\
+               2  &1  &0  \\
+               0  &0  &0
+             \end{amat}
+             \grstep{-2\rho_1+\rho_2}
+             \begin{amat}{2}
+              1  &-1 &0  \\
+              0  &3  &0  \\
+              0  &0  &0
+            \end{amat} 
+          \end{equation*}
+          Sistem ini memiliki solusi tunggal, yaitu $c_1=0$, $c_2=0$. Jadi,
+          himpunannya bebas linear.
+        \partsitem Ruang vektor alaminya adalah himpunan vektor baris
+          berlebar tiga. Persamaan
+          \begin{equation*}
+            \rowvec{0 &0 &0}=c_1\rowvec{1 &3 &1}
+                            +c_2\rowvec{-1 &4 &3}
+                            +c_3\rowvec{-1 &11 &7}
+          \end{equation*}
+          menghasilkan suatu sistem linear
+          \begin{align*}
+            \begin{amat}{3}
+              1  &-1  &-1  &0  \\
+              3  &4   &11  &0  \\
+              1  &3   &7   &0
+           \end{amat}
+           &\grstep[-\rho_1+\rho_3]{-3\rho_1+\rho_2}
+           \begin{amat}{3}
+             1  &-1  &-1  &0  \\
+             0  &7   &14  &0  \\
+             0  &4   &8   &0
+          \end{amat}                                   \\
+          &\grstep{(4/7)\rho_2+\rho_3}
+          \begin{amat}{3}
+            1  &-1  &-1  &0  \\
+            0  &7   &14  &0  \\
+            0  &0   &0   &0
+         \end{amat}
+       \end{align*}
+       dengan tak hingga banyak solusi, yaitu lebih dari sekadar solusi
+       trivial.
+       \begin{equation*}
+         \set{\colvec{c_1 \\ c_2 \\ c_3}
+              =\colvec{-1 \\ -2 \\ 1}c_3
+              \suchthat c_3\in\Re}
+       \end{equation*}
+       Jadi, himpunan itu bergantung linear. Salah satu kebergantungan diperoleh
+       dengan menetapkan $c_3=2$, yang memberikan $c_1=-2$ dan $c_2=-4$.
+      \partsitem Tanpa perlu menyusun sistem, kita dapat melihat bahwa elemen
+        kedua himpunan merupakan kelipatan elemen pertama (yakni, $0$ kali
+        elemen pertama).
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+    Buktikan bahwa masing-masing himpunan \( \set{f,g} \) berikut bebas linear
+    dalam ruang vektor semua fungsi dari \( \Re^+ \) ke \( \Re \).
+    \begin{exparts}
+      \partsitem \( f(x)=x \) dan \( g(x)=1/x \)
+      \partsitem \( f(x)=\cos(x) \) dan \( g(x)=\sin(x) \)
+      \partsitem \( f(x)=e^x \) dan \( g(x)=\ln(x) \)
+    \end{exparts}
+    \begin{answer}
+      Misalkan $\map{Z}{\Re^+}{\Re}$ adalah fungsi nol $Z(x)=0$, yang
+      merupakan identitas aditif dalam ruang vektor yang sedang dibahas.
+      \begin{exparts}
+        \partsitem Himpunan ini bebas linear.
+          Perhatikan \( c_1\cdot f(x)+c_2\cdot g(x)=Z(x) \). Menyubstitusikan
+          \( x=1 \) dan \( x=2 \) menghasilkan sistem linear
+          \begin{equation*}
+            \begin{linsys}{2}
+              c_1\cdot 1  &+  &c_2\cdot 1     &=  &0  \\
+              c_1\cdot 2  &+  &c_2\cdot (1/2) &=  &0
+            \end{linsys}
+          \end{equation*}
+          dengan solusi tunggal \( c_1=0 \), \( c_2=0 \).
+        \partsitem Himpunan ini bebas linear.
+          Perhatikan \( c_1\cdot f(x)+c_2\cdot g(x)=Z(x) \), lalu
+          substitusikan \( x=\pi \) dan \( x=\pi/2 \) untuk memperoleh
+          \begin{equation*}
+            \begin{linsys}{2}
+              c_1\cdot (-1)  &+  &c_2\cdot 0     &=  &0  \\
+              c_1\cdot 0     &+  &c_2\cdot 1     &=  &0
+            \end{linsys}
+          \end{equation*}
+          yang jelas memberikan \( c_1=0 \), \( c_2=0 \).
+        \partsitem Himpunan ini juga bebas linear.
+          Dengan memperhatikan \( c_1\cdot f(x)+c_2\cdot g(x)=Z(x) \) dan
+          menyubstitusikan \( x=1 \) serta \( x=e \),
+          \begin{equation*}
+            \begin{linsys}{2}
+              c_1\cdot e    &+  &c_2\cdot 0     &=  &0  \\
+              c_1\cdot e^e  &+  &c_2\cdot 1     &=  &0
+            \end{linsys}
+          \end{equation*}
+          diperoleh \( c_1=0 \) dan \( c_2=0 \).
+      \end{exparts}  
+     \end{answer}
+  \recommended \item 
+    Manakah dari subhimpunan ruang fungsi bernilai real dengan satu variabel
+    real berikut yang bergantung linear dan manakah yang bebas linear?
+    (Beberapa fungsi konstan telah disingkat; misalnya, pada butir pertama,
+    `$2$' menyatakan fungsi konstan $f(x)=2$.)
+    \begin{exparts*}
+      \partsitem \( \set{2,4\sin^2(x),\cos^2(x)} \)
+      \partsitem \( \set{1,\sin(x),\sin(2x)} \)
+      \partsitem \( \set{x,\cos(x)} \)
+      \partsitem \( \set{(1+x)^2,x^2+2x,3} \)
+      \partsitem \( \set{\cos(2x),\sin^2(x),\cos^2(x)} \)
+      \partsitem \( \set{0,x,x^2} \)
+    \end{exparts*}
+    \begin{answer}
+      Dalam setiap kasus, jika himpunannya bebas, Anda harus membuktikannya;
+      jika bergantung, Anda harus memperlihatkan suatu kebergantungan.
+      \begin{exparts}
+        \partsitem Himpunan ini bergantung.
+          Relasi yang sudah dikenal $\sin^2(x)+\cos^2(x)=1$ menunjukkan bahwa
+          $2=c_1\cdot(4\sin^2(x))+c_2\cdot(\cos^2(x))$ dipenuhi oleh
+          $c_1=1/2$ dan $c_2=2$.
+        \partsitem Himpunan ini bebas.
+          Perhatikan relasi
+          $c_1\cdot 1+c_2\cdot\sin(x)+c_3\cdot\sin(2x)=0$
+          (di sini `$0$' adalah fungsi nol). Mengambil tiga titik yang sesuai,
+          seperti $x=\pi$, $x=\pi/2$, $x=\pi/4$, menghasilkan sistem
+          \begin{equation*}
+            \begin{linsys}{3}
+               c_1  &   &                &   &      &=  &0  \\
+               c_1  &+  &c_2             &   &      &=  &0  \\
+               c_1  &+  &(\sqrt{2}/2)c_2 &+  &c_3   &=  &0  
+            \end{linsys}
+          \end{equation*}
+          yang satu-satunya solusinya ialah $c_1=0$, $c_2=0$, dan $c_3=0$.
+        \partsitem Melalui pengamatan, himpunan ini bebas. Kebergantungan
+          $\cos(x)=c\cdot x$ tidak mungkin ada karena fungsi kosinus bukan
+          kelipatan fungsi identitas (kita menerapkan
+          \nearbycorollary{cor:LDMeansLC}).
+        \partsitem Melalui pengamatan, kita menemukan adanya kebergantungan.
+          Karena $(1+x)^2=x^2+2x+1$, persamaan
+          $c_1\cdot(1+x)^2+c_2\cdot(x^2+2x)=3$ dipenuhi oleh $c_1=3$ dan
+          $c_2=-3$.
+        \partsitem Himpunan ini bergantung. Cara termudah untuk melihatnya
+          ialah mengingat relasi trigonometri
+          $\cos^2(x)-\sin^2(x)=\cos(2x)$.
+          (\textit{Catatan.} Orang yang tidak mengingat relasi ini dan mencoba
+          beberapa nilai $x$ tidak akan pernah memperoleh sistem yang menuju
+          ke solusi tunggal, sehingga tidak akan pernah dapat menyimpulkan
+          bahwa himpunan tersebut bebas. Tentu saja, orang itu mungkin bertanya
+          apakah ia hanya belum mencoba himpunan nilai $x$ yang tepat, tetapi
+          beberapa percobaan akan membuat kebanyakan orang mencari suatu
+          kebergantungan sebagai gantinya.)
+        \partsitem Himpunan ini bergantung karena memuat objek nol dalam ruang
+          vektor, yaitu polinomial nol.
+      \end{exparts}  
+     \end{answer}
+  \item 
+    Apakah persamaan \( \sin^2(x)/\cos^2(x)=\tan^2(x) \) menunjukkan bahwa
+    himpunan fungsi \( \set{\sin^2(x),\cos^2(x),\tan^2(x)} \) merupakan
+    subhimpunan bergantung linear dari himpunan semua fungsi bernilai real
+    dengan domain interval \( (-\pi/2..\pi/2) \), yakni bilangan real antara
+    \( -\pi/2 \) dan \( \pi/2 \)?
+    \begin{answer}
+      Tidak, persamaan itu bukan relasi linear. Bahkan, himpunan ini bebas,
+      sebagaimana ditunjukkan oleh sistem yang timbul ketika \( x \) diambil
+      sebesar \( 0 \), \( \pi/6 \), dan \( \pi/4 \).
+    \end{answer}
+  \item  
+    Apakah bidang-$xy$, sebagai subhimpunan ruang vektor $\Re^3$, bebas linear?
+    \begin{answer}
+      Tidak. Berikut dua anggota bidang tersebut, dengan anggota kedua
+      merupakan kelipatan anggota pertama.
+      \begin{equation*}
+        \colvec{1  \\ 0 \\ 0},\,\colvec{2 \\ 0 \\ 0}
+      \end{equation*}
+      (Alasan lain bahwa jawabannya ``tidak'' ialah vektor nol merupakan
+      anggota bidang tersebut dan tidak ada himpunan yang memuat vektor nol
+      yang bebas linear.)
+    \end{answer}
+  \recommended \item
+    Tunjukkan bahwa baris-baris tak nol dari suatu matriks berbentuk eselon
+    membentuk himpunan bebas linear.
+    \begin{answer}
+      Kita telah menunjukkan hal ini: Lema Kombinasi Linear dan akibatnya
+      menyatakan bahwa, dalam matriks berbentuk eselon, tidak ada baris tak nol
+      yang merupakan kombinasi linear dari baris-baris lainnya.
+    \end{answer}
+  \item
+     \begin{exparts}
+       \partsitem Tunjukkan bahwa jika himpunan
+          \( \set{\vec{u},\vec{v},\vec{w}} \) bebas linear, maka himpunan
+          \( \set{\vec{u},\vec{u}+\vec{v},\vec{u}+\vec{v}+\vec{w}} \)
+          juga bebas linear.
+       \partsitem Apa hubungan antara kebebasan atau kebergantungan linear
+         \( \set{\vec{u},\vec{v},\vec{w}} \) dan kebebasan atau kebergantungan
+         \( \set{\vec{u}-\vec{v},\vec{v}-\vec{w},\vec{w}-\vec{u}} \)?
+     \end{exparts}
+     \begin{answer}
+       \begin{exparts}
+         \partsitem Andaikan \( \set{\vec{u},\vec{v},\vec{w}} \) bebas
+           linear, sehingga setiap relasi
+           $d_0\vec{u}+d_1\vec{v}+d_2\vec{w}=\zero$ menghasilkan kesimpulan
+           bahwa $d_0=0$, $d_1=0$, dan $d_2=0$.
+
+           Perhatikan relasi
+           \( c_1(\vec{u})+c_2(\vec{u}+\vec{v})+c_3(\vec{u}+\vec{v}+\vec{w})
+           =\zero \).
+           Tulis ulang relasi itu untuk memperoleh
+           \( (c_1+c_2+c_3)\vec{u}+(c_2+c_3)\vec{v}+(c_3)\vec{w}=\zero \).
+           Dengan mengambil $d_0$ sebesar $c_1+c_2+c_3$, $d_1$ sebesar
+           $c_2+c_3$, dan $d_2$ sebesar $c_3$, kita memperoleh sistem berikut.
+           \begin{equation*}
+             \begin{linsys}{3}
+               c_1  &+  &c_2  &+  &c_3  &=  &0  \\
+                    &   &c_2  &+  &c_3  &=  &0  \\
+                    &   &     &   &c_3  &=  &0
+             \end{linsys}
+           \end{equation*}
+           Kesimpulannya: semua $c$ bernilai nol, sehingga himpunan tersebut
+           bebas linear.
+        \partsitem Himpunan kedua bergantung
+           \begin{equation*}
+             1\cdot(\vec{u}-\vec{v})
+             +1\cdot(\vec{v}-\vec{w})
+             +1\cdot(\vec{w}-\vec{u})
+             =\zero
+           \end{equation*}
+           tanpa memandang apakah himpunan pertama bebas atau tidak.
+      \end{exparts}
+    \end{answer}
+  \item 
+    \nearbyexample{ex:EmSetLI} menunjukkan bahwa himpunan kosong bebas linear.
+    \begin{exparts}
+      \partsitem Kapan suatu himpunan beranggota satu bebas linear?
+      \partsitem Bagaimana dengan himpunan beranggota dua?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Himpunan tunggal $\set{\vec{v}}$ bebas linear jika dan
+          hanya jika $\vec{v}\neq\zero$. Untuk arah `jika', dengan
+          $\vec{v}\neq\zero$, kita dapat menerapkan
+          \nearbylemma{le:LDIffANonTrivLinRel} dengan memperhatikan relasi
+          \( c\cdot\vec{v}=\zero \) dan mencatat bahwa satu-satunya solusi
+          adalah solusi trivial:~$c=0$. Untuk arah `hanya jika', ingat saja
+          bahwa
+          \nearbyexample{ex:SetWithZeroVecLD}
+          menunjukkan bahwa $\set{\zero}$ bergantung linear. Jadi, jika
+          $\set{\vec{v}}$ bebas linear, maka $\vec{v}\neq\zero$.
+
+          (\textit{Catatan.} Jawaban lain ialah mengatakan bahwa ini merupakan
+          kasus khusus dari
+          \nearbylemma{lm:AddVecLiSetIsLiIffVecNotInSpan} 
+          ketika \( S=\emptyset \).)
+        \partsitem Himpunan beranggota dua bebas linear jika dan hanya jika
+          tidak satu pun anggotanya merupakan kelipatan anggota lainnya
+          (perhatikan bahwa jika salah satunya adalah vektor nol, vektor itu
+          merupakan kelipatan dari yang lain). Pernyataan ekuivalennya ialah:
+          suatu himpunan bergantung linear jika dan hanya jika satu elemennya
+          merupakan kelipatan elemen lainnya.
+
+          Pembuktiannya mudah. Himpunan $\set{\vec{v}_1,\vec{v}_2}$ bergantung
+          linear jika dan hanya jika terdapat relasi
+          $c_1\vec{v}_1+c_2\vec{v}_2=\zero$ dengan $c_1\neq 0$ atau
+          $c_2\neq 0$ (atau keduanya). Hal itu berlaku jika dan hanya jika
+          $\vec{v}_1=(-c_2/c_1)\vec{v}_2$ atau
+          $\vec{v}_2=(-c_1/c_2)\vec{v}_1$ (atau keduanya).
+       \end{exparts}   
+     \end{answer}
+  \item  
+    Dalam sebarang ruang vektor \( V \), himpunan kosong bebas linear.
+    Bagaimana dengan seluruh \( V \)?
+    \begin{answer}
+      Himpunan ini bergantung linear karena memuat vektor nol.
+    \end{answer}
+  \item 
+    Tunjukkan bahwa jika \( \set{\vec{x},\vec{y},\vec{z}} \) bebas linear,
+    maka semua subhimpunan sejatinya juga bebas:~\( \set{\vec{x},\vec{y}} \),
+    \( \set{\vec{x},\vec{z}} \), \( \set{\vec{y},\vec{z}} \),
+    \( \set{\vec{x}} \),\( \set{\vec{y}} \), \( \set{\vec{z}} \),
+    dan \( \set{} \).
+    Apakah kebalikannya juga berlaku?
+    \begin{answer}
+      \nearbylemma{le:SubsetPreserveLI} memberikan arah `jika'. Kebalikannya
+      (pernyataan `hanya jika') tidak berlaku. Sebagai contoh, perhatikan ruang
+      vektor \( \Re^2 \) dan vektor-vektor berikut.
+      \begin{equation*}
+         \vec{x}=\colvec{1 \\ 0},\quad
+         \vec{y}=\colvec{0 \\ 1},\quad
+         \vec{z}=\colvec{1 \\ 1}
+      \end{equation*} 
+    \end{answer}
+  \item 
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa
+        \begin{equation*}
+          S=\set{\colvec{1 \\ 1 \\ 0},\colvec{-1 \\ 2 \\ 0}}
+        \end{equation*}
+        merupakan subhimpunan bebas linear dari \( \Re^3 \).
+      \partsitem Tunjukkan bahwa
+        \begin{equation*}
+          \colvec{3 \\ 2 \\ 0}
+        \end{equation*}
+        berada dalam rentang $S$ dengan mencari \( c_1 \) dan \( c_2 \) yang
+        menghasilkan relasi linear.
+        \begin{equation*}
+          c_1\colvec{1 \\ 1 \\ 0}
+          +c_2\colvec{-1 \\ 2 \\ 0}
+          =\colvec{3 \\ 2 \\ 0}
+        \end{equation*}
+        Tunjukkan bahwa pasangan \( c_1,c_2 \) tersebut tunggal.
+      \partsitem Andaikan \( S \) merupakan subhimpunan suatu ruang vektor dan
+        \( \vec{v} \) berada dalam \( \spanof{S} \), sehingga \( \vec{v} \)
+        merupakan kombinasi linear vektor-vektor dalam \( S \). Buktikan bahwa
+        jika \( S \) bebas linear, kombinasi linear vektor-vektor dalam
+        \( S \) yang berjumlah \( \vec{v} \) bersifat tunggal (yakni, tunggal
+        hingga pengurutan ulang dan penambahan atau pembuangan suku berbentuk
+        \( 0\cdot\vec{s} \)). Jadi, \( S \) merupakan himpunan perentang
+        minimal dalam arti kuat ini: setiap vektor dalam \( \spanof{S} \) merupakan
+        kombinasi elemen-elemen $S$ sesedikit mungkin\Dash hanya satu kali.
+      \partsitem
+        Buktikan bahwa ketika \( S \) tidak bebas linear, dapat terjadi dua
+        kombinasi linear berbeda berjumlah vektor yang sama.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Sistem linear yang muncul dari
+          \begin{equation*}
+            c_1\colvec{1 \\ 1 \\ 0}
+            +c_2\colvec{-1 \\ 2 \\ 0}
+            =\colvec{0 \\ 0 \\ 0}
+          \end{equation*}
+          memiliki solusi tunggal \( c_1=0 \) dan \( c_2=0 \).
+        \partsitem Sistem linear yang muncul dari
+          \begin{equation*}
+            c_1\colvec{1 \\ 1 \\ 0}
+            +c_2\colvec{-1 \\ 2 \\ 0}
+            =\colvec{3 \\ 2 \\ 0}
+          \end{equation*}
+          memiliki solusi tunggal \( c_1=8/3 \) dan \( c_2=-1/3 \).
+        \partsitem Andaikan \( S \) bebas linear. Andaikan kita memiliki
+          $\vec{v}=c_1\vec{s}_1+\dots+c_n\vec{s}_n$ sekaligus
+          $\vec{v}=d_1\vec{t}_1+\dots+d_m\vec{t}_m$ (dengan vektor-vektornya
+          merupakan anggota $S$). Sekarang,
+          \begin{equation*}
+            c_1\vec{s}_1+\dots+c_n\vec{s}_n
+            =\vec{v}
+            =d_1\vec{t}_1+\dots+d_m\vec{t}_m
+          \end{equation*}
+          dapat ditulis ulang sebagai berikut.
+          \begin{equation*}
+            c_1\vec{s}_1+\dots+c_n\vec{s}_n
+            -d_1\vec{t}_1-\dots-d_m\vec{t}_m
+            =\zero
+          \end{equation*}
+          Mungkin beberapa $\vec{s}$ sama dengan beberapa $\vec{t}$; kita
+          dapat menggabungkan koefisien-koefisien yang terkait (yakni, jika
+          $\vec{s}_i=\vec{t}_j$, maka
+          $\cdots+c_i\vec{s}_i+\dots-d_j\vec{t}_j-\cdots$ dapat ditulis ulang
+          sebagai $\cdots+(c_i-d_j)\vec{s}_i+\cdots$). Persamaan itu merupakan
+          relasi linear di antara anggota-anggota berbeda (setelah penggabungan
+          selesai) dari himpunan $S$. Kita telah mengandaikan bahwa $S$ bebas
+          linear, sehingga semua koefisiennya nol. Jika $i$ sedemikian sehingga
+          $\vec{s}_i$ tidak sama dengan satu pun $\vec{t}_j$, maka $c_i$ nol.
+          Jika $j$ sedemikian sehingga $\vec{t}_j$ tidak sama dengan satu pun
+          $\vec{s}_i$, maka $d_j$ nol. Dalam kasus terakhir, kita memiliki
+          $c_i-d_j=0$, sehingga $c_i=d_j$.
+
+          Oleh karena itu, kedua jumlah semula sama, kecuali mungkin beberapa
+          suku $0\cdot\vec{s}_i$ atau $0\cdot\vec{t}_j$ yang dapat kita abaikan.
+        \partsitem
+          Himpunan ini tidak bebas linear:
+          \begin{equation*}
+            S=\set{\colvec{1 \\ 0},\colvec{2 \\ 0}}\subset\Re^2
+          \end{equation*}
+          dan kedua kombinasi linear ini memberikan hasil yang sama
+          \begin{equation*}
+            \colvec{0 \\ 0}=2\cdot\colvec{1 \\ 0}-1\cdot\colvec{2 \\ 0}
+                            =4\cdot\colvec{1 \\ 0}-2\cdot\colvec{2 \\ 0}
+          \end{equation*}
+          Jadi, suatu himpunan yang bergantung linear dapat memiliki dua
+          kombinasi linear berbeda dengan hasil yang sama.
+
+          Bahkan, pernyataan yang lebih kuat berikut berlaku: jika suatu
+          himpunan bergantung linear, pasti terdapat dua kombinasi linear
+          berbeda yang berjumlah vektor yang sama. Secara singkat, jika
+          \( c_1\vec{s}_1+\dots+c_n\vec{s}_n=\zero \), mengalikan kedua ruas
+          relasi tersebut dengan dua menghasilkan relasi lain. Jika relasi
+          pertama tak trivial, relasi kedua juga tak trivial.
+      \end{exparts}  
+    \end{answer}
+  \item  \label{exer:PolyZeroFcnOnlyIfZeroPol}
+     Buktikan bahwa suatu polinomial menghasilkan fungsi nol jika dan hanya
+     jika polinomial itu adalah polinomial nol.
+     (\textit{Komentar.} Pertanyaan ini bukan masalah Aljabar Linear, tetapi
+     hasilnya sering kita gunakan. Suatu polinomial menghasilkan fungsi secara
+     alami:~$x\mapsto c_nx^n+\dots+c_1x+c_0$.)
+     \begin{answer}
+       Dalam pernyataan `jika dan hanya jika' ini, arah `jika' sudah
+       jelas\Dash jika polinomialnya adalah polinomial nol, fungsi yang timbul
+       dari polinomial itu pasti fungsi nol $x\mapsto 0$. Untuk arah `hanya
+       jika', tulis $p(x)=c_nx^n+\dots+c_0$. Menyubstitusikan nol,
+       $p(0)=0$, memberikan $c_0=0$. Mengambil turunannya dan menyubstitusikan
+       nol, $p^\prime(0)=0$, memberikan $c_1=0$. Dengan cara serupa, kita
+       memperoleh bahwa setiap $c_i$ nol dan $p$ adalah polinomial nol.
+     \end{answer}
+  \item
+    Kembali ke Bagian 1.2 dan definisikan ulang titik, garis, bidang, serta
+    permukaan linear lainnya agar kasus-kasus degenerat dihindari.
+    \begin{answer}
+      Pembahasan dalam bagian ini menyarankan agar kita mendefinisikan
+      permukaan linear tak degenerat berdimensi \( n \) sebagai rentang suatu
+      himpunan bebas linear yang terdiri atas \( n \) vektor.
+    \end{answer}
+  \item 
+    \begin{exparts}  
+      \partsitem Tunjukkan bahwa setiap himpunan empat vektor dalam \( \Re^2 \)
+         bergantung linear.
+      \partsitem Apakah ini berlaku untuk setiap himpunan lima vektor?
+         Untuk setiap himpunan tiga vektor?
+      \partsitem Berapa banyak elemen maksimum yang dapat dimiliki suatu
+         subhimpunan bebas linear dari $\Re^2$?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Untuk sebarang $a_{1,1}$, \ldots, $a_{2,4}$,
+          \begin{equation*}
+            c_1\colvec{a_{1,1} \\ a_{2,1}}
+            +c_2\colvec{a_{1,2} \\ a_{2,2}}
+            +c_3\colvec{a_{1,3} \\ a_{2,3}}
+            +c_4\colvec{a_{1,4} \\ a_{2,4}}
+            =\colvec{0 \\ 0}
+          \end{equation*}
+          menghasilkan suatu sistem linear
+          \begin{equation*}
+             \begin{linsys}{4}
+              a_{1,1}c_1 &+ &a_{1,2}c_2 &+ &a_{1,3}c_3 &+ &a_{1,4}c_4 &= &0  \\
+              a_{2,1}c_1 &+ &a_{2,2}c_2 &+ &a_{2,3}c_3 &+ &a_{2,4}c_4 &= &0  
+             \end{linsys}
+          \end{equation*}
+        menghasilkan sistem linear yang memiliki tak hingga banyak solusi
+        (Metode Gauss menyisakan setidaknya dua variabel bebas). Oleh karena
+        itu, terdapat relasi linear tak trivial di antara anggota-anggota
+        $\Re^2$ yang diberikan.
+      \partsitem Setiap himpunan lima vektor merupakan himpunan super dari
+        suatu himpunan empat vektor, sehingga bergantung linear.
+
+        Untuk tiga vektor dari $\Re^2$, argumen dari butir sebelumnya tetap
+        berlaku, dengan sedikit perubahan bahwa Metode Gauss sekarang hanya
+        menyisakan setidaknya satu variabel bebas (tetapi ini tetap memberikan
+        tak hingga banyak solusi).
+      \partsitem Butir sebelumnya menunjukkan bahwa tidak ada subhimpunan
+        beranggota tiga dari $\Re^2$ yang bebas. Kita tahu bahwa ada
+        subhimpunan beranggota dua dari $\Re^2$ yang bebas\Dash salah satunya
+        adalah
+        \begin{equation*}
+          \set{\colvec{1  \\ 0},\colvec{0  \\ 1}}
+        \end{equation*} 
+        sehingga jawabannya adalah dua.
+     \end{exparts}  
+    \end{answer}
+  \item
+    Adakah himpunan empat vektor dalam \( \Re^3 \) sedemikian sehingga setiap
+    tiga vektornya membentuk himpunan bebas linear?
+    \begin{answer}
+      Ada; berikut salah satunya.
+      \begin{equation*}
+         \set{\colvec{1 \\ 0 \\ 0},
+              \colvec{0 \\ 1 \\ 0},
+              \colvec{0 \\ 0 \\ 1},
+              \colvec{1 \\ 1 \\ 1} }
+      \end{equation*}  
+    \end{answer}
+  \item  
+    Apakah setiap himpunan yang bergantung linear harus memiliki subhimpunan
+    yang bergantung dan subhimpunan yang bebas?
+    \begin{answer}
+      Ya. Tetapkan sebarang ruang vektor~$V$, dan misalkan $S$ merupakan
+      subhimpunan bergantung linear dari~$V$. Sebagai subhimpunan $S$ yang
+      bergantung, kita dapat mengambil~$S$ sendiri. Sebagai subhimpunan $S$
+      yang bebas, kita dapat mengambil himpunan kosong.
+    \end{answer}
+  \item  
+    Dalam \( \Re^4 \), manakah himpunan bebas linear terbesar yang dapat Anda
+    temukan? Yang terkecil? Manakah himpunan bergantung linear terbesar? Yang
+    terkecil? (`Terbesar' dan `terkecil' berarti tidak ada himpunan super atau
+    subhimpunan dengan sifat yang sama.)
+    \begin{answer} 
+      Dalam \( \Re^4 \), himpunan bebas linear terbesar memiliki empat
+      vektor. Ada banyak contoh himpunan semacam itu; berikut salah satunya.
+      \begin{equation*}
+        \set{\colvec{1 \\ 0 \\ 0 \\ 0},
+             \colvec{0 \\ 1 \\ 0 \\ 0},
+             \colvec{0 \\ 0 \\ 1 \\ 0},
+             \colvec{0 \\ 0 \\ 0 \\ 1}  }
+      \end{equation*}
+      Untuk melihat bahwa tidak ada himpunan lima vektor atau lebih yang dapat
+      bebas, susun
+      \begin{equation*}
+             c_1\colvec{a_{1,1} \\ a_{2,1} \\ a_{3,1} \\ a_{4,1}}
+            +c_2\colvec{a_{1,2} \\ a_{2,2} \\ a_{3,2} \\ a_{4,2}}
+            +c_3\colvec{a_{1,3} \\ a_{2,3} \\ a_{3,3} \\ a_{4,3}}
+            +c_4\colvec{a_{1,4} \\ a_{2,4} \\ a_{3,4} \\ a_{4,4}}
+            +c_5\colvec{a_{1,5} \\ a_{2,5} \\ a_{3,5} \\ a_{4,5}}
+             =\colvec{0 \\ 0 \\ 0 \\ 0}
+      \end{equation*}
+      dan perhatikan bahwa sistem linear yang dihasilkan
+      \begin{equation*}
+        \begin{linsys}{5}
+          a_{1,1}c_1 &+ &a_{1,2}c_2 &+ &a_{1,3}c_3 
+              &+ &a_{1,4}c_4 &+ &a_{1,5}c_5 &=  &0   \\
+          a_{2,1}c_1 &+ &a_{2,2}c_2 &+ &a_{2,3}c_3 
+              &+ &a_{2,4}c_4 &+ &a_{2,5}c_5 &=  &0   \\
+          a_{3,1}c_1 &+ &a_{3,2}c_2 &+ &a_{3,3}c_3 
+              &+ &a_{3,4}c_4 &+ &a_{3,5}c_5 &=  &0   \\
+          a_{4,1}c_1 &+ &a_{4,2}c_2 &+ &a_{4,3}c_3 
+              &+ &a_{4,4}c_4 &+ &a_{4,5}c_5 &=  &0     
+        \end{linsys}
+      \end{equation*}
+      memiliki empat persamaan dan lima variabel tak diketahui. Karena itu,
+      Metode Gauss harus berakhir dengan setidaknya satu variabel \( c \) bebas,
+      sehingga terdapat tak hingga banyak solusi. Jadi, relasi linear di atas
+      di antara vektor-vektor berkomponen empat memiliki solusi selain solusi
+      trivial.
+
+      Himpunan bebas linear terkecil adalah himpunan kosong.
+
+      Himpunan bergantung linear terbesar adalah \( \Re^4 \). Yang terkecil
+      adalah \( \set{\zero} \).
+    \end{answer}
+  \recommended \item 
+    Kebebasan linear dan kebergantungan linear merupakan sifat himpunan.
+    Karena itu, secara alami kita dapat bertanya bagaimana sifat kebebasan dan
+    kebergantungan linear berperilaku terhadap relasi dan operasi himpunan
+    elementer yang sudah dikenal. Dalam isi subbagian ini, kita telah membahas
+    relasi subhimpunan dan himpunan super. Kita juga dapat mempertimbangkan
+    operasi irisan, komplemen, dan gabungan.
+    \begin{exparts}
+       \partsitem Bagaimana kebebasan linear berkaitan dengan irisan: dapatkah
+         irisan dua himpunan bebas linear bersifat bebas? Haruskah demikian?
+       \partsitem Bagaimana kebebasan linear berkaitan dengan komplemen?
+       \partsitem Tunjukkan bahwa gabungan dua himpunan bebas linear dapat
+          bersifat bebas linear.
+       \partsitem Tunjukkan bahwa gabungan dua himpunan bebas linear tidak
+          selalu bebas linear.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Irisan dua himpunan bebas linear $S\intersection T$ harus
+          bebas linear karena merupakan subhimpunan dari himpunan bebas linear
+          $S$ (dan tentu saja juga dari himpunan bebas linear $T$).
+        \partsitem Komplemen suatu himpunan bebas linear bergantung linear
+          karena memuat vektor nol.
+        \partsitem Contoh sederhana dalam \( \Re^2 \) ialah kedua himpunan ini.
+          \begin{equation*}
+            S=\set{\colvec{1 \\ 0}}
+            \qquad
+            T=\set{\colvec{0 \\ 1}}          
+          \end{equation*}
+          Contoh yang sedikit lebih halus, juga dalam \( \Re^2 \), ialah kedua
+          himpunan ini.
+          \begin{equation*}
+            S=\set{\colvec{1 \\ 0}}
+            \qquad
+            T=\set{\colvec{1 \\ 0}, \colvec{0 \\ 1}}
+          \end{equation*}
+        \partsitem Kita harus memberikan suatu contoh. Salah satu contoh dalam
+          \( \Re^2 \) adalah
+          \begin{equation*}
+            S=\set{\colvec{1 \\ 0}}
+            \qquad
+            T=\set{\colvec{2 \\ 0}}
+          \end{equation*}
+          karena kebergantungan linear \( S\union T \) mudah dilihat.
+      \end{exparts}
+    \end{answer}
+  \item \textit{Lanjutan dari latihan sebelumnya.}
+    Bagaimana interaksi antara sifat kebebasan linear dan operasi gabungan?
+    \begin{exparts}
+       \partsitem Kita mungkin menduga bahwa gabungan $S\union T$ dari dua
+          himpunan bebas linear bersifat bebas linear jika dan hanya jika
+          rentang keduanya memiliki irisan trivial
+          $\spanof{S}\intersection \spanof{T}=\set{\zero}$. Apa yang salah
+          dengan argumen berikut untuk arah `hanya jika' dari dugaan tersebut?
+          ``Jika gabungan $S\union T$ bebas linear, satu-satunya solusi dari
+          $c_1\vec{s}_1+\cdots+c_n\vec{s}_n
+            +d_1\vec{t}_1+\cdots+d_m\vec{t}_m
+            =\zero$
+          adalah solusi trivial $c_1=0$, \ldots, $d_m=0$. Jadi, setiap anggota
+          irisan rentang harus merupakan vektor nol karena dalam
+          $c_1\vec{s}_1+\cdots+c_n\vec{s}_n
+            =d_1\vec{t}_1+\cdots+d_m\vec{t}_m$
+          setiap skalar bernilai nol.''
+       \partsitem Berikan contoh yang menunjukkan bahwa dugaan tersebut salah.
+       \partsitem Carilah himpunan bebas linear \( S \) dan \( T \) sedemikian
+          sehingga gabungan \( S-(S\cap T)\) dan \( T-(S\cap T) \) bebas
+          linear, tetapi gabungan \( S\cup T \) tidak bebas linear.
+       \partsitem Karakterisasikan kapan gabungan dua himpunan bebas linear
+          bersifat bebas linear dalam suku-suku irisan rentangnya.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem \nearbylemma{le:LDIffANonTrivLinRel} mengharuskan
+          vektor-vektor
+          $\vec{s}_1,\ldots,\vec{s}_n,\vec{t}_1,\ldots,\vec{t}_m$ berbeda.
+          Namun, gabungan $S\cup T$ dapat bebas linear dengan suatu
+          $\vec{s}_i$ sama dengan suatu $\vec{t}_j$.
+        \partsitem Salah satu contoh dalam \( \Re^2 \) ialah kedua himpunan ini.
+          \begin{equation*}
+            S=\set{\colvec{1 \\ 0}}
+            \qquad
+            T=\set{\colvec{1 \\ 0}, \colvec{0 \\ 1}}
+          \end{equation*}
+        \partsitem 
+          Contoh dari \( \Re^2 \) ialah himpunan-himpunan berikut.
+          \begin{equation*}
+            S=\set{\colvec{1 \\ 0}, \colvec{0 \\ 1}}
+            \qquad
+            T=\set{\colvec{1 \\ 0}, \colvec{1 \\ 1}}
+          \end{equation*}
+        \partsitem Gabungan dua himpunan bebas linear $S\union T$ bebas linear
+          jika dan hanya jika rentang \( S \) dan \( T-(S\cap T)\) memiliki
+          irisan trivial
+          $\spanof{S}\intersection \spanof{T-(S\cap T)}=\set{\zero}$.
+          Untuk membuktikannya, andaikan \( S \) dan \( T \) merupakan
+          subhimpunan bebas linear dari suatu ruang vektor.
+
+          Untuk arah `jika', andaikan irisan rentang tersebut trivial,
+          \( \spanof{S}\intersection \spanof{T-(S\cap T)}=\set{\zero} \).
+          Perhatikan himpunan $S\union (T-(S\cap T))=S\union T$ dan relasi
+          linear
+          $c_1\vec{s}_1+\dots+c_n\vec{s}_n
+            +d_1\vec{t}_1+\dots+d_m\vec{t}_m=\zero$.
+          Pengurangan menghasilkan
+          $c_1\vec{s}_1+\dots+c_n\vec{s}_n=
+            -d_1\vec{t}_1-\dots-d_m\vec{t}_m$.
+          Ruas kiri persamaan itu berjumlah suatu vektor dalam $\spanof{S}$,
+          sedangkan ruas kanannya merupakan vektor dalam
+          $\spanof{T-(S\cap T)}$. Oleh karena irisan rentangnya trivial, kedua
+          ruas sama dengan vektor nol. Karena $S$ bebas linear, semua $c$
+          bernilai nol. Karena $T$ bebas linear, $T-(S\cap T)$ juga bebas
+          linear, sehingga semua $d$ bernilai nol. Jadi, relasi linear semula
+          di antara anggota $S\union T$ hanya berlaku jika semua koefisiennya
+          nol. Dengan demikian, $S\union T$ bebas linear.
+
+          Untuk arah `hanya jika', kita dapat menjalankan argumen yang sama secara
+          terbalik. Andaikan gabungan $S\union T$ bebas linear. Perhatikan
+          suatu relasi linear di antara anggota $S$ dan $T-(S\cap T)$:
+          $c_1\vec{s}_1+\cdots+c_n\vec{s}_n
+            +d_1\vec{t}_1+\cdots+d_m\vec{t}_m
+            =\zero$
+          Perhatikan bahwa tidak ada $\vec{s}_i$ yang sama dengan
+          $\vec{t}_j$, sehingga ini merupakan kombinasi vektor-vektor berbeda,
+          sebagaimana disyaratkan \nearbylemma{le:LDIffANonTrivLinRel}. Jadi,
+          satu-satunya solusi adalah solusi trivial $c_1=0$, \ldots, $d_m=0$.
+          Karena setiap vektor $\vec{v}$ dalam irisan rentang
+          $\spanof{S}\intersection \spanof{T-(S\cap T)}$ dapat kita tulis
+          sebagai
+          $\vec{v}=c_1\vec{s}_1+\cdots+c_n\vec{s}_n
+            =-d_1\vec{t}_1-\cdots-d_m\vec{t}_m$,
+          vektor itu harus merupakan vektor nol karena setiap skalarnya nol.
+      \end{exparts}  
+    \end{answer}
+  \item \label{exer:FillIndDetProofSetHasLISub}
+    Untuk \nearbycorollary{th:AlwaysAnLDSubset},
+    \begin{exparts}
+       \partsitem lengkapilah induksi dalam pembuktiannya;
+       \partsitem berikan pembuktian alternatif yang dimulai dengan himpunan
+         kosong dan membangun suatu barisan subhimpunan bebas linear dari
+         himpunan hingga yang diberikan sampai muncul subhimpunan dengan
+         rentang yang sama seperti himpunan tersebut.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+         \partsitem Kita melakukan induksi pada banyaknya vektor dalam
+           himpunan hingga \( S \).
+
+           Kasus dasarnya ialah $S$ tidak memiliki elemen. Dalam kasus ini,
+           $S$ bebas linear dan tidak ada yang perlu diperiksa\Dash subhimpunan
+           $S$ yang memiliki rentang sama dengan $S$ adalah $S$ sendiri.
+
+           Untuk langkah induktif, andaikan teorema itu benar untuk semua
+           himpunan berukuran $n=0$, $n=1$, \ldots, $n=k$, guna membuktikan
+           bahwa teorema berlaku ketika \( S \) memiliki $n=k+1$ elemen. Jika
+           himpunan beranggota $k+1$
+           \( S=\set{\vec{s}_0,\dots,\vec{s}_{k}} \) bebas linear, teorema ini
+           trivial; jadi, andaikan himpunan tersebut bergantung. Berdasarkan
+           \nearbycorollary{cor:LDMeansLC}, terdapat suatu \( \vec{s}_i \)
+           yang merupakan kombinasi linear vektor-vektor lain dalam \( S \).
+           Definisikan \( S_1=S-\set{\vec{s}_i} \), dan perhatikan bahwa
+           \( S_1 \) memiliki rentang yang sama dengan \( S \) berdasarkan
+           \nearbycorollary{cor:OmitVecNotShrinkSpanIffVecIsDep}. Himpunan
+           \( S_1 \) memiliki \( k \) elemen, sehingga hipotesis induktif
+           berlaku dan memberikan subhimpunan bebas linear dengan rentang yang
+           sama. Subhimpunan dari \( S_1 \) itu adalah subhimpunan \( S \) yang
+           diinginkan.
+         \partsitem Berikut sketsa argumennya. Kita menghilangkan rincian
+           argumen induksi.
+
+           Jika himpunan hingga \( S \) kosong, tidak ada yang perlu
+           dibuktikan. Jika \( S=\set{\zero} \), subhimpunan kosong memenuhi.
+
+           Jika tidak, ambil suatu vektor tak nol \( \vec{s}_1\in S \) dan
+           definisikan \( S_1=\set{\vec{s}_1} \). Jika
+           \( \spanof{S_1}=\spanof{S} \), pembuktian selesai dengan mencatat
+           bahwa \( S_1 \) bebas linear.
+
+           Jika tidak, terdapat suatu vektor tak nol
+           \( \vec{s}_2\in S-\spanof{S_1} \) (jika setiap \( \vec{s}\in S \)
+           berada dalam \( \spanof{S_1} \), maka
+           \( \spanof{S_1}=\spanof{S} \)). Definisikan
+           \( S_2=S_1\union\set{\vec{s}_2} \). Jika
+           \( \spanof{S_2}=\spanof{S} \), pembuktian selesai dengan memakai
+           \nearbycorollary{cor:LDMeansLC} untuk menunjukkan bahwa \( S_2 \)
+           bebas linear.
+
+           Ulangi paragraf terakhir sampai muncul himpunan dengan rentang yang
+           cukup besar. Hal itu pada akhirnya pasti terjadi karena \( S \)
+           hingga, dan paling lambat \( \spanof{S} \) akan tercapai ketika kita
+           telah memakai setiap vektor dari \( S \).
+      \end{exparts}  
+    \end{answer}
+  \item 
+     Dengan sejumlah perhitungan, kita dapat memperoleh rumus untuk menentukan
+     apakah suatu himpunan vektor bebas linear atau tidak.
+     \begin{exparts}
+       \partsitem Tunjukkan bahwa subhimpunan \( \Re^2 \) berikut
+         \begin{equation*}
+           \set{\colvec{a \\ c},\colvec{b \\ d}}
+         \end{equation*}
+         bebas linear jika dan hanya jika \( ad-bc\neq 0 \).
+       \partsitem Tunjukkan bahwa subhimpunan \( \Re^3 \) berikut
+         \begin{equation*}
+           \set{\colvec{a \\ d \\ g},
+                \colvec{b \\ e \\ h},
+                \colvec{c \\ f \\ i}  }
+         \end{equation*}
+         bebas linear jika dan hanya jika
+         \( aei+bfg+cdh-hfa-idb-gec \neq 0 \).
+       \partsitem Kapan subhimpunan \( \Re^3 \) berikut
+         \begin{equation*}
+           \set{\colvec{a \\ d \\ g},
+                \colvec{b \\ e \\ h} }
+         \end{equation*}
+         bebas linear?
+       \partsitem Ini adalah pertanyaan pendapat: untuk himpunan empat vektor
+         dari \( \Re^4 \), haruskah ada suatu rumus yang melibatkan keenam
+         belas entri dan menentukan kebebasan himpunan tersebut? (Anda tidak
+         perlu menghasilkan rumus semacam itu; cukup putuskan apakah rumus itu
+         ada.)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem 
+          Dengan terlebih dahulu mengandaikan \( a\neq 0 \),
+          \begin{equation*}
+            x\colvec{a \\ c}
+            +y\colvec{b \\ d}
+            =\colvec{0 \\ 0}
+          \end{equation*}
+          menghasilkan
+          \begin{equation*}
+            \begin{linsys}{2}
+               ax  &+  &by &=  &0  \\
+               cx  &+  &dy &=  &0  
+            \end{linsys}
+            \grstep{-(c/a)\rho_1+\rho_2}
+            \begin{linsys}{2}
+               ax  &+  &by           &=  &0  \\
+                   &   &(-(c/a)b+d)y &=  &0  
+             \end{linsys}
+          \end{equation*}
+          yang hanya memiliki solusi trivial jika dan hanya jika
+          \( 0\neq-(c/a)b+d=(-cb+ad)/a \)
+          (dalam kasus ini kita telah mengandaikan \( a\neq 0 \), sehingga
+          substitusi balik menghasilkan solusi tunggal).
+
+          Kasus \( a=0 \) juga tidak sulit\Dash pisahkan menjadi subkasus
+          \( c\neq 0 \) dan \( c=0 \), lalu perhatikan bahwa dalam kasus-kasus
+          ini \( ad-bc=0\cdot d-bc \).
+
+          \textit{Komentar.} Latihan sebelumnya menunjukkan bahwa himpunan dua
+          vektor bergantung linear jika dan hanya jika salah satu vektor
+          merupakan kelipatan skalar dari vektor lainnya. Kita juga dapat
+          memakainya untuk melakukan perhitungan.
+        \partsitem Persamaan
+          \begin{equation*}
+            c_1\colvec{a \\ d \\ g}
+            +c_2\colvec{b \\ e \\ h}
+            +c_3\colvec{c \\ f \\ i}
+            =\colvec{0 \\ 0 \\ 0}
+          \end{equation*}
+         menyatakan suatu sistem linear homogen. Kita melanjutkan dengan
+         menuliskannya dalam bentuk matriks dan menerapkan Metode Gauss.
+
+         Pertama-tama kita reduksi matriks menjadi segitiga atas. Andaikan
+         \( a\neq 0 \). Dengan itu, kita dapat menolkan entri-entri di bawah
+         entri pertama pada kolom pertama.
+         \begin{equation*}
+           \grstep{(1/a)\rho_1}
+           \begin{amat}{3}
+              1   &b/a   &c/a  &0 \\
+              d   &e     &f    &0 \\
+              g   &h     &i    &0
+            \end{amat}                                            
+           \grstep[-g\rho_1+\rho_3]{-d\rho_1+\rho_2}
+           \begin{amat}{3}
+              1   &b/a           &c/a        &0   \\
+              0   &(ae-bd)/a     &(af-cd)/a  &0   \\
+              0   &(ah-bg)/a     &(ai-cg)/a  &0
+            \end{amat}                                            
+         \end{equation*}
+         Kemudian kita memperoleh $1$ pada entri baris kedua, kolom kedua.
+         (Untuk sementara, andaikan \( ae-bd\neq 0 \) agar langkah reduksi
+         baris ini dapat dilakukan.)
+         \begin{equation*}
+           \grstep{(a/(ae-bd))\rho_2}
+           \begin{amat}{3}
+              1   &b/a           &c/a             &0  \\
+              0   &1             &(af-cd)/(ae-bd) &0  \\
+              0   &(ah-bg)/a     &(ai-cg)/a       &0
+            \end{amat}
+         \end{equation*}
+         Kemudian, berdasarkan pengandaian tersebut, kita melakukan operasi
+         baris $-((ah-bg)/a)\rho_2+\rho_3$ untuk memperoleh berikut ini.
+         \begin{equation*}
+           % \grstep{((ah-bg)/a)\rho_2+\rho_3}
+           \begin{amat}{3}
+              1   &b/a   &c/a                              &0 \\
+              0   &1     &(af-cd)/(ae-bd)                   &0 \\
+              0   &0     &(aei+bgf+cdh-hfa-idb-gec)/(ae-bd) &0
+            \end{amat}
+         \end{equation*}
+         Oleh karena itu, sistem semula tak singular jika dan hanya jika entri
+         \( 3,3 \) di atas tak nol (pecahan ini terdefinisi karena pengandaian
+         \( ae-bd\neq 0 \)). Entri tersebut sama dengan nol jika dan hanya jika
+         pembilangnya nol.
+
+         Berikutnya kita tangani pengandaian-pengandaian tersebut. Pertama,
+         jika \( a\neq 0 \) tetapi \( ae-bd=0 \), kita mempertukarkan baris
+         \begin{multline*}
+           \begin{amat}{3}
+              1   &b/a           &c/a        &0   \\
+              0   &0             &(af-cd)/a  &0   \\
+              0   &(ah-bg)/a     &(ai-cg)/a  &0
+            \end{amat}                                    \\
+           \grstep{\rho_2\leftrightarrow\rho_3}
+           \begin{amat}{3}
+              1   &b/a           &c/a        &0   \\
+              0   &(ah-bg)/a     &(ai-cg)/a  &0   \\
+              0   &0             &(af-cd)/a  &0
+            \end{amat}
+         \end{multline*}
+         dan menyimpulkan bahwa sistem tersebut tak singular jika dan hanya
+         jika \( ah-bg\neq 0 \) dan \( af-cd\neq 0 \). Ini sama dengan
+         mensyaratkan agar hasil kali keduanya tak nol:
+         \begin{align*}
+            ahaf-ahcd-bgaf+bgcd
+            &\neq 0                   \\
+            ahaf-ahcd-bgaf+aegc
+            &\neq 0                   \\
+            a(haf-hcd-bgf+egc)
+            &\neq 0
+         \end{align*}
+         (dalam peralihan dari baris pertama ke baris kedua, kita menerapkan
+         pengandaian kasus $ae-bd=0$ dengan mengganti $bd$ oleh $ae$). Karena
+         kita mengandaikan \( a\neq 0 \), kita memperoleh
+         \( haf-hcd-bgf+egc\neq 0 \). Dengan $ae-bd=0$, kita dapat menulis
+         ulang ini dalam bentuk yang diperlukan: dalam kasus \( a\neq 0 \) dan
+         \( ae-bd=0 \) ini, sistem yang diberikan tak singular ketika
+         \( haf-hcd-bgf+egc-i(ae-bd)\neq 0 \), sebagaimana diperlukan.
+
+         Kasus-kasus sisanya memiliki sifat yang sama. Tangani kasus \( a=0 \)
+         tetapi \( d\neq 0 \), serta kasus \( a=0 \), \( d=0 \), tetapi
+         \( g\neq 0 \), dengan terlebih dahulu mempertukarkan baris lalu
+         melanjutkan seperti di atas. Kasus \( a=0 \), \( d=0 \), dan
+         \( g=0 \) mudah\Dash himpunan yang memuat vektor nol bergantung linear,
+         dan rumusnya bernilai nol.
+       \partsitem Himpunan itu bergantung linear jika dan hanya jika salah
+         satu vektor merupakan kelipatan vektor lainnya. Artinya, himpunan itu
+         tidak bebas jika dan hanya jika
+         \begin{equation*}
+           \colvec{a \\ d \\ g}=r\cdot\colvec{b \\ e \\ h}
+          \quad\text{atau}\quad
+           \colvec{b \\ e \\ h}=s\cdot\colvec{a \\ d \\ g}
+         \end{equation*}
+         (atau keduanya) untuk sejumlah skalar $r$ dan $s$. Dengan
+         mengeliminasi $r$ dan $s$ agar syarat ini dinyatakan hanya dalam
+         huruf-huruf yang diberikan, $a$, $b$, $d$, $e$, $g$, $h$, kita
+         memperoleh bahwa himpunan itu tidak bebas\Dash yakni bergantung\Dash
+         jika dan hanya jika \( ae-bd=ah-gb=dh-ge=0 \).
+       \partsitem Kebergantungan atau kebebasan merupakan fungsi dari
+         entri-entrinya, sehingga memang terdapat sebuah rumus (walaupun pada
+         pandangan pertama orang mungkin mengira bahwa rumus tersebut
+         melibatkan beberapa kasus: ``jika komponen pertama dari vektor
+         pertama nol, maka \ldots'', dugaan ini ternyata tidak benar).
+      \end{exparts}  
+    \end{answer}
+  \recommended \item  
+    \begin{exparts}
+      \partsitem Buktikan bahwa himpunan dua vektor tak nol yang saling tegak
+        lurus dari \( \Re^n \) bebas linear ketika \( n>1 \).
+      \partsitem Bagaimana jika \( n=1 \)? Jika \( n=0 \)?
+      \partsitem Generalisasikan untuk lebih dari dua vektor.
+    \end{exparts}
+    \begin{answer}
+      Ingat bahwa dua vektor dari \( \Re^n \) saling tegak lurus jika dan hanya
+      jika hasil kali titik keduanya nol.
+      \begin{exparts}
+         \partsitem Andaikan \( \vec{v} \) dan \( \vec{w} \) merupakan vektor
+           tak nol yang saling tegak lurus dalam $\Re^n$, dengan \( n>1 \).
+           Pada relasi linear \( c\vec{v}+d\vec{w}=\zero \), ambil hasil kali
+           titik kedua ruas dengan \( \vec{v} \) untuk menyimpulkan bahwa
+           \( c\cdot\norm{\vec{v}}^2+d\cdot 0=0 \). Karena
+           \( \vec{v}\neq\zero \), kita memperoleh \( c=0 \). Penerapan serupa
+           dengan \( \vec{w} \) menunjukkan bahwa \( d=0 \).
+         \partsitem Dua vektor dalam \( \Re^1 \) saling tegak lurus jika dan
+           hanya jika setidaknya salah satunya nol.
+
+           Kita mendefinisikan \( \Re^0 \) sebagai ruang trivial, sehingga
+           $\vec{v}$ dan $\vec{w}$ keduanya merupakan vektor nol.
+         \partsitem Generalisasi yang tepat ialah meninjau himpunan vektor
+           \( \set{\vec{v}_1,\dots,\vec{v}_n}\subseteq\Re^k \) yang
+           \definend{saling ortogonal} (juga disebut
+           \definend{saling tegak lurus berpasangan}): jika \( i\neq j \), maka
+           \( \vec{v}_i \) tegak lurus terhadap \( \vec{v}_j \). Meniru
+           pembuktian butir pertama di atas menunjukkan bahwa himpunan
+           vektor-vektor tak nol semacam itu bebas linear.
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Perhatikan himpunan fungsi dari interval
+    $\openinterval{-1}{1}\subseteq \Re$ ke $\Re$.
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa himpunan ini merupakan ruang vektor di bawah
+         operasi-operasi biasa.
+      \partsitem Ingat rumus jumlah deret geometri tak hingga:
+         \( 1+x+x^2+\cdots=1/(1-x) \) untuk semua \( x\in(-1..1) \). Mengapa
+         ini tidak menyatakan suatu kebergantungan di dalam himpunan
+         $\set{g(x)=1/(1-x),f_0(x)=1,f_1(x)=x,f_2(x)=x^2,\ldots}$ (dalam ruang
+         vektor yang sedang kita pertimbangkan)?
+         (\textit{Petunjuk.} Tinjau kembali definisi kombinasi linear.)
+      \partsitem Tunjukkan bahwa himpunan dalam butir sebelumnya bebas linear.
+    \end{exparts}
+    Ini menunjukkan bahwa ada ruang vektor yang memiliki subhimpunan bebas
+    linear tak hingga.
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Pemeriksaan ini rutin.
+        \partsitem Penjumlahannya tak hingga (memiliki tak hingga banyak suku).
+          Definisi kombinasi linear hanya melibatkan jumlah hingga.
+        \partsitem Tidak ada jumlah hingga tak trivial dari anggota
+           \( \set{g,f_0,f_1,\ldots} \) yang berjumlah objek nol: andaikan
+           \begin{equation*}
+              c_0\cdot (1/(1-x))+c_1\cdot 1+\dots+c_n\cdot x^n=0
+           \end{equation*}
+           (setiap jumlah hingga memakai pangkat tertinggi, di sini \( n \)).
+           Kalikan kedua ruas dengan \( 1-x \) untuk menyimpulkan bahwa setiap
+           koefisien nol, karena suatu polinomial mendeskripsikan fungsi nol
+           hanya ketika polinomial itu adalah polinomial nol.
+      \end{exparts}
+     \end{answer}
+  \item 
+    Tunjukkan bahwa, jika \( S \) merupakan subruang dari \( V \), dan suatu
+    subhimpunan $T$ dari \( S \) bebas linear dalam \( S \), maka $T$ juga
+    bebas linear dalam \( V \). Apakah kebalikannya berlaku?
+    \begin{answer}
+      Kedua arah, `jika' dan `hanya jika', berlaku.
+
+      Misalkan \( T \) merupakan subhimpunan dari subruang \( S \) pada ruang
+      vektor \( V \). Pernyataan bahwa setiap relasi linear
+      $c_1\vec{t}_1+\dots+c_n\vec{t}_n=\zero$ di antara anggota \( T \) harus
+      merupakan relasi trivial $c_1=0$, \ldots, $c_n=0$ berlaku dalam
+      \( S \) jika dan hanya jika berlaku dalam \( V \), karena subruang
+      \( S \) mewarisi operasi penjumlahan dan perkalian skalarnya dari
+      \( V \).
+    \end{answer}
+\end{exercises}

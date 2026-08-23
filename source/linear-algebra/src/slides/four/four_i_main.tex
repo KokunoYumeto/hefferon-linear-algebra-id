@@ -1,0 +1,1603 @@
+% \documentclass[9pt,t]{beamer}
+\usefonttheme{professionalfonts}
+\usefonttheme{serif}
+\PassOptionsToPackage{pdfpagemode=FullScreen}{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color}
+% \DeclareGraphicsRule{*}{mps}{*}{}
+\usepackage{linalgjh}
+\usepackage{present}
+\usepackage{directories}  % Define \detdir, detmpdir, etc.
+\usepackage{xr}\externaldocument{\detdir det1} % read refs from .aux file
+\usepackage{xr}\externaldocument{\mapdir map4} % read refs from .aux file
+\usepackage{catchfilebetweentags}
+\usepackage{etoolbox} % from http://tex.stackexchange.com/questions/40699/input-only-part-of-a-file-using-catchfilebetweentags-package
+\makeatletter
+\patchcmd{\CatchFBT@Fin@l}{\endlinechar\m@ne}{}
+  {}{\typeout{Unsuccessful patch!}}
+\makeatother
+
+\mode<presentation>
+{
+  \usetheme{boxes}
+  \setbeamercovered{invisible}
+  \setbeamertemplate{navigation symbols}{} 
+}
+\addheadbox{filler}{\ }  % create extra space at top of slide 
+\hypersetup{colorlinks=true,linkcolor=blue} 
+
+\usepackage{tikz}
+\usetikzlibrary{backgrounds}\usetikzlibrary{matrix}
+\tikzset{node style ge/.style={circle}}
+
+\title[Determinants] % (optional, use only with long paper titles)
+{Four.I Definition of Determinant}
+
+\author{\textit{Linear Algebra} \\ {\small Jim Hef{}feron}}
+\institute{
+  \texttt{https://hefferon.net/linearalgebra}\\[0.25ex]
+  \texttt{http://joshua.smcvt.edu/linearalgebra}
+}
+\date{}
+
+
+\subject{Determinants}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% =============================================
+% \begin{frame}{Reduced Echelon Form} 
+% \end{frame}
+
+
+
+% ..... Four.I.1,2 .....
+\section{Properties of Determinants}
+%..........
+\begin{frame}{Nonsingular matrices}
+\noindent For any matrix, whether or not it is nonsingular is a key question.
+Recall that an \( \nbyn{n} \) matrix \( T \) is nonsingular if and only if
+each of these holds:%
+\ExecuteMetaData[\detdir det1.tex]{EquivalentOfNonsingular}
+This chapter develops a formula to determine whether a
+matrix is nonsingular.
+\end{frame}
+
+
+
+
+\begin{frame}
+\ExecuteMetaData[\detdir det1.tex]{DeterminantIntro}  
+\end{frame}
+
+
+
+
+\begin{frame}{The plan}
+The prior slide gives a formula for the $\nbyn{1}$, $\nbyn{2}$, and~$\nbyn{3}$
+determinants. 
+But while those three formulas are a help, they don't make clear what
+should be the general formula, for the $\nbyn{n}$~case.
+
+So we will proceed by stating some conditions that a
+determinant function must satisfy. 
+The conditions extrapolate from the $\nbyn{1}$, $\nbyn{2}$, 
+and~$\nbyn{3}$ cases; see the book's discussion.
+They will let us compute the determinant of a square matrix via Gauss's Method, 
+which we know to be fast and easy.
+
+\pause
+However, defining the determinant function by giving a list of conditions 
+has a downside.
+We must verify this function is well-defined,
+that there is at least one function satisfying those conditions and also that
+there is only one such.
+To verify that, after giving the algorithm we will develop a formula,
+the permutation expansion,
+satisfying the conditions. 
+\end{frame}
+
+
+
+
+\begin{frame}{Definition of determinant}
+\df[def:Det]
+\ExecuteMetaData[\detdir det1.tex]{df:Det}
+
+\pause 
+\re[rem:SwapRowsRedun] % \hspace*{-1em} 
+\ExecuteMetaData[\detdir det1.tex]{re:SwapRowsRedun}
+\end{frame}
+
+
+
+
+\begin{frame}{Consequences of the definition}
+\lm[le:IdenRowsDetZero]
+\ExecuteMetaData[\detdir det1.tex]{lm:IdenRowsDetZero}
+
+\pause 
+\pf 
+\ExecuteMetaData[\detdir det1.tex]{pf:IdenRowsDetZero0}
+
+\pause
+\ExecuteMetaData[\detdir det1.tex]{pf:IdenRowsDetZero1}
+\end{frame}
+\begin{frame}
+\ExecuteMetaData[\detdir det1.tex]{pf:IdenRowsDetZero2}
+
+\pause
+\ExecuteMetaData[\detdir det1.tex]{pf:IdenRowsDetZero3}  
+\end{frame}
+\begin{frame}
+\ExecuteMetaData[\detdir det1.tex]{pf:IdenRowsDetZero4}
+\qed
+\end{frame}
+
+
+
+
+\begin{frame}
+% (As remarked above, it is not evident from the definition that there is
+% a function satisfying the conditions, or that there is only one such function.
+% We will show later that the determinant exists and is unique.
+% For the moment we proceed without that assurance.)
+
+% \pause
+The conditions allow us to
+compute the determinant of a matrix using Gauss's Method
+
+\ex  On this matrix we can perform the Gauss's Method steps of
+$-2\rho_1+\rho_2$ and $-3\rho_1+\rho_3$, followed by
+$-(5/3)\rho_2+\rho_3$.
+Condition~(1) says that these row combination operations
+leave the determinant unchanged.
+\begin{equation*}
+  \begin{vmat}
+    1  &3  &-2 \\
+    2  &0  &4  \\
+    3  &-1 &5
+  \end{vmat}
+  =
+  \begin{vmat}
+    1  &3   &-2 \\
+    0  &-6  &-8  \\
+    0  &-10 &-11
+  \end{vmat}
+  =
+  \begin{vmat}
+    1  &3   &-2 \\
+    0  &-6  &-8  \\
+    0  &0   &-7/3
+  \end{vmat}
+\end{equation*}
+\pause
+The determinant is the product down the
+diagonal: 
+$1\cdot(-6)\cdot(-7/3)=14$.
+\end{frame}
+
+\begin{frame}
+\ex
+To see what happens with a row swap,
+consider this matrix. 
+The swap changes the determinant's sign.
+\begin{equation*}
+  \begin{vmat}
+    0  &3  &1 \\
+    1  &2  &0 \\
+    1  &5  &2
+  \end{vmat}
+  =
+  -\begin{vmat}
+    1  &2  &0 \\
+    0  &3  &1 \\
+    1  &5  &2
+  \end{vmat}
+\end{equation*}
+Finish by performing $-\rho_1+\rho_3$
+followed by $-\rho_2+\rho_3$
+\begin{equation*}
+  =-\begin{vmat}
+    1  &2  &0 \\
+    0  &3  &1 \\
+    0  &3  &2
+  \end{vmat}
+  =-\begin{vmat}
+    1  &2  &0 \\
+    0  &3  &1 \\
+    0  &0  &1
+  \end{vmat}
+\end{equation*}
+and then multiplying down the diagonal.
+The determinant of the original matrix is $-3$.
+\end{frame}
+
+
+\begin{frame}
+\ex
+Finally, to illustrate condition~(3) contrast these two.
+\begin{equation*}
+  \begin{vmat}
+    5 &10 \\
+    3 &4
+  \end{vmat}
+  \qquad
+  \begin{vmat}
+    1 &2 \\
+    3 &4
+  \end{vmat}
+\end{equation*}
+Condition~(3) gives
+\begin{equation*}
+  \begin{vmat}
+    5 &10 \\
+    3 &4
+  \end{vmat}
+  =5\cdot
+  \begin{vmat}
+    1 &2 \\
+    3 &4
+  \end{vmat}
+\end{equation*}
+and by performing $-3\rho_1+\rho_2$
+and multiplying down the diagonal we get this.
+\begin{equation*}
+  =5\cdot
+  \begin{vmat}
+    1 &2 \\
+    3 &4
+  \end{vmat}
+  =5\cdot
+  \begin{vmat}
+    1 &2 \\
+    0 &-2
+  \end{vmat}
+  =5\cdot(-2)
+  =-10
+\end{equation*}
+Thus here is the contrast.
+\begin{equation*}
+  \begin{vmat}
+    5 &10 \\
+    3 &4
+  \end{vmat}
+  =-10
+  \qquad
+  \begin{vmat}
+    1 &2 \\
+    3 &4
+  \end{vmat}
+  =-2
+\end{equation*}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Warning}
+The formula for the determinant of a $\nbyn{2}$ matrix has something to
+do with multiplying along the diagonals.
+\begin{equation*}
+  \begin{vmat}
+    a &b \\
+    c &d
+  \end{vmat}
+  =ad-bc
+\end{equation*}
+Sometimes people have learned a mnemonic for the $\nbyn{3}$ formula
+that also has to do with multplying diagonals.   
+\begin{equation*}
+  \begin{vmat}
+    a &b &c \\
+    d &e &f \\
+    g &h &i 
+  \end{vmat}
+  ={\color{green}aei+bfg+cdh}
+   {\color{red}-gec-hfa-idb}
+  \qquad
+  \begin{tikzpicture}[baseline=(A.center), scale=1]
+  \path[draw, line width=4pt, color=green, opacity=0.5] (-1.35,.6)--(.3,-.6);
+  \path[draw, line width=4pt, color=green, opacity=0.5] (-.75,.6)--(.8,-.6);
+  \path[draw, line width=4pt, color=green, opacity=0.5] (-.25,.6)--(1.3,-.6);
+  \path[draw, line width=4pt, color=red, opacity=0.5] (-1.3,-.6)--(.3,.6);
+  \path[draw, line width=4pt, color=red, opacity=0.5] (-.75,-.6)--(.8,.6);
+  \path[draw, line width=4pt, color=red, opacity=0.5] (-.25,-.6)--(1.3,.6);
+  \node (A) at (0,0) {$\begin{pmat}{ccc|cc}
+    a &b &c &a &b \\
+    d &e &f &d &e \\
+    g &h &i &g &h
+  \end{pmat}$};
+\end{tikzpicture}
+\end{equation*}
+Don't try to extend to $\nbyn{4}$ or larger sizes.
+Instead, for larger matrices use Gauss's Method.
+\end{frame}
+
+
+
+\begin{frame}{Existence and Uniqueness}
+As described before the definition of determinant,
+defining the function by giving conditions that it must satisfy
+has a downside.
+We must verify that there is a 
+function satisfying those conditions, and that there is only one such function.
+
+As to existence,
+how could there fail to be such a function, when we have been 
+computing its outputs?
+\ExecuteMetaData[\detdir det1.tex]{DifferentGaussMethodReductions}
+But just because we get consistent results in this case
+does not mean that all determinant computations
+give the same value.
+\end{frame}
+\begin{frame}
+Below we will give an alternative way to compute
+the determinant, a formula.
+It will make plain that the determinant is a function, 
+that it returns well-defined outputs.
+Computing a determinant with this formula  
+is not practical since it is very slow
+but nonetheless this formula is invaluable for the theory.
+
+\pause
+But before that we will show uniqueness, 
+that if a function satisfying the conditions
+exists then there is only one.
+
+\lm[lm:DetFcnIsUnique]
+\ExecuteMetaData[\detdir det1.tex]{lm:DetFcnIsUnique}
+
+\pf 
+\ExecuteMetaData[\detdir det1.tex]{pf:DetFcnIsUnique}
+\qed
+\end{frame}
+
+
+
+
+% ..... Four.I.3 .....
+\section{The Permutation Expansion}
+
+\begin{frame}{The determinant function is not linear}
+\ex
+The determinant does not in general satisfy that 
+$\det(k\cdot T)=k\cdot\det(T)$.
+The second matrix here is twice the first
+but the determinant does not double.
+\begin{equation*}
+  \begin{vmat}
+    3  &-3  &9 \\
+    1  &-1   &7 \\
+    2  &4   &0
+  \end{vmat}
+  =-72
+  \qquad
+  \begin{vmat}
+    6  &-6  &18 \\
+    2  &-2   &14 \\
+    4  &8   &0
+  \end{vmat}
+  =-576
+\end{equation*}
+Condition~(3) % of \nearbydefinition{def:Det}%
+has the determinant scale one row at a time.   
+\begin{align*}
+  \begin{vmat}
+    6  &-6  &18 \\
+    2  &-2   &14 \\
+    4  &8   &0
+  \end{vmat}
+  &=2\cdot
+  \begin{vmat}
+    3  &-3  &9 \\
+    2  &-2   &14 \\
+    4  &8   &0
+  \end{vmat}           \\
+  &=4\cdot
+  \begin{vmat}
+    3  &-3  &9 \\
+    1  &-1   &7 \\
+    4  &8   &0
+  \end{vmat}           \\
+  &=8\cdot
+  \begin{vmat}
+    3  &-3  &9 \\
+    1  &-1   &7 \\
+    2  &4   &0
+  \end{vmat}         
+\end{align*}
+\end{frame}
+\begin{frame}
+So determinants are not linear:~with scalar multiplication,
+the scalars come out one row at a time.
+What happens with addition?
+
+Consider condition~(3) applied to the case   
+% \begin{equation*}
+%   \det (\vec{\rho}_1,\dots,k\vec{\rho}_i,\dots,\vec{\rho}_n)
+%        = k\cdot \det (\vec{\rho}_1,\dots,\vec{\rho}_i,\dots,\vec{\rho}_n)
+% \end{equation*}
+$k=2$.
+\begin{equation*}
+  \det (\vec{\rho}_1,\dots,2\vec{\rho}_i,\dots,\vec{\rho}_n)
+       = 2\cdot \det (\vec{\rho}_1,\dots,\vec{\rho}_i,\dots,\vec{\rho}_n)
+\end{equation*}
+Rewrite it as addition. 
+\begin{multline*}
+  \det (\vec{\rho}_1,\dots,\vec{\rho}_i+\vec{\rho}_i,\dots,\vec{\rho}_n) \\
+       = \det (\vec{\rho}_1,\dots,\vec{\rho}_i,\dots,\vec{\rho}_n)
+         +\det (\vec{\rho}_1,\dots,\vec{\rho}_i,\dots,\vec{\rho}_n)
+\end{multline*}
+Of course this extends to $k=3$, etc.
+
+This hints that besides bringing out scalars one row at a time,
+determinants also break along a plus sign one row at a time.
+\end{frame}
+
+
+%..........
+\begin{frame}{Multilinear}
+\df[def:multilinear]
+\ExecuteMetaData[\detdir det1.tex]{df:Multilinear}
+
+
+\lm[lem:DetsMultilinear]
+\ExecuteMetaData[\detdir det1.tex]{lm:DetsMultilinear}
+
+\pause
+\pf
+\ExecuteMetaData[\detdir det1.tex]{pf:DetsMultilinear0}
+
+\pause
+\ExecuteMetaData[\detdir det1.tex]{pf:DetsMultilinear1}
+\end{frame}
+\begin{frame}
+\ExecuteMetaData[\detdir det1.tex]{pf:DetsMultilinear2}
+\end{frame}
+\begin{frame}
+\ExecuteMetaData[\detdir det1.tex]{pf:DetsMultilinear3}
+\qed
+
+\medskip
+\noindent (\textit{Remark}. 
+Some authors use multilinearity to define the determinant in place of our
+four conditions that lead to Gauss's Method.)
+\end{frame}
+
+
+
+\begin{frame}
+Multilinearity breaks a determinant into a sum of 
+simple ones.
+
+\ex
+We can expand this determinant
+\begin{equation*}
+  \begin{vmat}
+    1 &2 \\
+    3 &4
+  \end{vmat}
+\end{equation*}
+along the first row
+\begin{equation*}
+  =\begin{vmat}
+    1 &0 \\
+    3 &4
+  \end{vmat}
+  +\begin{vmat}
+    0 &2 \\
+    3 &4
+  \end{vmat}
+\end{equation*}
+and then expand both of those on second row.
+\begin{equation*}
+  =\begin{vmat}
+    1 &0 \\
+    3 &0
+  \end{vmat}
+  +\begin{vmat}
+    1 &0 \\
+    0 &4
+  \end{vmat}
+  +\begin{vmat}
+    0 &2 \\
+    3 &0
+  \end{vmat}
+  +\begin{vmat}
+    0 &2 \\
+    0 &4
+  \end{vmat}
+\end{equation*}
+Each matrix is simple in that  
+of its rows are all zeroes except
+for a single entry from the starting matrix.
+
+\pause
+Of these four, the first and last are~$0$ 
+because the matrices are
+nonsingular, since they have a second row that is a multiple of 
+the first.
+We are left with two determinants, where 
+in each the matrix is all zeros except for 
+one entry from the starting matrix in each row and each column.
+We'll show our strategy for evaluating these determinants below.
+\end{frame}
+
+
+
+
+\begin{frame}
+\ex
+Similarly we can use multilinearity to expand this determinant. 
+\begin{align*}
+  \begin{vmat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    7 &8 &9
+  \end{vmat}
+  &=\begin{vmat}
+    1 &0 &0 \\
+    4 &0 &0 \\
+    7 &0 &0
+  \end{vmat}
+  +\begin{vmat}
+    1 &0 &0 \\
+    4 &0 &0 \\
+    0 &8 &0
+  \end{vmat}
+  +\begin{vmat}
+    1 &0 &0 \\
+    4 &0 &0 \\
+    0 &0 &9
+  \end{vmat}  \\
+  &\quad+\begin{vmat}
+    1 &0 &0 \\
+    0 &5 &0 \\
+    7 &0 &0
+  \end{vmat}
+  +\begin{vmat}
+    1 &0 &0 \\
+    0 &5 &0 \\
+    0 &8 &0
+  \end{vmat}
+  +\begin{vmat}
+    1 &0 &0 \\
+    0 &5 &0 \\
+    0 &0 &9
+  \end{vmat}           \\
+  &\quad+\begin{vmat}
+    1 &0 &0 \\
+    0 &0 &6 \\
+    7 &0 &0
+  \end{vmat}
+  +\begin{vmat}
+    1 &0 &0 \\
+    0 &0 &6 \\
+    0 &8 &0
+  \end{vmat}
+  +\begin{vmat}
+    1 &0 &0 \\
+    0 &0 &6 \\
+    0 &0 &9
+  \end{vmat}       \\
+  &\quad+\begin{vmat}
+    0 &2 &0 \\
+    4 &0 &0 \\
+    7 &0 &0
+  \end{vmat}
+  +\qquad\cdots\qquad+
+  \begin{vmat}
+    0 &0 &3 \\
+    0 &0 &6 \\
+    0 &0 &9
+  \end{vmat}
+\end{align*}
+In each of the $3^3=27$~determinants on the right the matrix is all zeros but
+for a single entry from the starting matrix in each row. 
+\end{frame}
+
+\begin{frame}
+\begin{equation*}
+  \begin{vmat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    7 &8 &9
+  \end{vmat}
+  =\begin{vmat}
+    1 &0 &0 \\
+    4 &0 &0 \\
+    7 &0 &0
+  \end{vmat}
+  +\begin{vmat}
+    1 &0 &0 \\
+    4 &0 &0 \\
+    0 &8 &0
+  \end{vmat}
+  +\cdots+
+  \begin{vmat}
+    0 &0 &3 \\
+    0 &0 &6 \\
+    0 &8 &0
+  \end{vmat}
+  +\begin{vmat}
+    0 &0 &3 \\
+    0 &0 &6 \\
+    0 &0 &9
+  \end{vmat}
+\end{equation*}
+For any of these, if two of the matrix rows have their original 
+matrix entries in the same column then the determinant is~$0$
+since then one matrix row is a multiple of the other.
+
+\pause
+We've reduced to a sum of determinants, 
+where each matrix is all $0$'s but
+for a single entry from the original in each row and column.
+There are $3\cdot 2\cdot 1=6$ of these. 
+\end{frame}
+\begin{frame}
+\vspace*{-3ex}
+\begin{align*}
+  \begin{vmat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    7 &8 &9
+  \end{vmat}
+  &=\begin{vmat}
+    1 &0 &0 \\
+    0 &5 &0 \\
+    0 &0 &9
+  \end{vmat}
+  +\begin{vmat}
+    1 &0 &0 \\
+    0 &0 &6 \\
+    0 &8 &0
+  \end{vmat}            \\
+  &\quad+\begin{vmat}
+    0 &2 &0 \\
+    4 &0 &0 \\
+    0 &0 &9
+  \end{vmat}
+  +\begin{vmat}
+    0 &2 &0 \\
+    0 &0 &6 \\
+    7 &0 &0
+  \end{vmat}         \\
+  &\quad+\begin{vmat}
+    0 &0 &3 \\
+    4 &0 &0 \\
+    0 &8 &0
+  \end{vmat}
+  +\begin{vmat}
+    0 &0 &3 \\
+    0 &5 &0 \\
+    7 &0 &0
+  \end{vmat}            \\
+  &=45\cdot\begin{vmat}
+    1 &0 &0 \\
+    0 &1 &0 \\
+    0 &0 &1
+  \end{vmat}
+  +48\cdot\begin{vmat}
+    1 &0 &0 \\
+    0 &0 &1 \\
+    0 &1 &0
+  \end{vmat}            \\
+  &\quad+72\cdot\begin{vmat}
+    0 &1 &0 \\
+    1 &0 &0 \\
+    0 &0 &1
+  \end{vmat}
+  +84\cdot\begin{vmat}
+    0 &1 &0 \\
+    0 &0 &1 \\
+    1 &0 &0
+  \end{vmat}         \\
+  &\quad+96\cdot\begin{vmat}
+    0 &0 &1 \\
+    1 &0 &0 \\
+    0 &1 &0
+  \end{vmat}
+  +105\cdot\begin{vmat}
+    0 &0 &1 \\
+    0 &1 &0 \\
+    1 &0 &0
+  \end{vmat}
+\end{align*}
+\end{frame}
+\begin{frame}
+\noindent
+After bringing out each entry from the original matrix, we are left with 
+matrices that are all $0$'s except for a single~$1$ in each row and column.
+\end{frame}
+
+
+
+\begin{frame}{Permutation matrices}
+\ExecuteMetaData[\detdir det1.tex]{NotationForPermutationMatrices}
+
+\pause
+\df[df:permutation]
+\ExecuteMetaData[\detdir det1.tex]{df:permutation}
+
+So, in a permutation each number 
+$1$, \ldots, $n$ is the output associated with one and only one input.
+We sometimes denote a permutation as the sequence 
+$\phi=\sequence{\phi(1),\phi(2),\ldots,\phi(n)}$.
+
+\ex[ex:AllTwoThreePerms]
+These are the $2$-permutations.
+\begin{center}
+  \begin{tabular}{rcc}
+    $\phi_1$:  &$1\mapsto 1$  &$2\mapsto 2$  \\
+    $\phi_2$:  &$1\mapsto 2$  &$2\mapsto 1$      
+  \end{tabular}
+\end{center}
+The sequence notation is shorter:
+\( \phi_1=\sequence{1,2} \) and \( \phi_2=\sequence{2,1} \).
+% \ExecuteMetaData[\detdir det1.tex]{ex:AllTwoPerms}
+\ex[ex:AllThreePerms]
+\ExecuteMetaData[\detdir det1.tex]{ex:AllThreePerms}
+\end{frame}
+\begin{frame}
+\ExecuteMetaData[\detdir det1.tex]{AssociatePermutationWithPermutationMatrix}
+
+\ex
+Associated with the $4$-permutation $\phi=\sequence{2,4,3,1}$ is the
+matrix whose rows are the matching $\iota$'s.
+\begin{equation*}
+  P_{\phi}
+  =
+  \begin{mat}
+    \iota_2 \\
+    \iota_4 \\
+    \iota_3 \\
+    \iota_1
+  \end{mat}
+  =
+  \begin{mat}
+    0 &1 &0 &0 \\
+    0 &0 &0 &1 \\
+    0 &0 &1 &0 \\
+    1 &0 &0 &0
+  \end{mat}
+\end{equation*}
+\end{frame}
+
+
+
+
+\begin{frame}{Permutation expansion}
+\df[df:PermutationExpansion]
+\ExecuteMetaData[\detdir det1.tex]{df:PermutationExpansion}
+
+\pause
+\medskip
+\ExecuteMetaData[\detdir det1.tex]{SummationForPermutationExpansion}
+\end{frame}
+\begin{frame}
+\ex
+Recall that there are two $2$-permutations
+\( \phi_1=\sequence{1,2} \) and \( \phi_2=\sequence{2,1} \).
+% So for the $\nbyn{2}$ case, the sum over all permutations has two terms.
+These are the associated permutation matrices
+\begin{equation*}
+  P_{\phi_1}=
+  \begin{mat}
+    1 &0 \\
+    0 &1
+  \end{mat}
+  \qquad
+  P_{\phi_2}=
+  \begin{mat}
+    0 &1 \\
+    1 &0
+  \end{mat}
+\end{equation*}
+\pause
+giving this expansion.
+\begin{align*}
+  \begin{vmat}
+    t_{1,1}  &t_{1,2} \\
+    t_{2,1}  &t_{2,2}
+  \end{vmat}
+  &=
+  t_{1,1}t_{2,2}\cdot
+  \begin{vmat}
+    1  &0 \\
+    0  &1
+  \end{vmat}               
+  +
+  t_{1,2}t_{2,1}\cdot
+  \begin{vmat}
+    0  &1 \\
+    1  &0
+  \end{vmat}               \\
+  &=
+  t_{1,1}t_{2,2}\cdot 1
+  +
+  t_{1,2}t_{2,1}\cdot (-1)
+\end{align*}
+(From prior work we know that the determinant $\deter{P_{\phi_2}}$ 
+equals~$-1$ because we can bring that to 
+the identity matrix with one row swap.)
+\pause
+Renaming the matrix entries gives the familiar $\nbyn{2}$ formula.
+\begin{equation*}
+  \begin{vmat}
+    a  &b  \\
+    c  &d
+  \end{vmat}
+  =ad-bc
+\end{equation*}
+\end{frame}
+
+
+
+
+\begin{frame}
+The only thing remaining in our process of finding a formula for 
+the determinant (not involving Gauss's Method) is to give a formula for
+the determinant of such matrices.
+We do that in the next subsection.
+
+\pause\bigskip
+The next subsection is optional 
+so for those not going on, we state its results here.
+We will follow up on the second result.
+
+\th[th:DetsExist]
+\ExecuteMetaData[\detdir det1.tex]{th:DetsExist}
+
+\th[th:DeterminantOfAMatrixEqualsDeterminantOfTranspose]
+\ExecuteMetaData[\detdir det1.tex]{th:DeterminantOfAMatrixEqualsDeterminantOfTranspose}
+\end{frame}
+\begin{frame}{Column properties from row properties}
+The fact that the determinant of the transpose equals the determinant
+of the matrix allows us to transfer results: statements about rows 
+become statements about columns.
+
+For instance, the first condition in the definition of determinant is that a
+determinant is unchanged by a row combination:~where 
+$A$ is square and  
+$A\!\!\raisebox{-.5ex}{\smash{\grstep{k\rho_i+\rho_j}}}\!\! \hat{A}$
+(with~$i\neq j$)
+then $\det(A)=\det{\hat{A}}$.
+To see that the same holds for columns, observe that 
+we can do a column combination
+by transposing, doing a row combination,
+and then transposing back.
+These three don't change the determinant.
+
+\pause
+\co[cor:ColSwapChgSign]
+\ExecuteMetaData[\detdir det1.tex]{co:ColSwapChgSign}
+\pause
+\pf
+\ExecuteMetaData[\detdir det1.tex]{pf:ColSwapChgSign}
+\qed
+\end{frame}
+
+
+
+
+% ..... Four.I.4 .....
+\section{Determinants Exist (optional)}
+%..........
+\begin{frame}{Inversion}
+\df[df:Inversion]
+\ExecuteMetaData[\detdir det1.tex]{df:Inversion}
+\pause
+\ex The permutation $\phi=\sequence{3,2,1}$ has three inversions:
+$3$ is before $2$, $3$ is before $1$, and $2$ is before $1$.
+\begin{center} \small
+  \begin{tabular}{r|cc}
+    \multicolumn{1}{r|}{\makebox[0em][r]{before}} 
+        &$1$  &$2$  \\ \cline{1-2}
+    $2$ &\multicolumn{1}{c|}{$\times$} \\ \cline{3-3}
+    $3$ &$\times$ &\multicolumn{1}{c|}{$\times$} \\ \cline{2-3}
+  \end{tabular}
+\end{center}
+\end{frame}
+\begin{frame}
+\ex
+This matrix
+\begin{equation*}
+  P_{\phi}=
+  \begin{mat}
+    0 &1 &0 &0 \\
+    1 &0 &0 &0 \\
+    0 &0 &0 &1 \\
+    0 &0 &1 &0
+  \end{mat}
+  =
+  \begin{mat}
+    \iota_2 \\
+    \iota_1 \\
+    \iota_4 \\
+    \iota_3 
+  \end{mat}
+\end{equation*}
+associated with the permutation $\phi=\sequence{2,1,4,3}$
+has two inversions:~row~$2$ 
+comes before row~$1$, and row~$4$ is before row~$3$.
+\begin{center} \small
+  \begin{tabular}{r|ccc}
+    \multicolumn{1}{r|}{\makebox[0em][r]{before}} 
+        &$1$  &$2$ &$3$ \\ \cline{1-2}
+    $2$ &\multicolumn{1}{c|}{$\times$} \\ \cline{3-3}
+    $3$ & &\multicolumn{1}{c|}{\ }  \\ \cline{4-4}
+    $4$ & & &\multicolumn{1}{c|}{$\times$} \\ \cline{2-4}
+  \end{tabular}
+\end{center}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\lm[le:SwapsChangeSgn]
+\ExecuteMetaData[\detdir det1.tex]{lm:SwapsChangeSgn}
+
+\pause
+\iftoggle{showallproofs}{\pf
+  \ExecuteMetaData[\detdir det1.tex]{pf:SwapsChangeSgn0}
+}{%
+
+  \medskip
+  The book contains the proof; 
+  we will illustrate.
+  There are two cases, that the rows are adjacent and that they aren't.
+  \ex Swapping adjacent rows
+  \begin{equation*}
+    \begin{mat}
+      0 &0 &0 &1 \\
+      1 &0 &0 &0 \\
+      0 &0 &1 &0 \\
+      0 &1 &0 &0 
+    \end{mat}
+    \grstep{\rho_2\leftrightarrow\rho_3}
+    \begin{mat}
+      0 &0 &0 &1 \\
+      0 &0 &1 &0 \\
+      1 &0 &0 &0 \\
+      0 &1 &0 &0 
+    \end{mat}
+  \end{equation*}
+  changes the number of inversions by one.
+  \begin{center} \small
+    \hspace*{1.5em}  % nudge it to the right
+    \begin{tabular}{r|ccc}
+      \multicolumn{1}{r|}{\makebox[0em][r]{before}} 
+          &$1$  &$2$ &$3$ \\ \cline{1-2}
+      $2$ &\multicolumn{1}{c|}{\ } \\ \cline{3-3}
+      $3$ & &\multicolumn{1}{c|}{$\times$}  \\ \cline{4-4}
+      $4$ &$\times$ &$\times$ &\multicolumn{1}{c|}{$\times$} \\ \cline{2-4}
+    \end{tabular}
+    \hspace*{4em}
+    \begin{tabular}{r|ccc}
+      \multicolumn{1}{r|}{\makebox[0em][r]{before}} 
+          &$1$  &$2$ &$3$ \\ \cline{1-2}
+      $2$ &\multicolumn{1}{c|}{} \\ \cline{3-3}
+      $3$ &$\times$ &\multicolumn{1}{c|}{$\times$}  \\ \cline{4-4}
+      $4$ &$\times$ &$\times$ &\multicolumn{1}{c|}{$\times$} \\ \cline{2-4}
+    \end{tabular}
+  \end{center}
+  Except for the $\iota_1$ and $\iota_3$ involved in the swap, 
+  all of the inter-row relationships are unchanged.
+}
+\end{frame}
+\iftoggle{showallproofs}{
+  \begin{frame}
+  \ExecuteMetaData[\detdir det1.tex]{pf:SwapsChangeSgn1}
+  \end{frame}
+  \begin{frame}
+  \noindent\ExecuteMetaData[\detdir det1.tex]{pf:SwapsChangeSgn2}
+  \qed
+  \end{frame}
+}{%
+  \begin{frame}
+  \ex To swap non-adjacent rows
+  \begin{equation*}
+    \begin{mat}
+      0 &0 &0 &1 \\
+      1 &0 &0 &0 \\
+      0 &0 &1 &0 \\
+      0 &1 &0 &0 
+    \end{mat}
+    \grstep{\rho_1\leftrightarrow\rho_4}
+    \begin{mat}
+      0 &1 &0 &0 \\
+      1 &0 &0 &0 \\
+      0 &0 &1 &0 \\
+      0 &0 &0 &1 
+    \end{mat}
+  \end{equation*}
+  do a sequence of swaps of adjacent rows. 
+  \begin{align*}
+    \begin{mat}
+      0 &0 &0 &1 \\
+      1 &0 &0 &0 \\
+      0 &0 &1 &0 \\
+      0 &1 &0 &0 
+    \end{mat} 
+    &\grstep{\rho_1\leftrightarrow\rho_2}
+    \grstep{\rho_2\leftrightarrow\rho_3}
+    \grstep{\rho_3\leftrightarrow\rho_4}
+    \begin{mat}
+      1 &0 &0 &0 \\
+      0 &0 &1 &0 \\
+      0 &1 &0 &0 \\
+      0 &0 &0 &1 
+    \end{mat}                                        \\
+    &\grstep{\rho_3\leftrightarrow\rho_2}
+    \grstep{\rho_2\leftrightarrow\rho_1}
+    \begin{mat}
+      0 &1 &0 &0 \\
+      1 &0 &0 &0 \\
+      0 &0 &1 &0 \\
+      0 &0 &0 &1 
+    \end{mat}
+  \end{align*}
+  That's an odd number of swaps, five of them,
+  each of which flips the parity of the number of
+  inversions. 
+  Altogether the parity changes, from even to odd. 
+  \end{frame}
+}
+
+
+
+%..........
+\begin{frame}{Signum}
+\df[df:Signum]
+\ExecuteMetaData[\detdir det1.tex]{df:Signum}
+
+\pause
+\ex The permutation
+$\phi=\sequence{3,2,1}$
+associated with this matrix 
+\begin{equation*}
+  P_{\phi}=
+  \begin{mat}
+    0 &0 &1 \\
+    0 &1 &0 \\
+    1 &0 &0
+  \end{mat}
+\end{equation*}
+has an odd number of inversions, three.
+\begin{center} \small
+  \begin{tabular}{r|cc}
+    \multicolumn{1}{r|}{\makebox[0em][r]{before}} 
+        &$1$  &$2$  \\ \cline{1-2}
+    $2$ &\multicolumn{1}{c|}{$\times$} \\ \cline{3-3}
+    $3$ &$\times$ &\multicolumn{1}{c|}{$\times$} \\ \cline{2-3}
+  \end{tabular}
+\end{center}
+The signum is $\sgn(\phi)=-1$.
+
+\pause
+\ex
+The permutation $\phi=\sequence{3,2,4,1}$
+has four inversions: $3$ is before $2$ and~$1$,
+$2$ is before~$1$, and $4$ is before~$1$.
+So $\sgn(\phi)=+1$.
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\co[cor:ParityInversEqParitySwaps]
+\ExecuteMetaData[\detdir det1.tex]{co:ParityInversEqParitySwaps}
+
+\pause
+\pf
+\ExecuteMetaData[\detdir det1.tex]{pf:ParityInversEqParitySwaps}
+\qed
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}{Plan accomplished}
+We are in the process of showing that
+a function exists that satisfies the four conditions in the definition
+of determinant.
+We must show that for each input square matrix there is a well-defined 
+output value~\Dash Gauss's Method can be done in more than one way so 
+it isn't obvious that by keeping track of signs and multiplying down the
+diagonal we always get the same output.
+Consequently we have turned to getting an alternate formula 
+that obviously gives only one output.
+
+\pause
+\ExecuteMetaData[\detdir det1.tex]{DefiningDFunction}
+\end{frame}
+\begin{frame}
+\lm[lm:DeterminantsExist]
+\ExecuteMetaData[\detdir det1.tex]{lm:DeterminantsExist}
+
+\iftoggle{showallproofs}{
+  \pf
+  \ExecuteMetaData[\detdir det1.tex]{pf:DeterminantsExist0}
+
+  \pause
+  \ExecuteMetaData[\detdir det1.tex]{pf:DeterminantsExist1}
+  % \end{frame}
+  % \begin{frame}
+
+  \pause
+  \ExecuteMetaData[\detdir det1.tex]{pf:DeterminantsExist2}
+}{%
+
+  \pause  
+  \smallskip
+  The book has the proof, which verifies that the definition of 
+  determinant's four conditions
+  are satisfied by the function~$d$.
+  We shall here instead go through an illustrative example.
+}
+\end{frame}
+\iftoggle{showallproofs}{
+  \begin{frame}
+  \ExecuteMetaData[\detdir det1.tex]{pf:DeterminantsExist3}
+  \end{frame}
+  \begin{frame}
+  \noindent\ExecuteMetaData[\detdir det1.tex]{pf:DeterminantsExist4}
+  \end{frame}
+  \begin{frame}
+  \ExecuteMetaData[\detdir det1.tex]{pf:DeterminantsExist5}
+  \end{frame}
+  \begin{frame}
+  \ExecuteMetaData[\detdir det1.tex]{pf:DeterminantsExist6}
+  \end{frame}
+  \begin{frame}
+  \ExecuteMetaData[\detdir det1.tex]{pf:DeterminantsExist7}% 
+  \qed
+  \end{frame}
+}{}
+
+\iftoggle{showallproofs}{}{%
+  \begin{frame}
+  \ex
+  This is the $d$~expansion formula for a $\nbyn{3}$~matrix.
+  (To save space on the slides, 
+  in this example we write $s(\cdots\hspace*{-1\mu})$ 
+  in place of 
+  $\sgn(\cdots\hspace*{-1\mu})$.) 
+  \begin{align*}
+    d(\begin{mat}
+      a &b &c \\
+      e &f &g \\
+      h &i &j
+    \end{mat})
+    &=afj\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &1 &0 \\
+      0 &0 &1
+    \end{mat})
+    +agi\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &0 &1 \\
+      0 &1 &0
+    \end{mat})            \\
+    &\quad+bej\cdot s(\begin{mat}
+      0 &1 &0 \\
+      1 &0 &0 \\
+      0 &0 &1
+    \end{mat})
+    +cei\cdot s(\begin{mat}
+      0 &1 &0 \\
+      0 &0 &1 \\
+      1 &0 &0
+    \end{mat})         \\
+    &\quad+cfh\cdot s(\begin{mat}
+      0 &0 &1 \\
+      1 &0 &0 \\
+      0 &1 &0
+    \end{mat})
+    +ceg\cdot s(\begin{mat}
+      0 &0 &1 \\
+      0 &1 &0 \\
+      1 &0 &0
+    \end{mat})
+    \tag{$*$}
+  \end{align*}
+  We illustrate the proof's verification of the four conditions 
+  using this generic matrix.
+  \begin{equation*}
+    M=\begin{mat}
+      1 &2 &3 \\
+      4 &5 &6 \\
+      7 &8 &9
+    \end{mat}
+  \end{equation*}
+  \end{frame}
+  \begin{frame}
+  Condition~(4) is easy.
+  In terms of equation~($*$), in the identity matrix
+  all entries are~$0$
+  other than $a$, $f$, and $j$, which are~$1$.
+  So equation~($*$) has only one non-zero term, and the sum is~$1$.
+
+  \pause
+  For condition~(3) consider the effect of $k\rho_2$ on the generic example
+  matrix.
+  Here is the expansion, following~($*$).
+  \begin{align*}
+    d(\begin{mat}
+      1  &2  &3 \\
+      4k &5k &6k \\
+      7  &8  &9
+    \end{mat})                                
+    &=1(5k)9\cdot
+    s(\begin{mat}
+      1 &0 &0 \\
+      0 &1 &0 \\ 
+      0 &0 &1
+    \end{mat})
+    +1(6k)8\cdot
+    s(\begin{mat}
+      1 &0 &0 \\
+      0 &0 &1 \\
+      0 &1 &0
+    \end{mat})            \\
+    &\quad+2(4k)9\cdot 
+    s(\begin{mat}
+      0 &1 &0 \\
+      1 &0 &0 \\
+      0 &0 &1
+    \end{mat})
+     +2(6k)7\cdot 
+    s(\begin{mat}
+      0 &1 &0 \\
+      0 &0 &1 \\
+      1 &0 &0
+    \end{mat})         \\
+    &\quad+3(4k)8\cdot
+    s(\begin{mat}
+      0 &0 &1 \\
+      1 &0 &0 \\
+      0 &1 &0
+    \end{mat})
+    +3(5k)7\cdot
+    s(\begin{mat}
+      0 &0 &1 \\
+      0 &1 &0 \\
+      1 &0 &0
+    \end{mat})
+  \end{align*}
+  The $k$ factors out and the result is $k$ times the $d$~value of the
+  original generic matrix.
+  \end{frame}
+  \begin{frame}  \vspace*{-1ex}
+  Next, condition~(2).  Contrast the $d$~expansion of these two.
+  \begin{equation*}
+    \begin{mat}
+      1 &2 &3 \\ 
+      4 &5 &6 \\
+      7 &8 &9 
+    \end{mat}
+    \grstep{\rho_2\leftrightarrow\rho_3}    
+       \begin{mat}
+      1 &2 &3 \\
+      7 &8 &9 \\
+      4 &5 &6
+    \end{mat}                           
+  \end{equation*}
+  The first expansion is
+  \begin{align*}
+    &1(5)9\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &1 &0 \\
+      0 &0 &1
+    \end{mat})
+    +1(6)8\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &0 &1 \\
+      0 &1 &0
+    \end{mat})           
+    +2(4)9\cdot s(\begin{mat}
+      0 &1 &0 \\
+      1 &0 &0 \\
+      0 &0 &1
+    \end{mat})                          \\
+    &\quad+2(6)7\cdot s(\begin{mat}
+      0 &1 &0 \\
+      0 &0 &1 \\
+      1 &0 &0
+    \end{mat})         
+    +3(4)8\cdot s(\begin{mat}
+      0 &0 &1 \\
+      1 &0 &0 \\
+      0 &1 &0
+    \end{mat})
+    +3(5)7\cdot s(\begin{mat}
+      0 &0 &1 \\
+      0 &1 &0 \\
+      1 &0 &0
+    \end{mat})           
+  \end{align*}
+  while the second is this.
+  \begin{align*}
+    &1(8)6\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &1 &0 \\
+      0 &0 &1
+    \end{mat})
+    +1(9)5\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &0 &1 \\
+      0 &1 &0
+    \end{mat})           
+    +2(7)6\cdot s(\begin{mat}
+      0 &1 &0 \\
+      1 &0 &0 \\
+      0 &0 &1
+    \end{mat})                          \\
+    &\quad+2(9)4\cdot s(\begin{mat}
+      0 &1 &0 \\
+      0 &0 &1 \\
+      1 &0 &0
+    \end{mat})         
+    +3(7)5\cdot s(\begin{mat}
+      0 &0 &1 \\
+      1 &0 &0 \\
+      0 &1 &0
+    \end{mat})
+    +3(8)4\cdot s(\begin{mat}
+      0 &0 &1 \\
+      0 &1 &0 \\
+      1 &0 &0
+    \end{mat})  
+  \end{align*}
+  \end{frame}
+  \begin{frame} 
+  The two match term-by-term.
+  For instance, both have terms involving $1\cdot 5\cdot 9$ and the 
+  associated matrices differ by a row swap.
+  The signum function causes them to differ in
+  sign.  
+  The expansions are negatives of each other.
+
+  \pause
+  Last, condition~(1).  
+  By equation~($*$) the second matrix here
+  \begin{equation*}
+    \begin{mat}
+      1    &2    &3 \\
+      4    &5    &6 \\
+      7    &8    &9 
+    \end{mat}
+    \grstep{10\rho_1+\rho_2}
+    \begin{mat}
+      1    &2    &3 \\
+      10+4 &20+5 &30+6 \\
+      7    &8    &9 
+    \end{mat}
+  \end{equation*}
+  has this $d$ expansion.
+  \begin{align*}
+    &1(20+5)9\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &1 &0 \\
+      0 &0 &1
+    \end{mat})
+    +1(30+6)8\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &0 &1 \\
+      0 &1 &0
+    \end{mat})                           \\           
+    &\quad+2(10+4)9\cdot s(\begin{mat}
+      0 &1 &0 \\
+      1 &0 &0 \\
+      0 &0 &1
+    \end{mat})                          
+    +2(30+6)7\cdot s(\begin{mat}
+      0 &1 &0 \\
+      0 &0 &1 \\
+      1 &0 &0
+    \end{mat})                          \\
+    &\quad+3(10+4)8\cdot s(\begin{mat}
+      0 &0 &1 \\
+      1 &0 &0 \\
+      0 &1 &0
+    \end{mat})
+    +3(20+5)7\cdot s(\begin{mat}
+      0 &0 &1 \\
+      0 &1 &0 \\
+      1 &0 &0
+    \end{mat})           
+  \end{align*}
+  \end{frame}
+  \begin{frame}
+  \noindent   Break along the plus signs to get two sums.
+  One is the $d$~expansion of the original generic matrix.
+  \begin{align*}
+    &1(5)9\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &1 &0 \\
+      0 &0 &1
+    \end{mat})
+    +1(6)8\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &0 &1 \\
+      0 &1 &0
+    \end{mat})                             
+    +2(4)9\cdot s(\begin{mat}
+      0 &1 &0 \\
+      1 &0 &0 \\
+      0 &0 &1
+    \end{mat})                          \\
+    &\quad+2(6)7\cdot s(\begin{mat}
+      0 &1 &0 \\
+      0 &0 &1 \\
+      1 &0 &0
+    \end{mat})                          
+    +3(4)8\cdot s(\begin{mat}
+      0 &0 &1 \\
+      1 &0 &0 \\
+      0 &1 &0
+    \end{mat})
+    +3(5)7\cdot s(\begin{mat}
+      0 &0 &1 \\
+      0 &1 &0 \\
+      1 &0 &0
+    \end{mat})           
+    \\          
+    &=d(\begin{mat}
+      1    &2    &3 \\
+      4    &5    &6 \\
+      7    &8    &9 
+    \end{mat})
+  \end{align*}
+  The other is this.
+  \begin{align*}
+    &1(20)9\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &1 &0 \\
+      0 &0 &1
+    \end{mat})
+    +1(30)8\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &0 &1 \\
+      0 &1 &0
+    \end{mat})                                      
+    +2(10)9\cdot s(\begin{mat}
+      0 &1 &0 \\
+      1 &0 &0 \\
+      0 &0 &1
+    \end{mat})                          \\                          
+    &+2(30)7\cdot s(\begin{mat}
+      0 &1 &0 \\
+      0 &0 &1 \\
+      1 &0 &0
+    \end{mat})                         
+    +3(10)8\cdot s(\begin{mat}
+      0 &0 &1 \\
+      1 &0 &0 \\
+      0 &1 &0
+    \end{mat})
+    +3(20)7\cdot s(\begin{mat}
+      0 &0 &1 \\
+      0 &1 &0 \\
+      1 &0 &0
+    \end{mat})                    
+    % \\          
+    % &=10\cdot d(\begin{mat}
+    %   1    &2    &3 \\
+    %   1    &2    &3 \\
+    %   7    &8    &9 
+    % \end{mat})
+  \end{align*}
+  \end{frame}
+  \begin{frame}
+  \noindent Factor out~$10$. 
+  What's left, by equation~($*$), is this $d$ expansion.
+  \begin{align*}
+    &1(2)9\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &1 &0 \\
+      0 &0 &1
+    \end{mat})
+    +1(3)8\cdot s(\begin{mat}
+      1 &0 &0 \\
+      0 &0 &1 \\
+      0 &1 &0
+    \end{mat})                                      
+    +2(1)9\cdot s(\begin{mat}
+      0 &1 &0 \\
+      1 &0 &0 \\
+      0 &0 &1
+    \end{mat})                          \\                          
+    &+2(3)7\cdot s(\begin{mat}
+      0 &1 &0 \\
+      0 &0 &1 \\
+      1 &0 &0
+    \end{mat})                         
+    +3(1)8\cdot s(\begin{mat}
+      0 &0 &1 \\
+      1 &0 &0 \\
+      0 &1 &0
+    \end{mat})
+    +3(2)7\cdot s(\begin{mat}
+      0 &0 &1 \\
+      0 &1 &0 \\
+      1 &0 &0
+    \end{mat})                    \\          
+    &=d(\begin{mat}
+      1    &2    &3 \\
+      1    &2    &3 \\
+      7    &8    &9 
+    \end{mat})
+  \end{align*}
+  This matrix has two identical rows so its $d$~expansion gives~$0$
+  (condition~(2) shows this, since swapping the two rows changes the sign but
+  doesn't change the matrix).
+  Hence the operation $10\rho_1+\rho_2$ does not change the value of
+  the function~$d$.
+  \end{frame}
+} % end of iftoggle
+
+%..........
+\begin{frame}{The determinant of the transpose}
+\th[th:DetMatrixEqualsDetTrans]
+\ExecuteMetaData[\detdir det1.tex]{th:DetMatrixEqualsDetTrans}
+
+\pf
+\ExecuteMetaData[\detdir det1.tex]{pf:DetMatrixEqualsDetTrans0}
+\end{frame}
+\begin{frame}
+\ExecuteMetaData[\detdir det1.tex]{pf:DetMatrixEqualsDetTrans1} 
+\end{frame}
+\begin{frame}
+\ExecuteMetaData[\detdir det1.tex]{pf:DetMatrixEqualsDetTrans2}%
+\qed
+
+\pause
+\ex
+We know the formula for $\nbyn{2}$~matrices.
+\begin{equation*}
+  |A|=
+  \begin{vmat}
+    a  &b  \\
+    c  &d
+  \end{vmat}
+  =ad-bc
+  \qquad
+  |\trans{A}|=
+  \begin{vmat}
+    a  &c  \\
+    b  &d
+  \end{vmat}
+  =ad-cb
+\end{equation*}
+\end{frame}
+
+
+
+% % ..... Four.I.2 .....
+% \section{}
+% %..........
+% \begin{frame}
+% \end{frame}
+
+
+
+
+%...........................
+% \begin{frame}
+% \ExecuteMetaData[../gr3.tex]{GaussJordanReduction}
+% \df[def:RedEchForm]
+% 
+% \end{frame}
+\end{document}

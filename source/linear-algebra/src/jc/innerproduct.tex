@@ -1,0 +1,626 @@
+% Chapter 5, Topic _Linear Algebra_ Jim Hefferon
+%  https://hefferon.net/linearalgebra
+%  2021-Jul-28
+\topic{Hasil Kali Dalam}
+\index{hasil kali dalam|(}
+% Smash the depth, not the height; for use in radicals
+\def\smashdp#1{{\setbox0=\hbox{$#1$}\dp0=0pt \box0\relax}}
+
+Bab pertama membahas operasi hasil kali titik.
+Operasi ini menerima sepasang vektor dari suatu $\R^n$ dan menghasilkan sebuah skalar.
+\begin{equation*}
+  \colvec{-1 \\ 2 \\ 3}\dotprod\colvec{1 \\ 0 \\ 3}
+  =-1\cdot 1+2\cdot 0+3\cdot 3
+  =8
+\end{equation*}
+Dalam bab itu kita belum mengenal istilah `linear', tetapi
+operasi ini mempertahankan penjumlahan
+\begin{equation*}
+ (\vec{v}_1+\vec{v}_2)\dotprod\vec{w}=\vec{v}_1\dotprod\vec{w}
+                                      +\vec{v}_2\dotprod\vec{w}
+\qquad
+ \vec{v}\dotprod(\vec{w}_1+\vec{w}_2)=\vec{v}\dotprod\vec{w}_1
+                                      +\vec{v}\dotprod\vec{w}_2
+\end{equation*}
+dan perkalian skalar.
+\begin{equation*}
+ (r\vec{v})\dotprod\vec{w}=r(\vec{v}\dotprod\vec{w})
+  \qquad
+ \vec{v}\dotprod(r\vec{w})=r(\vec{v}\dotprod\vec{w})
+\end{equation*}
+
+Satu hal yang menarik tentang operasi hasil kali titik
+adalah bahwa operasi ini menggambarkan geometri
+$\Re^n\!$.
+Sebagai contoh, dua vektor saling tegak lurus jika dan hanya jika
+hasil kali titiknya nol, dan panjang sebuah vektor ditentukan oleh
+$\vec{v}\dotprod\vec{v}=\absval{\vec{v}\,}^2$.
+Di sini kita akan memperluas operasi ini, beserta konsep panjang,
+ke ruang-ruang vektor lain.
+Kita akan memakai notasi matematika tradisional untuk perluasan ini,
+yang tidak berupa titik, melainkan
+$\innerprod{\vec{v}}{\vec{w}}$.
+
+Untuk memotivasi definisinya,
+kita memerlukan pembahasan bilangan kompleks yang lebih lengkap daripada
+yang telah kita tinjau pada bagian pembuka bab ini.
+Di sana kita menggambarkan~$\C$ sebagai
+himpunan semua $z=a+bi$, dengan $a$ dan~$b$ bilangan real
+dan $i^2=-1$.
+Kita juga membahas penjumlahan, perkalian skalar,
+pengurangan, perkalian, serta panjang.
+Untuk pembagian, perhatikan $z=(1+2i)/(3+4i)$.
+Rumus selisih kuadrat memberikan
+$(a+bi)(a-bi)=a^2-(bi)^2=a^2-(-b^2)=a^2+b^2$,
+yang merupakan bilangan real.
+Jadi, dengan mengalikan pembilang dan penyebut $z$ dengan $3-4i$,
+kita memperoleh bentuk $a+bi$.
+\begin{equation*}
+  z=\frac{1+2i}{3+4i}\cdot\frac{3-4i}{3-4i}
+  =
+  \frac{(1\cdot 3+2\cdot 4)+(1\cdot (-4)+2\cdot 3)i}{3^2+4^2}
+  =
+  \frac{11+2i}{25}
+  =
+  \frac{11}{25}+\frac{2}{25}\,i
+\end{equation*}
+Dengan memperhatikan perhitungan tersebut, kita
+mendefinisikan \definend{konjugat} bilangan kompleks~$z$
+sebagai $\compconj{z}=\compconj{a+bi}=a-bi$, sehingga $z\compconj{z}=\absval{z}^2$.
+Membagi persamaan itu dengan $\absval{z}^2$ menghasilkan $z\compconj{z}/\absval{z}^2=1$,
+sehingga setiap bilangan kompleks tak nol mempunyai invers perkalian,
+$z^{-1}\!=\compconj{z}/\absval{z}^2$.
+% (and thus $\absval{z}=1$ if and only if $z^{-1}=\compconj{z}$).
+Perhatikan bahwa suatu bilangan kompleks merupakan bilangan real jika dan hanya jika
+bilangan itu sama dengan konjugatnya,
+bahwa $\compconj{z_1+z_2}=\compconj{z_1}+\compconj{z_2}$,
+dan bahwa $\compconj{z_1\cdot z_2}=\compconj{z_1}\cdot\compconj{z_2}$.
+Penggambaran $z=a+bi$ pada
+bidang kompleks\index{bidang kompleks}
+memperlihatkan konjugat tersebut.
+\begin{center}
+  \includegraphics{jc/asy/innerproduct000.pdf}
+\end{center}
+Gambar ini memperjelas bahwa
+$z+\compconj{z}=(a+bi)+(a-bi)$ sama dengan
+$2\cdot a$, yang kita tulis sebagai $2\cdot\RE{z}$.
+(``$\RE{z}$'' dibaca sebagai ``bagian real dari $z$.'')
+% It also shows the \definend{argument}, $\arg(z)$, the angle that
+% $z$ makes with the real axis.
+
+Sekarang kita siap memperumum operasi hasil kali titik dan panjang.
+Hasil kali titik dan panjang sudah akrab dalam ruang yang anggotanya berupa
+vektor kolom real, tetapi kita telah melihat banyak contoh ruang vektor
+yang sangat berbeda, seperti ruang polinomial $\polyspace_n$.
+Dalam ruang semacam itu, definisi panjang yang berguna atau alami
+tidaklah langsung tampak.
+Untuk memperoleh gambaran tentang apa yang harus dilakukan,
+perhatikan ruang vektor kompleks~$\C^n$.
+
+Dengan mengingat hasil kali titik pada ruang real,
+dugaan pertama yang alami ialah mencoba menjadikan
+$\innerprod{\vec{v}}{\vec{w}}$
+sebagai kombinasi linear komponen-komponennya, sehingga dalam kasus~$\C^2$
+\begin{equation*}
+  \vec{v}=\colvec{a_{1,1}+b_{1,1}i \\ a_{2,1}+b_{2,1}i}
+  \qquad
+  \vec{w}=\colvec{a_{1,2}+b_{1,2}i \\ a_{2,2}+b_{2,2}i}
+\end{equation*}
+dugaan untuk $\innerprod{\vec{v}}{\vec{w}}$ adalah
+$(a_{1,1}+b_{1,1}i)\cdot(a_{1,2}+b_{1,2}i)+(a_{2,1}+b_{2,1}i)\cdot(a_{2,2}+b_{2,2}i)$.
+Namun, ini tidak dapat dipakai.
+Kita sedang menyelidiki panjang,
+jadi kita menginginkan $\innerprod{\vec{v}}{\vec{v}}=\absval{\vec{v}\,}^2\!$,
+dan karena itu kita tidak menginginkan $\innerprod{\vec{v}}{\vec{v}}$ sama dengan
+$(a_1+b_1i)(a_1+b_1i)+(a_2+b_2i)(a_2+b_2i)$.
+Sebaliknya, kita menginginkan sesuatu seperti
+$(a_1+b_1i)(a_1-b_1i)+(a_2+b_2i)(a_2-b_2i)$.
+Karena itu, kita menggunakan definisi berikut untuk $\C^2\!$.
+\begin{equation*}
+  \innerprod{\vec{v}}{\vec{w}}
+  =(a_{1,1}+b_{1,1}i)\cdot(a_{1,2}-b_{1,2}i)\,+\,(a_{2,1}+b_{2,1}i)\cdot(a_{2,2}-b_{2,2}i)
+\end{equation*}
+\definend{hasil kali dalam Hermitian}
+adalah sebagai berikut:\index{hasil kali dalam!Hermitian}\index{hasil kali dalam Hermitian}
+jika vektor $\vec{v},\vec{w}\in\C^n$
+mempunyai komponen $v_1$, \ldots~$v_n$ dan $w_1$, \ldots~$w_n$, maka
+$\innerprod{\vec{v}}{\vec{w}}=v_1\compconj{w}_1+\cdots+v_n\compconj{w}_n$.
+Perhatikan bahwa definisi ini memperluas hasil kali titik dalam arti bahwa,
+jika kita kembali ke bilangan real dengan mengambil semua $b$ sama dengan nol,
+hasilnya sama dengan $\vec{v}\dotprod\vec{w}$.
+
+Operasi ini menerima dua vektor tetapi menghasilkan sebuah skalar.
+Berikut sebuah contoh.
+\begin{align*}
+  \innerprod{\colvec{1+2i \\ 3+4i}}{\colvec{5+6i \\ 7+8i}}
+  &=(1+2i)(5-6i)+(3+4i)(7-8i)                     \\[-2ex]
+  &=(17+4i)+(53+4i)=70+8i
+\end{align*}
+
+Hasil kali dalam Hermitian bersifat linear pada masukan pertama:~mudah untuk memeriksa bahwa
+$\innerprod{\vec{v}_1+\vec{v}_2}{\vec{w}}
+ = \innerprod{\vec{v}_1}{\vec{w}}
+   +\innerprod{\vec{v}_2}{\vec{w}}$
+ dan bahwa
+$\innerprod{z\cdot\vec{v}}{\vec{w}}
+     =z\cdot\innerprod{\vec{v}}{\vec{w}}$.
+Namun, operasi ini tidak linear pada masukan kedua karena, meskipun
+$\innerprod{\vec{v}}{\vec{w}_1+\vec{w}_2}
+ = \innerprod{\vec{v}}{\vec{w}_1}
+   +\innerprod{\vec{v}}{\vec{w}_2}$
+berlaku, pada perkalian skalar muncul suatu konjugasi:
+$\innerprod{\vec{v}}{z\cdot\vec{w}}
+     =\compconj{z}\cdot\innerprod{\vec{v}}{\vec{w}}$.
+Tentu saja, perbedaan ini muncul karena dalam definisi tersebut
+masukan kedua dikonjugasi, sedangkan masukan pertama tidak.
+Akibat lain dari asimetri ini adalah
+$\innerprod{\vec{w}}{\vec{v}}\neq \innerprod{\vec{v}}{\vec{w}}$; sebaliknya,
+$\innerprod{\vec{w}}{\vec{v}}=\compconj{\innerprod{\vec{v}}{\vec{w}}}$.
+
+Hasil kali dalam Hermitian merupakan salah satu cara, pada kelas ruang
+vektor tertentu, untuk memperluas hasil kali titik.
+Ada banyak perluasan lain pada banyak ruang lain.
+Namun, kita menginginkan perluasan yang menghasilkan gagasan panjang yang wajar.
+Untuk itu, \definend{hasil kali dalam} adalah operasi
+yang menerima dua vektor dari suatu ruang vektor real atau kompleks,
+menghasilkan sebuah skalar, dan memenuhi tiga syarat.
+Syarat~(1) menyatakan bahwa operasi itu linear pada masukan pertama, sehingga
+$\innerprod{\vec{v}_1+\vec{v}_2}{\vec{w}}
+ = \innerprod{\vec{v}_1}{\vec{w}}
+   +\innerprod{\vec{v}_2}{\vec{w}}$
+dan $\innerprod{z\vec{v}}{\vec{w}}
+     =z\innerprod{\vec{v}}{\vec{w}}$.
+% (Some presentations take inner product 
+% to be linear in the second input; more on this
+% at the end of this Topic.)
+Syarat~(2) menyatakan bahwa
+$\innerprod{\vec{w}}{\vec{v}}=\compconj{\innerprod{\vec{v}}{\vec{w}}}$.
+Sebagai akibatnya, perhatikan bahwa
+$\innerprod{\vec{v}}{\vec{v}}$ sama dengan konjugatnya dan karena itu
+merupakan bilangan real.
+Syarat~(3) menyatakan bahwa bilangan real tersebut memenuhi
+$\innerprod{\vec{v}}{\vec{v}}\geq 0$ untuk setiap $\vec{v}$, dengan
+$\innerprod{\vec{v}}{\vec{v}}= 0$ jika dan hanya jika $\vec{v}=\zero$.
+
+Ruang vektor yang dilengkapi dengan operasi hasil kali dalam disebut
+\definend{ruang hasil kali dalam}.
+(Pada paragraf sebelumnya kita memakai notasi $\innerprod{\vec{v}}{\vec{w}}$
+untuk sebarang hasil kali dalam, sedangkan sebelumnya kita memakainya untuk
+kasus khusus hasil kali dalam Hermitian.
+Pemakaian ganda ini tidak akan menimbulkan kebingungan karena dalam suatu ruang
+hasil kali dalam hanya ada tepat satu operasi semacam itu.)
+
+Setiap ruang vektor real $\R^n$ yang dilengkapi hasil kali titik merupakan
+ruang hasil kali dalam.
+Hasil kali dalam Hermitian menjadikan setiap ruang vektor kompleks~$\C^n$
+sebagai ruang hasil kali dalam.
+Pembuktian untuk keduanya terdapat dalam latihan.
+
+Contoh yang tampak sangat berbeda adalah ruang vektor real yang
+anggota-anggotanya berupa fungsi bernilai real yang kontinu pada
+interval tertutup $\closedinterval{0}{1}$.
+Definisikan hasil kali dalamnya sebagai berikut.
+\begin{equation*}
+  \innerprod{f}{g}=\int_{0}^1 f(t)\cdot g(t)\,dt
+\end{equation*}
+Operasi ini memenuhi syarat~(1) dalam definisi hasil kali dalam karena
+$\int_{0}^1 (f_1(t)+f_2(t))\cdot g(t)\,dt$ sama dengan
+$\int_{0}^1 f_1(t)g(t)\,dt+\int_{0}^1 f_2(t)g(t)\,dt$
+menurut suatu hasil dari Kalkulus dasar, dan hasil serupa berlaku untuk
+perkalian skalar.
+Operasi ini memenuhi~(2) karena konjugasi tidak mengubah bilangan real dan
+$f(t)g(t)$ sama dengan $g(t)f(t)$.
+Untuk syarat~(3), jika~$f$ bukan fungsi nol, maka kuadrat
+$f(t)\cdot f(t)$ lebih besar daripada~$0$ untuk suatu
+$\hat{t}\in \closedinterval{0}{1}$.
+Karena kontinuitas, kuadrat tersebut juga lebih besar daripada nol pada suatu
+subinterval di sekitar~$\hat{t}$, sehingga luas di bawah kurvanya lebih besar
+daripada~$0$.
+
+Selanjutnya kita memperumum operasi panjang.
+Kita akan menganggap suatu operasi sebagai perluasan panjang yang wajar
+jika operasi itu menerima vektor, menghasilkan bilangan real, dan memenuhi
+tiga syarat; setiap operasi semacam itu kita sebut
+\definend{norma},\index{norma} dan kita nyatakan dengan~$\norm{\vec{v}}$.
+Syarat pertama ialah $\norm{\vec{v}}\geq 0$ dan
+$\norm{\vec{v}}= 0$ jika dan hanya jika $\vec{v}=\zero$.
+Syarat kedua ialah bahwa penskalaan ulang suatu vektor juga menskalakan ulang
+normanya, secara khusus
+$\norm{z\cdot \vec{v}}=\absval{z}\cdot\norm{\vec{v}}$.
+Syarat ketiga ialah
+Ketaksamaan Segitiga,\index{Ketaksamaan Segitiga}
+yaitu $\norm{\vec{v}+\vec{w}}\leq\norm{\vec{v}}+\norm{\vec{w}}$.
+
+Contoh norma yang sudah dikenal dalam ruang vektor~$\R^n$ ialah panjang
+Euklides biasa, $\norm{\vec{v}}=\sqrt{\smashdp{v_1^2+\cdots+v_n^2}}$.
+
+Contoh lain terdapat pada ruang vektor real matriks
+$\matspace_{\nbym{n}{m}}$.
+Definisikan norma matriks, $\norm{M}$, sebagai nilai mutlak terbesar di antara
+semua entrinya.
+Syarat~(1) jelas, begitu pula syarat~(2).
+Syarat~(3) merupakan Ketaksamaan Segitiga biasa untuk bilangan real,
+$\absval{a+b}\leq\absval{a}+\absval{b}$.
+
+% Still another example of a norm operation 
+% is on the vector space of continuous real-valued functions 
+% on the closed interval $\closedinterval{0}{1}$.  
+% \begin{equation*}
+%   \norm{f}
+%   =\int_{x=0}^1 \absval{f(x)}\,dx
+%   \tag{$*$}
+% \end{equation*}
+% Verifying the three conditions in the definition is an exercise.
+
+Ketika memotivasi definisi hasil kali dalam, kita mengatakan bahwa
+perluasan hasil kali titik seharusnya menghasilkan gagasan panjang yang wajar.
+Sekarang kita memiliki definisi yang diperlukan untuk menyatakan hal itu secara
+tepat.
+Ambil
+$\norm{\vec{v}}=\sqrt{\smashdp{\innerprod{\vec{v}}{\vec{v}}}}$.
+Kita akan menunjukkan bahwa operasi ini memenuhi tiga syarat dalam definisi
+norma.
+Syarat pertama telah dibahas bersama hasil kali dalam.
+Untuk membuktikan syarat kedua,
+$\norm{z\cdot\vec{v}}
+=\sqrt{\smashdp{\innerprod{z\vec{v}}{z\vec{v}}}}
+=\sqrt{\smashdp{z\compconj{z}\cdot\innerprod{\vec{v}}{\vec{v}}}}
+=\sqrt{z\compconj{z}}\cdot\sqrt{\smashdp{\innerprod{\vec{v}}{\vec{v}}}}
+=\absval{z}\cdot\sqrt{\smashdp{\innerprod{\vec{v}}{\vec{v}}}}$.
+
+Untuk syarat ketiga, seperti dalam bab pertama, kita kembali mengaitkannya
+dengan Ketaksamaan Cauchy--Schwarz,\index{Ketaksamaan Cauchy--Schwarz}
+$\absval{\innerprod{\vec{v}}{\vec{w}}}\leq \norm{\vec{v}}\cdot\norm{\vec{w}}$.
+Pembuktian ketaksamaan di sini memperluas pembuktian pada bab pertama,
+tetapi lebih rumit.
+Perhatikan selisih $\vec{v}-z\cdot\vec{w}$ ketika $z\in\C$ berubah-ubah.
+Norma kuadrat vektor ini merupakan bilangan real tak negatif,
+$0\leq \norm{\vec{v}-z\cdot\vec{w}}^2
+   =\innerprod{\vec{v}-z\vec{w}}{\vec{v}-z\vec{w}}$.
+Linearitas memberikan
+$\innerprod{\vec{v}}{\vec{v}-z\vec{w}}
+  -z\cdot\innerprod{\vec{w}}{\vec{v}-z\vec{w}}$
+dan kemudian
+$\innerprod{\vec{v}}{\vec{v}}
+  -\compconj{z}\cdot\innerprod{\vec{v}}{\vec{w}}
+  -z\cdot\innerprod{\vec{w}}{\vec{v}}
+  +z\compconj{z}\cdot\innerprod{\vec{w}}{\vec{w}}$.
+Pernyataan ini berlaku untuk setiap $z\in\C$.
+\begin{equation*}
+ 0
+  \leq\innerprod{\vec{v}}{\vec{v}}
+  -\compconj{z}\cdot\innerprod{\vec{v}}{\vec{w}}
+  -z\cdot\compconj{\innerprod{\vec{v}}{\vec{w}}}
+  +z\compconj{z}\cdot\innerprod{\vec{w}}{\vec{w}}
+\end{equation*}
+
+Ambil
+$z=\innerprod{\vec{v}}{\vec{w}}/\innerprod{\vec{w}}{\vec{w}}$
+(jika $\vec{w}=\zero$, Ketaksamaan Cauchy--Schwarz berlaku langsung,
+sehingga kasus ini kita abaikan).
+Penyebutnya merupakan bilangan real, sehingga
+$\compconj{z}=\compconj{\innerprod{\vec{v}}{\vec{w}}}/\innerprod{\vec{w}}{\vec{w}}$,
+dan substitusinya ke suku kedua memberikan
+$\compconj{\innerprod{\vec{v}}{\vec{w}}}\innerprod{\vec{v}}{\vec{w}}/\innerprod{\vec{w}}{\vec{w}}$.
+Substitusi ke suku ketiga memberikan hasil yang sama, demikian pula
+substitusi ke suku terakhir.
+Menggabungkan ketiga suku sejenis itu menghasilkan
+\begin{equation*}
+ 0
+  \leq\innerprod{\vec{v}}{\vec{v}}
+  -\frac{\innerprod{\vec{v}}{\vec{w}}\compconj{\innerprod{\vec{v}}{\vec{w}}}}{\innerprod{\vec{w}}{\vec{w}}}
+  =\norm{\vec{v}}^2
+  -\frac{\absval{\innerprod{\vec{v}}{\vec{w}}}^2}{\norm{\vec{w}}^2}
+\end{equation*}
+Menata ulang dan menghilangkan penyebut memberikan ketaksamaan yang diinginkan.
+
+Dengan hasil itu, kita dapat membuktikan Ketaksamaan Segitiga.
+Sekali lagi, pembuktian ini memperluas argumen dalam bab pertama.
+\begin{align*}
+  \norm{\vec{v}+\vec{w}}^2
+  =\innerprod{\vec{v}+\vec{w}}{\vec{v}+\vec{w}}  
+  &=\innerprod{\vec{v}}{\vec{v}}
+    +\innerprod{\vec{v}}{\vec{w}}  
+    +\innerprod{\vec{w}}{\vec{v}}  
+    +\innerprod{\vec{w}}{\vec{w}}   \\ 
+  &=\norm{\vec{v}}^2
+    +\innerprod{\vec{v}}{\vec{w}}  
+    +\compconj{\innerprod{\vec{v}}{\vec{w}}}  
+    +\norm{\vec{w}}^2              \\   
+  &=\norm{\vec{v}}^2
+    +2\cdot\RE{\innerprod{\vec{v}}{\vec{w}}}  
+    +\norm{\vec{w}}^2      \\
+  &\leq\norm{\vec{v}}^2
+    +2\absval{\innerprod{\vec{v}}{\vec{w}}}  
+    +\norm{\vec{w}}^2     \\
+% \end{align*}
+\intertext{Terapkan Ketaksamaan Cauchy--Schwarz.}
+  &\leq\norm{\vec{v}}^2
+    +2\cdot\norm{\vec{v}}\cdot\norm{\vec{w}}
+    +\norm{\vec{w}}^2      
+  =(\norm{\vec{v}}+\norm{\vec{w}})^2         
+\end{align*}
+Mengambil akar kuadrat kedua ruas memberikan hasil yang diinginkan.
+
+Mari berhenti sejenak untuk melihat satu lagi hubungan antara hasil kali dalam,
+norma, dan geometri.
+Berikut diagram jajaran genjang yang sudah dikenal untuk jumlah dua vektor;
+selain $\vec{v}+\vec{w}$, kita juga menggambarkan $\vec{v}-\vec{w}$.
+\begin{center}
+  \includegraphics{jc/asy/innerproduct001.pdf}
+\end{center}
+Kita akan membuktikan
+\definend{identitas jajaran genjang},\index{identitas jajaran genjang}
+$\norm{\vec{v}+\vec{w}}^2+\norm{\vec{v}-\vec{w}}^2=2\norm{\vec{v}}^2+2\norm{\vec{w}}^2$.
+(Identitas ini memberikan pernyataan yang menarik: pada suatu jajaran genjang,
+jumlah kuadrat panjang kedua diagonal sama dengan jumlah kuadrat panjang
+keempat sisinya.)
+Walaupun gambar di atas memperlihatkan bidang, tempat kita biasanya memakai
+notasi hasil kali titik dan menuliskan panjang sebagai $\absval{\vec{v}\,}$,
+di sini kita akan memakai notasi hasil kali dalam dan norma.
+
+Seperti di atas, uraikan
+$
+  \norm{\vec{v}+\vec{w}}^2=\innerprod{\vec{v}+\vec{w}}{\vec{v}+\vec{w}}
+$
+dengan menggunakan sifat aditif pada masukan pertama, lalu pada masukan kedua.
+\begin{align*}
+  \norm{\vec{v}+\vec{w}}^2
+  &=\innerprod{\vec{v}+\vec{w}}{\vec{v}+\vec{w}}           \\
+   % &=\innerprod{\vec{v}}{\vec{v}+\vec{w}}+\innerprod{\vec{w}}{\vec{v}+\vec{w}} \\
+  &=\innerprod{\vec{v}}{\vec{v}}            
+   +\innerprod{\vec{v}}{\vec{w}}
+   +\innerprod{\vec{w}}{\vec{v}}
+   +\innerprod{\vec{w}}{\vec{w}}
+  =\norm{\vec{v}}^2            
+   +\innerprod{\vec{v}}{\vec{w}}
+   +\innerprod{\vec{w}}{\vec{v}}
+   +\norm{\vec{w}}^2
+\end{align*}
+Penguraian yang sama untuk $\innerprod{\vec{v}-\vec{w}}{\vec{v}-\vec{w}}$
+memberikan
+\begin{equation*}
+  \norm{\vec{v}-\vec{w}}^2
+  =\innerprod{\vec{v}-\vec{w}}{\vec{v}-\vec{w}}
+  =\norm{\vec{v}}^2
+   -\innerprod{\vec{v}}{\vec{w}}
+   -\innerprod{\vec{w}}{\vec{v}}
+   +\norm{\vec{w}}^2
+\end{equation*}
+Menjumlahkan keduanya memberikan hasil yang diinginkan.
+
+Sekarang, dengan operasi hasil kali dalam dan norma, kita dapat menafsirkan
+gagasan-gagasan geometri bahkan dalam ruang yang tidak memiliki geometri yang
+jelas.
+Sebagai contoh, kita dapat memperumum jarak menjadi operasi
+\definend{metrik}\index{metrik}
+$d(\vec{v},\vec{w})=\norm{\vec{v}-\vec{w}}$.
+Contoh lain ialah bahwa kita dapat menyebut vektor $\vec{v}$ dan~$\vec{w}$
+ortogonal apabila $\innerprod{\vec{v}}{\vec{w}}=0$, dan kita dapat memperluas
+proses Gram--Schmidt ke sebarang ruang hasil kali dalam berdimensi hingga.
+
+Sebuah catatan teknis:~kita telah mendefinisikan operasi norma dari hasil kali
+dalam sebagai $\norm{\vec{v}}=\sqrt{\smashdp{\innerprod{\vec{v}}{\vec{v}}}}$,
+lalu menurunkan identitas jajaran genjang.
+Pada ruang vektor real, sebaliknya juga benar bahwa jika suatu norma memenuhi
+identitas ini, maka norma tersebut berasal dari suatu hasil kali dalam, yakni
+$\innerprod{\vec{v}}{\vec{w}}
+  =(1/2)\cdot(\norm{\vec{v}+\vec{w}}^2-\norm{\vec{v}}^2-\norm{\vec{w}}^2)$.
+Namun, pembuktiannya berada di luar cakupan kita.
+
+Suatu norma mungkin tidak berasal dari hasil kali dalam; kita telah melihat
+contohnya di atas.
+Pada ruang vektor real $\matspace_{\nbyn{2}}$, definisikan norma matriks
+$\norm{M}$ sebagai nilai mutlak terbesar dari entrinya.
+Perhatikan matriks-matriks berikut.
+\begin{equation*}
+  M_1=
+  \begin{mat}
+  1  &2 \\
+  3  &4  
+  \end{mat}
+  \qquad
+  M_2=
+  \begin{mat}
+  8  &7  \\
+  6  &5
+  \end{mat}
+\end{equation*}
+Jelas bahwa $\norm{M_1}=4$ dan~$\norm{M_2}=8$.
+Mudah pula diperiksa bahwa $\norm{M_1+M_2}=9$ dan
+$\norm{M_1-M_2}=7$.
+Jadi $\norm{M_1+M_2}^2+\norm{M_1-M_2}^2=130$, sedangkan
+$2(\norm{M_1}^2+\norm{M_2}^2)=160$, dan keduanya tidak sama.
+
+Kita menutup bagian ini dengan sebuah catatan tentang definisi hasil kali dalam.
+Sebagian penulis, khususnya dalam fisika, mendefinisikan hasil kali dalam agar
+linear pada argumen kedua, bukan pada argumen pertama.
+Untuk sesuatu yang kita tulis sebagai $\innerprod{\vec{v}}{\vec{w}}$,
+para penulis itu menulis $\langle w\, |\, v\rangle$.
+Inilah \definend{notasi bra-ket}\index{notasi bra-ket}\index{hasil kali dalam!dibandingkan dengan bra-ket}
+yang lazim dalam mekanika kuantum.
+
+\begin{exercises}
+\item 
+Buktikan bahwa $\R^n$ yang dilengkapi hasil kali titik merupakan ruang hasil
+kali dalam.
+\begin{answer}
+Paragraf pembuka Topik ini menyatakan bahwa hasil kali titik linear pada kedua
+masukannya, sehingga syarat pertama terpenuhi.
+Syarat~(2) berkaitan dengan konjugasi, yang tidak mengubah bilangan real,
+sehingga syarat ini terpenuhi dengan sendirinya.
+Syarat~(3) mengharuskan panjang (panjang Euklides biasa pada ruang real
+berdimensi~$n$) bernilai nol jika dan hanya jika vektornya adalah~$\zero$.
+Jika vektor tersebut mempunyai komponen $v_1$, \ldots~$v_n$, maka
+$v_1^2+\cdots+v_n^2=0$ jika dan hanya jika semua komponennya nol.
+\end{answer}
+
+\item
+Tunjukkan bahwa hasil kali dalam Hermitian pada ruang vektor berdimensi dua
+$\C^2$ memenuhi ketiga syarat dalam definisi hasil kali dalam.
+\begin{answer}
+Pembahasan dalam tubuh Topik membuktikan~(1) dan~(2).
+Untuk~(3), misalkan dua anggota $\vec{v},\vec{w}$ dari~$\C^n$
+mempunyai komponen ke-$i$ berturut-turut $v_i$ dan $w_i$, sehingga
+$\innerprod{\vec{v}}{\vec{w}}=v_1\compconj{w}_1+\cdots+v_n\compconj{w}_n$.
+Maka $\innerprod{\vec{v}}{\vec{v}}=v_1\compconj{v}_1+\cdots+v_n\compconj{v}_n$
+sama dengan $\absval{v_1}^2+\cdots+\absval{v_n}^2$,
+yang jelas bernilai~$0$ jika dan hanya jika setiap komponennya bernilai~$0$.
+\end{answer}
+
+\item Tunjukkan bahwa operasi berikut merupakan hasil kali dalam pada ruang
+vektor real $\matspace_{\nbyn{2}}$.
+\begin{equation*}
+  \innerprod{
+    \begin{mat}
+    a  &b  \\
+    c  &d
+    \end{mat}
+    }{
+      \begin{mat}
+       e  &f  \\
+       g  &h
+      \end{mat}
+    }
+    =
+    ae+bf+cg+dh
+\end{equation*}
+\begin{answer}
+Syarat~(1), yakni linearitas pada argumen pertama, mudah dibuktikan.
+\begin{multline*}
+  \innerprod{
+    \begin{mat}
+    a_1  &b_1  \\
+    c_1  &d_1
+    \end{mat}
+    +
+    \begin{mat}
+    a_2  &b_2  \\
+    c_2  &d_2
+    \end{mat}
+    }{
+      \begin{mat}
+       e  &f  \\
+       g  &h
+      \end{mat}
+    }                                                  \\
+  \begin{split}
+    &=(a_1+a_2)e+(b_1+b_2)f+(c_1+c_2)g+(d_1+d_2)h   \\
+    &=(a_1e+b_1f+c_1g+d_1h)+(a_2e+b_2f+c_2g+d_2h)   \\
+    &=
+  \innerprod{
+    \begin{mat}
+    a_1  &b_1  \\
+    c_1  &d_1
+    \end{mat}
+    }{
+      \begin{mat}
+       e  &f  \\
+       g  &h
+      \end{mat}
+    }
+  +
+  \innerprod{
+    \begin{mat}
+    a_2  &b_2  \\
+    c_2  &d_2
+    \end{mat}
+    }{
+      \begin{mat}
+       e  &f  \\
+       g  &h
+      \end{mat}
+    }
+  \end{split}
+\end{multline*}
+Perkalian skalar juga dapat diperiksa secara langsung.
+Syarat~(2) berkaitan dengan konjugasi, yang tidak mengubah bilangan real,
+sehingga syarat ini terpenuhi dengan sendirinya.
+Untuk~(3), tentu saja $a^2+b^2+c^2+d^2\geq 0$, dengan kesamaan jika dan hanya
+jika setiap entrinya nol.
+\end{answer}
+%
+\item Perhatikan ruang vektor real polinomial kuadrat~$\polyspace_2$.
+Tunjukkan bahwa operasi berikut merupakan hasil kali dalam:
+$\innerprod{a_2x^2+a_1x+a_0}{b_2x^2+b_1x+b_0}=a_2b_2+a_1b_1+a_0b_0$. 
+Perhatikan norma yang dihasilkannya.
+Berapakah $\norm{x^2-1}$?
+\begin{answer}
+Syarat~(1) menyatakan bahwa operasi tersebut linear pada masukan pertama.
+Pemeriksaan bahwa operasi ini mempertahankan penjumlahan dapat dilakukan
+secara langsung:
+\begin{multline*}
+  \innerprod{(a_2x^2+a_1x+a_0)+(c_2x^2+c_1x+c_0)}{b_2x^2+b_1x+b_0}  \\
+  \begin{split}
+    &=(a_2+c_2)b_2+(a_1+c_1)b_1+(a_0+c_0)b_0             \\
+    &=(a_2b_2+a_1b_1+a_0b_0)+(c_2b_2+c_1b_1+c_0b_0)             \\
+    &=\innerprod{(a_2x^2+a_1x+a_0)}{b_2x^2+b_1x+b_0}      \\
+      &\qquad+\innerprod{(c_2x^2+c_1x+c_0)}{b_2x^2+b_1x+b_0}
+  \end{split}
+\end{multline*}
+Pemeriksaan bahwa operasi ini mempertahankan perkalian skalar juga dapat
+dilakukan secara langsung.
+Karena ini ruang vektor real dan konjugasi tidak mengubah skalar bilangan real,
+operasi tersebut memenuhi syarat~(2).
+Untuk syarat~(3), ambil $\vec{v}=a_2x^2+a_1x+a_0$.
+Maka $\innerprod{\vec{v}}{\vec{v}}=a_2^2+a_1^2+a_0^2$ jelas tak negatif dan
+sama dengan~$0$ jika dan hanya jika $\vec{v}$ merupakan polinomial nol.
+
+Untuk norma $x^2-1$, kita memperoleh
+\begin{equation*} 
+ \norm{x^2-1}=\sqrt{\innerprod{x^2-1}{x^2-1}}=\sqrt{1^2+0^2+(-1)^2}=\sqrt{2}
+\end{equation*}
+\end{answer}
+
+\item Buktikan bahwa himpunan fungsi bernilai real yang kontinu pada interval
+tertutup $\closedinterval{0}{1}$ merupakan ruang vektor.
+\begin{answer}
+Kesepuluh syarat dalam definisi ruang vektor merupakan akibat dari
+hasil-hasil dalam Kalkulus.
+Sebagai contoh, syarat pertama ialah ketertutupan terhadap penjumlahan, dan
+dari Kalkulus kita mengetahui bahwa jumlah dua fungsi kontinu merupakan fungsi
+kontinu.
+(Meskipun demikian, mahasiswa sering baru melihat pembuktian yang sepenuhnya
+teliti dalam mata kuliah berikutnya.)
+Demikian pula, penjumlahan dua fungsi bersifat komutatif.
+Tentu saja, vektor nolnya adalah fungsi $f(x)=0$, yang kontinu.
+\end{answer}
+
+%
+\item
+Tunjukkan bahwa upaya mendefinisikan $\innerprod{\vec{v}}{\vec{w}}$ pada
+$\C^n$ agar linear pada kedua masukan menyebabkan
+$\innerprod{\vec{v}}{\vec{v}}$ tidak lagi memberikan panjang.
+\begin{answer}
+Andaikan $\innerprod{\vec{v}}{\vec{v}}$ lebih besar daripada atau sama
+dengan~$0$ untuk setiap vektor kompleks~$\vec{v}$.
+Linearitas pada kedua masukan memberikan
+$0\leq \innerprod{i\vec{v}}{i\vec{v}}
+  =i\innerprod{\vec{v}}{i\vec{v}}
+  =i^2\innerprod{\vec{v}}{\vec{v}}\leq 0$.
+Jadi $\innerprod{\vec{v}}{\vec{v}}=0$ untuk setiap~$\vec{v}$, yang bertentangan
+dengan syarat positif-tegas ketika $\vec{v}\neq\zero$.
+\end{answer}
+
+
+% \item Show that this operation
+% on the vector space of continuous real-valued functions 
+% over $\closedinterval{0}{1}$ satisfies the 
+% conditions in the definition of a norm.  
+% \begin{equation*}
+%   \norm{f}
+%   =\int_{x=0}^1 \absval{f(x)}\,dx
+% \end{equation*}
+% \begin{answer}
+% The first condition holds because the integral of an absolute
+% value cannot be negative, and for continuous functions it is zero
+% if and only if the function is zero.
+% The second condition is  result from elementary Calculus.
+% \end{answer}
+
+
+
+\end{exercises}
+\index{hasil kali dalam|)}
+\endinput
+% \end{document}

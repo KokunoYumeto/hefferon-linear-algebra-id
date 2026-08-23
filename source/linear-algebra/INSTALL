@@ -1,0 +1,92 @@
+This is _Linear Algebra_ by Jim Hefferon.  The release date is 2021.
+You are free to use this material, either under the GNU Free Documentation
+license or under a Creative Commons Share Alike license.
+
+For more information, see the web site.
+  http://joshua.smcvt.edu/linearalgebra 
+
+
+INSTALLING
+
+Put book.pdf and jhanswer.pdf in the same directory.  Point your pdf reader
+at it.  I find that Acrobat Reader has some advantages (it shows opacity, for
+instance), but all PDF readers that I have tried did pretty well.
+
+Please note that you can buy a hardcopy of this book, for instance on Amazon,
+at a cost that is less than it would take for you to print your own copy.
+(Make sure that you are getting edition 4 as there are old versions
+also for sale.  The newest edition costs the same, and is better.)  The
+ISBN number of the latest printed version is at the book's home page.
+  https://hefferon.net/linearalgebra
+
+
+
+COMPILING FROM SOURCE
+
+Why?
+
+This is a very big project.  Running this:
+  $ find . -iname "*.tex" -or -iname "*.asy" -or -iname "*.sty" -iname "*.cls" -or -iname "*.mp" | xargs wc -l
+gives 201327 total.  There are a lot of things for you to get to go. Are
+you sure you want to compile from source?
+
+Sigh.  OK, first know that the compilation uses `make'; you cannot just
+run 'pdflatex book', it won't work.
+
+This is what I did for Linux, Ubuntu 22, in 2022-Oct.  I followed these
+steps from a fresh install.  If you have some  other system such as Mac
+or Windows then I am unable to help, sorry.  For that matter, if you have
+Linux then I will not help you either.  Sorry.
+
+0) Install TeX Live.  You can get it from https://tug.org/texlive/ but
+I just did this in a terminal.
+  sudo apt-get install texlive-full
+
+0.5) Change the ImageMagick policy.xml file.  I did
+  sudo emacs /etc/ImageMagick-6/policy.xml
+and found near the bottom a number of lines like this.
+  <!-- disable ghostscript format types -->
+  <policy domain="coder" rights="none" pattern="PS" />
+    ... total of six such policy lines ...
+  <policy domain="coder" rights="none" pattern="XPS" />
+I understand the story to be that old versions of GhostScript had a
+security flaw, and this sequence of lines turns off the described
+conversions to avoid that flaw.  But we want the described conversions,
+so comment them out by surrounding with <!-- and -->, as here.
+  <!-- <policy domain="coder" rights="none" pattern="PS" /> -->
+
+1) Get the linear-algebra archive.
+  In your browser, visit https://gitlab.com/jim.hefferon/linear-algebra.  
+  Download a .zip (it is the button between "Find file" and "Clone").
+  mv ~/Downloads/linear-algebra-master.zip ~/Documents
+  cd ~/Documents
+  unzip linear-algebra-master
+  mv linear-algebra-master linear-algebra
+
+Note that the subdirectory must be called linear-algebra, not
+linear-algebra-master.  The scripts expect that name.
+
+3) Now you can make the book.  
+    cd ~/Documents/linear-algebra/src
+    make
+It can take some time.  It took my machine maybe ten or fifteen minutes.
+
+(To get Asymptote to work I had to install freeglut3.
+  sudo apt-get install freeglut3
+If something fails with a question mark prompt then probably you get out by
+typing `x' and <return>.) 
+
+At the end, you'll have book.pdf and jhanswer.pdf, along with the slides.
+
+4) The lab is separate because it is more complex (it involves installing
+a couple of fonts) and not as many people will want to do it.  See
+lab/INSTALL.
+
+(To compile the version that is published in paper, change lines 10 and 11 in
+bookjhconcrete.sty to be this.
+  \booltrue{hardcopybool}  % uncomment this to make a book for publishing 
+  % \boolfalse{hardcopybool}  % the default  
+Then run make.)
+
+Jim
+jhefferon@smcvt.edu

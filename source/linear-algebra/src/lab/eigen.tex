@@ -1,0 +1,515 @@
+\chapter{Nilai Eigen}
+
+Dalam bab tentang Dekomposisi Nilai Singular, kita membahas faktor yang
+digunakan transformasi untuk mengubah panjang vektor dan menemukan faktor
+perubahan panjang maksimum, yaitu nilai singular.
+Dalam bab ini kita kembali menggambar bayangan lingkaran satuan untuk
+membahas efek geometris lain, yaitu besar sudut pemutaran vektor.
+
+
+\section{Pemutaran}
+Ingat bahwa suatu pemetaan linear memberikan efek yang sama pada semua
+vektor yang terletak pada garis yang sama melalui titik asal.
+Jadi, kita dapat melihat aksinya dengan menggambar hasil pemetaan satu titik
+pada setiap garis tersebut menggunakan rutin
+\inlinecode{plot_circle_action}.\footnote{%
+  Seperti dalam bab-bab sebelumnya, gambar-gambar ini dibuat dengan beberapa
+  opsi yang tidak ditampilkan.
+  Untuk daftar lengkapnya, lihat kode sumber panduan ini.}
+\begin{sagecommandline}
+sage: load("plot_action.sage")  
+sage: q = plot_circle_action(1,0,0,1) 
+sage: q.set_axes_range(-3, 3, -2, 3) 
+sage: q.save("graphics/eigen000a.pdf") 
+sage: p = plot_circle_action(2,0,2,2) 
+sage: p.set_axes_range(-3, 3, -2, 3) 
+sage: p.save("graphics/eigen000b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")  
+q = plot_circle_action(1,0,0,1) 
+q.set_axes_range(-3, 3, -3, 3) 
+q.save("graphics/eigen000a.pdf", figsize=2.65)
+p = plot_circle_action(2,0,2,2) 
+p.set_axes_range(-3, 3, -3, 3) 
+p.save("graphics/eigen000b.pdf", ticks_integer=True)
+\end{sagesilent}
+\begin{equation*} \label{gr:firstgraphic}
+  \vcenteredhbox{\includegraphics{graphics/eigen000a.pdf}}
+  \qquad\mapsunder{\big (\begin{smallmatrix} 2 &0 \\ 2 &2 \end{smallmatrix}\big )}\qquad
+  \vcenteredhbox{\includegraphics{graphics/eigen000b.pdf}}
+  % \tag{$*$}
+\end{equation*}
+Di sebelah kiri, jika ditelusuri berlawanan arah jarum jam, kurva dimulai
+dengan warna merah di $(x,y)=(1,0)$.
+Pada gambar di sebelah kanan, kurva dimulai dengan warna merah di $(1,2)$.
+Berikut adalah vektor sebelum dan sesudah untuk titik merah tersebut.
+\begin{sagecommandline}
+sage: load("plot_action.sage")  
+sage: p = plot_before_after_action(2,0,2,2, [(1,0)], ['red']) 
+sage: p.set_axes_range(-0.5, 2, -0.5, 2) 
+sage: p.save("graphics/eigen001.pdf", ticks=([1,2],[1,2]))
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")  
+p = plot_before_after_action(2,0,2,2, [(1,0)], ['red']) 
+p.set_axes_range(-0.5, 2, -0.5, 2) 
+p.save("graphics/eigen001.pdf", ticks=([1,2],[1,2]), figsize=2)
+\end{sagesilent}
+% The input $\binom{1}{0}$ is mapped to the output $\binom{2}{2}$. 
+Aksi matriks
+\begin{equation*}
+  \begin{mat}
+   2  &0  \\
+   2  &2
+  \end{mat}
+  \colvec{1 \\ 0}
+  =\colvec{2 \\ 2}
+  \qquad
+  \vcenteredhbox{\includegraphics{graphics/eigen001.pdf}}
+\end{equation*}
+adalah mengubah panjang sekaligus memutar vektor.
+\begin{sagecommandline}
+sage: v = vector(RR, [1,0])
+sage: M = matrix(RR, [[2, 0], [2, 2]])
+sage: w = M*v
+sage: v.norm(), w.norm()  
+sage: angle_in_rads = arccos(w*v/(w.norm()*v.norm())) 
+sage: angle_in_rads 
+\end{sagecommandline}
+Namun, untuk vektor-vektor lain, pemetaan ini akan mengubah panjang dan
+memutarnya dengan besar yang berbeda.
+Dengan kata lain, aksinya tidak seragam; ketika kita bergerak menyusuri
+setengah lingkaran atas dari $(1,0)$ ke $(-1,0)$, efek pemetaan berubah-ubah.
+Berikut adalah efek transformasi pada titik
+$(\cos(\pi/6),\sin(\pi/6))$.
+\begin{sagecommandline}
+sage: v = vector(RR, [cos(pi/6),sin(pi/6)])
+sage: w = M*v
+sage: v.norm(), w.norm()  
+sage: angle_in_rads = arccos(w*v/(w.norm()*v.norm())) 
+sage: angle_in_rads 
+sage: load("plot_action.sage")  
+sage: p = plot_before_after_action(2,0,2,2, [(1,0), (cos(pi/6),sin(pi/6))], rainbow(12)) 
+sage: p.set_axes_range(-0.5, 2, -0.5, 2.65) 
+sage: p.save("graphics/eigen001a.pdf", ticks=([1,2],[1,2]))
+\end{sagecommandline}
+\begin{sagesilent}
+v = vector(RR, [cos(pi/6),sin(pi/6)])
+w = M*v
+v.norm(), w.norm() 
+angle_in_rads = arccos(w*v/(w.norm()*v.norm())) 
+angle_in_rads 
+load("plot_action.sage")  
+p = plot_before_after_action(2,0,2,2, [(1,0), (cos(pi/6),sin(pi/6))], rainbow(12)) 
+p.set_axes_range(-0.5, 2, -0.5, 2.65) 
+p.save("graphics/eigen001a.pdf", ticks=([1,2],[1,2]), figsize=2)
+\end{sagesilent}
+Gambar ini kembali memperlihatkan keadaan sebelum dan sesudah untuk masukan
+merah~$(1,0)$, lalu menumpangkan efek yang sama untuk masukan
+oranye~$(\cos(\pi/6),\sin(\pi/6))$.
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/eigen001a.pdf}}
+\end{equation*}
+Keluaran oranye tidak diputar sejauh keluaran merah dari masukannya
+(panjangnya juga sedikit lebih besar).
+
+\Sage{} dapat menghitung sudut pemutaran vektor-vektor tersebut.
+Di akhir bab ini terdapat kode sumber rutin
+\inlinecode{plot_color_angles}. Rutin itu menerima entri-entri sebuah
+transformasi, menerapkan pemetaan tersebut pada vektor-vektor di setengah
+lingkaran, menghitung sudut pemutaran vektor, lalu menggambar grafik.
+Grafik itu mewarnai vektor-vektor keluaran sehingga kaitan visualnya terlihat.
+\begin{sagecommandline}
+sage: p = plot_color_angles(2,0,2,2)
+sage: p.set_axes_range(0,pi,0,pi)
+sage: p.save("graphics/eigen003.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")  
+p = plot_color_angles(2,0,2,2)
+p.set_axes_range(0,pi,0,pi)
+p.save("graphics/eigen003.pdf", figsize=3, tick_formatter=[pi,pi])
+\end{sagesilent}
+Transformasi untuk grafik ini adalah pemetaan yang, terhadap basis standar,
+direpresentasikan oleh
+$\left(\begin{smallmatrix}  2 &0 \\ 2 &2\end{smallmatrix}\right)$.
+\begin{center}
+  \vcenteredhbox{\includegraphics{graphics/eigen003.pdf}}
+\end{center}
+Titiknya yang paling menarik adalah ketika sudut keluaran bernilai $0$, yaitu
+tempat grafik memotong sumbu horizontal.
+Hal ini terjadi pada sudut masukan~$\pi/2$.
+Vektor masukan ini sama sekali tidak diputar oleh transformasi\Dash panjangnya
+diubah, tetapi arahnya tidak diputar.
+Pada diagram masukan/keluaran di halaman~\pageref{gr:firstgraphic}, vektor itu
+adalah vektor masukan hijau yang terletak pada sumbu~$y$; keluaran hijau yang
+bersesuaian juga terletak pada sumbu~$y$.
+
+
+
+
+\subsection{Matriks umum}
+Kita dapat melakukan analisis yang sama untuk matriks umum $\nbyn{2}$ yang
+biasa kita gunakan.
+\begin{sagecommandline}
+sage: q = plot_circle_action(1,0,0,1) 
+sage: q.set_axes_range(-2, 2, -4, 5) 
+sage: q.save("graphics/eigen100a.pdf")
+sage: p = plot_circle_action(1,2,3,4) 
+sage: p.set_axes_range(-2, 2, -4, 5) 
+sage: p.save("graphics/eigen100b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_circle_action(1,0,0,1) 
+q.set_axes_range(-2, 2, -4, 5) 
+q.save("graphics/eigen100a.pdf", ticks_integer=True)
+p = plot_circle_action(1,2,3,4) 
+p.set_axes_range(-2, 2, -4, 5) 
+p.save("graphics/eigen100b.pdf", ticks_integer=True)
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/eigen100a.pdf}}
+  \quad\mapsunder{\big (\begin{smallmatrix} 1 &2 \\ 3 &4 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/eigen100b.pdf}}
+\end{equation*}
+Grafik ini memperlihatkan sudut antara setiap vektor masukan dan vektor
+keluaran yang bersesuaian.
+% was:
+% angles = find_angles(1,2,3,4,50)
+% ticks = ([0,pi/4,pi/2,3*pi/4,pi], [0,pi/2,pi])
+% p = scatter_plot(angles, marker='.', ticks=ticks)
+% p.save("graphics/eigen101.pdf", figsize=2.5, tick_formatter=pi)
+\begin{sagecommandline}
+sage: p = plot_color_angles(1,2,3,4)
+sage: p.set_axes_range(0,pi,-1*pi,pi)
+sage: p.save("graphics/eigen101.pdf", tick_formatter=[pi,pi])
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")  
+p = plot_color_angles(1,2,3,4)
+p.set_axes_range(0,pi,-1*pi,pi)
+p.save("graphics/eigen101.pdf", figsize=3, tick_formatter=[pi,pi])
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/eigen101.pdf}}
+  \tag{$*$}
+\end{equation*}
+Grafik ini mempunyai dua titik menarik: ketika $y=0$, dan ketika
+$y=\pi$ (serta $y=-\pi$).
+Di kedua tempat tersebut, panjang vektor berubah tetapi garis yang direntangnya
+tidak berubah.
+Pada kasus kedua, ketika vektor diputar dengan sudut~$\pi$ (atau $-\pi$),
+vektor masukan dan keluaran terletak pada garis yang sama melalui titik asal,
+tetapi transformasi mengubah skalanya dengan bilangan negatif.
+
+Vektor yang oleh suatu transformasi~$t$ hanya dikenai perubahan skala disebut
+\definend{vektor eigen} untuk~$t$ (vektor nol tidak kita izinkan sebagai
+vektor eigen karena secara trivial dikenai perubahan skala oleh setiap
+transformasi).
+Faktor skala yang mengalikan vektor eigen disebut \definend{nilai eigen} yang
+bersesuaian.
+Untuk suatu nilai eigen~$\lambda$, himpunan vektor yang terkait dengan faktor
+perubahan skala tersebut disebut \definend{ruang eigen}.
+\Sage{} dapat menghitung ruang-ruang eigen sebuah matriks.\footnote{%
+  Baik perkalian oleh vektor dilakukan dari kanan,~$M\vec{v}$, maupun dari
+  kiri, $\vec{v}\,M$, sebuah matriks memiliki nilai-nilai eigen yang sama.
+  Namun, vektor-vektor eigennya mungkin berbeda.
+  Operasi \protect\Sage{} \protect\inlinecode{eigenvectors_right} menangani
+  kasus standar buku ini, $M\vec{v}=\lambda\vec{v}$, sedangkan
+  \protect\inlinecode{eigenvectors_left} menangani kasus yang lain.}
+
+\begin{sagecommandline}
+sage: M = matrix(RDF, [[1, 2], [3, 4]])
+sage: evs = M.eigenvectors_right()
+sage: evs
+sage: evs[0] 
+sage: v0 = vector(RDF, evs[0][1][0])
+sage: v0.norm()
+sage: evs[1]
+sage: v1 = vector(RDF, evs[1][1][0])
+sage: v1.norm()
+\end{sagecommandline}
+Hasil itu memperlihatkan daftar dengan dua elemen, masing-masing untuk satu
+nilai eigen.
+Elemen pertama, \inlinecode{evs[0]}, berkaitan dengan nilai eigen
+$\lambda_1\approx -0.37$ dan menyatakan bahwa ruang eigen yang bersesuaian
+mempunyai basis yang terdiri atas satu vektor satuan dengan titik ujung kira-kira
+$(-0.82, 0.57)$.\footnote{%
+  Angka~$1$ di bagian akhir adalah \protect\definend{multiplisitas geometris}
+  nilai eigen ini, yaitu dimensi ruang nol
+  $t-\lambda_1\cdot\identity$.
+  Informasi ini tidak akan kita gunakan.}
+Elemen kedua, \inlinecode{evs[1]}, berkaitan dengan
+$\lambda_2\approx 5.37$ dan menyatakan bahwa ruang eigennya mempunyai basis
+yang terdiri atas satu vektor dengan titik ujung kira-kira
+$(-0.42, -0.91)$.
+
+\Sage{} dapat menunjukkan letak masing-masing vektor tersebut pada grafik
+berlabel~($*$).
+\begin{sagecommandline}
+sage: M = matrix(RDF, [[1, 2], [3, 4]])
+sage: evs = M.eigenvectors_right()
+sage: v = vector(RDF, evs[0][1][0])
+sage: angle_v = atan2(v[1], v[0]) 
+sage: (angle_v/pi).n(digits=4) 
+\end{sagecommandline}
+(Ingat bahwa fungsi \inlinecode{n()} memberikan nilai numerik argumennya.)
+Jadi, sudutnya kira-kira $(4/5)\pi$. Dengan demikian, ruang eigen yang
+dicantumkan pertama berkaitan dengan titik menarik di sebelah kanan pada
+($*$), yaitu vektor yang diputar dengan sudut $\pi$.
+Hal ini selaras dengan kenyataan bahwa nilai eigennya negatif, sebab keduanya
+menyatakan bahwa aksi transformasi dari domain ke kodomain membalik arah
+vektor.
+
+\Sage{} dapat menggambar keadaan sebelum dan sesudah untuk kedua vektor eigen.
+\begin{sagecommandline}
+sage: M = matrix(RDF, [[1, 2], [3, 4]])
+sage: evs = M.eigenvectors_right()  
+sage: p1 = plot_before_after_action(1,2,3,4, [evs[0][1][0]], ['red']) 
+sage: p2 = plot_before_after_action(1,2,3,4, [evs[1][1][0]], ['blue']) 
+sage: p = p1+p2+circle((0,0), 1, edgecolor='black')
+sage: p.set_axes_range(-3, 1, -5, 1) 
+sage: p.save("graphics/eigen102.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")  
+M = matrix(RDF, [[1, 2], [3, 4]])
+evs = M.eigenvectors_right()  
+p1 = plot_before_after_action(1,2,3,4, [evs[0][1][0]], ['red']) 
+p2 = plot_before_after_action(1,2,3,4, [evs[1][1][0]], ['blue'])
+c = circle((0,0), 1, edgecolor='black') 
+p = p1+p2+c
+p.set_axes_range(-3, 1, -5, 1) 
+p.save("graphics/eigen102.pdf", ticks_integer=True, aspect_ratio=1, figsize=4.5)
+\end{sagesilent}
+\noindent
+Gambar ini memuat dua pasang vektor sebelum dan sesudah, satu pasang berwarna
+biru dan yang lain berwarna merah (setiap vektor sebelum adalah vektor satuan).
+Sekali lagi kita melihat bahwa vektor sesudah merupakan hasil perkalian skalar
+vektor sebelum: pada kasus biru dengan faktor positif
+$\lambda_2\approx 5.37$, dan pada kasus merah dengan faktor negatif
+$\lambda_1\approx -0.37$.
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/eigen102.pdf}}
+\end{equation*}
+
+
+
+\subsection{Rotasi bidang}
+Kita mengetahui matriks $\nbyn{2}$ yang memutar semua vektor berlawanan arah
+jarum jam.
+\begin{equation*}
+  \begin{mat}
+    \cos\theta  &-\sin\theta  \\
+    \sin\theta  &\cos\theta
+  \end{mat}
+\end{equation*}
+Berikut adalah aksinya pada setengah lingkaran atas ketika $\theta=\pi/3$.
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_circle_action(1,0,0,1) 
+sage: q.set_axes_range(-2, 2, -2, 2) 
+sage: q.save("graphics/eigen200a.pdf")
+sage: p = plot_circle_action(cos(pi/3),-sin(pi/3),sin(pi/3),cos(pi/3)) 
+sage: p.set_axes_range(-2, 2, -2, 2) 
+sage: p.save("graphics/eigen200b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_circle_action(1,0,0,1) 
+q.set_axes_range(-1.25, 1.25, -1.25, 1.25) 
+q.save("graphics/eigen200a.pdf", figsize=2.5)
+p = plot_circle_action(cos(pi/3),-sin(pi/3),sin(pi/3),cos(pi/3))
+p.set_axes_range(-1.25, 1.25, -1.25, 1.25) 
+p.save("graphics/eigen200b.pdf", figsize=2.5)
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/eigen200a.pdf}}
+  \quad\mapsunder{\big (\begin{smallmatrix} \cos(\pi/3) &-\sin(\pi/3) \\ \sin(\pi/3) &\cos(\pi/3) \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/eigen200b.pdf}}
+\end{equation*}
+Pemetaan ini memutar setiap vektor masukan sebesar $\pi/3$~radian, sehingga
+grafik sudut masukan/keluarannya tidak mempunyai titik yang menarik.
+\begin{sagecommandline}
+sage: load("plot_action.sage")  
+sage: p = plot_color_angles(cos(pi/3),-sin(pi/3),sin(pi/3),cos(pi/3))
+sage: p.set_axes_range(0,pi,-0.25*pi,pi)
+sage: p.save("graphics/eigen201.pdf", tick_formatter=[pi,pi])
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")  
+p = plot_color_angles(cos(pi/3),-sin(pi/3),sin(pi/3),cos(pi/3))
+p.set_axes_range(0,pi,-0.15*pi,pi)
+p.save("graphics/eigen201.pdf", figsize=2.5, tick_formatter=[pi,pi])
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/eigen201.pdf}}
+\end{equation*}
+Transformasi ini tidak mempunyai nilai eigen real.
+
+
+% \subsection{Points}
+% Another natural picture to draw is the action of linear maps on 
+% some points.
+
+% We start with the action of the linear transformation $\map{t}{\Re^2}{\Re^2}$
+% represented with respect to the standard bases by our generic matrix with
+% entries $1$, $2$, $3$, and $4$.
+% \begin{sagecommandline}
+% sage: load("plot_action.sage")
+% sage: plot.options['figsize']=4.5
+% sage: g = point_grid(3, 3)
+% sage: p = plot_point_action(1, 2, 3, 4, g)
+% sage: p.save("sagecommandline/plot_action110.pdf")  
+% \end{sagecommandline}
+% \begin{center}
+%   \includegraphics{"sagecommandline/plot_action110.pdf"}
+% \end{center}
+% This picture shows that the eigenspace associated with the eigenvector
+% having the largest absolute value is attractive.
+% This is the \textit{power method}:
+
+% \begin{sagecommandline}
+% sage: load("plot_action.sage")
+% sage: plot.options['figsize']=4.5
+% sage: g = point_grid(5, 5)
+% sage: p = plot_point_action(2, 2, 0, 2, g)
+% sage: p.save("sagecommandline/plot_action111.pdf")  
+% \end{sagecommandline}
+% \begin{center}
+%   \includegraphics{"sagecommandline/plot_action111.pdf"}
+% \end{center}
+
+
+
+
+\section{Polinomial matriks}
+
+\Sage{} dapat mencari polinomial karakteristik dan polinomial minimal sebuah
+matriks.
+\begin{sagecommandline}
+sage: M =  matrix(RDF, [[1, 2], [3, 4]]) 
+sage: poly = M.charpoly()
+sage: poly.factor()
+sage: poly.roots()
+\end{sagecommandline}
+Tentu saja, nilai-nilai eigennya adalah akar-akar polinomial tersebut.
+
+Ingat bahwa polinomial karakteristik dan polinomial minimal hanya dapat
+berbeda jika polinomial karakteristik mempunyai akar berulang.
+\begin{sagecommandline}
+sage: M =  matrix(RDF, [[2, 2, 3], [0, 4, -1], [0, 0, 2]]) 
+sage: M.charpoly()
+sage: M.minpoly()
+sage: M.charpoly().factor()
+sage: M.minpoly().factor()
+\end{sagecommandline}
+Di sini \Sage{} kesulitan menentukan apakah $2$ merupakan akar berulang karena
+masalah numerik titik mengambang.
+Perhitungan eksak menggunakan bilangan rasional menyelesaikan persoalan ini.
+\begin{sagecommandline}
+sage: M =  matrix(QQ, [[2, 2, 3], [0, 4, -1], [0, 0, 2]]) 
+sage: M.charpoly()
+sage: M.minpoly()
+sage: M.charpoly().factor()
+sage: M.minpoly().factor()
+\end{sagecommandline}
+
+Matriks rotasi tidak mempunyai nilai eigen real, tetapi mempunyai nilai eigen
+kompleks.
+\begin{sagecommandline}
+sage: R = matrix(RDF, [[cos(pi/3), -sin(pi/3)], [sin(pi/3), cos(pi/3)]])
+sage: R.minpoly()
+sage: R.eigenvalues()
+sage: R.eigenvectors_right()
+\end{sagecommandline}
+
+
+
+
+\section{Diagonalisasi dan bentuk Jordan}
+
+\Sage{} dapat memberi tahu kita apakah dua matriks saling serupa.
+\begin{sagecommandline}
+sage: S =  matrix(QQ, [[2, -3], [1, -1]]) 
+sage: T =  matrix(QQ, [[0, -1], [1,  1]]) 
+sage: S.is_similar(T)
+sage: U =  matrix(QQ, [[1, 2], [3,  4]]) 
+sage: S.is_similar(U)
+\end{sagecommandline}
+\noindent
+% We can even get a transformation.
+% \begin{sagecommandline}
+% sage: S =  matrix(QQ, [[2, -3], [1, -1]]) 
+% sage: T =  matrix(QQ, [[0, -1], [1,  1]]) 
+% sage: S.is_similar(T, transformation=True)
+% \end{sagecommandline}
+
+Kita dapat menentukan apakah suatu matriks dapat didiagonalkan.
+\begin{sagecommandline}
+sage: M =  matrix(QQ, [[4, -2], [1, 1]])  
+sage: M.is_diagonalizable()
+\end{sagecommandline}
+\noindent
+Untuk mendiagonalkan matriks, ubahlah matriks itu ke bentuk Jordan.
+(Sekalipun Anda belum mempelajari bentuk matriks ini, perintahnya sederhana.)
+\begin{sagecommandline}
+sage: M =  matrix(QQ, [[2, -2, 2], [0, 1, 1], [-4, 8, 3]])  
+sage: M.jordan_form()
+\end{sagecommandline}
+Perhatikan garis \inlinecode{-+-+-} yang membagi matriks menjadi blok-blok
+komponen horizontalnya.
+Demikian pula, terdapat garis-garis vertikal.
+
+\Sage{} juga dapat mencari matriks transformasi, yaitu matriks nonsingular~$P$
+yang mengonversi antara matriks~$M$ yang diberikan dan matriks~$D$ dalam bentuk
+yang diinginkan, dengan $M=PDP^{-1}$.
+\begin{sagecommandline}[d,0,1]
+sage: M =  matrix(QQ, [[2, -2, 2], [0, 1, 1], [-4, 8, 3]])  
+sage: JF, P = M.jordan_form(transformation=True)
+sage: JF
+sage: P
+sage: P^(-1)
+sage: P*JF*P^(-1)
+\end{sagecommandline}
+
+% Even a non-diagonalizable matrix can be put in Jordan form.
+% \begin{sagecommandline}
+% sage: M =  matrix(QQ, [[2, -1], [1, 4]])  
+% sage: M.jordan_form()
+% \end{sagecommandline}
+
+
+
+\section{Kode sumber plot\_color\_angles}
+Rutin ini mengumpulkan objek-objek grafis dan mengembalikan plot dari daftar
+objek tersebut.
+Secara bawaan, rutin ini menggambar seribu titik.
+\lstinputlisting[firstline=252, lastline=262]{plot_action.sage}
+
+\section{Kode sumber color\_angles\_list}
+Rutin ini mencari sudut yang dihasilkan oleh efek transformasi pada
+vektor-vektor, lalu menggambar plot sebar titik-titik tersebut.
+Setiap titik digambar dengan warna vektor masukannya.
+Konstanta \inlinecode{TICKS} menentukan letak label pada sumbu.
+\lstinputlisting[firstline=230, lastline=250]{plot_action.sage}
+
+\section{Kode sumber find\_angles}
+Rutin ini menggunakan rumus sudut antara dua vektor yang selalu menghasilkan
+nilai positif; dengan kata lain, sudutnya tidak berorientasi.
+Hal itu sesuai dengan tujuan kita di sini, yaitu menggunakan grafik untuk
+memperkirakan tempat-tempat ketika aksi matriks tidak memutar vektor.
+\lstinputlisting[firstline=200, lastline=227]{plot_action.sage}
+
+
+\section{Kode sumber plot\_before\_after\_action}
+Satu-satunya hal yang mungkin tak terduga dalam rutin ini dan rutin
+pembantunya adalah: jika bayangan vektor tidak terlalu jauh,
+\lstinputlisting[firstline=105, lastline=105]{plot_action.sage}
+maka rutin pembantu tidak menampilkan panah, melainkan lingkaran.
+\lstinputlisting[firstline=155, lastline=195]{plot_action.sage}
+\endinput
+
+PERLU DITINJAU

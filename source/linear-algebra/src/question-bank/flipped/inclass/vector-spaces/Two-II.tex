@@ -1,0 +1,42 @@
+%\documentclass[noanswers, nolegalese, 11pt]{examjh}
+\documentclass[answers, nolegalese, 11pt]{examjh}
+\usepackage{../../../../sty/conc}
+\usepackage{../../../../sty/linalgjh}
+
+\setlength{\parindent}{0em}\setlength{\parskip}{0.5ex}
+\pagestyle{empty}
+\begin{document}\thispagestyle{empty}
+\makebox[\textwidth]{Worksheet for Two.II\hfill  From \textit{Linear Algebra}, by Hef{}feron}\vspace{-1ex}
+\makebox[\textwidth]{\hbox{}\hrulefill\hbox{}}
+
+
+\begin{questions}
+\question
+For each space, find a basis.
+Verify that it is a basis.
+\begin{parts}
+\part  
+$S_1=\set{ax^2+bx+c\suchthat a-c=0}$
+\part
+$S_2=\set{\colvec{x \\ y \\ z}\suchthat \text{$x+2y=0$ and $x+y-z=0$}}$
+\end{parts}
+\begin{solution}
+\begin{parts}
+\part
+We have $S_1=\set{cx^2+bx+c\suchthat b,c\in\R}$.
+That equals $\set{c\cdot(x^1+1)+b\cdot(x)\suchthat b,c\in\R}$.
+A spanning set is $\set{x^2+1,x}$.
+
+It is linearly independent
+because the relationship
+\begin{equation*}
+  c_0(x^2+1)+c_1(x)=0x^2+0x+0
+\end{equation*}
+gives that $c_0=c_1=0$.
+Thus it is a basis for $S_1$.
+\end{parts}
+
+\end{solution}
+
+\end{questions}
+\end{document}

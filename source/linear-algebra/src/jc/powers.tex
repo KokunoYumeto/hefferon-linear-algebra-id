@@ -1,0 +1,388 @@
+% Chapter 4, Topic _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\topic{Metode Pangkat}
+\index{metode pangkat|(}
+\index{pangkat!metode|(}
+Dalam penerapan, matriks dapat berukuran besar. Menghitung nilai eigen dan
+vektor eigen dengan mencari lalu menyelesaikan polinomial karakteristik tidak
+praktis, terlalu lambat, dan terlalu rentan kesalahan. Beberapa teknik
+menghindari polinomial karakteristik. Di sini kita membahas suatu metode yang
+cocok untuk matriks besar yang \definend{jarang}\index{matriks!jarang}%
+\index{matriks jarang}, yakni matriks yang sebagian besar entrinya nol.
+
+Andaikan matriks $T$ berukuran $\nbyn{n}$ memiliki $n$ nilai eigen berbeda
+$\lambda_1$, $\lambda_2$, \ldots, $\lambda_n$. Maka $\C^n$ memiliki basis yang
+terdiri atas vektor-vektor eigen terkait
+$\sequence{\vec{\zeta}_1,\dots,\vec{\zeta}_n}$. Untuk sebarang
+$\vec{v}\in\C^n$, tulis
+$\vec{v}=c_1\vec{\zeta}_1+\dots+c_n\vec{\zeta}_n$ dan iterasikan $T$ pada
+$\vec{v}$ untuk memperoleh
+\begin{align*}
+  T\vec{v} 
+      &=c_1\lambda_1\vec{\zeta}_1+c_2\lambda_2\vec{\zeta}_2+
+                              \dots+c_n\lambda_n\vec{\zeta}_n  \\
+  T^2\vec{v} 
+      &=c_1\lambda_1^2\vec{\zeta}_1+c_2\lambda_2^2\vec{\zeta}_2+
+                              \dots+c_n\lambda_n^2\vec{\zeta}_n  \\
+  T^3\vec{v} 
+      &=c_1\lambda_1^3\vec{\zeta}_1+c_2\lambda_2^3\vec{\zeta}_2+
+                              \dots+c_n\lambda_n^3\vec{\zeta}_n  \\
+      &\vdotswithin{=}                                            \\
+  T^k\vec{v} 
+      &=c_1\lambda_1^k\vec{\zeta}_1+c_2\lambda_2^k\vec{\zeta}_2+
+                              \dots+c_n\lambda_n^k\vec{\zeta}_n  
+\end{align*}
+Dengan mengandaikan bahwa $|\lambda_1|$ benar-benar lebih besar daripada
+semua $|\lambda_i|$ lainnya dan membagi dengan $\lambda_1^k$, diperoleh
+\begin{equation*}
+  \frac{T^k\vec{v}}{\lambda_1^k} 
+      =c_1\vec{\zeta}_1+c_2\frac{\lambda_2^k}{\lambda_1^k}\vec{\zeta}_2+
+                    \dots+c_n\frac{\lambda_n^k}{\lambda_1^k}\vec{\zeta}_n  
+\end{equation*} 
+Ketika $k$ membesar, pecahan-pecahan tersebut menuju nol. Jadi, suku milik
+$\lambda_1$ mendominasi ekspresi itu dan ekspresinya menuju
+$c_1\vec{\zeta}_1$.
+
+Jadi, jika $c_1\neq 0$, ketika $k$ membesar, arah vektor $T^k\vec{v}$
+mendekati arah vektor eigen yang terkait dengan nilai eigen dominan.
+Akibatnya, rasio panjang vektor
+$\absval{T^{k}\vec{v}}/\absval{T^{k-1}\vec{v}}$ mendekati nilai mutlak nilai
+eigen dominan tersebut.
+
+Sebagai contoh, nilai eigen matriks 
+\begin{equation*}
+  T=\begin{mat}[r]
+    3  &0  \\
+    8  &-1
+  \end{mat}
+\end{equation*}
+adalah $3$ dan $-1$. Jika komponen $\vec{v}$ adalah $1$ dan $1$, iterasi
+memberikan hasil berikut.
+\begin{center}
+  \begin{tabular}{c|ccccc}
+     $\vec{v}$  &$T\vec{v}$  &$T^2\vec{v}$ 
+        &$\cdots$ &$T^9\vec{v}$ &$T^{10}\vec{v}$        \\ \hline 
+     $\matrixvenlarge{\colvec[r]{1 \\ 1}}$  
+        &$\matrixvenlarge{\colvec[r]{3 \\ 7}}$ 
+        &$\matrixvenlarge{\colvec[r]{9 \\ 17}}$ 
+        &$\cdots$  
+        &$\matrixvenlarge{\colvec[r]{19\,683 \\ 39\,367}}$   
+        &$\matrixvenlarge{\colvec[r]{59\,049 \\ 118\,097}}$
+  \end{tabular}
+\end{center}
+Rasio panjang dua vektor terakhir adalah $2.999\,9$.
+
+Ada dua persoalan implementasi. Pertama, alih-alih menentukan pangkat-pangkat
+$T$ lalu menerapkannya pada $\vec{v}$, kita hitung $\vec{v}_1=T\vec{v}$,
+kemudian $\vec{v}_2=T\vec{v}_1$, dan seterusnya (jadi, $T^2\!$, $T^3\!$,
+\ldots{} tidak dihitung secara terpisah). Hasil kali matriks--vektor ini dapat
+dihitung dengan cepat meskipun $T$ besar, asalkan $T$ jarang.
+
+Kedua, agar tidak menghasilkan bilangan yang begitu besar hingga melampaui
+kemampuan komputer, kita dapat menormalkan $\vec{v}_i$ pada setiap langkah.
+Misalnya, bagi setiap $\vec{v}_i$ dengan panjangnya (pilihan lain adalah
+membaginya dengan komponen terbesar atau cukup dengan komponen pertamanya).
+Dengan demikian, metode ini diimplementasikan dengan menghasilkan
+\begin{align*}
+  \vec{w}_0  &=\vec{v}_0/\absval{\vec{v}_0} \\
+  \vec{v}_1  &=T\vec{w}_0                 \\
+  \vec{w}_1  &=\vec{v}_1/\absval{\vec{v}_1} \\
+  \vec{v}_2  &=T\vec{w}_1                 \\
+             &\vdotswithin{=}    \\
+  \vec{w}_{k-1}  &=\vec{v}_{k-1}/\absval{\vec{v}_{k-1}} \\
+  \vec{v}_k  &=T\vec{w}_{k-1}                 
+\end{align*}
+hingga pendekatannya dianggap memadai. Kemudian $\vec{v}_k$ mendekati suatu
+vektor eigen, dan nilai eigen dominannya dapat didekati dengan hasil bagi
+Rayleigh % $\absval{\vec{v}_{k}}/\absval{\vec{w}_{k-1}}$.
+$((T\vec{v}_k)\dotprod \vec{v}_k)/(\vec{v}_k\dotprod\vec{v}_k)
+  \approx (\lambda_1\vec{v}_k\cdot\vec{v}_k)/(\vec{v}_k\dotprod\vec{v}_k)
+  =\lambda_1$.
+
+
+Salah satu kriteria kecukupan adalah mengiterasikan hingga pendekatan nilai
+eigen menjadi stabil. Misalnya, proses iterasi dapat dihentikan bukan setelah
+sejumlah langkah tetap, melainkan ketika dua pendekatan hasil bagi Rayleigh
+berturut-turut berbeda kurang dari satu persen atau sama hingga digit signifikan
+kedua.
+
+Laju konvergensi ditentukan oleh laju pangkat-pangkat
+$|\lambda_2/\lambda_1|$ menuju nol, dengan $\lambda_2$ sebagai nilai eigen
+yang nilai mutlaknya terbesar kedua. Jika rasio itu jauh lebih kecil daripada
+satu, konvergensinya cepat; jika hanya sedikit lebih kecil daripada satu,
+konvergensinya dapat sangat lambat. Karena itu, metode pangkat bukan cara yang
+paling umum digunakan untuk menentukan nilai eigen (meskipun merupakan cara
+yang paling sederhana, sehingga dibahas di sini). Berbagai metode lain biasanya
+mula-mula mengganti matriks $T$ dengan matriks serupa yang memiliki nilai eigen
+sama, tetapi berada dalam bentuk tereduksi seperti
+\definend{bentuk tridiagonal}\index{bentuk tridiagonal}%
+\index{matriks!tridiagonal}, yang hanya memiliki entri tak nol pada diagonal
+atau tepat di atas atau di bawahnya. Teknik-teknik kasus khusus kemudian dapat
+menentukan nilai eigennya. Setelah nilai eigen diketahui, vektor eigen $T$
+dapat dihitung dengan mudah. Metode-metode lain itu berada di luar cakupan kita.
+Rujukan yang baik adalah \cite{Goult}.
+
+
+
+\begin{exercises}
+  \item 
+    Gunakan sepuluh iterasi untuk memperkirakan nilai eigen dominan matriks-
+    matriks berikut, dimulai dari vektor berkomponen $1$ dan $2$.
+    Bandingkan jawabannya dengan hasil penyelesaian persamaan karakteristik.
+    \begin{exparts*}
+      \partsitem $\begin{mat}[r]
+                    1  &5  \\
+                    0  &4
+                  \end{mat}$
+      \partsitem $\begin{mat}[r]
+                    3   &2  \\
+                    -1  &0
+                  \end{mat}$
+    \end{exparts*}
+    \begin{answer}
+     \begin{exparts}
+       \partsitem Dengan pengamatan langsung, nilai eigen dominannya adalah $4$.
+         \Sage{} memberikan hasil berikut.
+\begin{lstlisting}
+sage: def eigen(M,v,num_loops=10):
+....:     for p in range(num_loops):
+....:         v_normalized = (1/v.norm())*v
+....:         v = M*v_normalized
+....:     return v 
+....: 
+sage: M = matrix(RDF, [[1,5], [0,4]])
+sage: v = vector(RDF, [1, 2])
+sage: v = eigen(M,v)
+sage: (M*v).dot_product(v)/v.dot_product(v)
+4.00000147259
+\end{lstlisting}
+       \partsitem Perhitungan sederhana menunjukkan bahwa nilai eigen dominannya
+          adalah~$2$.
+          \Sage{} memberikan hasil berikut.
+\begin{lstlisting}
+sage: M = matrix(RDF, [[3,2], [-1,0]])
+sage: v = vector(RDF, [1, 2])
+sage: v = eigen(M,v)
+sage: (M*v).dot_product(v)/v.dot_product(v)
+2.00097741083
+\end{lstlisting}
+     \end{exparts}
+    \end{answer}
+  \item 
+     Ulangi latihan sebelumnya dengan mengiterasikan hingga jarak antara dua
+     vektor ternormalisasi berturut-turut kurang dari $0.01$.
+     Pada setiap langkah, normalkan dengan membagi setiap vektor dengan
+     panjangnya. Berapa iterasi yang diperlukan? Apakah jawabannya berbeda
+     secara berarti?
+     \begin{answer}
+       \begin{exparts}
+         \partsitem Berikut hasil dari \Sage{}.
+ \begin{lstlisting}
+sage: def eigen_by_iter(M, v, toler=0.01):
+....:     dex = 0
+....:     diff = 10
+....:     while abs(diff)>toler:
+....:         dex = dex+1
+....:         v_next = M*v
+....:         v_normalized = (1/v.norm())*v
+....:         v_next_normalized = (1/v_next.norm())*v_next
+....:         diff = (v_next_normalized-v_normalized).norm()
+....:         v_prior = v_normalized
+....:         v = v_next_normalized
+....:     return v, v_prior, dex
+....: 
+sage: M = matrix(RDF, [[1,5], [0,4]])
+sage: v = vector(RDF, [1, 2])
+sage: v,v_prior,dex = eigen_by_iter(M,v)
+sage: (M*v).norm()/v.norm()
+4.00604111686
+sage: dex
+4           
+ \end{lstlisting}
+      \partsitem \Sage{} memerlukan beberapa iterasi tambahan untuk kasus ini.
+        Perhitungan berikut menggunakan prosedur yang didefinisikan pada bagian
+        sebelumnya.
+\begin{lstlisting}
+sage: M = matrix(RDF, [[3,2], [-1,0]])
+sage: v = vector(RDF, [1, 2])
+sage: v,v_prior,dex = eigen_by_iter(M,v)
+sage: (M*v).norm()/v.norm()
+2.01585174302
+sage: dex
+6        
+\end{lstlisting}
+       \end{exparts}
+     \end{answer}
+  \item 
+    Gunakan sepuluh iterasi untuk memperkirakan nilai eigen dominan matriks-
+    matriks berikut, dimulai dari vektor berkomponen $1$, $2$, dan $3$.
+    Bandingkan jawabannya dengan hasil penyelesaian persamaan karakteristik.
+    \begin{exparts*}
+      \partsitem $\begin{mat}[r]
+                    4   &0  &1 \\
+                    -2  &1  &0  \\
+                    -2  &0  &1
+                  \end{mat}$
+      \partsitem $\begin{mat}[r]
+                   -1  &2  &2  \\
+                    2  &2  &2  \\
+                   -3  &-6 &-6
+                  \end{mat}$
+    \end{exparts*}
+    \begin{answer}
+     \begin{exparts}
+       \partsitem Nilai eigen dominannya adalah $3$.
+         \Sage{} memberikan hasil berikut.
+\begin{lstlisting}
+sage: M = matrix(RDF, [[4,0,1], [-2,1,0], [-2,0,1]])
+sage: v = vector(RDF, [1, 2, 3])
+sage: v = eigen(M,v)
+sage: (M*v).dot_product(v)/v.dot_product(v)
+3.02362112326
+\end{lstlisting}
+       \partsitem Nilai eigen dominannya adalah $-3$.
+\begin{lstlisting}
+sage: M = matrix(RDF, [[-1,2,2], [2,2,2], [-3,-6,-6]])
+sage: v = vector(RDF, [1, 2, 3])
+sage: v = eigen(M,v)
+sage: (M*v).dot_product(v)/v.dot_product(v)
+-3.00941127145
+\end{lstlisting}
+     \end{exparts}
+    \end{answer}
+  \item 
+     Ulangi latihan sebelumnya dengan mengiterasikan hingga jarak antara dua
+     vektor ternormalisasi berturut-turut kurang dari $0.01$.
+     Pada setiap langkah, normalkan dengan membagi setiap vektor dengan
+     panjangnya. Berapa iterasi yang diperlukan? Apakah jawabannya berbeda
+     secara berarti?
+     \begin{answer}
+       \begin{exparts}
+         \partsitem
+           \Sage{} memberikan hasil berikut, dengan
+           \lstinline!eigen_by_iter! sebagaimana didefinisikan di atas.
+\begin{lstlisting}
+sage: M = matrix(RDF, [[4,0,1], [-2,1,0], [-2,0,1]])
+sage: v = vector(RDF, [1, 2, 3])
+sage: v,v_prior,dex = eigen_by_iter(M,v) 
+sage: (M*v).dot_product(v)/v.dot_product(v)
+3.05460392934
+sage: dex
+8            
+\end{lstlisting}
+         \partsitem Dengan pengaturan berikut,
+\begin{lstlisting}
+sage: M = matrix(RDF, [[-1,2,2], [2,2,2], [-3,-6,-6]])
+sage: v = vector(RDF, [1, 2, 3])       
+\end{lstlisting}
+            \Sage{} tidak berhenti (gunakan \lstinline!<Ctrl>-c! untuk
+            menghentikan perhitungan). Dengan menambahkan pemeriksaan galat
+            pada rutin tersebut,
+\begin{lstlisting}
+def eigen_by_iter(M, v, toler=0.01):
+    dex = 0
+    diff = 10
+    while abs(diff)>toler:
+        dex = dex+1
+        if dex>1000:
+            print("waduh! tampaknya terjadi perulangan: \nv=",v,"\nv_next=",v_next)
+        v_next = M*v
+        if (v.norm()==0):
+            print("waduh! v bernilai nol")
+            return None
+        if (v_next.norm()==0):
+            print("waduh! v_next bernilai nol")
+            return None
+        v_normalized = (1/v.norm())*v
+        v_next_normalized = (1/v_next.norm())*v_next
+        diff = (v_next_normalized-v_normalized).norm()
+        v_prior = v_normalized
+        v = v_next_normalized
+    return v, v_prior, dex              
+\end{lstlisting}
+           diperoleh hasil berikut.
+\begin{lstlisting}
+waduh! tampaknya terjadi perulangan: 
+  v= (0.707106781187, -1.48029736617e-16, -0.707106781187) 
+  v_next= (2.12132034356, -4.4408920985e-16, -2.12132034356) 
+waduh! tampaknya terjadi perulangan: 
+  v= (-0.707106781187, 1.48029736617e-16, 0.707106781187) 
+  v_next= (-2.12132034356, 4.4408920985e-16, 2.12132034356)
+waduh! tampaknya terjadi perulangan: 
+  v= (0.707106781187, -1.48029736617e-16, -0.707106781187) 
+  v_next= (2.12132034356, -4.4408920985e-16, -2.12132034356)           
+\end{lstlisting}
+          Jadi, iterasinya berputar di antara dua arah yang berlawanan.
+       \end{exparts}
+     \end{answer}
+  \item 
+      Apa yang terjadi jika $c_1=0$? Artinya, apa yang terjadi jika vektor awal
+      tidak memiliki komponen dalam arah vektor eigen yang relevan?
+     \begin{answer}
+       Secara teori, metode ini akan menghasilkan $\lambda_2$. Namun, dalam
+       praktik, galat pembulatan dalam perhitungan memasukkan komponen dalam
+       arah $\vec{v}_1$. Karena itu, metode tersebut tetap akan menghasilkan
+       $\lambda_1$, meskipun mungkin memerlukan waktu lebih lama dibandingkan
+       pilihan vektor awal yang lebih menguntungkan.
+     \end{answer}
+  \item 
+    Bagaimana metode pangkat dapat diadaptasi untuk menentukan nilai eigen
+    terkecil dalam nilai mutlak?
+    \begin{answer}
+      Alih-alih menggunakan $\vec{v}_k=T\vec{v}_{k-1}$, gunakan
+      $\vec{v}_k=T^{-1}\vec{v}_{k-1}$, atau secara ekuivalen selesaikan
+      $T\vec{v}_k=\vec{v}_{k-1}$ pada setiap langkah, dengan syarat $T$
+      nonsingular.
+    \end{answer}
+\end{exercises}
+
+\announcecomputercode
+Berikut kode untuk sistem aljabar komputer Octave yang melakukan perhitungan di
+atas. (Kode ini disunting ringan untuk menghapus baris kosong dan sebagainya.)
+\begin{lstlisting}
+>T=[3, 0;
+    8, -1]
+T=
+   3   0
+   8  -1
+>v0=[1; 1]
+v0=
+   1
+   1
+>v1=T*v0
+v1=
+   3
+   7
+>v2=T*v1
+v2=
+   9
+  17
+>T9=T**9
+T9=
+  19683  0
+  39368 -1
+>T10=T**10
+T10=
+  59049  0
+ 118096  1
+>v9=T9*v0
+v9=
+  19683
+  39367
+>v10=T10*v0
+v10=
+  59049
+ 118097
+>norm(v10)/norm(v9)
+ans=2.9999
+\end{lstlisting}
+\textit{Catatan.}
+Kode ini belum menggunakan seluruh kemampuan Octave; Octave memiliki fungsi
+bawaan yang secara otomatis menerapkan metode canggih untuk menentukan nilai
+eigen dan vektor eigen.
+
+\index{pangkat!metode|)}
+\index{metode pangkat|)}
+\endinput
+

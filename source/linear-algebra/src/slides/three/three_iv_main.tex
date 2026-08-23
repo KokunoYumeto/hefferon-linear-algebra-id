@@ -1,0 +1,1778 @@
+% \documentclass[9pt,t]{beamer}
+\usefonttheme{professionalfonts}
+\usefonttheme{serif}
+\PassOptionsToPackage{pdfpagemode=FullScreen}{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{xcolor}
+% \DeclareGraphicsRule{*}{mps}{*}{}
+\usepackage{linalgjh}
+\usepackage{present}
+\usepackage{directories}  % Define \mapdir, \mapmpdir, etc
+\usepackage{xr}\externaldocument{\mapdir map4} % read refs from .aux file
+\usepackage{xr}\externaldocument{\mapdir map2} % read refs from .aux file
+\usepackage{catchfilebetweentags}
+\usepackage{etoolbox} % from http://tex.stackexchange.com/questions/40699/input-only-part-of-a-file-using-catchfilebetweentags-package
+\makeatletter
+\patchcmd{\CatchFBT@Fin@l}{\endlinechar\m@ne}{}
+  {}{\typeout{Unsuccessful patch!}}
+\makeatother
+
+\mode<presentation>
+{
+  \usetheme{boxes}
+  \setbeamercovered{invisible}
+  \setbeamertemplate{navigation symbols}{} 
+}
+\addheadbox{filler}{\ }  % create extra space at top of slide 
+\hypersetup{colorlinks=true,linkcolor=blue} 
+
+\title[Matrix Operations] % (optional, use only with long paper titles)
+{Three.IV Matrix Operations}
+
+\author{\textit{Linear Algebra} \\ {\small Jim Hef{}feron}}
+\institute{
+  \texttt{https://hefferon.net/linearalgebra}\\[0.25ex]
+  \texttt{http://joshua.smcvt.edu/linearalgebra}
+}
+\date{}
+
+
+\subject{Matrix Operations}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% =============================================
+% \begin{frame}{Reduced Echelon Form} 
+% \end{frame}
+
+
+
+% ..... Three.IV.1 .....
+\section{Sums and Scalar Products}
+%..........
+\begin{frame}{Operations on linear functions}
+Recall that given 
+a linear map $\map{f}{V}{W}$ then 
+the scalar multiple function 
+\begin{equation*}
+  \vec{v}\mapsunder{r\cdot f} r\cdot (\,f(\vec{v})\,)
+\end{equation*}
+is also a linear map $\map{rf}{V}{W}$.
+
+And where $\map{f,g}{V}{W}$ are 
+linear then the function that is their sum 
+\begin{equation*}
+  \vec{v}\mapsunder{f+g} f(\vec{v})+g(\vec{v})
+\end{equation*}
+is again linear $\map{f+g}{V}{W}$.
+
+We will now see how the matrix representation of
+$\rep{f}{B,D}$ 
+is related to that of $\rep{rf}{B,D}$, 
+and how the representations of 
+$\rep{f}{B,D}$ and $\rep{g}{B,D}$
+combine to give the representation of $\rep{f+g}{B,D}$.
+\end{frame}
+
+
+
+\begin{frame}
+\ex
+Fix a domain~$V$ and codomain~$W$ with bases
+$B=\sequence{\vec{\beta}_1,\vec{\beta}_2}$
+and $D=\sequence{\vec{\delta}_1,\vec{\delta}_2}$.
+Let $\map{h}{V}{W}$ be linear
+and consider the map $\map{6h}{V}{W}$ given by 
+$\vec{v}\mapsunder{6h} 6\cdot h(\vec{v})$.
+
+Where this is the representation
+of~$h(\vec{v})$
+\begin{equation*}
+  % \rep{\vec{v}}{B}=\colvec{v_1 \\ v_2}
+  % \qquad
+  \rep{\,h(\vec{v})\,}{D}=\colvec{w_1 \\ w_2}
+  % =\colvec{2v_1+v_2 \\ 3v_1+4v_2} 
+\end{equation*}
+then
+$6\cdot h(\vec{v})=6\cdot (w_1\vec{\delta}_1+w_2\vec{\delta}_2)
+=(6w_1)\cdot\vec{\delta}_1+(6w_2)\cdot\vec{\delta}_2$.
+So the representation of $6h\:(\vec{v})$ 
+\begin{equation*}
+  \rep{6h\;(\vec{v})}{D}=\colvec{6w_1 \\ 6w_2} 
+\end{equation*}
+is entry-by-entry bigger by a factor of~$6$.  
+\end{frame}
+\begin{frame}
+For instance, if 
+\begin{equation*}
+  H=\rep{h}{B,D}=
+  \begin{mat}
+    2  &1  \\
+    3  &4  
+  \end{mat}
+\end{equation*}
+then this represents the action of $h$.
+\begin{equation*}
+  \rep{h(\vec{v})}{D}=\rep{h}{B,D}\: \rep{\vec{v}}{B}
+  =
+  \begin{mat}
+    2  &1 \\
+    3  &4
+  \end{mat}
+  \colvec{v_1 \\ v_2}
+  =\colvec{2v_1+v_2 \\ 3v_1+4v_2}
+\end{equation*}
+By the prior slide we know that the output of $6h$ is $6$ times bigger.
+\begin{equation*}
+  \rep{6h\:(\vec{v})}{D}
+  =\rep{6h}{B,D}\,\colvec{v_1 \\ v_2}
+  =\colvec{12v_1+6v_2 \\ 18v_1+24v_2}              
+\end{equation*}
+So the matrix representing $6h$ 
+\begin{equation*}
+  \rep{6h}{B,D}
+  =
+  \begin{mat}
+    12 &6 \\
+    18 &24
+  \end{mat}
+\end{equation*}
+is entry-by-entry $6$ times as large as the matrix representing~$h$.  
+\end{frame}
+
+
+\begin{frame}
+\ex
+Next consider the representation of the sum~$f+g$ of two linear maps
+$\map{f,g}{V}{W}$. 
+For a domain vector~$\vec{v}$ let the outputs $f(\vec{v})$ and $g(\vec{v})$ 
+have these representations.
+\begin{equation*}
+  \rep{f(\vec{v})}{D}=\colvec{u_1 \\ u_2}
+  \qquad
+  \rep{g(\vec{v})}{D}=\colvec{w_1 \\ w_2}
+\end{equation*}
+The action of $f+g$ is this.
+\begin{align*}
+  \vec{v}
+  \mapsunder{f+g}
+  \vec{u}+\vec{v}                      
+  &=(u_1\vec{\delta}_1+u_2\vec{\delta}_2)
+  +
+  (w_1\vec{\delta}_1+w_2\vec{\delta}_2)   \\
+  &=(u_1+w_1)\cdot\vec{\delta}_1+(u_2+w_2)\cdot\vec{\delta}_2
+\end{align*}
+The effect on the representations
+of adding the functions is to add the column vectors.
+\begin{equation*}
+  \rep{\,(f+g)\,(\vec{v})\,}{D}=\colvec{u_1+w_1 \\ u_2+w_2}
+\end{equation*}
+\end{frame}
+\begin{frame}
+\noindent 
+For instance, 
+let these be the map representations.
+\begin{equation*}
+  \rep{f}{B,D}=
+  \begin{mat}
+    2  &1  \\
+    3  &4  
+  \end{mat}
+  \qquad
+  \rep{g}{B,D}=
+  \begin{mat}
+    5  &8  \\
+    7  &6  
+  \end{mat}
+\end{equation*}
+The functions given have 
+this effect.
+\begin{align*}
+  \rep{f(\vec{v})}{D}=
+  \begin{mat}
+    2  &1  \\
+    3  &4  
+  \end{mat}
+  \colvec{v_1 \\ v_2}
+  =\colvec{2v_1+v_2 \\ 3v_1+4v_2}
+  \\
+  \rep{g(\vec{v})}{D}=
+  \begin{mat}
+    5  &8  \\
+    7  &6  
+  \end{mat}
+  \colvec{v_1 \\ v_2}
+  =\colvec{5v_1+8v_2 \\ 7v_1+6v_2}
+\end{align*}
+The prior slide says that $f+g$ acts in this way
+\begin{equation*}
+  \rep{\,(f+g)\,(\vec{v})\,}{D}
+  \colvec{v_1 \\ v_2}
+  =\colvec{7v_1+9v_2 \\ 10v_1+10v_2}
+\end{equation*}
+so its matrix
+\begin{equation*}
+  \rep{f+g}{B,D}
+  =\begin{mat}
+    7  &9  \\
+    10  &10  
+  \end{mat}
+\end{equation*}
+is the entry-by-entry sum of the other two.
+\end{frame}
+
+\begin{frame}{Definition of matrix sum and scalar multiple}
+\df[def:SumScalarProdMats]
+\ExecuteMetaData[\mapdir map4.tex]{df:SumScalarProdMats}
+
+\pause
+\ex
+Where
+\begin{equation*}
+  A=
+  \begin{mat}
+    1  &-1 \\
+    2  &3
+  \end{mat}
+  \quad
+  B=
+  \begin{mat}
+    0  &0     &2  \\
+    9  &-1/2  &5
+  \end{mat}
+  \quad
+  C=
+  \begin{mat}
+    1  &0 \\
+    8  &-1
+  \end{mat}
+\end{equation*}
+Then
+\begin{equation*}
+  A+C=
+  \begin{mat}
+    2  &-1  \\
+    10 &2
+  \end{mat}
+  \qquad
+  5B=
+  \begin{mat}
+    0  &0    &10 \\
+    45 &-5/2 &25 
+  \end{mat}
+\end{equation*}
+None of these is defined: $A+B$, $B+A$, 
+$B+C$, $C+B$.
+
+From the definition, they are not defined 
+because the sizes don't match and so
+the entry-by-entry sum is not possible.
+But really they are not defined because the underlying function operations
+are not possible.
+The fact that $A$ has two columns means that
+functions represented by~$A$ have two-dimensional domains.
+Functions represented by~$B$ have three-dimensional domains.
+Adding the two functions would be adding apples and oranges.
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\th[th:MatOpsRepMapOps]
+\ExecuteMetaData[\mapdir map4.tex]{th:MatOpsRepMapOps}
+
+\pause
+\pf
+Generalize the earlier examples.
+See \nearbyexercise{exer:CorrspMapMatOps}\hspace{-0.25em}.
+\qed
+
+\pause
+\medskip
+\df[df:ZeroMatrix]
+\ExecuteMetaData[\mapdir map4.tex]{df:ZeroMatrix}
+
+\pause
+\medskip
+\ex
+The zero matrix is the identity element for matrix addition.
+\begin{equation*}
+  \begin{mat}
+    3 &1 &2 \\
+    5 &0 &9
+  \end{mat}
+  +
+  \begin{mat}
+    0 &0 &0 \\
+    0 &0 &0
+  \end{mat}
+  =
+  \begin{mat}
+    3 &1 &2 \\
+    5 &0 &9
+  \end{mat}
+\end{equation*}
+A zero function
+$\map{Z}{V}{W}$ is the identity element for
+function addition, and the matrix fact accords with the map fact. 
+\end{frame}
+
+
+
+
+% ..... Three.IV.2 .....
+\section{Matrix Multiplication}
+%..........
+\begin{frame}{Representing composition}
+Another function operation,
+besides scalar multiplication and addition,   
+is composition.
+
+\pause
+\lm[lm:CompositionOfLinearMapsIsLinear]
+\ExecuteMetaData[\mapdir map4.tex]{lm:CompositionOfLinearMapsIsLinear}
+
+\pause
+\pf
+\ExecuteMetaData[\mapdir map4.tex]{pf:CompositionOfLinearMapsIsLinear}
+\qed
+
+% \pause
+% \medskip
+% We next do an exploratory calculation to see how the matrix
+% representations of the two functions combine to make
+% the matrix representation of their composition.
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\ex
+Consider two linear functions $\map{h}{V}{W}$ and $\map{g}{W}{X}$
+represented as here.
+\begin{equation*}
+  \rep{h}{B,C}=
+  \begin{mat}
+    3 &1 \\
+    2 &5 \\
+    4 &6
+  \end{mat}
+  \qquad
+  \rep{g}{C,D}=
+  \begin{mat}
+    8 &7 &11 \\
+    9 &10 &12 
+  \end{mat}
+\end{equation*}
+% The sizes of the matrices show that 
+% $V$ has dimension~$2$, 
+% $W$ has dimension~$3$, 
+% and $X$ has dimension~$2$.
+We will do an explatory computation, 
+to see how these two representations combine to 
+give the representation of the composition
+$\map{\composed{g}{h}}{V}{X}$.
+
+\pause
+We start with the action
+of~$h$ on~$\vec{v}\in V$.
+\begin{align*}
+  \rep{h(\vec{v})}{C}
+  &=\rep{h}{B,C}\cdot\rep{\vec{v}}{B}     \\
+  &=
+  \begin{mat}
+    3 &1 \\
+    2 &5 \\
+    4 &6
+  \end{mat}
+  \colvec{v_1 \\ v_2}  
+  =
+  \colvec{3v_1+v_2 \\ 2v_1+5v_2 \\ 4v_1+6v_2}
+\end{align*}
+\end{frame}
+\begin{frame}
+\noindent Next, to that apply $g$.
+\begin{multline*}
+  \rep{g}{C,D}\cdot \rep{h(\vec{v})}{C}
+  =
+  \begin{mat}
+    8 &7 &11 \\
+    9 &10 &12     
+  \end{mat}
+  \colvec{3v_1+v_2 \\ 2v_1+5v_2 \\ 4v_1+6v_2}                \\
+  =
+  \colvec{8(3v_1+v_2)+7(2v_1+5v_2)+11(4v_1+6v_2)  \\
+          9(3v_1+v_2)+10(2v_1+5v_2)+12(4v_1+6v_2)}
+\end{multline*}
+Gather terms.
+\begin{equation*}
+  =\colvec{(8\cdot 3+7\cdot 2+11\cdot 4)v_1+(8\cdot 1+7\cdot 5+11\cdot 6)v_2 \\
+           (9\cdot 3+10\cdot 2+12\cdot 4)v_1+(9\cdot 1+10\cdot 5+12\cdot 6)v_2}
+\end{equation*}
+Rewrite as a matrix-vector multiplication.
+\begin{equation*}
+  =\begin{mat}
+    8\cdot 3+7\cdot 2+11\cdot 4 &8\cdot 1+7\cdot 5+11\cdot 6 \\
+    9\cdot 3+10\cdot 2+12\cdot 4 &9\cdot 1+10\cdot 5+12\cdot 6
+  \end{mat}
+  \colvec{v_1 \\ v_2}
+\end{equation*}
+So here is how the two starting matrices combine.
+\begin{equation*}
+  \begin{mat}
+    8 &7 &11 \\
+    9 &10 &12 
+  \end{mat}
+  \begin{mat}
+    3 &1 \\
+    2 &5 \\
+    4 &6
+  \end{mat}
+  =
+  \begin{mat}
+    8\cdot 3+7\cdot 2+11\cdot 4 &8\cdot 1+7\cdot 5+11\cdot 6 \\
+    9\cdot 3+10\cdot 2+12\cdot 4 &9\cdot 1+10\cdot 5+12\cdot 6
+  \end{mat}
+\end{equation*}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}{Definition of matrix multiplication}
+\df[def:MatMult]
+\ExecuteMetaData[\mapdir map4.tex]{df:MatMult}
+\ex
+\begin{equation*}
+  \begin{mat}
+    3 &1 &6 \\
+    2 &5 &9
+  \end{mat}
+  \begin{mat}
+    2 &0  &4 \\
+    1 &-3 &5 \\
+    4 &2  &7
+  \end{mat}
+  =
+  \begin{mat}
+    31  &9  &59  \\
+    45  &3  &96
+  \end{mat}
+\end{equation*}
+\end{frame}
+\begin{frame}
+\ex
+This product 
+\begin{equation*}
+  \begin{mat}
+    1  &3  &-1 \\
+    0  &0  &0  \\
+    2  &0  &0
+  \end{mat}
+  \begin{mat}
+    5  &7  &1 \\
+    2  &2  &0 
+  \end{mat}
+\end{equation*}
+is not defined because
+the number of columns on the left must equal the number of rows on the right.
+
+\pause
+\ex
+Square matrices of the same size have a defined product.
+\begin{equation*}
+  \begin{mat}
+    1  &3  &-1 \\
+    0  &0  &0  \\
+    2  &0  &0
+  \end{mat}
+  \begin{mat}
+    5  &7  &1 \\
+    2  &2  &0 \\
+    1  &-1 &2 
+  \end{mat}
+  =
+  \begin{mat}
+    10  &14  &-1  \\
+     0  &0   &0   \\
+    10  &14  &2
+  \end{mat}
+\end{equation*}
+This reflects the fact that we can compose two
+functions from a space to itself $\map{g,h}{V}{V}$.
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}{Matrix multiplication represents composition}
+\th[th:MatMultRepComp]
+\ExecuteMetaData[\mapdir map4.tex]{th:MatMultRepComp}
+
+\iftoggle{showallproofs}{
+  \pause
+  \pf
+  \ExecuteMetaData[\mapdir map4.tex]{pf:MatMultRepComp0}
+}{
+
+  \bigskip
+  The book has the proof, which retraces the steps of the example.
+}
+\end{frame}
+\iftoggle{showallproofs}{
+  \begin{frame}
+  \ExecuteMetaData[\mapdir map4.tex]{pf:MatMultRepComp1}
+  \qed
+  \end{frame}
+}{}
+
+
+
+%..........
+\begin{frame}{Arrow diagrams}
+% \ExecuteMetaData[\mapdir map4.tex]{MatMultArrowDiag0}
+This pictures the relationship between maps and matrices.
+\centergraphic{\mapmpdir ch3.20}
+\pause
+\ExecuteMetaData[\mapdir map4.tex]{MatMultArrowDiag1}
+\end{frame}
+
+\begin{frame}
+\ex 
+Let $V=\Re^2$, $W=\polyspace_2$, and~$X=\matspace_{\nbyn{2}}$. 
+Fix these bases.  
+\begin{gather*}
+  B=\sequence{\colvec{1 \\ 1}, \colvec{1 \\ -1}}    
+  \qquad
+  C=\sequence{x^2, x^2+x, x^2+x+1}              \\
+  D=\sequence{
+    \begin{mat}
+      1 &0 \\
+      0 &0
+    \end{mat},
+    \begin{mat}
+      0 &2 \\
+      0 &0
+    \end{mat},
+    \begin{mat}
+      0 &0 \\
+      3 &0
+    \end{mat},
+    \begin{mat}
+      0 &0 \\
+      0 &4
+    \end{mat}}
+\end{gather*}
+Suppose that $\map{h}{\Re^2}{\polyspace_2}$ and
+$\map{g}{\polyspace_2}{\matspace_{\nbyn{2}}}$ have these actions.
+\begin{equation*}
+  \colvec{a \\ b}\mapsunder{h} ax^2+(a+b)
+  \qquad
+  px^2+qx+r\mapsunder{g}
+  \begin{mat}
+    p &p+q \\  
+    0 &r
+  \end{mat}
+\end{equation*}
+Then the composition does this.
+\begin{equation*}
+  \colvec{a \\ b}\mapsunder{h}ax^2+(a+b)\mapsunder{g}
+  \begin{mat}
+    a &a \\
+    0 &a+b
+  \end{mat}
+\end{equation*}
+Here is the same statement in the other notation.
+\begin{equation*}
+  \composed{g}{h}\,(\colvec{a \\ b})=  
+  \begin{mat}
+    a &a \\
+    0 &a+b
+  \end{mat}
+\end{equation*}
+\end{frame}
+\begin{frame}
+% So far in this example we have given the maps above the arrows, $f$, $g$, 
+% and $\composed{g}{h}$. 
+% \centergraphic{\mapmpdir ch3.20}
+We next compute the matrices representing those maps, and we will
+finish by checking that the product of $G$ and~$H$ is the matrix 
+representing $\composed{g}{h}$.
+
+To find $H=\rep{h}{B,D}$, compute the action of $h$
+on the domain basis vectors,
+\begin{equation*}
+  \colvec{1 \\ 1}\mapsunder{h}x^2+2
+  \quad
+  \colvec{1 \\ -1}\mapsunder{h}x^2
+\end{equation*}
+represent the results with respect to $D$, and make the matrix.
+\begin{equation*}
+  \rep{x^2+2}{C}=\colvec{1  \\ -2 \\ 2}
+  \quad
+  \rep{x^2}{C}=\colvec{1  \\ 0 \\ 0}         
+  \qquad
+  H=
+  \begin{mat}
+    1 &1 \\
+   -2 &0 \\
+    2 &0
+  \end{mat}
+\end{equation*}
+Do the same for~$g$: see where it maps its domain basis
+\begin{equation*}
+  x^2\mapsto
+  \begin{mat}
+    1 &1 \\
+    0 &0
+  \end{mat}
+  \quad
+  x^2+x\mapsto
+  \begin{mat}
+    1 &2 \\
+    0 &0
+  \end{mat}
+  \quad
+  x^2+x+1\mapsto
+  \begin{mat}
+    1 &2 \\
+    0 &1
+  \end{mat}
+\end{equation*}
+and represent those with respect to its codomain basis.
+\begin{equation*}
+  G=
+  \begin{mat}
+    1   &1  &1  \\
+    1/2 &1  &1  \\
+    0   &0  &0  \\
+    0   &0  &1/4
+  \end{mat}
+\end{equation*}
+\end{frame}
+\begin{frame}
+Next, $\composed{g}{h}$ has this action.
+\begin{equation*}
+  \colvec{1 \\ 1}\mapsto
+  \begin{mat}
+    1 &1 \\
+    0 &2
+  \end{mat}
+  \qquad  
+  \colvec{1 \\ -1}\mapsto
+  \begin{mat}
+    1 &1   \\
+    0 &0
+  \end{mat}
+\end{equation*}
+This represents the composition.
+\begin{equation*}
+  \rep{\composed{g}{h}}{B,D}
+  =
+  \begin{mat}
+    1   &1  \\
+    1/2 &1/2 \\
+    0   &0    \\
+    1/2 &0
+  \end{mat}
+\end{equation*}
+
+Finish by checking that the product of $G$ with~$H$
+equals the matrix representing~$\composed{g}{h}$.
+\begin{align*}
+  \rep{g}{C,D}\cdot\rep{h}{B,C}
+  &=\rep{\composed{g}{h}}{B,D}           \\
+  \begin{mat}
+    1   &1  &1  \\
+    1/2 &1  &1  \\
+    0   &0  &0  \\
+    0   &0  &1/4
+  \end{mat}
+  \begin{mat}
+    1 &1 \\
+   -2 &0 \\
+    2 &0
+  \end{mat}                    
+  &=  
+  \begin{mat}
+    1   &1  \\
+    1/2 &1/2 \\
+    0   &0    \\
+    1/2 &0
+  \end{mat}
+\end{align*}
+% \bigskip
+% \centergraphic{\mapmpdir ch3.20}
+\end{frame}
+
+
+\begin{frame}{Order, dimensions, and sizes}
+% These two functions can be composed 
+% \begin{equation*}
+%   \map{h}{V}{W}
+%   \qquad
+%   \map{g}{W}{X}
+% \end{equation*}
+% because the codomain of~$g$ is the domain of~$g$.
+
+An important observation about the order in which we write these things:~in 
+writing the composition~$\composed{g}{h}$,
+the function $g$ is written first, that is, leftmost, 
+but it is applied second.
+\begin{equation*}
+  \vec{v}\mapsunder{h} h(\vec{v}) \mapsunder{g} g( h(\vec{v}))
+\end{equation*}
+% We write $g$ first to match the definition 
+% $g(\,h(\vec{v})\,)$.
+That order carries over to matrices:~$\composed{g}{h}$
+is represented by $GH$.
+
+\pause
+Also consider the dimensions of the spaces.
+\begin{equation*}
+  \text{dimension \( n \) space}
+  \;\stackrel{h}{\longrightarrow}\;
+  \text{dimension \( r \) space}
+  \;\stackrel{g}{\longrightarrow}\;
+  \text{dimension \( m \) space}
+\end{equation*}
+Briefly,
+$\nbym{m}{r}\text{\ times\ }\nbym{r}{n}\text{\ equals\ }\nbym{m}{n}$,
+as here.
+\begin{align*}
+  \makebox[0.65in][c]{$\nbym{2}{3}$}
+  \makebox[1in][c]{$\nbym{3}{4}$}
+  &=
+  \makebox[1.15in][c]{$\nbym{2}{4}$}                            \\
+  \begin{mat}
+     2 &1 &4 \\
+    -1 &0 &3
+  \end{mat}
+  \begin{mat}
+     3 &0  &2 &1 \\
+     5 &0  &0 &2 \\
+     1 &-1 &4 &7
+  \end{mat}
+  &=
+  \begin{mat}
+     15 &-4  &20 &32 \\
+     0  &-3  &10 &20 
+  \end{mat}
+\end{align*}
+\end{frame}
+
+
+
+\begin{frame}{Matrix multiplication is not commutative}
+Function composition is in general not a commutative 
+operation\Dash $\cos(\sqrt{x})$
+is different than $\sqrt{\cos(x)}$.
+This holds even in the special case of 
+composition of linear functions.
+\pause
+\ex
+Changing the order in which we multiply these matrices
+\begin{equation*}
+  \begin{mat}
+    3  &3  \\
+    0  &4
+  \end{mat}
+  \begin{mat}
+    -2  &6  \\
+    6   &5
+  \end{mat}
+  =
+  \begin{mat}
+    12  &33 \\
+    24  &20
+  \end{mat}
+\end{equation*}
+changes the result.
+\begin{equation*}
+  \begin{mat}
+    -2  &6  \\
+    6   &5
+  \end{mat}
+  \begin{mat}
+    3  &3  \\
+    0  &4
+  \end{mat}
+  =
+  \begin{mat}
+     -6  &18   \\
+     18  &38  
+  \end{mat}
+\end{equation*}
+
+\ex
+The product of these two
+is defined in one order
+and not defined in the other.
+\begin{equation*}
+  \begin{mat}
+    3  &4  \\
+    0  &2
+  \end{mat}
+  \qquad
+  \begin{mat}
+    8  &12  &0 \\
+   -4  &0  &1/2
+  \end{mat}
+\end{equation*}
+% \begin{equation*}
+%   \begin{mat}
+%     8  &12  &0 \\
+%    -4  &0  &1/2
+%   \end{mat}
+%   \qquad
+%   \begin{mat}
+%     3  &4  \\
+%     0  &2
+%   \end{mat}
+% \end{equation*}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+Although the matrix operation of multiplication does not have
+the property of being commutative,
+it does have some nice algebraic properties.  
+
+\th[th:MatMultWellBehaved]
+\ExecuteMetaData[\mapdir map4.tex]{th:MatMultWellBehaved}
+\pause
+\pf
+\ExecuteMetaData[\mapdir map4.tex]{pf:MatMultWellBehaved0}
+
+% \pause
+\ExecuteMetaData[\mapdir map4.tex]{pf:MatMultWellBehaved1}
+\qed
+\end{frame}
+
+
+
+
+% ..... Three.IV.3 .....
+\section{Mechanics of Matrix Multiplication}
+%..........
+\begin{frame}{Combinatorics of multiplication}
+The striking thing about matrix multiplication is the
+way rows and columns combine.
+The \( i,j \) entry of the matrix product $GH$ is the dot product of
+row~$i$ of the left matrix $G$ with column~$j$
+of the right one~$H$.
+\begin{equation*} % 
+  p_{i,j}
+  =
+  g_{i,\text{\textcolor{red}{$1$}}}h_{\text{\textcolor{red}{$1 $}},j}
+   +g_{i,\text{\textcolor{red}{$2$}}}h_{\text{\textcolor{red}{$2 $}},j}
+   +\dots+g_{i,\text{\textcolor{red}{$r $}}}h_{\text{\textcolor{red}{$r $}},j}
+\end{equation*}
+Here a second row and a third column combine to make a $2,3$~entry.
+\begin{equation*}
+\setlength{\fboxsep}{1.5pt}
+    \begin{mat}
+       \begin{array}{@{}cc@{}} 1  &1 \end{array}                         \\ 
+       {\color{blue} \begin{array}{@{}cc@{}} 0  &1 \end{array}}           \\ 
+       % \text{\highlight{\( \begin{array}{@{}cc@{}}  0  &1  \end{array} \)}}   \\  
+       \begin{array}{@{}cc@{}} 1  &0 \end{array}
+    \end{mat}
+    \begin{mat}
+      \begin{array}{@{}c@{}}  4  \\  5  \end{array}
+      &{\color{blue}\begin{array}{@{}c@{}}  6  \\  7  \end{array}}
+      % &\text{\highlight{\(\begin{array}{@{}c@{}}  8  \\  9  \end{array}\)}}
+    \end{mat}
+  =
+    \begin{mat}
+      9   &13                           \\
+      % 5  &\text{\highlight{ \(7\) }}   \\  
+      5  &{\color{blue} 7 }   \\  
+      4  &6
+    \end{mat}
+\end{equation*}
+We can view this as the left matrix acting
+by multiplying its rows into the columns of the right matrix.
+Or we could see it as 
+the right matrix using its columns to
+act on the left matrix's rows.
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\lm[lm:ColsAndRowsInMatrixMult]
+\ExecuteMetaData[\mapdir map4.tex]{lm:ColsAndRowsInMatrixMult}
+\end{frame}
+% \begin{frame}
+% \pf
+% \ExecuteMetaData[\mapdir map4.tex]{pf:ColsAndRowsInMatrixMult}
+% \qed
+% \end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\df[df:UnitMatrix]
+\ExecuteMetaData[\mapdir map4.tex]{df:UnitMatrix}
+\ex
+The $2,1$ unit $\nbym{2}{3}$ matrix multiplies from the left 
+\begin{equation*}
+  \begin{mat}
+    0 &0 &0 \\
+    1 &0 &0
+  \end{mat}
+  \begin{mat}
+    2 &1 &3 \\
+    5 &6 &4 \\
+    7 &8 &9
+  \end{mat}
+  =
+  \begin{mat}
+    0 &0 &0 \\
+    2 &1 &3 
+  \end{mat}
+\end{equation*}
+to copy row~$1$ of the multiplicand into row~$2$ of the result. 
+
+\pause
+\ex 
+From the right the $2,1$ unit $\nbym{2}{3}$ matrix
+\begin{equation*}
+  \begin{mat}
+    3 &4 \\
+    6 &5
+  \end{mat}
+  \begin{mat}
+    0 &0 &0 \\
+    1 &0 &0
+  \end{mat}
+  =
+  \begin{mat}
+    4 &0 &0 \\
+    5 &0 &0
+  \end{mat}
+\end{equation*}
+copies column~$2$ of the first matrix into column~$1$ of the result.
+
+\pause
+\ex 
+Rescaling the unit matrix rescales the result.
+\begin{equation*}
+  \begin{mat}
+    3 &4 \\
+    6 &5
+  \end{mat}
+  \begin{mat}
+    0 &0 &0 \\
+    3 &0 &0
+  \end{mat}
+  =
+  \begin{mat}
+    12 &0 &0 \\
+    15 &0 &0
+  \end{mat}
+\end{equation*}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\df[df:MainDiagonal]
+\ExecuteMetaData[\mapdir map4.tex]{df:MainDiagonal}
+\pause
+\df[df:IdentityMatrix]
+\ExecuteMetaData[\mapdir map4.tex]{df:IdentityMatrix}
+\pause
+Taking the product with an identity matrix returns the multiplicand. 
+\ex
+Multiplication by an identity from the left
+\begin{equation*}
+  \begin{mat}
+    1  &0 \\
+    0  &1
+  \end{mat}
+  \begin{mat}
+    3  &2  \\
+   -1  &5
+  \end{mat}
+  =
+  \begin{mat}
+    3  &2  \\
+   -1  &5
+  \end{mat}
+\end{equation*}
+or from the right leaves the matrix unchanged.
+\begin{equation*}
+  \begin{mat}
+    3  &2  \\
+   -1  &5
+  \end{mat}
+  \begin{mat}
+    1  &0 \\
+    0  &1
+  \end{mat}
+  =
+  \begin{mat}
+    3  &2  \\
+   -1  &5
+  \end{mat}
+\end{equation*}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\df[df:DiagonalMatrix]
+\ExecuteMetaData[\mapdir map4.tex]{df:DiagonalMatrix}
+\pause
+\ex
+Multiplication from the left by a diagonal matrix rescales the rows.
+\begin{equation*}
+  \begin{mat}
+    2  &0 \\
+    0  &3
+  \end{mat}
+  \begin{mat}
+    3  &2  \\
+   -1  &5
+  \end{mat}
+  =
+  \begin{mat}
+    6  &4  \\
+   -3  &15
+  \end{mat}
+\end{equation*}
+From the right it rescales the columns.
+\begin{equation*}
+  \begin{mat}
+    3  &2  \\
+   -1  &5
+  \end{mat}
+  \begin{mat}
+    2  &0 \\
+    0  &3
+  \end{mat}
+  =
+  \begin{mat}
+    6  &6  \\
+   -2  &15
+  \end{mat}
+\end{equation*}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\df[df:PermutationMatrix]
+\ExecuteMetaData[\mapdir map4.tex]{df:PermutationMatrix}
+\pause
+\ex
+Multiplication by a permutation matrix from the left will swap rows.
+\begin{equation*}
+  \begin{mat}
+    0 &1 &0 \\
+    1 &0 &0 \\
+    0 &0 &1
+  \end{mat}
+  \begin{mat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    7 &8 &9
+  \end{mat}\
+  =
+  \begin{mat}
+    4 &5 &6 \\
+    1 &2 &3 \\
+    7 &8 &9
+  \end{mat}
+\end{equation*}
+From the right it swaps columns.
+\begin{equation*}
+  \begin{mat}
+    1 &2 &3 \\
+    4 &5 &6 \\
+    7 &8 &9
+  \end{mat}\
+  \begin{mat}
+    0 &1 &0 \\
+    1 &0 &0 \\
+    0 &0 &1
+  \end{mat}
+  =
+  \begin{mat}
+    2 &1 &3 \\
+    5 &4 &6 \\
+    8 &7 &9
+  \end{mat}
+\end{equation*}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\df[df:ElementaryReductionMatrices]
+\ExecuteMetaData[\mapdir map4.tex]{df:ElementaryReductionMatrices}
+% \pause
+% \ex
+% Here are some $\nbyn{2}$ examples.
+% \begin{equation*}
+%   M_{2}(3)=
+%   \begin{mat}[r]
+%     1  &0 \\
+%     0  &3
+%   \end{mat}
+%   \quad
+%   P_{1,2}=
+%   \begin{mat}[r]
+%     0  &1 \\
+%     1  &0
+%   \end{mat}
+%   \quad
+%   C_{1,2}(-3)=
+%   \begin{mat}[r]
+%     1  &0 \\
+%     -3 &1
+%   \end{mat}
+% \end{equation*}
+% \pause
+% \ex
+% Some $\nbyn{3}$ examples.
+% \begin{multline*}
+%   M_{2}(1/2)=
+%   \begin{mat}
+%     1 &0   &0 \\
+%     0 &1/2 &0 \\
+%     0 &0   &1
+%   \end{mat}
+%   \quad
+%   P_{2,3}=
+%   \begin{mat}
+%     1 &0 &0 \\
+%     0 &0 &1 \\
+%     0 &1 &0
+%   \end{mat}
+%   \\
+%   C_{2,3}(-4)=
+%   \begin{mat}[r]
+%     1 &0  &0 \\
+%     0 &1  &0 \\
+%     0 &-4 &1
+%   \end{mat}
+% \end{multline*}
+% \end{frame}
+
+
+
+
+% \begin{frame}
+\ex Multiplying on the left by the $\nbyn{3}$ matrix
+$M_{2}(1/2)$
+has the effect of the row operation $(1/2)\rho_2$. 
+\begin{equation*}
+  \begin{mat}
+    1 &0   &0 \\
+    0 &1/2 &0 \\
+    0 &0   &1
+  \end{mat}
+  \begin{mat}
+    1  &3  &0  \\
+    0  &2  &5  \\
+    0  &0  &0
+  \end{mat}
+  =
+  \begin{mat}
+    1  &3  &0  \\
+    0  &1  &5/2  \\
+    0  &0  &0
+  \end{mat}
+\end{equation*}
+\pause
+\ex
+Left multiplication by $C_{1,3}(-2)$ performs the
+row operation $-2\rho_1+\rho_3$.
+\begin{equation*}
+  \begin{mat}[r]
+    1 &0   &0 \\
+    0 &1   &0 \\
+    -2 &0   &1
+  \end{mat}
+  \begin{mat}[r]
+    1  &3  &0  \\
+    0  &2  &5  \\
+    2  &1  &1
+  \end{mat}
+  =
+  \begin{mat}[r]
+    1  &3  &0  \\
+    0  &2  &5  \\
+    0  &-5 &1
+  \end{mat}
+\end{equation*}
+\end{frame}
+
+
+
+
+\begin{frame}
+\lm[GrByMatMult]
+\ExecuteMetaData[\mapdir map4.tex]{lm:GrByMatMult}
+\pf
+Clear.
+\qed
+\co[cor:ReducViaMatrices]
+\ExecuteMetaData[\mapdir map4.tex]{co:ReducViaMatrices}
+
+\pause
+\ex
+You can do this Gauss-Jordan reduction
+\begin{equation*}
+  \begin{mat}
+    1 &2 \\
+    4 &3 
+  \end{mat}
+  \grstep{-4\rho_1+\rho_2}
+  \grstep{-(1/5)\rho_2}
+  \grstep{-2\rho_2+\rho_1}
+  \begin{mat}
+    1 &0 \\
+    0 &1 
+  \end{mat}
+\end{equation*}
+as a product; note that the order is right-to-left.
+\begin{align*}
+  \begin{mat}
+    1 &-2 \\
+    0 &1
+  \end{mat}
+  \begin{mat}
+    1 &0 \\
+    0 &-1/5
+  \end{mat}
+  \begin{mat}
+    1 &0 \\
+    -4 &1
+  \end{mat}
+  \cdot
+  \begin{mat}
+    1 &2 \\
+    4 &3 
+  \end{mat}
+  &=
+  \begin{mat}
+    1 &0 \\
+    0 &1 
+  \end{mat}              \\[1ex]
+  C_{2,1}(-2)\,M_2(-1/5)\,C_{1,2}(-4)\cdot H
+  &= I
+\end{align*}
+
+\end{frame}
+
+
+\begin{frame}
+\ex
+You can bring this augmented matrix to echelon form with matrix multiplication.
+\begin{equation*}
+  \begin{amat}{3}
+    1  &-1  &2  &4 \\
+    2  &-2  &-1 &6 \\
+    0  &3   &1  &5 
+  \end{amat}
+\end{equation*}
+% \end{frame}
+% \begin{frame}
+First perform $-2\rho_1+\rho_2$ via left multiplication by $C_{1,2}(-2)$.
+\begin{equation*}
+  \begin{mat}
+    1  &0  &0  \\
+    -2  &1  &0  \\
+   0  &0  &1
+  \end{mat}
+  \begin{amat}{3}
+    1  &-1  &2  &4 \\
+    2  &-2  &-1 &6  \\
+    0  &3   &1  &5 
+  \end{amat}
+  =
+  \begin{amat}{3}
+    1  &-1  &2  &4 \\
+    0  &0   &-5 &-2 \\
+    0  &3   &1  &5 
+  \end{amat}
+\end{equation*}
+%\pause
+Swap rows $2$ and $3$ with $P_{2,3}$
+\begin{equation*}
+  \begin{mat}
+    1  &0  &0  \\
+    0  &0  &1  \\
+    0  &1  &0
+  \end{mat}
+  \begin{amat}{3}
+    1  &-1  &2  &4 \\
+    0  &0   &-5 &-2 \\
+    0  &3   &1  &5 
+  \end{amat}
+  =
+  \begin{amat}{3}
+    1  &-1  &2  &4 \\
+    0  &3   &1  &5 \\
+    0  &0   &-5 &-2 
+  \end{amat}
+\end{equation*}
+Here is the full equation.
+\begin{equation*}
+  \begin{mat}
+    1  &0  &0  \\
+    0  &0  &1  \\
+    0  &1  &0
+  \end{mat}
+  \begin{mat}
+    1  &0  &0  \\
+    -2  &1  &0  \\
+    0  &0  &1
+  \end{mat}
+  \begin{amat}{3}
+    1  &-1  &2  &4 \\
+    2  &-2  &-1 &6  \\
+    0  &3   &1  &5 
+  \end{amat}
+  =
+  \begin{amat}{3}
+    1  &-1  &2  &4 \\
+    0  &3   &1  &5 \\
+    0  &0   &-5 &-2 
+  \end{amat}
+\end{equation*}
+\end{frame}
+
+
+
+% ..... Three.IV.3 .....
+\section{Inverses}
+\begin{frame}{Function inverses}
+\ExecuteMetaData[\mapdir map4.tex]{FunctionInverseReview0}
+Our goal is, where a linear~$h$ has an inverse, to find the
+relationship between the matrices $\rep{h}{B,D}$
+and $\rep{h^{-1}}{D,B}$.
+
+\pause
+\ExecuteMetaData[\mapdir map4.tex]{FunctionInverseReview1}
+\end{frame}
+\begin{frame}
+\ExecuteMetaData[\mapdir map4.tex]{FunctionInverseReview2}
+
+\pause
+\ExecuteMetaData[\mapdir map4.tex]{FunctionInverseReview3}
+\end{frame}
+\begin{frame}
+\ExecuteMetaData[\mapdir map4.tex]{FunctionInverseReview4}
+
+\pause
+\ExecuteMetaData[\mapdir map4.tex]{FunctionInverseReview5}
+\end{frame}
+
+
+
+%..........
+\begin{frame}{Definition of matrix inverse}
+\df[df:MatrixInverse]
+\ExecuteMetaData[\mapdir map4.tex]{df:MatrixInverse}
+\pause
+\ex
+This matrix 
+\begin{equation*}
+  H=
+  \begin{mat}
+    2  &5  \\
+    1  &3
+  \end{mat}
+\end{equation*}
+has a two-sided inverse.
+\begin{equation*}
+  H^{-1}=
+  \begin{mat}
+    3   &-5  \\
+    -1  &2
+  \end{mat}
+\end{equation*}
+To check that, we multiply them in both orders.  
+Here is one; the other is just as easy.
+\begin{equation*}
+  \begin{mat}
+    2  &5  \\
+    1  &3
+  \end{mat}
+  \begin{mat}
+    3   &-5  \\
+    -1  &2
+  \end{mat}
+  =
+  \begin{mat}
+    1  &0  \\
+    0  &1
+  \end{mat}
+\end{equation*}
+\end{frame}
+\begin{frame}
+\ex One advantage of knowing a matrix inverse is that it makes solving a 
+linear system easy and quick.
+To solve
+\begin{equation*}
+  \begin{linsys}{2}
+    2x &+ &5y &= &-3 \\
+    x  &+ &3y &= &10
+  \end{linsys}
+\end{equation*}
+rewrite as a matrix equation
+\begin{equation*}
+  \begin{mat}
+    2 &5 \\
+    1 &3
+  \end{mat}
+  \colvec{x \\ y}
+  =
+  \colvec{-3 \\ 10}
+\end{equation*}
+and multiply both sides (from the left) by the matrix inverse.
+\begin{align*}
+  \begin{mat}
+    3  &-5 \\
+    -1 &2 
+  \end{mat}\cdot
+  \begin{mat}
+    2 &5 \\
+    1 &3
+  \end{mat}
+  \colvec{x \\ y}
+  &=
+  \begin{mat}
+    3  &-5 \\
+    -1 &2 
+  \end{mat}\cdot
+  \colvec{-3 \\ 10}             \\
+  \begin{mat}
+    1 &0 \\
+    0 &1
+  \end{mat}
+  \colvec{x \\ y}
+  &=
+  \colvec{-59 \\ 23}           \\
+  \colvec{x \\ y}
+  &=
+  \colvec{-59 \\ 23}           
+\end{align*}
+\end{frame}
+
+
+
+%..........
+\begin{frame}
+This specializes the arrow diagram for composition 
+to the case of inverses.
+\centergraphic{\mapmpdir ch3.21}  
+\pause
+\lm[le:LeftAndRightInvEqual]
+\ExecuteMetaData[\mapdir map4.tex]{lm:LeftAndRightInvEqual}
+
+\th[th:MatrixInvertibleIffNonsingular]
+\ExecuteMetaData[\mapdir map4.tex]{th:MatrixInvertibleIffNonsingular}
+\pause
+\pf
+\ExecuteMetaData[\mapdir map4.tex]{pf:MatrixInvertibleIffNonsingular}
+\qed
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\lm[lem:ProdInvIsInv]
+\ExecuteMetaData[\mapdir map4.tex]{lm:ProdInvIsInv}
+% \pause
+% \pf
+% \ExecuteMetaData[\mapdir map4.tex]{pf:ProdInvIsInv0}
+
+% \pause
+% \ExecuteMetaData[\mapdir map4.tex]{pf:ProdInvIsInv1}
+% \qed
+% \end{frame}
+
+
+
+
+% \begin{frame}
+\lm[lem:ComputeInvMat]
+\ExecuteMetaData[\mapdir map4.tex]{lm:ComputeInvMat}
+% \pause
+% \pf
+% \ExecuteMetaData[\mapdir map4.tex]{pf:ComputeInvMat0}
+
+% \pause
+% \ExecuteMetaData[\mapdir map4.tex]{pf:ComputeInvMat1}
+
+% \pause
+% \ExecuteMetaData[\mapdir map4.tex]{pf:ComputeInvMat2}
+% \qed  
+\end{frame}
+
+
+
+
+\begin{frame}
+\ex
+This matrix is nonsingular and so is invertible.
+\begin{equation*}
+  A=
+  \begin{mat}
+    1  &3  &1  \\
+    2  &0  &-1 \\
+    1  &2  &0
+  \end{mat}
+\end{equation*}
+To ease the inverse calculation described in the prior proof, we write 
+the matrix~$A$ next to the $\nbyn{3}$ identity and as we Gauss-Jordan 
+reduce~the matrix on the left, 
+we apply those operations also on the right.
+\begin{align*}
+  \begin{pmat}{rrr|rrr}
+    1  &3  &1  &1  &0  &0  \\
+    2  &0  &-1 &0  &1  &0  \\
+    1  &2  &0  &0  &0  &1
+  \end{pmat}
+  &\grstep[-\rho_1+\rho_3]{-2\rho_1+\rho_2}
+  \begin{pmat}{rrr|rrr}
+    1  &3  &1  &1  &0  &0  \\
+    0  &-6 &-3 &-2  &1  &0  \\
+    0  &-1 &-1 &-1  &0  &1
+  \end{pmat}                                \\
+  &\grstep{-1/6\rho_2+\rho_3}
+  \begin{pmat}{rrr|rrr}
+    1  &3  &1    &1     &0     &0  \\
+    0  &-6 &-3   &-2    &1     &0  \\
+    0  &0  &-1/2 &-2/3  &-1/6  &1
+  \end{pmat}                                
+\end{align*}
+The right-hand side is in echelon form.
+We continue with the second half of Gauss-Jordan reduction on the next slide. 
+\end{frame}
+\begin{frame}
+\begin{align*}
+  &\grstep[-2\rho_3]{-1/6\rho_2}
+  \begin{pmat}{rrr|rrr}
+    1  &3  &1    &1     &0     &0  \\
+    0  &1  &1/2  &1/3   &-1/6  &0  \\
+    0  &0  &1    &4/3   &1/3   &-2
+  \end{pmat}                                \\
+  % &\begin{pmat}{rrr|rrr}
+  %   1  &3  &1    &1     &0     &0  \\
+  %   0  &1  &1/2  &1/3   &-1/6  &0  \\
+  %   0  &0  &1    &4/3   &1/3   &-2
+  % \end{pmat}                                \\                            
+  &\grstep[-(1/2)\rho_3+\rho_2]{-\rho_3+\rho_1}    
+  \begin{pmat}{rrr|rrr}
+    1  &3  &0    &-1/3  &-1/3  &2  \\
+    0  &1  &0    &-1/3  &-1/3  &1  \\
+    0  &0  &1    &4/3   &1/3   &-2
+  \end{pmat}                                \\
+  &\grstep{-3\rho_2+\rho_1}    
+  \begin{pmat}{rrr|rrr}
+    1  &0  &0    &2/3   &2/3   &-1  \\
+    0  &1  &0    &-1/3  &-1/3  &1  \\
+    0  &0  &1    &4/3   &1/3   &-2
+  \end{pmat}                                
+\end{align*}
+This is the inverse.
+\begin{equation*}
+  A^{-1}=
+  \begin{mat}
+    2/3   &2/3   &-1  \\
+   -1/3   &-1/3  &1   \\
+    4/3   &1/3   &-2
+  \end{mat}                                 
+\end{equation*}
+\end{frame}
+% \begin{frame}
+% \ex This is the same kind of calculation applied to a $\nbyn{2}$ matrix.
+% \begin{align*}
+%   \begin{pmat}{cc|cc}
+%     2 &1 &1 &0 \\
+%     4 &3 &0 &1
+%   \end{pmat}
+%   &\grstep{-2\rho_1+\rho_2}
+%   \begin{pmat}{cc|cc}
+%     2 &1 &1 &0 \\
+%     0 &1 &-2 &1
+%   \end{pmat}                      \\
+%   &\grstep{(1/2)\rho_1}
+%   \begin{pmat}{cc|cc}
+%     1 &1/2 &1/2 &0 \\
+%     0 &1   &-2 &1
+%   \end{pmat}                      \\
+%   &\grstep{-(1/2)\rho_2+\rho_1}
+%   \begin{pmat}{cc|cc}
+%     1 &0 &3/2 &-1/2 \\
+%     0 &1 &-2 &1
+%   \end{pmat}
+% \end{align*}
+% The inverse is this.
+% \begin{equation*}
+%   \begin{mat}
+%     2 &1 \\
+%     4 &3
+%   \end{mat}^{-1}
+%   =
+%   \begin{mat}
+%     3/2 &-1/2 \\
+%     -2  &1
+%   \end{mat}
+% \end{equation*}
+% \end{frame}
+
+
+
+
+\begin{frame}
+Finding the inverse of a matrix $A$
+is a lot of work but as we noted earlier,
+once we have it then solving linear
+systems $A\vec{x}=\vec{b}$ is easy. 
+\ex
+The linear system
+\begin{equation*}
+  \begin{linsys}{3}
+    x  &+  &3y  &+  &z  &=  &2   \\
+   2x  &   &    &-  &z  &=  &12  \\
+    x  &+  &2y  &   &   &=  &4
+  \end{linsys}
+\end{equation*}
+is this matrix equation.
+\begin{equation*}
+  \begin{mat}
+    1  &3  &1  \\
+    2  &0  &-1 \\
+    1  &2  &0
+  \end{mat}
+  \colvec{x \\ y  \\ z}
+  =
+  \colvec{2  \\ 12  \\ 4}
+\end{equation*}
+Solve it by multiplying both sides from the left by 
+the inverse that we found earlier.
+\begin{equation*}
+  % \begin{mat}
+  %   1  &0  &0  \\
+  %   0  &1  &0 \\
+  %   0  &0  &1
+  % \end{mat}
+  \colvec{x \\ y  \\ z}
+  =
+  \begin{mat}
+    2/3   &2/3   &-1  \\
+   -1/3   &-1/3  &1   \\
+    4/3   &1/3   &-2
+  \end{mat}                                 
+  \colvec{2  \\ 12  \\ 4}
+  =
+  \colvec{16/3 \\ -2/3 \\ -4/3}
+\end{equation*}
+\end{frame}
+\begin{frame}
+We sometimes want to repeatedly solve systems with the same left side
+but different right sides.
+This system equals the one on the prior slide but for one number on the
+right.  
+\begin{equation*}
+  \begin{linsys}{3}
+    x  &+  &3y  &+  &z  &=  &1   \\
+   2x  &   &    &-  &z  &=  &12  \\
+    x  &+  &2y  &   &   &=  &4
+  \end{linsys}
+\end{equation*}
+The solution is this.
+\begin{equation*}
+  % \begin{mat}
+  %   1  &0  &0  \\
+  %   0  &1  &0 \\
+  %   0  &0  &1
+  % \end{mat}
+  \colvec{x \\ y  \\ z}
+  =
+  \begin{mat}
+    2/3   &2/3   &-1  \\
+   -1/3   &-1/3  &1   \\
+    4/3   &1/3   &-2
+  \end{mat}                                 
+  \colvec{1  \\ 12  \\ 4}
+  =
+  \colvec{14/3 \\ -1/3 \\ -8/3}
+\end{equation*}
+\end{frame}
+
+
+
+\begin{frame}{The inverse of a $\nbyn{2}$ matrix}
+\co[cor:TwoByTwoInv]
+\ExecuteMetaData[\mapdir map4.tex]{co:TwoByTwoInv}
+\pause
+\pf
+\ExecuteMetaData[\mapdir map4.tex]{pf:TwoByTwoInv}
+\qed
+\pause  
+\ex
+\begin{equation*}
+  \begin{mat}
+    2  &4  \\
+   -1  &1
+  \end{mat}^{-1}
+  =
+  \frac{1}{6}
+  \begin{mat}
+    1  &-4  \\
+    1  &2
+  \end{mat}
+  =
+  \begin{mat}
+    1/6  &-2/3  \\
+    1/6  &1/3
+  \end{mat}
+\end{equation*}
+\pause
+The $\nbyn{3}$ formula is much more complicated. 
+We will cover it in the next chapter.
+\end{frame}
+
+
+%...........................
+% \begin{frame}
+% \ExecuteMetaData[../gr3.tex]{GaussJordanReduction}
+% \df[def:RedEchForm]
+% 
+% \end{frame}
+\end{document}

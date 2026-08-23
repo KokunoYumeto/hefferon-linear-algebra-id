@@ -1,0 +1,178 @@
+% Chapter 2, Topic _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-11
+\topic{Lapangan}
+\index{lapangan|(}
+Perhitungan yang hanya melibatkan bilangan bulat atau hanya bilangan rasional
+jauh lebih mudah daripada perhitungan yang melibatkan bilangan real.
+Dapatkah struktur aljabar lain, seperti bilangan bulat atau bilangan rasional,
+menggantikan
+\( \Re \) dalam definisi ruang vektor?
+
+Jika yang dimaksud dengan ``dapat'' adalah bahwa hasil-hasil dalam bab ini
+tetap berlaku,
+maka terdapat daftar syarat yang secara wajar harus dimiliki suatu struktur
+(yakni suatu sistem bilangan)
+agar dapat menggantikan $\Re$.
+Sebuah \definend{lapangan}\index{lapangan!definisi} adalah himpunan
+\( \F \) yang dilengkapi dengan operasi
+`\( + \)'
+dan `\( \cdot \)' sedemikian sehingga
+\begin{tfae}
+   \item untuk sembarang \( a,b\in\F \), hasil \( a+b \) berada di \( \F \), dan
+         \( a+b=b+a \), dan
+         jika \( c\in\F \), maka \( a+(b+c)=(a+b)+c \)
+   \item untuk sembarang \( a,b\in\F \), hasil \( a\cdot b \) berada di \( \F \), dan
+         \( a\cdot b=b\cdot a \), dan
+         jika \( c\in\F \), maka \( a\cdot (b\cdot c)=(a\cdot b)\cdot c \)
+   \item jika \( a,b,c\in\F \), maka \( a\cdot (b+c)=a\cdot b+a\cdot c \)
+   \item terdapat unsur \( 0\in\F \) sedemikian sehingga
+         jika \( a\in\F \), maka \( a+0=a \), dan
+         untuk setiap \( a\in\F \) terdapat unsur \( -a\in\F \)
+                sedemikian sehingga \( (-a)+a=0 \)
+   \item terdapat unsur \( 1\in\F \) sedemikian sehingga
+         jika \( a\in\F \), maka \( a\cdot 1=a \), dan
+         untuk setiap unsur \( a\neq 0 \) di \( \F \)
+                terdapat unsur \( a^{-1}\in\F \)
+                sedemikian sehingga \( a^{-1}\cdot a=1 \).
+\end{tfae}
+
+Sebagai contoh, struktur aljabar yang terdiri atas himpunan bilangan real
+beserta operasi penjumlahan dan perkalian yang lazim merupakan sebuah lapangan.
+Contoh lapangan lainnya adalah himpunan bilangan rasional dengan operasi
+penjumlahan dan perkalian yang lazim.
+Contoh struktur aljabar yang bukan lapangan adalah
+bilangan bulat, karena struktur itu tidak memenuhi syarat terakhir.
+
+Beberapa contoh lainnya lebih mengejutkan.
+Himpunan \( \mathbb{B}=\set{0,1} \) dengan operasi berikut:
+\par\vfill\pagebreak
+\begin{center}
+  \begin{tabular}{c|cc}
+    \( + \) &\( 0 \) &\( 1 \) \\
+    \hline
+    \( 0 \) &\( 0 \) &\( 1 \) \\
+    \( 1 \) &\( 1 \) &\( 0 \)
+  \end{tabular}
+  \qquad
+  \begin{tabular}{c|cc}
+    \( \cdot \) &\( 0 \) &\( 1 \) \\
+     \hline
+       \( 0 \)  &\( 0 \) &\( 0 \)  \\
+       \( 1 \)  &\( 0 \) &\( 1 \)
+  \end{tabular}
+\end{center}
+merupakan sebuah lapangan; lihat \nearbyexercise{exer:BinField}.
+
+Dalam buku ini kita dapat mengembangkan Aljabar Linear sebagai teori
+ruang vektor dengan skalar dari sembarang lapangan.
+Dalam hal itu,
+hampir semua pernyataan di sini akan tetap berlaku jika
+`\( \Re \)' diganti dengan `\( \F \)', yakni dengan
+mengambil koefisien, entri vektor,
+dan entri matriks sebagai unsur \( \F \)
+(pengecualiannya adalah pernyataan yang melibatkan jarak atau sudut,
+yang memerlukan pengembangan tambahan).
+Berikut beberapa contohnya; masing-masing berlaku untuk ruang vektor \( V \)
+di atas lapangan \( \F \).
+\begin{itemize}
+  %\makebox[\parindent]{\ \hfil\ }
+  \item[$*$] Untuk sembarang \( \vec{v}\in V \) dan \( a\in\F \),
+  (i)~\( 0\cdot\vec{v}=\zero \),
+  (ii)~\( -1\cdot\vec{v}+\vec{v}=\zero \),
+  dan (iii)~\( a\cdot\vec{0}=\vec{0} \).
+
+  \item[$*$] Rentang, yaitu himpunan kombinasi linear, dari suatu himpunan
+  bagian \( V \) merupakan subruang dari \( V \).
+
+  \item[$*$] Setiap himpunan bagian dari suatu himpunan bebas linear juga
+     bebas linear.
+
+  \item[$*$] Dalam ruang vektor berdimensi hingga,
+    sembarang dua basis memiliki jumlah unsur yang sama.
+\end{itemize}
+(Bahkan pernyataan yang tidak menyebutkan \( \F \) secara eksplisit
+menggunakan sifat-sifat lapangan dalam pembuktiannya.)
+
+Kita tidak akan mengembangkan ruang vektor dalam tatanan yang lebih umum ini
+karena abstraksi tambahan tersebut dapat mengalihkan perhatian.
+Gagasan yang ingin kita tonjolkan sudah tampak ketika kita membatasi diri
+pada bilangan real.
+
+Pengecualiannya adalah Bab Lima.
+Di sana kita harus memfaktorkan polinom,
+sehingga kita akan beralih untuk membahas ruang vektor di atas
+lapangan bilangan kompleks.
+
+\begin{exercises}
+  \item 
+    Periksalah bahwa bilangan real membentuk suatu lapangan.
+    \begin{answer}
+      Dengan menelaah kelima syarat tersebut, terlihat bahwa semuanya sudah
+      dikenal dari matematika dasar.
+    \end{answer}
+  \item 
+    Buktikan bahwa berikut ini merupakan lapangan.
+    \begin{exparts*}
+       \partsitem Bilangan rasional $\Q$
+       \partsitem Bilangan kompleks  $\C$
+    \end{exparts*}
+    \begin{answer}
+      Seperti pada soal sebelumnya, dengan menelaah kelima syarat tersebut
+      terlihat bahwa, untuk kedua struktur ini,
+      semua sifatnya sudah dikenal.
+    \end{answer}
+  \item 
+     Berikan contoh yang menunjukkan bahwa sistem bilangan bulat
+     bukan lapangan.
+     \begin{answer}
+       Bilangan bulat tidak memenuhi syarat~(5).
+       Sebagai contoh, $2$ tidak memiliki invers perkalian\Dash meskipun
+       $2$ adalah bilangan bulat, $1/2$ bukan bilangan bulat.
+     \end{answer}
+  \item \label{exer:BinField} 
+     Periksalah bahwa himpunan $\mathbb{B}=\set{0,1}$ merupakan lapangan
+     dengan operasi yang tercantum di atas.
+     \begin{answer}
+       Pemeriksaan ini dapat kita lakukan dengan mendaftarkan semua
+       kemungkinan.
+       Sebagai contoh, untuk memverifikasi bagian pertama syarat~(1), kita
+       harus memeriksa bahwa struktur tersebut tertutup terhadap penjumlahan
+       dan bahwa penjumlahan bersifat komutatif, $a+b=b+a$.
+       Kita dapat memeriksa keduanya untuk semua pasangan $a$ dan~$b$ yang
+       mungkin karena hanya ada empat pasangan seperti itu.
+       Demikian pula, untuk asosiativitas hanya ada delapan tripel $a$, $b$,
+       $c$, sehingga pemeriksaannya tidak terlalu panjang.
+       (Ada cara lain untuk melakukan pemeriksaan tersebut; khususnya, Anda
+       mungkin mengenali operasi ini sebagai aritmetika modulo~$2$.
+       Namun, pemeriksaan menyeluruh tidaklah memberatkan.)
+     \end{answer}
+  \item 
+     Berikan operasi yang sesuai agar himpunan $\set{0,1,2}$
+     menjadi suatu lapangan.
+     \begin{answer}
+       Operasi berikut memenuhi syarat.
+       \begin{center}
+          \begin{tabular}{c|ccc}
+             \( + \) &\( 0 \) &\( 1 \) &$2$ \\
+             \hline
+             \( 0 \) &\( 0 \) &\( 1 \) &$2$ \\
+             \( 1 \) &\( 1 \) &\( 2 \) &$0$ \\
+             $2$     &$2$     &$0$     &$1$
+          \end{tabular}
+          \qquad
+          \begin{tabular}{c|ccc}
+            \( \cdot \) &\( 0 \) &\( 1 \) &$2$ \\
+            \hline
+            \( 0 \)  &\( 0 \) &\( 0 \) &$0$ \\
+            \( 1 \)  &\( 0 \) &\( 1 \) &$2$ \\
+            $2$      &$0$     &$2$     &$1$
+          \end{tabular}
+       \end{center}
+       Seperti pada soal sebelumnya, kita dapat memverifikasi bahwa operasi
+       tersebut memenuhi semua syarat dengan mendaftarkan seluruh kasus.
+     \end{answer}
+\end{exercises}
+\index{lapangan|)}
+%\include{la}
+%\end{document}

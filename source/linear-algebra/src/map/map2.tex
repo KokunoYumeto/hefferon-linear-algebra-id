@@ -1,0 +1,2983 @@
+% Chapter 3, Section 2 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-11
+\section{Homomorfisme}
+Definisi isomorfisme memiliki dua syarat.
+Dalam bagian ini kita akan membahas syarat yang kedua.
+Kita akan mempelajari pemetaan yang 
+hanya diwajibkan mempertahankan struktur,
+tanpa diwajibkan pula menjadi korespondensi. 
+
+Pengalaman menunjukkan bahwa pemetaan-pemetaan ini 
+sangat berguna.
+Salah satunya, pada subbagian kedua di bawah ini kita akan melihat
+bahwa isomorfisme menjelaskan bagaimana ruang-ruang itu sama,
+sedangkan pemetaan-pemetaan ini dapat dipandang sebagai penjelasan tentang bagaimana ruang-ruang itu serupa.
+
+
+
+
+
+
+
+
+\subsection{Definisi}
+
+\begin{definition}  \label{def:Homo}
+%<*df:Homo>
+Suatu fungsi antarruang vektor \( \map{h}{V}{W} \) yang 
+mempertahankan\index{mempertahankan struktur}\index{struktur!pelestarian} 
+penjumlahan
+\begin{center}
+  jika \( \vec{v}_1,\vec{v}_2\in V \), maka
+      \( h(\vec{v}_1+\vec{v}_2)=h(\vec{v}_1)+h(\vec{v}_2) \)
+\end{center}
+dan perkalian skalar
+\begin{center}
+      jika \( \vec{v}\in V \) dan \( r\in\Re \), maka
+      \( h(r\cdot\vec{v})=r\cdot h(\vec{v}) \)
+\end{center}
+disebut \definend{homomorfisme}\index{homomorfisme}\index{pemetaan linear}%
+\index{fungsi!mempertahankan struktur!\see{homomorfisme}}%
+\index{ruang vektor!homomorfisme}\index{ruang vektor!pemetaan}
+atau \definend{pemetaan linear}\index{pemetaan linear|seealso{homomorfisme}}.
+%</df:Homo>
+\end{definition}
+
+\begin{example}    \label{ex:RThreeHomoRTwoFirst}
+Pemetaan proyeksi\index{proyeksi}
+\( \map{\pi}{\Re^3}{\Re^2} \)
+\begin{equation*}
+   \colvec{x \\ y \\ z}
+    \mapsunder{\pi}
+   \colvec{x \\ y}
+\end{equation*}
+adalah suatu homomorfisme.
+Pemetaan ini mempertahankan penjumlahan
+\begin{equation*}
+  \pi(\colvec{x_1 \\ y_1 \\ z_1}\!+\!\colvec{x_2 \\ y_2 \\ z_2})
+  =
+  \pi(\colvec{x_1+x_2 \\ y_1+y_2 \\ z_1+z_2})
+  =
+  \colvec{x_1+x_2 \\ y_1+y_2}
+  =
+  \pi(\colvec{x_1 \\ y_1 \\ z_1})
+  +
+  \pi(\colvec{x_2 \\ y_2 \\ z_2})
+\end{equation*}
+dan perkalian skalar.
+\begin{equation*}
+  \pi(r\cdot\colvec{x_1 \\ y_1 \\ z_1})
+  =
+  \pi(\colvec{rx_1 \\ ry_1 \\ rz_1})
+  =
+  \colvec{rx_1 \\ ry_1}
+  =
+  r\cdot\pi(\colvec{x_1 \\ y_1 \\ z_1})
+\end{equation*}
+Pemetaan ini bukan isomorfisme karena tidak satu-ke-satu. 
+Sebagai contoh, baik $\zero$ maupun $\vec{e}_3$ dalam $\Re^3$ dipetakan ke
+vektor nol dalam $\Re^2$.
+\end{example}
+
+\begin{example} \label{exam:TwoMapsHomoNotIso}
+Domain dan kodomain 
+tidak harus berupa ruang vektor kolom.
+Kedua pemetaan berikut adalah homomorfisme;
+pembuktiannya langsung.
+\begin{enumerate}
+  \item \( \map{f_1}{\polyspace_2}{\polyspace_3} \) yang diberikan oleh
+    \begin{equation*}
+      a_0+a_1x+a_2x^2 \;\mapsto\; a_0x+(a_1/2)x^2+(a_2/3)x^3 
+    \end{equation*}
+  \item \( \map{f_2}{M_{\nbyn{2}}}{\Re} \) yang diberikan oleh
+    \begin{equation*}
+      \begin{mat}
+        a  &b  \\
+        c  &d
+      \end{mat}
+        \mapsto
+      a+d
+    \end{equation*}
+\end{enumerate}
+\end{example}
+
+\begin{example}
+Di antara sembarang dua ruang terdapat suatu \definend{homomorfisme nol},%
+\index{homomorfisme nol}\index{homomorfisme!nol}\index{fungsi!nol}
+yang memetakan setiap vektor dalam domain ke vektor nol dalam kodomain.
+\end{example}
+
+Kita akan menggunakan kedua istilah `homomorfisme' dan `pemetaan linear' secara bergantian.
+
+\begin{example}
+Dua contoh berikut memberi petunjuk mengapa kita menyebutnya `pemetaan linear'.
+\begin{enumerate}
+  \item Pemetaan \( \map{g}{\Re^3}{\Re} \) yang diberikan oleh
+    \begin{equation*}
+      \colvec{x \\ y \\ z}
+        \mapsunder{g}
+      3x+2y-4.5z
+    \end{equation*}
+    bersifat linear, yaitu merupakan homomorfisme.
+    Pemeriksaannya mudah.
+    Sebaliknya, pemetaan \( \map{\hat{g}}{\Re^3}{\Re} \) yang diberikan oleh
+    \begin{equation*}
+      \colvec{x \\ y \\ z}
+        \mapsunder{\hat{g}}
+      3x+2y-4.5z+1
+    \end{equation*}
+    tidak linear.
+    Untuk menunjukkannya kita hanya perlu memberikan satu
+    kombinasi linear yang tidak dipertahankan oleh pemetaan tersebut.
+    Berikut salah satunya.
+    \begin{equation*}
+      \hat{g}(\colvec[r]{0 \\ 0 \\ 0}+\colvec[r]{1 \\ 0 \\ 0})=4
+      \qquad
+      \hat{g}(\colvec[r]{0 \\ 0 \\ 0})
+      +\hat{g}(\colvec[r]{1 \\ 0 \\ 0})=5
+    \end{equation*}
+  \item Pemetaan pertama dari kedua pemetaan 
+    \( \map{t_1,t_2}{\Re^3}{\Re^2} \)
+    berikut bersifat linear, sedangkan yang kedua tidak.
+    \begin{equation*}
+      \colvec{x \\ y \\ z}
+        \mapsunder{t_1}
+      \colvec{5x-2y \\ x+y}
+      \qquad
+      \colvec{x \\ y \\ z}
+        \mapsunder{t_2}
+      \colvec{5x-2y \\ xy}
+    \end{equation*}
+    Mudah untuk menemukan kombinasi linear yang tidak 
+    dipertahankan oleh pemetaan kedua. 
+\end{enumerate}
+% The homomorphisms have 
+% coordinate functions that are linear combinations of the arguments.
+% See also \nearbyexercise{exer:GrpahNotALine}.
+\end{example}
+
+Jadi, salah satu cara memandang `homomorfisme' 
+adalah bahwa kita sedang memperumum `isomorfisme' (dengan membuang syarat bahwa
+pemetaan tersebut merupakan korespondensi),
+berdasarkan pengamatan bahwa banyak sifat
+isomorfisme hanya bergantung pada sifat pemetaan yang mempertahankan struktur.
+Dua hasil berikut merupakan contoh dari gagasan ini.
+Pada bagian sebelumnya kita melihat bahwa bukti untuk masing-masing hasil itu hanya menggunakan pelestarian
+penjumlahan dan pelestarian perkalian skalar,
+sehingga berlaku pula untuk homomorfisme.
+
+\begin{lemma}       \label{le:HomoSendsZeroToZero}
+%<*lm:HomoSendsZeroToZero>
+Pemetaan linear memetakan vektor nol ke vektor nol.
+%</lm:HomoSendsZeroToZero>
+\end{lemma}
+
+\begin{lemma}  \label{le:HomoPreserveLinCombo}
+%<*lm:HomoPreserveLinCombo>
+Pernyataan-pernyataan berikut ekuivalen untuk sembarang pemetaan 
+\( \map{f}{V}{W} \) 
+antarruang vektor.
+\begin{tfae}
+  \item 
+      $f$ adalah homomorfisme 
+  \item 
+      $f(c_1\cdot\vec{v}_1+c_2\cdot\vec{v}_2)
+      =c_1\cdot f(\vec{v}_1)+c_2\cdot f(\vec{v}_2)$
+      untuk sembarang \( c_1,c_2\in\Re \) dan \( \vec{v}_1,\vec{v}_2\in V \)
+  \item
+    $f(c_1\cdot\vec{v}_1+\dots+c_n\cdot\vec{v}_n)
+    =c_1\cdot f(\vec{v}_1)+\dots+c_n\cdot f(\vec{v}_n)$ 
+    untuk sembarang \( c_1,\dots,c_n\in\Re \) dan
+    \( \vec{v}_1,\ldots,\vec{v}_n\in V \)
+\end{tfae}
+%</lm:HomoPreserveLinCombo>
+\end{lemma}
+
+\begin{example}
+Fungsi \( \map{f}{\Re^2}{\Re^4} \) yang diberikan oleh
+\begin{equation*}
+  \colvec{x \\ y}
+    \mapsunder{f}
+  \colvec{x/2 \\ 0 \\ x+y \\ 3y}
+\end{equation*}
+bersifat linear karena memenuhi butir~(2).
+\begin{equation*}
+  \colvec{r_1(x_1/2)+r_2(x_2/2) \\ 0 \\ 
+                 r_1(x_1+y_1)+r_2(x_2+y_2) \\ r_1(3y_1)+r_2(3y_2)}
+   =
+  r_1\colvec{x_1/2 \\ 0 \\ x_1+y_1 \\ 3y_1}
+   +
+  r_2\colvec{x_2/2 \\ 0 \\ x_2+y_2 \\ 3y_2}
+\end{equation*}
+\end{example}
+
+Namun,
+sebagian hal yang berlaku untuk isomorfisme tidak berlaku untuk
+homomorfisme.
+Salah satu contohnya terdapat dalam bukti Lema~I.\ref{lem:IsoImpliesSameDim}, 
+yang menunjukkan bahwa isomorfisme antarruang menghasilkan 
+korespondensi di antara basis-basisnya.
+Homomorfisme tidak menghasilkan korespondensi semacam itu;
+\nearbyexample{ex:RThreeHomoRTwoFirst} menunjukkan hal ini, dan contoh lainnya adalah
+pemetaan nol di antara dua ruang nontrivial. 
+Sebagai gantinya, untuk homomorfisme kita memiliki hasil yang lebih lemah tetapi tetap sangat berguna.
+
+\begin{theorem} \label{th:HomoDetActOnBasis}
+%<*th:HomoDetActOnBasis>
+Suatu homomorfisme ditentukan oleh aksinya pada suatu basis:~jika
+$V$ adalah ruang vektor dengan basis
+\( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \),
+Jika $W$ adalah ruang vektor, dan jika 
+\( \vec{w}_1,\dots,\vec{w}_n\in W \) 
+(unsur-unsur kodomain ini tidak harus berbeda), maka
+terdapat suatu homomorfisme dari \( V \) ke \( W \) yang memetakan setiap
+\( \vec{\beta}_i \) ke \( \vec{w}_i \), dan homomorfisme tersebut tunggal.
+%</th:HomoDetActOnBasis>
+\end{theorem}
+
+\begin{proof}
+%<*pf:HomoDetActOnBasis0>
+Untuk sembarang masukan $\vec{v}\in V$, misalkan bentuknya terhadap
+basis tersebut adalah
+\( \vec{v}=c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n \). 
+Definisikan
+keluaran yang terkait dengan menggunakan koordinat yang sama,
+$h(\vec{v})=c_1\vec{w}_1+\dots+c_n\vec{w}_n$.
+Fungsi ini terdefinisi dengan baik karena, terhadap basis tersebut,
+representasi setiap vektor domain \( \vec{v} \) bersifat tunggal.
+%</pf:HomoDetActOnBasis0>
+
+%<*pf:HomoDetActOnBasis1>
+Pemetaan ini merupakan homomorfisme 
+karena mempertahankan kombinasi linear:
+dengan \( \vec{v_1}=c_1\vec{\beta}_1+\cdots+c_n\vec{\beta}_n \) dan
+\( \vec{v_2}=d_1\vec{\beta}_1+\cdots+d_n\vec{\beta}_n \), berikut
+perhitungannya.
+\begin{align*}
+  h(r_1\vec{v}_1+r_2\vec{v}_2)
+  &=h(\,(r_1c_1+r_2d_1)\vec{\beta}_1+\dots+(r_1c_n+r_2d_n)\vec{\beta}_n\,)  \\
+  &=(r_1c_1+r_2d_1)\vec{w}_1+\dots+(r_1c_n+r_2d_n)\vec{w}_n   \\
+  &=r_1h(\vec{v}_1)+r_2h(\vec{v}_2)
+\end{align*}
+%</pf:HomoDetActOnBasis1>
+
+%<*pf:HomoDetActOnBasis2>
+Pemetaan ini tunggal karena jika \( \map{\hat{h}}{V}{W} \) 
+adalah homomorfisme lain yang memenuhi \( \hat{h}(\vec{\beta}_i)=\vec{w}_i \) 
+untuk setiap \( i \),
+maka \( h \) dan \( \hat{h} \) memberikan 
+hasil yang sama pada semua vektor dalam domain. 
+\begin{multline*}
+  \hat{h}(\vec{v})
+  =\hat{h}(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n)  
+  =c_1 \hat{h}(\vec{\beta}_1)+\dots+c_n \hat{h}(\vec{\beta}_n)  \\  
+  =c_1\vec{w}_1+\dots+c_n\vec{w}_n 
+  =h(\vec{v})
+\end{multline*}
+Keduanya memiliki aksi yang sama, sehingga merupakan fungsi yang sama.
+%</pf:HomoDetActOnBasis2>
+\end{proof}
+
+\begin{definition} \label{df:ExtendedLinearly}
+%<*df:ExtendedLinearly>
+Misalkan $V$ dan~$W$ adalah ruang vektor dan 
+misalkan  
+$B=\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_n}$ 
+adalah basis untuk~$V$.  
+Suatu fungsi yang didefinisikan pada basis tersebut $\map{f}{B}{W}$
+\definend{diperluas secara linear}\index{diperluas, secara linear}\index{fungsi!diperluas secara linear}\index{perluasan linear suatu fungsi}
+menjadi fungsi $\map{\hat{f}}{V}{W}$ jika,
+untuk setiap $\vec{v}\in V$ sedemikian sehingga
+$\vec{v}=c_1\vec{\beta}_1+\cdots+c_n\vec{\beta}_n$,
+aksi pemetaannya adalah
+$\hat{f}(\vec{v})=c_1\cdot f(\vec{\beta}_1)
+  +\cdots+c_n\cdot f(\vec{\beta}_n)$.
+%</df:ExtendedLinearly>
+\end{definition}
+
+
+\begin{example}
+Jika kita menentukan suatu pemetaan \( \map{h}{\Re^2}{\Re^2} \)
+yang beraksi pada basis standar $\stdbasis_2$ dengan cara berikut, 
+\begin{equation*}
+  h(\colvec[r]{1 \\ 0})=\colvec[r]{-1 \\ 1}
+  \qquad
+  h(\colvec[r]{0 \\ 1})=\colvec[r]{-4 \\ 4}
+\end{equation*}
+maka kita juga telah menentukan aksi $h$ pada setiap anggota domain lainnya.
+Sebagai contoh,
+nilai $h$ pada argumen berikut
+\begin{equation*}
+  h(\colvec[r]{3 \\ -2})=h(3\cdot \colvec[r]{1 \\ 0}-2\cdot \colvec[r]{0 \\ 1})
+                      =3\cdot h(\colvec[r]{1 \\ 0})-2\cdot h(\colvec[r]{0 \\ 1})
+                      =\colvec[r]{5 \\ -5}
+\end{equation*}
+merupakan konsekuensi langsung dari nilai $h$ pada vektor-vektor basis.
+\end{example}
+
+Nanti dalam bab ini kita akan mengembangkan suatu skema yang praktis untuk perhitungan 
+seperti ini dengan menggunakan matriks.
+
+% Just as the isomorphisms of a space with itself are useful and interesting, 
+% so too are the homomorphisms of a space with itself.
+
+\begin{definition} \label{df:LinearTransformation}
+%<*df:LinearTransformation>
+Pemetaan linear dari suatu ruang ke ruang itu sendiri \( \map{t}{V}{V} \) disebut
+\definend{transformasi linear}\index{transformasi linear}\index{transformasi linear|seealso{transformasi}}.
+%</df:LinearTransformation>
+\end{definition}
+
+\begin{remark}
+Dalam buku ini kita menggunakan `transformasi linear' hanya ketika 
+kodomain sama dengan domain.
+Perhatikan bahwa sebagian sumber justru menggunakannya sebagai sinonim `pemetaan linear'.
+Sinonim lainnya adalah `operator linear'.
+\end{remark}
+
+\begin{example}
+Pemetaan pada $\Re^2$ yang memproyeksikan semua vektor ke sumbu-$x$
+merupakan transformasi linear.
+\begin{equation*}
+  \colvec{x \\ y}\mapsto\colvec{x \\ 0}
+\end{equation*}
+\end{example}
+
+\begin{example}
+Pemetaan turunan \( \map{d/dx}{\polyspace_n}{\polyspace_n} \)
+\begin{equation*}
+  a_0+a_1x+\cdots+a_nx^n
+    \mapsunder{d/dx}
+  a_1+2a_2x+3a_3x^2+\cdots+na_nx^{n-1}
+\end{equation*}
+merupakan transformasi linear, sebagaimana ditunjukkan oleh hasil dari kalkulus berikut:
+\( d(c_1f+c_2g)/dx=c_1\,(df/dx)+c_2\,(dg/dx) \).
+\end{example}
+
+\begin{example} \label{ex:MatTransMapLinear}
+Operasi transpos matriks
+\begin{equation*}
+  \begin{mat}
+    a  &b  \\
+    c  &d
+  \end{mat}
+  \;\mapsto\;
+  \begin{mat}
+    a  &c  \\
+    b  &d
+  \end{mat}
+\end{equation*}
+merupakan transformasi linear pada \( \matspace_{\nbyn{2}} \).
+(Transpos bersifat satu-ke-satu dan pada, sehingga sebenarnya 
+merupakan automorfisme.)
+\end{example}
+
+Kita mengakhiri subbagian tentang pemetaan ini dengan mengingat kembali bahwa
+kita dapat mengombinasikan pemetaan secara linear.
+Sebagai contoh, untuk pemetaan-pemetaan berikut dari \( \Re^2 \) ke dirinya sendiri,
+\begin{equation*}
+  \colvec{x \\ y}
+   \mapsunder{f}
+  \colvec{2x \\ 3x-2y}
+  \quad\text{dan}\quad
+  \colvec{x \\ y}
+   \mapsunder{g}
+  \colvec{0 \\ 5x}
+\end{equation*}
+kombinasi linear \( 5f-2g \) juga merupakan transformasi pada~$\Re^2$.
+\begin{equation*}
+  \colvec{x \\ y}
+   \mapsunder{5f-2g}
+  \colvec{10x \\ 5x-10y}
+\end{equation*}
+
+\begin{lemma} \label{le:SpLinFcns}
+%<*lm:SpLinFcns>
+Untuk ruang vektor \( V \) dan \( W \),
+himpunan fungsi linear dari \( V \) ke
+\( W \) itu sendiri merupakan ruang vektor, yakni subruang dari ruang semua fungsi
+dari \( V \) ke \( W \).
+%</lm:SpLinFcns>
+\end{lemma}
+
+%<*SpLinFcns>
+\noindent Kita menyatakan ruang pemetaan linear dari $V$ ke~$W$ dengan
+\( \linmaps{V}{W} \).\index{pemetaan linear, ruang vektor dari}
+%</SpLinFcns>
+
+\begin{proof}
+%<*pf:SpLinFcns>
+Himpunan ini tidak kosong karena memuat homomorfisme nol.
+Jadi, untuk menunjukkan bahwa himpunan ini merupakan subruang, kita hanya perlu memeriksa bahwa himpunan ini 
+tertutup terhadap operasi-operasinya.
+Misalkan \( \map{f,g}{V}{W} \) linear. 
+Maka operasi penjumlahan fungsi dipertahankan,
+\begin{align*}
+   (f+g)(c_1\vec{v}_1+c_2\vec{v}_2)
+   &=f(c_1\vec{v}_1+c_2\vec{v}_2) + 
+   g(c_1\vec{v}_1+c_2\vec{v}_2)       \\
+   &=c_1f(\vec{v}_1)+c_2f(\vec{v}_2)
+   +c_1g(\vec{v}_1)+c_2g(\vec{v}_2)   \\
+   &=c_1\bigl(f+g\bigr)(\vec{v}_1)+c_2\bigl(f+g\bigr)(\vec{v}_2)
+\end{align*}
+demikian pula operasi perkalian skalar pada suatu fungsi.
+\begin{align*}
+   (r\cdot f)(c_1\vec{v}_1+c_2\vec{v}_2)
+   &=r(c_1f(\vec{v}_1)+c_2f(\vec{v}_2))  \\
+   &=c_1(r\cdot f)(\vec{v}_1)+c_2(r\cdot f)(\vec{v}_2)
+\end{align*}
+Dengan demikian, \( \linmaps{V}{W} \) merupakan subruang.
+%</pf:SpLinFcns>
+\end{proof}
+
+Kita memulai bagian ini dengan 
+mendefinisikan `homomorfisme' sebagai perumuman `isomorfisme',
+dengan memisahkan sifat pelestarian struktur.
+Sebagian hal mengenai isomorfisme berlaku tanpa perubahan, sedangkan
+hal lainnya kita sesuaikan.
+
+Namun, perhatikan bahwa gagasan 
+`homomorfisme' sama sekali bukan gagasan sekunder dibandingkan
+dengan `isomorfisme'.
+Pada sisa bab ini kita terutama akan bekerja dengan homomorfisme.
+Hal ini
+sebagian karena setiap pernyataan tentang homomorfisme secara otomatis berlaku 
+untuk isomorfisme, tetapi terutama karena, 
+meskipun konsep isomorfisme terasa lebih alami, 
+pengalaman kita akan menunjukkan bahwa konsep homomorfisme 
+lebih produktif dan lebih sentral bagi kemajuan kita.
+
+\begin{exercises}
+  \recommended \item
+    Tentukan apakah setiap \( \map{h}{\Re^3}{\Re^2} \) berikut linear.
+    \begin{exparts*}
+      \partsitem \( h(\colvec{x \\ y \\ z})=\colvec{x \\ x+y+z}  \)
+      \partsitem \( h(\colvec{x \\ y \\ z})=\colvec[r]{0 \\ 0}  \)
+      \partsitem \( h(\colvec{x \\ y \\ z})=\colvec[r]{1 \\ 1}  \)
+      \partsitem \( h(\colvec{x \\ y \\ z})=\colvec{2x+y \\ 3y-4z}  \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ya.
+          Pembuktiannya langsung.
+          \begin{align*}
+            h( c_1\cdot\colvec{x_1 \\ y_1 \\ z_1}
+               +c_2\cdot\colvec{x_2 \\ y_2 \\ z_2} )
+            &=h( \colvec{c_1x_1+c_2x_2 \\ c_1y_1+c_2y_2 \\ c_1z_1+c_2z_2} ) \\
+            &=\colvec{c_1x_1+c_2x_2 \\ 
+                     c_1x_1+c_2x_2+c_1y_1+c_2y_2+c_1z_1+c_2z_2}          \\
+            &=c_1\cdot\colvec{x_1 \\ x_1+y_1+z_1}
+               +c_2\cdot\colvec{x_2 \\ x_2+y_2+z_2}                       \\  
+            &=c_1\cdot h(\colvec{x_1 \\ y_1 \\ z_1}) 
+               +c_2\cdot h(\colvec{x_2 \\ y_2 \\ z_2})
+          \end{align*}
+        \partsitem Ya.
+          Pembuktiannya mudah.
+          \begin{align*}
+            h(c_1\cdot\colvec{x_1 \\ y_1 \\ z_1}
+              +c_2\cdot\colvec{x_2 \\ y_2 \\ z_2})
+            &=h( \colvec{c_1x_1+c_2x_2 \\ c_1y_1+c_2y_2 \\ c_1z_1+c_2z_2} ) \\
+            &=\colvec[r]{0 \\ 0}                                      \\
+            &=c_1\cdot h(\colvec{x_1 \\ y_1 \\ z_1}) 
+               +c_2\cdot h(\colvec{x_2 \\ y_2 \\ z_2})            
+          \end{align*}
+        \partsitem Tidak.
+          Berikut contoh penjumlahan yang tidak dipertahankan.
+          \begin{equation*}
+            h(\colvec[r]{0 \\ 0 \\ 0}+\colvec[r]{0 \\ 0 \\ 0})
+            =\colvec[r]{1 \\ 1}
+            \neq h(\colvec[r]{0 \\ 0 \\ 0})+h(\colvec[r]{0 \\ 0 \\ 0})
+          \end{equation*}
+        \partsitem Ya.
+           Pembuktiannya langsung.
+          \begin{align*}
+            h( c_1\cdot\colvec{x_1 \\ y_1 \\ z_1}
+               +c_2\cdot\colvec{x_2 \\ y_2 \\ z_2} )
+            &=h( \colvec{c_1x_1+c_2x_2 \\ c_1y_1+c_2y_2 \\ c_1z_1+c_2z_2} ) \\
+            &=\colvec{2(c_1x_1+c_2x_2)+(c_1y_1+c_2y_2) \\ 
+                      3(c_1y_1+c_2y_2)-4(c_1z_1+c_2z_2)}          \\
+            &=c_1\cdot\colvec{2x_1+y_1 \\ 3y_1-4z_1}
+               +c_2\cdot\colvec{2x_2+y_2 \\ 3y_2-4z_2}            \\  
+            &=c_1\cdot h(\colvec{x_1 \\ y_1 \\ z_1}) 
+               +c_2\cdot h(\colvec{x_2 \\ y_2 \\ z_2})
+          \end{align*}
+      \end{exparts}  
+    \end{answer}
+  \recommended \item
+    Tentukan apakah setiap pemetaan \( \map{h}{\matspace_{\nbyn{2}}}{\Re} \) berikut linear.
+    \begin{exparts}
+      \partsitem \( h(\begin{mat} a &b  \\ c &d \end{mat})=a+d  \)
+      \partsitem \( h(\begin{mat} a &b  \\ c &d \end{mat})=ad-bc  \)
+      \partsitem \( h(\begin{mat} a &b \\ c &d \end{mat})=2a+3b+c-d  \)
+      \partsitem \( h(\begin{mat} a &b  \\ c &d \end{mat})=a^2+b^2  \)
+    \end{exparts}
+    \begin{answer} 
+      Untuk masing-masing pemetaan, kita harus memeriksa bahwa pemetaan itu mempertahankan kombinasi linear
+      atau memberikan contoh kombinasi linear yang tidak 
+      dipertahankannya.
+      \begin{exparts*}
+        \partsitem Ya.
+           Pemeriksaan bahwa pemetaan ini mempertahankan kombinasi bersifat rutin.
+           \begin{align*}
+             h(r_1\cdot\begin{mat}
+                 a_1  &b_1  \\
+                 c_1  &d_1
+               \end{mat}
+              +r_2\cdot\begin{mat}
+                 a_2  &b_2  \\
+                 c_2  &d_2
+               \end{mat})
+              &=h(\begin{mat}
+                 r_1a_1+r_2a_2  &r_1b_1+r_2b_2  \\
+                 r_1c_1+r_2c_2  &r_1d_1+r_2d_2
+               \end{mat})                    \\
+              &=(r_1a_1+r_2a_2)+(r_1d_1+r_2d_2)    \\
+              &=r_1(a_1+d_1)+r_2(a_2+d_2)          \\
+              &=r_1\cdot h(\begin{mat}
+                             a_1  &b_1  \\
+                             c_1  &d_1
+                            \end{mat})
+                +r_2\cdot h(\begin{mat}
+                             a_2  &b_2  \\
+                             c_2  &d_2
+                            \end{mat})
+           \end{align*}
+        \partsitem Tidak.
+          Sebagai contoh, perkalian dengan skalar $2$ tidak dipertahankan.
+          \begin{equation*}
+            h(2\cdot\begin{mat}[r]
+                1  &0  \\
+                0  &1  
+              \end{mat})
+            =h(\begin{mat}[r]
+                2  &0  \\
+                0  &2  
+              \end{mat})
+            =4
+            \quad\text{sedangkan}\quad
+            2\cdot h(\begin{mat}[r]
+                1  &0  \\
+                0  &1  
+              \end{mat})
+            =2\cdot 1=2
+          \end{equation*}
+        \partsitem Ya.
+           Berikut pemeriksaan bahwa pemetaan ini mempertahankan kombinasi dua anggota
+           domain.
+           \begin{multline*}
+             h(r_1\cdot\begin{mat} a_1 &b_1 \\ c_1 &d_1 \end{mat}
+               +r_2\cdot\begin{mat} a_2 &b_2 \\ c_2 &d_2 \end{mat})     \\
+             \begin{aligned}
+             &=h(\begin{mat} 
+                   r_1a_1+r_2a_2 &r_1b_1+r_2b_2   \\ 
+                   r_1c_1+r_2c_2 &r_1d_1+r_2d_2 
+                 \end{mat})                                 \\
+             &=2(r_1a_1+r_2a_2)+3(r_1b_1+r_2b_2)
+                    +(r_1c_1+r_2c_2)-(r_1d_1+r_2d_2)              \\
+             &=r_1(2a_1+3b_1+c_1-d_1)
+               +r_2(2a_2+3b_2+c_2-d_2)              \\
+             &=r_1\cdot h(\begin{mat} a_1 &b_1 \\ c_1 &d_1 \end{mat}
+               +r_2\cdot h(\begin{mat} a_2 &b_2 \\ c_2 &d_2 \end{mat})
+             \end{aligned}
+           \end{multline*}
+        \partsitem Tidak.
+          Sebagai contoh kombinasi yang tidak dipertahankan,
+          menghitungnya dengan satu cara memberikan hasil berikut,
+          \begin{equation*}
+            h(\begin{mat}[r]
+              1  &0  \\
+              0  &0
+            \end{mat}
+            +\begin{mat}[r]
+              1  &0  \\
+              0  &0
+            \end{mat})
+           =h(\begin{mat}[r]
+              2  &0  \\
+              0  &0
+            \end{mat})
+           =4
+           \end{equation*}
+           sedangkan cara lainnya memberikan hasil berikut.
+           \begin{equation*}
+            h(\begin{mat}[r]
+              1  &0  \\
+              0  &0
+            \end{mat})
+            +h(\begin{mat}[r]
+              1  &0  \\
+              0  &0
+            \end{mat})
+            =1+1
+            =2
+          \end{equation*}
+      \end{exparts*}   
+    \end{answer}
+  \recommended \item
+    Tunjukkan bahwa pemetaan-pemetaan berikut adalah homomorfisme.
+    Apakah keduanya saling invers?
+    \begin{exparts}
+      \partsitem \( \map{d/dx}{\polyspace_3}{\polyspace_2} \)
+        yang diberikan dengan memetakan \( a_0+a_1x+a_2x^2+a_3x^3 \) ke
+        \( a_1+2a_2x+3a_3x^2 \)
+      \partsitem \( \map{\int}{\polyspace_2}{\polyspace_3} \) yang diberikan dengan memetakan
+        \( b_0+b_1x+b_2x^2 \) ke \( b_0x+(b_1/2)x^2+(b_2/3)x^3 \)
+    \end{exparts}
+    \begin{answer}
+      Pemeriksaan bahwa masing-masing merupakan homomorfisme bersifat rutin.
+      Berikut pemeriksaan untuk pemetaan diferensiasi.
+      \begin{multline*}
+        \frac{d}{dx}(r\cdot (a_0+a_1x+a_2x^2+a_3x^3)
+                    +s\cdot (b_0+b_1x+b_2x^2+b_3x^3))                 \\
+        \begin{aligned}
+           &=\frac{d}{dx}((ra_0+sb_0)+(ra_1+sb_1)x+(ra_2+sb_2)x^2
+                                                    +(ra_3+sb_3)x^3)  \\
+           &=(ra_1+sb_1)+2(ra_2+sb_2)x+3(ra_3+sb_3)x^2         \\
+           &=r\cdot (a_1+2a_2x+3a_3x^2)+s\cdot (b_1+2b_2x+3b_3x^2)         \\
+           &=r\cdot \frac{d}{dx}(a_0+a_1x+a_2x^2+a_3x^3)
+                    +s\cdot \frac{d}{dx} (b_0+b_1x+b_2x^2+b_3x^3)
+        \end{aligned}
+      \end{multline*}
+      (Bukti alternatifnya cukup dengan memperhatikan bahwa ini merupakan 
+      sifat diferensiasi yang sudah dikenal dari kalkulus.)
+
+      Kedua pemetaan ini bukan saling invers karena komposisi berikut 
+      tidak beraksi sebagai pemetaan identitas pada 
+      unsur domain ini.
+      \begin{equation*}
+        1\in\polyspace_3\;\mapsunder{d/dx}\;
+        0\in\polyspace_2\;\mapsunder{\int}\;
+        0\in\polyspace_3
+      \end{equation*}   
+     \end{answer}
+  \item  
+    Apakah proyeksi (tegak lurus) dari \( \Re^3 \) ke bidang-\( xz \)
+    merupakan homomorfisme?
+    Bagaimana dengan proyeksi ke bidang-\( yz \)?
+    Ke sumbu-\( x \)?
+    Sumbu-\( y \)?
+    Sumbu-\( z \)?
+    Proyeksi ke titik asal?
+    \begin{answer}
+      Setiap proyeksi tersebut merupakan homomorfisme.
+      Proyeksi ke bidang-$xz$ dan ke bidang-$yz$ adalah pemetaan berikut.
+      \begin{equation*}
+         \colvec{x \\ y \\ z}\mapsto\colvec{x \\ 0 \\ z}
+           \qquad
+         \colvec{x \\ y \\ z}\mapsto\colvec{0 \\ y \\ z}
+      \end{equation*}
+      Proyeksi ke sumbu-$x$, ke sumbu-$y$, dan ke sumbu-$z$ adalah
+      pemetaan berikut. 
+      \begin{equation*}
+         \colvec{x \\ y \\ z}\mapsto\colvec{x \\ 0 \\ 0}
+           \qquad
+         \colvec{x \\ y \\ z}\mapsto\colvec{0 \\ y \\ 0}
+           \qquad
+         \colvec{x \\ y \\ z}\mapsto\colvec{0 \\ 0 \\ z}
+      \end{equation*}
+      Sementara itu, proyeksi ke titik asal adalah pemetaan berikut.
+      \begin{equation*}
+         \colvec{x \\ y \\ z}\mapsto\colvec[r]{0 \\ 0 \\ 0}
+      \end{equation*}
+      Pembuktian bahwa masing-masing merupakan homomorfisme bersifat langsung.
+      (Yang terakhir, tentu saja, adalah transformasi nol pada $\Re^3$.)  
+     \end{answer}
+  \item Buktikan bahwa setiap pemetaan berikut merupakan homomorfisme.
+    \begin{exparts}
+      \partsitem $\map{h}{\polyspace_2}{\Re^2}$ yang diberikan oleh
+        \begin{equation*}
+          ax^2+bx+c\mapsto \colvec{a+b \\ a+c}
+        \end{equation*}
+      \partsitem $\map{f}{\Re^2}{\Re^3}$ yang diberikan oleh 
+        \begin{equation*}
+          \colvec{x \\ y}\mapsto\colvec{0 \\ x-y \\ 3y} 
+        \end{equation*}
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem
+          Perhitungan ini membuktikan bahwa pemetaan tersebut mempertahankan kombinasi linear.
+          Menurut \nearbylemma{le:HomoPreserveLinCombo}, hal ini cukup untuk menunjukkan bahwa 
+          pemetaan tersebut merupakan homomorfisme.
+          \begin{multline*}
+            h(\,d_1(a_1x^2+b_1x+c_1)+d_2(a_2x^2+b_2x+c_2)\,)      \\
+             \begin{aligned}
+             &=h((d_1a_1+d_2a_2)x^2+(d_1b_1+d_2b_2)x+(d_1c_1+d_2c_2))  \\
+             &=\colvec{(d_1a_1+d_2a_2)+(d_1b_1+d_2b_2) \\ 
+             (d_1a_1+d_2a_2)+(d_1c_1+d_2c_2)} \\
+             &=\colvec{d_1a_1+d_1b_1 \\  d_1a_1+d_1c_1}+
+                 \colvec{d_2a_2+d_2b_2 \\  d_2a_2+d_2c_2}  \\
+             &=d_1\colvec{a_1+b_1 \\  a_1+c_1}+
+                 d_2\colvec{a_2+b_2 \\  a_2+c_2}  \\
+            &=d_1\cdot h(a_1x^2+b_1x+c_1)+d_2\cdot h(a_2x^2+b_2x+c_2)
+            \end{aligned}
+          \end{multline*}
+        \partsitem
+          Pemetaan ini mempertahankan kombinasi linear.
+          \begin{align*}
+            f(\,a_1\colvec{x_1 \\ y_1}+a_2\colvec{x_2 \\ y_2}\,)
+              &=f(\,\colvec{a_1x_1+a_2x_2 \\ a_1y_1+a_2y_2}\,)  \\
+              &=\colvec{0 \\ (a_1x_1+a_2x_2)-(a_1y_1+a_2y_2) \\ 
+              3(a_1y_1+a_2y_2) }  \\
+              &=a_1\colvec{0 \\ x_1-y_1 \\ 3y_1}
+                 +a_2\colvec{0 \\ x_2-y_2 \\ 3y_2}  \\
+              &=a_1f(\colvec{x_1 \\ y_1})+a_2f(\colvec{x_2 \\ y_2})
+          \end{align*}
+      \end{exparts}
+    \end{answer}
+
+
+  \item 
+    Tunjukkan bahwa, meskipun pemetaan-pemetaan dari \nearbyexample{exam:TwoMapsHomoNotIso}
+    mempertahankan operasi linear, keduanya bukan isomorfisme.
+    \begin{answer}
+      Pemetaan pertama tidak pada; sebagai contoh, tidak ada polinomial yang
+      dipetakan ke polinomial konstan $p(x)=1$.
+      Pemetaan kedua tidak satu-ke-satu; kedua anggota domain berikut
+      \begin{equation*}
+        \begin{mat}[r]
+          1  &0  \\
+          0  &0  
+        \end{mat}
+        \quad\text{dan}\quad
+        \begin{mat}[r]
+          0  &0  \\
+          0  &1  
+        \end{mat}
+      \end{equation*}
+      dipetakan ke anggota kodomain yang sama, yaitu $1\in\Re$.
+     \end{answer}
+  \item 
+    Apakah pemetaan identitas merupakan transformasi linear?
+    \begin{answer}
+      Ya;~dalam sembarang ruang, \( \text{id}(c\cdot \vec{v}+d\cdot \vec{w})
+      = c\cdot \vec{v}+d\cdot \vec{w}
+      = c\cdot\text{id}(\vec{v})+d\cdot\text{id}(\vec{w}) \).
+    \end{answer}
+  \recommended \item \label{exer:GrpahNotALine}
+    Menyatakan bahwa suatu fungsi `linear' berbeda dengan 
+    menyatakan bahwa grafiknya berupa garis.
+    \begin{exparts}
+      \partsitem Fungsi \( \map{f_1}{\Re}{\Re} \) yang diberikan oleh 
+        \( f_1(x)=2x-1 \) memiliki grafik berupa garis.
+        Tunjukkan bahwa fungsi ini bukan fungsi linear.
+      \partsitem Fungsi \( \map{f_2}{\Re^2}{\Re} \) yang diberikan oleh
+        \begin{equation*}
+          \colvec{x \\ y} \mapsto x+2y
+        \end{equation*}
+        tidak memiliki grafik berupa garis.
+        Tunjukkan bahwa fungsi ini merupakan fungsi linear.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+         \partsitem Pemetaan ini tidak mempertahankan struktur karena
+           \( f(1+1)=3 \), sedangkan \( f(1)+f(1)=2 \).
+         \partsitem Pemeriksaannya rutin.
+           \begin{align*}
+             f(r_1\cdot\colvec{x_1 \\ y_1}+r_2\cdot\colvec{x_2 \\ y_2})
+             &=f(\colvec{r_1x_1+r_2x_2 \\ r_1y_1+r_2y_2})               \\
+             &=(r_1x_1+r_2x_2)+2(r_1y_1+r_2y_2)                          \\
+             &=r_1\cdot (x_1+2y_1)+r_2\cdot (x_2+2y_2)                   \\
+             &=r_1\cdot f(\colvec{x_1 \\ y_1})+r_2\cdot f(\colvec{x_2 \\ y_2})
+           \end{align*}
+      \end{exparts}   
+     \end{answer}
+  \recommended \item 
+    Salah satu bagian definisi fungsi linear adalah bahwa fungsi tersebut mempertahankan
+    penjumlahan. 
+    Apakah fungsi linear mempertahankan pengurangan?
+    \begin{answer}
+      Ya.
+      Jika \( \map{h}{V}{W} \) linear, maka
+      \( h(\vec{u}-\vec{v})
+         =h(\vec{u}+(-1)\cdot\vec{v})
+         =h(\vec{u})+(-1)\cdot h(\vec{v})
+         =h(\vec{u})-h(\vec{v}) \).
+    \end{answer}
+  \item 
+    Anggaplah \( h \) merupakan transformasi linear pada \( V \) dan
+    \( \sequence{\vec{\beta}_1,\ldots,\vec{\beta}_n} \) merupakan basis \( V \).
+    Buktikan setiap pernyataan berikut.
+    \begin{exparts}
+      \partsitem Jika \( h(\vec{\beta}_i)=\zero \) untuk setiap vektor basis,
+        maka \( h \) adalah pemetaan nol.
+      \partsitem Jika \( h(\vec{\beta}_i)=\vec{\beta}_i \) untuk setiap vektor
+        basis, maka \( h \) adalah pemetaan identitas.
+      \partsitem Jika terdapat skalar \( r \) sedemikian sehingga
+        \( h(\vec{\beta}_i)=r\cdot\vec{\beta}_i \) untuk setiap
+        vektor basis, maka \( h(\vec{v})=r\cdot\vec{v} \) untuk semua vektor
+        dalam $V$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+       \partsitem Misalkan \( \vec{v}\in V \) direpresentasikan terhadap 
+         basis tersebut sebagai \( \vec{v}=c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n \).
+         Maka \( h(\vec{v})=h(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n)
+                  =c_1h(\vec{\beta}_1)+\dots+c_nh(\vec{\beta}_n)
+                  =c_1\cdot\zero+\dots+c_n\cdot\zero
+                  =\zero \).
+       \partsitem Argumen ini serupa dengan argumen sebelumnya.
+         Misalkan \( \vec{v}\in V \) direpresentasikan terhadap 
+         basis tersebut sebagai \( \vec{v}=c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n \).
+         Maka \( h(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n)
+            =c_1h(\vec{\beta}_1)+\dots+c_nh(\vec{\beta}_n)
+            =c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n
+            =\vec{v} \).
+       \partsitem Seperti di atas, hanya saja 
+         \( c_1h(\vec{\beta}_1)+\dots+c_nh(\vec{\beta}_n)
+            =c_1r\vec{\beta}_1+\dots+c_nr\vec{\beta}_n
+            =r(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n)
+            =r\vec{v} \).
+      \end{exparts}  
+     \end{answer}
+  \item
+    Tinjau ruang vektor \( \Re^+ \), dengan penjumlahan vektor
+    dan perkalian skalar yang bukan diwarisi dari $\Re$,
+    melainkan didefinisikan sebagai berikut:
+    \( a+b \) adalah hasil kali \( a \) dan \( b \), sedangkan \( r\cdot a \) adalah
+    pangkat ke-\( r \) dari \( a \).
+    (Dalam latihan sebelumnya telah ditunjukkan bahwa ini merupakan ruang vektor.)
+    Buktikan bahwa pemetaan logaritma alami \( \map{\ln}{\Re^+}{\Re} \) 
+    merupakan homomorfisme di antara kedua ruang tersebut.
+    Apakah pemetaan ini merupakan isomorfisme?
+    \begin{answer}
+      Fakta bahwa pemetaan ini merupakan homomorfisme mengikuti aturan yang sudah dikenal, yaitu
+      logaritma suatu hasil kali adalah jumlah logaritmanya,
+      $\ln(ab)=\ln(a)+\ln(b)$ 
+      dan logaritma suatu pangkat adalah kelipatan logaritmanya,
+      $\ln(a^r)=r\ln(a)$.
+      Pemetaan ini merupakan isomorfisme karena memiliki invers, yaitu 
+      pemetaan eksponensial, sehingga merupakan korespondensi,
+      dan dengan demikian merupakan isomorfisme.  
+     \end{answer}
+  \item 
+     Tinjau transformasi bidang \( \Re^2 \) berikut.
+     \begin{equation*}
+       \colvec{x \\ y} \mapsto \colvec{x/2 \\ y/3}
+     \end{equation*}
+     Tentukan citra elips berikut di bawah pemetaan ini.
+     \begin{equation*}
+       \set{\colvec{x \\ y} \suchthat (x^2/4)+(y^2/9)=1}
+     \end{equation*}
+     \begin{answer}
+       Dengan \( \hat{x}=x/2 \) dan \( \hat{y}=y/3 \),
+       himpunan citranya adalah
+       \begin{equation*}
+         \set{\colvec{\hat{x} \\ \hat{y}} \suchthat
+           \frac{\displaystyle (2\hat{x})^2}{\displaystyle 4}
+           +\frac{\displaystyle (3\hat{y})^2}{\displaystyle 9}=1}
+         =\set{\colvec{\hat{x} \\ \hat{y}} \suchthat
+            \hat{x}^2+\hat{y}^2=1}
+       \end{equation*}
+       yaitu lingkaran satuan pada bidang-\( \hat{x}\hat{y} \).
+     \end{answer}
+  \recommended \item
+    Bayangkan seutas tali dililitkan rapat mengelilingi khatulistiwa bumi
+    (anggap bumi berbentuk bola).
+    Berapa banyak tali tambahan yang harus kita berikan agar, di sepanjang 
+    keliling bumi, tali itu berada enam kaki di atas permukaan tanah?
+    \begin{answer}
+      Fungsi keliling $r\mapsto 2\pi r$ bersifat linear.  
+      Dengan demikian, kita memperoleh
+      $2\pi\cdot (r_{\text{earth}}+6)-
+         2\pi\cdot (r_{\text{earth}})=12\pi$.
+      Perhatikan bahwa
+      jumlah tali tambahan yang diperlukan untuk menaikkan lingkaran dari lilitan rapat 
+      pada bola basket hingga enam kaki di atas bola tersebut sama dengan jumlah yang diperlukan
+      untuk menaikkannya dari lilitan rapat pada bumi hingga enam kaki di atas
+      bumi.
+     \end{answer}
+  \recommended \item 
+    Buktikan bahwa pemetaan \( \map{h}{\Re^3}{\Re} \) berikut
+    \begin{equation*}
+      \colvec{x \\ y \\ z}\;\mapsto\;
+      \colvec{x \\ y \\ z}\dotprod\colvec[r]{3 \\ -1 \\ -1}=3x-y-z
+    \end{equation*}
+    bersifat linear.
+    Perumum hasilnya.
+    \begin{answer}
+      Pembuktian bahwa pemetaan ini linear bersifat rutin.
+      \begin{align*}
+        h(c_1\cdot \colvec{x_1 \\ y_1 \\ z_1}
+          +c_2\cdot \colvec{x_2 \\ y_2 \\ z_2})
+        &=h(\colvec{c_1x_1+c_2x_2 \\ c_1y_1+c_2y_2 \\ c_1z_1+c_2z_2})   \\
+        &=3(c_1x_1+c_2x_2)-(c_1y_1+c_2y_2)-(c_1z_1+c_2z_2)             \\
+        &=c_1\cdot (3x_1-y_1-z_1)+c_2\cdot (3x_2-y_2-z_2)             \\
+        &=c_1\cdot h(\colvec{x_1 \\ y_1 \\ z_1})
+          +c_2\cdot h(\colvec{x_2 \\ y_2 \\ z_2})
+      \end{align*}
+      Dugaan perumuman yang wajar 
+      adalah bahwa untuk sembarang \( \vec{k}\in\Re^3 \) yang tetap,
+      pemetaan \( \vec{v}\mapsto\vec{v}\dotprod\vec{k} \) bersifat linear.
+      Pernyataan ini benar.
+      Hal ini mengikuti sifat-sifat hasil kali titik yang telah kita lihat sebelumnya:
+      \( (\vec{v}+\vec{u})\dotprod\vec{k}=\vec{v}\dotprod\vec{k}+
+         \vec{u}\dotprod\vec{k} \)
+      dan \( (r\vec{v})\dotprod\vec{k}=r(\vec{v}\dotprod\vec{k}) \).
+      (Dugaan wajar untuk memperumum perumuman ini, 
+      yaitu bahwa pemetaan dari \( \Re^n \)
+      ke \( \Re \) yang beraksi dengan mengambil hasil kali titik antara
+      argumennya dan vektor tetap \( \vec{k}\in\Re^n \) bersifat linear, 
+      juga benar.) 
+    \end{answer}
+  \item \label{exer:HomoRONeMultByScalar}
+    Tunjukkan bahwa setiap homomorfisme dari \( \Re^1 \) ke \( \Re^1 \) 
+    beraksi melalui perkalian dengan suatu skalar.
+    Simpulkan bahwa setiap transformasi linear nontrivial pada \( \Re^1 \) merupakan
+    isomorfisme.
+    Apakah hal itu benar untuk transformasi pada \( \Re^2 \)?
+    \( \Re^n \)?
+    \begin{answer}
+      Misalkan \( \map{h}{\Re^1}{\Re^1} \) linear.
+      Suatu pemetaan linear ditentukan oleh aksinya pada basis, maka tetapkan basis
+      \( \sequence{1} \) untuk \( \Re^1 \).
+      Untuk sembarang \( r\in\Re^1 \), kita memiliki \( h(r)=h(r\cdot 1)=r\cdot h(1) \),
+      sehingga \( h \) beraksi pada sembarang argumen $r$ 
+      dengan mengalikannya dengan konstanta \( h(1) \).
+      Jika \( h(1) \) tidak nol, maka pemetaan itu merupakan korespondensi\Dash inversnya 
+      adalah pembagian dengan \( h(1) \)\Dash sehingga setiap transformasi nontrivial 
+      pada $\Re^1$ merupakan isomorfisme.
+
+      Pemetaan proyeksi berikut merupakan contoh yang menunjukkan bahwa tidak setiap
+      transformasi pada \( \Re^n \) beraksi melalui perkalian dengan suatu konstanta
+      ketika \( n>1 \), termasuk ketika $n=2$.
+      \begin{equation*}
+        \colvec{x_1 \\ x_2 \\ \vdots \\ x_n}
+          \mapsto\colvec{x_1 \\ 0 \\ \vdots \\ 0}
+      \end{equation*}  
+    \end{answer}
+  \item 
+    %(This will be used in \nearbyexercise{exer:Cosets} below.)
+    Tunjukkan bahwa untuk sembarang skalar \( a_{1,1},\dots, a_{m,n}  \), 
+    pemetaan
+    \( \map{h}{\Re^n}{\Re^m} \) berikut merupakan homomorfisme.
+    \begin{equation*}
+      \colvec{x_1 \\ \vdots \\ x_n}
+        \mapsto
+      \colvec{a_{1,1}x_1+\dots+a_{1,n}x_n \\ 
+                   \vdots \\
+                   a_{m,1}x_1+\cdots+a_{m,n}x_n}
+    \end{equation*}
+    \begin{answer}
+      Dengan \( c \) dan \( d \) skalar, kita memperoleh hasil berikut.
+          \begin{multline*}
+            h(c\cdot \colvec{x_1 \\ \vdots \\ x_n} 
+              +d\cdot \colvec{y_1 \\ \vdots \\ y_n})                     \\
+            \begin{aligned}
+            &=h(\colvec{cx_1+dy_1 \\ \vdots \\ cx_n+dy_n})        \\
+            &=\colvec{a_{1,1}(cx_1+dy_1)+\dots+a_{1,n}(cx_n+dy_n) \\
+                         \vdots                                   \\
+                         a_{m,1}(cx_1+dy_1)+\dots+a_{m,n}(cx_n+dy_n)} \\
+            &=c\cdot\colvec{a_{1,1}x_1+\dots+a_{1,n}x_n \\ 
+                         \vdots                     \\ 
+                         a_{m,1}x_1+\dots+a_{m,n}x_n}
+            +d\cdot\colvec{a_{1,1}y_1+\dots+a_{1,n}y_n \\ 
+                         \vdots \\ 
+                         a_{m,1}y_1+\dots+a_{m,n}y_n} \\
+            &=c\cdot h(\colvec{x_1 \\ \vdots \\ x_n})
+              +d\cdot h(\colvec{y_1 \\ \vdots \\ y_n})
+            \end{aligned}
+          \end{multline*}
+     \end{answer}
+   \item Tinjau ruang polinomial \( \polyspace_n \).
+     \begin{exparts}
+       \partsitem Tunjukkan bahwa untuk setiap $i$, operator turunan ke-\( i \) 
+          $d^i/dx^i$ merupakan transformasi linear pada ruang tersebut.
+       \partsitem
+          Simpulkan bahwa untuk sembarang skalar \( c_k,\ldots, c_0 \), pemetaan berikut
+          merupakan transformasi linear pada ruang tersebut.
+          \begin{equation*}
+            f\;\mapsto\;
+            c_{k}\frac{d^k}{dx^k}f+c_{k-1}\frac{d^{k-1}}{dx^{k-1}}f
+               +\dots+
+            c_1\frac{d}{dx}f+c_0f
+          \end{equation*}
+      \end{exparts}
+      \begin{answer}
+        \begin{exparts}
+          \partsitem Setiap pangkat $i$ dari operator turunan bersifat linear 
+            karena aturan-aturan berikut sudah dikenal dari kalkulus.
+            \begin{equation*}
+              \frac{d^i}{dx^i}(\,f(x)+g(x)\,)=\frac{d^i}{dx^i}f(x)
+                                         +\frac{d^i}{dx^i}g(x)
+              \qquad
+              \frac{d^i}{dx^i}\,r\cdot f(x)=r\cdot\frac{d^i}{dx^i}f(x)
+            \end{equation*}
+         \partsitem 
+          Setiap kombinasi linear dari pemetaan-pemetaan linear juga merupakan pemetaan linear.
+          Dengan demikian,
+          pemetaan yang diberikan merupakan transformasi linear pada \( \polyspace_n \).
+        \end{exparts}
+      \end{answer}
+  \item 
+    \nearbylemma{le:SpLinFcns} menunjukkan bahwa jumlah fungsi-fungsi linear bersifat
+    linear dan bahwa kelipatan skalar suatu fungsi linear bersifat linear.
+    Tunjukkan pula bahwa komposisi fungsi-fungsi linear bersifat linear.
+    \begin{answer}
+      (Argumen ini telah muncul sebagai bagian dari bukti bahwa
+      isomorfisme merupakan relasi ekuivalensi.)
+      Misalkan $\map{f}{U}{V}$ dan $\map{g}{V}{W}$ linear.
+      Komposisinya mempertahankan kombinasi linear,
+      \begin{multline*}
+        \composed{g}{f}(c_1\vec{u}_1+c_2\vec{u}_2)
+        =g(\,f(c_1\vec{u}_1+c_2\vec{u}_2)\,)          
+        =g(\,c_1f(\vec{u}_1)+c_2f(\vec{u}_2)\,)              \\          
+        =c_1\cdot g(f(\vec{u}_1))+c_2\cdot g(f(\vec{u}_2))          
+        =c_1\cdot \composed{g}{f}(\vec{u}_1)
+           +c_2\cdot \composed{g}{f}(\vec{u}_2)          
+      \end{multline*}
+      dengan $\vec{u}_1,\vec{u}_2\in U$ dan skalar $c_1,c_2$. 
+    \end{answer}
+  \item
+    Misalkan \( \map{f}{V}{W} \) linear dan
+    \( f(\vec{v}_1)=\vec{w}_1 \), \ldots, \( f(\vec{v}_n)=\vec{w}_n \)
+    untuk sejumlah vektor \( \vec{w}_1 \), \ldots, \( \vec{w}_n \) dalam \( W \).
+    \begin{exparts}
+      \partsitem Jika himpunan vektor \( \vec{w} \) bebas, haruskah
+        himpunan vektor \( \vec{v} \) juga bebas?
+      \partsitem Jika himpunan vektor \( \vec{v} \) 
+        bebas, haruskah
+        himpunan vektor \( \vec{w} \) juga bebas?
+      \partsitem Jika himpunan vektor \( \vec{w} \) merentang \( W \), haruskah himpunan
+        vektor \( \vec{v} \) merentang \( V \)?
+      \partsitem Jika himpunan vektor \( \vec{v} \) merentang \( V \), haruskah himpunan
+        vektor \( \vec{w} \) merentang \( W \)?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ya.
+          Himpunan vektor $\vec{w}$ tidak mungkin bebas linear jika
+          himpunan vektor $\vec{v}$ bergantung linear karena
+          setiap relasi nontrivial dalam domain
+          \( \zero_V=c_1\vec{v}_1+\dots+c_n\vec{v}_n \)
+          akan menghasilkan relasi nontrivial dalam ruang hasil,
+          \( f(\zero_V)=\zero_W=f(c_1\vec{v}_1+\dots+c_n\vec{v}_n)
+             =c_1f(\vec{v}_1)+\dots+c_nf(\vec{v}_n)
+             =c_1\vec{w}_1+\dots+c_n\vec{w}_n \).
+        \partsitem Tidak selalu.
+          Sebagai contoh, transformasi pada \( \Re^2 \) yang diberikan oleh
+          \begin{equation*}
+            \colvec{x \\ y} \mapsto \colvec{x+y \\ x+y}
+          \end{equation*}
+          memetakan himpunan bebas linear dalam domain berikut 
+          ke citra yang bergantung linear.
+          \begin{equation*}
+            \set{\vec{v}_1,\vec{v}_2}=\set{\colvec[r]{1 \\ 0},\colvec[r]{1 \\ 1}}
+            \;\mapsto\;
+            \set{\colvec[r]{1 \\ 1},\colvec[r]{2 \\ 2}}=\set{\vec{w}_1,\vec{w}_2}
+          \end{equation*}
+        \partsitem Tidak selalu.
+          Salah satu contohnya adalah pemetaan proyeksi 
+          \( \map{\pi}{\Re^3}{\Re^2} \)
+          \begin{equation*}
+            \colvec{x \\ y \\ z}\mapsto\colvec{x \\ y}
+          \end{equation*}
+          dan himpunan berikut yang tidak merentang domain tetapi 
+          dipetakan ke himpunan yang merentang kodomain.
+          \begin{equation*}
+            \set{\colvec[r]{1 \\ 0 \\ 0},\colvec[r]{0 \\ 1 \\ 0}}
+            \mapsunder{\pi}\set{\colvec[r]{1 \\ 0},\colvec[r]{0 \\ 1}}
+          \end{equation*}
+        \partsitem Tidak selalu.
+          Sebagai contoh, pemetaan inklusi $\map{\iota}{\Re^2}{\Re^3}$ memetakan
+          basis standar $\stdbasis_2$ untuk domain ke himpunan yang 
+          tidak merentang
+          kodomain. 
+          (\textit{Catatan.}
+          Namun, himpunan vektor $\vec{w}$ memang merentang ruang hasil.
+          Buktinya mudah.)
+      \end{exparts}  
+     \end{answer}
+  \item  
+    Perumum \nearbyexample{ex:MatTransMapLinear}
+    dengan membuktikan bahwa untuk setiap domain dan kodomain yang sesuai,
+    pemetaan transpos matriks bersifat linear.
+    Apa domain dan kodomain yang sesuai itu?
+    \begin{answer}
+      Ingat bahwa entri pada baris~$i$ dan kolom~$j$ dari transpos $M$
+      adalah entri $m_{j,i}$ dari baris~$j$ dan kolom~$i$ pada $M$.
+      Sekarang, pemeriksaannya rutin.
+      Mulailah dengan transpos kombinasi tersebut. 
+      \begin{equation*}
+        \trans{[r\cdot\begin{mat}
+                \    &\vdots          \\
+             \cdots &a_{i,j} &\cdots \\
+                    &\vdots
+           \end{mat}
+         +s\cdot\begin{mat}
+                \    &\vdots          \\
+             \cdots &b_{i,j} &\cdots \\
+                    &\vdots
+           \end{mat}]} 
+      \end{equation*}
+      Gabungkan, lalu ambil transposnya.               
+      \begin{equation*}
+        =\trans{\begin{mat}
+                 \       &\vdots                    \\
+                  \cdots &ra_{i,j}+sb_{i,j} &\cdots \\
+                         &\vdots
+                \end{mat}}                               
+        =\begin{mat}
+              \     &\vdots                    \\
+            \cdots &ra_{j,i}+sb_{j,i} &\cdots \\
+                   &\vdots
+          \end{mat}                               
+      \end{equation*}
+      Kemudian keluarkan skalar-skalar itu, lalu balikkan transposnya.
+      \begin{multline*} 
+        =r\cdot\begin{mat}
+             \     &\vdots          \\
+            \cdots &a_{j,i} &\cdots \\
+                   &\vdots
+          \end{mat}
+         +s\cdot\begin{mat}
+             \      &\vdots          \\
+            \cdots &b_{j,i} &\cdots \\
+                   &\vdots
+          \end{mat}                             \\   
+        =r\cdot\trans{\begin{mat}
+             \      &\vdots          \\
+            \cdots &a_{j,i} &\cdots \\
+                   &\vdots
+          \end{mat} }
+         +s\cdot\trans{\begin{mat}
+              \     &\vdots          \\
+            \cdots &b_{j,i} &\cdots \\
+                   &\vdots
+          \end{mat} }
+      \end{multline*}
+      Domainnya adalah \( \matspace_{\nbym{m}{n}} \), 
+      sedangkan kodomainnya adalah \( \matspace_{\nbym{n}{m}} \).  
+     \end{answer}
+  \item 
+    \begin{exparts}
+     \partsitem Untuk \( \vec{u},\vec{v}\in \Re^n \), 
+        menurut definisi, ruas garis yang menghubungkan keduanya adalah himpunan
+        \( \ell=\set{t\cdot\vec{u}+(1-t)\cdot\vec{v}\suchthat t\in [0..1]} \).
+        Tunjukkan bahwa citra ruas antara
+        $\vec{u}$ dan $\vec{v}$ di bawah homomorfisme $h$ adalah ruas antara $h(\vec{u})$ dan
+        $h(\vec{v})$.
+     \partsitem Himpunan bagian dari \( \Re^n \) disebut \definend{konveks}\index{himpunan konveks} 
+       jika, untuk sembarang dua titik dalam
+       himpunan tersebut, seluruh ruas garis yang menghubungkannya terletak dalam himpunan itu.
+       (Bagian dalam suatu bola bersifat konveks,
+       sedangkan kulit bolanya tidak.)
+       Buktikan bahwa pemetaan linear dari \( \Re^n \) ke \( \Re^m \) mempertahankan 
+       sifat konveks suatu himpunan.
+     \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem  Untuk sembarang homomorfisme \( \map{h}{\Re^n}{\Re^m} \), kita memiliki
+          \begin{equation*}
+            h(\ell)
+            =\set{h(t\cdot\vec{u}+(1-t)\cdot\vec{v})\suchthat t\in [0..1]}
+            =\set{t\cdot h(\vec{u})+(1-t)\cdot h(\vec{v})\suchthat t\in [0..1]}
+          \end{equation*}
+          yang merupakan ruas garis dari $h(\vec{u})$ ke $h(\vec{v})$.
+        \partsitem Kita harus menunjukkan bahwa jika suatu himpunan bagian dari domain bersifat konveks, maka
+          citranya sebagai himpunan bagian dari ruang hasil juga konveks. 
+          Misalkan \( C\subseteq \Re^n \) konveks,
+          dan tinjau citranya $h(C)$.
+          Untuk menunjukkan bahwa $h(C)$ konveks, kita harus menunjukkan bahwa untuk sembarang dua 
+          anggotanya, $\vec{d}_1$ dan $\vec{d}_2$, 
+          ruas garis yang menghubungkannya
+          \begin{equation*}
+            \ell=\set{t\cdot\vec{d}_1+(1-t)\cdot\vec{d}_2\suchthat t\in [0..1]}
+          \end{equation*}
+          merupakan himpunan bagian dari $h(C)$.
+
+          Tetapkan sembarang anggota $\hat{t}\cdot\vec{d}_1+(1-\hat{t})\cdot\vec{d}_2$
+          dari ruas garis tersebut.
+          Karena titik-titik ujung $\ell$ berada dalam citra $C$, terdapat
+          anggota-anggota $C$ yang dipetakan ke titik-titik tersebut, katakanlah $h(\vec{c}_1)=\vec{d}_1$
+          dan $h(\vec{c}_2)=\vec{d}_2$.
+          Sekarang, dengan $\hat{t}$ skalar yang kita tetapkan pada kalimat pertama
+          paragraf ini, perhatikan bahwa
+          $h(\hat{t}\cdot\vec{c}_1+(1-\hat{t})\cdot\vec{c}_2)
+          =\hat{t}\cdot h(\vec{c}_1)+(1-\hat{t})\cdot h(\vec{c}_2)
+          =\hat{t}\cdot\vec{d}_1+(1-\hat{t})\cdot\vec{d}_2$
+          Dengan demikian, setiap anggota $\ell$ merupakan anggota $h(C)$, sehingga $h(C)$
+          konveks.
+      \end{exparts}
+    \end{answer}
+  \recommended \item \label{exer:HomosPresLinStruc}
+    Misalkan \( \map{h}{\Re^n}{\Re^m} \) suatu homomorfisme.
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa citra suatu garis dalam \( \Re^n \) 
+        di bawah \( h \) adalah garis (yang mungkin degenerat) dalam \( \Re^m \).
+      \partsitem Apa yang terjadi pada permukaan linear berdimensi \( k \)?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Untuk \( \vec{v}_0,\vec{v}_1\in\Re^n \), garis melalui 
+          \( \vec{v}_0 \) dengan arah \( \vec{v}_1 \) adalah himpunan 
+          $\set{\vec{v}_0+t\cdot \vec{v}_1\suchthat t\in\Re}$.
+          Citra garis tersebut di bawah $h$,
+          $\set{h(\vec{v}_0+t\cdot \vec{v}_1)\suchthat t\in\Re}
+             =\set{h(\vec{v}_0)+t\cdot h(\vec{v}_1)\suchthat t\in\Re}$
+          adalah garis melalui $h(\vec{v}_0)$ dengan arah $h(\vec{v}_1)$.
+          Jika \( h(\vec{v}_1) \) adalah vektor nol, maka garis ini 
+          degenerat.
+        \partsitem Permukaan linear berdimensi \( k \) dalam \( \Re^n \) dipetakan ke
+          permukaan linear berdimensi \( k \) dalam
+          \( \Re^m \) (yang mungkin degenerat).
+          Buktinya sama seperti bukti untuk garis.
+      \end{exparts}  
+     \end{answer}
+  \item 
+    Buktikan bahwa restriksi suatu homomorfisme ke subruang dari
+    domainnya juga merupakan homomorfisme.
+    \begin{answer}
+      Misalkan \( \map{h}{V}{W} \) adalah homomorfisme dan misalkan
+      \( S \) subruang dari \( V \).
+      Tinjau pemetaan \( \map{\hat{h}}{S}{W} \) yang didefinisikan oleh
+      \( \hat{h}(\vec{s})=h(\vec{s}) \).
+      (Satu-satunya perbedaan antara $\hat{h}$ dan $h$ adalah perbedaan 
+      domain.)
+      Maka pemetaan baru ini linear: 
+      \( \hat{h}(c_1\cdot\vec{s}_1+c_2\cdot\vec{s}_2)=
+              h(c_1\vec{s}_1+c_2\vec{s}_2)=c_1h(\vec{s}_1)+c_2h(\vec{s}_2)=
+              c_1\cdot\hat{h}(\vec{s}_1)+c_2\cdot\hat{h}(\vec{s}_2) \).  
+    \end{answer}
+  \item 
+    Anggaplah \( \map{h}{V}{W} \) linear.
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa \definend{ruang hasil} pemetaan ini, 
+        \( \set{h(\vec{v})\suchthat \vec{v}\in V} \), merupakan subruang dari 
+        kodomain \( W \).
+      \partsitem Tunjukkan bahwa \definend{ruang nol} pemetaan ini,
+        \( \set{\vec{v}\in V\suchthat h(\vec{v})=\zero_W} \) 
+        merupakan subruang dari domain \( V \).
+      \partsitem Tunjukkan bahwa jika \( U \) adalah subruang dari domain \( V \), maka
+        citranya \( \set{h(\vec{u})\suchthat \vec{u}\in U} \) merupakan subruang 
+        dari kodomain \( W \).
+        Pernyataan ini memperumum butir pertama.
+      \partsitem Perumum butir kedua.
+    \end{exparts}
+    \begin{answer} Hasil ini akan muncul sebagai lema dalam subbagian berikutnya.
+      \begin{exparts}
+        \partsitem Ruang hasil tidak kosong karena \( V \) tidak kosong.
+          Untuk menuntaskan bukti, kita perlu menunjukkan bahwa ruang hasil tertutup terhadap kombinasi.
+          Dengan \( \vec{v}_1,\dots,\vec{v}_n\in V \), suatu kombinasi vektor-vektor hasil
+          berbentuk
+          \begin{equation*}
+            c_1\cdot h(\vec{v}_1)+\dots+c_n\cdot h(\vec{v}_n)
+            =
+            h(c_1\vec{v}_1)+\dots+h(c_n\vec{v}_n)
+            =
+            h(c_1\cdot \vec{v}_1+\dots+c_n\cdot \vec{v}_n),
+          \end{equation*}
+          yang berada dalam ruang hasil karena
+          \( c_1\cdot \vec{v}_1+\dots+c_n\cdot \vec{v}_n \) merupakan anggota
+          domain \( V \).
+          Oleh karena itu, ruang hasil merupakan subruang.
+        \partsitem Ruang nol tidak kosong karena memuat $\zero_V$, sebab
+          \( \zero_V \) dipetakan ke \( \zero_W \).
+          Ruang nol tertutup terhadap kombinasi linear karena, jika
+          \( \vec{v}_1,\dots,\vec{v}_n\in V \) merupakan unsur-unsur 
+          citra balik 
+          \( \set{\vec{v}\in V\suchthat h(\vec{v})=\zero_W} \),
+          maka untuk \( c_1,\ldots,c_n\in\Re \),
+          \begin{equation*}
+            \zero_W=c_1\cdot h(\vec{v}_1)+\dots+c_n\cdot h(\vec{v}_n)
+            =h(c_1\cdot \vec{v}_1+\dots+c_n\cdot \vec{v}_n)
+          \end{equation*}
+          sehingga \( c_1\cdot \vec{v}_1+\dots+c_n\cdot \vec{v}_n \) juga berada dalam
+          citra balik \( \zero_W \).
+        \partsitem Citra \( U \) ini tidak kosong karena \( U \) tidak kosong.
+          Untuk ketertutupan terhadap kombinasi, 
+          dengan \( \vec{u}_1,\ldots,\vec{u}_n\in U \),
+          \begin{equation*}
+            c_1\cdot h(\vec{u}_1)+\dots+c_n\cdot h(\vec{u}_n)
+            =
+            h(c_1\cdot \vec{u}_1)+\dots+h(c_n\cdot \vec{u}_n)
+            =
+            h(c_1\cdot \vec{u}_1+\dots+c_n\cdot \vec{u}_n)
+          \end{equation*}
+          yang berada dalam \( h(U) \) karena
+          \( c_1\cdot \vec{u}_1+\dots+c_n\cdot \vec{u}_n \) berada dalam \( U \).
+          Jadi, himpunan ini merupakan subruang.
+        \partsitem Perumuman yang wajar adalah bahwa citra balik suatu
+          subruang kodomain merupakan subruang domain.
+
+          Misalkan \( X \) adalah subruang dari \( W \).
+          Perhatikan bahwa \( \zero_W\in X \), sehingga himpunan
+          \( \set{\vec{v}\in V \suchthat h(\vec{v})\in X} \) tidak kosong.
+          Untuk menunjukkan bahwa himpunan ini tertutup terhadap kombinasi, misalkan
+          \( \vec{v}_1,\dots,\vec{v}_n \) merupakan unsur-unsur \( V \)
+          sedemikian sehingga \( h(\vec{v}_1)=\vec{x}_1 \), \ldots,
+          \( h(\vec{v}_n)=\vec{x}_n \), dan perhatikan bahwa 
+          \begin{equation*}
+            h(c_1\cdot \vec{v}_1+\dots+c_n\cdot \vec{v}_n)
+            =c_1\cdot h(\vec{v}_1)+\dots+c_n\cdot h(\vec{v}_n)
+            =c_1\cdot \vec{x}_1+\dots+c_n\cdot \vec{x}_n
+          \end{equation*}
+          sehingga kombinasi linear unsur-unsur \( h^{-1}(X) \) juga berada dalam
+          \( h^{-1}(X) \).
+      \end{exparts}  
+     \end{answer}
+  \item 
+    Tinjau himpunan isomorfisme dari suatu ruang vektor ke dirinya sendiri.
+    Apakah himpunan ini merupakan subruang dari ruang \( \linmaps{V}{V} \),
+    yaitu ruang homomorfisme dari ruang tersebut ke dirinya sendiri?
+    \begin{answer}
+      Tidak; himpunan isomorfisme tidak memuat pemetaan nol
+      (kecuali jika ruangnya trivial).
+    \end{answer}
+  \item 
+   Apakah \nearbytheorem{th:HomoDetActOnBasis} mensyaratkan bahwa
+   $\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_n}$
+   merupakan basis? 
+   Dengan kata lain, apakah kita masih dapat memperoleh homomorfisme yang terdefinisi dengan baik dan tunggal jika kita
+   membuang syarat bahwa himpunan vektor $\vec{\beta}$ 
+   bebas linear, 
+   atau syarat bahwa himpunan itu merentang domain?
+   \begin{answer}
+     Jika $\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_n}$ tidak merentang ruang tersebut,
+     maka pemetaannya tidak harus tunggal.
+     Sebagai contoh, jika kita mencoba mendefinisikan pemetaan dari $\Re^2$ ke dirinya sendiri dengan 
+     hanya menetapkan bahwa $\vec{e}_1$ dipetakan ke dirinya sendiri, maka 
+     terdapat lebih dari
+     satu homomorfisme yang mungkin; baik pemetaan identitas maupun pemetaan proyeksi 
+     ke komponen pertama memenuhi syarat ini.
+
+     Jika kita membuang syarat bahwa 
+     $\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_n}$
+     bebas linear, maka kita berisiko memperoleh spesifikasi yang tidak konsisten
+     (yaitu, pemetaan semacam itu mungkin tidak ada).
+     Sebagai contoh, tinjau 
+     $\sequence{\vec{e}_2,\vec{e}_1,2\vec{e}_1}$ dan cobalah 
+     mendefinisikan pemetaan dari $\Re^2$ ke dirinya sendiri yang 
+     memetakan $\vec{e}_2$ ke dirinya sendiri, serta memetakan
+     $\vec{e}_1$ dan $2\vec{e}_1$ ke $\vec{e}_1$.
+     Tidak ada homomorfisme yang dapat memenuhi ketiga syarat ini. 
+   \end{answer}
+  \item 
+    Misalkan \( V \) suatu ruang vektor dan anggaplah bahwa 
+    pemetaan \( \map{f_1,f_2}{V}{\Re^1} \) linear.
+    \begin{exparts}
+      \partsitem Definisikan pemetaan \( \map{F}{V}{\Re^2} \) yang fungsi-fungsi
+        komponennya adalah fungsi linear yang diberikan.
+        \begin{equation*}
+           \vec{v}\mapsto\colvec{f_1(\vec{v}) \\ f_2(\vec{v})}
+        \end{equation*}
+        Tunjukkan bahwa \( F \) linear.
+      \partsitem Apakah konversnya berlaku\Dash apakah setiap pemetaan linear dari \( V \) ke
+        \( \Re^2 \) tersusun dari dua pemetaan komponen linear ke \( \Re^1 \)?
+      \partsitem Perumum hasilnya.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Secara ringkas, pemeriksaan linearitasnya adalah sebagai berikut.
+          \begin{multline*}
+            F(r_1\cdot \vec{v}_1+r_2\cdot \vec{v}_2)
+            =\colvec{f_1(r_1\vec{v}_1+r_2\vec{v}_2) \\ 
+                        f_2(r_1\vec{v}_1+r_2\vec{v}_2)}           \\
+            =r_1\colvec{f_1(\vec{v}_1) \\ f_2(\vec{v}_1)}
+            +r_2\colvec{f_1(\vec{v}_2) \\ f_2(\vec{v}_2)}
+            =r_1\cdot F(\vec{v}_1)+r_2\cdot F(\vec{v}_2)
+          \end{multline*}
+        \partsitem Ya.
+          Misalkan \( \map{\pi_1}{\Re^2}{\Re^1} \) dan
+          \( \map{\pi_2}{\Re^2}{\Re^1} \) adalah proyeksi
+          \begin{equation*}
+            \colvec{x \\ y}\mapsunder{\pi_1} x
+              \quad\text{dan}\quad
+            \colvec{x \\ y}\mapsunder{\pi_2} y
+          \end{equation*}
+          ke kedua sumbu.
+          Sekarang, dengan \( f_1(\vec{v})=\pi_1(F(\vec{v})) \) dan
+          \( f_2(\vec{v})=\pi_2(F(\vec{v})) \) 
+          kita memperoleh fungsi-fungsi komponen yang diinginkan.
+          \begin{equation*}
+            F(\vec{v})=
+            \colvec{f_1(\vec{v}) \\ f_2(\vec{v})}
+          \end{equation*}
+          Fungsi-fungsi itu linear karena merupakan komposisi fungsi-fungsi linear,
+          dan fakta bahwa komposisi fungsi-fungsi linear bersifat linear
+          merupakan bagian dari bukti bahwa isomorfisme adalah relasi
+          ekuivalensi (sebagai alternatif, pemeriksaan bahwa fungsi-fungsi tersebut linear
+          bersifat langsung). 
+        \partsitem Secara umum, pemetaan dari ruang vektor \( V \) ke 
+          \( \Re^n \) bersifat linear jika dan hanya jika setiap fungsi 
+          komponennya linear.
+          Pembuktiannya sama seperti pada butir sebelumnya.
+      \end{exparts}  
+     \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Ruang Hasil dan Ruang Nol}
+Isomorfisme maupun homomorfisme sama-sama mempertahankan struktur.
+Perbedaannya adalah bahwa homomorfisme memiliki lebih sedikit pembatasan karena
+tidak harus pada dan
+tidak harus satu-ke-satu.
+Kita akan mengkaji apa yang dapat terjadi pada homomorfisme
+tetapi tidak dapat terjadi pada isomorfisme. 
+
+Pertama-tama, tinjau fakta bahwa 
+homomorfisme tidak harus pada.
+Tentu saja, 
+setiap fungsi bersifat pada terhadap suatu himpunan, yaitu ruang hasilnya.
+Sebagai contoh, pemetaan inklusi \( \map{\iota}{\Re^2}{\Re^3} \)
+\begin{equation*}
+  \colvec{x \\ y} \mapsto \colvec{x \\ y \\ 0}
+\end{equation*}
+merupakan homomorfisme dan tidak pada terhadap $\Re^3$. 
+Namun, pemetaan ini pada terhadap bidang-$xy$.
+
+\begin{lemma}   \label{le:RangeIsSubSp}
+%<*lm:RangeIsSubSp>
+Di bawah suatu homomorfisme, citra
+setiap subruang dari domain merupakan subruang dari kodomain.
+Secara khusus, citra seluruh ruang,
+yaitu ruang hasil homomorfisme, merupakan subruang dari kodomain.
+%</lm:RangeIsSubSp>
+\end{lemma}
+
+\begin{proof}
+%<*pf:RangeIsSubSp>
+Misalkan $\map{h}{V}{W}$ linear dan $S$ subruang dari domain 
+$V$.
+Citra $h(S)$ merupakan himpunan bagian dari kodomain $W$ yang
+tidak kosong karena $S$ tidak kosong.
+Jadi, untuk menunjukkan bahwa $h(S)$ merupakan subruang dari $W$,
+kita hanya perlu menunjukkan bahwa himpunan itu tertutup terhadap kombinasi linear
+dua vektor.
+Jika $h(\vec{s}_1)$ dan $h(\vec{s}_2)$ merupakan anggota $h(S)$, maka
+$c_1\cdot h(\vec{s}_1)+c_2\cdot h(\vec{s}_2)
+  =
+  h(c_1\cdot \vec{s}_1)+h(c_2\cdot \vec{s}_2)
+  =
+  h(c_1\cdot \vec{s}_1+c_2\cdot \vec{s}_2)$
+juga merupakan anggota $h(S)$ karena merupakan citra dari
+\( c_1\cdot \vec{s}_1+c_2\cdot \vec{s}_2 \) dalam \( S \).
+%</pf:RangeIsSubSp>
+\end{proof}
+
+\begin{definition} \label{df:RangeSpace}
+%<*df:RangeSpace>
+\definend{Ruang hasil}\index{ruang hasil}\index{homomorfisme!ruang hasil}
+dari suatu homomorfisme \( \map{h}{V}{W} \) adalah
+\begin{equation*}
+  \rangespace{h}=\set{h(\vec{v})\suchthat \vec{v}\in V}
+\end{equation*}
+yang kadang-kadang dinyatakan dengan \( h(V) \).
+Dimensi ruang hasil disebut
+\definend{rank} pemetaan tersebut.\index{rank!homomorfisme}
+%</df:RangeSpace>
+\end{definition}
+\noindent 
+Kita akan segera melihat hubungan antara rank suatu pemetaan dan rank suatu 
+matriks.
+
+\begin{example}  \label{ex:DerivMapRnge}
+Untuk pemetaan turunan 
+\( \map{d/dx}{\polyspace_3}{\polyspace_3} \)
+yang diberikan oleh \( a_0+a_1x+a_2x^2+a_3x^3 \mapsto a_1+2a_2x+3a_3x^2 \),
+ruang hasil 
+\( \rangespace{d/dx} \) adalah himpunan polinomial kuadrat
+\( \set{r+sx+tx^2\suchthat r,s,t\in\Re } \).
+Dengan demikian, rank pemetaan ini adalah~\( 3 \).
+\end{example}
+
+\begin{example}  \label{ex:MatToPolyRnge}
+Untuk homomorfisme \( \map{h}{M_{\nbyn{2}}}{\polyspace_3} \) berikut,
+\begin{equation*}
+  \begin{mat}
+    a  &b  \\
+    c  &d
+  \end{mat}
+  \mapsto
+  (a+b+2d)+cx^2+cx^3
+\end{equation*}
+citra suatu vektor dalam ruang hasil
+dapat memiliki sembarang suku konstan, harus memiliki koefisien $x$ sebesar nol,
+dan harus memiliki koefisien $x^2$ yang sama dengan koefisien $x^3$.
+Dengan kata lain, ruang hasilnya adalah
+\( \rangespace{h}=\set{r+sx^2+sx^3\suchthat r,s\in\Re} \)
+sehingga ranknya adalah~\( 2 \).
+\end{example}
+
+Hasil sebelumnya menunjukkan bahwa, 
+dalam beralih dari definisi isomorfisme ke definisi homomorfisme yang
+lebih umum,  
+menghilangkan syarat pada tidak menimbulkan perbedaan yang mendasar.
+Setiap homomorfisme bersifat pada terhadap suatu ruang, yaitu ruang hasilnya.
+
+Namun, menghilangkan syarat satu-ke-satu memang menimbulkan perbedaan. 
+Suatu homomorfisme dapat memiliki banyak unsur
+domain yang dipetakan ke satu unsur kodomain.
+Di bawah ini terdapat sketsa berbentuk kacang dari pemetaan 
+banyak-ke-satu antardua himpunan.\appendrefs{pemetaan banyak-ke-satu}\spacefactor=1000 %
+Sketsa tersebut menunjukkan tiga unsur kodomain yang masing-masing merupakan citra dari
+banyak anggota domain.
+(Alih-alih menggambar banyak panah $\mapsto$ satu per satu, setiap pengaitan
+banyak masukan dengan satu keluaran hanya menampilkan satu panah semacam itu.)
+\begin{center}  
+  \includegraphics{map/mp/ch3.5}  % bean to bean; many to one
+\end{center}
+%<*InverseImage>
+Ingat bahwa untuk sembarang fungsi $\map{h}{V}{W}$, 
+himpunan unsur-unsur $V$ yang dipetakan ke \( \vec{w}\in W \)
+disebut \definend{citra balik\/}\index{citra balik}%
+\index{fungsi!citra balik}   
+$h^{-1}(\vec{w})=\set{\vec{v}\in V\suchthat h(\vec{v})=\vec{w}}$.
+%</InverseImage>
+Di atas, sisi kiri menunjukkan tiga himpunan citra balik.
+
+\begin{example}
+Tinjau proyeksi\index{proyeksi}
+\( \map{\pi}{\Re^3}{\Re^2} \)
+\begin{equation*}
+   \colvec{x \\ y \\ z}
+    \mapsunder{\pi}
+   \colvec{x \\ y}
+\end{equation*}
+yang merupakan homomorfisme banyak-ke-satu.
+Suatu himpunan citra balik berupa garis vertikal yang terdiri dari vektor-vektor
+dalam domain.
+\begin{center}
+  \includegraphics{map/mp/ch3.11}
+\end{center}
+Berikut salah satu contohnya.
+\begin{equation*}
+  \pi^{-1}(\colvec[r]{1 \\ 3})=\set{\colvec[r]{1 \\ 3 \\ z}\suchthat z\in\Re}
+\end{equation*}
+\end{example}
+
+\begin{example} \label{ex:RTwoHomoREasyOneMap}
+Homomorfisme $\map{h}{\Re^2}{\Re^1}$ berikut
+\begin{equation*}
+  \colvec{x \\ y}
+   \mapsunder{h}
+  x+y
+\end{equation*}
+juga bersifat banyak-ke-satu.
+Untuk $w\in\Re^1$ yang tetap, 
+citra balik $h^{-1}(w)$
+\begin{center}
+  \includegraphics{map/mp/ch3.12}
+\end{center}
+adalah himpunan vektor bidang yang jumlah komponennya sama dengan $w$.
+\end{example}
+
+% The above examples have only to do with the
+% fact that we are considering functions,
+% specifically, many-to-one functions.
+% They show the inverse images 
+% as sets of vectors that are 
+% related to the image vector $\vec{w}$.
+% But these are more than just arbitrary functions, they are
+% homomorphisms; what do the two preservation
+% conditions say about the relationships?
+
+Ketika memperumum isomorfisme menjadi homomorfisme dengan 
+menghilangkan syarat satu-ke-satu,
+kita kehilangan sifat bahwa, secara intuitif, 
+domain ``sama'' dengan ruang hasil.
+Dengan kata lain, kita kehilangan korespondensi sempurna
+antara domain dan ruang hasil.
+Contoh-contoh di bawah ini menggambarkan bahwa hal yang tetap kita miliki
+adalah bahwa suatu homomorfisme menjelaskan bagaimana
+domain ``analog dengan'' atau ``serupa dengan'' ruang hasil.
+
+\begin{example}    \label{ex:RThreeHomoRTwo} %\label{exPicProj}
+Kita memandang $\Re^3$ serupa dengan $\Re^2$, kecuali bahwa vektor-vektornya memiliki satu
+komponen tambahan. 
+Dengan kata lain, kita memandang vektor berkomponen $x$, $y$, dan~$z$ 
+serupa dengan vektor berkomponen $x$ dan~$y$.
+Definisi pemetaan proyeksi $\pi$ memperjelas anggota
+domain mana yang kita pandang berhubungan dengan anggota
+kodomain mana.
+
+Untuk memahami bagaimana
+syarat-syarat pelestarian dalam definisi homomorfisme
+menunjukkan bahwa unsur-unsur domain serupa dengan unsur-unsur kodomain, 
+mulailah dengan membayangkan $\Re^2$ sebagai bidang-$xy$ di dalam $\Re^3$
+(bidang-$xy$ di dalam $\Re^3$ 
+adalah himpunan vektor tiga komponen dengan 
+komponen ketiga
+nol, sehingga tidak persis sama dengan himpunan vektor dua komponen~$\Re^2$,
+tetapi penyematan ini membuat gambarnya jauh lebih jelas).
+Sifat pelestarian penjumlahan menyatakan bahwa
+vektor-vektor dalam \( \Re^3 \) berperilaku seperti bayangannya pada bidang tersebut.
+\begin{center}  \small
+  \begin{tabular}{@{}c@{}c@{}c@{}c@{}c@{}}
+    \includegraphics{map/mp/ch3.1}
+    &&\includegraphics{map/mp/ch3.2}
+    &&\includegraphics{map/mp/ch3.3} \\[1.5ex]
+    {\small  $\colvec{x_1 \\ y_1 \\ z_1}$ di atas $\colvec{x_1 \\ y_1}$}
+    &{\small \ ditambah\ }
+    &{\small $\colvec{x_2 \\ y_2 \\ z_2}$ di atas $\colvec{x_2 \\ y_2}$}
+    &{\small \ sama dengan\ }
+    &{\small $\colvec{x_1+x_2 \\ y_1+y_2 \\ z_1+z_2}$ 
+              di atas $\colvec{x_1+x_2 \\ y_1+y_2}$}
+  \end{tabular}
+\end{center}
+\noindent 
+Memandang $\pi(\vec{v})$ sebagai ``bayangan'' $\vec{v}$ pada bidang 
+memberikan pernyataan ulang berikut:
+jumlah bayangan $\pi(\vec{v}_1)+\pi(\vec{v}_2)$ sama dengan
+bayangan jumlahnya, 
+$\pi(\vec{v}_1+\vec{v}_2)$.
+Pelestarian perkalian skalar serupa.
+
+Menggambar kodomain $\Re^2$ di sebelah kanan
+menghasilkan gambar yang kurang menarik tetapi lebih sesuai dengan
+sketsa berbentuk kacang di atas.
+\begin{center}  \small
+  \includegraphics{map/mp/ch3.4}
+\end{center}
+Sekali lagi, vektor-vektor domain yang dipetakan ke $\vec{w}_1$ terletak
+pada suatu garis vertikal;
+salah satunya digambar dengan warna abu-abu.
+Sebut setiap anggota citra balik $\pi^{-1}(\vec{w}_1)$ ini
+sebagai ``vektor~$\vec{w}_1$.''
+Serupa dengan itu, terdapat garis vertikal ``vektor-vektor~$\vec{w}_2$'' dan
+garis vertikal ``vektor-vektor~$\vec{w}_1+\vec{w}_2$.''
+Sekarang, menyatakan bahwa $\pi$ merupakan homomorfisme berarti mengakui bahwa 
+jika $\pi(\vec{v}_1)=\vec{w}_1$ dan $\pi(\vec{v}_2)=\vec{w}_2$, 
+maka $\pi(\vec{v}_1+\vec{v}_2)=\pi(\vec{v}_1)+\pi(\vec{v}_2)
+  =\vec{w}_1+\vec{w}_2$.
+Dengan kata lain, kelas-kelas tersebut dapat dijumlahkan:~sembarang 
+vektor~\( \vec{w}_1 \) ditambah sembarang
+vektor~\( \vec{w}_2 \) 
+menghasilkan vektor~\( \vec{w}_1+\vec{w}_2 \).
+Perkalian skalarnya serupa.
+
+Jadi, meskipun $\Re^3$ dan $\Re^2$ tidak isomorfik,
+$\pi$ menjelaskan satu cara keduanya serupa:~vektor-vektor 
+dalam $\Re^3$ dijumlahkan sebagaimana vektor-vektor terkait dalam $\Re^2$\Dash vektor-vektor 
+dijumlahkan sebagaimana bayangannya dijumlahkan. 
+\end{example}
+
+\begin{example}   \label{ex:RTwoHomoRHardOne}
+Suatu homomorfisme dapat menyatakan
+analogi antarruang yang lebih halus daripada analogi sebelumnya.
+Untuk pemetaan 
+dari \nearbyexample{ex:RTwoHomoREasyOneMap},
+\begin{equation*}
+  \colvec{x \\ y}
+   \mapsunder{h}
+  x+y
+\end{equation*}
+tetapkan dua bilangan dalam ruang hasil, $w_1, w_2\in\Re$.
+Suatu $\vec{v}_1$ yang dipetakan ke $w_1$ memiliki komponen-komponen yang 
+berjumlah $w_1$,
+sehingga citra balik $h^{-1}(w_1)$ adalah himpunan vektor 
+yang titik ujungnya terletak pada garis diagonal $x+y=w_1$.
+Pandang vektor-vektor ini sebagai ``vektor-vektor $w_1$.''
+Serupa dengan itu, kita memiliki ``vektor-vektor $w_2$'' dan ``vektor-vektor $w_1+w_2$.''  
+Sifat pelestarian penjumlahan menyatakan hal berikut.
+\begin{center}  \small
+  \begin{tabular}{@{}ccccc@{}}
+    \includegraphics{map/mp/ch3.6}
+    &&\includegraphics{map/mp/ch3.7}
+    &&\includegraphics{map/mp/ch3.8}  \\[1.5ex]
+    {\small sebuah ``vektor $w_1$''}
+    &{\small ditambah}
+    &{\small sebuah ``vektor $w_2$''}
+    &{\small sama dengan}
+    &{\small sebuah ``vektor $w_1+w_2$''}
+  \end{tabular}
+\end{center}
+Dengan kata lain, jika kita menjumlahkan
+vektor~$w_1$ dengan vektor~$w_2$, maka 
+$h$ memetakan hasilnya ke vektor~$w_1+w_2$.
+Secara ringkas, jumlah citra sama dengan citra jumlah.
+Lebih ringkas lagi, \( h(\vec{v}_1)+h(\vec{v}_2)=h(\vec{v}_1+\vec{v}_2) \).
+% (The preservation of scalar multiplication condition has a
+% similar restatement.)
+\end{example}
+
+\begin{example}   \label{ex:PicRThreeToRTwo}
+Citra balik dapat berupa struktur selain garis.
+Untuk pemetaan linear \( \map{h}{\Re^3}{\Re^2} \),
+\begin{equation*}
+  \colvec{x \\ y \\ z}
+    \mapsto
+  \colvec{x \\ x}
+\end{equation*}
+himpunan-himpunan citra baliknya adalah bidang $x=0$, $x=1$, dan seterusnya,
+yang tegak lurus terhadap sumbu-\( x \).
+\begin{center}  \small
+  \includegraphics{map/mp/ch3.9}
+\end{center}
+\end{example}
+
+Kita tidak akan menjelaskan bagaimana setiap homomorfisme yang kita gunakan
+merupakan suatu analogi karena makna formal
+yang kita berikan kepada ``serupa dalam hal~\ldots'' adalah 
+`terdapat suatu homomorfisme sedemikian sehingga~\ldots'.
+Meskipun demikian, gagasan bahwa homomorfisme antardua ruang menjelaskan bagaimana
+vektor-vektor domain terbagi ke dalam kelas-kelas yang berperilaku seperti
+vektor-vektor ruang hasil merupakan cara yang baik untuk memandang homomorfisme.
+
+Alasan lain kita tidak akan memperlakukan semua homomorfisme yang
+kita jumpai seperti di atas adalah bahwa banyak ruang vektor sulit digambar,
+misalnya ruang polinomial.
+Namun, tidak ada salahnya memanfaatkan ruang-ruang
+yang dapat kita gambar:
+dari ketiga contoh
+\ref{ex:RThreeHomoRTwo}, \ref{ex:RTwoHomoRHardOne}, 
+dan~\ref{ex:PicRThreeToRTwo}, kita memperoleh dua wawasan.
+
+Wawasan pertama adalah bahwa dalam ketiga contoh tersebut, 
+citra balik vektor nol dalam ruang hasil merupakan garis atau bidang
+yang melalui titik asal.
+Karena itu, citra balik tersebut merupakan subruang dari domain.
+
+\begin{lemma}  \label{le:NullspIsSubSp}
+%<*lm:NullspIsSubSp>
+Untuk sembarang homomorfisme, citra balik suatu subruang dari ruang hasil 
+merupakan subruang dari domain.
+Secara khusus, citra balik subruang trivial dari ruang hasil
+merupakan subruang dari domain.
+%</lm:NullspIsSubSp>
+\end{lemma}
+
+\noindent (Contoh-contoh di atas meninjau citra balik satu vektor,
+tetapi hasil ini membahas citra balik himpunan, 
+$h^{-1}(S)=\set{\vec{v}\in V\suchthat h(\vec{v})\in S}$.
+Kita menggunakan istilah yang sama untuk keduanya dengan menganggap citra
+balik suatu unsur tunggal $h^{-1}(\vec{w})$ sebagai
+citra balik himpunan berunsur tunggal $h^{-1}(\set{\vec{w}})$.)
+
+\begin{proof}
+%<*pf:NullspIsSubSp>
+Misalkan $\map{h}{V}{W}$ suatu homomorfisme
+dan $S$ subruang dari ruang hasil $h$.
+Tinjau citra balik $S$.
+Himpunan ini tidak kosong karena memuat $\zero_V$, sebab
+\( h(\zero_V)=\zero_W \) dan \( \zero_W \) merupakan unsur $S$
+karena $S$ adalah subruang.
+Untuk menuntaskan bukti, kita menunjukkan bahwa $h^{-1}(S)$ tertutup terhadap kombinasi linear.
+Misalkan \( \vec{v}_1 \) dan \( \vec{v}_2 \) adalah dua unsurnya, sehingga
+$h(\vec{v}_1)$ dan $h(\vec{v}_2)$ merupakan unsur-unsur $S$.
+Maka
+$c_1\vec{v}_1+c_2\vec{v}_2$
+merupakan unsur citra balik $h^{-1}(S)$ 
+karena
+$h(c_1\vec{v}_1+c_2\vec{v}_2)
+  =c_1h(\vec{v}_1)+c_2h(\vec{v}_2)$
+merupakan anggota $S$. 
+%</pf:NullspIsSubSp>
+\end{proof}
+
+\begin{definition} \label{df:NullSpace}
+%<*df:NullSpace>
+\definend{Ruang nol}\index{homomorfisme!ruang nol}\index{ruang nol}
+atau \definend{kernel}\index{kernel, pemetaan linear} dari suatu pemetaan linear
+\( \map{h}{V}{W} \) adalah citra balik $\zero_W$.
+\begin{equation*}
+  \nullspace{h}=h^{-1}(\zero_W)=\set{\vec{v}\in V\suchthat h(\vec{v})=\zero_W}
+\end{equation*}
+Dimensi ruang nol disebut
+\definend{nulitas}\index{nulitas}\index{homomorfisme!nulitas} pemetaan tersebut.
+%</df:NullSpace>
+\end{definition}
+
+\begin{center}
+  \includegraphics{map/mp/ch3.10}
+\end{center}
+
+\begin{example}
+Pemetaan dari \nearbyexample{ex:DerivMapRnge} memiliki ruang nol berikut,
+\( \nullspace{d/dx}=\set{a_0+0x+0x^2+0x^3\suchthat a_0\in\Re} \)
+sehingga nulitasnya adalah $1$.
+\end{example}
+
+\begin{example}
+Pemetaan dari \nearbyexample{ex:MatToPolyRnge}
+memiliki ruang nol berikut dan nulitas $2$.
+\begin{equation*}
+   \nullspace{h}=\set{\begin{mat}
+                         a  &b          \\
+                         0  &-(a+b)/2
+                      \end{mat}\suchthat a,b\in\Re}
+\end{equation*}
+\end{example}
+
+Sekarang kita beralih ke wawasan kedua dari contoh-contoh di atas.
+Dalam \nearbyexample{ex:RThreeHomoRTwo}, setiap garis vertikal  
+dipipihkan 
+menjadi satu titik\Dash ketika beralih dari domain ke ruang hasil, $\pi$
+mengambil semua garis vertikal satu dimensi ini dan memetakannya
+ke satu titik,
+sehingga dimensi ruang hasil lebih kecil satu daripada dimensi domain.
+Serupa dengan itu, dalam \nearbyexample{ex:RTwoHomoRHardOne},
+domain dua dimensi dimampatkan menjadi ruang hasil satu dimensi dengan membagi 
+domain menjadi garis-garis diagonal 
+dan memetakan masing-masing garis itu ke satu anggota ruang hasil.
+Terakhir, dalam \nearbyexample{ex:PicRThreeToRTwo},
+domain terbagi menjadi bidang-bidang yang
+dipipihkan menjadi satu titik, sehingga pemetaan dimulai dengan domain tiga dimensi
+tetapi berakhir dua dimensi lebih kecil, dengan
+ruang hasil satu dimensi. 
+(Kodomainnya
+dua dimensi, tetapi ruang hasilnya satu dimensi, dan 
+dimensi ruang hasillah yang penting.)
+
+\begin{theorem} \label{th:RankPlusNullEqDim}
+\index{rank!homomorfisme}
+%<*th:RankPlusNullEqDim>
+Rank suatu pemetaan linear ditambah nulitasnya sama dengan dimensi domainnya.
+%</th:RankPlusNullEqDim>
+\end{theorem}
+
+\begin{proof}
+%<*pf:RankPlusNullEqDim0>
+Misalkan \( \map{h}{V}{W} \) linear dan
+misalkan \( B_N=\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_k} \)
+adalah basis ruang nol.
+Perluas basis itu menjadi basis
+\( B_V=\sequence{\vec{\beta}_1,\dots,\vec{\beta}_k,
+       \vec{\beta}_{k+1},\dots,\vec{\beta}_n} \)
+untuk seluruh domain dengan menggunakan Korolari~Dua.III.\ref{cor:LIExpBas}.
+Kita akan menunjukkan bahwa
+\( B_R=\sequence{ h(\vec{\beta}_{k+1}),\dots,h(\vec{\beta}_n)} \)
+merupakan basis ruang hasil.
+Kemudian, menghitung ukuran basis-basis tersebut memberikan hasil yang diinginkan.
+%</pf:RankPlusNullEqDim0>
+
+%<*pf:RankPlusNullEqDim1>
+Untuk melihat bahwa \( B_R \) bebas linear, 
+tinjau 
+\( \zero_W=c_{k+1}h(\vec{\beta}_{k+1})+\dots+c_nh(\vec{\beta}_n) \).
+Kita memiliki
+\( \zero_W=h(c_{k+1}\vec{\beta}_{k+1}+\dots+c_n\vec{\beta}_n) \)
+sehingga \( c_{k+1}\vec{\beta}_{k+1}+\dots+c_n\vec{\beta}_n \)
+berada dalam ruang nol $h$.
+Karena \( B_N\) merupakan basis ruang nol, terdapat skalar-skalar
+\( c_1,\dots,c_k \) yang memenuhi relasi berikut.
+\begin{equation*}
+   c_1\vec{\beta}_1+\dots+c_k\vec{\beta}_k
+   =
+   c_{k+1}\vec{\beta}_{k+1}+\dots+c_n\vec{\beta}_n
+\end{equation*}
+Namun, ini merupakan persamaan di antara anggota-anggota \( B_V \), 
+yang merupakan basis \( V \), sehingga setiap $c_i$ sama dengan $0$.
+Oleh karena itu, \( B_R \) bebas linear.
+%</pf:RankPlusNullEqDim1>
+
+%<*pf:RankPlusNullEqDim2>
+Untuk menunjukkan bahwa \( B_R \) merentang ruang hasil,
+tinjau suatu anggota ruang hasil \( h(\vec{v}) \).
+Nyatakan \( \vec{v} \) sebagai kombinasi linear 
+$\vec{v}=c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n$
+dari anggota-anggota \( B_V \).
+Hal ini memberikan
+$h(\vec{v})=h(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n)
+     =c_1h(\vec{\beta}_1)+\dots+c_kh(\vec{\beta}_k)
+     +c_{k+1}h(\vec{\beta}_{k+1})+\dots+c_nh(\vec{\beta}_n)$
+dan karena 
+$\vec{\beta}_1$, \ldots, $\vec{\beta}_k$ berada dalam ruang nol, kita memperoleh
+$h(\vec{v})=\zero+\dots+\zero
+     +c_{k+1}h(\vec{\beta}_{k+1})+\dots+c_nh(\vec{\beta}_n)$.
+Dengan demikian, $h(\vec{v})$ merupakan kombinasi linear anggota-anggota \( B_R \),
+sehingga $B_R$ merentang ruang hasil.
+%</pf:RankPlusNullEqDim2>
+\end{proof}
+
+\begin{example}
+Untuk \( \map{h}{\Re^3}{\Re^4} \) yang diberikan oleh
+\begin{equation*}
+  \colvec{x \\ y \\ z}
+    \mapsunder{h}
+  \colvec{x \\ 0 \\ y \\ 0}
+\end{equation*}
+ruang hasil dan ruang nolnya adalah
+\begin{equation*}
+  \rangespace{h}=
+    \set{\colvec{a \\ 0 \\ b \\ 0}\suchthat a,b\in\Re }
+  \quad\text{dan}\quad
+  \nullspace{h}=
+    \set{\colvec{0 \\ 0 \\ z}\suchthat z\in\Re }
+\end{equation*}
+sehingga rank $h$ adalah $2$, sedangkan nulitasnya adalah $1$.
+\end{example}
+
+\begin{example}
+Jika \( \map{t}{\Re}{\Re} \) merupakan transformasi linear \( x\mapsto -4x, \)
+maka ruang hasilnya adalah \(  \rangespace{t}=\Re \).
+Ranknya adalah $1$ dan nulitasnya adalah $0$.
+\end{example}
+
+\begin{corollary}
+\label{cor:RankDecreases}
+Rank suatu pemetaan linear kurang dari atau sama dengan dimensi domainnya.
+Kesamaan berlaku jika dan hanya jika nulitas pemetaan tersebut adalah $0$.
+\end{corollary}
+
+Kita mengetahui 
+bahwa suatu isomorfisme terdapat di antara dua ruang 
+jika dan hanya jika dimensi ruang hasil sama dengan dimensi domain.
+Sekarang kita telah melihat bahwa syarat perlu bagi adanya homomorfisme adalah 
+dimensi ruang hasil harus kurang dari atau sama dengan 
+dimensi domain.
+Sebagai contoh, tidak ada homomorfisme
+dari \( \Re^2 \) yang pada terhadap \( \Re^3 \).
+Ada banyak homomorfisme
+dari \( \Re^2 \) ke dalam \( \Re^3 \), tetapi tidak ada yang pada.
+
+Ruang hasil suatu pemetaan linear dapat memiliki dimensi yang lebih kecil secara ketat daripada 
+dimensi domain,
+sehingga
+himpunan bebas linear dalam domain
+dapat dipetakan ke himpunan bergantung linear dalam ruang hasil.
+(Transformasi turunan pada $\polyspace_3$ dalam \nearbyexample{ex:DerivMapRnge}
+memiliki domain berdimensi~$4$ tetapi ruang hasil berdimensi~$3$,
+dan turunan memetakan
+$\set{1,x,x^2,x^3}$ ke $\set{0,1,2x,3x^2}$).
+Dengan kata lain, kebebasan dapat hilang di bawah homomorfisme.
+Sebaliknya, kebergantungan tetap dipertahankan.
+
+\begin{lemma} \label{lm:ImageLinearlyDependentIsLinearlyDependent}
+%<*lm:ImageLinearlyDependentIsLinearlyDependent>
+Di bawah suatu pemetaan linear, citra himpunan yang bergantung linear juga
+bergantung linear.
+%</lm:ImageLinearlyDependentIsLinearlyDependent>
+\end{lemma}
+
+\begin{proof}
+%<*pf:ImageLinearlyDependentIsLinearlyDependent>
+Misalkan \( c_1\vec{v}_1+\dots+c_n\vec{v}_n=\zero_V \)
+dengan suatu $c_i$ tidak nol.
+Terapkan $h$ pada kedua ruas:
+\( h(c_1\vec{v}_1+\dots+c_n\vec{v}_n)=c_1h(\vec{v}_1)+\dots+c_nh(\vec{v}_n) \)
+dan \( h(\zero_V)=\zero_W \).
+Dengan demikian, kita memperoleh $c_1h(\vec{v}_1)+\dots+c_nh(\vec{v}_n)=\zero_W$ dengan suatu
+$c_i$ tidak nol.
+%</pf:ImageLinearlyDependentIsLinearlyDependent>
+\end{proof}
+
+Kapan kebebasan tidak hilang?
+Syarat cukup yang jelas adalah ketika homomorfisme tersebut merupakan isomorfisme.
+Syarat ini juga perlu; 
+lihat \nearbyexercise{exer:NonSingIffPreservLI}.
+Kita akan mengakhiri subbagian yang membandingkan homomorfisme dengan isomorfisme ini 
+dengan mengamati bahwa
+homomorfisme satu-ke-satu merupakan isomorfisme dari domainnya ke ruang hasilnya.
+
+% \begin{definition}
+% A linear map that is one-to-one is 
+% {\em nonsingular}\index{homomorphism!nonsingular}%
+% \index{nonsingular!homomorphism}.
+% \end{definition}
+% %\begin{remark}
+% \noindent (In the next section we will see the connection
+% between this use of `nonsingular' for maps and its familiar
+% use for matrices.)
+
+\begin{example}
+Homomorfisme satu-ke-satu \( \map{\iota}{\Re^2}{\Re^3} \) berikut
+\begin{equation*}
+  \colvec{x \\ y}
+    \mapsunder{\iota}
+  \colvec{x \\ y \\ 0}
+\end{equation*}
+menghasilkan korespondensi di antara \( \Re^2 \) dan bidang-\( xy \),
+yang merupakan himpunan bagian dari \( \Re^3 \).
+\end{example}
+
+% The prior observation allows us to adapt some results about isomorphisms.
+
+\begin{theorem}  \label{th:OOHomoEquivalence}
+%<*th:OOHomoEquivalence>
+Jika \( V \) merupakan ruang vektor berdimensi \( n \), maka pernyataan-pernyataan
+berikut ekuivalen
+untuk pemetaan linear \( \map{h}{V}{W} \).
+\begin{tfae}
+  \item \( h \) bersifat satu-ke-satu
+  \item \( h \) memiliki invers dari ruang hasilnya ke domainnya yang merupakan pemetaan 
+         linear
+  \item \( \nullspace{h}=\set{\zero\,} \), yaitu \( \nullity(h)=0 \)
+  \item \( \rank (h)=n \)
+  \item jika \( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \)
+        merupakan basis untuk \( V \), maka
+        \( \sequence{h(\vec{\beta}_1),\dots,h(\vec{\beta}_n)} \)
+        merupakan basis untuk \( \rangespace{h} \)
+\end{tfae}
+%</th:OOHomoEquivalence>
+\end{theorem}
+
+\begin{proof}
+%<*pf:OOHomoEquivalence0>
+Pertama-tama kita akan menunjukkan bahwa \( \text{(1)} \Longleftrightarrow \text{(2)} \).
+Kemudian kita akan menunjukkan bahwa
+\(
+  \text{(1)}\implies \text{(3)}\implies 
+  \text{(4)}\implies \text{(5)}\implies \text{(2)}
+\).
+%</pf:OOHomoEquivalence0>
+
+%<*pf:OOHomoEquivalence1>
+Untuk \( \text{(1)} \Longrightarrow \text{(2)} \),
+misalkan pemetaan linear $h$ bersifat satu-ke-satu sehingga memiliki invers
+$\map{h^{-1}}{\rangespace{h}}{V}$.
+Domain invers tersebut adalah ruang hasil $h$, sehingga kombinasi linear
+dua anggotanya berbentuk $c_1h(\vec{v}_1)+c_2h(\vec{v}_2)$.
+Pada kombinasi tersebut, invers \( h^{-1} \) memberikan hasil berikut.
+\begin{align*}
+  h^{-1}(c_1h(\vec{v}_1)+c_2h(\vec{v}_2))
+  &=h^{-1}(h(c_1\vec{v}_1+c_2\vec{v}_2))  \\
+  &=\composed{h^{-1}}{h}\;(c_1\vec{v}_1+c_2\vec{v}_2) \\
+  &=c_1\vec{v}_1+c_2\vec{v}_2 \\
+%   &=c_1\composed{h^{-1}}{h}\,(\vec{v}_1)
+%            +c_2\composed{h^{-1}}{h}\,(\vec{v}_2) \\
+  &=c_1\cdot h^{-1}(h(\vec{v}_1))+c_2\cdot h^{-1}(h(\vec{v}_2))
+\end{align*}
+Dengan demikian, jika suatu pemetaan linear memiliki invers, maka
+invers tersebut harus linear.
+Namun, hal ini juga memberikan implikasi \( \text{(2)} \Longrightarrow \text{(1)} \), 
+karena invers itu sendiri harus satu-ke-satu.
+%</pf:OOHomoEquivalence1>
+
+%<*pf:OOHomoEquivalence2>
+Dari implikasi-implikasi yang tersisa,
+\( \text{(1)}\implies \text{(3)} \) berlaku karena setiap
+homomorfisme memetakan \( \zero_V \) ke \( \zero_W \), tetapi pemetaan satu-ke-satu memetakan paling
+banyak satu anggota \( V \) ke \( \zero_W \).
+
+Selanjutnya, \( \text{(3)} \implies \text{(4)} \) benar karena rank
+ditambah nulitas sama dengan dimensi domain.
+%</pf:OOHomoEquivalence2>
+
+%<*pf:OOHomoEquivalence3>
+Untuk
+\( \text{(4)} \implies \text{(5)} \), guna menunjukkan bahwa
+\( \sequence{h(\vec{\beta}_1),\dots,h(\vec{\beta}_n)} \)
+merupakan basis ruang hasil, kita hanya perlu menunjukkan bahwa barisan tersebut adalah himpunan perentang,
+karena menurut asumsi ruang hasil berdimensi $n$.
+Tinjau $h(\vec{v})\in\rangespace{h}$.
+Menyatakan $\vec{v}$ sebagai kombinasi linear unsur-unsur basis menghasilkan
+\( h(\vec{v})=h(\lincombo{c}{\vec{\beta}}) \),
+yang memberikan 
+\( h(\vec{v})=c_1h(\vec{\beta}_1)+\dots+c_nh(\vec{\beta}_n) \),
+seperti yang diinginkan.
+%</pf:OOHomoEquivalence3>
+
+%<*pf:OOHomoEquivalence4>
+Terakhir, untuk implikasi \( \text{(5)}\implies \text{(2)} \), anggaplah
+\( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \)
+merupakan basis untuk \( V \), sehingga
+\( \sequence{h(\vec{\beta}_1),\dots,h(\vec{\beta}_n)} \)
+merupakan basis untuk \( \rangespace{h} \).
+Maka setiap
+\( \vec{w}\in\rangespace{h} \) memiliki representasi tunggal
+\( \vec{w}=c_1h(\vec{\beta}_1)+\dots+c_nh(\vec{\beta}_n) \).
+Definisikan pemetaan dari \( \rangespace{h} \) ke $V$ dengan
+\begin{equation*}
+    \vec{w} \;\mapsto\; \lincombo{c}{\vec{\beta}}
+\end{equation*}
+(ketunggalan representasi menjadikan pemetaan ini terdefinisi dengan baik).
+Pemeriksaan bahwa pemetaan ini linear dan bahwa
+pemetaan ini merupakan invers $h$ bersifat mudah.
+%</pf:OOHomoEquivalence3>
+\end{proof}
+
+Kita telah melihat bahwa suatu pemetaan linear
+menyatakan bagaimana struktur domain serupa dengan struktur ruang hasil.
+Kita dapat memandang pemetaan semacam itu sebagai pengorganisasian ruang domain menjadi
+citra-citra balik dari titik-titik dalam ruang hasil.
+Dalam kasus khusus ketika pemetaan tersebut satu-ke-satu, setiap citra balik berupa satu
+titik dan pemetaan itu merupakan isomorfisme di antara domain dan ruang hasil.
+
+
+\begin{exercises}
+  \recommended \item 
+    Misalkan \( \map{h}{\polyspace_3}{\polyspace_4} \) diberikan oleh
+    \( p(x)\mapsto x\cdot p(x) \).
+    Manakah di antara polinomial berikut yang berada dalam ruang nol?
+    Manakah yang berada dalam ruang hasil?
+    \begin{exparts*}
+      \partsitem \( x^3 \)
+      \partsitem \( 0 \)
+      \partsitem \( 7 \)
+      \partsitem \( 12x-0.5x^3 \)
+      \partsitem \( 1+3x^2-x^3 \)
+    \end{exparts*}
+    \begin{answer}
+      Pertama, untuk menjawab apakah suatu polinomial berada dalam ruang nol, 
+      kita harus meninjaunya sebagai anggota domain $\polyspace_3$.
+      Untuk menjawab apakah polinomial itu berada dalam ruang hasil, kita meninjaunya sebagai anggota
+      kodomain $\polyspace_4$.
+      Dengan kata lain, untuk $p(x)=x^4$, pertanyaan apakah polinomial itu berada dalam ruang hasil
+      masuk akal, tetapi pertanyaan apakah polinomial itu berada dalam ruang nol tidak,
+      karena polinomial tersebut bahkan tidak berada dalam domain.
+      \begin{exparts}
+        \partsitem Polinomial $x^3\in\polyspace_3$ tidak berada dalam ruang nol
+            karena $h(x^3)=x^4$ bukan polinomial nol dalam $\polyspace_4$.
+            Polinomial $x^3\in\polyspace_4$ berada dalam ruang hasil karena
+            $x^2\in\polyspace_3$ dipetakan oleh $h$ ke $x^3$.
+        \partsitem Jawaban untuk kedua pertanyaan adalah, ``Ya, karena 
+            $h(0)=0$.''
+            Polinomial $0\in\polyspace_3$ berada dalam ruang nol
+            karena dipetakan oleh $h$ ke polinomial nol dalam 
+            $\polyspace_4$.
+            Polinomial $0\in\polyspace_4$ berada dalam ruang hasil karena
+            merupakan citra $0\in\polyspace_3$ di bawah $h$.
+        \partsitem Polinomial $7\in\polyspace_3$ tidak berada dalam ruang nol
+            karena $h(7)=7x$ bukan polinomial nol dalam $\polyspace_4$.
+            Polinomial $7\in\polyspace_4$ tidak berada dalam ruang hasil 
+            karena tidak ada anggota domain yang, ketika dikalikan 
+            dengan $x$, menghasilkan polinomial konstan $p(x)=7$.
+        \partsitem Polinomial $12x-0.5x^3\in\polyspace_3$ tidak berada dalam 
+            ruang nol karena $h(12x-0.5x^3)=12x^2-0.5x^4$.
+            Polinomial $12x-0.5x^3\in\polyspace_4$ berada dalam ruang hasil 
+            karena merupakan citra $12-0.5x^2$.
+        \partsitem Polinomial $1+3x^2-x^3\in\polyspace_3$ tidak berada dalam 
+            ruang nol karena $h(1+3x^2-x^3)=x+3x^3-x^4$.
+            Polinomial $1+3x^2-x^3\in\polyspace_4$ tidak berada dalam 
+            ruang hasil karena suku konstannya.
+      \end{exparts}
+    \end{answer}
+  \item Tentukan ruang hasil dan rank setiap homomorfisme berikut.
+    \begin{exparts}
+      \partsitem
+        $\map{h}{\polyspace_3}{\Re^2}$ yang diberikan oleh
+        \begin{equation*}
+           ax^2+bx+c\mapsto \colvec{a+b \\ a+c}
+        \end{equation*}
+      \partsitem $\map{f}{\Re^2}{\Re^3}$ yang diberikan oleh 
+        \begin{equation*}
+          \colvec{x \\ y}\mapsto\colvec{0 \\ x-y \\ 3y} 
+        \end{equation*}     
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem
+          Ruang hasil $h$ adalah seluruh kodomain~$\Re^2$ karena, untuk sembarang 
+          \begin{equation*}
+            \colvec{x \\ y}\in\Re^2
+          \end{equation*}
+          vektor itu merupakan citra dari vektor domain $0x^2+bx+c$ di bawah~$h$.
+          Jadi, rank~$h$ adalah~$2$.
+        \partsitem
+          Ruang hasilnya adalah bidang-$yz$. Sembarang 
+          \begin{equation*}
+            \colvec{0 \\ a \\ b}
+          \end{equation*}
+          merupakan citra vektor domain berikut di bawah~$f$.
+          \begin{equation*}
+            \colvec{a+b/3  \\ b/3}
+          \end{equation*}
+          Jadi, rank pemetaan tersebut adalah~$2$.
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+    Tentukan ruang hasil dan rank setiap pemetaan berikut.
+    \begin{exparts}
+      \partsitem \( \map{h}{\Re^2}{\polyspace_3} \) yang diberikan oleh
+        \begin{equation*}
+          \colvec{a \\ b}\mapsto a+ax+ax^2
+        \end{equation*}
+      \partsitem \( \map{h}{\matspace_{\nbyn{2}}}{\Re} \) yang diberikan oleh
+        \begin{equation*}
+          \begin{mat}
+            a  &b  \\
+            c  &d
+          \end{mat}
+          \mapsto a+d
+        \end{equation*}
+      \partsitem \( \map{h}{\matspace_{\nbyn{2}}}{\polyspace_2} \) yang diberikan oleh
+        \begin{equation*}
+          \begin{mat}
+            a  &b  \\
+            c  &d
+          \end{mat}
+          \mapsto a+b+c+dx^2
+        \end{equation*}
+      \partsitem pemetaan nol \( \map{Z}{\Re^3}{\Re^4} \)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ruang hasilnya adalah
+          \begin{equation*}
+            \rangespace{h}
+            =\set{a+ax+ax^2\in\polyspace_3\suchthat a\in\Re}
+            =\set{a\cdot(1+x+x^2)\suchthat a\in\Re}
+          \end{equation*}
+          sehingga ranknya adalah satu.
+        \partsitem Ruang hasil
+          \begin{equation*}
+            \rangespace{h}=
+             \set{a+d\suchthat a,b,c,d\in\Re}
+          \end{equation*}
+          adalah seluruh $\Re$ (kita dapat memperoleh sembarang bilangan real dengan
+mengambil $d=0$ dan $a$ sama dengan bilangan yang diinginkan).
+          Dengan demikian, ranknya adalah satu.
+        \partsitem Ruang hasilnya adalah 
+          $\rangespace{h}=\set{r+sx^2\suchthat r,s\in\Re}$.
+          Ranknya adalah dua.
+        \partsitem Ruang hasilnya adalah subruang trivial dari \( \Re^4 \), 
+          sehingga ranknya adalah nol.
+      \end{exparts}  
+    \end{answer}
+  \recommended \item
+    Untuk setiap pemetaan linear dalam latihan sebelumnya, tentukan ruang nol dan nulitasnya.
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Ruang nolnya adalah
+          \begin{align*}
+            \nullspace{h}
+              &=\set{\colvec{a \\ b}\in\Re^2\suchthat 
+                                    a+ax+ax^2+0x^3=0+0x+0x^2+0x^3}  \\
+              &=\set{\colvec{0 \\ b}\suchthat b\in\Re}
+          \end{align*}
+        sehingga nulitasnya adalah satu.
+        \partsitem Ruang nolnya adalah sebagai berikut.
+          \begin{equation*}
+            \nullspace{h}
+             =\set{\begin{mat}
+                     a  &b  \\
+                     c  &d
+                   \end{mat} \suchthat a+d=0}
+             =\set{\begin{mat}
+                     -d  &b  \\
+                      c  &d
+                   \end{mat} \suchthat b,c,d\in\Re }
+          \end{equation*}
+          Dengan demikian, nulitasnya adalah tiga.
+        \partsitem Ruang nol
+          \begin{equation*}
+            \nullspace{h}
+             =\set{\begin{mat}
+                     a  &b  \\
+                     c  &d
+                   \end{mat} \suchthat a+b+c=0,\,d=0}
+             =\set{\begin{mat}
+                     -b-c  &b  \\
+                      c  &0
+                   \end{mat} \suchthat b,c\in\Re }
+          \end{equation*}
+          merupakan ruang berdimensi~$2$, sehingga nulitasnya adalah dua.
+        \partsitem Setiap vektor dalam domain dipetakan ke vektor
+          nol, sehingga ruang nolnya adalah $\nullspace{Z}=\Re^3$.
+      \end{exparts}  
+    \end{answer}
+  \recommended \item 
+    Tentukan nulitas setiap pemetaan di bawah ini.
+    \begin{exparts*}
+      \partsitem \( \map{h}{\Re^5}{\Re^8} \) dengan rank lima
+      \partsitem \( \map{h}{\polyspace_3}{\polyspace_3} \) dengan rank satu
+      \partsitem \( \map{h}{\Re^6}{\Re^3} \), suatu pemetaan pada
+      \partsitem \( \map{h}{\matspace_{\nbyn{3}}}{\matspace_{\nbyn{3}}} \),
+        pada
+    \end{exparts*}
+    \begin{answer}
+      Untuk masing-masing, gunakan hasil 
+      bahwa rank ditambah nulitas sama dengan dimensi domain.
+      \begin{exparts*}
+        \partsitem $0$
+        \partsitem $3$ 
+        \partsitem $3$
+        \partsitem $0$
+      \end{exparts*}
+    \end{answer}
+  \recommended \item 
+    Apa ruang nol transformasi diferensiasi
+    \( \map{d/dx}{\polyspace_n}{\polyspace_n} \)?
+    Apa ruang nol turunan kedua sebagai
+    transformasi pada \( \polyspace_n \)?
+    Bagaimana dengan turunan ke-\( k \)?
+    \begin{answer}
+      Karena
+      \begin{equation*}
+        \frac{d}{dx}\,(a_0+a_1x+\cdots+a_nx^n)
+        =a_1+2a_2x+3a_3x^2+\cdots+na_nx^{n-1}
+      \end{equation*}
+      kita memperoleh hasil berikut.
+      \begin{align*}
+        \nullspace{\frac{d}{dx}}
+        &=\set{a_0+\cdots+a_nx^n\suchthat a_1+2a_2x+\cdots+na_nx^{n-1}
+                                         =0+0x+\cdots+0x^{n-1}}       \\
+        &=\set{a_0+\cdots+a_nx^n\suchthat 
+               \text{$a_1=0$, dan $a_2=0$, \ldots, $a_n=0$}}  \\
+        &=\set{a_0+0x+0x^2+\cdots+0x^n\suchthat a_0\in\Re}
+      \end{align*}
+      Dengan cara yang sama, 
+      \begin{equation*}
+        \nullspace{\frac{d^k}{dx^k}}
+        =\set{a_0+a_1x+\cdots+a_{k-1}x^{k-1}\suchthat a_0,\ldots,a_{k-1}\in\Re}
+      \end{equation*}
+      untuk \( k\leq n \).  
+    \end{answer}
+  \item Untuk pemetaan $\map{h}{\Re^3}{\Re^2}$ yang diberikan oleh
+      \begin{equation*}
+        \colvec{x \\  y \\ z}
+          \mapsto
+          \colvec{x+y \\ x+z}
+      \end{equation*}
+      tentukan ruang hasil, rank, ruang nol, dan nulitasnya.
+      \begin{answer}
+        Untuk melihat bahwa ruang hasilnya adalah seluruh~$\Re^2$, perhatikan bahwa untuk sembarang
+        $u,v\in\Re$, sistem berikut memiliki solusi.
+        \begin{equation*}
+          \begin{linsys}{3}
+            x &+ &y &  &  &= &u  \\
+            x &  &  &+ &z &= &v
+          \end{linsys}
+          \grstep{-\rho_1+\rho_2}
+          \begin{linsys}{3}
+            x &+ &y  &  &  &= &u  \\
+              &  &-y &+ &z &= &-u+v
+          \end{linsys}
+        \end{equation*}
+        (Bahkan, karena terdapat variabel bebas $z$, sistem ini memiliki tak berhingga 
+        banyak solusi.)
+        Dengan demikian, ranknya, yaitu dimensi ruang hasil, adalah~$2$.
+
+        Karena rank ditambah nulitas sama dengan dimensi domain,
+        kita mengetahui bahwa nulitasnya adalah~$1$.
+        Menentukan ruang nol membuktikan hal tersebut:
+        \begin{equation*}
+          \begin{linsys}{3}
+            x &+ &y &  &  &= &0  \\
+            x &  &  &+ &z &= &0
+          \end{linsys}
+          \grstep{-\rho_1+\rho_2}
+          \begin{linsys}{3}
+            x &+ &y  &  &  &= &0  \\
+              &  &-y &+ &z &= &0
+          \end{linsys}
+        \end{equation*}
+        ruang nolnya adalah himpunan berikut,
+        \begin{equation*}
+          \set{\colvec{-1 \\ 1 \\ 1}\cdot z\suchthat z \in \Re}
+        \end{equation*}
+        yang berdimensi satu.
+      \end{answer}
+  \item  \label{exer:CondTwoProjMap}
+    \nearbyexample{ex:RThreeHomoRTwo} menyatakan ulang syarat pertama dalam
+    definisi homomorfisme sebagai `bayangan suatu jumlah adalah jumlah
+    bayangan-bayangannya'.
+    Nyatakan ulang syarat kedua dengan gaya yang sama.
+    \begin{answer}
+      Bayangan suatu kelipatan skalar adalah kelipatan skalar dari bayangannya.  
+    \end{answer}
+  \item 
+    Untuk homomorfisme \( \map{h}{\polyspace_3}{\polyspace_3} \)
+    yang diberikan oleh \( h(a_0+a_1x+a_2x^2+a_3x^3)=a_0+(a_0+a_1)x+(a_2+a_3)x^3 \),
+    tentukan hal-hal berikut.
+    \begin{exparts*}
+      \partsitem \( \nullspace{h} \)
+      \partsitem \( h^{-1}(2-x^3) \)
+      \partsitem \( h^{-1}(1+x^2) \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Menetapkan $a_0+(a_0+a_1)x+(a_2+a_3)x^3=0+0x+0x^2+0x^3$
+           memberikan $a_0=0$, $a_0+a_1=0$, dan $a_2+a_3=0$, sehingga ruang nolnya adalah
+           \( \set{-a_3x^2+a_3x^3\suchthat a_3\in\Re} \).
+        \partsitem Menetapkan $a_0+(a_0+a_1)x+(a_2+a_3)x^3=2+0x+0x^2-x^3$
+           memberikan $a_0=2$, $a_1=-2$, dan $a_2+a_3=-1$.
+           Mengambil $a_3$ sebagai parameter dan menamainya ulang $a_3=a$ memberikan
+           deskripsi himpunan berikut,
+           \( \set{2-2x+(-1-a)x^2+ax^3\suchthat a\in\Re}
+                =\set{(2-2x-x^2)+a\cdot(-x^2+x^3)\suchthat a\in\Re} \).
+        \partsitem Himpunan ini kosong karena ruang hasil $h$ hanya memuat
+           polinomial-polinomial dengan suku $0x^2$.
+      \end{exparts}  
+    \end{answer}
+  \recommended \item 
+    Untuk pemetaan \( \map{f}{\Re^2}{\Re} \) yang diberikan oleh
+    \begin{equation*}
+       f(\colvec{x \\ y})=2x+y
+    \end{equation*}
+    gambarkan sketsa himpunan-himpunan citra balik berikut:~\( f^{-1}(-3) \), \( f^{-1}(0) \), 
+    dan \( f^{-1}(1) \).
+    \begin{answer}
+      Semua citra balik merupakan garis dengan gradien $-2$.    
+      \begin{center}
+        \includegraphics{map/mp/ch3.74}
+     \end{center}
+    \end{answer}
+  \recommended \item 
+    Setiap transformasi pada \( \polyspace_3 \) berikut bersifat satu-ke-satu.
+    Untuk masing-masing, tentukan inversnya.
+    \begin{exparts}
+      \partsitem \( a_0+a_1x+a_2x^2+a_3x^3\mapsto a_0+a_1x+2a_2x^2+3a_3x^3 \)
+      \partsitem \( a_0+a_1x+a_2x^2+a_3x^3\mapsto a_0+a_2x+a_1x^2+a_3x^3 \)
+      \partsitem \( a_0+a_1x+a_2x^2+a_3x^3\mapsto a_1+a_2x+a_3x^2+a_0x^3 \)
+      \partsitem \( a_0+a_1x+a_2x^2+a_3x^3\mapsto
+              a_0+(a_0+a_1)x+(a_0+a_1+a_2)x^2+(a_0+a_1+a_2+a_3)x^3 \)
+    \end{exparts}
+    \begin{answer}
+      Berikut invers-inversnya.
+      \begin{exparts}
+        \partsitem \( a_0+a_1x+a_2x^2+a_3x^3\mapsto
+                        a_0+a_1x+(a_2/2)x^2+(a_3/3)x^3 \)
+        \partsitem \( a_0+a_1x+a_2x^2+a_3x^3\mapsto a_0+a_2x+a_1x^2+a_3x^3 \)
+        \partsitem \( a_0+a_1x+a_2x^2+a_3x^3\mapsto a_3+a_0x+a_1x^2+a_2x^3 \)
+        \partsitem \( a_0+a_1x+a_2x^2+a_3x^3\mapsto
+                        a_0+(a_1-a_0)x+(a_2-a_1)x^2+(a_3-a_2)x^3 \)
+      \end{exparts} 
+      Sebagai contoh, untuk pemetaan kedua, pemetaan yang diberikan dalam soal memetakan
+      $0+1x+2x^2+3x^3\mapsto 0+2x+1x^2+3x^3$, lalu invers di atas
+      memetakan $0+2x+1x^2+3x^3\mapsto 0+1x+2x^2+3x^3$.
+      Jadi, pemetaan ini sebenarnya merupakan invers bagi dirinya sendiri.
+     \end{answer}
+  \item 
+    Deskripsikan ruang nol dan ruang hasil dari transformasi
+    yang diberikan oleh \( \vec{v}\mapsto 2\vec{v} \).
+    \begin{answer}
+       Untuk sembarang ruang vektor $V$, ruang nol 
+       \begin{equation*}
+         \set{\vec{v}\in V\suchthat 2\vec{v}=\zero}
+       \end{equation*}
+       bersifat trivial, sedangkan ruang hasil 
+       \begin{equation*}
+         \set{\vec{w}\in V\suchthat 
+                 \text{$\vec{w}=2\vec{v}$ untuk suatu $\vec{v}\in V$}}
+       \end{equation*}
+       adalah seluruh \( V \), karena setiap vektor $\vec{w}$ sama dengan dua kali suatu 
+       vektor lain; secara khusus, vektor itu sama dengan dua kali $(1/2)\vec{w}$.
+       (Dengan demikian, transformasi ini sebenarnya merupakan automorfisme.)  
+    \end{answer}
+  \item 
+    Daftarkan semua pasangan \( (\text{rank}(h),\text{nulitas}(h)) \) 
+    yang mungkin untuk pemetaan linear dari $\Re^5$ ke $\Re^3$.
+    \begin{answer}
+      Karena rank ditambah nulitas sama dengan dimensi domain 
+      (di sini lima), dan rank paling tinggi tiga,
+      pasangan yang mungkin adalah:~\( (3,2) \), \( (2,3) \), 
+      \( (1,4) \), dan~\( (0,5) \).
+      Mudah untuk menyusun pemetaan linear yang menunjukkan bahwa setiap pasangan tersebut memang
+mungkin.  
+    \end{answer}
+  \item 
+    Apakah pemetaan diferensiasi
+    \( \map{d/dx}{\polyspace_n}{\polyspace_n} \) memiliki invers?
+    \begin{answer}
+      Tidak (kecuali \( \polyspace_n \) trivial), karena kedua polinomial
+      \( f_0(x)=0 \) dan \( f_1(x)=1 \) memiliki turunan yang sama; suatu pemetaan harus
+      satu-ke-satu agar memiliki invers.
+    \end{answer}
+  \recommended \item
+    Tentukan nulitas pemetaan \( \map{h}{\polyspace_n}{\Re} \) berikut.
+    \begin{equation*}
+      a_0+a_1x+\dots+a_nx^n\mapsto\int_{x=0}^{x=1}a_0+a_1x+\dots+a_nx^n\,dx
+    \end{equation*}
+    \begin{answer}
+      Ruang nolnya adalah sebagai berikut.
+      \begin{multline*}
+        \set{a_0+a_1x+\dots+a_nx^n\suchthat
+                   a_0(1)+\frac{\displaystyle a_1}{\displaystyle 2}(1^2)
+                   +\dots
+                   +\frac{\displaystyle a_n}{\displaystyle n+1}(1^{n+1})=0} \\
+        =\set{a_0+a_1x+\dots+a_nx^n\suchthat
+                   a_0+(a_1/2)+\dots+(a_{n}/(n+1))=0}
+      \end{multline*}
+      Dengan demikian, nulitasnya adalah \( n \).  
+     \end{answer}
+  \item 
+    \begin{exparts}
+      \partsitem Buktikan bahwa suatu homomorfisme bersifat pada jika dan hanya jika
+        ranknya sama dengan dimensi kodomainnya.
+      \partsitem Simpulkan bahwa homomorfisme antarruang vektor dengan 
+        dimensi yang sama bersifat satu-ke-satu jika dan hanya jika bersifat pada.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Satu arah sudah jelas:~jika homomorfisme tersebut 
+          pada, maka ruang hasilnya adalah kodomain, sehingga
+          ranknya sama dengan dimensi kodomainnya.
+          Untuk arah lainnya, anggaplah rank pemetaan sama dengan
+          dimensi kodomain.
+          Maka ruang hasil pemetaan merupakan subruang dari kodomain dan memiliki
+          dimensi yang sama dengan dimensi kodomain.
+          Oleh karena itu, ruang hasil pemetaan harus sama dengan kodomain dan
+          pemetaan tersebut bersifat pada. 
+          (Kata `oleh karena itu' berlaku karena
+          terdapat himpunan bagian bebas linear dari ruang hasil yang
+          ukurannya sama dengan dimensi kodomain,
+          tetapi setiap himpunan bagian bebas linear semacam itu dalam kodomain harus merupakan 
+          basis kodomain, sehingga ruang hasil sama dengan kodomain.)
+        \partsitem By \nearbytheorem{th:OOHomoEquivalence}, 
+          suatu homomorfisme bersifat satu-ke-satu jika dan hanya jika nulitasnya nol.
+          Karena rank ditambah nulitas sama dengan dimensi domain,
+          dapat disimpulkan bahwa suatu homomorfisme bersifat satu-ke-satu jika dan hanya
+          jika ranknya sama dengan dimensi domainnya.
+          Namun, domain dan kodomain ini memiliki dimensi yang sama,
+          sehingga pemetaan tersebut satu-ke-satu jika dan hanya jika pada.  
+      \end{exparts}
+   \end{answer}
+  \item \label{exer:NonSingIffPreservLI} 
+    Tunjukkan bahwa suatu pemetaan linear bersifat satu-ke-satu jika dan hanya jika mempertahankan 
+kebebasan linear.
+    \begin{answer}
+      Kita membuktikan bahwa \( \map{h}{V}{W} \) bersifat satu-ke-satu jika dan hanya
+      jika, untuk setiap himpunan bagian bebas linear \( S \) dari \( V \), himpunan bagian
+      \( h(S)=\set{h(\vec{s})\suchthat \vec{s}\in S} \) dari \( W \) juga
+      bebas linear.
+
+      Satu arahnya mudah\Dash menurut \nearbytheorem{th:OOHomoEquivalence}, 
+      jika \( h \) tidak satu-ke-satu, maka ruang nolnya
+      nontrivial, yaitu memuat lebih dari sekadar vektor nol.
+      Jadi, 
+      jika \( \vec{v}\neq\zero_V \) berada dalam ruang nol tersebut, himpunan singleton
+      \( \set{\vec{v\,}} \) bebas, sedangkan citranya
+      \( \set{h(\vec{v})}=\set{\zero_W} \) tidak bebas.
+
+      Untuk arah lainnya,
+      anggaplah \( h \) satu-ke-satu sehingga menurut
+      \nearbytheorem{th:OOHomoEquivalence} memiliki ruang nol trivial.
+      Maka untuk sembarang \( \vec{v}_1,\dots,\vec{v}_n\in V \), relasi
+      \begin{equation*}
+        \zero_W=
+        c_1\cdot h(\vec{v}_1)+\dots+c_n\cdot h(\vec{v}_n)
+        =h(c_1\cdot \vec{v}_1+\dots+c_n\cdot \vec{v}_n)
+      \end{equation*}
+      mengakibatkan relasi 
+      \( c_1\cdot \vec{v}_1+\dots+c_n\cdot \vec{v}_n=\zero_V \).
+      Dengan demikian, jika suatu himpunan bagian dari \( V \) bebas, maka citranya dalam
+      \( W \) juga bebas.  
+
+      \textit{Catatan.}
+      Pernyataannya adalah bahwa suatu pemetaan linear bersifat satu-ke-satu jika dan hanya jika
+      mempertahankan kebebasan untuk \emph{semua} himpunan
+      (yaitu, jika suatu himpunan bebas, maka citranya juga bebas).
+      Pemetaan yang tidak satu-ke-satu mungkin saja mempertahankan sebagian himpunan bebas.
+      Salah satu contohnya adalah pemetaan dari $\Re^3$ ke $\Re^2$ berikut.
+      \begin{equation*}
+        \colvec{x \\ y \\ z}\mapsto\colvec{x+y+z \\ 0}
+      \end{equation*}
+      Kebebasan linear dipertahankan untuk himpunan berikut,
+      \begin{equation*}
+        \set{\colvec[r]{1 \\ 0 \\ 0}}\mapsto\set{\colvec[r]{1 \\ 0}}
+      \end{equation*}
+      dan (dalam contoh yang agak lebih rumit) juga untuk himpunan berikut, 
+      \begin{equation*}
+        \set{\colvec[r]{1 \\ 0 \\ 0},\colvec[r]{0 \\ 1 \\ 0}}
+        \mapsto\set{\colvec[r]{1 \\ 0}}
+      \end{equation*}
+      (ingat bahwa dalam suatu himpunan, unsur yang berulang tidak muncul dua kali).
+      Namun, terdapat himpunan-himpunan yang kebebasannya tidak dipertahankan di bawah
+      pemetaan ini, 
+      \begin{equation*}
+        \set{\colvec[r]{1 \\ 0 \\ 0},\colvec[r]{0 \\ 2 \\ 0}}
+        \mapsto\set{\colvec[r]{1 \\ 0},\colvec[r]{2 \\ 0}}
+      \end{equation*}
+      sehingga tidak semua himpunan mengalami pelestarian kebebasan. 
+    \end{answer}
+  \item \label{exer:DimRngLessImpMapOnto}
+    \nearbycorollary{cor:RankDecreases} menyatakan bahwa agar terdapat homomorfisme
+    pada dari ruang vektor $V$ ke ruang vektor $W$, 
+    dimensi $W$ perlu kurang dari atau sama dengan 
+    dimensi $V$.
+    Buktikan bahwa syarat ini juga cukup;
+    gunakan \nearbytheorem{th:HomoDetActOnBasis} untuk menunjukkan bahwa
+    jika dimensi $W$ 
+    kurang dari atau sama dengan dimensi $V$,
+    maka terdapat homomorfisme pada dari $V$ ke $W$.
+    \begin{answer}
+      (Kita menggunakan notasi dari \nearbytheorem{th:HomoDetActOnBasis}.)
+      Tetapkan basis $\sequence{\vec{\beta}_1,\dots,\vec{\beta}_n}$ untuk $V$
+      dan basis 
+      $\sequence{\vec{w}_1,\ldots,\vec{w}_k}$ untuk $W$.
+      Jika dimensi $k$ dari $W$ kurang dari atau sama dengan dimensi $n$
+      dari $V$, 
+      maka teorema tersebut memberikan pemetaan linear dari $V$ ke $W$
+      yang ditentukan sebagai berikut.
+      \begin{equation*}
+        \vec{\beta}_1\mapsto\vec{w}_1,\,\dots,\,\vec{\beta}_k\mapsto\vec{w}_k
+        \quad\text{dan}\quad
+        \vec{\beta}_{k+1}\mapsto\vec{w}_k,
+           \,\dots,\,\vec{\beta}_n\mapsto\vec{w}_k
+      \end{equation*}
+      Kita hanya perlu membuktikan bahwa pemetaan ini pada.
+
+      Kita dapat menuliskan setiap anggota $W$ sebagai kombinasi linear 
+      unsur-unsur basis, 
+      $c_1\cdot \vec{w}_1+\dots+c_k\cdot \vec{w}_k$.
+      Vektor ini merupakan citra, di bawah pemetaan yang dijelaskan di atas, dari 
+      $c_1\cdot \vec{\beta}_1+\dots+c_k\cdot \vec{\beta}_k
+      +0\cdot \vec{\beta}_{k+1}\dots+0\cdot \vec{\beta}_n$.
+      Dengan demikian, pemetaan tersebut pada.
+    \end{answer}  
+  \recommended \item
+    Ingat bahwa ruang nol merupakan himpunan bagian dari domain dan ruang hasil 
+    merupakan himpunan bagian dari kodomain. 
+    Apakah keduanya mesti berbeda?
+    Apakah terdapat homomorfisme yang ruang nol dan ruang hasilnya
+    memiliki irisan nontrivial?
+    \begin{answer}
+      Ya.
+      Untuk transformasi pada \( \Re^2 \) yang diberikan oleh
+      \begin{equation*}
+        \colvec{x \\ y}\mapsunder{h}\colvec{0 \\ x}
+      \end{equation*}
+      kita memperoleh hasil berikut.
+      \begin{equation*}
+        \nullspace{h}=\set{\colvec{0 \\ y}\suchthat y\in\Re}
+        =\rangespace{h}
+      \end{equation*}
+      \textit{Catatan.}
+      Kita akan melihat lebih banyak mengenai hal ini dalam bab kelima.   
+    \end{answer}
+  \item 
+        Buktikan bahwa 
+        citra suatu rentang sama dengan rentang citra-citranya.
+        Dengan kata lain, jika \( \map{h}{V}{W} \) linear, 
+        buktikan bahwa jika \( S \) merupakan himpunan bagian dari 
+        \( V \), maka \( h(\spanof{S}) \) sama dengan \( \spanof{h(S)} \).
+        Hasil ini memperumum \nearbylemma{le:RangeIsSubSp}
+        karena menunjukkan bahwa jika \( U \) adalah sembarang subruang dari \( V \), maka
+        citranya \( \set{h(\vec{u})\suchthat \vec{u}\in U} \)
+        merupakan subruang dari \( W \), sebab rentang himpunan $U$ adalah $U$.
+    \begin{answer}
+        Berikut perhitungan sederhana.
+          \begin{align*}
+            h(\spanof{S})
+            &=\set{h(c_1\vec{s}_1+\dots+c_n\vec{s}_n)
+                 \suchthat \text{\( c_1,\dots,c_n\in\Re \)
+                                 dan \( \vec{s}_1,\dots,\vec{s}_n\in S \)} } \\
+            &=\set{c_1h(\vec{s}_1)+\dots+c_nh(\vec{s}_n)
+                 \suchthat \text{\( c_1,\dots,c_n\in\Re \)
+                                 dan \( \vec{s}_1,\dots,\vec{s}_n\in S \)} } \\
+            &=\spanof{h(S)}
+          \end{align*}   
+     \end{answer}
+  \item \label{exer:Cosets}   
+    \begin{exparts}
+    \partsitem Buktikan bahwa untuk sembarang pemetaan linear \( \map{h}{V}{W} \) dan sembarang
+      \( \vec{w}\in W \), himpunan \( h^{-1}(\vec{w}) \) berbentuk
+      \begin{equation*}
+        h^{-1}(\vec{w})=
+        \set{\vec{v}+\vec{n}\suchthat \text{$\vec{v},\vec{n}\in V$,
+                                            $\vec{n}\in\nullspace{h}$,
+                                            dan $h(\vec{v})=\vec{w}$}}
+      \end{equation*}
+      (jika \( h \) tidak pada dan $\vec{w}$ tidak berada dalam ruang hasil $h$,
+      maka himpunan ini kosong karena syarat ketiganya tidak dapat dipenuhi).
+      Himpunan semacam ini merupakan \definend{koset}\index{koset} dari \( \nullspace{h} \)
+      dan kita menyatakannya sebagai \( \vec{v}+\nullspace{h} \).
+    \partsitem Tinjau pemetaan \( \map{t}{\Re^2}{\Re^2} \) yang diberikan oleh
+      \begin{equation*}
+        \colvec{x \\ y}
+          \mapsunder{t}
+        \colvec{ax+by \\ cx+dy}
+      \end{equation*}
+      untuk suatu skalar $a$, $b$, $c$, dan $d$.
+      Buktikan bahwa \( t \) linear.
+    \partsitem
+      Simpulkan dari kedua butir sebelumnya bahwa untuk sembarang sistem linear berbentuk
+      \begin{equation*}
+        \begin{linsys}{2}
+          ax  &+  &by  &=  &e \\
+          cx  &+  &dy  &=  &f 
+        \end{linsys}
+      \end{equation*}
+      kita dapat menuliskan himpunan solusinya
+      (vektor-vektornya merupakan anggota $\Re^2$)
+      \begin{equation*}
+        \set{\vec{p}+\vec{h}\suchthat
+             \text{\( \vec{h} \) memenuhi sistem homogen terkait} }
+      \end{equation*}
+      dengan \( \vec{p} \) suatu solusi partikular dari sistem linear tersebut
+      (jika tidak terdapat solusi partikular, maka himpunan di atas
+      kosong).
+    \partsitem Tunjukkan bahwa pemetaan
+      \( \map{h}{\Re^n}{\Re^m} \) berikut linear,
+      \begin{equation*}
+        \colvec{x_1 \\ \vdots \\ x_n}
+          \mapsto
+        \colvec{a_{1,1}x_1+\dots+a_{1,n}x_n \\ 
+                     \vdots \\ 
+                     a_{m,1}x_1+\dots+a_{m,n}x_n}
+      \end{equation*}
+      untuk sembarang skalar \( a_{1,1} \), \ldots, \( a_{m,n} \). 
+      Perluas kesimpulan yang diperoleh pada butir sebelumnya.
+    \partsitem Tunjukkan bahwa pemetaan turunan ke-\( k \) merupakan transformasi 
+      linear pada
+      \( \polyspace_n \) untuk setiap \( k \).
+      Buktikan bahwa pemetaan berikut
+      merupakan transformasi linear pada ruang tersebut,
+      \begin{equation*}
+        f\mapsto
+        \frac{d^k}{dx^k}f+c_{k-1}\frac{d^{k-1}}{dx^{k-1}}f
+           +\dots+
+        c_1\frac{d}{dx}f+c_0f
+      \end{equation*}
+      untuk sembarang skalar \( c_{k-1} \), \ldots, \( c_0 \).
+      Tarik kesimpulan seperti di atas.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem 
+          Kita akan menunjukkan bahwa himpunan-himpunan berikut sama,
+          $h^{-1}(\vec{w})
+            =\set{\vec{v}+\vec{n}\suchthat \vec{n}\in\nullspace{h} }$ 
+          melalui inklusi timbal balik.
+          Untuk arah 
+          $\set{\vec{v}+\vec{n}\suchthat \vec{n}\in\nullspace{h} }
+            \subseteq h^{-1}(\vec{w})$
+          perhatikan saja bahwa 
+          $h(\vec{v}+\vec{n})=h(\vec{v})+h(\vec{n})$ sama dengan
+          $\vec{w}$, sehingga setiap anggota himpunan pertama merupakan anggota himpunan
+          kedua. 
+          Untuk arah 
+          $h^{-1}(\vec{w})
+            \subseteq\set{\vec{v}+\vec{n}\suchthat \vec{n}\in\nullspace{h} }$ 
+          tinjau $\vec{u}\in h^{-1}(\vec{w})$.
+          Karena \( h \) linear, \( h(\vec{u})=h(\vec{v}) \)
+          mengakibatkan \( h(\vec{u}-\vec{v})=\zero \).
+          Kita dapat menuliskan \( \vec{u}-\vec{v} \) sebagai \( \vec{n} \),
+          lalu kita memperoleh
+          $\vec{u}\in\set{\vec{v}+\vec{n}\suchthat \vec{n}\in\nullspace{h} }$,
+          seperti yang diinginkan, karena $\vec{u}=\vec{v}+(\vec{u}-\vec{v})$.
+        \partsitem Pemeriksaan ini rutin.
+        \partsitem Hasil ini langsung.
+        \partsitem Secara ringkas, untuk pemeriksaan linearitas, 
+          dengan \( c,d \) skalar dan
+          \( \vec{x},\vec{y}\in\Re^n \) berkomponen
+          \( x_1,\dots,x_n \) dan \( y_1,\dots,y_n \),
+          kita memperoleh hasil berikut.
+          \begin{align*}
+            h(c\cdot \vec{x}+d\cdot \vec{y})
+            &=\colvec{a_{1,1}(cx_1+dy_1)+\dots+a_{1,n}(cx_n+dy_n) \\ 
+                         \vdots \\ 
+                         a_{m,1}(cx_1+dy_1)+\dots+a_{m,n}(cx_n+dy_n)}    \\
+            &=\colvec{a_{1,1}cx_1+\dots+a_{1,n}cx_n \\ 
+                         \vdots \\ 
+                         a_{m,1}cx_1+\dots+a_{m,n}cx_n}
+            +\colvec{a_{1,1}dy_1+\dots+a_{1,n}dy_n \\ 
+                         \vdots \\                           
+                         a_{m,1}dy_1+\dots+a_{m,n}dy_n}        \\
+            &=c\cdot h(\vec{x})+d\cdot h(\vec{y})
+          \end{align*}
+          Kesimpulan yang sesuai adalah
+          \( \text{Umum}=\text{Partikular}+\text{Homogen} \).
+        \partsitem Setiap pangkat operator turunan bersifat 
+          linear karena aturan
+          \begin{equation*}
+            \frac{d^k}{dx^k}(f(x)+g(x))=\frac{d^k}{dx^k}f(x)
+                                         +\frac{d^k}{dx^k}g(x)
+            \quad\text{dan}\quad
+            \frac{d^k}{dx^k}rf(x)=r\frac{d^k}{dx^k}f(x)
+          \end{equation*}
+          dari kalkulus.
+          Dengan demikian, pemetaan yang diberikan merupakan transformasi linear pada ruang tersebut karena
+          setiap kombinasi linear pemetaan-pemetaan linear juga merupakan pemetaan linear
+          menurut \nearbylemma{le:SpLinFcns}.
+          Kesimpulan yang sesuai adalah 
+          \( \text{Umum}=\text{Partikular}+\text{Homogen} \),
+          dengan persamaan diferensial homogen terkait 
+          memiliki konstanta \( 0 \).
+      \end{exparts}  
+     \end{answer}
+  \item 
+    Buktikan bahwa untuk sembarang transformasi \( \map{t}{V}{V} \) dengan rank satu, 
+    pemetaan yang diperoleh dengan mengomposisikan operator tersebut dengan dirinya sendiri, 
+    \( \map{\composed{t}{t}}{V}{V} \), memenuhi
+    \( \composed{t}{t}=r\cdot t \) untuk suatu bilangan real \( r \).
+    \begin{answer}
+      Karena rank \( t \) adalah satu, ruang hasil \( t \)
+      merupakan subruang satu dimensi.
+      Dengan mengambil $\sequence{t(\vec{v})}$ sebagai basis (untuk suatu
+      $\vec{v}$ yang sesuai), untuk setiap $\vec{w}\in V$ kita memperoleh bahwa citra 
+      $t(\vec{w})\in V$ merupakan kelipatan vektor basis ini\Dash terkait
+      dengan setiap $\vec{w}$ terdapat skalar 
+      \( c_{\vec{w}} \)  
+      sedemikian sehingga \( t(\vec{w})=c_{\vec{w}}t(\vec{v}) \).
+      Terapkan \( t \) pada kedua ruas persamaan tersebut 
+      dan ambil \( r \) sebagai \( c_{t(\vec{v})} \),
+      \begin{equation*}
+        \composed{t}{t}(\vec{w})
+        =t(c_{\vec{w}}\cdot t(\vec{v}))
+        =c_{\vec{w}}\cdot\composed{t}{t}(\vec{v})
+        =c_{\vec{w}}\cdot c_{t(\vec{v})}\cdot t(\vec{v})
+        =c_{\vec{w}}\cdot r\cdot t(\vec{v})
+        =r\cdot c_{\vec{w}}\cdot t(\vec{v})
+        =r\cdot t(\vec{w})
+      \end{equation*}
+      untuk memperoleh kesimpulan yang diinginkan.  
+    \end{answer}
+  \item 
+    Misalkan \( \map{h}{V}{\Re} \) suatu homomorfisme, tetapi bukan
+    homomorfisme nol.
+    Buktikan bahwa jika \( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \) merupakan
+    basis ruang nol dan jika \( \vec{v}\in V \) tidak berada dalam ruang nol,
+    maka \( \sequence{\vec{v},\vec{\beta}_1,\dots,\vec{\beta}_n} \) merupakan
+    basis seluruh domain \( V \).
+    \begin{answer}
+      Menurut asumsi, \( h \) bukan pemetaan nol, 
+      sehingga terdapat vektor \( \vec{v}\in V \) yang tidak berada dalam ruang nol.
+      Perhatikan bahwa \( \sequence{h(\vec{v})} \) merupakan basis \( \Re \) 
+      karena merupakan himpunan bagian bebas linear berukuran satu dari \( \Re \).
+      Akibatnya, \( h \) bersifat pada, sebab untuk sembarang \( r\in\Re \), kita memiliki
+      \( r=c\cdot h(\vec{v}) \) untuk suatu skalar \( c \), sehingga
+      \( r=h(c\vec{v}) \).
+
+      Dengan demikian, rank \( h \) adalah satu.
+      Karena nulitasnya adalah $n$, dimensi domain
+      \( h \), yaitu ruang vektor \( V \), adalah \( n+1 \).
+      Kita dapat menuntaskan bukti dengan menunjukkan bahwa
+      \( \set{\vec{v},\vec{\beta}_1,\dots,\vec{\beta}_n} \)
+      bebas linear, karena himpunan itu berukuran~$n+1$ dalam ruang 
+      berdimensi~$n+1$.
+      Karena \( \set{\vec{\beta}_1,\dots,\vec{\beta}_n} \) bebas
+      linear, kita hanya perlu menunjukkan bahwa 
+      \( \vec{v} \) bukan kombinasi linear vektor-vektor lainnya.
+      Namun, \( c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n=\vec{v} \) akan memberikan
+      \( -\vec{v}+c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n=\zero \), dan menerapkan
+      \( h \) pada kedua ruas akan menghasilkan kontradiksi.  
+    \end{answer}
+  \item 
+    Tunjukkan bahwa untuk sembarang ruang \( V \) berdimensi \( n \),
+    \definend{ruang dual}\index{ruang dual}\index{ruang vektor!dual}
+    \begin{equation*}
+      \linmaps{V}{\Re}=\set{\map{h}{V}{\Re}\suchthat \text{\( h \) linear}}
+    \end{equation*}
+    isomorfik dengan \( \Re^n \).
+    Ruang ini sering dinyatakan dengan $V^\ast$.
+    Simpulkan bahwa \( V^\ast\isomorphicto V \).
+    \begin{answer}
+      Tetapkan basis \( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \)
+      untuk \( V \).
+      Kita akan membuktikan bahwa pemetaan
+      \begin{equation*}
+        h\mapsunder{\Phi}
+        \colvec{h(\vec{\beta}_1) \\ \vdots \\ h(\vec{\beta}_n)}
+      \end{equation*}
+      merupakan isomorfisme dari \( V^\ast \) ke \( \Re^n \).
+
+      Untuk melihat bahwa $\Phi$ satu-ke-satu, anggaplah $h_1$ dan $h_2$ merupakan
+      anggota $V^\ast$ sedemikian sehingga $\Phi(h_1)=\Phi(h_2)$.
+      Maka
+      \begin{equation*}
+        \colvec{h_1(\vec{\beta}_1) \\ \vdots \\ h_1(\vec{\beta}_n)}
+        =\colvec{h_2(\vec{\beta}_1) \\ \vdots \\ h_2(\vec{\beta}_n)}
+      \end{equation*}
+      dan akibatnya, $h_1(\vec{\beta}_1)=h_2(\vec{\beta}_1)$, dan seterusnya.
+      Namun, suatu homomorfisme ditentukan oleh aksinya pada basis, sehingga 
+      \( h_1=h_2 \), dan oleh karena itu \( \Phi \) satu-ke-satu.
+
+      Untuk melihat bahwa $\Phi$ pada, tinjau
+      \begin{equation*}
+        \colvec{x_1 \\ \vdots \\ x_n}
+      \end{equation*}
+      untuk \( x_1,\ldots,x_n\in\Re \). 
+      Fungsi $h$ dari $V$ ke $\Re$ berikut 
+      \begin{equation*}
+        c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n
+        \mapsunder{h} c_1x_1+\dots+c_nx_n
+      \end{equation*}
+      bersifat linear dan $\Phi$ memetakannya ke 
+      vektor yang diberikan dalam $\Re^n$, sehingga \( \Phi \) pada.
+
+      Pemetaan \( \Phi \) juga mempertahankan struktur:~dengan
+      \begin{align*}
+        c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n
+        &\mapsunder{h_1}
+        c_1h_1(\vec{\beta}_1)+\dots+c_nh_1(\vec{\beta}_n)    \\
+        c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n
+        &\mapsunder{h_2}
+        c_1h_2(\vec{\beta}_1)+\dots+c_nh_2(\vec{\beta}_n)
+      \end{align*}
+      kita memperoleh
+      \begin{multline*}
+        (r_1h_1+r_2h_2)(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n)       \\
+        \begin{aligned}
+        &=
+        c_1(r_1h_1(\vec{\beta}_1)+r_2h_2(\vec{\beta}_1))
+          +\dots
+          +c_n(r_1h_1(\vec{\beta}_n)+r_2h_2(\vec{\beta}_n))    \\
+        &=
+        r_1(c_1h_1(\vec{\beta}_1)+\dots+c_nh_1(\vec{\beta}_n))
+          + r_2(c_1h_2(\vec{\beta}_1)+\dots+c_nh_2(\vec{\beta}_n))
+        \end{aligned}
+      \end{multline*}
+      sehingga \( \Phi(r_1h_1+r_2h_2)=r_1\Phi(h_1)+r_2\Phi(h_2) \).  
+    \end{answer}
+  \item 
+    Tunjukkan bahwa setiap pemetaan linear merupakan jumlah pemetaan-pemetaan ber-rank satu.
+    \begin{answer}
+      Misalkan \( \map{h}{V}{W} \) linear dan tetapkan basis
+      \( \sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \) untuk \( V \).
+      Tinjau \( n \) pemetaan berikut dari \( V \) ke \( W \),
+      \begin{equation*}
+        h_1(\vec{v})=c_1\cdot h(\vec{\beta}_1),
+        \quad
+        h_2(\vec{v})=c_2\cdot h(\vec{\beta}_2),
+        \quad\ldots\quad,
+        h_n(\vec{v})=c_n\cdot h(\vec{\beta}_n)
+      \end{equation*}
+      untuk sembarang \( \vec{v}=c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n \).
+      Jelas bahwa \( h \) merupakan jumlah dari pemetaan-pemetaan \( h_i \).
+      Kita hanya perlu memeriksa bahwa setiap \( h_i \) linear:~jika
+      \( \vec{u}=d_1\vec{\beta}_1+\dots+d_n\vec{\beta}_n \), maka
+      \( h_i(r\vec{v}+s\vec{u})=(rc_i+sd_i)h(\vec{\beta}_i)
+      =rh_i(\vec{v})+sh_i(\vec{u}) \).  
+    \end{answer}
+ \item 
+   Apakah `homomorfik ke' merupakan relasi ekuivalensi?
+   (\textit{Petunjuk:}~kesulitannya adalah menentukan makna yang tepat 
+   untuk frasa dalam tanda kutip tersebut.)
+   \begin{answer}
+     Bisa ya (secara trivial) atau tidak (hampir secara trivial).
+
+     Jika kita memaknai \( V \) `homomorfik ke' \( W \) sebagai adanya
+     homomorfisme dari \( V \) ke dalam (tetapi tidak harus pada terhadap) \( W \),
+     maka setiap ruang homomorfik ke setiap ruang lainnya karena pemetaan nol selalu
+     ada.
+
+     Jika kita memaknai \( V \) `homomorfik ke' \( W \) sebagai adanya
+     homomorfisme pada dari \( V \) ke \( W \), maka relasi tersebut bukan
+     relasi ekuivalensi.
+     Sebagai contoh, terdapat homomorfisme
+     pada dari \( \Re^3 \) ke \( \Re^2 \)
+     (proyeksi adalah salah satunya), tetapi menurut \nearbycorollary{cor:RankDecreases}, tidak ada homomorfisme dari \( \Re^2 \) yang pada terhadap
+     \( \Re^3 \),
+     sehingga relasi tersebut tidak simetris.\appendrefs{relasi ekuivalensi}  
+   \end{answer}
+  \item 
+    Tunjukkan bahwa ruang hasil dan ruang nol dari pangkat-pangkat pemetaan linear
+    \( \map{t}{V}{V} \) masing-masing membentuk rantai menurun,
+    \begin{equation*}
+      V\supseteq \rangespace{t}\supseteq\rangespace{t^2}\supseteq\ldots
+    \end{equation*}
+    dan rantai menaik,
+    \begin{equation*}
+     \set{\vec{0}}\subseteq\nullspace{t}\subseteq\nullspace{t^2}\subseteq\ldots
+    \end{equation*}
+    Tunjukkan pula bahwa jika \( k \) sedemikian sehingga
+    \( \rangespace{t^k}=\rangespace{t^{k+1}} \)
+    maka semua ruang hasil berikutnya sama:
+    \( \rangespace{t^k}=\rangespace{t^{k+1}}=\rangespace{t^{k+2}}\ldots\, \).
+    Serupa dengan itu, jika \( \nullspace{t^k}=\nullspace{t^{k+1}} \),
+    maka  
+    \( \nullspace{t^k}=\nullspace{t^{k+1}}=\nullspace{t^{k+2}}=\ldots\, \).
+    \begin{answer}
+      Fakta bahwa ruang-ruang tersebut membentuk rantai sudah jelas.
+      Untuk bagian lainnya, di sini kita menunjukkan bahwa
+      \( \rangespace{t^{j+1}}=\rangespace{t^{j}} \)
+      mengakibatkan
+      \( \rangespace{t^{j+2}}=\rangespace{t^{j+1}} \).
+      Selanjutnya, induksi dapat diterapkan.
+
+      Anggaplah 
+      \( \rangespace{t^{j+1}}=\rangespace{t^{j}} \).
+      Maka \( \map{t}{\rangespace{t^{j+1}}}{\rangespace{t^{j+2}}} \)
+      adalah pemetaan yang sama, dengan domain yang sama, seperti
+      \( \map{t}{\rangespace{t^{j}}}{\rangespace{t^{j+1}}} \).
+      Dengan demikian, pemetaan itu memiliki ruang hasil yang sama:
+      \( \rangespace{t^{j+2}}=\rangespace{t^{j+1}} \).  
+    \end{answer}
+\end{exercises}

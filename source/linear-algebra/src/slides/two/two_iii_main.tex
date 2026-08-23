@@ -1,0 +1,1057 @@
+% \documentclass[9pt,t]{beamer}
+\usefonttheme{professionalfonts}
+\usefonttheme{serif}
+\PassOptionsToPackage{pdfpagemode=FullScreen}{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color}
+% \DeclareGraphicsRule{*}{mps}{*}{}
+\usepackage{linalgjh}
+\usepackage{present}
+\usepackage{directories}  % Defines \vsdir, \vsmpdir, etc
+\usepackage{xr}\externaldocument{\vsdir vs3} % read refs from .aux file
+\usepackage{xr}\externaldocument{\vsdir vs2} % read refs from .aux file
+\usepackage{xr}\externaldocument{\grdir gr1} % read refs from .aux file
+\usepackage{xr}\externaldocument{\grdir gr3} % read refs from .aux file
+\usepackage{catchfilebetweentags}
+\usepackage{etoolbox} % from http://tex.stackexchange.com/questions/40699/input-only-part-of-a-file-using-catchfilebetweentags-package
+\makeatletter
+\patchcmd{\CatchFBT@Fin@l}{\endlinechar\m@ne}{}
+  {}{\typeout{Unsuccessful patch!}}
+\makeatother
+
+\mode<presentation>
+{
+  \usetheme{boxes}
+  \setbeamercovered{invisible}
+  \setbeamertemplate{navigation symbols}{} 
+}
+\addheadbox{filler}{\ }  % create extra space at top of slide 
+\hypersetup{colorlinks=true,linkcolor=blue} 
+
+\title[Basis and Dimension] % (optional, use only with long paper titles)
+{Two.III Basis and Dimension}
+
+\author[Jim Hefferon]{\textit{Linear Algebra}, edition four \\ {\small Jim Hef{}feron}}
+\institute{
+  \texttt{https://hefferon.net/linearalgebra}\\[0.25ex]
+  \texttt{http://joshua.smcvt.edu/linearalgebra}
+}
+\date{}
+
+
+\subject{Basis and Dimension}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% =============================================
+% \begin{frame}{Reduced Echelon Form} 
+% \end{frame}
+
+
+
+% ..... Two.III.1 .....
+\section{Basis}
+%..........
+\begin{frame}{Definition of basis}
+\df[def:basis]
+\ExecuteMetaData[\vsdir vs3.tex]{df:basis}
+
+\pause\medskip
+\ExecuteMetaData[\vsdir vs3.tex]{BasisNotation}
+
+\pause
+\ex
+This is a basis for $\Re^2$.
+\begin{equation*}
+  \sequence{\colvec{1 \\ -1},
+            \colvec{1 \\ 1}
+           }
+\end{equation*}
+It is linearly independent.
+\begin{equation*}
+  c_1\colvec{1 \\ -1}+c_2\colvec{1 \\ 1}=\colvec{0 \\ 0}
+  \implies
+  \begin{linsys}{2}
+    c_1 &+ &c_2 &= &0  \\
+   -c_1 &+ &c_2 &= &0
+  \end{linsys}
+  \implies
+  c_1=0,\,c_2=0
+\end{equation*}
+And it spans $\Re^2$ since
+\begin{equation*}
+  c_1\colvec{1 \\ -1}+c_2\colvec{1 \\ 1}=\colvec{x \\ y}
+  \implies
+  \begin{linsys}{2}
+    c_1 &+ &c_2 &= &x  \\
+   -c_1 &+ &c_2 &= &y
+  \end{linsys}
+\end{equation*}
+has the solution $c_1=(1/2)x-(1/2)y$
+and $c_2=(1/2)x+(1/2)y$.
+\end{frame}
+
+
+%..........
+\begin{frame}
+\ex
+In the vector space of linear polynomials 
+$\polyspace_1=\set{a+bx\suchthat a,b\in\Re}$
+one basis is $B=\sequence{1+x,1-x}$.
+
+Check that is a basis by verifying that it is
+linearly independent
+\begin{equation*}
+  0=c_1(1+x)+c_2(1-x)
+  \implies
+  0=c_1+c_2,\;0=c_1-c_2
+  \implies 
+  c_1=c_2=0
+\end{equation*}
+and that it spans the space.
+\begin{equation*}
+  a+bx=c_1(1+x)+c_2(1-x)
+  % \implies
+  % a=c_1+c_2,\;b=c_1-c_2
+  \implies 
+  c_1=(a+b)/2,\;c_2=(a-b)/2
+\end{equation*}
+\pause
+\ex
+This is a basis for $\matspace_{\nbyn{2}}$.
+\begin{equation*}
+  \sequence{
+    \begin{mat}
+      1  &0  \\
+      0  &0 
+    \end{mat},
+    \begin{mat}
+      0  &2  \\
+      0  &0 
+    \end{mat},
+    \begin{mat}
+      0  &0  \\
+      3  &0 
+    \end{mat},
+    \begin{mat}
+      0  &0  \\
+      0  &4 
+    \end{mat}
+  }
+\end{equation*}
+This is another one.
+\begin{equation*}
+  \sequence{
+    \begin{mat}
+      1  &0  \\
+      0  &0 
+    \end{mat},
+    \begin{mat}
+      1  &2  \\
+      0  &0 
+    \end{mat},
+    \begin{mat}
+      1  &2  \\
+      3  &0 
+    \end{mat},
+    \begin{mat}
+      1  &2  \\
+      3  &4 
+    \end{mat}
+  }
+\end{equation*}
+\end{frame}
+\begin{frame}
+\ex
+This is a basis for $\Re^3$.
+\begin{equation*}
+  \stdbasis_3=
+  \sequence{
+            \colvec{1 \\ 0 \\ 0},
+            \colvec{0 \\ 1 \\ 0},
+            \colvec{0 \\ 0 \\ 1}
+            }
+\end{equation*}
+Calculus books sometimes call those 
+$\vec{\imath}$, $\vec{\jmath}$, and $\vec{k}$.
+
+\pause
+\df[df:StandardBasis]
+\ExecuteMetaData[\vsdir vs3.tex]{df:StandardBasis}
+
+\medskip\noindent
+Checking that $\stdbasis_n$ is a basis for $\Re^n$ is routine.
+\end{frame}
+
+
+
+%..........
+\begin{frame}
+Although a basis is a sequence we will follow the  
+common practice 
+and refer to it as a set.
+
+\th[th:BasisIffUniqueRepWRT]
+\ExecuteMetaData[\vsdir vs3.tex]{th:BasisIffUniqueRepWRT}
+
+\pause
+\pf
+\ExecuteMetaData[\vsdir vs3.tex]{pf:BasisIffUniqueRepWRT0}
+\end{frame}
+\begin{frame}
+\ExecuteMetaData[\vsdir vs3.tex]{pf:BasisIffUniqueRepWRT1}
+\qed
+\end{frame}
+
+
+
+\begin{frame}
+\ex This is a vector and basis for the vector space $\Re^3$.
+\begin{equation*}
+  \vec{v}=\colvec{1 \\ 2 \\ 3}\in\Re^3
+  \qquad
+  B=\sequence{\colvec{1 \\ 1 \\ 1},
+              \colvec{1 \\ 1 \\ 0},
+              \colvec{1 \\ 0 \\ 0}}
+   =\sequence{\vec{\beta}_1,\vec{\beta}_2,\vec{\beta}_3}
+\end{equation*}
+Find how to express $\vec{v}$ as 
+$c_1\vec{\beta}_1+c_2\vec{\beta}_2+c_3\vec{\beta}_3$ by solving this system.
+\begin{equation*}
+  \begin{linsys}{3}
+    c_1 &+ &c_2 &+ &c_3 &= &1 \\
+    c_1 &+ &c_2 &  &    &= &2 \\
+    c_1 &  &    &  &    &= &3 \\
+  \end{linsys}
+\end{equation*}
+By eye we see just what the Theorem says we will see:
+there is one and only one solution $c_1=3$, $c_2=-1$, and~$c_3=-1$.
+\end{frame}
+
+
+%..........
+\begin{frame}
+\df[def:RepresentingVectors]
+\ExecuteMetaData[\vsdir vs3.tex]{df:RepresentingVectors}
+
+\pause\medskip
+The prior slide shows that where
+\begin{equation*}
+  \vec{v}=\colvec{1 \\ 2 \\ 3}
+  \qquad
+  B=\sequence{\colvec{1 \\ 1 \\ 1},
+              \colvec{1 \\ 1 \\ 0},
+              \colvec{1 \\ 0 \\ 0}}
+\end{equation*}
+we have this.
+\begin{equation*}
+  \rep{\vec{v}}{B}=\colvec{3 \\ -1 \\ -1}_B
+\end{equation*}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\ex
+Above we saw that in  
+$\polyspace_1=\set{a+bx\suchthat a,b\in\Re}$
+one basis is $B=\sequence{1+x,1-x}$.
+As part of that we computed the coefficients needed to 
+express a member of $\polyspace_1$ as a combination of
+basis vectors.
+\begin{equation*}
+  a+bx=c_1(1+x)+c_2(1-x)
+  % \implies
+  % a=c_1+c_2,\;b=c_1-c_2
+  \implies 
+  c_1=(a+b)/2,\;c_2=(a-b)/2
+\end{equation*}
+\pause
+For instance, the polynomial $3+4x$ has this expression
+\begin{equation*}
+  3+4x=(7/2)\cdot(1+x)+(-1/2)\cdot(1-x)
+\end{equation*}
+so its representation is this.
+\begin{equation*}
+  \rep{3+4x}{B}=\colvec{7/2 \\ -1/2}
+\end{equation*}
+\end{frame}
+\begin{frame}
+\ex 
+With respect to $\Re^3$'s standard basis $\stdbasis_3$ the vector
+\begin{equation*}
+  \vec{v}
+  =\colvec{2 \\ -3 \\ 1/2}
+\end{equation*}
+has this representation.
+\begin{equation*}
+  \rep{\vec{v}}{\stdbasis_3}=\colvec{2 \\ -3 \\ 1/2}
+\end{equation*}
+In general, any $\vec{w}\in\Re^n$ 
+has $\rep{\vec{w}}{\stdbasis_n}=\vec{w}$.
+\end{frame}
+
+
+\begin{frame}{``Represents'' in what sense?}
+The word used in the definition applies because, as this result says,
+a relationship holds among
+a set of vectors if and only if it holds among the representatives.
+
+\lm[lem:LinearRelRepresented]
+\ExecuteMetaData[\vsdir vs3.tex]{lm:LinearRelRepresented}
+
+\ex
+Consider this basis for $\R^2$, and these members of the space.
+\begin{equation*}
+  B=\sequence{\colvec{1 \\ 1},\colvec{1 \\ -1}}
+  \qquad \vec{v}_1=\colvec{2 \\ 3}\quad
+   \vec{v}_2=\colvec{1 \\ 2}\quad
+   \vec{v}_3=\colvec{1 \\ 0}
+\end{equation*}
+Notice that $2\vec{v}_1-3\vec{v}_2-\vec{v}_3=\zero$.
+The calculation for these is routine.
+\begin{equation*}
+  \rep{\vec{v}_1}{B}=\colvec{5/2 \\ -1/2}\quad
+  \rep{\vec{v}_2}{B}=\colvec{3/2 \\ -1/2}\quad
+  \rep{\vec{v}_3}{B}=\colvec{1/2 \\ 1/2}
+\end{equation*}
+Also routine is the verification that 
+$2\cdot\rep{\vec{v}_1}{B}-3\cdot\rep{\vec{v}_2}{B}-\rep{\vec{v}_3}{B}$
+equals $\zero$. 
+\end{frame}
+
+
+
+
+
+
+\section{Dimension}
+%..........
+\begin{frame}{Definition of dimension}
+\df[df:FiniteDimensional]
+\ExecuteMetaData[\vsdir vs3.tex]{df:FiniteDimensional}
+
+\ex
+The space 
+$\Re^3$
+is finite-dimensional since it has a basis with three elements $\stdbasis_3$.
+
+\ex
+The space of quadratic polynomials $\polyspace_2$ has at least one
+basis with finitely many elements, $\sequence{1,x,x^2}$, so it is
+finite-dimensional. 
+
+\ex
+The space $\matspace_{\nbyn{2}}$ of $\nbyn{2}$ matrices is finite-dimensional.
+Here is one basis with finitely many members.
+\begin{equation*}
+  \sequence{
+    \begin{mat}
+      1 &0 \\
+      0 &0
+    \end{mat},
+    \begin{mat}
+      1 &1 \\
+      0 &0
+    \end{mat},
+    \begin{mat}
+      1 &1 \\
+      1 &0
+    \end{mat},
+    \begin{mat}
+      1 &1 \\
+      1 &1
+    \end{mat}
+        }
+\end{equation*}
+
+\pause
+\no
+From this point on we will restrict our attention to 
+vector spaces that are finite-dimensional.
+All the later examples, definitions, and theorems
+assume this of the spaces.
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+We will show that for any finite-dimensional space, all of its bases
+have the same number of elements.
+
+\ex
+Each of these is a basis for $\polyspace_2$.
+\begin{align*}
+  &B_0=\sequence{1,1+x,1+x+x^2}       \\
+  &B_1=\sequence{1+x+x^2,1+x,1}       \\
+  &B_2=\sequence{x^2,1+x,1-x}         \\
+  &B_3=\sequence{1,x,x^2}
+\end{align*}
+Each has three elements.
+
+\pause
+\ex
+Here are two different bases for $\matspace_{\nbyn{2}}$. 
+\begin{align*}
+  &B_0=\sequence{
+    \begin{mat}[r]
+      1 &0 \\
+      0 &0
+    \end{mat},
+    \begin{mat}[r]
+      1 &1 \\
+      0 &0
+    \end{mat},
+    \begin{mat}[r]
+      1 &1 \\
+      1 &0
+    \end{mat},
+    \begin{mat}[r]
+      1 &1 \\
+      1 &1
+    \end{mat}
+          }                 \\
+  &B_1=\sequence{
+    \begin{mat}[r]
+      0 &0 \\
+      0 &1
+    \end{mat},
+    \begin{mat}[r]
+      0 &0 \\
+      1 &0
+    \end{mat},
+    \begin{mat}[r]
+      0 &1 \\
+      0 &0
+    \end{mat},
+    \begin{mat}[r]
+      1 &0 \\
+      0 &0
+    \end{mat}
+          }                 
+\end{align*}
+Both have four elements.
+\end{frame}
+
+
+
+%..........
+% \begin{frame}{Exchange Lemma}
+% \ex
+% This is a basis for $\Re^3$.
+% \begin{equation*}
+%   B=\sequence{\colvec{1 \\ 1 \\ 0},
+%               \colvec{1 \\ -1 \\0},
+%               \colvec{0 \\ 0 \\ 1}}
+% \end{equation*}
+% Here are the representations of two vectors with respect to $B$.
+% \begin{align*}
+%   \vec{v}_1
+%   &=\colvec{3 \\ 2 \\ 0}
+%   =(5/2)\cdot\colvec{1 \\ 1 \\ 0}
+%     +(1/2)\cdot\colvec{1 \\ -1 \\ 0}
+%     +0\cdot\colvec{0 \\ 0 \\ 1}               \\
+%   \vec{v}_2
+%   &=\colvec{3 \\ 0 \\ 2}
+%   =(3/2)\cdot\colvec{1 \\ 1 \\ 0}
+%     +(3/2)\cdot\colvec{1 \\ -1 \\ 0}
+%     +2\cdot\colvec{0 \\ 0 \\ 1}              
+% \end{align*}
+% For the first line, the coefficient of the third vector is $0$
+% so $\vec{v}_1$ has no part in the direction of the third vector.
+% In the second line, the coefficient of the third vector is nonzero
+% so $\vec{v}_2$ has some part in the direction of the third vector of $B$.
+% \end{frame}
+% \begin{frame}
+% Consider what results when we exchange this third vector from $B$ for
+% $\vec{v}_1$ and~$\vec{v}_2$.
+% \begin{equation*}
+%   B_1=\sequence{\colvec{1 \\ 1 \\ 0},
+%                 \colvec{1 \\ -1 \\0},
+%                 \colvec{3 \\ 2 \\ 0}}
+%   \qquad
+%   B_2=\sequence{\colvec{1 \\ 1 \\ 0},
+%                 \colvec{1 \\ -1 \\0},
+%                 \colvec{3 \\ 0 \\ 2}}
+% \end{equation*}
+% \pause
+% Because $\vec{v}_1$ does not involve the third element of~$B$\Dash
+% that is, because in the reprresentation the coefficient of the 
+% thrid vector is $0$\Dash
+% the set~$B_1$ is linearly dependent.
+% But the second set $B_2$ is linearly independent
+% because in the representation of $\vec{v}_2$ 
+% the coefficient of the third vector of~$B$ is not zero,
+% so $\vec{v}_2$ is not redundant on the other two members of $B_2$.
+% % See Lemma~II.\ref{lm:AddVecLiSetIsLiIffVecNotInSpan}.
+% \end{frame}
+
+% \begin{frame}
+% \lm[lm:ExchangeLemma]
+% \ExecuteMetaData[\vsdir vs3.tex]{lm:ExchangeLemma}
+
+% \pause
+% \pf
+% \ExecuteMetaData[\vsdir vs3.tex]{pf:ExchangeLemma0}
+% \end{frame}
+% \begin{frame}
+% \ExecuteMetaData[\vsdir vs3.tex]{pf:ExchangeLemma1}
+% \qed
+% \end{frame}
+
+
+
+% %..........
+% \begin{frame}{All of a space's bases are the same size}
+% \th[th:AllBasesSameSize]
+% \ExecuteMetaData[\vsdir vs3.tex]{th:AllBasesSameSize}
+
+% \ex
+% The idea of the proof is that, given two bases, exchange
+% members of the second for members of the first, which shows that they
+% have the same number of elements.
+% For an illustration, these are bases for $\polyspace_2$.
+% \begin{equation*}
+%   B=\sequence{1+x+x^2,1+x,1}
+%   \qquad
+%   D=\sequence{2,2x,2x^2}
+% \end{equation*}
+% \pause
+% For the first element of~$D$,
+% represent it with respect to~$B$, look for a nonzero coefficient, and exchange.
+% \begin{equation*}
+%   2=0\cdot(1+x+x^2)+0\cdot(1+x)+2\cdot(1)
+%   \quad B_1=\sequence{1+x+x^2,1+x,2}
+% \end{equation*}
+% \pause
+% Iterate (only exchanging for elements of $B$).
+% \begin{equation*}
+%   2x=0\cdot(1+x+x^2)+2\cdot(1+x)-1\cdot(2)
+%   \quad B_2=\sequence{1+x+x^2,2x,2}
+% \end{equation*}
+% The third exchange finishes it off.
+% \begin{equation*}
+%   2x^2=2\cdot(1+x+x^2)-1\cdot(2x)-1\cdot(2)
+%   \quad B_3=D
+% \end{equation*}
+% \end{frame}
+
+% \begin{frame}
+% \pf
+% \ExecuteMetaData[\vsdir vs3.tex]{pf:AllBasesSameSize0}
+
+% \pause
+% \ExecuteMetaData[\vsdir vs3.tex]{pf:AllBasesSameSize1}
+
+% \pause
+% \ExecuteMetaData[\vsdir vs3.tex]{pf:AllBasesSameSize2}
+% \end{frame}
+% \begin{frame}
+% \ExecuteMetaData[\vsdir vs3.tex]{pf:AllBasesSameSize3}
+% \qed
+% \end{frame}
+
+\begin{frame}{All of a space's bases are the same size}
+\th[th:AllBasesSameSize]
+\ExecuteMetaData[\vsdir vs3.tex]{th:AllBasesSameSize}
+
+\noindent\textit{Note:} the proof in the book is different.
+This one relies more on computation with coordinates.
+
+\pf
+Fix a vector space with at least one finite basis.
+From among all of this space's bases, choose
+one \( B=\sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \) that has minimal size.
+We will show that any other basis
+\( D=\smash{\sequence{\vec{\delta}_1,\vec{\delta}_2,\ldots}} \)
+also has $n$ members.
+Because \( B \) has minimal size, \( D \) cannot have fewer than 
+\( n \) vectors.
+We will argue that it cannot have more.
+
+So suppose that
+$\vec{\delta}_1$, \ldots{}, $\vec{\delta}_{n+1}$ are distinct.
+We shall show that among these~$n+1$ vectors
+there is a nontrivial linear relationship, a
+$a_1\vec{\delta}_1+\dots+a_{n+1}\vec{\delta}_{n+1}=\vec{0}$
+where not all the  $a_i$ are zero.
+
+First represent them with respect to~$B$.
+\begin{equation*}
+  \rep{\vec{\delta}_1}{B}=\colvec{c_{1,1} \\ \vdots \\ c_{n,1}}
+  \quad\cdots\quad
+  \rep{\vec{\delta}_{n+1}}{B}=\colvec{c_{1,n+1} \\ \vdots \\ c_{n,n+1}}  
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+\nearbylemma{lem:LinearRelRepresented} says that a relationship
+holds among the vectors
+$a_1\vec{\delta}_1+\dots+a_{n+1}\vec{\delta}_{n+1}=\vec{0}$ 
+if and only if the same relationship holds among the representations.
+\begin{equation*}
+  a_1\colvec{c_{1,1} \\ \vdots \\ c_{n,1}}
+  +\cdots+
+  a_{n+1}\colvec{c_{1,n+1} \\ \vdots \\ c_{n,n+1}}
+  =\colvec{0 \\ \vdots \\ 0}  
+\end{equation*}
+The $c_{i,j}$ are the coefficients in the 
+representations of the given vectors, while we are looking for the~$a_i$.
+So this gives a homogeneous linear system.
+\begin{equation*}
+  \begin{linsys}{3}
+    c_{1,1}a_1 &+ &\cdots &+ &c_{1,n+1}a_{n+1} &= &0 \\ 
+              &  &        &  &               &\vdots \\ 
+    c_{n,1}a_1 &+ &\cdots &+ &c_{n,n+1}a_{n+1} &= &0 
+  \end{linsys}
+\end{equation*}
+It is homogeneous so it has at least one solution.
+But there are more unknowns, $n+1$, than equations.
+So it has infinitely many solutions.
+Therefore the set $D$ is linearly dependent.
+\qed
+\end{frame}
+
+
+%..........
+\begin{frame}{Definition of dimension}
+\df[df:Dimension]
+\ExecuteMetaData[\vsdir vs3.tex]{df:Dimension}
+
+\pause
+\ex
+The vector space $\Re^n$ has dimension~$n$ because that is how many members
+are in $\stdbasis_n$.
+
+\pause
+\ex
+The vector space $\polyspace_2$ has dimension~$3$ because one of 
+its bases is $\sequence{1,x,x^2}$.
+\pause
+More generally, $\polyspace_n$ has dimension~$n+1$.
+
+\pause
+\ex
+The vector space $\matspace_{\nbym{n}{m}}$ has dimension $n\cdot m$.
+A natural basis consists of matrices with a single~$1$ and the other
+entries~$0$'s.
+\end{frame}
+\begin{frame}
+\ex
+The solution set $S$ of this system
+\begin{equation*}
+  \begin{linsys}{4}
+    x  &-  &y  &+  &z  &  &   &=  &0  \\
+   -x  &+  &2y &-  &z  &+ &2w &=  &0  \\
+   -x  &+  &3y &-  &z  &+ &4w &=  &0  
+  \end{linsys}
+\end{equation*}
+is a vector space (this is easy to check for any homogeneous system).
+Solving the system
+\begin{equation*}
+  \begin{amat}[r]{4}
+    1  &-1  &1  &0  &0  \\
+   -1  &2   &-1 &2  &0  \\
+    1  &3   &-1 &4  &0  
+  \end{amat}
+  \grstep[\rho_1+\rho_3]{\rho_1+\rho_2}
+  \grstep{-2\rho_2+\rho_3}
+  \begin{amat}[r]{4}
+    1  &-1  &1  &0  &0  \\
+    0  &1   &0  &2  &0  \\
+    0  &0   &0  &0  &0  
+  \end{amat}
+\end{equation*}
+and parametrizing gives a basis of two vectors.
+\begin{equation*}
+  \set{\colvec{x \\ y \\ z \\ w}
+      =\colvec{-1 \\ 0 \\ 1 \\ 0}\cdot z
+       +\colvec{-2 \\ -2 \\ 0 \\ 1}\cdot w
+      \suchthat z,w\in\Re}
+  \qquad
+  B=\sequence{\colvec{-1 \\ 0 \\ 1 \\ 0},
+               \colvec{-2 \\ -2 \\ 0 \\ 1}}
+\end{equation*}
+So $S$ is a vector space of dimension two. 
+% \begin{equation*}
+%   B=\sequence{\colvec{-1 \\ 0 \\ 1 \\ 0},
+%               \colvec{-2 \\ 1 \\ 0 \\ 1}
+%              }
+% \end{equation*}
+\end{frame}
+
+
+%..........
+\begin{frame}
+\co[cor:NoLiSetGreatDim]
+\ExecuteMetaData[\vsdir vs3.tex]{co:NoLiSetGreatDim}
+
+\pause
+\pf
+\ExecuteMetaData[\vsdir vs3.tex]{pf:NoLiSetGreatDim}
+\qed
+
+\pause\medskip
+\re
+This is an example of what we said earlier, that we will 
+take the vector spaces to be
+finite-dimensional without specifically saying so.
+\end{frame}
+
+
+
+%..........
+\begin{frame}
+\co[cor:LIExpBas]
+\ExecuteMetaData[\vsdir vs3.tex]{co:LIExpBas}
+
+\pf
+\ExecuteMetaData[\vsdir vs3.tex]{pf:LIExpBas}
+\qed
+
+\pause
+\co[co:SpanningSetShrinksToABasis]
+\ExecuteMetaData[\vsdir vs3.tex]{co:SpanningSetShrinksToABasis}
+
+\pf
+\ExecuteMetaData[\vsdir vs3.tex]{pf:SpanningSetShrinksToABasis}
+\qed
+\end{frame}
+
+
+
+%..........
+\begin{frame}
+\co[cor:NVecsRNSpanIffLI]
+\ExecuteMetaData[\vsdir vs3.tex]{co:NVecsRNSpanIffLI}
+
+\pause
+\pf
+\ExecuteMetaData[\vsdir vs3.tex]{pf:NVecsRNSpanIffLI}
+\qed
+
+\pause
+\ex
+This clearly spans the space.
+\begin{equation*}
+  \sequence{\colvec{1 \\ 1 \\ 1},
+            \colvec{1 \\ 1 \\ 0},
+            \colvec{1 \\ 0 \\ 0}}\subseteq\Re^3
+\end{equation*}
+Because it has same number of elements as the dimension of the space,
+it is therefore a basis.
+\end{frame}
+
+
+
+
+
+
+% ..... Two.III.3 .....
+\section{Vector Spaces and Linear Systems}
+%..........
+\begin{frame}{Row space}
+\df[df:RowSpace]
+\ExecuteMetaData[\vsdir vs3.tex]{df:RowSpace}
+
+\pause
+\lm[le:RowSpUnchByGR]
+\ExecuteMetaData[\vsdir vs3.tex]{lm:RowSpUnchByGR}
+
+\pause
+\pf
+\ExecuteMetaData[\vsdir vs3.tex]{pf:RowSpUnchByGR0}
+\end{frame}
+\begin{frame}
+\ExecuteMetaData[\vsdir vs3.tex]{pf:RowSpUnchByGR1}
+\qed
+
+\pause
+\lm[le:RowSpUnchByGR]
+\ExecuteMetaData[\vsdir vs3.tex]{lm:RowsEchMatLI}
+
+\pause
+\pf
+\ExecuteMetaData[\vsdir vs3.tex]{pf:RowsEchMatLI}
+\qed
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\ex
+The matrix before Gauss's Method and the matrix after have equal row
+spaces.
+\begin{equation*}
+  M=
+  \begin{mat}[r]
+    1 &2  &1 &0 &3 \\
+   -1 &-2 &2 &2 &0 \\
+    2 &4  &5 &2 &9 
+  \end{mat}
+  \grstep[-2\rho_1+\rho_3]{\rho_1+\rho_2}
+  \grstep{-\rho_2+\rho_3}
+  \begin{mat}[r]
+    1 &2  &1 &0 &3 \\
+    0 &0  &3 &2 &3 \\
+    0 &0  &0 &0 &0 
+  \end{mat}
+\end{equation*}
+The nonzero rows of the latter matrix form a basis for $\rowspace{M}$.
+\begin{equation*}
+  B=\sequence{\rowvec{1 &2  &1 &0 &3},\,
+          \rowvec{0 &0  &3 &2 &3}
+          }
+\end{equation*}
+The row rank is $2$.
+
+So Gauss's Method produces a basis for the row space of a matrix.
+It has found the ``repeat'' information, that $M$'s third
+row is three times the first plus the second, and eliminated that extra row.
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}{Column space}
+\df[df:ColumnSpace]
+\ExecuteMetaData[\vsdir vs3.tex]{df:ColumnSpace}
+
+\pause
+\ex
+This system
+\begin{equation*}
+  \begin{linsys}{2}
+  2x &+ &3y     &= &d_1  \\
+  -x &+ &(1/2)y &= &d_2
+  \end{linsys}
+\end{equation*}
+has a solution for those $d_1,d_2\in\Re$ that we can find to satisfy
+this vector equation.
+\begin{equation*}
+  x\cdot\colvec{2 \\ -1}+y\cdot\colvec{3 \\ 1/2}
+  =\colvec{d_1 \\ d_2}
+  \qquad x,y\in\Re
+\end{equation*}
+That is, the system has a solution if and only if the vector on the right
+is in the column space of this matrix.
+\begin{equation*}
+  \begin{mat}
+    2  &3  \\
+    -1 &1/2
+  \end{mat}
+\end{equation*}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}{Transpose}
+\df[df:Transpose]
+\ExecuteMetaData[\vsdir vs3.tex]{df:Transpose}
+
+\pause
+\ex
+To find a basis for the column space of a matrix,
+\begin{equation*}
+  \begin{mat}
+    2  &3  \\
+    -1 &1/2
+  \end{mat}
+\end{equation*}
+transpose,
+\begin{equation*}
+  \trans{\begin{mat}
+    2  &3  \\
+    -1 &1/2
+  \end{mat}}
+  =
+  \begin{mat}
+    2  &-1  \\
+    3 &1/2
+  \end{mat}
+\end{equation*}
+reduce, 
+\begin{equation*}
+  \begin{mat}
+    2  &-1  \\
+    3 &1/2
+  \end{mat}
+  \grstep{(-3/2)\rho_1+\rho_2}
+  \begin{mat}
+    2  &-1  \\
+    0  &2
+  \end{mat}
+\end{equation*}
+and transpose back.
+\begin{equation*}
+  \trans{\begin{mat}
+    2  &-1  \\
+    0  &2
+  \end{mat}}
+  =
+  \begin{mat}
+    2  &0  \\
+    -1 &2
+  \end{mat}
+\end{equation*}
+\end{frame}
+\begin{frame}
+\noindent
+This basis
+\begin{equation*}
+  B=\sequence{\colvec{2 \\ -1},
+              \colvec{0 \\ 2}
+            }
+\end{equation*}
+shows that the column space is the entire vector space $\Re^2$. 
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\lm[le:RowOpsNoChngColRnk]
+\ExecuteMetaData[\vsdir vs3.tex]{lm:RowOpsNoChngColRnk}
+\iftoggle{showallproofs}{
+  \pf
+  \ExecuteMetaData[\vsdir vs3.tex]{pf:RowOpsNoChngColRnk}
+  \qed
+}{
+  \medskip\par
+  The reason is that row operations do not change linear relationships between
+  the columns.
+  So row operations do not change
+  the number of linearly unrelated columns.
+
+  The book has the full proof; here is an example.
+  In this matrix, the second column minus the first is equal to the third.
+  \begin{equation*}
+    \begin{mat}
+      1  &2  &1  \\
+      0  &3  &3  \\
+      2  &6  &4
+    \end{mat}
+  \end{equation*}
+  As we perform row operations
+  that relationship between the columns
+  continues to hold.
+  \begin{equation*}
+    \grstep{-2\rho_1+\rho_3}
+    \begin{mat}
+      1  &2  &1  \\
+      0  &3  &3  \\
+      0  &2  &2
+    \end{mat}
+    \grstep{-(2/3)\rho_2+\rho_3}
+    \begin{mat}
+      1  &2  &1  \\
+      0  &3  &3  \\
+      0  &0  &0
+    \end{mat}
+  \end{equation*}
+}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\th[th:RowRankEqualsColumnRank]
+\ExecuteMetaData[\vsdir vs3.tex]{th:RowRankEqualsColumnRank}
+
+\pause
+\pf
+\ExecuteMetaData[\vsdir vs3.tex]{pf:RowRankEqualsColumnRank0}
+
+\pause
+\ExecuteMetaData[\vsdir vs3.tex]{pf:RowRankEqualsColumnRank1}
+\qed
+
+\pause
+\df[df:Rank]
+\ExecuteMetaData[\vsdir vs3.tex]{df:Rank}
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\ex
+The column rank of this matrix 
+\begin{equation*}
+  \begin{mat}
+    2 &-1 &3 &1 &0 &1  \\
+    3 &0  &1 &1 &4 &-1 \\
+    4 &-2 &6 &2 &0 &2  \\
+    1 &0  &3 &0 &0 &2 
+  \end{mat}
+\end{equation*}
+is $3$.  
+Its largest set of linearly independent columns is size~$3$
+because that's the size of its largest set of linearly independent rows.
+\begin{equation*}\hspace*{-2em}
+  \grstep[-2\rho_1+\rho_3 \\ -(1/2)\rho_1+\rho_4]{-(3/2)\rho_1+\rho_2}
+  \grstep{-(1/3)\rho_2+\rho_4}
+  \grstep{\rho_3\leftrightarrow\rho_4}
+  \begin{mat}
+    2 &-1   &3    &1    &0     &1    \\
+    0 &3/2  &-7/2 &-1/2 &4     &-5/2 \\
+    0 &0    &8/3  &-1/3 &-4/3  &7/3   \\
+    0 &0    &0    &0    &0     &0 
+  \end{mat}
+\end{equation*}
+\end{frame}
+
+
+
+%..........
+\begin{frame}
+\th[th:RankVsSoltnSp]
+\ExecuteMetaData[\vsdir vs3.tex]{tm:RankVsSoltnSp}
+
+\pause
+\pf
+\ExecuteMetaData[\vsdir vs3.tex]{pf:RankVsSoltnSp}
+\qed
+\end{frame}
+
+
+
+
+%..........
+\begin{frame}
+\co[co:EquivToNonsingular]
+\ExecuteMetaData[\vsdir vs3.tex]{co:EquivToNonsingular}
+
+\pause
+\pf
+\ExecuteMetaData[\vsdir vs3.tex]{pf:EquivToNonsingular}
+\qed
+\end{frame}
+
+
+
+
+%...........................
+% \begin{frame}
+% \ExecuteMetaData[../gr3.tex]{GaussJordanReduction}
+% \df[def:RedEchForm]
+% 
+% \end{frame}
+\end{document}

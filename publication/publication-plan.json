@@ -1,0 +1,240 @@
+{
+  "schema_version": "hefferon-id-publication-plan-v1",
+  "release": {
+    "version": "2026.08.22",
+    "tag": "v2026.08.22",
+    "publication_date": "2026-08-22",
+    "title": "Aljabar Linear karya Jim Hefferon — Edisi Bahasa Indonesia",
+    "short_title": "Aljabar Linear — Edisi Bahasa Indonesia",
+    "model_provenance": "OpenAI Codex gpt-5.6-sol, Ultra."
+  },
+  "authority": {
+    "author": "Jim Hefferon",
+    "work": "Linear Algebra, Fourth Edition",
+    "homepage": "https://hefferon.net/linearalgebra",
+    "repository": "https://gitlab.com/jim.hefferon/linear-algebra",
+    "source_commit": "df2262e089a02651c127f1dd12649c4622ee1383",
+    "source_tree": "30340725aa2641b3c617b1584c59f6df83e1fdf3",
+    "source_commit_url": "https://gitlab.com/jim.hefferon/linear-algebra/-/tree/df2262e089a02651c127f1dd12649c4622ee1383"
+  },
+  "rights": {
+    "selected_license_id": "cc-by-sa-2.5",
+    "selected_license_name": "Creative Commons Attribution-ShareAlike 2.5 Generic",
+    "selected_license_url": "https://creativecommons.org/licenses/by-sa/2.5/",
+    "route": "The pinned upstream LICENSE offers GNU FDL or CC BY-SA 2.5; this derivative edition selects CC BY-SA 2.5 for material covered by that notice. Embedded components retain their own notices and licenses.",
+    "attribution_file": "NOTICE.id-ID.md"
+  },
+  "github": {
+    "owner": "KokunoYumeto",
+    "repository": "hefferon-linear-algebra-id",
+    "description": "Edisi Bahasa Indonesia dari Linear Algebra karya Jim Hefferon, dengan buku jawaban, laboratorium Sage, dan backend modular. OpenAI Codex gpt-5.6-sol, Ultra.",
+    "default_branch": "main",
+    "pages_path": "/docs",
+    "topics": [
+      "bahasa-indonesia",
+      "education",
+      "latex",
+      "linear-algebra",
+      "open-textbook",
+      "sage",
+      "translation"
+    ]
+  },
+  "zenodo": {
+    "upload_type": "publication",
+    "publication_type": "book",
+    "language": "ind",
+    "creator": "Hefferon, Jim",
+    "access_right": "open",
+    "keywords": [
+      "Bahasa Indonesia",
+      "id-ID",
+      "linear algebra",
+      "aljabar linear",
+      "open textbook",
+      "worked answers",
+      "SageMath",
+      "modular translation backend",
+      "LaTeX",
+      "CC BY-SA 2.5",
+      "AI translation"
+    ]
+  },
+  "runtime": {
+    "github_token_environment": "HEFFERON_GITHUB_TOKEN",
+    "zenodo_token_environment": "HEFFERON_ZENODO_TOKEN",
+    "excluded_local_configuration": "publication/.runtime.json"
+  },
+  "qa": {
+    "source_root": "source/linear-algebra",
+    "build_report": "build/hefferon_id/build_report.json",
+    "staged_source_manifest": "build/hefferon_id/staged_source_manifest.json",
+    "all_page_render_manifest": "build/hefferon_id/all_page_render_manifest.json",
+    "cross_pdf_link_audit": "build/hefferon_id/cross_pdf_link_audit.json",
+    "lab_sagetex_runtime_manifest": "build/hefferon_id/lab_sagetex_runtime_manifest.json",
+    "metapost_asset_manifest": "build/hefferon_id/metapost_asset_manifest.json",
+    "pdftex_input_audit": "build/hefferon_id/pdftex_input_audit.json",
+    "final_pdf_qa": "qa/final_pdf_qa.json",
+    "final_visual_review": "qa/final_visual_review.json",
+    "backend_validator": "backend/validate_backend.py",
+    "required_status": "success",
+    "require_reproducibility_match": true,
+    "require_source_unchanged": true,
+    "require_zero_undefined_references": true,
+    "require_zero_generated_english_labels": true,
+    "require_zero_runtime_placeholders": true,
+    "require_resolved_cross_pdf_links": true,
+    "require_sidecar_byte_bindings": true,
+    "require_lab_sagetex_closure": true,
+    "require_build_fingerprint_v4": true,
+    "require_final_pdf_qa_zero_hard_failures": true,
+    "require_final_visual_review_pass": true,
+    "require_complete_visual_review_coverage": true,
+    "require_backend_final_build": true
+  },
+  "reader_pdfs": [
+    {
+      "component": "textbook",
+      "source": "build/hefferon_id/output/pdf/book.pdf",
+      "release_name": "01_HEFFERON_LINEAR_ALGEBRA_ID_TEXTBOOK_2026.08.22.pdf"
+    },
+    {
+      "component": "worked-answers",
+      "source": "build/hefferon_id/output/pdf/jhanswer.pdf",
+      "release_name": "02_HEFFERON_LINEAR_ALGEBRA_ID_WORKED_ANSWERS_2026.08.22.pdf"
+    },
+    {
+      "component": "sage-lab",
+      "source": "build/hefferon_id/output/pdf/lab.pdf",
+      "release_name": "03_HEFFERON_LINEAR_ALGEBRA_ID_SAGE_LAB_2026.08.22.pdf"
+    }
+  ],
+  "bundles": [
+    {
+      "kind": "editable-source",
+      "release_name": "HEFFERON_LINEAR_ALGEBRA_ID_EDITABLE_SOURCE_2026.08.22.zip",
+      "include": [
+        "README.md",
+        "LICENSE",
+        "NOTICE.id-ID.md",
+        "authority/archives/linear-algebra-df2262e089a02651c127f1dd12649c4622ee1383.zip",
+        "authority/official/book.pdf",
+        "authority/official/jhanswer.pdf",
+        "authority/official/lab.pdf",
+        "source/linear-algebra",
+        "tools"
+      ]
+    },
+    {
+      "kind": "modular-backend",
+      "release_name": "HEFFERON_LINEAR_ALGEBRA_ID_MODULAR_BACKEND_2026.08.22.zip",
+      "include": [
+        "backend"
+      ]
+    },
+    {
+      "kind": "provenance-qa",
+      "release_name": "HEFFERON_LINEAR_ALGEBRA_ID_PROVENANCE_QA_2026.08.22.zip",
+      "include": [
+        "00_control",
+        "qa/final_pdf_qa.json",
+        "qa/final_visual_review.json",
+        "qa/visual_review/final-2b463cbced3f",
+        "build/hefferon_id/build_report.json",
+        "build/hefferon_id/staged_source_manifest.json",
+        "build/hefferon_id/book_graphics_manifest.csv",
+        "build/hefferon_id/lab_graphics_manifest.csv",
+        "build/hefferon_id/missing_lab_asset_manifest.json",
+        "build/hefferon_id/lab_sagetex_runtime_manifest.json",
+        "build/hefferon_id/metapost_asset_manifest.json",
+        "build/hefferon_id/pdftex_input_audit.json",
+        "build/hefferon_id/cross_pdf_link_audit.json",
+        "build/hefferon_id/all_page_render_manifest.json",
+        "build/hefferon_id/logs"
+      ]
+    }
+  ],
+  "repository_snapshot": {
+    "include": [
+      "README.md",
+      "LICENSE",
+      "NOTICE.id-ID.md",
+      "authority/archives/linear-algebra-df2262e089a02651c127f1dd12649c4622ee1383.zip",
+      "authority/official/book.pdf",
+      "authority/official/jhanswer.pdf",
+      "authority/official/lab.pdf",
+      "source/linear-algebra",
+      "backend",
+      "tools",
+      "00_control",
+      "qa/final_pdf_qa.json",
+      "qa/final_visual_review.json",
+      "qa/visual_review/final-2b463cbced3f",
+      "publication/README.md",
+      "publication/REMOTE_PREFLIGHT.md",
+      "publication/publication-plan.json",
+      "publication/publish_release.py",
+      "publication/tests",
+      "publication/README_RELEASE_2026.08.22.md",
+      "publication/release-manifest.json",
+      "publication/SHA256SUMS",
+      "docs"
+    ],
+    "exclude_names": [
+      ".publication.lock",
+      ".runtime.json",
+      ".transactions",
+      "__pycache__",
+      ".DS_Store",
+      "public-readback.json",
+      "transaction-state.json"
+    ],
+    "exclude_suffixes": [
+      ".pyc",
+      ".pyo"
+    ]
+  },
+  "release_assets": {
+    "directory": "publication/release-assets/2026.08.22",
+    "readme": "README_RELEASE_2026.08.22.md",
+    "manifest": "release-manifest.json",
+    "checksums": "SHA256SUMS",
+    "expected_count": 9
+  },
+  "staging_inputs": [
+    "README.md",
+    "LICENSE",
+    "NOTICE.id-ID.md",
+    "authority/archives/linear-algebra-df2262e089a02651c127f1dd12649c4622ee1383.zip",
+    "authority/official/book.pdf",
+    "authority/official/jhanswer.pdf",
+    "authority/official/lab.pdf",
+    "source/linear-algebra",
+    "backend",
+    "tools",
+    "00_control",
+    "qa/final_pdf_qa.json",
+    "qa/final_visual_review.json",
+    "qa/visual_review/final-2b463cbced3f",
+    "authority/extracted/linear-algebra-df2262e089a02651c127f1dd12649c4622ee1383",
+    "build/hefferon_id/build_report.json",
+    "build/hefferon_id/staged_source_manifest.json",
+    "build/hefferon_id/book_graphics_manifest.csv",
+    "build/hefferon_id/lab_graphics_manifest.csv",
+    "build/hefferon_id/missing_lab_asset_manifest.json",
+    "build/hefferon_id/lab_sagetex_runtime_manifest.json",
+    "build/hefferon_id/metapost_asset_manifest.json",
+    "build/hefferon_id/pdftex_input_audit.json",
+    "build/hefferon_id/cross_pdf_link_audit.json",
+    "build/hefferon_id/all_page_render_manifest.json",
+    "build/hefferon_id/logs",
+    "build/hefferon_id/output/pdf/book.pdf",
+    "build/hefferon_id/output/pdf/jhanswer.pdf",
+    "build/hefferon_id/output/pdf/lab.pdf",
+    "publication/README.md",
+    "publication/REMOTE_PREFLIGHT.md",
+    "publication/publication-plan.json",
+    "publication/publish_release.py",
+    "publication/tests"
+  ]
+}

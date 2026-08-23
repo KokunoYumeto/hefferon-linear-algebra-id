@@ -1,0 +1,2768 @@
+% Chapter 3, Section 1 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-11
+\chapter{Pemetaan Antar-Ruang}% 
+% Without this hack, it prints \nobreak
+\ \vspace{-10ex}
+
+\index{isomorfisme|(}
+\section{Isomorfisme} %
+Dalam contoh-contoh setelah definisi ruang vektor,
+kita mengemukakan intuisi bahwa beberapa ruang pada hakikatnya sama dengan
+ruang lainnya.
+Sebagai contoh, 
+% the space of two-tall column vectors and
+% the space of two-wide row vectors
+% are not equal because their 
+% elements\Dash column vectors and row vectors\Dash are 
+% not equal, 
+kita dapat melihat bahwa ruang matriks dua-kali-dua dan
+ruang vektor kolom berukuran empat
+\begin{equation*}
+  \matspace_{\nbyn{2}}=\set{
+    \begin{pmatrix}
+      a &b \\
+      c &d
+    \end{pmatrix}\suchthat a,b,c,d\in\R}
+  \qquad
+  \R^4=\set{\colvec{a \\ b \\ c \\ d}\suchthat a,b,c,d\in\R}
+\end{equation*}
+tidak sama karena unsur-unsurnya tidak sama, tetapi perbedaannya
+hanyalah pada tampilan.
+Sekarang kita akan menyatakan hal ini secara tepat.
+
+Hal ini menggambarkan tahap yang umum dalam penyelidikan matematis.
+Dengan bantuan beberapa contoh, kita telah memperoleh suatu gagasan.
+Selanjutnya kita akan memberikan definisi formal, lalu
+menghasilkan sejumlah hasil yang mendukung pendapat kita bahwa
+definisi tersebut menangkap gagasan itu.
+Kita sudah pernah melihat pola ini, misalnya pada bagian pertama
+dalam bab Ruang Vektor.
+Di sana, kajian tentang sistem linear mengarahkan kita untuk
+meninjau kumpulan yang tertutup terhadap kombinasi linear.
+Kumpulan semacam itu kita definisikan sebagai ruang vektor,
+lalu kita memberikan beberapa hasil pendukung.
+
+Itu bukanlah titik akhir; sebaliknya,
+hal tersebut mengarah pada wawasan baru seperti gagasan tentang basis.
+Di sini pun, setelah membuat dan mendukung sebuah definisi,
+kita akan memperoleh dua kejutan yang menyenangkan.
+Pertama, kita akan mendapati bahwa definisi tersebut berlaku pada
+beberapa kasus menarik yang tidak terduga.
+Kedua, kajian terhadap definisi itu akan menghasilkan gagasan-gagasan baru.
+Dengan demikian, penyelidikan kita akan terus berkembang.
+
+
+
+
+
+
+
+
+\subsection{Def{}inisi dan Contoh}
+Kita mulai dengan dua contoh yang mengarahkan kita pada definisi yang tepat. 
+
+\begin{example}  \label{exam:TwoWideIsoTwoTall}
+Ruang vektor baris berukuran dua dan
+ruang vektor kolom berukuran dua
+``sama'' dalam arti bahwa jika kita memasangkan vektor-vektor
+yang memiliki komponen yang sama, misalnya,
+\begin{equation*}
+   \rowvec{1 &2} \quad\longleftrightarrow\quad \colvec[r]{1 \\ 2}
+\end{equation*}
+(baca panah ganda sebagai ``berkorespondensi dengan''),
+maka pemasangan ini menghormati operasi-operasinya.
+Sebagai contoh, vektor-vektor yang berkorespondensi ini dijumlahkan menjadi
+hasil-hasil yang juga berkorespondensi
+\begin{equation*}
+  \rowvec{1 &2}+\rowvec{3 &4}=\rowvec{4 &6}
+  \quad\longleftrightarrow\quad
+  \colvec[r]{1 \\ 2}+\colvec[r]{3 \\ 4}=\colvec[r]{4 \\ 6}
+\end{equation*}
+dan berikut adalah contoh bahwa korespondensi tersebut menghormati
+perkalian skalar.
+\begin{equation*}
+  5\cdot\rowvec{1  &2}=\rowvec{5 &10}
+  \quad\longleftrightarrow\quad
+  5\cdot\colvec[r]{1 \\ 2}=\colvec[r]{5 \\ 10}
+\end{equation*}
+Secara umum, di bawah korespondensi
+\begin{equation*}
+  \rowvec{a_0  &a_1}
+  \quad\longleftrightarrow\quad
+  \colvec{a_0 \\ a_1}
+\end{equation*} 
+kedua operasi dipertahankan:
+\begin{equation*}
+  \rowvec{a_0  &a_1}+\rowvec{b_0  &b_1}=\rowvec{a_0+b_0 &a_1+b_1}
+  \hfill\longleftrightarrow\hfill
+  \colvec{a_0 \\ a_1}+\colvec{b_0  \\ b_1}=\colvec{a_0+b_0  \\ a_1+b_1}
+\end{equation*}
+dan
+\begin{equation*}
+ r\cdot\rowvec{a_0 &a_1}=\rowvec{ra_0 &ra_1}
+  \quad\longleftrightarrow\quad
+ r\cdot\colvec{a_0  \\ a_1}=\colvec{ra_0  \\ ra_1}
+\end{equation*}
+(semua variabelnya adalah skalar).
+\end{example}
+
+\begin{example} \label{exam:PolyTwoIsoRThree}  
+Dua ruang lain yang dapat kita pandang ``sama'' adalah
+\( \polyspace_2 \), ruang polinomial kuadrat, dan \( \Re^3 \).
+Korespondensi yang alami adalah sebagai berikut.
+\begin{equation*}
+  a_0+a_1x+a_2x^2
+  \quad\longleftrightarrow\quad
+  \colvec{a_0 \\ a_1 \\ a_2}
+%  \qquad
+  \tag*{\mbox{(mis., $1+2x+3x^2\,\longleftrightarrow\,\colvec[r]{1 \\ 2 \\ 3}$)}}
+\end{equation*}
+Korespondensi ini mempertahankan struktur:~unsur-unsur yang berkorespondensi
+dijumlahkan dengan cara yang berkorespondensi
+\begin{equation*}
+    \mbox{\begin{tabular}{r}
+        \( a_0+a_1x+a_2x^2 \)  \\
+     +\,\,\( b_0+b_1x+b_2x^2 \)  \\ \hline
+        \( (a_0+b_0)+(a_1+b_1)x+(a_2+b_2)x^2 \)
+     \end{tabular} }
+    \longleftrightarrow
+    \colvec{a_0 \\ a_1 \\ a_2}
+    +\colvec{b_0 \\ b_1 \\ b_2}
+    =\colvec{a_0+b_0 \\ a_1+b_1 \\ a_2+b_2}
+\end{equation*}
+dan perkalian skalarnya juga berkorespondensi.
+\begin{equation*}
+  r\cdot(a_0+a_1x+a_2x^2)=
+    (ra_0)+(ra_1)x+(ra_2)x^2
+  \quad\longleftrightarrow\quad
+  r\cdot\colvec{a_0 \\ a_1 \\ a_2}
+  =\colvec{ra_0 \\ ra_1 \\ ra_2}
+\end{equation*}
+\end{example}
+
+\begin{definition} \label{def:Isomorphism}
+%<*df:Isomorphism>
+Sebuah \definend{isomorfisme}\index{isomorfisme!definisi}%
+\index{ruang vektor!isomorfisme}
+antara dua ruang vektor $V$ dan $W$
+adalah pemetaan \( \map{f}{V}{W} \) yang
+\begin{enumerate}
+  \item merupakan korespondensi:\index{korespondensi}
+     \( f \) bersifat injektif dan surjektif;% \footnotemark % keep fn in minipage
+                   \appendrefs{korespondensi}
+  \item \definend{mempertahankan struktur:}\index{fungsi!mempertahankan struktur}
+   jika \( \vec{v}_1,\vec{v}_2\in V \), maka
+   \begin{equation*}
+      f(\vec{v}_1+\vec{v}_2)=f(\vec{v}_1)+f(\vec{v}_2)
+   \end{equation*}
+   dan jika \( \vec{v}\in V \) dan \( r\in\Re \), maka
+   \begin{equation*}
+         f(r\vec{v})=r{}f(\vec{v})  % suppress kerning
+   \end{equation*}
+\end{enumerate}
+(kita menulis \( V\isomorphicto W \), dibaca ``\( V \) isomorfik dengan \( W \)'',
+jika pemetaan semacam itu ada).
+%</df:Isomorphism>
+\end{definition}% \footnotetext{More information on one-to-one and onto maps 
+                %               is in the appendix.}
+
+\noindent ``Morfisme''\index{morfisme} berarti pemetaan,
+sehingga ``isomorfisme'' berarti pemetaan yang menyatakan kesamaan.
+
+\begin{example}  \label{ex:CheckMapIsIso}
+Ruang vektor
+\(  G=\set{c_1\cos\theta+c_2\sin\theta\suchthat c_1,c_2\in\Re} \)
+yang terdiri atas fungsi-fungsi dari \( \theta \) isomorfik dengan
+\( \Re^2 \) di bawah pemetaan berikut.
+\begin{equation*}
+  c_1\cos\theta+c_2\sin\theta\mapsunder{f}\colvec{c_1 \\ c_2}
+\end{equation*}
+Kita akan memeriksanya dengan menelusuri syarat-syarat dalam definisi.
+Pertama-tama kita akan memverifikasi syarat~(1), yaitu bahwa pemetaan tersebut
+merupakan korespondensi antara himpunan-himpunan yang mendasari kedua ruang.
+
+Untuk menunjukkan bahwa $f$ injektif,
+kita harus membuktikan bahwa \( f(\vec{a})=f(\vec{b}) \) hanya jika
+\( \vec{a}=\vec{b} \).
+Jika
+\begin{equation*}
+   f(a_1\cos\theta+a_2\sin\theta)=f(b_1\cos\theta+b_2\sin\theta)
+\end{equation*}
+maka berdasarkan definisi $f$
+\begin{equation*}
+  \colvec{a_1 \\ a_2}=\colvec{b_1 \\ b_2}
+\end{equation*}
+dari sini kita menyimpulkan bahwa \( a_1=b_1 \) dan \( a_2=b_2 \),
+karena dua vektor kolom sama hanya jika komponen-komponennya sama.
+Jadi $a_1\cos\theta+a_2\sin\theta=b_1\cos\theta+b_2\sin\theta$, dan
+sesuai kebutuhan kita telah memverifikasi bahwa \( f(\vec{a})=f(\vec{b}) \)
+menyiratkan \( \vec{a}=\vec{b} \).
+% which shows that \( f \) is one-to-one.
+
+Untuk membuktikan bahwa $f$ surjektif, kita harus memeriksa bahwa setiap unsur
+kodomain \( \Re^2 \) merupakan bayangan dari suatu unsur domain $G$.
+Maka, tinjau suatu unsur kodomain
+\begin{equation*}
+   \colvec{x \\ y}
+\end{equation*}
+dan perhatikan bahwa unsur ini merupakan bayangan
+\( x\cos\theta+y\sin\theta \) di bawah $f$.
+
+Selanjutnya kita akan memverifikasi syarat~(2), yaitu bahwa $f$
+mempertahankan struktur.
+Perhitungan berikut menunjukkan bahwa \( f \) mempertahankan penjumlahan.
+\begin{multline*}
+  f\bigl(\,(a_1\cos\theta+a_2\sin\theta)
+      +(b_1\cos\theta+b_2\sin\theta)\,\bigr)                     \\
+ \begin{aligned}
+  &=f\bigl(\,(a_1+b_1)\cos\theta+(a_2+b_2)\sin\theta\,\bigr)   \\
+  &=\colvec{a_1+b_1 \\ a_2+b_2}   \\
+  &=\colvec{a_1 \\ a_2}+\colvec{b_1 \\ b_2}   \\
+  &=f(a_1\cos\theta+a_2\sin\theta)+f(b_1\cos\theta+b_2\sin\theta)
+ \end{aligned}
+\end{multline*}
+Perhitungan yang menunjukkan bahwa $f$ mempertahankan perkalian skalar serupa.
+\begin{align*}
+  f\bigl(\,r\cdot(a_1\cos\theta+a_2\sin\theta)\,\bigr)
+  &=f(\,ra_1\cos\theta+ra_2\sin\theta\,)   \\
+  &=\colvec{ra_1 \\ ra_2}   \\
+  &=r\cdot\colvec{a_1 \\ a_2}   \\
+  &=r\cdot\, f(a_1\cos\theta+a_2\sin\theta)
+\end{align*}
+
+Karena (1) dan~(2) telah diverifikasi,
+kita mengetahui bahwa $f$ adalah isomorfisme dan dapat mengatakan bahwa
+kedua ruang tersebut isomorfik, $G\isomorphicto\Re^2$.
+\end{example}
+
+\begin{example} \label{ex:LinComboThreeIsoPTwo}
+Misalkan \( V \) adalah ruang
+\( \set{c_1x+c_2y+c_3z\suchthat c_1,c_2,c_3\in\Re} \)
+yang terdiri atas kombinasi linear ketiga variabel tersebut,
+di bawah operasi penjumlahan dan perkalian skalar yang alami.
+Maka $V$ isomorfik dengan $\polyspace_2$, yaitu ruang polinomial kuadrat.
+
+Untuk menunjukkan hal ini, kita harus menghasilkan sebuah pemetaan isomorfisme.
+Terdapat lebih dari satu kemungkinan; misalnya, berikut empat pilihan.
+\begin{center}
+  \begin{tabular}{c}
+    $c_1x+c_2y+c_3z$
+  \end{tabular}  \quad
+  \begin{tabular}{rl}
+      $\mapsunder{f_1}$    &$c_1+c_2x+c_3x^2$  \\
+      $\mapsunder{f_2}$    &$c_2+c_3x+c_1x^2$  \\
+      $\mapsunder{f_3}$    &$-c_1-c_2x-c_3x^2$  \\
+      $\mapsunder{f_4}$    &$c_1+(c_1+c_2)x+(c_1+c_3)x^2$
+  \end{tabular}
+\end{center}
+Pemetaan pertama merupakan korespondensi yang lebih alami karena hanya
+memindahkan koefisien-koefisiennya.
+Namun, kita akan menggunakan $f_2$ untuk menegaskan bahwa terdapat
+isomorfisme selain yang tampak jelas.
+(Pemeriksaan bahwa $f_1$ merupakan isomorfisme terdapat pada
+\nearbyexercise{exer:NatMapAlsoIso}.)
+
+Untuk menunjukkan bahwa $f_2$ injektif, kita akan membuktikan bahwa jika
+$f_2(c_1x+c_2y+c_3z)=f_2(d_1x+d_2y+d_3z)$
+maka $c_1x+c_2y+c_3z=d_1x+d_2y+d_3z$.
+Asumsi $f_2(c_1x+c_2y+c_3z)=f_2(d_1x+d_2y+d_3z)$,
+berdasarkan definisi $f_2$, memberikan
+$c_2+c_3x+c_1x^2=d_2+d_3x+d_1x^2$.
+Dua polinomial yang sama memiliki koefisien yang sama, sehingga
+$c_2=d_2$, $c_3=d_3$, dan $c_1=d_1$.
+Oleh karena itu, $f_2(c_1x+c_2y+c_3z)=f_2(d_1x+d_2y+d_3z)$ menyiratkan
+$c_1x+c_2y+c_3z=d_1x+d_2y+d_3z$, sehingga $f_2$ injektif.
+
+Pemetaan $f_2$ surjektif karena setiap unsur $a+bx+cx^2$ dari kodomain
+merupakan bayangan suatu unsur domain, tepatnya $f_2(cx+ay+bz)$.
+Sebagai contoh, $2+3x-4x^2$ adalah $f_2(-4x+2y+3z)$.
+
+Perhitungan untuk mempertahankan struktur serupa dengan perhitungan pada
+contoh sebelumnya.
+Pemetaan $f_2$ mempertahankan penjumlahan
+\begin{multline*}
+  f_2\bigl((c_1x+c_2y+c_3z)
+        +(d_1x+d_2y+d_3z)\bigr)       \\
+ \begin{aligned}
+  &=f_2\bigl((c_1+d_1)x+(c_2+d_2)y+(c_3+d_3)z\bigr)   \\
+  &=(c_2+d_2)+(c_3+d_3)x+(c_1+d_1)x^2   \\
+  &=(c_2+c_3x+c_1x^2)+(d_2+d_3x+d_1x^2)   \\
+  &=f_2(c_1x+c_2y+c_3z)+f_2(d_1x+d_2y+d_3z)
+ \end{aligned}
+\end{multline*}
+dan perkalian skalar.
+\begin{align*}
+  f_2\bigl(r\cdot(c_1x+c_2y+c_3z)\bigr)
+  &=f_2(rc_1x+rc_2y+rc_3z)   \\
+  &=rc_2+rc_3x+rc_1x^2   \\
+  &=r\cdot(c_2+c_3x+c_1x^2)   \\
+  &=r\cdot\, f_2(c_1x+c_2y+c_3z)
+\end{align*}
+Jadi $f_2$ merupakan isomorfisme.
+Kita menulis $V\isomorphicto\polyspace_2$.
+\end{example}
+
+\begin{example}
+Setiap ruang isomorfik dengan dirinya sendiri di bawah pemetaan identitas.
+Pemeriksaannya mudah.
+\end{example}
+
+\begin{definition} \label{df:Automorphism}
+%<*df:Automorphism>
+Sebuah \definend{automorfisme}\index{automorfisme}
+adalah isomorfisme suatu ruang dengan
+dirinya sendiri\index{isomorfisme!suatu ruang dengan dirinya sendiri}.
+%</df:Automorphism>
+\end{definition}
+
+\begin{example} \label{exam:RigidPlaneMapsAutos}
+%<*ex:RigidPlaneMapsAutos0>
+Sebuah pemetaan \definend{dilatasi}\index{dilatasi}%
+\index{automorfisme!dilatasi}
+$\map{d_s}{\Re^2}{\Re^2}$ yang mengalikan semua vektor dengan skalar tak nol
+$s$ merupakan automorfisme dari $\Re^2$.
+%</ex:RigidPlaneMapsAutos0>
+\begin{center} \small
+  \includegraphics{map/mp/ch3.14}                                
+\end{center}
+%<*ex:RigidPlaneMapsAutos1>
+Automorfisme lainnya adalah \definend{rotasi\/}\index{rotasi}%
+\index{automorfisme!rotasi}
+atau \definend{pemetaan perputaran}\index{pemetaan perputaran},
+$\map{t_{\theta}}{\Re^2}{\Re^2}$, yang memutar semua vektor melalui
+sudut~$\theta$.
+%</ex:RigidPlaneMapsAutos1>
+\begin{center} \small
+  \includegraphics{map/mp/ch3.15}                                
+\end{center}
+%<*ex:RigidPlaneMapsAutos2>
+Jenis ketiga automorfisme dari $\Re^2$ adalah pemetaan
+$\map{f_\ell}{\Re^2}{\Re^2}$ yang \definend{membalik}
+atau \definend{mencerminkan}\index{pencerminan terhadap garis}%
+\index{automorfisme!pencerminan}
+semua vektor terhadap suatu garis $\ell$ yang melalui titik asal.
+%</ex:RigidPlaneMapsAutos2>
+\begin{center} \small
+  \includegraphics{map/mp/ch3.16}                                
+\end{center}
+Pemeriksaan bahwa semuanya merupakan automorfisme terdapat pada
+\nearbyexercise{exer:RigidPlaneMapsAutos}.
+\end{example}
+
+\begin{example} \label{ex:OORThreeToFourLinCom}
+Tinjau ruang $\polyspace_5$ yang terdiri atas polinomial berderajat~$5$
+atau kurang, serta pemetaan $f$ yang membawa polinomial $p(x)$ ke $p(x-1)$.
+Sebagai contoh, di bawah pemetaan ini $x^2\mapsto (x-1)^2=x^2-2x+1$
+dan $x^3+2x\mapsto (x-1)^3+2(x-1)=x^3-3x^2+5x-3$.
+Pemetaan ini merupakan automorfisme ruang tersebut;
+pemeriksaannya terdapat pada \nearbyexercise{exer:PolyToPolyLinSubst}.
+
+Isomorfisme $\polyspace_5$ dengan dirinya sendiri ini tidak sekadar memberi
+tahu kita bahwa ruang tersebut ``sama'' dengan dirinya sendiri.
+Isomorfisme ini juga memberi kita wawasan tentang struktur ruang tersebut.
+Di bawah ini terdapat suatu keluarga parabola, yaitu grafik dari
+unsur-unsur $\polyspace_5$.
+Masing-masing memiliki titik puncak pada $y=-1$; parabola paling kiri
+memiliki akar pada $-2.25$ dan $-1.75$, parabola berikutnya memiliki akar
+pada $-1.25$ dan $-0.75$, dan seterusnya.
+\begin{center}
+  \includegraphics{map/mp/ch3.13}                                
+\end{center}
+Penggantian \( x \) dengan \( x-1 \) dalam argumen sebarang fungsi
+menggeser grafiknya satu satuan ke kanan.
+Jadi, $f(p_0)=p_1$, dan tindakan $f$ adalah menggeser semua parabola
+satu satuan ke kanan.
+Perhatikan bahwa gambar sebelum $f$ diterapkan sama dengan gambar setelah
+$f$ diterapkan: ketika setiap parabola bergerak ke kanan, parabola lain
+masuk dari kiri untuk menggantikannya.
+Hal yang sama juga berlaku untuk grafik kubik, dan sebagainya.
+Jadi, automorfisme $f$ menyatakan gagasan bahwa $P_5$ memiliki suatu
+homogenitas horizontal:
+jika kita menggambar dua gambar yang menampilkan semua unsur $\polyspace_5$,
+satu berpusat pada $x=0$ dan yang lain berpusat pada~$x=1$, kedua gambar
+tersebut tidak dapat dibedakan.
+\end{example}
+
+Seperti diuraikan pada pembukaan bagian ini, setelah memberikan definisi
+isomorfisme, selanjutnya kita akan mendukung tesis bahwa definisi tersebut
+menangkap intuisi kita mengenai ruang-ruang vektor yang sama.
+Pertama, definisinya sendiri meyakinkan:~sebuah ruang vektor terdiri atas
+suatu himpunan dan suatu struktur, dan definisi itu hanya mensyaratkan bahwa
+himpunan-himpunannya berkorespondensi serta strukturnya juga berkorespondensi.
+Contoh-contoh di atas juga meyakinkan, seperti
+\nearbyexample{exam:TwoWideIsoTwoTall}, yang memperlihatkan bahwa ruang-ruang
+isomorfik sama dalam segala hal yang relevan.
+Kadang-kadang, jika \( V\isomorphicto W \), orang mengatakan bahwa
+``\( W \) hanyalah \( V \) yang dicat hijau''\Dash perbedaannya semata-mata
+bersifat kosmetik.
+
+Hasil-hasil di bawah ini semakin mendukung pendapat kita bahwa di bawah
+suatu isomorfisme, semua hal yang penting pada kedua ruang vektor saling
+berkorespondensi.
+Karena kita memperkenalkan ruang vektor untuk mempelajari kombinasi linear,
+``penting'' berarti ``berkaitan dengan kombinasi linear.''
+Yang tidak penting adalah cara vektor-vektor itu ditampilkan secara tipografis
+(atau warnanya!\spacefactor1000).
+
+\begin{lemma}       \label{le:IsoSendsZeroToZero}
+%<*lm:IsoSendsZeroToZero>
+Sebuah isomorfisme memetakan vektor nol ke vektor nol.
+%</lm:IsoSendsZeroToZero>
+\end{lemma}
+
+\begin{proof}
+%<*pf:IsoSendsZeroToZero>
+Jika \( \map{f}{V}{W} \) adalah isomorfisme, tetapkan suatu
+\( \vec{v}\in V \).
+Maka \( f(\zero_V)=f(0\cdot\vec{v})=0\cdot f(\vec{v})=\zero_W \). 
+%</pf:IsoSendsZeroToZero>
+\end{proof}
+
+% The definition of isomorphism requires that sums of two vectors correspond and
+% that so do scalar multiples.
+% We can extend that to say that all linear combinations correspond.
+
+\begin{lemma}       \label{le:PresStructIffPresCombos}
+%<*lm:PresStructIffPresCombos>
+Untuk sebarang pemetaan \( \map{f}{V}{W} \) antara ruang-ruang vektor,
+pernyataan-pernyataan berikut ekuivalen.
+\begin{tfae}
+   \item \( f \) mempertahankan struktur\index{fungsi!mempertahankan struktur}
+     \begin{equation*}
+        f(\vec{v}_1+\vec{v}_2)=f(\vec{v}_1)+f(\vec{v}_2)
+         \quad\text{dan}\quad
+        f(c\vec{v})=c\,f(\vec{v})
+     \end{equation*}
+   \item \( f \) mempertahankan kombinasi linear dua vektor
+     \begin{equation*}
+        f(c_1\vec{v}_1+c_2\vec{v}_2)=c_1f(\vec{v}_1)+c_2f(\vec{v}_2)
+     \end{equation*}
+   \item \( f \) mempertahankan kombinasi linear sebarang banyak vektor
+     yang berhingga
+     \begin{equation*}
+        f(c_1\vec{v}_1+\dots+c_n\vec{v}_n)=
+           c_1f(\vec{v}_1)+\dots+c_nf(\vec{v}_n)
+     \end{equation*}
+\end{tfae}
+%</lm:PresStructIffPresCombos>
+\end{lemma}
+
+\begin{proof}
+%<*pf:PresStructIffPresCombos0>
+Karena implikasi \mbox{$\text{(3)}\!\implies\!\text{(2)}$} dan 
+\mbox{$\text{(2)}\!\implies\!\text{(1)}$}
+sudah jelas, kita hanya perlu menunjukkan bahwa
+\mbox{$\text{(1)}\!\implies\!\text{(3)}$}.
+Maka, andaikan pernyataan~(1).
+Kita akan membuktikan~(3) dengan induksi pada banyaknya suku $n$.
+%</pf:PresStructIffPresCombos0>
+
+%<*pf:PresStructIffPresCombos1>
+Kasus dasar satu suku, yaitu
+\( f(c\vec{v}_1)=c\,f(\vec{v}_1) \), sudah tercakup dalam klausa kedua
+pernyataan~(1).
+%</pf:PresStructIffPresCombos1>
+
+%<*pf:PresStructIffPresCombos2>
+Untuk langkah induksi, andaikan pernyataan~(3) berlaku setiap kali terdapat
+\( k \) suku atau kurang.
+% , that is, whenever
+% $n=1$, or $n=2$, \ldots, or $n=k$.
+Tinjau kasus dengan $k+1$ suku.
+Gunakan bagian pertama dari~(1) untuk memisahkan jumlah pada tanda `$+$'
+terakhir.
+\begin{equation*}
+  f(c_1\vec{v}_1+\dots+c_k\vec{v}_k+c_{k+1}\vec{v}_{k+1})
+  =f(c_1\vec{v}_1+\dots+c_k\vec{v}_k)+f(c_{k+1}\vec{v}_{k+1})
+\end{equation*}
+Gunakan hipotesis induksi untuk memisahkan jumlah $k$ suku di sebelah kiri.
+\begin{equation*}
+  =f(c_1\vec{v}_1)+\dots+f(c_k\vec{v}_k)+f(c_{k+1}\vec{v}_{k+1})
+\end{equation*}
+Sekarang bagian kedua dari~(1) memberikan
+\begin{equation*}
+  =c_1\,f(\vec{v}_1)+\dots+c_k\,f(\vec{v}_k)+c_{k+1}\,f(\vec{v}_{k+1})
+\end{equation*}
+ketika diterapkan sebanyak $k+1$~kali.
+%</pf:PresStructIffPresCombos2>
+\end{proof}
+
+% In addition to adding to the intuition that the definition of isomorphism
+% does indeed preserve the things of interest in a vector space, 
+\noindent Kita sering menggunakan butir~(2) untuk menyederhanakan verifikasi
+bahwa suatu pemetaan mempertahankan struktur.
+
+Sebagai penutup, berikut ringkasannya.
+Dalam bab sebelumnya, setelah memberikan definisi ruang vektor,
+kita melihat berbagai contoh dan mencatat bahwa beberapa ruang tampaknya
+pada hakikatnya sama dengan ruang lain.
+Di sini kita telah mendefinisikan relasi `\( \cong \)' dan berargumen bahwa
+relasi tersebut merupakan cara yang tepat untuk menyatakan secara cermat
+apa yang kita maksud dengan ``sama'', karena relasi itu mempertahankan
+ciri-ciri penting suatu ruang vektor\Dash khususnya, kombinasi linear.
+Pada bagian berikutnya kita akan menunjukkan bahwa isomorfisme merupakan
+relasi ekuivalensi sehingga mempartisi kumpulan ruang vektor.
+
+
+\begin{exercises}
+  \recommended \item \label{exer:PThreeIsoRFour}
+   Dengan menggunakan \nearbyexample {ex:CheckMapIsIso} sebagai model,
+   verifikasikan bahwa kedua korespondensi yang diberikan sebelum definisi
+   merupakan isomorfisme.
+   \begin{exparts*}
+      \partsitem \nearbyexample{exam:TwoWideIsoTwoTall}
+      \partsitem \nearbyexample{exam:PolyTwoIsoRThree}
+    \end{exparts*}
+    \begin{answer}
+     \begin{exparts}
+     \partsitem Namakan pemetaan tersebut $f$.
+       \begin{equation*}
+         \rowvec{a &b} \mapsunder{f} \colvec{a \\ b}
+       \end{equation*}
+       Pemetaan ini injektif karena jika $f$ membawa dua unsur domain ke
+       bayangan yang sama, yakni jika
+       $f\left(\rowvec{a &b}\right)=f\left(\rowvec{c &d}\right)$,
+       maka definisi $f$ memberikan
+       \begin{equation*}
+          \colvec{a \\ b}=\colvec{c \\ d}
+       \end{equation*}
+       dan karena vektor-vektor kolom sama hanya jika komponen-komponennya sama,
+       kita memperoleh $a=c$ dan $b=d$.
+       Jadi, jika $f$ memetakan dua vektor baris dari domain ke vektor kolom
+       yang sama, maka kedua vektor baris itu sama:
+       $\rowvec{a &b}=\rowvec{c &d}$.
+
+       Untuk menunjukkan bahwa $f$ surjektif, kita harus menunjukkan bahwa
+       setiap unsur kodomain $\Re^2$ adalah bayangan suatu vektor baris di
+       bawah $f$. Hal ini mudah;
+       \begin{equation*}
+          \colvec{x \\ y} 
+       \end{equation*}
+       adalah $f\left(\rowvec{x &y}\right)$.
+
+       Perhitungan yang menunjukkan dipertahankannya penjumlahan adalah
+       sebagai berikut.
+       \begin{multline*}
+         f\left(\rowvec{a &b}+\rowvec{c &d}\right) 
+           = f\left(\rowvec{a+c &b+d}\right)           
+           = \colvec{a+c \\ b+d}                               \\
+           = \colvec{a \\ b}+\colvec{c \\ d}         
+           = f\left(\rowvec{a &b}\right)+f\left(\rowvec{c &d}\right)
+       \end{multline*}
+       Perhitungan untuk perkalian skalar serupa.
+       \begin{equation*}
+         f\left(r\cdot\rowvec{a &b}\right) 
+           = f\left(\rowvec{ra &rb}\right)          
+           = \colvec{ra \\ rb}          
+           = r\cdot\colvec{a \\ b}          
+           = r\cdot f\left(\rowvec{a &b}\right)
+       \end{equation*}
+     \partsitem Nyatakan pemetaan dari \nearbyexample{exam:PolyTwoIsoRThree}
+      dengan $f$.
+      Untuk menunjukkan bahwa pemetaan tersebut injektif,
+      andaikan \( f(a_0+a_1x+a_2x^2)=f(b_0+b_1x+b_2x^2) \).
+      Maka, berdasarkan definisi fungsi,
+      \begin{equation*}
+        \colvec{a_0 \\ a_1 \\ a_2}
+        =\colvec{b_0 \\ b_1 \\ b_2}
+      \end{equation*}
+      sehingga \( a_0=b_0 \), \( a_1=b_1 \), dan \( a_2=b_2 \).
+      Jadi \( a_0+a_1x+a_2x^2=b_0+b_1x+b_2x^2 \), sehingga \( f \)
+      injektif.
+
+      Fungsi $f$ surjektif karena terdapat polinomial yang dipetakan ke
+      \begin{equation*}
+        \colvec{a \\ b \\ c}
+      \end{equation*}
+      oleh \( f \), yaitu \( a+bx+cx^2 \).
+
+      Mengenai struktur, perhitungan berikut menunjukkan bahwa $f$
+      mempertahankan penjumlahan
+      \begin{multline*}
+        f\left(\,(a_0+a_1x+a_2x^2)+(b_0+b_1x+b_2x^2)\,\right)           \\
+        \begin{aligned}
+        &=f\left(\,(a_0+b_0)+(a_1+b_1)x+(a_2+b_2)x^2\,\right)       \\
+        &=\colvec{a_0+b_0 \\ a_1+b_1 \\ a_2+b_2}                    \\
+        &=\colvec{a_0 \\ a_1 \\ a_2} +\colvec{b_0 \\ b_1 \\ b_2}   \\
+        &=f(a_0+a_1x+a_2x^2)+f(b_0+b_1x+b_2x^2)
+        \end{aligned}
+      \end{multline*}
+      dan perhitungan berikut menunjukkan
+      \begin{align*}
+        f(\,r(a_0+a_1x+a_2x^2)\,)
+        &=f(\,(ra_0)+(ra_1)x+(ra_2)x^2\,)    \\
+        &=\colvec{ra_0 \\ ra_1 \\ ra_2}     \\
+        &=r\cdot\colvec{a_0 \\ a_1 \\ a_2}     \\
+        &=r\,f(a_0+a_1x+a_2x^2)
+      \end{align*}   
+      bahwa pemetaan tersebut mempertahankan perkalian skalar.
+    \end{exparts} 
+   \end{answer}
+  \recommended \item 
+    Untuk pemetaan
+    \( \map{f}{\polyspace_1}{\Re^2} \) yang diberikan oleh
+    \begin{equation*}
+       a+bx\mapsunder{f}\colvec{a-b \\ b}
+    \end{equation*}
+    tentukan bayangan setiap unsur domain berikut.
+    \begin{exparts*}
+      \partsitem \( 3-2x \)
+      \partsitem \( 2+2x \)
+      \partsitem \( x \)
+    \end{exparts*}
+    Tunjukkan bahwa pemetaan ini merupakan isomorfisme.
+    \begin{answer}
+       Berikut adalah bayangan-bayangannya.
+       \begin{exparts*}
+        \partsitem \( \colvec[r]{5 \\ -2} \)
+        \partsitem \( \colvec[r]{0 \\ 2} \)
+        \partsitem \( \colvec[r]{-1 \\ 1} \)
+      \end{exparts*}
+
+      Untuk membuktikan bahwa $f$ injektif, andaikan bahwa pemetaan ini membawa
+      dua polinomial linear ke bayangan yang sama,
+      $f(a_1+b_1x)=f(a_2+b_2x)$. Maka
+      \begin{equation*}
+        \colvec{a_1-b_1 \\ b_1}=\colvec{a_2-b_2 \\ b_2}
+      \end{equation*}
+      dan karena vektor-vektor kolom sama hanya jika komponen-komponennya sama,
+      diperoleh $b_1=b_2$ dan $a_1=a_2$.
+      Hal ini menunjukkan bahwa kedua polinomial linear itu sama, sehingga
+      $f$ injektif.
+
+      Untuk menunjukkan bahwa $f$ surjektif, perhatikan bahwa unsur kodomain
+      \begin{equation*}
+         \colvec{s \\ t}
+      \end{equation*}
+      ini merupakan bayangan unsur domain $(s+t)+tx$.
+
+      Untuk memeriksa bahwa $f$ mempertahankan struktur,
+      kita dapat menggunakan butir~(2) dari
+      \nearbylemma{le:PresStructIffPresCombos}.
+      \begin{align*}
+        f\left(c_1\cdot (a_1+b_1x)+c_2\cdot (a_2+b_2x)\right)
+        &=f\left((c_1a_1+c_2a_2)+(c_1b_1+c_2b_2)x\right)                \\
+        &=\colvec{(c_1a_1+c_2a_2)-(c_1b_1+c_2b_2) \\ c_1b_1+c_2b_2}       \\  
+        &=c_1\cdot\colvec{a_1-b_1 \\ b_1}+c_2\cdot\colvec{a_2-b_2 \\ b_2}  \\
+        &=c_1\cdot f(a_1+b_1x)+c_2\cdot f(a_2+b_2x)
+      \end{align*}
+     \end{answer}
+  \item \label{exer:NatMapAlsoIso}
+    Tunjukkan bahwa pemetaan alami $f_1$ dari
+    \nearbyexample{ex:LinComboThreeIsoPTwo} 
+    merupakan isomorfisme.
+    \begin{answer}
+      Untuk memverifikasi bahwa pemetaan tersebut injektif, andaikan
+       $f_1(c_1x+c_2y+c_3z)=f_1(d_1x+d_2y+d_3z)$.
+      Maka $c_1+c_2x+c_3x^2=d_1+d_2x+d_3x^2$ berdasarkan definisi $f_1$.
+      Unsur-unsur $\polyspace_2$ sama hanya jika koefisien-koefisiennya sama,
+      sehingga hal ini menyiratkan $c_1=d_1$, $c_2=d_2$, dan $c_3=d_3$.
+      Oleh karena itu, $f_1(c_1x+c_2y+c_3z)=f_1(d_1x+d_2y+d_3z)$ menyiratkan
+      $c_1x+c_2y+c_3z=d_1x+d_2y+d_3z$, sehingga $f_1$ injektif.
+
+      Untuk memverifikasi bahwa pemetaan tersebut surjektif, tinjau sebarang
+      unsur kodomain $a_1+a_2x+a_3x^2$ dan perhatikan bahwa unsur itu memang
+      merupakan bayangan suatu unsur domain, yaitu
+      $f_1(a_1x+a_2y+a_3z)$.
+      (Sebagai contoh, $0+3x+6x^2=f_1(0x+3y+6z)$.)
+
+      Perhitungan yang memeriksa bahwa $f_1$ mempertahankan penjumlahan adalah
+      sebagai berikut.
+      \begin{multline*}
+        f_1\left(\,(c_1x+c_2y+c_3z)+(d_1x+d_2y+d_3z)\,\right)            \\
+          \begin{aligned}
+          &=f_1\left(\,(c_1+d_1)x+(c_2+d_2)y+(c_3+d_3)z\,\right)  \\
+          &=(c_1+d_1)+(c_2+d_2)x+(c_3+d_3)x^2  \\
+          &=(c_1+c_2x+c_3x^2)+(d_1+d_2x+d_3x^2)  \\
+          &=f_1(c_1x+c_2y+c_3z)+f_1(d_1x+d_2y+d_3z)
+          \end{aligned}
+      \end{multline*}
+
+      Pemeriksaan bahwa $f_1$ mempertahankan perkalian skalar adalah sebagai
+      berikut.
+      \begin{align*}
+        f_1(\,r\cdot (c_1x+c_2y+c_3z)\,)
+          &=f_1(\,(rc_1)x+(rc_2)y+(rc_3)z\,)  \\
+          &=(rc_1)+(rc_2)x+(rc_3)x^2  \\
+          &=r\cdot (c_1+c_2x+c_3x^2)  \\
+          &=r\cdot f_1(c_1x+c_2y+c_3z)
+      \end{align*}
+    \end{answer}
+  \item Tunjukkan bahwa pemetaan $\map{t}{\polyspace_2}{\polyspace_2}$ yang
+    diberikan oleh $t(ax^2+bx+c)=bx^2-(a+c)x+a$ merupakan isomorfisme.
+    \begin{answer}
+      Untuk melihat bahwa pemetaan tersebut injektif, andaikan
+      $t(\vec{v}_1)=t(\vec{v}_2)$ dengan tujuan menyimpulkan
+      $\vec{v}_1=\vec{v}_2$.
+      Artinya, $t(a_1x^2+b_1x+c_1)=t(a_2x^2+b_2x+c_2)$.
+      Maka $b_1x^2-(a_1+c_1)x+a_1=b_2x^2-(a_2+c_2)x+a_2$.
+      Karena polinomial kuadrat sama hanya jika suku kuadrat, suku konstan,
+      dan suku linearnya sama, kita menyimpulkan bahwa $b_1=b_2$,
+      $a_1=a_2$, dan dari sini $c_1=c_2$.
+      Oleh karena itu, $a_1x^2+b_1x+c_1=a_2x^2+b_2x+c_2$ dan fungsi tersebut
+      injektif.
+
+      Untuk melihat bahwa pemetaan tersebut surjektif, andaikan diberikan
+      suatu unsur~$\vec{w}$ dari kodomain, lalu carilah unsur~$\vec{v}$ dari
+      domain yang dipetakan kepadanya.
+      Misalkan unsur kodomain itu~$\vec{w}=px^2+qx+r$.
+      Perhatikan bahwa jika $\vec{v}=rx^2+px+(-q-r)$, maka
+      $t(\vec{v})=\vec{w}$. Jadi~$t$ surjektif.
+
+      Untuk melihat bahwa pemetaan tersebut merupakan homomorfisme, kita
+      menunjukkan bahwa pemetaan itu menghormati kombinasi linear dua unsur.
+      Berdasarkan \nearbylemma{le:PresStructIffPresCombos}, hal ini akan
+      menunjukkan bahwa pemetaan tersebut mempertahankan operasi-operasinya.
+      \begin{multline*}
+        t(r_1(a_1x^2+b_1x+c_1)+r_2(a_2x^2+b_2x+c_2))              \\ 
+        \begin{split} \quad 
+        &=t((r_1a_1+r_2a_2)x^2+(r_1b_1+r_2b_2)x+(r_1c_1+r_2c_2))   \\
+        &=(r_1b_1+r_2b_2)x^2-((r_1a_1+r_2a_2)+(r_1c_1+r_2c_2))x+(r_1a_1+r_2a_2)  \\
+        &=(r_1b_1)x^2-(r_1a_1+r_1c_1)x+r_1a_1
+           +(r_2b_2)x^2-(r_2a_2+r_2c_2)x+r_2a_2                       \\
+        &=r_1t(a_1x^2+b_1x+c_1)+r_2t(a_2x^2+b_2x+c_2)
+        \end{split}
+      \end{multline*}      
+    \end{answer}
+  \recommended \item Verifikasikan bahwa pemetaan berikut merupakan isomorfisme:
+    $\map{h}{\Re^4}{\matspace_{\nbyn{2}}}$ yang diberikan oleh
+    \begin{equation*}
+      \colvec{a \\ b \\ c \\ d}
+      \mapsto
+      \begin{mat}
+        c  &a+d \\
+        b  &d
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Pertama-tama kita memverifikasi bahwa $h$ injektif.
+      Untuk itu, kita akan menunjukkan bahwa $h(\vec{v}_1)=h(\vec{v}_2)$
+      menyiratkan $\vec{v}_1=\vec{v}_2$.
+      Maka andaikan
+      \begin{equation*}
+          h(\vec{v}_1)
+          =
+          h(\colvec{a_1 \\ b_1 \\ c_1 \\ d_1})
+          =
+          h(\colvec{a_2 \\ b_2 \\ c_2 \\ d_2})
+          =h(\vec{v}_2)
+      \end{equation*}
+      yang memberikan
+      \begin{equation*}
+          \begin{mat}
+            c_1  &a_1+d_1 \\
+            b_1  &d_1
+          \end{mat}
+          =
+          \begin{mat}
+            c_2  &a_2+d_2 \\
+            b_2  &d_2
+          \end{mat}
+      \end{equation*}
+      dari sini kita menyimpulkan bahwa
+      $c_1=c_2$ (dari entri kiri-atas),
+      $b_1=b_2$ (dari entri kiri-bawah),
+      $d_1=d_2$ (dari entri kanan-bawah),
+      dan dari kesamaan terakhir ini kita memperoleh $a_1=a_2$
+      (dari entri kanan-atas).
+      Oleh karena itu, $\vec{v}_1=\vec{v}_2$.
+
+      Selanjutnya kita akan menunjukkan bahwa pemetaan tersebut surjektif,
+      yakni bahwa setiap unsur kodomain $\matspace_{\nbyn{2}}$ merupakan
+      bayangan suatu vektor kolom berukuran empat dari domain.
+      Maka, jika diberikan
+      \begin{equation*}
+          \vec{w}=
+          \begin{mat}
+            m  &n \\
+            p  &q
+          \end{mat}
+          \in\matspace_{\nbyn{2}}
+      \end{equation*}
+      perhatikan bahwa matriks tersebut merupakan bayangan vektor domain berikut.
+      \begin{equation*}
+        \vec{v}=
+        \colvec{n-q \\ p \\ m \\ q}
+      \end{equation*}
+
+      Sebagai penutup, kita memverifikasi bahwa pemetaan tersebut
+      mempertahankan kombinasi linear.
+      Berdasarkan \nearbylemma{le:PresStructIffPresCombos}, hal ini menunjukkan
+      bahwa pemetaan tersebut mempertahankan operasi-operasinya.
+      \begin{align*}
+          h(r_1\cdot\colvec{a_1 \\ b_1 \\ c_1 \\ d_1}
+            +
+            r_2\cdot\colvec{a_2 \\ b_2 \\ c_2 \\ d_2})
+          &=h(\colvec{r_1a_1+r_2a_2 \\ r_1b_1+r_2b_2 \\ r_1c_1+r_2c_2 \\ r_1d_1+r_2d_2})  \\
+          &=
+          \begin{mat}
+             r_1c_1+r_2c_2 &(r_1a_1+r_2a_2)+(r_1d_1+r_2d_2)  \\
+             r_1b_1+r_2b_2 &r_1d_1+r_2d_2
+          \end{mat}                               \\
+          &=
+          r_1\begin{mat}
+             c_1 &a_1+d_1  \\
+             b_1 &d_1
+          \end{mat}                               
+          +
+          r_2\begin{mat}
+             c_2 &a_2+d_2  \\
+             b_2 &d_2
+          \end{mat}                               \\
+         &=r_1\cdot h(\colvec{a_1 \\ b_1 \\ c_1 \\ d_1})
+            +
+            r_2\cdot h(\colvec{a_2 \\ b_2 \\ c_2 \\ d_2})
+      \end{align*}      
+    \end{answer}
+  \recommended \item 
+   Tentukan apakah setiap pemetaan berikut merupakan isomorfisme.
+   Jika ya, buktikan; jika tidak, nyatakan syarat yang gagal dipenuhinya.
+    \begin{exparts}
+      \partsitem \( \map{f}{\matspace_{\nbyn{2}}}{\Re} \) yang diberikan oleh
+        \begin{equation*}
+           \begin{mat}
+             a  &b  \\
+             c  &d
+           \end{mat}
+           \mapsto
+           ad-bc
+        \end{equation*}
+      \partsitem \( \map{f}{\matspace_{\nbyn{2}}}{\Re^4} \) yang diberikan oleh
+        \begin{equation*}
+           \begin{mat}
+             a  &b  \\
+             c  &d
+           \end{mat}
+           \mapsto
+           \colvec{a+b+c+d \\ a+b+c \\ a+b \\ a}
+        \end{equation*}
+      \partsitem \( \map{f}{\matspace_{\nbyn{2}}}{\polyspace_3} \) yang diberikan oleh
+        \begin{equation*}
+           \begin{mat}
+             a  &b  \\
+             c  &d
+           \end{mat}
+           \mapsto
+           c+(d+c)x+(b+a)x^2+ax^3
+        \end{equation*}
+      \partsitem \( \map{f}{\matspace_{\nbyn{2}}}{\polyspace_3} \) yang diberikan oleh
+        \begin{equation*}
+           \begin{mat}
+             a  &b  \\
+             c  &d
+           \end{mat}
+           \mapsto
+           c+(d+c)x+(b+a+1)x^2+ax^3
+        \end{equation*}
+    \end{exparts}
+  \begin{answer}
+    \begin{exparts}
+      \partsitem Tidak; pemetaan ini tidak injektif.
+        Secara khusus, matriks yang semua entrinya nol dipetakan ke bayangan
+        yang sama dengan matriks yang semua entrinya satu.
+      \partsitem Ya, pemetaan ini merupakan isomorfisme.
+
+        Pemetaan ini injektif:
+        \begin{align*}
+          &\text{jika }
+          f(\begin{mat}
+              a_1  &b_1  \\
+              c_1  &d_1
+            \end{mat})
+         =f(\begin{mat}
+              a_2  &b_2  \\
+              c_2  &d_2
+            \end{mat})                                     \\
+          &\qquad\text{ maka }
+          \colvec{a_1+b_1+c_1+d_1 \\ a_1+b_1+c_1 \\ a_1+b_1 \\ a_1}
+          =\colvec{a_2+b_2+c_2+d_2 \\ a_2+b_2+c_2 \\ a_2+b_2 \\ a_2}
+        \end{align*}
+        memberikan \( a_1=a_2 \), \( b_1=b_2 \),
+        \( c_1=c_2 \), dan \( d_1=d_2 \).
+
+        Pemetaan ini surjektif, karena persamaan berikut menunjukkan
+        \begin{equation*}
+          \colvec{x \\ y \\ z \\ w}
+         =f(\begin{mat}
+              w    &z-w  \\
+              y-z  &x-y
+            \end{mat})
+        \end{equation*}
+        bahwa sebarang vektor kolom berukuran empat merupakan bayangan suatu
+        matriks $\nbyn{2}$.
+
+        Terakhir, pemetaan tersebut mempertahankan kombinasi linear
+        \begin{multline*}
+          f(\,r_1\cdot\begin{mat}
+              a_1  &b_1  \\
+              c_1  &d_1
+            \end{mat}
+            +r_2\cdot\begin{mat}
+              a_2  &b_2  \\
+              c_2  &d_2
+            \end{mat}\,)                                   \\
+          \begin{aligned}
+          &=f(\begin{mat}
+              r_1a_1+r_2a_2  &r_1b_1+r_2b_2  \\
+              r_1c_1+r_2c_2  &r_1d_1+r_2d_2
+            \end{mat})                            \\
+          &=\colvec{r_1a_1+\dots+r_2d_2 \\ r_1a_1+\dots+r_2c_2 \\ 
+                       r_1a_1+\dots+r_2b_2 \\ r_1a_1+r_2a_2}          \\
+          &=r_1\cdot\colvec{a_1+\dots+d_1 \\ a_1+\dots+c_1 \\ 
+                       a_1+b_1 \\ a_1}
+          +r_2\cdot\colvec{a_2+\dots+d_2 \\ a_2+\dots+c_2 \\ 
+                       a_2+b_2 \\ a_2}                         \\
+          &=r_1\cdot f(\begin{mat}
+                  a_1  &b_1  \\
+                  c_1  &d_1
+            \end{mat})
+          +r_2\cdot f(\begin{mat}
+                  a_2  &b_2  \\
+                  c_2  &d_2
+            \end{mat})
+         \end{aligned}
+        \end{multline*}
+        sehingga butir~(2) dari \nearbylemma{le:PresStructIffPresCombos}
+        menunjukkan bahwa pemetaan itu mempertahankan struktur.
+      \partsitem Ya, pemetaan ini merupakan isomorfisme.
+
+        Untuk menunjukkan bahwa pemetaan ini injektif, andaikan dua unsur
+        domain memiliki bayangan yang sama di bawah $f$.
+        \begin{equation*}
+          f(\begin{mat}
+              a_1  &b_1  \\
+              c_1  &d_1
+            \end{mat})
+          =f(\begin{mat}
+              a_2  &b_2  \\
+              c_2  &d_2
+            \end{mat})
+        \end{equation*}
+        Berdasarkan definisi $f$, hal ini memberikan
+        $c_1+(d_1+c_1)x+(b_1+a_1)x^2+a_1x^3
+          =c_2+(d_2+c_2)x+(b_2+a_2)x^2+a_2x^3$
+        lalu fakta bahwa polinomial sama hanya jika koefisien-koefisiennya sama
+        memberikan sistem persamaan linear
+        \begin{align*}
+          c_1      &=  c_2      \\
+          d_1+c_1  &=  d_2+c_2  \\
+          b_1+a_1  &=  b_2+a_2  \\
+          a_1      &=  a_2
+        \end{align*}
+        yang hanya memiliki solusi $a_1=a_2$, $b_1=b_2$, $c_1=c_2$, dan
+        $d_1=d_2$.
+
+        Untuk menunjukkan bahwa $f$ surjektif, perhatikan bahwa
+        $p+qx+rx^2+sx^3$ merupakan bayangan matriks berikut di bawah $f$.
+        \begin{equation*}
+          \begin{mat}
+            s  &r-s   \\
+            p  &q-p
+          \end{mat}
+        \end{equation*}
+
+        Kita dapat memeriksa bahwa $f$ mempertahankan struktur dengan
+        menggunakan butir~(2) dari \nearbylemma{le:PresStructIffPresCombos}.
+        \begin{multline*}
+          f(r_1\cdot\begin{mat}
+              a_1  &b_1  \\
+              c_1  &d_1
+            \end{mat}
+            +r_2\cdot\begin{mat}
+              a_2  &b_2  \\
+              c_2  &d_2
+            \end{mat})                                      \\
+           \begin{aligned}
+           &=
+           f(\begin{mat}
+               r_1a_1+r_2a_2  &r_1b_1+r_2b_2  \\
+               r_1c_1+r_2c_2  &r_1d_1+r_2d_2
+             \end{mat})                         \\
+           &=\begin{aligned}[t]
+               &(r_1c_1+r_2c_2)
+               +(r_1d_1+r_2d_2+r_1c_1+r_2c_2)x                 \\
+               &\mbox{}\quad +(r_1b_1+r_2b_2+r_1a_1+r_2a_2)x^2
+                 +(r_1a_1+r_2a_2)x^3
+             \end{aligned}                   \\
+           &=\begin{aligned}[t]
+                &r_1\cdot\left(c_1+(d_1+c_1)x+(b_1+a_1)x^2+a_1x^3\right) \\
+                &\mbox{}\quad +r_2\cdot\left(c_2+(d_2+c_2)x
+                            +(b_2+a_2)x^2+a_2x^3\right)
+              \end{aligned} \\
+           &=r_1\cdot f(\begin{mat}
+              a_1  &b_1  \\
+              c_1  &d_1
+            \end{mat})
+            +r_2\cdot f(\begin{mat}
+              a_2  &b_2  \\
+              c_2  &d_2
+            \end{mat})
+            \end{aligned}
+        \end{multline*}
+      \partsitem Tidak, pemetaan ini tidak mempertahankan struktur.
+        Sebagai contoh, pemetaan ini tidak membawa matriks yang semua entrinya
+        nol ke polinomial nol.
+    \end{exparts}  
+   \end{answer}
+  \item 
+    Tunjukkan bahwa pemetaan \( \map{f}{\Re^1}{\Re^1} \) yang diberikan oleh
+    \( f(x)=x^3 \) bersifat injektif dan surjektif.
+    Apakah pemetaan tersebut merupakan isomorfisme?
+    \begin{answer}
+      Pemetaan ini injektif dan surjektif, sehingga merupakan korespondensi,
+      karena memiliki invers (yaitu \( f^{-1}(x)=\sqrt[3]{x} \)).
+      Namun, pemetaan ini bukan isomorfisme.
+      Sebagai contoh, \( f(1)+f(1)\neq f(1+1) \).
+    \end{answer}
+  \recommended \item 
+    Lihat \nearbyexample{exam:TwoWideIsoTwoTall}.
+    Buat dua isomorfisme lainnya
+    (tentu saja, Anda juga harus memverifikasi bahwa keduanya memenuhi
+    syarat-syarat dalam definisi isomorfisme).
+    \begin{answer}
+     Banyak pemetaan yang mungkin.
+     Berikut dua di antaranya.
+     \begin{equation*}
+       \rowvec{a &b}\mapsto\colvec{b \\ a}
+       \quad\text{dan}\quad
+       \rowvec{a &b}\mapsto\colvec{2a \\ b}
+     \end{equation*} 
+     Verifikasinya merupakan adaptasi langsung dari verifikasi-verifikasi di atas.
+    \end{answer}
+  \item 
+    Lihat \nearbyexample{exam:PolyTwoIsoRThree}.
+    Buat dua isomorfisme lainnya
+    (dan verifikasikan bahwa keduanya memenuhi syarat-syarat tersebut).
+    \begin{answer}
+      Berikut dua di antaranya.
+      \begin{equation*}
+        a_0+a_1x+a_2x^2 \mapsto \colvec{a_1 \\ a_0 \\ a_2}
+        \quad\text{dan}\quad
+        a_0+a_1x+a_2x^2 \mapsto \colvec{a_0+a_1 \\ a_1 \\ a_2}
+      \end{equation*}
+      Verifikasinya langsung (untuk pemetaan kedua, guna menunjukkan bahwa
+      pemetaan itu surjektif, perhatikan bahwa
+      \begin{equation*}
+        \colvec{s \\ t \\ u}
+      \end{equation*}
+      merupakan bayangan dari $(s-t)+tx+ux^2$).
+     \end{answer}
+  \recommended \item 
+     Tunjukkan bahwa meskipun \( \Re^2 \) sendiri bukan subruang dari
+     \( \Re^3 \), ruang ini isomorfik dengan subruang bidang \( xy \)
+     dari \( \Re^3 \).
+     \begin{answer}
+       Ruang $\Re^2$ bukan subruang dari $\Re^3$ karena bukan subhimpunan
+       dari $\Re^3$.
+       Vektor-vektor kolom berukuran dua dalam $\Re^2$ bukan unsur $\Re^3$.
+
+       Misalkan
+       \( P=\set{\colvec{x \\ y \\ 0}\suchthat x,y\in\Re} \), yaitu
+       subruang bidang \(xy\) dari \( \Re^3 \).
+       Isomorfisme alami \( \map{\iota}{\Re^2}{P} \)
+       (disebut pemetaan \definend{injeksi}) adalah sebagai berikut.
+       \begin{equation*}
+         \colvec{x \\ y}
+           \mapsunder{\iota}
+         \colvec{x \\ y \\ 0}
+       \end{equation*}
+
+       Pemetaan ini injektif karena
+       \begin{equation*}
+         \iota(\colvec{x_1 \\ y_1})=\iota(\colvec{x_2 \\ y_2})
+         \quad\text{menyiratkan}\quad
+         \colvec{x_1 \\ y_1 \\ 0}=\colvec{x_2 \\ y_2 \\ 0}
+       \end{equation*}
+       yang selanjutnya menyiratkan $x_1=x_2$ dan $y_1=y_2$, sehingga kedua
+       vektor kolom berukuran dua semula sama.
+
+       Karena
+       \begin{equation*}
+         \colvec{x \\ y \\ 0}
+         =\iota(\colvec{x \\ y})
+       \end{equation*}
+       pemetaan ini surjektif ke bidang $xy$.
+
+       Untuk menunjukkan bahwa pemetaan ini mempertahankan struktur, kita akan
+       menggunakan butir~(2) dari \nearbylemma{le:PresStructIffPresCombos}
+       dan menunjukkan
+       \begin{multline*}
+         \iota(c_1\cdot \colvec{x_1 \\ y_1}+c_2\cdot \colvec{x_2 \\ y_2})
+          = \iota(\colvec{c_1x_1+c_2x_2 \\ c_1y_1+c_2y_2})  
+          =\colvec{c_1x_1+c_2x_2 \\ c_1y_1+c_2y_2 \\ 0}                     \\
+          =c_1\cdot \colvec{x_1 \\ y_1 \\ 0}+c_2\cdot \colvec{x_2 \\ y_2 \\ 0}
+          =c_1\cdot \iota(\colvec{x_1 \\ y_1})
+             +c_2\cdot \iota(\colvec{x_2 \\ y_2})
+       \end{multline*}
+       bahwa pemetaan ini mempertahankan kombinasi linear dua vektor.
+     \end{answer}
+  \item 
+    Temukan dua isomorfisme antara \( \Re^{16} \) dan
+    \( \matspace_{\nbyn{4}} \).
+     \begin{answer}
+        Berikut dua di antaranya:
+        \begin{equation*}
+           \colvec{r_1 \\ r_2 \\ \vdots \\ r_{16}}
+              \mapsto
+           \begin{mat}
+              r_1  &r_2  &\ldots  \\
+                   &              \\
+                   &     &\ldots  &r_{16}
+           \end{mat}
+           \quad\text{dan}\quad
+           \colvec{r_1 \\ r_2 \\ \vdots \\ r_{16}}
+              \mapsto
+           \begin{mat}
+              r_1    &                    \\
+              r_2    &                    \\
+              \vdots &   &        &\vdots \\
+                   &     &        &r_{16}
+           \end{mat}
+        \end{equation*}     
+        Verifikasi bahwa masing-masing merupakan isomorfisme mudah dilakukan.
+    \end{answer}
+  \recommended \item
+    Untuk nilai \( k \) berapakah \( \matspace_{\nbym{m}{n}} \) isomorfik
+    dengan \( \Re^{k} \)?
+     \begin{answer}
+        Jika $k$ adalah hasil kali \( k=mn \), berikut suatu isomorfisme.
+        \begin{equation*}
+           \begin{mat}
+              r_1  &r_2  &\ldots  \\
+                   &\vdots        \\
+                   &     &\ldots  &r_{m\cdot n}
+           \end{mat}
+           \mapsto
+           \colvec{r_1 \\ r_2 \\ \vdots \\ r_{m\cdot n}}
+        \end{equation*}
+        Pemeriksaan bahwa pemetaan ini merupakan isomorfisme mudah dilakukan.
+      \end{answer}
+  \item 
+     Untuk nilai \( k \) berapakah \( \polyspace_k \) isomorfik dengan
+     \( \Re^n \)?
+     \begin{answer}
+        Jika \( n\geq 1 \), maka \( \polyspace_{n-1}\isomorphicto\Re^n \).
+        (Jika kita mengambil \( \polyspace_{-1} \) dan \( \Re^0 \) sebagai
+        ruang vektor trivial, hubungan tersebut meluas satu dimensi lebih
+        rendah.)
+        Isomorfisme alami di antara keduanya adalah sebagai berikut.
+        \begin{equation*}
+          a_0+a_1x+\dots+a_{n-1}x^{n-1}
+          \mapsto\colvec{a_0 \\ a_1 \\ \vdots \\ a_{n-1}}
+        \end{equation*}
+        Pemeriksaan bahwa pemetaan tersebut merupakan isomorfisme berlangsung
+        langsung.
+     \end{answer}
+  \item \label{exer:PolyToPolyLinSubst}
+    Buktikan bahwa pemetaan dalam \nearbyexample{ex:OORThreeToFourLinCom},
+    dari \( \polyspace_5 \) ke \( \polyspace_5 \) yang diberikan oleh
+    \( p(x)\mapsto p(x-1) \), merupakan isomorfisme ruang vektor.
+    \begin{answer}
+      Berikut pemetaan tersebut setelah dijabarkan.
+      \begin{multline*}
+        f(a_0+a_1x+a_2x^2+a_3x^3+a_4x^4+a_5x^5)                        \\
+        \begin{aligned}
+        &=a_0+a_1(x-1)+a_2(x-1)^2+a_3(x-1)^3               \\
+        &\mbox{}\quad +a_4(x-1)^4+a_5(x-1)^5               \\
+        &=a_0+a_1(x-1)+a_2(x^2-2x+1)         \\
+        &\mbox{}\quad +a_3(x^3-3x^2+3x-1)   \\
+        &\mbox{}\quad +a_4(x^4-4x^3+6x^2-4x+1) \\
+        &\mbox{}\quad +a_5(x^5-5x^4+10x^3-10x^2+5x-1)       \\
+        &=(a_0-a_1+a_2-a_3+a_4-a_5)  \\
+        &\mbox{}\quad +(a_1-2a_2+3a_3-4a_4+5a_5)x  \\
+        &\mbox{}\quad +(a_2-3a_3+6a_4-10a_5)x^2  \\
+        &\quad+(a_3-4a_4+10a_5)x^3         \\
+        &\mbox{}\quad +(a_4-5a_5)x^4
+                        +a_5x^5
+        \end{aligned}
+      \end{multline*}
+      Pemetaan ini merupakan korespondensi karena memiliki invers, yaitu
+      pemetaan \( p(x)\mapsto p(x+1) \).
+
+      Untuk menyelesaikan pemeriksaan bahwa pemetaan ini merupakan isomorfisme,
+      kita menerapkan butir~(2) dari
+      \nearbylemma{le:PresStructIffPresCombos} dan menunjukkan bahwa pemetaan
+      tersebut mempertahankan kombinasi linear dua polinomial.
+      Secara ringkas,
+      $f(c\cdot (a_0+a_1x+\dots +a_5x^5)+d\cdot (b_0+b_1x+\dots +b_5x^5))$
+      sama dengan
+      \begin{multline*}
+         (ca_0-ca_1+ca_2-ca_3+ca_4-ca_5+db_0-db_1+db_2-db_3+db_4-db_5)  \\
+          +\dots+(ca_5+db_5)x^5                                
+      \end{multline*}
+      yang sama dengan
+      $c\cdot f(a_0+a_1x+\dots +a_5x^5)+d\cdot f(b_0+b_1x+\dots +b_5x^5)$.
+    \end{answer}
+  \item  
+    Mengapa dalam \nearbylemma{le:IsoSendsZeroToZero} harus terdapat
+    \( \vec{v}\in V \)?
+    Dengan kata lain, mengapa $V$ harus tak kosong?
+     \begin{answer}
+       Tidak ada ruang vektor yang himpunan dasarnya kosong.
+       Kita dapat mengambil $\vec{v}$ sebagai vektor nol.
+     \end{answer}
+  \item  
+     Apakah sebarang dua ruang trivial isomorfik?
+     \begin{answer}
+        Ya; jika kedua ruang tersebut adalah \( \set{\vec{a}} \) dan
+        \( \set{\vec{b}} \), pemetaan yang membawa \( \vec{a} \) ke
+        \( \vec{b} \) jelas injektif dan surjektif, serta mempertahankan
+        sedikit struktur yang ada.
+      \end{answer}
+  \item 
+    Dalam pembuktian \nearbylemma{le:PresStructIffPresCombos}, bagaimana
+    dengan kasus tanpa suku (yakni, jika $n$ sama dengan nol)?
+    \begin{answer}
+       Kombinasi linear dari $n=0$ vektor berjumlah vektor nol, sehingga
+       \nearbylemma{le:IsoSendsZeroToZero} menunjukkan bahwa ketiga pernyataan
+       tersebut ekuivalen dalam kasus ini.
+    \end{answer}
+  \item 
+    Tunjukkan bahwa setiap isomorfisme \( \map{f}{\polyspace_0}{\Re^1} \)
+    berbentuk \( a\mapsto ka \) untuk suatu bilangan riil tak nol \( k \).
+    \begin{answer}
+      Tinjau basis \( \sequence{1} \) bagi \( \polyspace_0 \), dan misalkan
+      \( f(1)\in\Re \) adalah \( k \).
+      Untuk sebarang \( a\in\polyspace_0 \), kita memiliki
+      \( f(a)=f(a\cdot 1)=af(1)=ak \), sehingga tindakan \( f \) adalah
+      perkalian dengan \( k \).
+      Perhatikan bahwa \( k\neq 0 \); jika tidak, pemetaan tersebut tidak
+      injektif.
+      (Selain itu, setiap pemetaan semacam $a\mapsto ka$ merupakan isomorfisme,
+      seperti yang mudah diperiksa.)
+     \end{answer}
+  \item 
+    Butir-butir berikut membuktikan bahwa isomorfisme merupakan relasi
+    ekuivalensi.
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa pemetaan identitas
+        $\map{\mbox{id}}{V}{V}$ merupakan isomorfisme.
+        Jadi, setiap ruang vektor isomorfik dengan dirinya sendiri.
+      \partsitem Tunjukkan bahwa jika $\map{f}{V}{W}$ merupakan isomorfisme,
+        inversnya $\map{f^{-1}}{W}{V}$ juga merupakan isomorfisme.
+        Jadi, jika $V$ isomorfik dengan $W$, maka $W$ juga isomorfik dengan $V$.
+      \partsitem Tunjukkan bahwa komposisi isomorfisme merupakan isomorfisme:
+        jika $\map{f}{V}{W}$ dan $\map{g}{W}{U}$ merupakan isomorfisme,
+        maka $\map{\composed{g}{f}}{V}{U}$ juga merupakan isomorfisme.
+        Jadi, jika $V$ isomorfik dengan $W$ dan $W$ isomorfik dengan $U$,
+        maka $V$ juga isomorfik dengan $U$.
+    \end{exparts}
+    \begin{answer}
+      Pada setiap butir, dengan mengikuti butir~(2) dari
+      \nearbylemma{le:PresStructIffPresCombos}, kita menunjukkan bahwa pemetaan
+      mempertahankan struktur dengan menunjukkan bahwa pemetaan tersebut
+      mempertahankan kombinasi linear dua unsur domain.
+      \begin{exparts}
+        \partsitem 
+          Pemetaan identitas jelas injektif dan surjektif.
+          Pemeriksaan kombinasi linear mudah dilakukan.
+          \begin{equation*}
+            \mbox{id}(c_1\cdot \vec{v}_1+c_2\cdot \vec{v}_2)
+             =c_1\vec{v}_1+c_2\vec{v}_2
+             =c_1\cdot \mbox{id}(\vec{v}_1)+c_2\cdot \mbox{id}(\vec{v}_2)
+          \end{equation*}
+        \partsitem Invers suatu korespondensi juga merupakan korespondensi
+          (seperti dinyatakan dalam lampiran), sehingga kita hanya perlu
+          memeriksa bahwa invers tersebut mempertahankan kombinasi linear.
+          Andaikan \( \vec{w}_1=f(\vec{v}_1) \)
+          (sehingga \( f^{-1}(\vec{w}_1)=\vec{v}_1 \)) dan andaikan
+          \( \vec{w}_2=f(\vec{v}_2) \).
+          \begin{align*}
+            f^{-1}(c_1\cdot\vec{w}_1+c_2\cdot\vec{w}_2)
+              &=f^{-1}\bigl(\,c_1\cdot f(\vec{v}_1)
+                             +c_2\cdot f(\vec{v}_2)\,\bigr) \\
+              &=f^{-1}(\,f\bigl(c_1\vec{v}_1+c_2\vec{v}_2)\,\bigr)    \\
+              &=c_1\vec{v}_1+c_2\vec{v}_2                             \\ 
+              &=c_1\cdot f^{-1}(\vec{w}_1)+c_2\cdot f^{-1}(\vec{w}_2)    
+          \end{align*}
+        \partsitem Komposisi dua korespondensi merupakan korespondensi
+          (seperti dinyatakan dalam lampiran), sehingga kita hanya perlu
+          memeriksa bahwa pemetaan komposisinya mempertahankan kombinasi linear.
+          \begin{align*}
+           \composed{g}{f}\,\bigl(c_1\cdot\vec{v}_1+c_2\cdot\vec{v}_2\bigr)
+             &=g\bigl(\,f(c_1\vec{v}_1+c_2\vec{v}_2)\,\bigr)        \\
+             &=g\bigl(\,c_1\cdot f(\vec{v}_1)+c_2\cdot f(\vec{v}_2)\,\bigr) \\ 
+             &=c_1\cdot g\bigl(f(\vec{v}_1))+c_2\cdot g(f(\vec{v}_2)\bigr)  \\
+             &=c_1\cdot\composed{g}{f}\,(\vec{v}_1)
+                  +c_2\cdot\composed{g}{f}\,(\vec{v}_2)
+          \end{align*}
+      \end{exparts}
+     \end{answer}
+  \item 
+    Andaikan \( \map{f}{V}{W} \) mempertahankan struktur.
+    Tunjukkan bahwa \( f \) injektif jika dan hanya jika satu-satunya unsur
+    \( V \) yang dipetakan oleh \( f \) ke \( \zero_W \) adalah \( \zero_V \).
+    \begin{answer}
+      Salah satu arah mudah:~menurut definisi, jika \( f \) injektif, maka
+      untuk sebarang \( \vec{w}\in W \), paling banyak ada satu
+      \( \vec{v}\in V \) yang memenuhi \( f(\vec{v}\,)=\vec{w} \).
+      Jadi, khususnya, paling banyak satu unsur \( V \) dipetakan ke
+      \( \zero_W \).
+      Pembuktian \nearbylemma{le:IsoSendsZeroToZero} tidak menggunakan fakta
+      bahwa pemetaan tersebut merupakan korespondensi, sehingga menunjukkan
+      bahwa setiap pemetaan \( f \) yang mempertahankan struktur membawa
+      \( \zero_V \) ke \( \zero_W \).
+
+      Untuk arah sebaliknya, andaikan satu-satunya unsur \( V \) yang dipetakan
+      ke \( \zero_W \) adalah \( \zero_V \).
+      Untuk menunjukkan bahwa \( f \) injektif, andaikan
+      \( f(\vec{v}_1)=f(\vec{v}_2) \).
+      Maka \( f(\vec{v}_1)-f(\vec{v}_2)=\zero_W \), sehingga
+      \( f(\vec{v}_1-\vec{v}_2)=\zero_W \).
+      Akibatnya \( \vec{v}_1-\vec{v}_2=\zero_V \), sehingga
+      $\vec{v}_1=\vec{v}_2$ dan \( f \) injektif.
+    \end{answer}
+  \item 
+    Andaikan \( \map{f}{V}{W} \) merupakan isomorfisme.
+    Buktikan bahwa himpunan
+    \( \set{\vec{v}_1,\dots,\vec{v}_k}\subseteq V \) bergantung linear
+    jika dan hanya jika himpunan bayangan
+    \( \set{f(\vec{v}_1),\dots,f(\vec{v}_k)}\subseteq W \)
+    bergantung linear.
+    \begin{answer}
+      Kita akan membuktikan sesuatu yang lebih kuat\Dash bukan hanya keberadaan
+      kebergantungan yang dipertahankan oleh isomorfisme, melainkan setiap
+      kejadian kebergantungan juga dipertahankan, yaitu,
+      \begin{multline*}
+        \vec{v}_i=c_1\vec{v}_1+\cdots+c_{i-1}\vec{v}_{i-1}
+                   +c_{i+1}\vec{v}_{i+1}+\cdots+c_k\vec{v}_k   \\
+        \iff
+        f(\vec{v}_i)=c_1f(\vec{v}_1)+\cdots+c_{i-1}f(\vec{v}_{i-1})
+                     +c_{i+1}f(\vec{v}_{i+1})+\cdots+c_kf(\vec{v}_k).
+      \end{multline*}
+      Arah \( \implies \) dari pernyataan ini berlaku berdasarkan butir~(3) dari
+      \nearbylemma{le:PresStructIffPresCombos}.
+      Arah \( \isimpliedby \) berlaku dengan mengelompokkan kembali
+      \begin{align*}
+         f(\vec{v}_i)
+           &=c_1f(\vec{v}_1)+\dots+c_{i-1}f(\vec{v}_{i-1})
+                     +c_{i+1}f(\vec{v}_{i+1})+\dots+c_kf(\vec{v}_k)  \\
+           &=f(c_1\vec{v}_1+\dots+c_{i-1}\vec{v}_{i-1}
+                     +c_{i+1}\vec{v}_{i+1}+\dots+c_k \vec{v}_k) 
+      \end{align*}
+      dan menerapkan fakta bahwa $f$ injektif. Jadi, karena kedua vektor
+      $\vec{v}_i$ dan
+      $c_1\vec{v}_1+\dots+c_{i-1}\vec{v}_{i-1}
+              +c_{i+1}\vec{v}_{i+1}+\dots+c_k\vec{v}_k$
+      dipetakan oleh $f$ ke bayangan yang sama, keduanya harus sama.
+    \end{answer}
+  \recommended \item \label{exer:RigidPlaneMapsAutos} 
+    Tunjukkan bahwa setiap jenis pemetaan dari
+    \nearbyexample{exam:RigidPlaneMapsAutos} merupakan automorfisme.
+    \begin{exparts}
+      \partsitem Dilatasi $d_s$ oleh skalar tak nol \( s \).
+      \partsitem Rotasi $t_\theta$ melalui sudut \( \theta \).
+      \partsitem Pencerminan $f_\ell$ terhadap garis yang melalui titik asal.
+    \end{exparts}
+    \textit{Petunjuk.}
+     Untuk butir kedua dan ketiga, koordinat polar berguna.
+    \begin{answer}
+      \begin{exparts}
+        \partsitem 
+          Pemetaan ini injektif karena jika
+          \( d_s(\vec{v}_1)=d_s(\vec{v}_2) \), maka menurut definisi pemetaan,
+          \( s\cdot\vec{v}_1=s\cdot\vec{v}_2 \), sehingga
+          \( \vec{v}_1=\vec{v}_2 \), sebab \( s \) tak nol.
+          Pemetaan ini surjektif karena sebarang \( \vec{w}\in\Re^2 \)
+          merupakan bayangan dari \( \vec{v}=(1/s)\cdot\vec{w} \)
+          (sekali lagi, perhatikan bahwa $s$ tak nol).
+          (Cara lain untuk melihat bahwa pemetaan ini merupakan korespondensi
+          adalah dengan mengamati bahwa pemetaan tersebut memiliki invers:
+          invers dari \( d_s \) adalah \( d_{1/s} \).)
+
+          Sebagai penutup, perhatikan bahwa pemetaan ini mempertahankan
+          kombinasi linear
+          \begin{equation*}
+            d_s(c_1\cdot\vec{v}_1+c_2\cdot\vec{v}_2)
+            =s(c_1\vec{v}_1+c_2\vec{v}_2)
+            =c_1s\vec{v}_1+c_2s\vec{v}_2
+            =c_1\cdot d_s(\vec{v}_1)+c_2\cdot d_s(\vec{v}_2)
+          \end{equation*}
+          sehingga merupakan isomorfisme.
+        \partsitem Seperti pada butir sebelumnya, kita dapat menunjukkan bahwa
+          pemetaan $t_\theta$ merupakan korespondensi dengan mengamati bahwa
+          pemetaan itu memiliki invers, $t_{-\theta}$.
+
+          Secara geometris mudah dilihat bahwa pemetaan ini mempertahankan
+          struktur.
+          Sebagai contoh, menjumlahkan dua vektor lalu merotasinya memberikan
+          hasil yang sama dengan merotasi keduanya terlebih dahulu lalu
+          menjumlahkannya.
+          Untuk argumen aljabar, tinjau koordinat polar:
+          pemetaan \( t_\theta \) membawa vektor dengan titik ujung
+          \( (r,\phi) \) ke vektor dengan titik ujung
+          \( (r,\phi+\theta) \).
+          Selanjutnya, rumus-rumus trigonometri yang dikenal
+          $\cos(\phi+\theta)=\cos\phi\,\cos\theta-\sin\phi\,\sin\theta$
+          dan
+          $\sin(\phi+\theta)=\sin\phi\,\cos\theta+\cos\phi\,\sin\theta$
+          menunjukkan cara menyatakan tindakan pemetaan tersebut dalam
+          sistem koordinat Kartesius yang biasa.
+          \begin{equation*}
+            \colvec{x \\ y}=\colvec{r\cos\phi \\ r\sin\phi}
+              \mapsunder{t_\theta}
+            \colvec{r\cos(\phi+\theta) \\ r\sin(\phi+\theta)}
+            =\colvec{x\cos\theta-y\sin\theta \\ x\sin\theta+y\cos\theta}
+          \end{equation*}
+          Sekarang perhitungan untuk mempertahankan penjumlahan bersifat rutin.
+          \begin{multline*}
+            \colvec{x_1+x_2 \\ y_1+y_2}
+              \mapsunder{t_\theta}
+            \colvec{(x_1+x_2)\cos\theta-(y_1+y_2)\sin\theta \\ 
+                       (x_1+x_2)\sin\theta+(y_1+y_2)\cos\theta}    \\
+            =\colvec{x_1\cos\theta-y_1\sin\theta \\ 
+                       x_1\sin\theta+y_1\cos\theta}
+            +\colvec{x_2\cos\theta-y_2\sin\theta \\ 
+                       x_2\sin\theta+y_2\cos\theta}
+          \end{multline*}
+          Perhitungan untuk mempertahankan perkalian skalar serupa.
+        \partsitem 
+          Pemetaan ini merupakan korespondensi karena memiliki invers
+          (yaitu dirinya sendiri).
+
+          Seperti pada butir sebelumnya, secara geometris mudah dilihat bahwa
+          pemetaan pencerminan mempertahankan struktur:~misalnya, menjumlahkan
+          vektor lalu mencerminkannya memberi hasil yang sama dengan
+          mencerminkannya terlebih dahulu lalu menjumlahkannya.
+          Untuk pembuktian aljabar, andaikan garis $\ell$ memiliki gradien $k$
+          (kasus garis dengan gradien tak terdefinisi dapat ditangani sebagai
+          kasus terpisah yang mudah).
+          Kita dapat mengikuti petunjuk dan menggunakan koordinat polar:~jika
+          garis \( \ell \) membentuk sudut \( \phi \) dengan sumbu \( x \),
+          tindakan \( f_\ell \) adalah membawa vektor dengan titik ujung
+          \( (r\cos\theta,r\sin\theta) \) ke vektor dengan titik ujung
+          \( (r\cos(2\phi-\theta),r\sin(2\phi-\theta)) \).
+          \begin{center}  \small
+            \includegraphics{map/mp/ch3.72}
+          \end{center}
+          Untuk mengubahnya ke koordinat Kartesius, kita akan menggunakan
+          beberapa rumus trigonometri seperti pada butir sebelumnya.
+          Pertama, perhatikan bahwa $\cos\phi$ dan $\sin\phi$ dapat ditentukan
+          dari gradien $k$ garis tersebut.
+          Gambar berikut
+          \begin{center}  \small
+            \includegraphics{map/mp/ch3.73}
+          \end{center}
+          memberikan $\cos\phi=1/\sqrt{1+k^2}$ dan
+          $\sin\phi=k/\sqrt{1+k^2}$.
+          Sekarang,
+          \begin{align*}
+            \cos(2\phi-\theta)
+              &=\cos(2\phi)\,\cos\theta+\sin(2\phi)\,\sin\theta        \\
+              &=\left(\cos^2\phi-\sin^2\phi\right)\,\cos\theta
+                 +\left(2\sin\phi\cos\phi\right)\,\sin\theta        \\
+              &=\left((\frac{1}{\sqrt{1+k^2}})^2
+                      -(\frac{k}{\sqrt{1+k^2}})^2\right)
+                   \,\cos\theta
+                 +\left(2\frac{k}{\sqrt{1+k^2}}\frac{1}{\sqrt{1+k^2}}\right)
+                   \,\sin\theta        \\
+              &=\left(\frac{1-k^2}{1+k^2}\right)\,\cos\theta
+                 +\left(\frac{2k}{1+k^2}\right)\,\sin\theta        
+          \end{align*}
+          sehingga komponen pertama vektor bayangan adalah sebagai berikut.
+          \begin{equation*}
+            r\cdot\cos(2\phi-\theta)=\frac{1-k^2}{1+k^2}\cdot x
+                                     +\frac{2k}{1+k^2}\cdot y
+          \end{equation*}
+          Perhitungan serupa menunjukkan bahwa komponen kedua vektor bayangan
+          adalah sebagai berikut.
+          \begin{equation*}
+            r\cdot\sin(2\phi-\theta)=\frac{2k}{1+k^2}\cdot x
+                                     -\frac{1-k^2}{1+k^2}\cdot y
+          \end{equation*}
+          Dengan deskripsi aljabar tentang tindakan $f_\ell$ ini
+          \begin{equation*}
+            \colvec{x \\ y}
+             \mapsunder{f_\ell}
+            \colvec{((1-k^2)/(1+k^2))\cdot x
+                                     +(2k/(1+k^2))\cdot y \\ 
+                   (2k/(1+k^2))\cdot x
+                                     -((1-k^2)/(1+k^2))\cdot y}
+          \end{equation*}
+          pemeriksaan bahwa pemetaan tersebut mempertahankan struktur bersifat
+          rutin.
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Buat sebuah automorfisme dari \( \polyspace_2 \) selain pemetaan identitas
+    dan selain pemetaan pergeseran $p(x)\mapsto p(x-k)$.
+    \begin{answer}
+       Pertama, pemetaan $p(x)\mapsto p(x+k)$ tidak dihitung karena merupakan
+       versi dari $p(x)\mapsto p(x-k)$.
+       Berikut sebuah jawaban yang benar (banyak jawaban lain juga benar):
+       \( a_0+a_1x+a_2x^2 \mapsto a_2+a_0x+a_1x^2 \).
+       Verifikasi bahwa pemetaan ini merupakan isomorfisme berlangsung langsung.
+    \end{answer}
+  \item
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa fungsi \( \map{f}{\Re^1}{\Re^1} \)
+        merupakan automorfisme jika dan hanya jika berbentuk
+        \( x\mapsto kx \) untuk suatu \( k\neq 0 \).
+      \partsitem Misalkan \( f \) adalah automorfisme dari \( \Re^1 \)
+        sedemikian sehingga \( f(3)=7 \).
+        Tentukan \( f(-2) \).
+      \partsitem Tunjukkan bahwa fungsi \( \map{f}{\Re^2}{\Re^2} \)
+        merupakan automorfisme jika dan hanya jika berbentuk
+        \begin{equation*}
+          \colvec{x \\ y}
+            \mapsto
+          \colvec{ax+by \\ cx+dy}
+        \end{equation*}
+        untuk suatu \( a,b,c,d\in\Re \) dengan \( ad-bc\neq 0 \).
+        \textit{Petunjuk.}
+        Latihan-latihan dalam subbagian sebelumnya telah menunjukkan bahwa
+        \begin{equation*}
+          \colvec{a \\ c}\text{ dan }\colvec{b \\ d}
+          \text{ bebas linear}
+        \end{equation*}
+        jika dan hanya jika $ad-bc\neq 0$.
+      \partsitem Misalkan \( f \) adalah automorfisme dari \( \Re^2 \) dengan
+        \begin{equation*}
+          f(\colvec[r]{1 \\ 3})=\colvec[r]{2 \\ -1}
+           \quad\text{dan}\quad
+          f(\colvec[r]{1 \\ 4})=\colvec[r]{0 \\ 1}.
+        \end{equation*}
+        Tentukan
+        \begin{equation*}
+          f(\colvec[r]{0 \\ -1}).
+        \end{equation*}
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Untuk arah `hanya jika', misalkan
+          \( \map{f}{\Re^1}{\Re^1} \) merupakan isomorfisme.
+          Tinjau basis \( \sequence{1}\subseteq\Re^1 \).
+          Nyatakan \( f(1) \) dengan \( k \).
+          Maka untuk sebarang \( x \), kita memiliki
+          \( f(x)=f(x\cdot 1)=x\cdot f(1)=xk \), sehingga tindakan $f$
+          adalah perkalian dengan $k$.
+          Untuk menyelesaikan arah ini, cukup perhatikan bahwa \( k\neq 0 \);
+          jika tidak, $f$ tidak akan injektif.
+
+          Untuk arah `jika', kita hanya perlu memeriksa bahwa pemetaan semacam
+          itu merupakan isomorfisme ketika $k\neq 0$.
+          Untuk memeriksa sifat injektif, andaikan \( f(x_1)=f(x_2) \),
+          sehingga \( kx_1=kx_2 \), lalu bagi dengan faktor tak nol \( k \)
+          untuk menyimpulkan $x_1=x_2$.
+          Untuk memeriksa sifat surjektif, perhatikan bahwa sebarang
+          \( y\in\Re^1 \) merupakan bayangan dari \( x=y/k \)
+          (sekali lagi, $k\neq 0$).
+          Terakhir, untuk memeriksa bahwa pemetaan semacam itu mempertahankan
+          kombinasi linear dua unsur domain, kita memiliki
+          \begin{equation*}
+            f(c_1x_1+c_2x_2)
+            =k(c_1x_1+c_2x_2)
+            =c_1kx_1+c_2kx_2
+            =c_1f(x_1)+c_2f(x_2)
+          \end{equation*}
+        \partsitem Berdasarkan butir sebelumnya, tindakan $f$ adalah
+          \( x\mapsto (7/3)x \). Jadi \( f(-2)=-14/3 \).
+        \partsitem Untuk arah `hanya jika', andaikan
+          \( \map{f}{\Re^2}{\Re^2} \) merupakan automorfisme.
+          Tinjau basis standar \( \stdbasis_2 \) bagi \( \Re^2 \).
+          Misalkan
+          \begin{equation*}
+            f(\vec{e}_1)=\colvec{a \\ c}
+            \quad\text{dan}\quad
+            f(\vec{e}_2)=\colvec{b \\ d}.
+          \end{equation*}
+          Maka tindakan $f$ pada sebarang vektor ditentukan oleh tindakannya
+          pada kedua vektor basis.
+          \begin{equation*}
+            f(\colvec{x \\ y})
+            =f(x\cdot\vec{e}_1+y\cdot\vec{e}_2)
+            =x\cdot f(\vec{e}_1)+y\cdot f(\vec{e}_2)
+            =x\cdot\colvec{a \\ c}+y\cdot\colvec{b \\ d}
+            =\colvec{ax+by \\ cx+dy}
+          \end{equation*}
+          Untuk menyelesaikan arah ini, perhatikan bahwa jika \( ad-bc=0 \),
+          yakni jika \( f(\vec{e}_1) \) dan \( f(\vec{e}_2) \) bergantung
+          linear, maka \( f \) tidak injektif.
+
+          Untuk arah `jika', kita harus memeriksa bahwa pemetaan tersebut
+          merupakan isomorfisme di bawah syarat $ad-bc\neq 0$.
+          Pemeriksaan bahwa struktur dipertahankan mudah; di sini kita akan
+          menunjukkan bahwa \( f \) merupakan korespondensi.
+          Untuk argumen bahwa pemetaan tersebut injektif, andaikan
+          \begin{equation*}
+            f(\colvec{x_1 \\ y_1})
+            =f(\colvec{x_2 \\ y_2})
+            \quad\text{sehingga}\quad
+            \colvec{ax_1+by_1 \\ cx_1+dy_1}
+            =\colvec{ax_2+by_2 \\ cx_2+dy_2}
+          \end{equation*}
+          Karena \( ad-bc\neq 0 \), sistem yang dihasilkan
+          \begin{equation*}
+            \begin{linsys}{2}
+              a(x_1-x_2)  &+  &b(y_1-y_2)  &=  &0  \\
+              c(x_1-x_2)  &+  &d(y_1-y_2)  &=  &0  
+            \end{linsys}
+          \end{equation*}
+          memiliki solusi tunggal, yaitu solusi trivial
+          $x_1-x_2=0$ dan $y_1-y_2=0$
+          (hal ini mengikuti dari petunjuk).
+
+          Argumen bahwa pemetaan ini surjektif berkaitan erat\Dash sistem
+          \begin{equation*}
+            \begin{linsys}{2}
+              ax_1  &+  &by_1  &=  &x  \\
+              cx_1  &+  &dy_1  &=  &y  
+            \end{linsys}
+          \end{equation*}
+          memiliki solusi untuk sebarang \( x \) dan \( y \) jika dan hanya jika
+          himpunan
+          \begin{equation*}
+            \set{\colvec{a \\ c},
+                 \colvec{b \\ d} }
+          \end{equation*}
+          merentang \( \Re^2 \), yakni jika dan hanya jika himpunan ini
+          merupakan basis (karena merupakan subhimpunan dua unsur dari
+          $\Re^2$), yakni jika dan hanya jika \( ad-bc\neq 0 \).
+        \partsitem
+          \begin{equation*}
+            f(\colvec[r]{0 \\ -1})=f(\colvec[r]{1 \\ 3}-\colvec[r]{1 \\ 4})
+            =f(\colvec[r]{1 \\ 3})-f(\colvec[r]{1 \\ 4})
+            =\colvec[r]{2 \\ -1}-\colvec[r]{0 \\ 1}
+            =\colvec[r]{2 \\ -2}
+          \end{equation*}
+      \end{exparts}    
+    \end{answer}
+  \item 
+     Lihat \nearbylemma{le:IsoSendsZeroToZero} dan
+     \nearbylemma{le:PresStructIffPresCombos}. 
+     Temukan dua hal lain yang dipertahankan oleh isomorfisme.
+     \begin{answer}
+       Terdapat banyak jawaban; dua di antaranya adalah kebebasan linear dan
+       subruang.
+
+       Pertama, kita menunjukkan bahwa jika himpunan
+       $\set{\vec{v}_1,\dots,\vec{v}_n}$ bebas linear, maka bayangannya
+       $\set{f(\vec{v}_1),\dots,f(\vec{v}_n)}$ juga bebas linear.
+       Tinjau suatu relasi linear di antara unsur-unsur himpunan bayangan.
+       \begin{equation*}
+         0=c_1f(\vec{v}_1)+\dots+c_nf(\vec{v}_n)
+          =f(c_1\vec{v}_1)+\dots+f(c_n\vec{v}_n)
+          =f(c_1\vec{v}_1+\dots+c_n\vec{v}_n)
+       \end{equation*}
+       Karena pemetaan ini merupakan isomorfisme, pemetaan tersebut injektif.
+       Jadi, $f$ hanya memetakan satu vektor dari domain ke vektor nol dalam
+       kodomain; artinya, $c_1\vec{v}_1+\dots+c_n\vec{v}_n$ sama dengan vektor nol
+       (tentu saja, dalam domain).
+       Namun, jika $\set{\vec{v}_1,\dots,\vec{v}_n}$ bebas linear, semua
+       koefisien $c$ bernilai nol, sehingga
+       $\set{f(\vec{v}_1),\dots,f(\vec{v}_n)}$ juga bebas linear.
+       (\textit{Catatan.}
+       Ada satu hal kecil mengenai argumen ini yang patut disebutkan.
+       Dalam suatu himpunan, pengulangan melebur; artinya, secara ketat
+       $\set{\vec{v},\vec{v}}$ merupakan himpunan satu unsur karena kedua hal
+       yang dicantumkan di dalamnya sama.
+       Namun, perhatikan penggunaan subskrip~$n$ dalam argumen di atas.
+       Ketika kita beralih dari himpunan domain
+       $\set{\vec{v}_1,\dots,\vec{v}_n}$ ke himpunan bayangan
+       $\set{f(\vec{v}_1),\dots,f(\vec{v}_n)}$, tidak terjadi peleburan,
+       karena himpunan bayangan tidak memiliki pengulangan, sebab isomorfisme
+       $f$ bersifat injektif.)
+
+       Untuk menunjukkan bahwa jika $\map{f}{V}{W}$ merupakan isomorfisme dan
+       $U$ adalah subruang dari domain $V$, maka himpunan vektor bayangan
+       $f(U)=\set{\vec{w}\in W
+                 \suchthat\text{$\vec{w}=f(\vec{u})$ untuk suatu $\vec{u}\in U$}}$
+       merupakan subruang dari $W$, kita hanya perlu menunjukkan bahwa
+       himpunan tersebut tertutup terhadap kombinasi linear dua unsurnya
+       (himpunan ini tak kosong karena memuat bayangan vektor nol).
+       Kita memiliki
+       \begin{equation*}
+         c_1\cdot f(\vec{u}_1)+c_2\cdot f(\vec{u}_2)
+        =f(c_1\vec{u}_1)+f(c_2\vec{u}_2)
+        =f(c_1\vec{u}_1+c_2\vec{u}_2)
+       \end{equation*}
+       dan $c_1\vec{u}_1+c_2\vec{u}_2$ merupakan unsur $U$ karena subruang
+       tertutup terhadap kombinasi linear.
+       Dengan demikian, kombinasi $f(\vec{u}_1)$ dan $f(\vec{u}_2)$ merupakan
+       unsur $f(U)$.
+      \end{answer}
+  \item 
+    Kita menunjukkan bahwa isomorfisme dapat disesuaikan: dalam keadaan
+    tertentu, jika diberikan vektor-vektor dalam domain dan kodomain, kita dapat
+    menghasilkan isomorfisme yang memasangkan vektor-vektor tersebut.
+    \begin{exparts}
+      \partsitem Misalkan \( B=\sequence{\vec{\beta}_1,\vec{\beta}_2,
+                   \vec{\beta}_3} \)
+        merupakan basis bagi \( \polyspace_2 \), sehingga sebarang
+        \( \vec{p}\in\polyspace_2 \) memiliki representasi tunggal
+        sebagai \(
+        \vec{p}=c_1\vec{\beta}_1+c_2\vec{\beta}_2+c_3\vec{\beta}_3 \),
+        yang kita nyatakan dengan cara berikut.
+        \begin{equation*}
+          \rep{\vec{p}}{B}=\colvec{c_1 \\ c_2 \\ c_3}
+        \end{equation*}
+        Tunjukkan bahwa operasi $\rep{\cdot}{B}$ merupakan fungsi dari
+        \( \polyspace_2 \) ke \( \Re^3 \)
+        (hal ini mencakup menunjukkan bahwa dengan setiap vektor domain
+        \( \vec{v}\in\polyspace_2 \)
+        terdapat vektor bayangan terkait dalam \( \Re^3 \), dan selanjutnya,
+        dengan setiap vektor domain \( \vec{v}\in\polyspace_2 \) terdapat
+        paling banyak satu vektor bayangan terkait).
+      \partsitem Tunjukkan bahwa fungsi $\rep{\cdot}{B}$ ini injektif dan
+        surjektif.
+      \partsitem Tunjukkan bahwa fungsi tersebut mempertahankan struktur.
+      \partsitem Buat suatu isomorfisme dari \( \polyspace_2 \) ke \( \Re^3 \)
+        yang memenuhi spesifikasi berikut.
+        \begin{equation*}
+          x+x^2\mapsto\colvec[r]{1 \\ 0 \\ 0}
+          \quad\text{dan}\quad
+          1-x\mapsto\colvec[r]{0 \\ 1 \\ 0}
+        \end{equation*}
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Pemasangan
+          \begin{equation*}
+            \vec{p}=c_1\vec{\beta}_1+c_2\vec{\beta}_2+c_3\vec{\beta}_3
+            \mapsunder{\rep{\cdot}{B}}
+            \colvec{c_1 \\ c_2 \\ c_3}
+          \end{equation*}
+          merupakan fungsi jika setiap unsur $\vec{p}$ dari domain dipasangkan
+          dengan sekurang-kurangnya satu unsur kodomain, dan jika setiap unsur
+          $\vec{p}$ dari domain dipasangkan dengan paling banyak satu unsur
+          kodomain.
+          Syarat pertama berlaku karena basis $B$ merentang domain\Dash setiap
+          $\vec{p}$ dapat ditulis sebagai sekurang-kurangnya satu kombinasi
+          linear dari vektor-vektor $\vec{\beta}$.
+          Syarat kedua berlaku karena basis $B$ bebas linear\Dash setiap unsur
+          $\vec{p}$ dari domain dapat ditulis sebagai paling banyak satu
+          kombinasi linear dari vektor-vektor $\vec{\beta}$.
+        \partsitem Untuk argumen injektif, jika
+          $\rep{\vec{p}}{B}=\rep{\vec{q}}{B}$, yakni jika
+          \( \rep{p_1\vec{\beta}_1+p_2\vec{\beta}_2+p_3\vec{\beta}_3}{B}
+             =\rep{q_1\vec{\beta}_1+q_2\vec{\beta}_2+q_3\vec{\beta}_3}{B} \)
+          maka
+          \begin{equation*}
+            \colvec{p_1 \\ p_2 \\ p_3}
+            =\colvec{q_1 \\ q_2 \\ q_3}
+          \end{equation*}
+          maka \( p_1=q_1 \), \( p_2=q_2 \), dan \( p_3=q_3 \), yang
+          memberikan kesimpulan $\vec{p}=\vec{q}$.
+          Oleh karena itu, pemetaan ini injektif.
+
+          Untuk sifat surjektif, kita cukup mencatat bahwa
+          \begin{equation*}
+            \colvec{a \\ b \\ c}
+          \end{equation*}
+          sama dengan $\rep{a\vec{\beta}_1+b\vec{\beta}_2+c\vec{\beta}_3}{B}$,
+          sehingga sebarang unsur kodomain $\Re^3$ merupakan bayangan suatu
+          unsur domain $\polyspace_2$.
+        \partsitem Pemetaan ini menghormati penjumlahan dan perkalian skalar
+           karena menghormati kombinasi linear dua unsur domain
+           (yakni, kita menggunakan butir~(2) dari
+           \nearbylemma{le:PresStructIffPresCombos}): jika
+           $\vec{p}=p_1\vec{\beta}_1+p_2\vec{\beta}_2+p_3\vec{\beta}_3$ dan
+           $\vec{q}=q_1\vec{\beta}_1+q_2\vec{\beta}_2+q_3\vec{\beta}_3$,
+           kita memiliki
+           \begin{align*}
+             \rep{c\cdot\vec{p}+d\cdot\vec{q}}{B}
+             &=\rep{\,(cp_1+dq_1)\vec{\beta}_1+(cp_2+dq_2)\vec{\beta}_2
+                  +(cp_3+dq_3)\vec{\beta}_3\,}{B}  \\
+             &=\colvec{cp_1+dq_1 \\ cp_2+dq_2 \\ cp_3+dq_3}  \\
+             &=c\cdot\colvec{p_1 \\ p_2 \\ p_3}  
+               +d\cdot\colvec{q_1 \\ q_2 \\ q_3}  \\
+             &=c\cdot\rep{\vec{p}}{B}+d\cdot\rep{\vec{q}}{B}
+           \end{align*}
+        \partsitem Gunakan sebarang basis \( B \) bagi $\polyspace_2$ yang
+          dua unsur pertamanya adalah \( x+x^2 \) dan \( 1-x \), misalnya
+          \( B=\sequence{x+x^2,1-x,1} \).
+      \end{exparts}   
+    \end{answer}
+  \item 
+    Buktikan bahwa suatu ruang berdimensi \( n \) jika dan hanya jika ruang
+    tersebut isomorfik dengan \( \Re^n \).
+    \textit{Petunjuk.}
+    Tetapkan basis $B$ bagi ruang tersebut dan tinjau pemetaan yang membawa
+    suatu vektor ke representasinya terhadap $B$.
+    \begin{answer}
+      Lihat subbagian berikutnya.
+    \end{answer}
+  \item 
+    \textit{(Memerlukan subbagian opsional tentang Mengombinasikan Subruang.)}
+    Misalkan \( U \) dan \( W \) adalah ruang-ruang vektor.
+    Definisikan ruang vektor baru yang terdiri atas himpunan
+    \( U\times W=\set{(\vec{u},\vec{w})  \suchthat  \vec{u}\in U\text{ dan }
+                                                   \vec{w}\in W}  \)
+    beserta operasi-operasi berikut.
+    \begin{equation*}
+      (\vec{u}_1,\vec{w}_1)+(\vec{u}_2,\vec{w}_2)=
+          (\vec{u}_1+\vec{u}_2,\vec{w}_1+\vec{w}_2)
+      \quad\text{dan}\quad
+      r\cdot (\vec{u},\vec{w})=(r\vec{u},r\vec{w})
+    \end{equation*}
+    Ini merupakan ruang vektor, yaitu
+    \definend{jumlah langsung eksternal}\index{jumlah langsung!eksternal}%
+    \index{jumlah langsung eksternal} dari \( U \) dan \( W \).
+    \begin{exparts}
+      \partsitem Periksa bahwa himpunan dengan operasi tersebut merupakan
+        ruang vektor.
+      \partsitem Temukan basis dan dimensi jumlah langsung eksternal
+        \( \polyspace_2\times\Re^2 \).
+      \partsitem Apa hubungan antara \( \dim(U) \), \( \dim(W) \), dan
+        \( \dim(U\times W) \)?
+      \partsitem Andaikan \( U \) dan \( W \) merupakan subruang dari ruang
+        vektor \( V \) sedemikian sehingga \( V=U\directsum W \)
+        (dalam kasus ini kita mengatakan bahwa $V$ merupakan
+        \definend{jumlah langsung internal}\index{jumlah langsung!internal}%
+        \index{jumlah langsung internal} dari $U$ dan $W$).
+        Tunjukkan bahwa pemetaan \( \map{f}{U\times W}{V} \) yang diberikan oleh
+        \begin{equation*}
+          (\vec{u},\vec{w})\mapsunder{f} \vec{u}+\vec{w}
+        \end{equation*}
+        merupakan isomorfisme.
+        Jadi, jika jumlah langsung internal terdefinisi, maka jumlah langsung
+        internal dan eksternal isomorfik.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Sebagian besar syarat dalam definisi ruang vektor bersifat
+          rutin.
+          Di sini kita menguraikan verifikasi bagian~(1) dari definisi tersebut.
+
+          Untuk ketertutupan $U\times W$, perhatikan bahwa karena \( U \) dan
+          \( W \) tertutup, kita memiliki $\vec{u}_1+\vec{u}_2\in U$ dan
+          $\vec{w}_1+\vec{w}_2\in W$, sehingga
+          \( (\vec{u}_1+\vec{u}_2,\vec{w}_1+\vec{w}_2)\in U\times W \).
+          Komutativitas penjumlahan dalam \( U\times W \) mengikuti dari
+          komutativitas penjumlahan dalam \( U \) dan \( W \).
+          \begin{equation*}
+             (\vec{u}_1,\vec{w}_1)+(\vec{u}_2,\vec{w}_2)=
+                 (\vec{u}_1+\vec{u}_2,\vec{w}_1+\vec{w}_2)
+                 =(\vec{u}_2+\vec{u}_1,\vec{w}_2+\vec{w}_1)
+             =(\vec{u}_2,\vec{w}_2)+(\vec{u}_1,\vec{w}_1)
+          \end{equation*}
+          Pemeriksaan asosiativitas penjumlahan serupa.
+          Unsur nolnya adalah \( (\zero_U,\zero_W)\in U\times W \), dan invers
+          aditif dari \( (\vec{u},\vec{w}) \) adalah
+          \( (-\vec{u},-\vec{w}) \).
+
+          Pemeriksaan bagian kedua definisi ruang vektor juga langsung.
+        \partsitem Berikut adalah suatu basis
+          \begin{equation*}
+            \sequence{\, (1,\colvec[r]{0 \\ 0}), (x,\colvec[r]{0 \\ 0}),
+              (x^2,\colvec[r]{0 \\ 0}), (\zero,\colvec[r]{1 \\ 0}),
+              (\zero,\colvec[r]{0 \\ 1}) \,}
+          \end{equation*}
+          karena terdapat tepat satu cara untuk merepresentasikan sebarang
+          unsur $\polyspace_2\times \Re^2$ terhadap himpunan ini;
+          berikut sebuah contoh.
+          \begin{equation*}
+            (3+2x+x^2,\colvec[r]{5 \\ 4})
+             =  
+              3\cdot(1,\colvec[r]{0 \\ 0})
+              +2\cdot(x,\colvec[r]{0 \\ 0})
+              +(x^2,\colvec[r]{0 \\ 0}) 
+              +5\cdot(\zero,\colvec[r]{1 \\ 0})
+              +4\cdot(\zero,\colvec[r]{0 \\ 1}) 
+          \end{equation*}
+          Dimensi ruang ini adalah lima.
+        \partsitem Kita memiliki \( \dim(U\times W)=\dim(U)+\dim(W) \) karena
+          berikut merupakan suatu basis.
+          \begin{equation*}
+            \sequence{ (\vec{\mu}_1,\zero_W), \dots,
+              (\vec{\mu}_{\dim(U)},\zero_W), (\zero_U,\vec{\omega}_1),
+              \ldots,(\zero_U,\vec{\omega}_{\dim(W)}) }
+          \end{equation*}
+        \partsitem Kita mengetahui bahwa jika \( V=U\directsum W \), maka setiap
+          \( \vec{v}\in V \) dapat ditulis sebagai
+          \( \vec{v}=\vec{u}+\vec{w} \) dalam tepat satu cara.
+          Inilah yang kita perlukan untuk membuktikan bahwa fungsi yang diberikan
+          merupakan isomorfisme.
+
+          Pertama, untuk menunjukkan bahwa \( f \) injektif, kita dapat
+          menunjukkan bahwa jika
+          \( f\left((\vec{u}_1,\vec{w}_1)\right)
+                 =f\left((\vec{u}_2,\vec{w}_2)\right) \), yakni jika
+          \( \vec{u}_1+\vec{w}_1=\vec{u}_2+\vec{w}_2 \), maka
+          \( \vec{u}_1=\vec{u}_2 \) dan \( \vec{w}_1=\vec{w}_2 \).
+          Namun, pernyataan `setiap $\vec{v}$ merupakan jumlah semacam itu
+          dalam tepat satu cara' persis merupakan hal yang diperlukan untuk
+          menarik kesimpulan ini.
+          Demikian pula, argumen bahwa \( f \) surjektif dilengkapi oleh
+          pernyataan `setiap $\vec{v}$ merupakan jumlah semacam itu dalam
+          sekurang-kurangnya satu cara'.
+
+          Pemetaan ini juga mempertahankan kombinasi linear
+          \begin{align*}
+            f(\,c_1\cdot(\vec{u}_1,\vec{w}_1)+c_2\cdot (\vec{u}_2,\vec{w}_2)\,)
+            &=f(\,(c_1\vec{u}_1+c_2\vec{u}_2,c_1\vec{w}_1+c_2\vec{w}_2)\,) \\
+            &=c_1\vec{u}_1+c_2\vec{u}_2+c_1\vec{w}_1+c_2\vec{w}_2    \\
+            &=c_1\vec{u}_1+c_1\vec{w}_1+c_2\vec{u}_2+c_2\vec{w}_2    \\
+            &=c_1\cdot f(\,(\vec{u}_1,\vec{w}_1)\,)
+               +c_2\cdot f(\,(\vec{u}_2,\vec{w}_2)\,)
+          \end{align*}
+          sehingga merupakan isomorfisme.
+      \end{exparts}     
+    \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+%\subsection{Real Spaces Represent\index{representative!of isomorphism classes}
+%   \protect$n\protect$--Spaces}
+\subsection{Dimensi Mencirikan Isomorfisme}
+
+Dalam subbagian sebelumnya, setelah menyatakan definisi isomorfisme,
+kita memberikan beberapa hasil yang mendukung gagasan bahwa pemetaan semacam
+itu menggambarkan ruang-ruang sebagai ``sama.''
+Di sini kita akan mengembangkan intuisi tersebut.
+Ketika dua ruang (yang tidak sama) isomorfik, kita memandang keduanya hampir
+sama, atau ekuivalen.
+Kita akan menyatakan hal itu secara tepat dengan membuktikan bahwa hubungan
+`isomorfik dengan' merupakan relasi ekuivalensi.
+
+\begin{lemma}  \label{lem:IsoInvAlsoIso}
+%<*lm:IsoInvAlsoIso>
+Invers suatu isomorfisme juga merupakan isomorfisme.
+%</lm:IsoInvAlsoIso>
+\end{lemma}
+
+\begin{proof}
+%<*pf:IsoInvAlsoIso0>
+Andaikan $V$ isomorfik dengan $W$ melalui $\map{f}{V}{W}$.
+Isomorfisme merupakan korespondensi antara himpunan-himpunan, sehingga
+$f$ memiliki fungsi invers $\map{f^{-1}}{W}{V}$ yang juga merupakan
+korespondensi.\appendrefs{fungsi invers}\spacefactor1000
+%</pf:IsoInvAlsoIso0>
+
+%<*pf:IsoInvAlsoIso1>
+Kita akan menunjukkan bahwa karena $f$ mempertahankan kombinasi linear,
+$f^{-1}$ juga demikian.
+Andaikan $\vec{w}_1,\vec{w}_2\in W$.
+Karena merupakan isomorfisme, $f$ surjektif, sehingga terdapat
+$\vec{v}_1, \vec{v}_2\in V$ sedemikian sehingga
+\( \vec{w}_1=f(\vec{v}_1) \) dan \( \vec{w}_2=f(\vec{v}_2) \).
+Maka
+\begin{multline*}
+  f^{-1}(c_1\cdot\vec{w}_1+c_2\cdot\vec{w}_2)
+    =f^{-1}\bigl(\,c_1\cdot f(\vec{v}_1)
+                             +c_2\cdot f(\vec{v}_2)\,\bigr) \\
+    =f^{-1}(\,f\bigl(c_1\vec{v}_1+c_2\vec{v}_2)\,\bigr)    
+    =c_1\vec{v}_1+c_2\vec{v}_2                              
+    =c_1\cdot f^{-1}(\vec{w}_1)+c_2\cdot f^{-1}(\vec{w}_2)     
+\end{multline*}
+karena \( f^{-1}(\vec{w}_1)=\vec{v}_1 \) dan
+\( f^{-1}(\vec{w}_2)=\vec{v}_2 \).
+Dengan demikian, berdasarkan pernyataan kedua
+\nearbylemma{le:PresStructIffPresCombos}, pemetaan ini mempertahankan struktur.
+%</pf:IsoInvAlsoIso1>
+\end{proof}
+
+\begin{theorem} \label{th:IsoEquivRel}
+%<*th:IsoEquivRel>
+Isomorfisme\index{relasi ekuivalensi!isomorfisme} merupakan relasi ekuivalensi
+antara ruang-ruang vektor.
+%</th:IsoEquivRel>
+\end{theorem}
+
+\begin{proof}
+%<*pf:IsoEquivRel0>
+Kita harus membuktikan bahwa relasi tersebut simetris, refleksif, dan transitif.
+
+Untuk memeriksa refleksivitas, yaitu bahwa setiap ruang isomorfik dengan
+dirinya sendiri, tinjau pemetaan identitas.
+Pemetaan tersebut jelas injektif dan surjektif.
+Persamaan berikut menunjukkan bahwa pemetaan itu mempertahankan kombinasi linear.
+\begin{equation*}
+   \mbox{id}(c_1\cdot \vec{v}_1+c_2\cdot \vec{v}_2)
+   =c_1\vec{v}_1+c_2\vec{v}_2
+   =c_1\cdot \mbox{id}(\vec{v}_1)+c_2\cdot \mbox{id}(\vec{v}_2)
+\end{equation*}
+%</pf:IsoEquivRel0>
+
+%<*pf:IsoEquivRel1>
+Kesimetrian, yakni bahwa jika $V$ isomorfik dengan~$W$, maka $W$ juga
+isomorfik dengan~$V$, berlaku berdasarkan \nearbylemma{lem:IsoInvAlsoIso},
+karena setiap pemetaan isomorfisme dari $V$ ke $W$ berpasangan dengan
+isomorfisme dari $W$ ke $V$.
+%</pf:IsoEquivRel1>
+
+%<*pf:IsoEquivRel2>
+Sebagai penutup, kita harus memeriksa transitivitas, yakni bahwa jika $V$
+isomorfik dengan $W$ dan $W$ isomorfik dengan $U$, maka $V$ isomorfik dengan
+$U$.
+Misalkan $\map{f}{V}{W}$ dan $\map{g}{W}{U}$ merupakan isomorfisme.
+Tinjau komposisinya $\map{\composed{g}{f}}{V}{U}$.
+Karena komposisi korespondensi merupakan korespondensi, kita hanya perlu
+memeriksa bahwa komposisi tersebut mempertahankan kombinasi linear.
+\begin{align*}
+  \composed{g}{f}\:\bigl(c_1\cdot\vec{v}_1+c_2\cdot\vec{v}_2\bigr)
+     &=g\bigl(\,f(\,c_1\cdot \vec{v}_1+c_2\cdot\vec{v}_2\,)\,\bigr)        \\
+     &=g\bigl(\,c_1\cdot f(\vec{v}_1)+c_2\cdot f(\vec{v}_2)\,\bigr) \\ 
+     &=c_1\cdot g\bigl(f(\vec{v}_1))+c_2\cdot g(f(\vec{v}_2)\bigr)  \\
+     &=c_1\cdot(\composed{g}{f})\,(\vec{v}_1)
+                  +c_2\cdot(\composed{g}{f})\,(\vec{v}_2)
+\end{align*}
+Jadi, komposisi tersebut merupakan isomorfisme.
+%</pf:IsoEquivRel2>
+\end{proof}
+
+Karena merupakan relasi ekuivalensi, isomorfisme mempartisi semesta ruang
+vektor menjadi kelas-kelas:\index{partisi!ke dalam kelas isomorfisme}
+setiap ruang berada dalam tepat satu kelas isomorfisme.
+\begin{center} \small
+  \raisebox{.5in}{\begin{tabular}{l}
+                    Semua ruang vektor \\
+                    berdimensi hingga:
+                  \end{tabular}}
+  \includegraphics{map/mp/ch3.17}
+  \raisebox{.3in}{\begin{tabular}{l}
+                     $V\isomorphicto W$
+                  \end{tabular}}
+\end{center}
+Hasil berikut mencirikan\index{mencirikan}%
+\index{isomorfisme!kelas dicirikan oleh dimensi}
+kelas-kelas ini berdasarkan dimensi.
+Artinya, kita dapat menggambarkan setiap kelas cukup dengan memberikan
+bilangan yang merupakan dimensi semua ruang dalam kelas tersebut.
+ 
+
+\begin{theorem} \label{th:NDimSpaceIsoRN}
+%<*th:NDimSpaceIsoRN>
+Ruang-ruang vektor isomorfik jika dan hanya jika dimensinya sama.
+%</th:NDimSpaceIsoRN>
+\end{theorem}
+
+Dalam pernyataan implikasi ganda ini, pembuktian setiap arah melibatkan
+gagasan penting, sehingga kita akan membuktikan keduanya secara terpisah.
+
+\begin{lemma}   \label{lem:IsoImpliesSameDim}
+%<*lm:IsoImpliesSameDim>
+Jika ruang-ruang isomorfik, maka dimensinya sama.
+%</lm:IsoImpliesSameDim>
+\end{lemma}
+
+\begin{proof}
+%<*pf:IsoImpliesSameDim0>
+Kita akan menunjukkan bahwa suatu isomorfisme antara dua ruang memberikan
+korespondensi antara basis-basisnya.
+Artinya, kita akan menunjukkan bahwa jika \( \map{f}{V}{W} \) merupakan
+isomorfisme dan basis bagi domain $V$ adalah
+\( B=\sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \), maka bayangannya
+\( D=\sequence{f(\vec{\beta}_1),\dots,f(\vec{\beta}_n)} \) merupakan basis
+bagi kodomain \( W \).
+(Arah lain dari korespondensi tersebut, yakni bahwa untuk sebarang basis dari
+$W$, bayangan inversnya merupakan basis bagi $V$, mengikuti fakta bahwa
+$f^{-1}$ juga merupakan isomorfisme, sehingga kita dapat menerapkan kalimat
+sebelumnya pada $f^{-1}$.)
+%</pf:IsoImpliesSameDim0>
+
+%<*pf:IsoImpliesSameDim1>
+Untuk melihat bahwa \( D \) merentang \( W \), tetapkan sebarang
+\( \vec{w}\in W \).
+Karena \( f \) merupakan isomorfisme, pemetaan tersebut surjektif, sehingga
+terdapat \( \vec{v}\in V \) dengan \( \vec{w}=f(\vec{v}) \).
+Jabarkan \( \vec{v} \) sebagai kombinasi vektor-vektor basis.
+\begin{equation*}
+  \vec{w}=f(\vec{v})
+  =f(v_1\vec{\beta}_1+\dots+v_n\vec{\beta}_n)  
+  =v_1\cdot f(\vec{\beta}_1)+\dots+v_n\cdot f(\vec{\beta}_n)
+\end{equation*}
+Untuk kebebasan linear $D$, jika
+\begin{equation*}
+  \zero_W
+  =c_1f(\vec{\beta}_1)+\dots+c_nf(\vec{\beta}_n)  
+  =f(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n)
+\end{equation*}
+maka, karena \( f \) injektif sehingga satu-satunya vektor yang dibawa ke
+\( \zero_W \) adalah \( \zero_V \), kita memiliki
+\( \zero_V=c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n \), yang menyiratkan
+bahwa semua koefisien \( c \) bernilai nol.
+%</pf:IsoImpliesSameDim1>
+\end{proof}
+
+\begin{lemma} \label{lem:EqDimImpIso}
+%<*lm:EqDimImpIso>
+Jika ruang-ruang memiliki dimensi yang sama, maka ruang-ruang tersebut isomorfik.
+%</lm:EqDimImpIso>
+\end{lemma}
+
+\begin{proof}
+%<*pf:EqDimImpIso0>
+Kita akan membuktikan bahwa setiap ruang berdimensi~$n$ isomorfik dengan
+$\Re^n$.
+Selanjutnya, berdasarkan transitivitas yang ditunjukkan dalam
+\nearbytheorem{th:IsoEquivRel}, semua ruang semacam itu isomorfik satu sama lain.
+%</pf:EqDimImpIso0>
+
+%<*pf:EqDimImpIso1>
+Misalkan $V$ berdimensi \( n \).
+Tetapkan basis \( B=\sequence{\vec{\beta}_1,\dots,\vec{\beta}_n} \) bagi
+domain $V$.
+Tinjau operasi merepresentasikan unsur-unsur $V$ terhadap $B$ sebagai fungsi
+dari $V$ ke $\Re^n$.
+\begin{equation*}
+   \vec{v}=v_1\vec{\beta}_1+\dots+v_n\vec{\beta}_n
+   \,\mapsunder{\text{\small Rep}_B}\,\colvec{v_1 \\ \vdots \\ v_n}
+\end{equation*}
+%</pf:EqDimImpIso1>
+Fungsi ini \definend{terdefinisi dengan baik}%
+\appendrefs{terdefinisi dengan baik}\spacefactor1000 %
+\index{terdefinisi dengan baik}
+karena setiap \( \vec{v} \) memiliki tepat satu representasi semacam itu
+(lihat \nearbyremark{not:WellDefFcns} setelah pembuktian ini).
+
+%<*pf:EqDimImpIso2>
+Fungsi ini injektif karena jika
+\begin{equation*}
+   \text{Rep}_B(u_1\vec{\beta}_1+\dots+u_n\vec{\beta}_n)
+     =\text{Rep}_B(v_1\vec{\beta}_1+\dots+v_n\vec{\beta}_n)
+\end{equation*}
+maka
+\begin{equation*}
+  \colvec{u_1 \\ \vdots \\ u_n}
+    =
+  \colvec{v_1 \\ \vdots \\ v_n}
+\end{equation*}
+sehingga \( u_1=v_1 \), \ldots, $u_n=v_n$, yang menyiratkan bahwa argumen
+semula \( u_1\vec{\beta}_1+\dots+u_n\vec{\beta}_n \) dan
+\( v_1\vec{\beta}_1+\dots+v_n\vec{\beta}_n\) sama.
+%</pf:EqDimImpIso2>
+
+%<*pf:EqDimImpIso3>
+Fungsi ini surjektif; sebarang unsur $\Re^n$
+\begin{equation*}
+   \vec{w}=\colvec{w_1 \\ \vdots \\ w_n}
+\end{equation*}
+merupakan bayangan suatu \( \vec{v}\in V \), yaitu
+\( \vec{w}=\rep{w_1\vec{\beta}_1+\dots+w_n\vec{\beta}_n}{B}  \).
+%</pf:EqDimImpIso3>
+
+%<*pf:EqDimImpIso4>
+Terakhir, fungsi ini mempertahankan struktur.
+\begin{align*}
+  \rep{r\cdot\vec{u}+s\cdot\vec{v}}{B}
+  &=\rep{\,(ru_1+sv_1)\vec{\beta}_1+\dots+(ru_n+sv_n)\vec{\beta}_n\,}{B}  \\
+  &=\colvec{ru_1+sv_1 \\ \vdots \\ ru_n+sv_n}  \\
+  &=r\cdot\colvec{u_1 \\ \vdots \\ u_n}+s\cdot\colvec{v_1 \\ \vdots \\ v_n} \\
+  &=r\cdot\rep{\vec{u}}{B}+s\cdot\rep{\vec{v}}{B}
+\end{align*}
+
+Oleh karena itu, $\mbox{Rep}_B$ merupakan isomorfisme.
+Akibatnya, setiap ruang berdimensi $n$ isomorfik dengan $\Re^n$.
+%</pf:EqDimImpIso4>
+\end{proof}
+
+\begin{remark}
+Ketika memperkenalkan notasi $\mbox{Rep}_B$ bagi vektor pada
+halaman~\pageref{rem:RepNotation}, kita mencatat bahwa notasi tersebut tidak
+standar dan mengatakan bahwa salah satu keunggulannya adalah lebih sulit
+terlewatkan.
+Di sini kita melihat keunggulan lainnya:~notasi ini menyatakan secara eksplisit
+bahwa $\mbox{Rep}_B$ merupakan fungsi dari~$V$ ke $\R^n$.
+\end{remark}
+
+\begin{remark} \label{not:WellDefFcns}
+\index{terdefinisi dengan baik}
+Pembuktian tersebut memuat sebuah kalimat tentang `terdefinisi dengan baik.'
+Maksudnya adalah bahwa untuk menjadi isomorfisme, $\mbox{Rep}_B$ harus
+merupakan fungsi.
+Definisi fungsi mensyaratkan bahwa bagi setiap masukan, keluaran yang terkait
+harus ada dan harus ditentukan oleh masukannya.
+Jadi, kita harus memeriksa bahwa setiap $\vec{v}$ dipasangkan dengan
+sekurang-kurangnya satu~$\mbox{Rep}_B(\vec{v})$, dan tidak lebih dari satu.
+
+Dalam pembuktian, kita menyatakan unsur-unsur $\vec{v}$ dari ruang domain
+sebagai kombinasi unsur-unsur basis~$B$, lalu memasangkan $\vec{v}$ dengan
+vektor kolom koefisien.
+Keberadaan sekurang-kurangnya satu penjabaran bagi setiap~$\vec{v}$ berlaku
+karena $B$ merupakan basis sehingga merentang ruang tersebut.
+
+Persoalan bahwa tidak boleh ada lebih dari satu unsur kodomain yang terkait
+lebih halus.
+Contoh pembanding ketika sebuah pemasangan gagal memenuhi syarat keluaran
+tunggal ini akan memperjelas persoalan tersebut.
+Misalkan domainnya \( \polyspace_2 \), dan tinjau suatu himpunan yang bukan
+basis (himpunan itu tidak bebas linear, meskipun merentang ruang tersebut).
+\begin{equation*}
+ A=\set{1+0x+0x^2,
+              0+1x+0x^2,
+              0+0x+1x^2,
+              1+1x+2x^2}
+\end{equation*}
+Namakan polinomial-polinomial tersebut $\vec{\alpha}_1$, \ldots,
+$\vec{\alpha}_4$.
+Berbeda dengan keadaan ketika himpunan itu merupakan basis, di sini dapat
+terdapat lebih dari satu pernyataan vektor domain dalam bentuk
+% \( \vec{v}=c_1\vec{\alpha}_1+c_2\vec{\alpha}_2+
+%              c_3\vec{\alpha}_3+c_4\vec{\alpha}_4 \)
+unsur-unsur himpunan tersebut.
+Sebagai contoh, tinjau \( \vec{v}=1+x+x^2 \).
+Berikut dua penjabaran yang berbeda.
+\begin{equation*}
+  \vec{v}=1\vec{\alpha}_1+1\vec{\alpha}_2+1\vec{\alpha}_3+0\vec{\alpha}_4 
+  \qquad
+  \vec{v}=0\vec{\alpha}_1+0\vec{\alpha}_2-
+                1\vec{\alpha}_3+1\vec{\alpha}_4 
+\end{equation*}
+Jadi, vektor masukan~$\vec{v}$ ini dipasangkan dengan lebih dari satu kolom.
+\begin{equation*}
+  \colvec[r]{1 \\ 1 \\ 1 \\ 0}
+  \qquad
+  \colvec[r]{0 \\ 0 \\ -1 \\ 1}
+\end{equation*}
+Dengan demikian, dengan~$A$ pemasangan tersebut tidak terdefinisi dengan baik.
+(Persoalannya adalah bahwa $A$ tidak bebas linear; untuk menunjukkan
+ketunggalan, pembuktian Teorema~Dua.III.\ref{th:BasisIffUniqueRepWRT}
+hanya menggunakan kebebasan linear.)
+
+Secara umum, setiap kali kita mendefinisikan fungsi, kita harus memeriksa bahwa
+nilai-nilai keluarannya terdefinisi dengan baik.
+Biasanya syarat ini sangat jelas, tetapi dalam pembuktian di atas syarat
+tersebut perlu diverifikasi.
+Lihat \nearbyexercise{exer:FcnWellDef}.
+\end{remark}
+
+\begin{corollary} \label{co:FiniteDimensionalIsoToReN}
+%<*co:FiniteDimensionalIsoToReN>
+Setiap ruang vektor berdimensi hingga isomorfik dengan tepat satu dari
+ruang-ruang $\Re^n$.
+%</co:FiniteDimensionalIsoToReN>
+\end{corollary}
+
+Hal ini memberi kita kumpulan perwakilan kelas-kelas isomorfisme.
+\begin{center}
+  \raisebox{.5in}{\begin{tabular}{l}
+                    Semua ruang vektor \\
+                    berdimensi hingga:
+                  \end{tabular}}
+  \includegraphics{map/mp/ch3.18}
+  \raisebox{.3in}{\begin{tabular}{l}
+                    Satu perwakilan \\ per kelas
+                  \end{tabular}}
+\end{center}
+
+Pembuktian-pembuktian di atas memadatkan banyak gagasan dalam ruang yang kecil.
+Sepanjang sisa bab ini, kita akan meninjau kembali dan mengembangkan
+gagasan-gagasan tersebut.
+Sebagai gambaran awal, di sini kita akan memperluas pembuktian
+\nearbylemma{lem:EqDimImpIso}.
+
+\begin{example}  \label{ex:ExtendLinearlyMatrixMap}
+Ruang $\matspace_{\nbyn{2}}$ yang terdiri atas matriks $\nbyn{2}$ isomorfik
+dengan $\Re^4$.
+Dengan basis domain berikut
+\begin{equation*}
+  B=\sequence{\begin{mat}[r]
+                1  &0  \\
+                0  &0
+              \end{mat},
+              \begin{mat}[r]
+                0  &1  \\
+                0  &0
+              \end{mat},
+              \begin{mat}[r]
+                0  &0  \\
+                1  &0
+              \end{mat},
+              \begin{mat}[r]
+                0  &0  \\
+                0  &1
+              \end{mat} }
+\end{equation*}
+isomorfisme yang diberikan dalam lema, yaitu pemetaan representasi
+$f_1=\mbox{Rep}_B$, memindahkan entri-entri tersebut.
+\begin{equation*}
+  \begin{mat}
+    a  &b  \\
+    c  &d
+  \end{mat}
+  \mapsunder{f_1}
+  \colvec{a \\ b \\ c \\ d}
+\end{equation*}
+Salah satu cara memahami pemetaan $f_1$ adalah sebagai berikut:~tetapkan basis
+$B$ bagi domain, gunakan basis standar $\stdbasis_4$ bagi kodomain, lalu
+pasangkan $\vec{\beta}_1$ dengan $\vec{e}_1$, $\vec{\beta}_2$ dengan
+$\vec{e}_2$, dan seterusnya.
+Kemudian perluas pemasangan ini ke semua unsur kedua ruang.
+\begin{equation*}
+  \begin{mat}
+    a  &b  \\
+    c  &d
+  \end{mat}
+  =a\vec{\beta}_1+b\vec{\beta}_2+c\vec{\beta}_3+d\vec{\beta}_4
+  \;\;\mapsunder{f_1}\;\;
+  a\vec{e}_1+b\vec{e}_2+c\vec{e}_3+d\vec{e}_4
+  =\colvec{a \\ b \\ c \\ d}
+\end{equation*}
+
+Kita dapat melakukan hal yang sama dengan basis-basis berbeda, misalnya dengan
+mengambil basis berikut bagi domain.
+\begin{equation*}
+  A=\sequence{
+              \begin{mat}[r]
+                2  &0  \\
+                0  &0
+              \end{mat},
+              \begin{mat}[r]
+                0  &2  \\
+                0  &0
+              \end{mat},
+              \begin{mat}[r]
+                0  &0  \\
+                2  &0
+              \end{mat},
+              \begin{mat}[r]
+                0  &0  \\
+                0  &2
+              \end{mat} }
+\end{equation*}
+Memasangkan unsur-unsur yang berkorespondensi dari $A$ dan $\stdbasis_4$
+memberikan
+\begin{multline*}
+  \begin{mat}
+    a  &b  \\
+    c  &d
+  \end{mat}
+  =(a/2)\vec{\alpha}_1+(b/2)\vec{\alpha}_2
+      +(c/2)\vec{\alpha}_3+(d/2)\vec{\alpha}_4          \\
+  \mapsunder{f_2}\;\;
+  (a/2)\vec{e}_1+(b/2)\vec{e}_2+(c/2)\vec{e}_3+(d/2)\vec{e}_4
+  =\colvec{a/2 \\ b/2 \\ c/2 \\ d/2}
+\end{multline*}
+menghasilkan isomorfisme yang berbeda dari $f_1$.
+
+Pemetaan sebelumnya muncul dengan mengubah basis domain.
+Kita juga dapat mengubah basis kodomain.
+Kembali ke basis $B$ di atas dan gunakan basis berikut bagi kodomain.
+\begin{equation*}
+  D=\sequence{\colvec[r]{1 \\ 0 \\ 0 \\ 0},
+                \colvec[r]{0 \\ 1 \\ 0 \\ 0},
+                \colvec[r]{0 \\ 0 \\ 0 \\ 1},
+                \colvec[r]{0 \\ 0 \\ 1 \\ 0}}
+\end{equation*}
+Pasangkan $\vec{\beta}_1$ dengan $\vec{\delta}_1$, dan seterusnya.
+Memperluas pemasangan tersebut memberikan isomorfisme lain.
+\begin{equation*}
+  \begin{mat}
+     a  &b  \\
+     c  &d  
+   \end{mat}
+  =a\vec{\beta}_1+b\vec{\beta}_2+c\vec{\beta}_3+d\vec{\beta}_4
+  \;\;\mapsunder{f_3}\;\;
+  a\vec{\delta}_1+b\vec{\delta}_2+c\vec{\delta}_3+d\vec{\delta}_4
+  =\colvec{a \\ b \\ d \\ c}
+\end{equation*}
+\end{example}
+
+Kita menutup dengan sebuah rangkuman.
+Ingat bahwa bab pertama mendefinisikan dua matriks sebagai ekuivalen baris
+jika keduanya dapat diperoleh satu sama lain melalui operasi baris.
+Di sana kita menunjukkan bahwa relasi tersebut merupakan relasi ekuivalensi,
+sehingga kumpulan matriks dipartisi ke dalam kelas-kelas; semua matriks yang
+saling ekuivalen baris berada dalam satu kelas.
+Selanjutnya, untuk memahami matriks mana yang berada dalam setiap kelas,
+kita memberikan perwakilan kelas-kelas tersebut, yaitu matriks bentuk eselon
+tereduksi.
+
+Dalam bagian ini kita mengikuti pola tersebut, kecuali bahwa gagasan ``sama''
+di sini adalah isomorfisme ruang vektor.
+Kita mendefinisikannya dan menetapkan beberapa sifat, termasuk bahwa
+isomorfisme merupakan relasi ekuivalensi.
+Kemudian, seperti sebelumnya, kita menyusun daftar perwakilan kelas untuk
+membantu memahami partisi tersebut\Dash partisi itu mengklasifikasikan ruang
+vektor berdasarkan dimensi.
+
+Dalam Bab Dua, melalui definisi ruang vektor, kita tampaknya telah membuka
+kajian terhadap banyak contoh struktur baru selain ruang-ruang $\Re^n$ yang
+sudah dikenal.
+Sekarang kita mengetahui bahwa kenyataannya tidak demikian.
+Setiap ruang vektor berdimensi hingga sesungguhnya ``sama'' dengan suatu
+ruang riil.
+
+
+
+
+\begin{exercises}
+  \recommended \item 
+    Tentukan apakah ruang-ruang berikut isomorfik.
+    \begin{exparts*}
+       \partsitem \( \Re^2 \),~\( \Re^4 \)
+       \partsitem \( \polyspace_5 \),~\( \Re^5 \)
+       \partsitem \( \matspace_{\nbym{2}{3}} \),~\( \Re^6 \)
+       \partsitem \( \polyspace_5 \),~\( \matspace_{\nbym{2}{3}} \)
+       \partsitem \( \matspace_{\nbym{2}{k}} \),~\( \matspace_{\nbym{k}{2}} \)
+    \end{exparts*}
+    \begin{answer}
+       Setiap pasangan ruang isomorfik jika dan hanya jika keduanya memiliki
+       dimensi yang sama.
+       Jika terdapat isomorfisme, kita dapat menyatakan suatu pemetaan, tetapi
+       hal itu tidak mutlak diperlukan.
+       \begin{exparts}
+         \partsitem Tidak, dimensinya berbeda.
+         \partsitem Tidak, dimensinya berbeda.
+         \partsitem Ya, dimensinya sama.
+           Berikut salah satu isomorfismenya.
+           \begin{equation*}
+             \begin{mat}
+               a  &b  &c  \\
+               d  &e  &f
+             \end{mat}
+             \mapsto
+             \colvec{a \\ \vdots \\ f}
+           \end{equation*}
+         \partsitem Ya, dimensinya sama.
+           Berikut suatu isomorfisme.
+           \begin{equation*}
+             a+bx+\cdots+fx^5
+             \mapsto
+             \begin{mat}
+               a  &b  &c  \\
+               d  &e  &f
+             \end{mat}
+           \end{equation*}
+         \partsitem Ya, keduanya berdimensi \( 2k \).
+      \end{exparts}    
+    \end{answer}
+  \item Ruang-ruang manakah berikut ini yang saling isomorfik?
+    \begin{exparts*}
+      \partsitem $\Re^3$
+      \partsitem $\matspace_{\nbyn{2}}$
+      \partsitem $\polyspace_3$
+      \partsitem $\Re^4$
+      \partsitem $\polyspace_2$
+    \end{exparts*}
+    \begin{answer}
+      Cukup tentukan dimensi setiap ruang, misalnya dengan menemukan suatu
+      basis; ruang-ruang dengan dimensi yang sama kemudian isomorfik.
+      Berikut daftar dimensi setiap ruang.
+      \begin{exparts*}
+        \partsitem $3$
+        \partsitem $4$
+        \partsitem $4$
+        \partsitem $4$
+        \partsitem $3$
+      \end{exparts*}
+    \end{answer}
+  \recommended \item 
+    Tinjau isomorfisme
+    \( \map{\rep{\cdot}{B}}{\polyspace_1}{\Re^2} \) 
+    dengan \( B=\sequence{1,1+x} \).
+    Tentukan bayangan setiap unsur domain berikut.
+    \begin{exparts*}
+      \partsitem \( 3-2x \);
+      \partsitem \( 2+2x \);
+      \partsitem \( x \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts*}
+        \partsitem \( \rep{3-2x}{B}=\colvec[r]{5 \\ -2} \)
+        \partsitem \( \colvec[r]{0 \\ 2} \)
+        \partsitem \( \colvec[r]{-1 \\ 1} \)
+      \end{exparts*}  
+     \end{answer}
+  \item Untuk nilai $n$ berapakah ruang tersebut isomorfik dengan~$\Re^n$?
+    \begin{exparts}
+      \partsitem $\polyspace_4$
+      \partsitem $\polyspace_1$
+      \partsitem $\matspace_{\nbym{2}{3}}$
+      \partsitem bidang $2x-y+z=0$ yang merupakan subhimpunan dari~$\Re^3$
+      \partsitem ruang vektor kombinasi linear tiga huruf
+         $\set{ax+by+cz\suchthat a,b,c\in\Re}$
+    \end{exparts}
+    \begin{answer}
+      Untuk setiap ruang, cara termudah ialah menentukan dimensinya dengan
+      menemukan suatu basis.
+      Untuk setiap basis yang diberikan di bawah ini, kita mengabaikan
+      verifikasi bahwa himpunan tersebut benar-benar merupakan basis.
+      \begin{exparts}
+        \partsitem Ruang ini isomorfik dengan $\Re^5$.
+          Salah satu basis bagi $\polyspace_4$ adalah
+          $\set{x^4,x^3,x^2,x,1}$, sehingga ruang tersebut berdimensi~$5$.
+        \partsitem Ruang ini isomorfik dengan $\Re^2$ karena salah satu basis
+          bagi ruang $\polyspace_1=\set{a+bx\suchthat a,b\in\Re}$ adalah
+          $\set{1,x}$.
+        \partsitem Ruang ini isomorfik dengan $\Re^6$.
+          Salah satu basisnya terdiri atas enam matriks berikut.
+          \begin{equation*}
+            \begin{mat}
+              1 &0 &0 \\
+              0 &0 &0
+            \end{mat},\; 
+            \begin{mat}
+              0 &1 &0 \\
+              0 &0 &0
+            \end{mat},\;
+            \cdots\;
+            \begin{mat}
+              0 &0 &0 \\
+              0 &0 &1
+            \end{mat}
+          \end{equation*}
+        \partsitem Ruang ini merupakan bidang, sehingga isomorfik
+          dengan~$\Re^2$.
+          Untuk jawaban yang lebih lengkap, memparameterkan bidang tersebut
+          memberikan deskripsi vektor berikut
+          \begin{equation*}
+            \set{\colvec{x \\ y \\ z}=\colvec{1/2 \\ 1 \\ 0}y
+                                      +\colvec{-1/2 \\ 0 \\ 1}z
+                   \suchthat  y,z\in\Re}
+          \end{equation*}
+          sehingga ruang itu memiliki basis yang terdiri atas kedua vektor
+          tersebut.
+        \partsitem Ruang ini isomorfik dengan $\Re^3$.
+          Salah satu basisnya adalah himpunan kombinasi linear
+          $\set{x,y,z}$, yaitu $\set{x+0y+0z, 0x+y+0z,0x+0y+z}$.
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+    Tunjukkan bahwa jika \( m\neq n \), maka
+    \( \Re^m\not\isomorphicto\Re^n \).
+     \begin{answer}
+       Keduanya memiliki dimensi yang berbeda.
+     \end{answer}
+  \recommended \item
+    Apakah \( \matspace_{\nbym{m}{n}}\isomorphicto\matspace_{\nbym{n}{m}} \)?
+    \begin{answer}
+      Ya, keduanya berdimensi \( mn \).
+    \end{answer}
+  \recommended \item
+    Apakah sebarang dua bidang yang melalui titik asal dalam \( \Re^3 \)
+    isomorfik?
+    \begin{answer}
+      Ya, sebarang dua bidang (tak degenerat) sama-sama merupakan ruang vektor
+      berdimensi dua.
+    \end{answer}
+  \item 
+     Temukan himpunan perwakilan kelas ekuivalensi selain himpunan
+     ruang-ruang \( \Re^n \).
+     \begin{answer}
+        Terdapat banyak jawaban; salah satunya adalah himpunan ruang-ruang
+        \( \polyspace_k \) (dengan mengambil \( \polyspace_{-1} \) sebagai
+        ruang vektor trivial).
+     \end{answer}
+  \item 
+    Benar atau salah:~antara sebarang ruang berdimensi \( n \) dan \( \Re^n \)
+    terdapat tepat satu isomorfisme.
+    \begin{answer}
+      Salah (kecuali ketika \( n=0 \)).
+      Sebagai contoh, jika \( \map{f}{V}{\Re^n} \) merupakan isomorfisme,
+      mengalikannya dengan sebarang skalar tak nol selain \(1\) memberikan
+      isomorfisme lain yang berbeda.
+      (Antara ruang-ruang trivial, isomorfismenya tunggal; satu-satunya
+      pemetaan yang mungkin adalah $\zero_V\mapsto \zero_W$.)
+    \end{answer}
+  \item 
+    Dapatkah suatu ruang vektor isomorfik dengan salah satu subruang sejatinya?
+    \begin{answer}
+      Dapat, jika ruangnya berdimensi tak hingga. Sebagai contoh, pemetaan
+      \( \map{T}{\polyspace}{x\polyspace} \) yang diberikan oleh
+      \( T(p(x))=xp(x) \) merupakan isomorfisme dari ruang semua polinomial
+      ke subruang sejatinya \(x\polyspace\).
+      Namun, dalam konteks berdimensi hingga buku ini, hal tersebut tidak
+      mungkin: subruang sejati memiliki dimensi yang lebih kecil secara ketat
+      daripada ruang induknya.
+    \end{answer}
+  \recommended \item 
+    Subbagian ini menunjukkan bahwa bagi setiap isomorfisme, pemetaan inversnya
+    juga merupakan isomorfisme.
+    Subbagian ini juga menunjukkan bahwa untuk basis tetap \( B \) dari ruang
+    vektor berdimensi \( n \), \( V \), pemetaan
+    \( \map{\text{Rep}_B}{V}{\Re^n} \) merupakan isomorfisme.
+    Tentukan invers pemetaan ini.
+    \begin{answer}
+      Jika \( B=\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_n} \), inversnya
+      adalah sebagai berikut.
+      \begin{equation*}
+        \colvec{c_1 \\ \vdots \\ c_n}
+        \mapsto c_1\vec{\beta}_1+\cdots+c_n\vec{\beta}_n
+      \end{equation*}  
+    \end{answer}
+  \recommended \item 
+    Buktikan fakta-fakta berikut tentang matriks.
+    \begin{exparts}
+      \partsitem Ruang baris suatu matriks isomorfik dengan ruang kolom dari
+        transposnya.
+      \partsitem Ruang baris suatu matriks isomorfik dengan ruang kolomnya.
+    \end{exparts}
+    \begin{answer}
+      Ketiga ruang tersebut memiliki dimensi yang sama dengan rank matriks.
+    \end{answer}
+  \item \label{exer:FcnWellDef}
+    Tunjukkan bahwa fungsi dari \nearbytheorem{th:NDimSpaceIsoRN}
+    terdefinisi dengan baik.
+     \begin{answer}
+        Kita harus menunjukkan bahwa jika \( \vec{a}=\vec{b} \), maka
+        \( f(\vec{a})=f(\vec{b}) \).
+        Maka andaikan
+        $a_1\vec{\beta}_1+\dots+a_n\vec{\beta}_n
+           =b_1\vec{\beta}_1+\dots+b_n\vec{\beta}_n$.
+        Setiap vektor dalam ruang vektor (di sini, ruang domain) memiliki
+        representasi tunggal sebagai kombinasi linear vektor-vektor basis,
+        sehingga kita dapat menyimpulkan bahwa \( a_1=b_1 \), \ldots,
+        \(a_n=b_n \).
+        Jadi,
+        \begin{equation*}
+          f(\vec{a})
+          =\colvec{a_1 \\ \vdots \\ a_n}=\colvec{b_1 \\ \vdots \\ b_n}
+          =f(\vec{b})          
+        \end{equation*}
+        sehingga fungsi tersebut terdefinisi dengan baik.
+     \end{answer}
+  \item 
+     Apakah pembuktian \nearbytheorem{th:NDimSpaceIsoRN} sah ketika \( n=0 \)?
+     \begin{answer}
+       Ya, karena ruang berdimensi nol merupakan ruang trivial.
+     \end{answer}
+  \item 
+    Untuk setiap himpunan berikut, tentukan apakah himpunan tersebut merupakan
+    himpunan perwakilan kelas isomorfisme.
+    \begin{exparts}
+      \partsitem \( \set{\C^k \suchthat k\in\N} \)
+      \partsitem $\set{\polyspace_k\suchthat k\in \set{-1,0,1,\ldots}}$
+      \partsitem \( \set{\matspace_{\nbym{m}{n}}\suchthat 
+                   m,n\in\N} \)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Tidak, kumpulan ini tidak memiliki ruang berdimensi ganjil.
+        \partsitem Ya, karena $\polyspace_{k}\isomorphicto\Re^{k+1}$.
+        \partsitem Tidak, sebagai contoh,
+          \( \matspace_{\nbym{2}{3}}\isomorphicto\matspace_{\nbym{3}{2}} \).
+      \end{exparts}  
+    \end{answer}
+  \item
+    Misalkan \( f \) merupakan korespondensi antara ruang-ruang vektor
+    \( V \) dan \( W \) (yakni, pemetaan yang injektif dan surjektif).
+    Tunjukkan bahwa ruang \( V \) dan \( W \) isomorfik melalui \( f \)
+    jika dan hanya jika terdapat basis \( B\subset V \) dan \( D\subset W \)
+    sedemikian sehingga vektor-vektor yang berkorespondensi memiliki koordinat
+    yang sama:
+    \( \rep{\vec{v}}{B}=\rep{f(\vec{v})}{D} \).
+    \begin{answer}
+       Salah satu arah mudah:~jika kedua ruang isomorfik melalui \( f \), maka
+       untuk sebarang basis \( B\subseteq V \), himpunan \( D=f(B) \) juga
+       merupakan basis (hal ini ditunjukkan dalam
+       \nearbylemma{lem:IsoImpliesSameDim}).
+       Pemeriksaan bahwa vektor-vektor yang berkorespondensi memiliki koordinat
+       yang sama:
+       \( f(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n)
+          =c_1f(\vec{\beta}_1)+\dots+c_nf(\vec{\beta}_n)
+          =c_1\vec{\delta}_1+\dots+c_n\vec{\delta}_n   \)
+       bersifat rutin.
+
+       Untuk arah lainnya, andaikan terdapat basis-basis sedemikian sehingga
+       vektor-vektor yang berkorespondensi memiliki koordinat yang sama terhadap
+       basis-basis tersebut.
+       Karena \( f \) merupakan korespondensi, untuk menunjukkan bahwa
+       pemetaan itu merupakan isomorfisme, kita hanya perlu menunjukkan bahwa
+       pemetaan tersebut mempertahankan struktur.
+       Karena \( \rep{\vec{v}\,}{B}=\rep{f(\vec{v}\,)}{D} \), pemetaan \( f \)
+       mempertahankan struktur jika dan hanya jika representasi mempertahankan
+       penjumlahan:
+       \( \rep{\vec{v}_1+\vec{v}_2}{B}=\rep{\vec{v}_1}{B}+\rep{\vec{v}_2}{B} \)
+       dan perkalian skalar:
+       \( \rep{r\cdot\vec{v}\,}{B}=r\cdot\rep{\vec{v}\,}{B} \)
+       Perhitungan penjumlahannya adalah sebagai berikut:
+       \( (c_1+d_1)\vec{\beta}_1+\dots+(c_n+d_n)\vec{\beta}_n
+          =c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n
+          +d_1\vec{\beta}_1+\dots+d_n\vec{\beta}_n \),
+       dan perhitungan perkalian skalarnya serupa.
+     \end{answer}
+  \item 
+    Tinjau isomorfisme \( \map{\text{Rep}_B}{\polyspace_3}{\Re^4} \).
+    \begin{exparts}
+      \partsitem Vektor-vektor dalam ruang riil ortogonal jika dan hanya jika
+        hasil kali titiknya nol.
+        Berikan definisi ortogonalitas bagi polinomial.
+      \partsitem Turunan suatu unsur \( \polyspace_3 \) berada dalam
+        \( \polyspace_3 \).
+        Berikan definisi turunan suatu vektor dalam \( \Re^4 \).
+    \end{exparts}
+    \begin{answer}
+       \begin{exparts}
+        \partsitem Menarik kembali definisi dari \( \Re^4 \) ke
+          \( \polyspace_3 \) memberikan bahwa
+          \( a_0+a_1x+a_2x^2+a_3x^3 \) ortogonal terhadap
+          \( b_0+b_1x+b_2x^2+b_3x^3 \) jika dan hanya jika
+          \( a_0b_0+a_1b_1+a_2b_2+a_3b_3=0 \).
+        \partsitem Definisi yang alami adalah sebagai berikut.
+          \begin{equation*}
+            D(\colvec{a_0 \\ a_1 \\ a_2 \\ a_3})=
+              \colvec{a_1 \\ 2a_2 \\ 3a_3 \\ 0}
+          \end{equation*}
+      \end{exparts}   
+    \end{answer}
+  \recommended \item
+    Apakah setiap korespondensi antara basis, ketika diperluas ke ruang-ruangnya,
+    memberikan isomorfisme?
+    Artinya, andaikan \( V \) merupakan ruang vektor dengan basis
+    \( B=\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_n} \) dan
+    \( \map{f}{B}{W} \)
+    merupakan korespondensi sedemikian sehingga
+    \( D=\sequence{f(\vec{\beta}_1),\ldots,f(\vec{\beta}_n)} \)
+    merupakan basis bagi~$W$.
+    Haruskah $\map{\hat{f}}{V}{W}$ yang membawa
+    $\vec{v}=c_1\vec{\beta}_1+\cdots+c_n\vec{\beta}_n$
+    ke $
+    \hat{f}(\vec{v})=c_1f(\vec{\beta}_1)+\cdots+c_nf(\vec{\beta}_n)$
+    merupakan isomorfisme?
+    \begin{answer}
+      Ya.
+
+      Pertama, \( \hat{f} \) terdefinisi dengan baik karena setiap unsur
+      \( V \) memiliki tepat satu representasi sebagai kombinasi linear
+      unsur-unsur \( B \).
+
+      Kedua, kita harus menunjukkan bahwa $\hat{f}$ injektif dan surjektif.
+      Pemetaan itu injektif karena setiap unsur \( W \) hanya memiliki satu
+      representasi sebagai kombinasi linear unsur-unsur \( D \), sebab $D$
+      merupakan basis.
+      Selanjutnya, \( \hat{f} \) surjektif karena setiap unsur \( W \)
+      memiliki sekurang-kurangnya satu representasi sebagai kombinasi linear
+      unsur-unsur \( D \).
+
+      Terakhir, pemeriksaan bahwa struktur dipertahankan bersifat rutin.
+      Sebagai contoh, berikut perhitungan untuk penjumlahan.
+      \begin{multline*}
+        \hat{f}(\,(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n)+
+                  (d_1\vec{\beta}_1+\dots+d_n\vec{\beta}_n)\,)    \\
+       \begin{aligned}
+        &=\hat{f}(\,(c_1+d_1)\vec{\beta}_1+\dots+(c_n+d_n)\vec{\beta}_n\,) \\
+        &=(c_1+d_1)f(\vec{\beta}_1)+\dots+(c_n+d_n)f(\vec{\beta}_n) \\
+        &=c_1f(\vec{\beta}_1)+\dots+c_nf(\vec{\beta}_n)
+          +d_1f(\vec{\beta}_1)+\dots+d_nf(\vec{\beta}_n) \\
+        &=\hat{f}(c_1\vec{\beta}_1+\dots+c_n\vec{\beta}_n)
+          +\hat{f}(d_1\vec{\beta}_1+\dots+d_n\vec{\beta}_n)
+      \end{aligned}
+      \end{multline*}
+      (Kesamaan kedua merupakan definisi $\hat{f}$.)
+      Perkalian skalar diperiksa dengan cara serupa.
+    \end{answer}
+  \item 
+    \textit{(Memerlukan subbagian opsional tentang Mengombinasikan Subruang.)}
+    Andaikan \( V=V_1\directsum V_2 \) dan \( V \) isomorfik dengan ruang
+    \( U \) di bawah pemetaan \( f \).
+    Tunjukkan bahwa \( U=f(V_1)\directsum f(V_2) \).
+    \begin{answer}
+      Karena \( V_1\intersection V_2=\set{\zero_V} \) dan \( f \) injektif,
+      kita memiliki \( f(V_1)\intersection f(V_2)=\set{\zero_U} \).
+      Sebagai penutup, hitung dimensinya:
+      \( \dim(U)=\dim(V)=\dim(V_1)+\dim(V_2)=\dim(f(V_1))+\dim(f(V_2)) \),
+      sesuai kebutuhan.
+    \end{answer}
+  \item Tunjukkan bahwa berikut bukan fungsi yang terdefinisi dengan baik dari
+    bilangan rasional ke bilangan bulat: pasangkan setiap pecahan dengan nilai
+    pembilangnya.
+    \begin{answer}
+      Bilangan rasional memiliki banyak representasi, misalnya
+      \( 1/2=3/6 \), dan pembilangnya dapat berbeda-beda di antara
+      representasi tersebut.
+    \end{answer}
+\index{isomorfisme|)}
+\end{exercises}

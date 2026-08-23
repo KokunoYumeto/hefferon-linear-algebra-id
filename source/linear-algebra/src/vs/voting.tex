@@ -1,0 +1,915 @@
+\topic{Paradoks Pemungutan Suara}
+\index{paradoks pemungutan suara|(}
+%\emph{(Optional material from this chapter is discussed here,
+%but is not required to complete the exercises.)}
+
+Bayangkan bahwa sebuah kelas Ilmu Politik yang mempelajari proses
+pemilihan presiden Amerika mengadakan simulasi pemilihan.
+Sebanyak $29$ anggota kelas
+mengurutkan calon Partai Demokrat,
+Partai Republik, dan Partai Ketiga,
+dari yang paling disukai hingga yang paling tidak disukai
+($>$ berarti `lebih disukai daripada').
+\begin{center}
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{cc}
+    \multicolumn{1}{c}{\begin{tabular}[b]{@{}c@{}}
+       \textit{urutan preferensi}
+    \end{tabular}}
+    &\multicolumn{1}{l}{{\renewcommand{\arraystretch}{1.0}
+      \begin{tabular}[b]{@{}l@{}}
+         \textit{jumlah pemilih dengan}    \\[-0.5ex]
+         \textit{preferensi tersebut}
+      \end{tabular}}}                \\  
+    \hline
+    \begin{tabular}{@{}r@{}}
+      $\text{Demokrat} > \text{Republik} > \text{Ketiga}$      \\
+      $\text{Demokrat} > \text{Ketiga} > \text{Republik}$      \\
+      $\text{Republik} > \text{Demokrat} > \text{Ketiga}$      \\
+      $\text{Republik} > \text{Ketiga} > \text{Demokrat}$      \\
+      $\text{Ketiga} > \text{Demokrat} > \text{Republik}$      \\
+      $\text{Ketiga} > \text{Republik} > \text{Demokrat}$   
+    \end{tabular}
+    &\begin{tabular}{@{}r@{}}                                                
+      $5$     \\
+      $4$     \\
+      $2$     \\
+      $8$     \\
+      $8$     \\
+      $2$    
+    \end{tabular}    
+  \end{tabular}
+    \renewcommand{\arraystretch}{1}
+\end{center}
+Bagaimanakah preferensi kelompok itu secara keseluruhan?
+
+Secara keseluruhan,
+kelompok tersebut lebih menyukai calon Demokrat daripada calon Republik dengan selisih lima suara;
+tujuh belas pemilih menempatkan calon Demokrat di atas calon Republik,
+sedangkan dua belas pemilih memilih urutan sebaliknya.
+Kelompok tersebut juga
+lebih menyukai calon Republik daripada calon Partai Ketiga,
+lima belas berbanding empat belas.
+Namun, anehnya, kelompok itu juga
+lebih menyukai calon Partai Ketiga daripada calon Demokrat, delapan belas berbanding sebelas.
+\begin{center}
+  \includegraphics{vs/mp/voting.1}
+\end{center}
+Ini adalah sebuah \definend{paradoks pemungutan suara}\index{paradoks pemungutan suara!definisi},
+lebih khusus lagi, sebuah
+\definend{siklus mayoritas}.\index{paradoks pemungutan suara!siklus mayoritas}
+
+Matematikawan mempelajari paradoks pemungutan suara antara lain karena
+implikasinya bagi politik praktis.
+Sebagai contoh, pengajar dapat memanipulasi kelas ini
+agar memilih calon Demokrat sebagai pemenang keseluruhan
+dengan mula-mula meminta pemungutan suara antara calon Republik dan
+calon Partai Ketiga,
+lalu meminta pemungutan suara antara pemenang kontes itu, yaitu calon
+Republik, dan calon Demokrat.
+Dengan manipulasi serupa,
+pengajar dapat membuat salah satu dari dua calon lainnya menjadi pemenang.
+(Kita akan membatasi pembahasan pada pemilihan dengan tiga calon, tetapi hal yang sama
+terjadi dalam pemilihan yang lebih besar.)
+
+Matematikawan juga mempelajari paradoks pemungutan suara semata-mata karena
+paradoks itu menarik.
+Salah satu aspek yang menarik ialah bahwa
+siklus mayoritas kelompok secara keseluruhan terjadi meskipun
+daftar preferensi setiap pemilih bersifat
+\definend{rasional}\index{paradoks pemungutan suara!urutan preferensi rasional}, yakni
+berupa urutan lurus.
+Dengan kata lain, siklus mayoritas tampaknya muncul dalam keseluruhan
+tanpa hadir dalam komponen-komponen keseluruhan tersebut, yaitu daftar preferensi.
+Namun, kita dapat menggunakan aljabar linear untuk menunjukkan bahwa
+kecenderungan menuju preferensi siklik sebenarnya terdapat
+dalam daftar setiap pemilih dan
+bahwa kecenderungan itu tampak ketika penjumlahannya lebih besar
+daripada pembatalannya.
+
+Untuk itu,
+dengan menyingkat pilihan sebagai $D$, $R$, dan $T$,
+kita dapat menggambarkan bagaimana
+seorang pemilih dengan urutan preferensi $D>R>T$ berkontribusi terhadap siklus di atas.
+\begin{center}
+  \includegraphics{vs/mp/voting.2}
+\end{center}
+(Tanda negatif muncul karena panah itu menggambarkan $T$ sebagai
+lebih disukai daripada $D$, sedangkan pemilih ini menyukai urutan sebaliknya.)
+Gambaran untuk daftar preferensi lainnya terdapat pada tabel di
+halaman~\pageref{table:Voting}.
+
+Sekarang, untuk melaksanakan pemilihan, kita menggabungkan gambaran-gambaran ini secara linear;
+sebagai contoh, simulasi pemilihan kelas Ilmu Politik
+\begin{equation*}
+  5\cdot \votinggraphic{43}
+  +4\cdot\votinggraphic{44}
+  +\dots+2\cdot\votinggraphic{45}
+\tag*{}\end{equation*}
+menghasilkan preferensi kelompok melingkar yang ditunjukkan sebelumnya.
+
+Tentu saja, membentuk kombinasi linear merupakan aljabar linear.
+Notasi siklus grafis memberi gambaran yang baik, tetapi kurang praktis, sehingga kita
+menggunakan vektor kolom dengan memulai dari $D$ dan
+mengambil bilangan-bilangan pada siklus dengan urutan berlawanan arah jarum jam.
+Dengan demikian, simulasi pemilihan dan satu suara $D>R>T$ kita nyatakan sebagai berikut.
+\begin{equation*}
+  \votepreflist{7}{1}{5}
+  \quad\text{dan}\quad
+  \votepreflist{-1}{1}{1}
+\tag*{}\end{equation*}
+
+Kita akan
+menguraikan vektor suara menjadi dua bagian, yang satu
+siklik dan yang lain asiklik.
+Untuk bagian pertama,
+kita mengatakan bahwa sebuah vektor \definend{siklik murni} jika vektor itu berada dalam
+subruang $\Re^3$ berikut.
+\begin{equation*}
+  C
+  =\set{\votepreflist{k}{k}{k} \suchthat k \in\Re}
+  =\set{k\cdot\votepreflist{1}{1}{1} \suchthat k \in\Re}
+\end{equation*}
+Untuk bagian kedua, perhatikan himpunan
+vektor yang
+tegak lurus terhadap semua vektor dalam $C$.
+\nearbyexercise{exer:PerpIsSubSp} menunjukkan bahwa himpunan ini merupakan subruang
+\begin{align*}
+  C^\perp &=\set{\votepreflist{c_1}{c_2}{c_3} \suchthat 
+                 \colvec{c_1 \\ c_2 \\ c_3}\dotprod\colvec{k \\ k \\ k} =0
+                 \text{\ untuk setiap $k\in\Re$}}             \\
+          &=\set{\votepreflist{c_1}{c_2}{c_3} \suchthat 
+                 c_1+c_2+c_3=0}                                         
+          =\set{c_2\votepreflist{-1}{1}{0}
+                +c_3\votepreflist{-1}{0}{1} \suchthat  c_2,c_3\in\Re}
+\end{align*}
+(dibaca ``$C$~tegak lurus'').
+Dengan demikian, kita memperoleh basis berikut untuk $\Re^3$.
+\begin{equation*}
+ \sequence{\votepreflist{1}{1}{1},
+             \votepreflist{-1}{1}{0},
+             \votepreflist{-1}{0}{1}}
+\tag*{}\end{equation*}
+Kita dapat menyatakan suara terhadap basis ini,
+dan dengan demikian menguraikannya menjadi bagian siklik dan bagian asiklik.
+\textit{(Catatan bagi pembaca yang telah mempelajari bagian pilihan
+dalam bab ini:~artinya, ruang tersebut merupakan jumlah langsung dari $C$ dan~$C^\perp$.)}
+
+Sebagai contoh, perhatikan pemilih $D>R>T$ yang dibahas di atas.
+Kita menyatakan pemilih tersebut terhadap basis ini melalui
+\begin{equation*}
+  \begin{linsys}{3}
+    c_1  &-  &c_2  &-  &c_3  &=  &-1 \\
+    c_1  &+  &c_2  &   &     &=  &1  \\
+    c_1  &   &     &+  &c_3  &=  &1  
+  \end{linsys}
+  \grstep[-\rho_1+\rho_3]{-\rho_1+\rho_2}
+  \repeatedgrstep{(-1/2)\rho_2+\rho_3}
+  \begin{linsys}{3}
+    c_1  &-  &c_2  &-  &c_3      &=  &-1 \\
+         &   &2c_2 &+  &c_3      &=  &2  \\
+         &   &     &   &(3/2)c_3 &=  &1  
+  \end{linsys}
+\end{equation*}
+dengan menggunakan koordinat $c_1=1/3$, $c_2=2/3$, dan $c_3=2/3$.
+Selanjutnya,
+\begin{equation*}
+  \votepreflist{-1}{1}{1}
+  =\frac{1}{3}\cdot\votepreflist{1}{1}{1}
+    +\frac{2}{3}\cdot\votepreflist{-1}{1}{0}
+    +\frac{2}{3}\cdot\votepreflist{-1}{0}{1}
+  =\votepreflist{1/3}{1/3}{1/3}
+   +\votepreflist{-4/3}{2/3}{2/3}
+\tag*{}\end{equation*}
+memberikan penguraian yang diinginkan menjadi
+bagian siklik dan bagian asiklik.
+\begin{equation*}
+  \votinggraphic{3}
+=
+\votinggraphic{4}
+\>+\>
+\votinggraphic{5}
+\end{equation*}
+Dengan demikian, kita melihat bahwa daftar preferensi rasional
+pemilih $D>R>T$ ini memang memiliki bagian siklik.
+
+Pemilih $T>R>D$ berlawanan dengan pemilih yang baru saja dibahas
+karena simbol `$>$' dibalik.
+Penguraian pemilih ini
+\begin{equation*}
+\votinggraphic{6}
+=
+\votinggraphic{7}
+\>+\>
+\votinggraphic{8}
+\end{equation*}
+menunjukkan bahwa preferensi yang berlawanan ini mempunyai penguraian yang juga berlawanan.
+Kita mengatakan bahwa pemilih pertama mempunyai
+\definend{putaran} positif\index{putaran}\index{paradoks pemungutan suara!putaran}
+karena bagian siklusnya searah dengan
+arah panah yang telah kita pilih,
+sedangkan putaran pemilih kedua bernilai negatif.
+
+Fakta bahwa kedua pemilih yang berlawanan ini saling membatalkan tercermin dalam
+kenyataan bahwa jumlah vektor suaranya adalah nol.
+Hal ini menyarankan cara lain untuk menghitung hasil pemilihan.
+Kita dapat terlebih dahulu membatalkan sebanyak mungkin pasangan daftar preferensi yang berlawanan,
+kemudian menentukan hasilnya dengan menjumlahkan daftar yang tersisa.
+
+Tabel di bawah memuat tiga pasangan
+daftar preferensi yang berlawanan.
+Sebagai contoh, baris teratas memuat para pemilih yang dibahas di atas.
+\begin{center}
+  \def\betweenrowvspace{5.5ex}
+  \makebox[\hsize][l]{%  box runs into margin; suppress overfull warn
+  \begin{tabular}{@{}c@{\hspace{0em}}c@{}} 
+    % \hline
+    \multicolumn{1}{c}{\textit{putaran positif}}
+    &\multicolumn{1}{c}{\textit{putaran negatif}}  
+     \\ \hline
+    {\renewcommand{\arraystretch}{1.4}%%
+     \begin{tabular}{@{}c}
+      $\text{Demokrat}>\text{Republik}>\text{Ketiga}$                     \\
+      $\votinggraphic{9} % \votecycle{1}{1}{-1}{3}
+      =\votinggraphic{10} %\votecycle{1/3}{1/3}{1/3}{3}
+      \>+\>
+      \votinggraphic{11}$  %\votecycle{2/3}{2/3}{-4/3}{3}\;{}
+    \end{tabular}}
+    &{\renewcommand{\arraystretch}{1.4}%%
+     \begin{tabular}{c@{}}
+      $\text{Ketiga}>\text{Republik}>\text{Demokrat}$                     \\
+      $\votinggraphic{12}  %\votecycle{-1}{-1}{1}{3}
+      =\votinggraphic{13}  %\votecycle{-1/3}{-1/3}{-1/3}{3}
+      \>+\>
+      \votinggraphic{14}$  %\votecycle{-2/3}{-2/3}{4/3}{3}\;{}
+    \end{tabular}}                  \\[\betweenrowvspace] % \hline
+    {\renewcommand{\arraystretch}{1.4}%%
+    \begin{tabular}{@{}c}
+      $\text{Republik}>\text{Ketiga}>\text{Demokrat}$                     \\
+      $\votinggraphic{15}  %\votecycle{-1}{1}{1}{3}
+      =\votinggraphic{16} %\votecycle{1/3}{1/3}{1/3}{3}
+      \>+\>
+      \votinggraphic{17}$  %\votecycle{-4/3}{2/3}{2/3}{3}\;{}
+    \end{tabular}}
+    &{\renewcommand{\arraystretch}{1.4}%%
+     \begin{tabular}{c@{}}
+      $\text{Demokrat}>\text{Ketiga}>\text{Republik}$                     \\
+      $\votinggraphic{18}  %\votecycle{1}{-1}{-1}{3}
+      =\votinggraphic{19}  %\votecycle{-1/3}{-1/3}{-1/3}{3}
+      \>+\>
+      \votinggraphic{20}$  %\votecycle{4/3}{-2/3}{-2/3}{3}\;{}
+    \end{tabular}}                  \\[\betweenrowvspace] % \hline
+    {\renewcommand{\arraystretch}{1.4}%%
+    \begin{tabular}{@{}c}
+      $\text{Ketiga}>\text{Demokrat}>\text{Republik}$                     \\
+      $\votinggraphic{21}  %\votecycle{1}{-1}{1}{3}
+      =\votinggraphic{22}  %\votecycle{1/3}{1/3}{1/3}{3}
+      \>+\>
+      \votinggraphic{23}$  %\votecycle{2/3}{-4/3}{2/3}{3}\;{}
+    \end{tabular}}
+    &{\renewcommand{\arraystretch}{1.4}%%
+     \begin{tabular}{c@{}}
+      $\text{Republik}>\text{Demokrat}>\text{Ketiga}$                     \\
+      $\votinggraphic{24}  %\votecycle{-1}{1}{-1}{3}
+      =\votinggraphic{25}  %\votecycle{-1/3}{-1/3}{-1/3}{3}
+      \>+\>
+      \votinggraphic{26}$  %\votecycle{-2/3}{4/3}{-2/3}{3}\;{}
+    \end{tabular}}                  % \\ \hline
+  \end{tabular}
+  }
+  \label{table:Voting}
+\end{center}
+Jika pemilihan dilaksanakan seperti yang baru saja dijelaskan, maka setelah kita
+membatalkan sebanyak mungkin pasangan pemilih yang berlawanan, akan tersisa tiga
+himpunan daftar preferensi:~satu himpunan dari baris pertama, satu dari baris kedua,
+dan satu dari baris ketiga.
+Sebagai penutup, kita akan membuktikan bahwa
+paradoks pemungutan suara hanya dapat terjadi jika
+putaran ketiga himpunan itu searah.
+Artinya, agar paradoks pemungutan suara terjadi, ketiga himpunan yang tersisa harus semuanya berasal
+dari sisi kiri tabel atau semuanya dari sisi kanan
+(lihat \nearbyexercise{exer:CancelPolSci}).
+Ini menunjukkan adanya hubungan antara siklus mayoritas dan
+penguraian yang kita gunakan\Dash paradoks
+pemungutan suara hanya dapat terjadi ketika
+kecenderungan-kecenderungan menuju preferensi siklik saling memperkuat.
+
+Untuk pembuktiannya, andaikan kita telah membatalkan
+urutan preferensi yang berlawanan dan tersisa satu himpunan
+daftar preferensi untuk setiap baris.
+Perhatikan daftar preferensi yang tersisa pada baris pertama.
+Daftar itu dapat berasal dari sisi kiri atau kanan baris pertama
+(atau tidak tersisa dari keduanya, jika daftar tersebut saling membatalkan dengan tepat).
+Kita tuliskan
+\begin{equation*}
+  \votinggraphic{27}
+\end{equation*}
+dengan $a$ suatu bilangan bulat yang positif jika daftar yang tersisa berada di
+sisi kiri, $a$ negatif jika daftar itu berada di sisi kanan, dan nol
+jika pembatalannya sempurna.
+Dengan cara serupa, kita mempunyai bilangan bulat $b$ dan $c$ untuk baris kedua dan ketiga;
+masing-masing dapat bernilai positif, negatif, atau nol.
+
+Hasil pemilihan kemudian ditentukan oleh jumlah berikut.
+\begin{equation*}
+  \votinggraphic{27}  %\votecycle{a}{a}{-a}{4} 
+  +  
+  \votinggraphic{28}  %\votecycle{-b}{b}{b}{4} 
+  +  
+  \votinggraphic{29}  %\votecycle{c}{-c}{c}{4}  
+  =\hspace{.30in}
+  \votinggraphic{30}  %\votecycle{a-b+c}{a+b-c}{-a+b+c}{4}
+  \hspace{.30in}\hbox{}
+\end{equation*}
+Paradoks pemungutan suara terjadi ketika ketiga bilangan pada siklus total di sebelah kanan,
+$-a+b+c$, $a-b+c$, dan $a+b-c$,
+semuanya tak negatif atau semuanya tak positif.
+Kita akan membuktikan bahwa hal ini hanya terjadi ketika
+$a$, $b$, dan~$c$ semuanya tak negatif atau ketiganya tak positif.
+
+Misalkan bilangan-bilangan pada siklus total tak negatif; kasus lainnya serupa.
+\begin{equation*}
+  \begin{linsys}{3}
+    -a &+ &b &+ &c &\geq &0 \\
+     a &- &b &+ &c &\geq &0 \\
+     a &+ &b &- &c &\geq &0 
+  \end{linsys}
+\end{equation*}
+Jumlahkan dua baris pertama untuk memperoleh $c\geq 0$.
+Jumlahkan baris pertama dan ketiga untuk memperoleh $b\geq 0$.
+Selanjutnya, penjumlahan baris kedua dan ketiga memberikan $a\geq 0$.
+Jadi, jika siklus total tak negatif, maka pada setiap baris daftar
+preferensi yang tersisa berasal dari sisi kiri tabel.
+Dengan demikian, pembuktian selesai.
+
+Hasil ini hanya menyatakan bahwa ketiga putaran yang searah merupakan
+syarat perlu bagi siklus mayoritas.
+Syarat itu tidak cukup; lihat
+\nearbyexercise{exer:VoterCondNotSuff}.
+
+Teori pemungutan suara dan topik-topik terkait merupakan bidang penelitian masa kini.
+Ada banyak hasil yang menarik, terutama
+hasil K~Arrow \cite{Arrow}, yang memperoleh Hadiah Nobel antara lain berkat
+karya ini, yang menunjukkan bahwa tidak ada sistem pemungutan suara yang sepenuhnya adil
+(untuk suatu definisi ``adil'' yang wajar).
+Beberapa artikel pengantar yang baik ialah \cite{Gardner70},
+\cite{Gardner74}, \cite{Gardner80}, dan \cite{NeimiRiker}.
+\cite{Taylor} merupakan buku yang mudah dibaca.
+Daftar panjang kasus dari sejarah politik Amerika modern dalam
+\cite{GamingVote} menunjukkan bahwa paradoks-paradoks ini
+secara rutin dimanipulasi dalam praktik.
+(Di sisi lain, penelitian yang cukup baru menunjukkan bahwa
+perhitungan cara memanipulasi pemilihan secara umum dapat menjadi tidak layak dilakukan,
+tetapi hal ini berada di luar cakupan kita.)
+Topik ini diadaptasi dari \cite{Zwicker}.
+\emph{(Catatan Penulis:~Saya ingin berterima kasih kepada Profesor~Zwicker
+atas diskusinya yang ramah dan mencerahkan.)}
+
+\begin{exercises}
+  \item \label{IrrIndVote}
+    Berikut ini salah satu cara yang masuk akal bagi seorang pemilih untuk mempunyai preferensi siklik.
+    Andaikan pemilih ini menilai setiap calon
+    berdasarkan masing-masing dari tiga kriteria.
+    \begin{exparts}
+      \partsitem Buatlah tabel dengan baris berlabel `Demokrat',
+         `Republik', dan `Ketiga', serta kolom berlabel
+         `karakter', `pengalaman', dan `kebijakan'.
+         Dalam setiap kolom, tempatkan satu
+         calon sebagai yang paling disukai,
+         calon lain di tengah, dan calon yang tersisa
+         sebagai yang paling tidak disukai.
+      \partsitem Dalam pemeringkatan ini, apakah calon Demokrat lebih disukai daripada calon Republik
+         pada (setidaknya) dua dari tiga kriteria, atau sebaliknya?
+         Apakah calon Republik lebih disukai daripada calon Ketiga?
+      \partsitem Apakah tabel yang baru saja
+         dibuat mempunyai urutan preferensi siklik?
+         Jika tidak, buatlah tabel yang mempunyainya.
+    \end{exparts}
+    Jadi, seorang pemilih dapat mempunyai preferensi siklik di antara para calon.
+    Akan tetapi, paradoks yang dijelaskan di atas ialah bahwa sekalipun setiap pemilih memiliki
+    daftar preferensi lurus,
+    preferensi siklik tetap dapat muncul pada kelompok secara keseluruhan.
+    \begin{answer}
+      Contoh ini menghasilkan urutan preferensi tak rasional bagi
+      seorang pemilih.
+      \smallskip
+      \begin{center}
+        \begin{tabular}{l|c|c|c|}
+             \multicolumn{1}{c}{\ }
+                  &\multicolumn{1}{c}{\textit{karakter}}
+                  &\multicolumn{1}{c}{\textit{pengalaman}}
+                  &\multicolumn{1}{c}{\textit{kebijakan}}   \\ 
+          \cline{2-4}
+         \textit{Demokrat}   &teratas &tengah  &terbawah \\
+         \textit{Republik}   &tengah  &terbawah &teratas \\
+         \textit{Ketiga}     &terbawah &teratas &tengah  \\
+          \cline{2-4}
+        \end{tabular}
+      \end{center}
+      \smallskip
+      Calon Demokrat lebih baik daripada calon Republik dalam karakter dan
+      pengalaman.
+      Calon Republik mengungguli calon Ketiga dalam karakter dan kebijakan.
+      Selanjutnya, calon Ketiga mengungguli calon Demokrat dalam pengalaman dan kebijakan.
+    \end{answer}
+  \item \label{VoteCalcTable} 
+    Hitunglah nilai-nilai dalam tabel penguraian.
+    \begin{answer}
+      Pertama, bandingkan penguraian $D>R>T$ yang dibahas dalam Topik ini
+      \begin{equation*}
+        \votepreflist{-1}{1}{1}
+          =\frac{1}{3}\cdot\votepreflist{1}{1}{1}
+           +\frac{2}{3}\cdot\votepreflist{-1}{1}{0}
+           +\frac{2}{3}\cdot\votepreflist{-1}{0}{1}
+      \end{equation*}
+      dengan penguraian pemilih $T>R>D$ yang berlawanan.
+      \begin{equation*}
+        \votepreflist{1}{-1}{-1}
+          =d_1\cdot\votepreflist{1}{1}{1}
+           +d_2\cdot\votepreflist{-1}{1}{0}
+           +d_3\cdot\votepreflist{-1}{0}{1}
+      \tag*{}\end{equation*}
+      Jelas bahwa yang kedua merupakan negatif dari yang pertama, sehingga
+      $d_1=-1/3$, $d_2=-2/3$, dan $d_3=-2/3$.
+      Prinsip ini berlaku untuk setiap pasangan pemilih yang berlawanan, sehingga kita hanya perlu
+      melakukan perhitungan bagi seorang pemilih dari baris kedua dan seorang pemilih dari
+      baris ketiga.
+      Untuk pemilih dengan putaran positif pada baris kedua,
+      \begin{equation*}
+        \begin{linsys}{3}
+          c_1  &-  &c_2  &-  &c_3  &=  &1 \\
+          c_1  &+  &c_2  &   &     &=  &1  \\
+          c_1  &   &     &+  &c_3  &=  &-1  
+        \end{linsys}
+        \grstep[-\rho_1+\rho_3]{-\rho_1+\rho_2}
+        \repeatedgrstep{(-1/2)\rho_2+\rho_3}
+        \begin{linsys}{3}
+          c_1  &-  &c_2  &-  &c_3      &=  &1 \\
+               &   &2c_2 &+  &c_3      &=  &0  \\
+               &   &     &   &(3/2)c_3 &=  &-2  
+        \end{linsys}
+      \tag*{}\end{equation*}
+      memberikan $c_3=-4/3$, $c_2=2/3$, dan $c_1=1/3$.
+      Untuk pemilih dengan putaran positif pada baris ketiga,
+      \begin{equation*}
+        \begin{linsys}{3}
+          c_1  &-  &c_2  &-  &c_3  &=  &1 \\
+          c_1  &+  &c_2  &   &     &=  &-1  \\
+          c_1  &   &     &+  &c_3  &=  &1  
+        \end{linsys}
+        \grstep[-\rho_1+\rho_3]{-\rho_1+\rho_2}
+        \repeatedgrstep{(-1/2)\rho_2+\rho_3}
+        \begin{linsys}{3}
+          c_1  &-  &c_2  &-  &c_3      &=  &1 \\
+               &   &2c_2 &+  &c_3      &=  &-2  \\
+               &   &     &   &(3/2)c_3 &=  &1  
+        \end{linsys}
+        \tag*{}\end{equation*}
+        memberikan $c_3=2/3$, $c_2=-4/3$, dan $c_1=1/3$.
+      \end{answer}
+  \item \label{exer:CancelPolSci} 
+    Lakukan pembatalan urutan preferensi yang berlawanan
+    pada simulasi pemilihan kelas Ilmu Politik.
+    Apakah semua preferensi yang tersisa berasal dari tiga entri kiri dalam
+    tabel atau dari tiga entri kanan?
+    \begin{answer}
+      Simulasi pemilihan bersesuaian dengan tabel pada
+      halaman~\pageref{table:Voting} sebagaimana ditunjukkan dalam tabel pertama,
+      dan setelah pembatalan hasilnya adalah tabel kedua.
+     \smallskip
+      \begin{center}
+         % \renewcommand{\arraystretch}{1.2}
+         \begin{tabular}{|c|c|} \hline
+           \textit{putaran positif}
+           &\textit{putaran negatif}  \\ \hline
+           \begin{tabular}{l}
+             $D>R>T$        \\
+             5 pemilih
+           \end{tabular}
+          &\begin{tabular}{l}
+             $T>R>D$          \\
+             2 pemilih
+           \end{tabular}                  \\ \hline
+          \begin{tabular}{l}
+             $R>T>D$           \\
+             8 pemilih
+          \end{tabular}
+         &\begin{tabular}{l}
+             $D>T>R$             \\
+             4 pemilih
+           \end{tabular}                  \\ \hline
+          \begin{tabular}{l}
+            $T>D>R$             \\
+            8 pemilih
+          \end{tabular}
+         &\begin{tabular}{l}
+            $R>D>T$            \\
+            2 pemilih
+          \end{tabular}                  \\ \hline
+        \end{tabular}
+        \qquad
+         \begin{tabular}{|c|c|} \hline
+           \textit{putaran positif}
+           &\textit{putaran negatif}  \\ \hline
+           \begin{tabular}{l}
+             $D>R>T$        \\
+             3 pemilih
+           \end{tabular}
+          &\begin{tabular}{l}
+             $T>R>D$          \\
+             \textit{-dibatalkan-}
+           \end{tabular}                  \\ \hline
+          \begin{tabular}{l}
+             $R>T>D$           \\
+             4 pemilih
+          \end{tabular}
+         &\begin{tabular}{l}
+             $D>T>R$             \\
+             \textit{-dibatalkan-}
+           \end{tabular}                  \\ \hline
+          \begin{tabular}{l}
+            $T>D>R$             \\
+            6 pemilih
+          \end{tabular}
+         &\begin{tabular}{l}
+            $R>D>T$            \\
+            \textit{-dibatalkan-}
+          \end{tabular}                  \\ \hline
+        \end{tabular}
+       \end{center}
+       \smallskip
+       Ketiganya berasal dari sisi tabel yang sama (sisi kiri),
+       sebagaimana dinyatakan oleh hasil dalam Topik ini.
+       Sekarang kita dapat menghitung hasilnya dengan menggunakan jumlah setelah pembatalan,
+       \begin{equation*}
+         % \psset{xunit=4pt,yunit=4pt,runit=4pt} 
+         3\cdot \votinggraphic{31}
+%          \pspicture[.4](-10.5,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%            \SpecialCoor
+%            \rput(3;90){\small $D$}
+%            \psarc{->}(0,0){3}{10}{70} %-rd->
+%               \rput[lb](3.3;20){\scriptsize $1$ voter} 
+%            \rput[B](3;210){\small $T$}
+%            \psarc{->}(0,0){3}{220}{320} %-tr->
+%               \rput[t](3.1;270){\scriptsize $1$ voter} 
+%            \rput[B](3;330){\small $R$}
+%            \psarc{->}(0,0){3}{110}{175} %-dt->
+%               \rput[rb](3.3;160){\scriptsize $-1$ voter} 
+%          \endpspicture
+         +4\cdot\votinggraphic{32}
+%          \pspicture[.4](-10,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%            \SpecialCoor
+%            \rput(3;90){\small $D$}
+%            \psarc{->}(0,0){3}{10}{70} %-rd->
+%               \rput[lb](3.3;20){\scriptsize $-1$ voter} 
+%            \rput[B](3;210){\small $T$}
+%            \psarc{->}(0,0){3}{220}{320} %-tr->
+%               \rput[t](3.1;270){\scriptsize $1$ voter} 
+%            \rput[B](3;330){\small $R$}
+%            \psarc{->}(0,0){3}{110}{175} %-dt->
+%               \rput[rb](3.3;160){\scriptsize $1$ voter} 
+%          \endpspicture
+         +6\cdot\votinggraphic{33}
+%          \pspicture[.4](-9,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%            \SpecialCoor
+%            \rput(3;90){\small $D$}
+%            \psarc{->}(0,0){3}{10}{70} %-rd->
+%               \rput[lb](3.3;20){\scriptsize $1$ voter} 
+%            \rput[B](3;210){\small $T$}
+%            \psarc{->}(0,0){3}{220}{320} %-tr->
+%               \rput[t](3.1;270){\scriptsize $-1$ voter} 
+%            \rput[B](3;330){\small $R$}
+%            \psarc{->}(0,0){3}{110}{175} %-dt->
+%               \rput[rb](3.3;160){\scriptsize $1$ voter} 
+%          \endpspicture
+         = \votinggraphic{34}
+%          \pspicture[.4](-9,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%            \SpecialCoor
+%            \rput(3;90){\small $D$}
+%            \psarc{->}(0,0){3}{10}{70} %-rd->
+%               \rput[lb](3.3;20){\scriptsize $5$ voters} 
+%            \rput[B](3;210){\small $T$}
+%            \psarc{->}(0,0){3}{220}{320} %-tr->
+%               \rput[t](3.1;270){\scriptsize $1$ voter} 
+%            \rput[B](3;330){\small $R$}
+%            \psarc{->}(0,0){3}{110}{175} %-dt->
+%               \rput[rb](3.3;160){\scriptsize $7$ voters} 
+%          \endpspicture
+       \tag*{}\end{equation*}
+       untuk memperoleh hasil yang sama.
+    \end{answer}
+  \item \label{exer:VoterCondNotSuff} 
+    Syarat perlu bahwa
+    paradoks pemungutan suara hanya dapat terjadi jika ketiga daftar preferensi yang tersisa
+    setelah pembatalan mempunyai putaran yang sama bukanlah syarat cukup.
+    \begin{exparts}
+      % \partsitem Continuing the nonnegative total cycle case 
+      %   considered in the proof, 
+      %   use the two inequalities $0\leq a-b+c$ and $0\leq -a+b+c$
+      %   to show that $\absval{a-b}\leq c$.
+      % \partsitem Also show that $c\leq a+b$, and hence that
+      %   $\absval{a-b}\leq c\leq a+b$. 
+      \partsitem Berikan contoh pemungutan suara yang mempunyai siklus mayoritas,
+        tetapi penambahan satu pemilih lagi dengan putaran yang sama menyebabkan siklus itu
+        hilang.
+      \partsitem Dapatkah hal sebaliknya terjadi; dapatkah penambahan seorang pemilih dengan
+        putaran yang ``salah'' menyebabkan munculnya siklus?
+      \partsitem Berikan suatu syarat yang perlu sekaligus cukup
+        untuk memperoleh siklus mayoritas.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        % \partsitem We can rewrite the two as $-c\leq a-b$ and $-c\leq b-a$.
+        %   Either $a-b$ or $b-a$ is nonpositive and so $-c\leq-\absval{a-b}$,
+        %   as required.
+        % \partsitem This is immediate from the supposition that $0\leq a+b-c$.
+        \partsitem Contoh sederhana dimulai dengan pemilihan tanpa pemilih,
+          yang mempunyai siklus mayoritas trivial, lalu menambahkan seorang pemilih mana pun.
+          Contoh yang lebih menarik menggunakan simulasi
+          pemilihan kelas Ilmu Politik dan menambahkan dua pemilih $T>D>R$
+          (untuk memenuhi kriteria
+          ``penambahan satu pemilih lagi'' dalam soal,
+          kita dapat menambahkan mereka satu per satu).
+          Para pemilih baru mempunyai putaran positif, yaitu
+          putaran suara yang tersisa setelah pembatalan dalam simulasi
+          pemilihan semula.
+          Berikut adalah tabel pemilih yang dihasilkan dan, di sebelahnya,
+          hasil pembatalan.
+      \smallskip
+      \begin{center}
+         % \renewcommand{\arraystretch}{1.3}
+         \begin{tabular}{|c|c|} \hline
+           \textit{putaran positif}
+           &\textit{putaran negatif}  \\ \hline
+           \begin{tabular}{l}
+             $D>R>T$        \\
+             5 pemilih
+           \end{tabular}
+          &\begin{tabular}{l}
+             $T>R>D$          \\
+             2 pemilih
+           \end{tabular}                  \\ \hline
+          \begin{tabular}{l}
+             $R>T>D$           \\
+             8 pemilih
+          \end{tabular}
+         &\begin{tabular}{l}
+             $D>T>R$             \\
+             4 pemilih
+           \end{tabular}                  \\ \hline
+          \begin{tabular}{l}
+            $T>D>R$             \\
+            10 pemilih
+          \end{tabular}
+         &\begin{tabular}{l}
+            $R>D>T$            \\
+            2 pemilih
+          \end{tabular}                  \\ \hline
+        \end{tabular}
+        \qquad
+         \begin{tabular}{|c|c|} \hline
+           \textit{putaran positif}
+           &\textit{putaran negatif}  \\ \hline
+           \begin{tabular}{l}
+             $D>R>T$        \\
+             3 pemilih
+           \end{tabular}
+          &\begin{tabular}{l}
+             $T>R>D$          \\
+             \textit{-dibatalkan-}
+           \end{tabular}                  \\ \hline
+          \begin{tabular}{l}
+             $R>T>D$           \\
+             4 pemilih
+          \end{tabular}
+         &\begin{tabular}{l}
+             $D>T>R$             \\
+             \textit{-dibatalkan-}
+           \end{tabular}                  \\ \hline
+          \begin{tabular}{l}
+            $T>D>R$             \\
+            8 pemilih
+          \end{tabular}
+         &\begin{tabular}{l}
+            $R>D>T$            \\
+            \textit{-dibatalkan-}
+          \end{tabular}                  \\ \hline
+        \end{tabular}
+       \end{center}
+       \smallskip
+       Berikut adalah pemilihannya dengan menggunakan jumlah setelah pembatalan.
+       \begin{equation*}
+         % \psset{xunit=4pt,yunit=4pt,runit=4pt} 
+         3\cdot\votinggraphic{35}
+%          \pspicture[.4](-10.5,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%            \SpecialCoor
+%            \rput(3;90){\small $D$}
+%            \psarc{->}(0,0){3}{10}{70} %-rd->
+%               \rput[lb](3.3;20){\scriptsize $1$ voter} 
+%            \rput[B](3;210){\small $T$}
+%            \psarc{->}(0,0){3}{220}{320} %-tr->
+%               \rput[t](3.1;270){\scriptsize $1$ voter} 
+%            \rput[B](3;330){\small $R$}
+%            \psarc{->}(0,0){3}{110}{175} %-dt->
+%               \rput[rb](3.3;160){\scriptsize $-1$ voter} 
+%          \endpspicture
+         +4\cdot\votinggraphic{36}
+%          \pspicture[.4](-10,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%            \SpecialCoor
+%            \rput(3;90){\small $D$}
+%            \psarc{->}(0,0){3}{10}{70} %-rd->
+%               \rput[lb](3.3;20){\scriptsize $-1$ voter} 
+%            \rput[B](3;210){\small $T$}
+%            \psarc{->}(0,0){3}{220}{320} %-tr->
+%               \rput[t](3.1;270){\scriptsize $1$ voter} 
+%            \rput[B](3;330){\small $R$}
+%            \psarc{->}(0,0){3}{110}{175} %-dt->
+%               \rput[rb](3.3;160){\scriptsize $1$ voter} 
+%          \endpspicture
+         +8\cdot\votinggraphic{37}
+%          \pspicture[.4](-9,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%            \SpecialCoor
+%            \rput(3;90){\small $D$}
+%            \psarc{->}(0,0){3}{10}{70} %-rd->
+%               \rput[lb](3.3;20){\scriptsize $1$ voter} 
+%            \rput[B](3;210){\small $T$}
+%            \psarc{->}(0,0){3}{220}{320} %-tr->
+%               \rput[t](3.1;270){\scriptsize $-1$ voter} 
+%            \rput[B](3;330){\small $R$}
+%            \psarc{->}(0,0){3}{110}{175} %-dt->
+%               \rput[rb](3.3;160){\scriptsize $1$ voter} 
+%          \endpspicture
+         =\votinggraphic{38}
+%          \pspicture[.4](-9,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%            \SpecialCoor
+%            \rput(3;90){\small $D$}
+%            \psarc{->}(0,0){3}{10}{70} %-rd->
+%               \rput[lb](3.3;20){\scriptsize $7$ voters} 
+%            \rput[B](3;210){\small $T$}
+%            \psarc{->}(0,0){3}{220}{320} %-tr->
+%               \rput[t](3.1;270){\scriptsize $-1$ voter} 
+%            \rput[B](3;330){\small $R$}
+%            \psarc{->}(0,0){3}{110}{175} %-dt->
+%               \rput[rb](3.3;160){\scriptsize $9$ voters} 
+%          \endpspicture
+       \tag*{}\end{equation*}
+       Siklus mayoritas itu memang telah hilang.
+      \partsitem Balikkan langkah pada soal sebelumnya.
+         Artinya, tambahkan pada hasil soal sebelumnya seorang pemilih yang
+         membatalkan pemilih yang membuat siklus tersebut hilang.
+      \partsitem Salah satu syarat semacam itu ialah bahwa, setelah pembatalan,
+         ketiganya tak negatif atau ketiganya tak positif,
+         serta:~$\absval{c}\leq\absval{a+b}$, $\absval{b}\leq\absval{a+c}$,
+         dan $\absval{a}\leq\absval{b+c}$.
+         Syarat ini diperoleh dari diagram berikut.
+         \begin{equation*}
+           \votinggraphic{27}  %\votecycle{a}{a}{-a}{4} 
+           +  
+           \votinggraphic{28}  %\votecycle{-b}{b}{b}{4} 
+           +  
+           \votinggraphic{29}  %\votecycle{c}{-c}{c}{4}  
+           =\hspace{.30in}
+           \votinggraphic{30}  %\votecycle{a-b+c}{a+b-c}{-a+b+c}{4}
+           \hspace{.30in}\hbox{}  
+         \end{equation*}
+%          \begin{center}
+%            \votecycle{a}{a}{-a}{4} 
+%            +  
+%            \votecycle{-b}{b}{b}{4} 
+%            +  
+%            \votecycle{c}{-c}{c}{4}  
+%            =\hspace{.30in}  
+%            \votecycle{a-b+c}{a+b-c}{-a+b+c}{4}\hspace{.30in}\hbox{}  
+%          \end{center}
+      \end{exparts}
+    \end{answer}
+\item Pemilihan dengan satu pemilih tidak dapat mempunyai siklus mayoritas karena
+    kita mensyaratkan bahwa daftar pemilih tersebut harus rasional.
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa pemilihan dengan dua pemilih dapat mempunyai siklus mayoritas.
+        (Kita menganggap preferensi kelompok sebagai siklus mayoritas jika ketiga
+        total kelompok tak negatif atau jika ketiganya tak positif---artinya,
+        kita mengizinkan adanya nilai nol dalam preferensi kelompok.)
+      \partsitem Tunjukkan bahwa untuk setiap jumlah pemilih yang lebih besar daripada satu,
+        terdapat pemilihan dengan sebanyak itu pemilih yang menghasilkan siklus
+        mayoritas.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Pemilihan dengan dua pemilih dapat mempunyai siklus mayoritas melalui dua cara.
+          Pertama, kedua pemilih dapat saling berlawanan,
+          sehingga setelah pembatalan dihasilkan pemilihan trivial (dengan
+          siklus mayoritas yang seluruh nilainya nol).
+          Kedua, kedua pemilih dapat mempunyai putaran yang sama, tetapi berasal dari
+          baris yang berbeda, seperti berikut.
+          \begin{equation*}
+            % \psset{xunit=4pt,yunit=4pt,runit=4pt} 
+            1\cdot \votinggraphic{39}
+%             \pspicture[.4](-10.5,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%               \SpecialCoor
+%               \rput(3;90){\small $D$}
+%               \psarc{->}(0,0){3}{10}{70} %-rd->
+%                  \rput[lb](3.3;20){\scriptsize $1$ voter} 
+%               \rput[B](3;210){\small $T$}
+%               \psarc{->}(0,0){3}{220}{320} %-tr->
+%                  \rput[t](3.1;270){\scriptsize $1$ voter} 
+%               \rput[B](3;330){\small $R$}
+%               \psarc{->}(0,0){3}{110}{175} %-dt->
+%                  \rput[rb](3.3;160){\scriptsize $-1$ voter} 
+%             \endpspicture
+            +1\cdot\votinggraphic{40}
+%             \pspicture[.4](-10,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%               \SpecialCoor
+%               \rput(3;90){\small $D$}
+%               \psarc{->}(0,0){3}{10}{70} %-rd->
+%                  \rput[lb](3.3;20){\scriptsize $-1$ voter} 
+%               \rput[B](3;210){\small $T$}
+%               \psarc{->}(0,0){3}{220}{320} %-tr->
+%                  \rput[t](3.1;270){\scriptsize $1$ voter} 
+%               \rput[B](3;330){\small $R$}
+%               \psarc{->}(0,0){3}{110}{175} %-dt->
+%                  \rput[rb](3.3;160){\scriptsize $1$ voter} 
+%             \endpspicture
+            +0\cdot\votinggraphic{41}
+%             \pspicture[.4](-9,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%               \SpecialCoor
+%               \rput(3;90){\small $D$}
+%               \psarc{->}(0,0){3}{10}{70} %-rd->
+%                  \rput[lb](3.3;20){\scriptsize $1$ voter} 
+%               \rput[B](3;210){\small $T$}
+%               \psarc{->}(0,0){3}{220}{320} %-tr->
+%                  \rput[t](3.1;270){\scriptsize $-1$ voter} 
+%               \rput[B](3;330){\small $R$}
+%               \psarc{->}(0,0){3}{110}{175} %-dt->
+%                  \rput[rb](3.3;160){\scriptsize $1$ voter} 
+%             \endpspicture
+            =\votinggraphic{42}
+%             \pspicture[.4](-9,-4.2)(10,4) %\psgrid(-10,-10)(10,10)
+%               \SpecialCoor
+%               \rput(3;90){\small $D$}
+%               \psarc{->}(0,0){3}{10}{70} %-rd->
+%                  \rput[lb](3.3;20){\scriptsize $0$ voters} 
+%               \rput[B](3;210){\small $T$}
+%               \psarc{->}(0,0){3}{220}{320} %-tr->
+%                  \rput[t](3.1;270){\scriptsize $2$ voters} 
+%               \rput[B](3;330){\small $R$}
+%               \psarc{->}(0,0){3}{110}{175} %-dt->
+%                  \rput[rb](3.3;160){\scriptsize $0$ voters} 
+%             \endpspicture
+          \tag*{}\end{equation*}
+        \partsitem Ada dua kasus.
+          Pemilih yang berjumlah genap dapat dibagi dua sama banyak menjadi pasangan berlawanan;
+          misalnya, separuh pemilih memilih $D>R>T$ dan separuh lainnya $T>R>D$.
+          Pembatalan kemudian menghasilkan pemilihan trivial.
+          Jika jumlah pemilih lebih besar daripada satu dan ganjil (berbentuk
+          $2k+1$ dengan $k>0$), maka dengan menggunakan diagram siklus dari pembuktian,
+          \begin{equation*}
+            \votinggraphic{27}  %\votecycle{a}{a}{-a}{4} 
+            +  
+            \votinggraphic{28}  %\votecycle{-b}{b}{b}{4} 
+            +  
+            \votinggraphic{29}  %\votecycle{c}{-c}{c}{4}  
+            =\hspace{.30in}
+            \votinggraphic{30}  %\votecycle{a-b+c}{a+b-c}{-a+b+c}{4}
+            \hspace{.30in}\hbox{}  
+          \end{equation*}
+%          \begin{center}
+%            \votecycle{a}{a}{-a}{4} 
+%            +  
+%            \votecycle{-b}{b}{b}{4} 
+%            +  
+%            \votecycle{c}{-c}{c}{4}  
+%            =\hspace{.30in}  
+%            \votecycle{a-b+c}{a+b-c}{-a+b+c}{4}\hspace{.30in}\hbox{}  
+%          \end{center}
+          kita dapat mengambil $a=k$, $b=k$, dan $c=1$.
+          Karena $k>0$, hasilnya merupakan siklus mayoritas.
+       \end{exparts}
+    \end{answer}
+\item \label{exer:PerpIsSubSp} 
+    Misalkan $U$ suatu subruang dari $\Re^3$.
+    Buktikan bahwa himpunan
+    $U^\perp=\set{\vec{v}\suchthat 
+              \text{$\vec{v}\dotprod\vec{u}=0$ untuk setiap $\vec{u}\in U$}}$
+    yang terdiri atas vektor-vektor
+    yang tegak lurus terhadap setiap vektor dalam $U$ juga merupakan subruang dari $\Re^3$.
+    Apakah pernyataan ini tetap berlaku jika $U$ bukan subruang?
+    \begin{answer}
+      Himpunan ini tak kosong karena memuat vektor nol.
+      Untuk melihat bahwa himpunan ini tertutup terhadap kombinasi linear dua
+      anggotanya, andaikan $\vec{v}_1$ dan $\vec{v}_2$ berada dalam $U^\perp$
+      dan perhatikan $c_1\vec{v}_1+c_2\vec{v}_2$.
+      Untuk setiap $\vec{u}\in U$,
+      \begin{equation*}
+        (c_1\vec{v}_1+c_2\vec{v}_2)\dotprod\vec{u}
+        =c_1(\vec{v}_1\dotprod\vec{u})+c_2(\vec{v}_2\dotprod\vec{u})
+        =c_1\cdot 0+c_2\cdot 0=0         
+      \tag*{}\end{equation*}
+      sehingga $c_1\vec{v}_1+c_2\vec{v}_2\in U^\perp$.
+
+      Mengenai apakah pernyataan tersebut tetap berlaku jika $U$ merupakan himpunan bagian,
+      tetapi bukan subruang, jawabannya adalah ya.
+    \end{answer}
+\end{exercises}
+\index{paradoks pemungutan suara|)}
+\endinput

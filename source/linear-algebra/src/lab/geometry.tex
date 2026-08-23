@@ -1,0 +1,1025 @@
+\chapter{Geometri Pemetaan Linear}
+
+Untuk memperlihatkan efek geometris transformasi linear,
+kita akan menggambarkan aksi
+transformasi bidang pada persegi satuan.
+Kita menampilkan bidang, $\Re^2$,
+karena dapat dimuat di atas kertas, tetapi prinsip-prinsipnya berlaku pula pada
+ruang berdimensi lebih tinggi~$\Re^n$.
+
+
+
+
+%========================================
+\section{Garis dipetakan ke garis}
+Bab sebelumnya menunjukkan bahwa
+syarat $h(r\cdot \vec{v})=r\cdot h(\vec{v})$ dalam definisi
+pemetaan linear berarti bahwa
+pemetaan semacam ini membawa garis yang melalui titik asal ke garis yang melalui titik asal.
+Bagaimana dengan garis yang tidak melalui titik asal?
+Tetapkan suatu pemetaan linear $\map{h}{\Re^d}{\Re^c}$.
+Suatu garis dalam domain berbentuk
+$\ell = \set{\vec{m}\cdot s +\vec{b}\suchthat s\in\Re}$
+untuk~$\vec{m}, \vec{b}\in\Re^d$ (jika $\vec{m}=\zero$, maka garis itu degenerat).
+Citranya
+\begin{equation*}
+  h(\ell)=\set{h(\vec{m}\cdot s+\vec{b})\suchthat s\in\Re}
+  =\set{h(\vec{m})\cdot s+h(\vec{b})\suchthat s\in\Re}
+\end{equation*}
+adalah suatu garis dalam kodomain.
+Jadi, pemetaan linear membawa setiap garis, baik melalui titik asal maupun tidak, ke garis lain.
+
+Sebagai contoh, perhatikan transformasi $\map{t}{\Re^2}{\Re^2}$
+yang memutar vektor berlawanan arah jarum jam sebesar
+$\pi/6$~radian.
+\begin{equation*}
+  \rep{t}{\stdbasis_2,\stdbasis_2}
+  =
+  \begin{mat}
+    \cos(\pi/6)  &-\sin(\pi/6) \\
+    \sin(\pi/6)  &\cos(\pi/6)
+  \end{mat}
+  = 
+  \begin{mat}
+    \sqrt{3}/2   &-1/2 \\
+    1/2          &\sqrt{3}/2
+  \end{mat}
+\end{equation*}
+Perhatikan pula garis $y=3x+2$.
+\begin{equation*}
+  \ell=
+  \set{\colvec{x \\ y}=\colvec{1 \\ 3}\cdot s+\colvec{0 \\ 2}\suchthat s\in\Re}
+\end{equation*}
+Di bawah aksi~$t$,
+\begin{equation*}
+  \begin{mat}
+    \sqrt{3}/2   &-1/2 \\
+    1/2          &\sqrt{3}/2
+  \end{mat}
+  \colvec{1  \\ 3}
+  =
+  \colvec{(\sqrt{3}-3)/2  \\ (1+3\sqrt{3})/2}
+  \qquad
+  \begin{mat}
+    \sqrt{3}/2    &-1/2 \\
+    1/2          &\sqrt{3}/2
+  \end{mat}
+  \colvec{0  \\ 2}
+  =
+  \colvec{-1  \\ \sqrt{3}}
+\end{equation*}
+garis tersebut menjadi himpunan berikut.
+\begin{equation*}
+  t(\ell)
+  =
+  \set{\colvec{x \\ y}=\colvec{(\sqrt{3}-3)/2 \\ (1+3\sqrt{3})/2}\cdot s
+                          +\colvec{-1 \\ \sqrt{3}}\suchthat s\in\Re}
+\end{equation*}
+Berikut adalah kode serta plot masukan dan keluarannya.\footnote{%
+  Seperti dalam bab-bab sebelumnya, sebagian kode yang
+  mengatur ukuran huruf dan sebagainya tidak ditampilkan.}
+  %% For the full call see this manual's source.
+  %% Also, the limits on the parameter~$s$ of $10$ and~$-10$ are arbitrary, just
+  %% chosen to be large enough that the line segment covers the entire 
+  %% domain and codomain intervals shown, from $-4$ to~$4$.}
+\begin{sagecommandline}
+sage: s = var('s')
+sage: ell = parametric_plot((s, 3*s+2), (s, -10, 10))
+sage: d = circle((0,2), 0.1, rgbcolor=(1,0,0))
+sage: ell = ell+d
+sage: ell.save("graphics/geo000a.pdf")
+sage: t_x(s) = ((sqrt(3)-3)/2)*s-1
+sage: t_y(s) = ((1+3*sqrt(3))/2)*s+sqrt(3)
+sage: t_ell = parametric_plot((t_x(s), t_y(s)), (s, -10, 10))
+sage: d = circle((-1,sqrt(3)), 0.1, rgbcolor=(1,0,0))
+sage: t_ell = t_ell+d
+sage: t_ell.save("graphics/geo000b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+s = var('s')
+plot.options['figsize'] = 2.5
+plot.options['axes_pad'] = 0.05
+plot.options['fontsize'] = 7
+plot.options['dpi'] = 1200
+plot.options['aspect_ratio'] = 1
+ell = parametric_plot((s, 3*s+2), (s, -10, 10))
+d = circle((0,2), 0.1, rgbcolor=(1,0,0))
+ell = ell+d
+ell.set_axes_range(-4, 4, -4, 4)
+ell.save("graphics/geo000a.pdf", fontsize=7)
+t_x(s) = ((sqrt(3)-3)/2)*s-1
+t_y(s) = ((1+3*sqrt(3))/2)*s+sqrt(3)
+t_ell = parametric_plot((t_x(s), t_y(s)), (s, -10, 10))
+d = circle((-1,sqrt(3)), 0.1, rgbcolor=(1,0,0))
+t_ell = t_ell+d
+t_ell.set_axes_range(-4, 4, -4, 4)
+t_ell.save("graphics/geo000b.pdf", fontsize=7)
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo000a.pdf}}
+  \quad\mapsvia{\makebox[1.5em][c]{\scriptsize $t$}}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo000b.pdf}}
+\end{equation*}
+Pemetaan~$t$ merupakan rotasi sebesar~$\pi/6$~radian, tetapi hal itu mungkin sulit terlihat.
+Salah satu contohnya, yang ditunjukkan oleh titik-titik merah, ialah bahwa vektor yang berujung di $(0,2)$
+diputar menjadi vektor yang berujung di $(-1,\sqrt{3})$.
+
+
+
+
+%========================================
+\section{Persegi satuan}
+Bab sebelumnya menggambarkan
+efek transformasi bidang
+$\map{t}{\Re^2}{\Re^2}$ 
+dengan menerapkannya pada lingkaran satuan.
+Dalam bab ini kita menggunakan persegi satuan.
+Pengamatan bahwa
+pemetaan linear membawa garis ke garis membuat kodenya sederhana:~kita mulai dengan
+keempat sudut persegi masukan,
+menghitung efek transformasi pada sudut-sudut itu untuk
+mendapatkan empat sudut keluaran, lalu
+menghubungkan keempatnya dengan ruas garis sehingga diperoleh jajaran genjang.
+(Persamaan-persamaan di atas menunjukkan bahwa garis-garis
+dengan vektor arah~$\vec{m}$ yang sama dipetakan ke garis-garis dengan vektor arah
+$t(\vec{m})$ yang sama; dengan kata lain, garis-garis sejajar dipetakan ke garis-garis sejajar.)
+
+Jadi, metode kita adalah memulai dengan persegi satuan.
+Perhatikan warnanya; di sini warna-warna itu berperan sama seperti sebelumnya.
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: p = plot_square_action(1,0,0,1)  # matriks identitas
+sage: p.save("graphics/geo100.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+p = plot_square_action(1,0,0,1)  # matriks identitas
+p.set_axes_range(-0.25, 1.5, -0.25, 1.5) 
+p.save("graphics/geo100.pdf")
+\end{sagesilent}
+\begin{center}
+  \includegraphics{graphics/geo100.pdf}
+\end{center}
+Rutin \inlinecode{plot_square_action(a,b,c,d)} menerapkan pada
+persegi satuan tersebut suatu
+transformasi yang, terhadap basis standar, direpresentasikan oleh
+matriks dengan entri $a$, $b$, $c$, dan~$d$.
+(Kode sumbernya terdapat pada akhir bab.)
+\begin{equation*}
+  \begin{mat}
+    a &b \\
+    c &d
+  \end{mat}
+  \colvec{x  \\ y}
+  =
+  \colvec{ax+by \\ cx+dy}
+\end{equation*}
+Berikut ini menggambarkan efek matriks umum tersebut.
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-1, 4, -1, 7) 
+sage: q.save("graphics/geo101a.pdf")
+sage: p = plot_square_action(1,2,3,4) 
+sage: p.set_axes_range(-1, 4, -1, 7) 
+sage: p.save("graphics/geo101b.pdf")
+\end{sagecommandline}
+% \begin{sagesilent}
+% load("plot_action.sage")
+% q = plot_square_action(1,0,0,1) 
+% q.set_axes_range(-1, 4, -1, 7) 
+% q.save("graphics/geo101a.pdf")
+% p = plot_square_action(1,2,3,4) 
+% p.set_axes_range(-1, 4, -1, 7) 
+% p.save("graphics/geo101b.pdf")
+% \end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo101a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} 1 &2 \\ 3 &4 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo101b.pdf}}
+\end{equation*}
+Seperti dijelaskan di atas, transformasi itu mengubah persegi masukan menjadi jajaran genjang keluaran.
+
+Warna-warna tersebut memperlihatkan efek lain transformasi, selain perubahan bentuk.
+Jika warna diurutkan secara alami sebagai merah, jingga,
+hijau, lalu biru,
+persegi dalam domain berorientasi berlawanan arah jarum jam.
+Namun, bangun dalam kodomain berorientasi searah jarum jam.
+Jadi, warna-warna itu menunjukkan bahwa transformasi ini
+membalik orientasi (yang kadang disebut `arah').
+
+Kita dapat memahami perilaku yang rumit dengan
+membangunnya dari pemahaman atas perilaku yang sederhana.
+Karena itu, kita mulai dengan transformasi contoh yang sama seperti dalam bab sebelumnya,
+yaitu transformasi yang menggandakan komponen pertama.
+%% \footnote{%
+%%   As in other chapters, some of the plots are drawn using 
+%%   some fiddly graphics options that are not shown.
+%%   In this case, the \protect\inlinecode{p.save(...)} has
+%%   the \protect\inlinecode{ticks\_integer=True} option.}
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-1, 3, -1, 2) 
+sage: q.save("graphics/geo102a.pdf")
+sage: p = plot_square_action(2,0,0,1)  
+sage: p.set_axes_range(-1, 3, -1, 2) 
+sage: p.save("graphics/geo102b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_square_action(1,0,0,1) 
+q.set_axes_range(-1, 3, -1, 2) 
+q.save("graphics/geo102a.pdf", ticks_integer=True)
+p = plot_square_action(2,0,0,1)  
+p.set_axes_range(-1, 3, -1, 2) 
+p.save("graphics/geo102b.pdf", ticks_integer=True)
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo102a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} 2 &0 \\ 0 &1 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo102b.pdf}}
+  \tag{$*$}
+\end{equation*}
+Pemetaan linear membawa vektor nol ke vektor nol, dan persegi
+masukan berpangkal di titik asal, sehingga
+bangun keluaran juga berpangkal di titik asal.
+Namun, bangun itu telah diregangkan secara horizontal\Dash orientasinya sama
+dengan persegi awal, tetapi luasnya dua kali lipat.
+
+Contoh tersebut menunjukkan bahwa perilaku yang berkaitan dengan matriks diagonal
+bersifat sederhana.
+Sebagai contoh, mengalikan koordinat~$x$ dengan tiga menghasilkan bangun serupa yang
+luasnya tiga kali luas bangun awal.
+Apa yang terjadi jika kita mengambil $-1$ kali koordinat~$x$?
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-2, 2, -1, 2) 
+sage: q.save("graphics/geo103a.pdf")
+sage: p = plot_square_action(-1,0,0,1) 
+sage: p.set_axes_range(-2, 2, -1, 2) 
+sage: p.save("graphics/geo103b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_square_action(1,0,0,1) 
+q.set_axes_range(-2, 2, -1, 2) 
+q.save("graphics/geo103a.pdf", ticks_integer=True)
+p = plot_square_action(-1,0,0,1) 
+p.set_axes_range(-2, 2, -1, 2) 
+p.save("graphics/geo103b.pdf", ticks_integer=True)
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo103a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} -1 &0 \\ 0 &1 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo103b.pdf}}
+  \tag{$**$}
+\end{equation*}
+Transformasi itu mengubah orientasi.
+
+Kita mengatakan bahwa bangun di sebelah kiri di atas memiliki \textit{luas berarah}
+sebesar $-1$.
+Alasan luas diberi tanda
+adalah kekontinuan:~bayangkan kita mulai dengan bangun sebelah kanan
+dari contoh sebelumnya, yaitu diagram berlabel~($*$),
+lalu menggeser sisi jingga dari kanan, dari $2$ ke~$1$, ke~$0$, dan
+kemudian ke~$-1$.
+Luasnya turun dari~$2$ ke~$1$, lalu ke~$0$, sehingga secara alami
+kita memberi bangun di atas ukuran luas~$-1$.
+Kata `berarah' hanya digunakan untuk membedakan ukuran ini dari
+pengertian luas yang dipelajari di sekolah dasar.
+Luas dalam pengertian sekolah dasar adalah nilai mutlak dari luas berarah.
+
+Transformasi berikutnya menggabungkan aksi pada dua sumbu,
+yaitu mengalikan komponen~$y$ dengan tiga dan
+komponen~$x$ dengan $-1$.
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-2, 2, -1, 4) 
+sage: q.save("graphics/geo104a.pdf")
+sage: p = plot_square_action(-1,0,0,3) 
+sage: p.set_axes_range(-2, 2, -1, 4) 
+sage: p.save("graphics/geo104b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_square_action(1,0,0,1) 
+q.set_axes_range(-2, 2, -1, 4) 
+q.save("graphics/geo104a.pdf", ticks_integer=True)
+p = plot_square_action(-1,0,0,3) 
+p.set_axes_range(-2, 2, -1, 4) 
+p.save("graphics/geo104b.pdf", ticks_integer=True)
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo104a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} -1 &0 \\ 0 &3 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo104b.pdf}}
+\end{equation*}
+Warna-warnanya menunjukkan bahwa transformasi ini juga mengubah
+orientasi, sehingga bangun baru memiliki luas berarah~$-3$.
+
+Apa yang terjadi jika orientasi diubah dua kali?
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-3, 2, -4, 2) 
+sage: q.save("graphics/geo105a.pdf")
+sage: p = plot_square_action(-2,0,0,-3) 
+sage: p.set_axes_range(-3, 2, -4, 2) 
+sage: p.save("graphics/geo105b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_square_action(1,0,0,1) 
+q.set_axes_range(-3, 2, -4, 2) 
+q.save("graphics/geo105a.pdf", ticks_integer=True)
+p = plot_square_action(-2,0,0,-3) 
+p.set_axes_range(-3, 2, -4, 2) 
+p.save("graphics/geo105b.pdf", ticks_integer=True)
+\end{sagesilent}
+Plot sebelum dan sesudah
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo105a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} -2 &0 \\ 0 &-3 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo105b.pdf}}
+\end{equation*}
+menunjukkan bahwa pada bangun sebelah kanan,
+warna-warnanya muncul dalam urutan yang sama seperti pada orientasi
+berlawanan arah jarum jam bangun asli:
+merah, jingga, hijau, lalu biru.
+Dengan kata lain, membalik orientasi dua kali mengembalikan
+orientasi semula.
+Bangun baru memiliki luas berarah~$6$.
+
+Selanjutnya, perhatikan efek penempatan entri di luar diagonal pada matriks.
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-1, 3, -1, 2) 
+sage: q.save("graphics/geo106a.pdf")
+sage: p = plot_square_action(1,2,0,1) 
+sage: p.set_axes_range(-1, 3, -1, 2) 
+sage: p.save("graphics/geo106b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_square_action(1,0,0,1) 
+q.set_axes_range(-1, 3, -1, 2) 
+q.save("graphics/geo106a.pdf", ticks_integer=True)
+p = plot_square_action(1,2,0,1) 
+p.set_axes_range(-1, 3, -1, 2) 
+p.save("graphics/geo106b.pdf", ticks_integer=True)
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo106a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} 1 &2 \\ 0 &1 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo106b.pdf}}
+\end{equation*}
+Transformasi ini merupakan suatu \textit{geseran}.
+Sisi-sisi keluaran tidak saling tegak lurus, meskipun pasangan sisi yang berhadapan tetap
+sejajar.
+Aksi
+\begin{equation*}
+  \begin{mat}
+    1  &2  \\
+    0  &1
+  \end{mat}
+  \colvec{x \\ y}
+  = \colvec{x+2y \\ y}
+\end{equation*}
+berarti bahwa
+vektor awal dengan komponen~$y$ sebesar~$1$ digeser ke kanan sejauh~$2$, sedangkan
+vektor awal dengan komponen~$y$ sebesar~$2$ digeser ke kanan sejauh~$4$, dan seterusnya.
+Dengan kata lain,
+vektor digeser bergantung pada seberapa jauh letaknya di atas atau di bawah
+sumbu~$x$.
+Bangun keluaran memiliki alas~$1$
+dan tinggi~$1$, sementara orientasinya dipertahankan,
+sehingga luas berarahnya~$1$.
+
+Menempatkan nilai tak nol pada entri luar diagonal yang lain,
+yaitu entri kiri bawah, memberikan efek yang sama, kecuali bahwa geserannya sejajar
+dengan sumbu~$y$.
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-1, 3, -3, 2) 
+sage: q.save("graphics/geo107a.pdf")
+sage: p = plot_square_action(1,0,-2,1) 
+sage: p.set_axes_range(-1, 3, -3, 2) 
+sage: p.save("graphics/geo107b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_square_action(1,0,0,1) 
+q.set_axes_range(-1, 3, -3, 2) 
+q.save("graphics/geo107a.pdf", ticks_integer=True)
+p = plot_square_action(1,0,-2,1) 
+p.set_axes_range(-1, 3, -3, 2) 
+p.save("graphics/geo107b.pdf", ticks_integer=True)
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo107a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} 1 &0 \\ -2 &1 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo107b.pdf}}
+\end{equation*}
+Aksi di atas
+\begin{equation*}
+  \colvec{x \\ y} \mapsto \colvec{x \\ -2x+y}
+\end{equation*}
+berarti bahwa vektor digeser bergantung pada seberapa jauh letaknya dari
+sumbu~$y$.
+Sebagai contoh, vektor masukan dengan komponen~$x$ sebesar~$1$ digeser sebesar~$-2$,
+sedangkan jika komponen~$x$-nya~$2$, vektor itu digeser sebesar~$-4$.
+Luas berarah bangun keluaran adalah~$1$.
+
+
+
+
+
+\section{Determinan}
+Buku ini menafsirkan secara geometris
+syarat-syarat dalam definisi
+fungsi determinan.
+Buku ini menunjukkan bahwa, ketika beralih dari gambar sebelum ke gambar sesudah,
+matriks-matriks transformasi tersebut
+mengubah luas berarah daerah masukan dengan faktor sebesar
+determinan matriks.
+Pada diagram~($*$) di atas, matriksnya berdeterminan~$2$ dan menggandakan luas berarah.
+Pada diagram~($**$), matriksnya mengalikan luas berarah dengan~$-1$.
+
+Salah satu keuntungan memulai gambar sebelum/sesudah ini dengan persegi
+satuan ialah bahwa, karena masukan berluas~$1$,
+luas berarah bangun keluaran sama dengan
+determinan matriks.
+
+Sebagai contoh, matriks
+\begin{equation*}
+\begin{mat}
+  1 &2 \\
+  2 &4
+\end{mat}
+\end{equation*}
+bersifat singular sehingga determinannya~$0$.
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-1, 4, -1, 6) 
+sage: q.save("graphics/geo200a.pdf")
+sage: p = plot_square_action(1,2,2,4) 
+sage: p.set_axes_range(-1, 4, -1, 6) 
+sage: p.save("graphics/geo200b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_square_action(1,0,0,1) 
+q.set_axes_range(-1, 4, -1, 6) 
+q.save("graphics/geo200a.pdf")
+p = plot_square_action(1,2,2,4) 
+p.set_axes_range(-1, 4, -1, 6) 
+p.save("graphics/geo200b.pdf")
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo200a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} 1 &2 \\ 2 &4 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo200b.pdf}}
+\end{equation*}
+Bangun keluaran memiliki luas nol.
+
+
+
+
+
+
+\section{Faktorisasi Turing, PA=LDU}
+Sekarang kita akan melihat bagaimana aksi sebarang matriks dapat diuraikan menjadi
+aksi-aksi yang ditunjukkan di atas.
+Dengan demikian, kita memperoleh deskripsi geometris lengkap bagi sebarang pemetaan linear;
+artinya, efek sebarang transformasi dapat dipahami dengan
+menguraikannya menjadi serangkaian langkah sederhana.
+
+Ingat bahwa kita dapat melakukan operasi baris dalam Metode Gauss dengan
+perkalian matriks.
+Sebagai contoh, perkalian dari kiri dengan matriks berikut memberikan efek operasi baris
+$2\rho_1+\rho_2$.
+\begin{equation*}
+  \begin{mat}
+    1 &0 &0 \\
+    2 &1 &0 \\
+    0 &0 &1
+  \end{mat}
+  \begin{mat}
+    3 &1 &4 \\
+   -6 &1 &-8 \\
+    0 &-3 &2
+  \end{mat}
+  =
+  \begin{mat}
+    3 &1  &4 \\ 
+    0 &3 &0 \\
+    0 &-3  &2
+  \end{mat}
+\end{equation*}
+
+Seperti dijelaskan dalam buku,
+matriks reduksi elementer
+terdiri atas tiga jenis.
+Untuk suatu matriks~$H$, lakukan penskalaan baris~\( r\rho_i \)
+dengan \( M_i(r)\,H \),
+pertukarkan baris \( \rho_i\leftrightarrow\rho_j \) dengan \( P_{i,j}\,H \),
+dan tambahkan kelipatan suatu baris ke baris lain,
+\( k\rho_i+\rho_j \), dengan \( C_{i,j}(k)\,H \).
+Ketiga jenis ini
+diperoleh dengan menerapkan suatu operasi baris pada matriks identitas:
+\begin{center}
+$I\grstep{r\rho_i}M_i(r)$
+\qquad
+\( I\grstep{\rho_i\leftrightarrow\rho_j}P_{i,j} \)
+\qquad
+\( I\grstep{k\rho_i+\rho_j}C_{i,j}(k) \)
+\end{center}
+(dengan $r\neq 0$ dan $i\neq j$).
+Sebagai contoh, paragraf sebelumnya menggunakan matriks $\nbyn{3}$
+$C_{1,2}(2)$.
+Kita akan berfokus pada transformasi, sehingga semua matriks ini
+dianggap berukuran sama dan berbentuk persegi.
+
+Untuk melanjutkan reduksi dengan Metode Gauss yang dimulai dalam persamaan matriks di atas,
+gunakan $C_{2,3}(1)$ untuk melakukan $\rho_2+\rho_3$,
+sehingga diperoleh bentuk eselon.
+\begin{equation*}
+  \begin{mat}
+    1 &0  &0 \\
+    0 &1  &0 \\
+    0 &1 &1
+  \end{mat}
+  \begin{mat}
+    1 &0 &0 \\
+    2 &1 &0 \\
+    0 &0 &1
+  \end{mat}\cdot
+  \begin{mat}
+    3 &1 &4 \\
+   -6 &1 &-8 \\
+    0 &-3 &2
+  \end{mat}
+  =
+  \begin{mat}
+    3 &1  &4 \\ 
+    0 &3  &0 \\
+    0 &0  &2
+  \end{mat}
+  % \tag{$*$}
+\end{equation*}
+
+Perhatikan bahwa jika matriks awal sedemikian rupa sehingga
+tidak diperlukan pertukaran baris,
+kita cukup menggunakan operasi~\( k\rho_i+\rho_j \) dengan
+$j>i$.
+Matriks elementer
+yang melakukan operasi tersebut disebut \definend{segitiga bawah}
+karena semua entri di atas diagonal utamanya bernilai nol.
+(Matriks yang semua entrinya di bawah diagonal utama bernilai nol disebut
+\definend{segitiga atas}.)
+% Thus the factorization so far is into a product of lower triangular elementary
+% matrices and an echelon form matrix.
+
+Kita dapat melangkah lebih jauh.
+Selanjutnya, gunakan matriks diagonal untuk mengubah
+entri utama pada baris-baris tak nol dari matriks bentuk eselon menjadi~$1$.
+\begin{equation*}
+  \begin{mat}
+    1/3 &0   &0 \\
+    0   &1/3 &0 \\
+    0   &0   &1/2  
+  \end{mat}
+  \begin{mat}
+    1 &0  &0 \\
+    0 &1  &0 \\
+    0 &1 &1
+  \end{mat}
+  \begin{mat}
+    1 &0 &0 \\
+    2 &1 &0 \\
+    0 &0 &1
+  \end{mat}\cdot
+  \begin{mat}
+    3 &1 &4 \\
+   -6 &1 &-8 \\
+    0 &-3 &2
+  \end{mat}
+  =
+  \begin{mat}
+    1 &1/3  &4/3 \\ 
+    0 &1  &0 \\
+    0 &0  &1
+  \end{mat}
+  \tag{$*$}
+\end{equation*}
+%% sage: M = matrix(QQ, [[3,1,4], [-6,1,-8], [0,-3,2]])                            
+%% sage: N1 = matrix(QQ, [[1,0,0], [2,1,0], [0,0,1]])                              
+%% sage: N2 = matrix(QQ, [[1,0,0], [0,1,0], [0,1,1]])                              
+%% sage: N3 = matrix(QQ, [[1/3,0,0], [0,1/3,0], [0,0,1/2]])                        
+%% sage: N3*N2*N1*M                                                                
+%% [  1 1/3 4/3]
+%% [  0   1   0]
+%% [  0   0   1]
+Terakhir, gunakan operasi kolom
+untuk mereduksi matriks tersebut sepenuhnya menjadi
+matriks identitas parsial berbentuk blok.
+Berikut adalah perkalian dari kanan pada ruas kanan~($*$) untuk
+menambahkan $-1/3$ kali kolom pertama ke kolom kedua.
+\begin{equation*}
+  \begin{mat}
+    1 &1/3  &4/3 \\ 
+    0 &1  &0 \\
+    0 &0  &1
+  \end{mat}\cdot
+  \begin{mat}
+    1  &-1/3  &0  \\
+    0  &1     &0  \\
+    0  &0     &1
+  \end{mat}
+  =
+  \begin{mat}
+    1 &0  &4/3 \\ 
+    0 &1  &0 \\
+    0 &0  &1
+  \end{mat}
+\end{equation*}
+Terakhir, penambahan $-4/3$~kali kolom pertama ke kolom ketiga
+menghasilkan matriks identitas.
+\begin{equation*}
+  \begin{mat}
+    1 &1/3  &4/3 \\ 
+    0 &1  &0 \\
+    0 &0  &1
+  \end{mat}\cdot
+  \begin{mat}
+    1  &-1/3  &0  \\
+    0  &1     &0  \\
+    0  &0     &1
+  \end{mat}
+  \begin{mat}
+    1  &0     &-4/3  \\
+    0  &1     &0  \\
+    0  &0     &1
+  \end{mat}
+  =
+  \begin{mat}
+    1 &0  &0 \\ 
+    0 &1  &0 \\
+    0 &0  &1
+  \end{mat}
+   \tag{$**$}
+\end{equation*}
+%% sage: P1 = matrix(QQ, [[1,-1/3,0], [0,1,0], [0,0,1]])                           
+%% sage: P2 = matrix(QQ, [[1,0,-4/3], [0,1,0], [0,0,1]])                           
+%% sage: N3*N2*N1*M*P1*P2                                                          
+%% [1 0 0]
+%% [0 1 0]
+%% [0 0 1]
+
+Ringkasnya,
+jika kita mulai dengan matriks $A$ yang tidak memerlukan pertukaran baris,
+kita memperoleh persamaan matriks berikut.
+\begin{equation*}
+  D_0\cdot L_s\cdots L_2 L_1\cdot A\cdot U_1U_2\cdots U_r = I
+\end{equation*}
+Di sini $I$ adalah matriks identitas parsial,
+$D_0$ adalah matriks diagonal,
+$L_i$ adalah matriks kombinasi baris segitiga bawah,
+dan $U_j$ adalah matriks kombinasi kolom segitiga atas.
+
+Semua operasi baris dapat dibatalkan
+(sebagai contoh, $2\rho_1+\rho_2$
+dibatalkan dengan $-2\rho_1+\rho_2$).
+Dengan demikian, setiap matriks segitiga bawah tersebut
+memiliki invers.
+Demikian pula, setiap matriks segitiga atas memiliki invers.
+Artinya, kita dapat melakukan manipulasi aljabar untuk mengisolasi~$A$
+dalam persamaan itu.
+Oleh karena itu,
+jika reduksi Gauss--Jordan pada matriks~$A$ tidak memerlukan pertukaran,
+kita memperoleh faktorisasi matriks awal
+\begin{equation*} 
+  A = L_1^{-1}\cdots L_s^{-1}\cdot D\cdot U_r^{-1}\cdots U_1^{-1}
+\end{equation*}
+dengan $D$ merupakan hasil kali $D_0^{-1}$ dan identitas parsial~$I$,
+yang jelas merupakan matriks diagonal.
+
+Untuk menangani masalah pertukaran, kita dapat melakukan pertukaran terlebih dahulu:~sebelum
+memfaktorkan matriks awal, pertukarkan dahulu baris-barisnya
+dengan matriks permutasi~$P$.
+\begin{equation*}
+  P\cdot A = L_1^{-1}\cdots L_s^{-1}\cdot D\cdot U_r^{-1}\cdots U_1^{-1}
+  \tag{$*{*}*$}
+\end{equation*}
+
+Sekarang tibalah langkah penutup.
+Invers matriks segitiga bawah merupakan matriks segitiga bawah,
+dan hasil kali matriks-matriks segitiga bawah juga
+merupakan matriks segitiga bawah. Karena itu, semua $L_i^{-1}$ dalam~($*{*}*$)
+dapat digabungkan menjadi satu matriks segitiga bawah~$L$.
+Demikian pula, semua $U_i^{-1}$ dapat digabungkan menjadi satu
+matriks segitiga atas~$U$.
+Jadi, sebarang matriks memiliki faktorisasi $PA=LDU$.
+
+Kita mengilustrasikannya dengan transformasi umum $\nbyn{2}$ pada $\Re^2$ yang,
+terhadap basis standar, direpresentasikan sebagai berikut.
+\begin{equation*}
+  T=
+  \begin{mat}
+    1 &2 \\
+    3 &4
+  \end{mat}
+\end{equation*}
+Penerapan Metode Gauss di sini cukup sederhana.
+\begin{equation*}
+  \begin{mat}
+    1 &2 \\
+    3 &4
+  \end{mat}
+  \grstep{-3\rho_1+\rho_2}  
+  \begin{mat}
+    1 &2 \\
+    0 &-2
+  \end{mat}
+  \grstep{-(1/2)\rho_2}  
+  \begin{mat}
+    1 &2 \\
+    0 &1
+  \end{mat}
+  \grstep{-2\chi_1+\chi_2}  
+  \begin{mat}
+    1 &0 \\
+    0 &1
+  \end{mat}
+\end{equation*}
+(Kita menuliskan $\chi_i$ untuk kolom.)
+Berikut adalah faktorisasi yang bersesuaian.
+\begin{equation*}
+  \begin{mat}
+    1 &2 \\
+    3 &4
+  \end{mat}
+  =
+  \begin{mat}
+   1 &0 \\
+   3 &1 
+  \end{mat}
+  \begin{mat}
+    1 &0 \\
+    0 &-2
+  \end{mat}
+  \begin{mat}
+    1 &2 \\
+    0 &1
+  \end{mat}
+\end{equation*}
+Hasil kalinya sesuai.
+\begin{sagecommandline}
+sage: L = matrix(QQ, [[1, 0], [3, 1]])
+sage: D = matrix(QQ, [[1, 0], [0, -2]])
+sage: U = matrix(QQ, [[1, 2], [0, 1]])
+sage: L*D*U  
+\end{sagecommandline}
+
+Kita membahas ini untuk memahami
+efek geometris transformasi umum tersebut.
+\begin{equation*}
+  \begin{mat}
+   1 &2 \\
+   3 &4 
+  \end{mat}
+  \colvec{x \\ y}
+\end{equation*}
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-2, 4, -1, 7) 
+sage: q.save("graphics/geo300a.pdf")
+sage: p = plot_square_action(1,2,3,4) 
+sage: p.set_axes_range(-2, 4, -1, 7) 
+sage: p.save("graphics/geo300b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_square_action(1,0,0,1) 
+q.set_axes_range(-2, 4, -1, 7) 
+q.save("graphics/geo300a.pdf")
+p = plot_square_action(1,2,3,4) 
+p.set_axes_range(-2, 4, -1, 7) 
+p.save("graphics/geo300b.pdf")
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo300a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} 1 &2 \\ 3 &4 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo300b.pdf}}
+\end{equation*}
+\noindent Uraikan matriks itu dengan faktorisasi~$LDU$ di atas.
+\begin{equation*}
+  \begin{mat}
+    1 &2 \\
+    3 &4
+  \end{mat}
+  \colvec{x \\ y}
+  =
+  \begin{mat}
+   1 &0 \\
+   3 &1 
+  \end{mat}
+  \begin{mat}
+    1 &0 \\
+    0 &-2
+  \end{mat}
+  \begin{mat}
+    1 &2 \\
+    0 &1
+  \end{mat}  
+  \colvec{x \\ y}
+\end{equation*}
+Pertama-tama, kita akan melihat efek $U$, $D$, dan~$L$ secara terpisah.
+Kemudian kita akan melihat efek kumulatifnya:~aksi~$U$, lalu~$DU$,
+dan akhirnya~$LDU$.
+
+Matriks yang diterapkan pertama, yaitu matriks paling kanan~$U$,
+merupakan geseran sejajar sumbu~$x$.
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-2, 4, -2.25, 4.25) 
+sage: q.save("graphics/geo303a.pdf")
+sage: p = plot_square_action(1,2,0,1) 
+sage: p.set_axes_range(-2, 4, -2.25, 4.25) 
+sage: p.save("graphics/geo303b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_square_action(1,0,0,1) 
+q.set_axes_range(-2, 4, -2.25, 4.25) 
+q.save("graphics/geo303a.pdf")
+p = plot_square_action(1,2,0,1) 
+p.set_axes_range(-2, 4, -2.25, 4.25) 
+p.save("graphics/geo303b.pdf")
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo303a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} 1 &2 \\ 0 &1 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo303b.pdf}}
+\end{equation*}
+Matriks kedua~$D$ mengubah skala dan orientasi.
+\begin{sagecommandline}
+sage: load("plot_action.sage")
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-2, 4, -2.25, 4.25) 
+sage: q.save("graphics/geo302a.pdf")
+sage: p = plot_square_action(1,0,0,-2) 
+sage: p.set_axes_range(-2, 4, -2.25, 4.25) 
+sage: p.save("graphics/geo302b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_square_action(1,0,0,1) 
+q.set_axes_range(-2, 4, -2.25, 4.25) 
+q.save("graphics/geo302a.pdf")
+p = plot_square_action(1,0,0,-2) 
+p.set_axes_range(-2, 4, -2.25, 4.25) 
+p.save("graphics/geo302b.pdf")
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo302a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} 1 &0 \\ 0 &-2 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo302b.pdf}}
+\end{equation*}
+
+Matriks paling kiri, $L$, merupakan geseran sejajar sumbu~$y$.
+\begin{sagecommandline}
+sage: q = plot_square_action(1,0,0,1) 
+sage: q.set_axes_range(-2, 4, -2.25, 4.25) 
+sage: q.save("graphics/geo301a.pdf")
+sage: p = plot_square_action(1,0,3,1) 
+sage: p.set_axes_range(-2, 4, -2.25, 4.25) 
+sage: p.save("graphics/geo301b.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+load("plot_action.sage")
+q = plot_square_action(1,0,0,1) 
+q.set_axes_range(-2, 4, -2.25, 4.25) 
+q.save("graphics/geo301a.pdf")
+p = plot_square_action(1,0,3,1) 
+p.set_axes_range(-2, 4, -2.25, 4.25) 
+p.save("graphics/geo301b.pdf")
+\end{sagesilent}
+\begin{equation*}
+  \vcenteredhbox{\includegraphics{graphics/geo301a.pdf}}
+  \quad\mapsvia{\big (\begin{smallmatrix} 1 &0 \\ 3 &1 \end{smallmatrix}\big )}\quad
+  \vcenteredhbox{\includegraphics{graphics/geo301b.pdf}}
+\end{equation*}
+  
+Matriks segitiga bawah dan segitiga atas tidak
+mengubah orientasi.
+Setiap perubahan orientasi dalam $LDU$ terjadi melalui entri diagonal yang
+negatif.
+(Perhatikan bahwa jika suatu matriks memerlukan pertukaran baris, sehingga $PA=LDU$, situasinya
+lebih rumit.
+Setiap pertukaran baris membalik orientasi, dari berlawanan arah jarum jam menjadi searah jarum jam, atau
+sebaliknya.
+Jadi,
+jika matriks permutasi memerlukan jumlah pertukaran yang ganjil,
+matriks itu mengubah orientasi,
+sedangkan jumlah pertukaran yang genap mempertahankan orientasi.)
+
+Kita mengakhiri pembahasan $LDU$ dengan memperhatikan efek kumulatifnya.
+Perhatikan secara berurutan aksi $U$, lalu~$DU$, dan kemudian~$LDU$.
+Sebagai contoh, berikut adalah efek kumulatif pemetaan-pemetaan tersebut pada
+sudut kanan atas persegi satuan.
+\begin{equation*}
+  \colvec{1 \\ 1}
+  \mapsunder{U}
+  \colvec{3 \\ 1}
+  \mapsunder{D}
+  \colvec{3 \\ -2}
+  \mapsunder{L}
+  \colvec{3 \\ 7}
+\end{equation*}
+Berikut adalah gambar untuk seluruh persegi.
+Sekali lagi kita melihat geseran sejajar sumbu~$x$, diikuti perubahan skala dan
+orientasi, lalu geseran sejajar sumbu~$y$.
+\begin{sagecommandline}
+sage: L = matrix(QQ, [[1, 0], [3, 1]])
+sage: D = matrix(QQ, [[1, 0], [0, -2]])
+sage: U = matrix(QQ, [[1, 2], [0, 1]])
+sage: DU = D*U
+sage: LDU = L*DU  
+sage: load("plot_action.sage")
+sage: p = plot_square_action(1,0,0,1) 
+sage: p.set_axes_range(-4, 4, -2, 7) 
+sage: p.save("graphics/geo304a.pdf")
+sage: p = plot_square_action(U[0][0], U[0][1], U[1][0], U[1][1]) 
+sage: p.set_axes_range(-4, 4, -2, 7) 
+sage: p.save("graphics/geo304b.pdf")
+sage: p = plot_square_action(DU[0][0], DU[0][1], DU[1][0], DU[1][1]) 
+sage: p.set_axes_range(-4, 4, -2, 7) 
+sage: p.save("graphics/geo304c.pdf")
+sage: p = plot_square_action(LDU[0][0], LDU[0][1], LDU[1][0],LDU[1][1]) 
+sage: p.set_axes_range(-4, 4, -2, 7) 
+sage: p.save("graphics/geo304d.pdf")
+\end{sagecommandline}
+\begin{sagesilent}
+L = matrix(QQ, [[1, 0], [3, 1]])
+D = matrix(QQ, [[1, 0], [0, -2]])
+U = matrix(QQ, [[1, 2], [0, 1]])
+DU = D*U
+LDU = L*DU  
+load("plot_action.sage")
+p = plot_square_action(1,0,0,1) 
+p.set_axes_range(-4, 4, -2, 7) 
+p.save("graphics/geo304a.pdf")
+p = plot_square_action(U[0][0], U[0][1], U[1][0], U[1][1]) 
+p.set_axes_range(-4, 4, -2, 7) 
+p.save("graphics/geo304b.pdf")
+p = plot_square_action(DU[0][0], DU[0][1], DU[1][0], DU[1][1]) 
+p.set_axes_range(-4, 4, -2, 7) 
+p.save("graphics/geo304c.pdf")
+p = plot_square_action(LDU[0][0], LDU[0][1], LDU[1][0], LDU[1][1]) 
+p.set_axes_range(-4, 4, -2, 7) 
+p.save("graphics/geo304d.pdf")
+\end{sagesilent}
+\begin{center}
+  \begin{tabular}{rcl}
+    \vcenteredhbox{\includegraphics{graphics/geo304a.pdf}}
+    &$\mapsvia{\big (\begin{smallmatrix} 1 &2 \\ 0 &1 \end{smallmatrix}\big )}$
+    &\vcenteredhbox{\includegraphics{graphics/geo304b.pdf}}  \\
+    &$\mapsvia{\big (\begin{smallmatrix} 1 &0 \\ 0 &-2 \end{smallmatrix}\big )}$
+    &\vcenteredhbox{\includegraphics{graphics/geo304c.pdf}}  \\
+    &$\mapsvia{\big (\begin{smallmatrix} 1 &0 \\ 3 &1 \end{smallmatrix}\big )}$
+    &\vcenteredhbox{\includegraphics{graphics/geo304d.pdf}} 
+  \end{tabular} 
+\end{center}
+
+
+
+\section{Kode sumber plot\_action.sage}
+Rutin \inlinecode{plot_square_action}
+menerima empat entri matriks $\nbyn{2}$
+dan mengembalikan sebuah daftar grafik.
+\lstinputlisting[firstline=92,lastline=103]{plot_action.sage}
+
+Sebagian besar pekerjaan
+dilakukan oleh rutin pembantu \inlinecode{color_square_list}.
+\lstinputlisting[firstline=53,lastline=90]{plot_action.sage}
+Ada dua hal teknis yang perlu
+dijelaskan.
+\inlinecode{ZORDER} menentukan urutan \Sage{} dalam
+menggambar objek; di sini kita ingin persegi satuan digambar
+setelah sumbu agar warna-warnanya terlihat.
+Selain itu, sambungan antarruas garis tampak kurang rapi,
+sehingga sambungan itu kita tutupi dengan sebuah titik.
+
+\endinput
+
+
+Perlu dikerjakan:

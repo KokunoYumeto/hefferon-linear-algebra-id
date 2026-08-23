@@ -1,0 +1,4815 @@
+% Chapter 4, Section 2 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\section{Keserupaan}
+\index{keserupaan|(}
+%<*SimilarityMotiviation0>
+Kita telah mendefinisikan dua matriks \( H \) dan \( \hat{H} \) sebagai
+ekuivalen jika terdapat matriks nonsingular \( P \) dan \( Q \) sedemikian
+sehingga \( \hat{H}=PHQ \).
+Motivasinya adalah diagram berikut, yang menunjukkan bahwa $H$ dan $\hat{H}$
+sama-sama merepresentasikan pemetaan $h$, tetapi terhadap pasangan basis yang
+berbeda, yaitu $B,D$ dan $\hat{B},\hat{D}$.
+\begin{equation*}
+  \begin{CD}
+    V_{\wrt{B}}                   @>h>H>        W_{\wrt{D}}       \\
+    @V{\scriptstyle\identity} VV             @V{\scriptstyle\identity} VV \\
+    V_{\wrt{\hat{B}}}             @>h>\hat{H}>  W_{\wrt{\hat{D}}}
+  \end{CD}
+\end{equation*}
+%</SimilarityMotiviation0>
+
+%<*SimilarityMotiviation1>
+Sekarang kita meninjau kasus khusus transformasi, ketika kodomain sama dengan
+domain, dan menambahkan syarat bahwa basis kodomain sama dengan basis domain.
+Jadi, kita meninjau representasi terhadap $B,B$ dan $D,D$.
+\index{diagram panah}
+\begin{equation*}
+  \begin{CD}
+    V_{\wrt{B}}                   @>t>T>        V_{\wrt{B}}       \\
+    @V{\scriptstyle\identity} VV              @V{\scriptstyle\identity} VV \\
+    V_{\wrt{D}}                   @>t>\hat{T}>        V_{\wrt{D}}
+  \end{CD}
+\end{equation*}
+Dalam bentuk matriks,
+\(\rep{t}{D,D}
+  =\rep{\identity}{B,D}\;\rep{t}{B,B}\;\bigl(\rep{\identity}{B,D}\bigr)^{-1} \).
+%</SimilarityMotiviation1>
+
+
+
+\subsection{Definisi dan Contoh}
+\begin{example}
+Tinjau transformasi turunan
+$\map{d/dx}{\polyspace_2}{\polyspace_2}$,
+dan dua basis bagi ruang tersebut,
+$B=\sequence{x^2,x,1}$ dan
+$D=\sequence{1,1+x,1+x^2}$.
+Kita akan menghitung keempat sisi persegi panahnya.
+\begin{equation*}
+  \begin{CD}
+    {\polyspace_2\,}_{\wrt{B}}                   @>d/dx>T>        {\polyspace_2\,}_{\wrt{B}}       \\
+    @V{\scriptstyle\identity} VV              @V{\scriptstyle\identity} VV \\
+    {\polyspace_2\,}_{\wrt{D}}                   @>d/dx>\hat{T}>        {\polyspace_2\,}_{\wrt{D}}
+  \end{CD}
+\end{equation*}
+Mulailah dari sisi atas.
+Pengaruh transformasi pada basis awal~$B$
+\begin{equation*}
+  x^2\mapsunder{d/dx} 2x
+  \qquad
+  x\mapsunder{d/dx} 1
+  \qquad
+  1\mapsunder{d/dx} 0
+\end{equation*}
+yang direpresentasikan terhadap basis akhir (juga~$B$)
+\begin{equation*}
+  \rep{2x}{B}=\colvec{0 \\ 2 \\ 0}
+  \qquad
+  \rep{1}{B}=\colvec{0 \\ 0 \\ 1}
+  \qquad
+  \rep{0}{B}=\colvec{0 \\ 0 \\ 0}
+\end{equation*}
+memberikan representasi pemetaannya.
+\begin{equation*}
+  T=
+  \rep{d/dx}{B,B}=
+  \begin{mat}
+    0 &0 &0 \\
+    2 &0 &0 \\
+    0 &1 &0
+  \end{mat}
+\end{equation*}
+
+Selanjutnya, menghitung matriks bagi sisi kanan melibatkan pencarian pengaruh
+pemetaan identitas pada unsur-unsur~$B$.
+Tentu saja, pemetaan identitas sama sekali tidak mengubahnya, sehingga untuk
+mencari matriksnya kita merepresentasikan unsur-unsur $B$ terhadap~$D$.
+\begin{equation*}
+  \rep{x^2}{D}=\colvec{-1 \\ 0 \\ 1}
+  \quad
+  \rep{x}{D}=\colvec{-1 \\ 1 \\ 0}
+  \quad
+  \rep{1}{D}=\colvec{1 \\ 0 \\ 0}
+\end{equation*}
+Jadi, matriks untuk bergerak turun pada sisi kanan merupakan penggabungan
+vektor-vektor tersebut.
+\begin{equation*}
+  P=\rep{id}{B,D}=
+  \begin{mat}
+    -1 &-1  &1 \\
+     0 &1   &0 \\
+     1 &0   &0   
+  \end{mat}
+\end{equation*}
+
+Dengan itu, kita memiliki dua pilihan untuk menghitung matriks bagi gerak naik
+pada sisi kiri.
+Perhitungan langsung merepresentasikan unsur-unsur~$D$ terhadap~$B$
+\begin{equation*}
+  \rep{1}{B}=\colvec{0 \\ 0 \\ 1}
+  \quad
+  \rep{1+x}{B}=\colvec{0 \\ 1 \\ 1}
+  \quad
+  \rep{1+x^2}{B}=\colvec{1 \\ 0 \\ 1}
+\end{equation*}
+dan menggabungkannya untuk membentuk matriks.
+\begin{equation*}
+  \begin{mat}
+    0 &0 &1 \\
+    0 &1 &0 \\ 
+    1 &1 &1
+  \end{mat}
+\end{equation*}
+Pilihan lain untuk menghitung matriks bagi gerak naik pada sisi kiri adalah
+mengambil invers matriks~$P$ bagi gerak turun pada sisi kanan.
+\begin{equation*}
+  \begin{pmat}{ccc|ccc}
+    -1 &-1 &1 &1 &0 &0 \\
+     0 &1  &0 &0 &1 &0 \\
+     1 &0  &0 &0 &0 &1
+  \end{pmat}
+  % \grstep{\rho_1+\rho_3}
+  % \grstep{\rho_2+\rho_3}
+  % \grstep{-\rho_1}
+  % \grstep{\rho_3+\rho_1}
+  % \grstep{-\rho_2+\rho_1}
+  \grstep{}
+  \cdots
+  \grstep{}
+  \begin{pmat}{ccc|ccc}
+     1 &0  &0 &0 &0 &1 \\
+     0 &1  &0 &0 &1 &0 \\
+     0 &0  &1 &1 &1 &1
+  \end{pmat}
+\end{equation*}
+
+Tersisa sisi bawah persegi.
+Ada dua cara menghitung matriks~$\hat{T}$.
+Cara pertama ialah menghitungnya langsung dengan mencari pengaruh transformasi
+pada unsur-unsur~$D$
+\begin{equation*}
+  1\mapsunder{d/dx} 0
+  \qquad
+  1+x\mapsunder{d/dx} 1
+  \qquad
+  1+x^2\mapsunder{d/dx} 2x
+\end{equation*}
+yang direpresentasikan terhadap~$D$.
+\begin{equation*}
+  \hat{T}=
+  \rep{d/dx}{D,D}=
+  \begin{mat}
+    0 &1 &-2 \\
+    0 &0 &2 \\
+    0 &0 &0
+  \end{mat}
+\end{equation*}
+Cara lain menghitung~$\hat{T}$, yang biasanya akan kita gunakan, ialah mengikuti
+diagram ke atas, menyeberang, lalu turun.
+\begin{align*}
+  \rep{d/dx}{D,D}
+  &=\rep{\identity}{B,D}\,\rep{d/dx}{B,B}\,\rep{\identity}{D,B}  \\
+  \hat{T}
+  &=\rep{\identity}{B,D}\,T\,\rep{\identity}{D,B}   \\
+  &=  
+  \begin{mat}
+    -1 &-1  &1 \\
+     0 &1   &0 \\
+     1 &0   &0   
+  \end{mat}
+  \begin{mat}
+    0 &0 &0 \\
+    2 &0 &0 \\
+    0 &1 &0
+  \end{mat}
+  \begin{mat}
+    0 &0 &1 \\
+    0 &1 &0 \\ 
+    1 &1 &1
+  \end{mat}
+\end{align*}
+Perkalian tersebut memberikan matriks~$\hat{T}$ yang sama dengan hasil di atas.
+\end{example}
+
+\begin{definition} \label{df:Similar}
+%<*df:Similar>
+Matriks \( T \) dan $\hat{T}$ disebut
+\definend{serupa}\index{matriks!keserupaan}%
+\index{relasi ekuivalensi!keserupaan matriks}\index{matriks serupa}
+jika terdapat matriks nonsingular \( P \) sedemikian sehingga
+$
+  \hat{T}=PTP^{-1}
+$.
+%</df:Similar>
+\end{definition}
+
+\noindent Karena matriks nonsingular berbentuk persegi, $T$ dan $\hat{T}$ harus
+berbentuk persegi dengan ukuran yang sama.
+\nearbyexercise{exer:SimIsEquivRel} memeriksa bahwa keserupaan merupakan relasi
+ekuivalensi.
+
+\begin{example}
+Definisi tersebut tidak mengharuskan kita meninjau suatu pemetaan.
+Perhitungan dengan dua matriks berikut,
+\begin{equation*}
+  P=
+  \begin{mat}[r]
+    2  &1  \\
+    1  &1
+  \end{mat}
+  \qquad
+  T=
+  \begin{mat}[r]
+    2  &-3  \\
+    1  &-1
+  \end{mat}
+\end{equation*}
+menunjukkan bahwa $T$ serupa dengan matriks berikut.
+\begin{equation*}
+  \hat{T}=
+  \begin{mat}[r]
+    12  &-19  \\
+    7  &-11
+  \end{mat}
+\end{equation*}
+\end{example}
+
+\begin{example}  \label{ex:OnlyZeroSimToZero}
+%<*ex:OnlyZeroSimToZero>
+Satu-satunya matriks yang serupa dengan matriks nol adalah matriks nol itu
+sendiri:~$PZP^{-1}=PZ=Z$.
+Matriks identitas memiliki sifat yang sama:~$PIP^{-1}=PP^{-1}=I$.
+%</ex:OnlyZeroSimToZero>
+\end{example}
+
+Kasus khusus yang umum terjadi ketika ruang vektornya adalah $\C^n$ dan
+matriks~$T$ merepresentasikan suatu pemetaan terhadap basis standar.
+\begin{equation*}
+  \begin{CD}
+    \C^n_{\wrt{E_n}}                   @>t>T>        \C^n_{\wrt{E_n}}       \\
+    @V{\scriptstyle\identity} VV              @V{\scriptstyle\identity} VV \\
+    \C^n_{\wrt{D}}                   @>t>\hat{T}>        \C^n_{\wrt{D}}
+  \end{CD}
+\end{equation*}
+Dalam kasus ini, pada persamaan keserupaan $\hat{T}=PTP^{-1}$, kolom-kolom~$P$
+merupakan unsur-unsur~$D$.
+
+Keserupaan matriks merupakan kasus khusus ekuivalensi matriks, sehingga jika
+dua matriks serupa, keduanya ekuivalen.
+Bagaimana dengan kebalikannya:~jika keduanya berbentuk persegi, apakah sebarang
+dua matriks ekuivalen harus serupa?
+Tidak; kelas ekuivalensi matriks dari suatu matriks identitas terdiri atas semua
+matriks nonsingular berukuran sama, sedangkan contoh sebelumnya menunjukkan
+bahwa satu-satunya anggota kelas keserupaan matriks identitas adalah matriks itu
+sendiri.
+Jadi, kedua matriks berikut ekuivalen tetapi tidak serupa.
+\begin{equation*}
+  T=
+  \begin{mat}[r]
+    1  &0  \\
+    0  &1
+  \end{mat}
+  \qquad
+  S=
+  \begin{mat}[r]
+    1  &2  \\
+    0  &3
+  \end{mat}
+\end{equation*}
+Jadi, sebagian kelas ekuivalensi matriks terpecah menjadi dua atau lebih kelas
+keserupaan\Dash keserupaan memberikan partisi yang lebih halus daripada
+ekuivalensi matriks.
+Gambar berikut menunjukkan beberapa kelas ekuivalensi matriks yang terbagi
+menjadi kelas-kelas keserupaan.
+\begin{center}
+  \includegraphics{jc/mp/ch5.4}
+\end{center}
+
+Untuk memahami relasi keserupaan, kita akan mempelajari kelas-kelas keserupaan.
+Kita mendekati pertanyaan ini seperti ketika mempelajari relasi ekuivalensi
+baris dan ekuivalensi matriks, yaitu dengan mencari bentuk kanonik bagi
+wakil-wakil % \appendrefs{representatives}\spacefactor=1000 %
+kelas keserupaan, yang disebut bentuk Jordan.
+Dengan bentuk kanonik ini, kita dapat menentukan apakah dua matriks serupa
+dengan memeriksa apakah keduanya berada dalam kelas yang memiliki wakil sama.
+Dalam ekuivalensi baris maupun ekuivalensi matriks, kita juga telah melihat
+bahwa bentuk kanonik memberi wawasan tentang kesamaan anggota-anggota suatu
+kelas (misalnya, dua matriks berukuran sama ekuivalen jika dan hanya jika
+keduanya memiliki peringkat yang sama).
+%(Along the way we shall see ideas that are interesting and important
+%in their own right, not just as stepping stones to Jordan form.)
+
+\begin{exercises}
+  \item 
+    Untuk
+    \begin{equation*}
+      T=
+      \begin{mat}[r]
+        1  &3  \\
+       -2  &-6
+      \end{mat}
+      \quad
+      \hat{T}=
+      \begin{mat}[r]
+        0    &0  \\
+       -11/2 &-5
+      \end{mat}
+      \quad
+      P=
+      \begin{mat}[r]
+        4  &2  \\
+       -3  &2
+      \end{mat}
+    \end{equation*}
+    periksa bahwa $\hat{T}=PTP^{-1}$.
+    \begin{answer}
+      Salah satu cara mengerjakannya adalah dari kiri ke kanan.
+      \begin{multline*}
+        PTP^{-1}=
+        \begin{mat}[r]
+          4  &2  \\
+         -3  &2
+        \end{mat}
+        \begin{mat}[r]
+          1  &3  \\
+         -2  &-6
+        \end{mat}
+        \begin{mat}[r]
+          2/14  &-2/14  \\
+          3/14  &4/14
+        \end{mat}                                 \\
+        =
+        \begin{mat}[r]
+          0  &0  \\
+         -7  &-21
+        \end{mat}  
+        \begin{mat}[r]
+          2/14  &-2/14  \\
+          3/14  &4/14
+        \end{mat}
+        =
+        \begin{mat}[r]
+          0    &0  \\
+         -11/2 &-5
+        \end{mat}
+      \end{multline*}
+    \end{answer}
+  \item
+    \nearbyexample{ex:OnlyZeroSimToZero} menunjukkan bahwa satu-satunya matriks
+    yang serupa dengan matriks nol adalah matriks nol itu sendiri, dan satu-
+    satunya matriks yang serupa dengan matriks identitas adalah matriks identitas
+    itu sendiri.
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa matriks $\nbyn{1}$ yang satu-satunya entrinya
+         adalah $2$ juga hanya serupa dengan dirinya sendiri.
+      \partsitem Apakah matriks berbentuk $cI$ bagi suatu skalar $c$ hanya serupa
+         dengan dirinya sendiri?
+     \partsitem Apakah matriks diagonal hanya serupa dengan dirinya sendiri?
+     % \partsitem Is a square block partial-identity matrix similar only to 
+     % itself?
+    \end{exparts}
+    \begin{answer}
+     \begin{exparts}
+      \partsitem Karena matriks $(2)$ berukuran $\nbyn{1}$, matriks $P$ dan
+         $P^{-1}$ juga berukuran $\nbyn{1}$. Jika $P=(p)$, inversnya adalah
+         $P^{-1}=(1/p)$. Jadi $P(2)P^{-1}=(p)(2)(1/p)=(2)$.
+      \partsitem Ya:~ingat bahwa kelipatan skalar dapat dikeluarkan dari suatu
+        matriks, \( P(cI)P^{-1}=cPIP^{-1}=cI \).
+        Matriks nol dan identitas masing-masing merupakan kasus khusus $c=0$
+        dan $c=1$.
+      \partsitem Tidak, sebagaimana ditunjukkan contoh berikut.
+        \begin{equation*}
+           \begin{mat}[r]
+              1  &-2  \\
+             -1  &1
+            \end{mat}
+           \begin{mat}[r]
+             -1  &0   \\
+              0  &-3
+           \end{mat}
+           \begin{mat}[r]
+              -1  &-2   \\
+              -1  &-1
+           \end{mat}
+           =
+           \begin{mat}[r]
+              -5  &-4   \\
+              2   &1
+           \end{mat}
+        \end{equation*} 
+    \end{exparts}  
+   \end{answer}
+  \recommended \item Tinjau transformasi pada~$\C^3$ berikut,
+    \begin{equation*}
+      t(\colvec{x \\ y \\ z})=\colvec{x-z \\ z \\ 2y}
+    \end{equation*}
+    beserta basis-basis berikut.
+    \begin{equation*}
+      B=\sequence{\colvec{1 \\ 2 \\ 3}, 
+                  \colvec{0 \\ 1 \\ 0}, 
+                  \colvec{0 \\ 0 \\ 1}}
+      \qquad
+      D=\sequence{\colvec{1 \\ 0 \\ 0},
+                  \colvec{1 \\ 1 \\ 0},
+                  \colvec{1 \\ 0 \\ 1}}
+    \end{equation*}
+    Kita akan menghitung bagian-bagian diagram panah untuk merepresentasikan
+    transformasi tersebut menggunakan dua matriks serupa.
+    \begin{exparts}
+      \partsitem Gambarkan diagram panah yang dikhususkan bagi kasus ini.
+      \partsitem Hitung $T=\rep{t}{B,B}$.
+      \partsitem Hitung $\hat{T}=\rep{t}{D,D}$.
+      \partsitem Hitung matriks bagi dua sisi lain persegi panah.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem
+          \begin{equation*}
+            \begin{CD}
+              \C^3_{\wrt{B}}                   @>t>T>        \C^3_{\wrt{B}}       \\
+              @V{\scriptstyle\identity} VV              @V{\scriptstyle\identity} VV \\
+              \C^3_{\wrt{D}}                   @>t>\hat{T}>        \C^3_{\wrt{D}}
+            \end{CD}
+          \end{equation*}
+        \partsitem
+          Bagi setiap unsur basis awal~$B$, cari pengaruh transformasinya,
+          \begin{equation*}
+             \colvec{1 \\ 2 \\ 3}\mapsunder{t}\colvec{-2 \\ 3 \\ 4}
+             \qquad 
+             \colvec{0 \\ 1 \\ 0}\mapsunder{t}\colvec{0 \\ 0 \\ 2}
+             \qquad 
+             \colvec{0 \\ 0 \\ 1}\mapsunder{t}\colvec{-1 \\ 1 \\ 0}
+          \end{equation*}
+          lalu representasikan hasil-hasilnya terhadap basis akhir~$B$,
+          \begin{equation*}
+            \rep{\colvec{-2 \\ 3 \\ 4}}{B}=\colvec{-2 \\ 7 \\ 10}
+            \qquad
+            \rep{\colvec{0 \\ 0 \\ 2}}{B}=\colvec{0 \\ 0 \\ 2}
+            \qquad
+            \rep{\colvec{-1 \\ 1 \\ 0}}{B}=\colvec{-1 \\ 3 \\ 3}
+          \end{equation*}
+          untuk memperoleh matriks.
+          \begin{equation*}
+            T=\rep{t}{B,B}=
+            \begin{mat}
+              -2 &0 &-1 \\
+               7 &0 &3  \\
+              10 &2 &3 
+            \end{mat}
+          \end{equation*}
+        \partsitem
+          Cari pengaruh transformasi pada unsur-unsur~$D$,
+          \begin{equation*}
+             \colvec{1 \\ 0 \\ 0}\mapsunder{t}\colvec{1 \\ 0 \\ 0}
+             \qquad 
+             \colvec{1 \\ 1 \\ 0}\mapsunder{t}\colvec{1 \\ 0 \\ 2}
+             \qquad 
+             \colvec{1 \\ 0 \\ 1}\mapsunder{t}\colvec{0 \\ 1 \\ 0}
+          \end{equation*}
+          lalu representasikan hasil-hasilnya terhadap basis akhir~$D$,
+          \begin{equation*}
+            \rep{\colvec{1 \\ 0 \\ 0}}{D}=\colvec{1 \\ 0 \\ 0}
+            \qquad
+            \rep{\colvec{1 \\ 0 \\ 2}}{D}=\colvec{-1 \\ 0 \\ 2}
+            \qquad
+            \rep{\colvec{0 \\ 1 \\ 0}}{D}=\colvec{-1 \\ 1 \\ 0}
+          \end{equation*}
+          untuk memperoleh matriks.
+          \begin{equation*}
+            \hat{T}=\rep{t}{D,D}=
+            \begin{mat}
+               1 &-1 &-1 \\
+               0 &0  &1  \\
+               0 &2  &0 
+            \end{mat}
+          \end{equation*}
+        \partsitem
+          Untuk bergerak turun pada sisi kanan, kita memerlukan
+          $\rep{\identity}{B,D}$. Jadi, mula-mula hitung pengaruh pemetaan
+          identitas pada setiap unsur~$B$, yang tidak mengubah unsur tersebut,
+          lalu representasikan hasilnya terhadap~$D$.
+          \begin{equation*}
+            \rep{\colvec{1 \\ 2 \\ 3}}{D}=\colvec{-4 \\ 2 \\ 3}
+            \qquad
+            \rep{\colvec{0 \\ 1 \\ 0}}{D}=\colvec{-1 \\ 1 \\ 0}
+            \qquad
+            \rep{\colvec{0 \\ 0 \\ 1}}{D}=\colvec{-1 \\ 0 \\ 1}
+          \end{equation*}
+          Jadi, inilah~$P$.
+          \begin{equation*}
+            P=
+            \begin{mat}
+              -4 &-1 &-1 \\
+               2 &1  &0  \\
+               3 &0  &1
+            \end{mat}
+          \end{equation*}
+          Matriks lain~$\rep{\identity}{D,B}$ dapat dicari secara langsung
+          seperti ketika mencari~$P$, atau dengan menghitung invers matriks
+          seperti biasa.
+          \begin{equation*}
+            P^{-1}=
+            \begin{mat}
+               1 &1 &1 \\
+               -2 &-1  &-2  \\
+               -3 &-3  &-2
+            \end{mat}
+          \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \item 
+    Tinjau transformasi $\map{t}{\polyspace_2}{\polyspace_2}$ yang
+    dideskripsikan oleh $x^2\mapsto x+1$, $x\mapsto x^2-1$, dan $1\mapsto 3$.
+    \begin{exparts}
+      \partsitem Cari $T=\rep{t}{B,B}$ dengan $B=\sequence{x^2,x,1}$.
+      \partsitem Cari $\hat{T}=\rep{t}{D,D}$ dengan
+        $D=\sequence{1,1+x,1+x+x^2}$.
+      \partsitem Cari matriks $P$ sedemikian sehingga $\hat{T}=PTP^{-1}$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Karena kita mendeskripsikan $t$ menggunakan anggota-anggota
+          $B$, mencari representasi matriksnya mudah:
+          \begin{equation*}
+            \rep{t(x^2)}{B}=\colvec[r]{0 \\ 1 \\ 1}_B
+            \quad
+            \rep{t(x)}{B}=\colvec[r]{1 \\ 0 \\ -1}_B
+            \quad
+            \rep{t(1)}{B}=\colvec[r]{0 \\ 0 \\ 3}_B
+          \end{equation*}
+          memberikan hasil berikut.
+          \begin{equation*}
+            \rep{t}{B,B}=
+            \begin{mat}[r]
+              0  &1  &0  \\
+              1  &0  &0  \\
+              1  &-1 &3  
+            \end{mat}
+          \end{equation*}
+        \partsitem Kita akan mencari $t(1)$, $t(1+x)$, dan $t(1+x+x^2)$ untuk
+          mengetahui representasi masing-masing terhadap $D$.
+          Diberikan $t(1)=3$, dan dua lainnya mudah diperoleh:
+          $t(1+x)=x^2+2$ dan $t(1+x+x^2)=x^2+x+3$.
+          Dengan mengamati langsung, kita memperoleh representasi setiap vektor,
+          \begin{equation*}
+            \rep{t(1)}{D}=\colvec[r]{3 \\ 0 \\ 0}_D
+            \quad
+            \rep{t(1+x)}{D}=\colvec[r]{2  \\ -1 \\  1}_D
+            \quad
+            \rep{t(1+x+x^2)}{D}=\colvec[r]{2 \\ 0 \\ 1}_D
+          \end{equation*}
+          sehingga diperoleh representasi pemetaannya.
+          \begin{equation*}
+            \rep{t}{D,D}
+            =
+            \begin{mat}[r]
+              3  &2  &2  \\
+              0  &-1 &0  \\
+              0  &1  &1
+            \end{mat}
+          \end{equation*}
+         \partsitem Diagram
+           \begin{equation*}
+             \begin{CD}
+               V_{\wrt{B}}                  @>t>T>  V_{\wrt{B}}       \\
+               @V\scriptstyle\identity VPV      @V\scriptstyle\identity VPV \\
+               V_{\wrt{D}}                  @>t>\hat{T}>  V_{\wrt{D}}
+             \end{CD}
+           \end{equation*}
+           menunjukkan bahwa matriks-matriks ini adalah
+           $P=\rep{\identity}{B,D}$ dan $P^{-1}=\rep{\identity}{D,B}$.
+           \begin{equation*}
+             P=
+             \begin{mat}[r]
+               0  &-1  &1  \\ 
+               -1  &1  &0  \\
+               1  &0  &0 
+             \end{mat}
+             \qquad
+             P^{-1}=
+             \begin{mat}[r]
+               0  &0  &1  \\ 
+               0  &1  &1  \\
+               1  &1  &1 
+             \end{mat}
+           \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \recommended \item 
+    Misalkan $T$ merepresentasikan $\map{t}{\C^2}{\C^2}$ terhadap $B,B$.
+    \begin{equation*}
+      T=
+      \begin{mat}
+        1 &-1 \\ 
+        2 &1
+      \end{mat}
+      \qquad
+      B=\sequence{\colvec{1 \\ 0},\colvec{1 \\ 1}},\hspace{0.7em}
+      D=\sequence{\colvec{2 \\ 0},\colvec{0 \\ -2}}
+    \end{equation*}
+    Kita akan mengubahnya menjadi matriks yang merepresentasikan~$t$ terhadap
+    $D,D$.
+    \begin{exparts}
+      \partsitem Gambarkan diagram panahnya.
+      \partsitem Berikan matriks yang merepresentasikan sisi kiri dan kanan
+          diagram tersebut, dalam arah yang kita lalui untuk melakukan
+          perubahan representasi.
+      \partsitem Cari $\rep{t}{D,D}$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem
+          \begin{equation*}
+            \begin{CD}
+              \C^2_{\wrt{B}}                   @>t>T>        \C^2_{\wrt{B}}       \\
+              @V{\scriptstyle\identity} VV              @V{\scriptstyle\identity} VV \\
+              \C^2_{\wrt{D}}                   @>t>\hat{T}>        \C^2_{\wrt{D}}
+            \end{CD}
+          \end{equation*}  
+        \partsitem
+          Bagi sisi kanan, cari pengaruh pemetaan identitas, yang tidak mengubah
+          unsur,
+          \begin{equation*}
+            \colvec{1 \\ 0}\mapsunder{\identity}\colvec{1 \\ 0}
+            \qquad
+            \colvec{1 \\ 1}\mapsunder{\identity}\colvec{1 \\ 1}
+          \end{equation*}
+          lalu representasikan hasilnya terhadap~$D$,
+          \begin{equation*}
+            \rep{\colvec{1 \\ 0}}{D}=\colvec{1/2 \\ 0}
+            \qquad
+            \rep{\colvec{1 \\ 1}}{D}=\colvec{1/2 \\ -1/2}
+          \end{equation*}
+          sehingga diperoleh
+          \begin{equation*}
+            P=\rep{\identity}{B,D}=
+            \begin{mat}
+              1/2 &1/2 \\
+              0   &-1/2
+            \end{mat}
+          \end{equation*}
+
+          Matriks pada sisi kiri dapat dihitung secara langsung seperti pada
+          paragraf sebelumnya, atau diperoleh dengan mengambil invers.
+          \begin{equation*}
+            P^{-1}=\rep{\identity}{D,B}=
+            \frac{1}{(-1/4)}\cdot
+            \begin{mat}
+              -1/2 &-1/2 \\
+              0   &1/2
+            \end{mat}
+            =
+            \begin{mat}
+              2 &2 \\
+              0 &-2
+            \end{mat}
+          \end{equation*}
+        \partsitem
+          Seperti pada butir sebelumnya, kita dapat menghitungnya langsung dari
+          definisi atau menggunakan operasi matriks.
+          \begin{equation*}
+            PTP^{-1}=
+            \begin{mat}
+              2 &2 \\
+              0 &-2
+            \end{mat}
+            \begin{mat}
+              1 &-1 \\ 
+              2 &1
+            \end{mat}
+            \begin{mat}
+              2 &2 \\
+              0 &-2
+            \end{mat}
+            =
+            \begin{mat}
+              3 &3  \\
+             -2 &-1
+            \end{mat}
+          \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+     Tampilkan suatu hubungan keserupaan tak trivial dengan membiarkan
+     \( \map{t}{\C^2}{\C^2} \) bertindak sebagai berikut,
+     \begin{equation*}
+        \colvec[r]{1 \\ 2}\mapsto\colvec[r]{3 \\ 0}
+        \qquad
+        \colvec[r]{-1 \\ 1}\mapsto\colvec[r]{-1 \\ 2}
+     \end{equation*}
+     memilih dua basis~$B,D$, lalu merepresentasikan \( t \) terhadap keduanya,
+     \( \hat{T}=\rep{t}{B,B} \) dan \( T=\rep{t}{D,D} \).
+     Kemudian hitung \( P \) dan \( P^{-1} \) untuk mengubah basis dari \( B \)
+     ke \( D \), lalu kembali lagi.
+     \begin{answer}
+       Salah satu pilihan basis yang mungkin adalah
+       \begin{equation*}
+         B=\sequence{\colvec[r]{1 \\ 2},\colvec[r]{-1 \\ 1}}
+         \qquad
+         D=\stdbasis_2=\sequence{\colvec[r]{1 \\ 0},\colvec[r]{0 \\ 1}}
+       \end{equation*}
+       (basis $B$ ini berasal dari deskripsi pemetaan).
+       Untuk mencari matriks $\hat{T}=\rep{t}{B,B}$, selesaikan hubungan
+       \begin{equation*}
+          c_1\colvec[r]{1 \\ 2}+c_2\colvec[r]{-1 \\ 1}=\colvec[r]{3 \\ 0}
+          \qquad
+         \hat{c}_1\colvec[r]{1 \\ 2}+\hat{c}_2\colvec[r]{-1 \\ 1}=\colvec[r]{-1 \\ 2}
+       \end{equation*}
+       untuk memperoleh \( c_1=1 \), \( c_2=-2 \), \( \hat{c}_1=1/3 \), dan
+       \( \hat{c}_2=4/3 \).
+       \begin{equation*}
+          \rep{t}{B,B}=
+          \begin{mat}[r]
+             1  &1/3 \\
+            -2  &4/3
+          \end{mat}
+       \end{equation*}
+
+       Mencari \( \rep{t}{D,D} \) memerlukan sedikit lebih banyak perhitungan.
+       Mula-mula cari \( t(\vec{e}_1) \).
+       Hubungan
+       \begin{equation*}
+         c_1\colvec[r]{1 \\ 2}+c_2\colvec[r]{-1 \\ 1}=\colvec[r]{1 \\ 0}
+       \end{equation*}
+       memberikan \( c_1=1/3 \) dan \( c_2=-2/3 \), sehingga
+       \begin{equation*}
+         \rep{\vec{e}_1}{B}=\colvec[r]{1/3 \\ -2/3}_B
+       \end{equation*}
+       dan karena itu
+       \begin{equation*}
+          \rep{t(\vec{e}_1)}{B}=
+                 \begin{mat}[r]
+                    1  &1/3  \\
+                   -2  &4/3
+                 \end{mat}_{B,B}
+                 \colvec[r]{1/3 \\ -2/3}_B
+                 =
+                 \colvec[r]{1/9 \\ -14/9}_B
+       \end{equation*}
+       Jadi, $t$ bertindak pada vektor basis pertama $\vec{e}_1$ sebagai
+       berikut.
+       \begin{equation*}
+         t(\vec{e}_1)
+         =(1/9)\cdot\colvec[r]{1 \\ 2}-(14/9)\cdot\colvec[r]{-1 \\ 1}
+         =\colvec[r]{5/3 \\ -4/3}      
+       \end{equation*}
+       Perhitungan bagi \( t(\vec{e}_2) \) serupa.
+       Hubungan
+       \begin{equation*}
+         c_1\colvec[r]{1 \\ 2}+c_2\colvec[r]{-1 \\ 1}=\colvec[r]{0 \\ 1}
+       \end{equation*}
+       memberikan \( c_1=1/3 \) dan \( c_2=1/3 \), sehingga
+       \begin{equation*}
+         \rep{\vec{e}_2}{B}=\colvec[r]{1/3 \\ 1/3}_B
+       \end{equation*}
+       dan karena itu
+       \begin{equation*}
+         \rep{t(\vec{e}_2)}{B}=
+                 \begin{mat}[r]
+                    1  &1/3  \\
+                   -2  &4/3
+                 \end{mat}_{B,B}
+                 \colvec[r]{1/3 \\ 1/3}_B
+                 =
+                 \colvec[r]{4/9 \\ -2/9}_B
+       \end{equation*}
+       Jadi, $t$ bertindak pada vektor basis kedua $\vec{e}_2$ sebagai berikut.
+       \begin{equation*}
+         t(\vec{e}_2)
+         =(4/9)\cdot\colvec[r]{1 \\ 2}-(2/9)\cdot\colvec[r]{-1 \\ 1}
+         =\colvec[r]{2/3 \\ 2/3}
+       \end{equation*}
+       Karena itu,
+       \begin{equation*}
+          \rep{t}{D,D}=
+          \begin{mat}[r]
+             5/3  &2/3  \\
+            -4/3  &2/3
+          \end{mat}
+       \end{equation*}
+       Matriks perubahan basisnya adalah
+       \begin{equation*}
+         P=\rep{\identity}{B,D}
+         =\begin{mat}[r]
+           1  &-1  \\
+           2  &1 
+         \end{mat}
+       \end{equation*}
+      sedangkan matriks berikut mengubah basis kembali.
+      \begin{equation*}
+         P^{-1}=\bigl(\rep{\identity}{B,D}\bigr)^{-1}
+         =\begin{mat}[r]
+            1  &-1 \\
+            2  &1
+         \end{mat}^{-1}
+         =
+         \begin{mat}[r]
+           1/3  &1/3  \\
+           -2/3 &1/3
+         \end{mat}
+      \end{equation*}
+       Pemeriksaan perhitungan ini bersifat rutin.
+      \begin{equation*}
+         \begin{mat}[r]
+            1  &-1 \\
+            2  &1
+         \end{mat}
+         \begin{mat}[r]
+            1  &1/3 \\
+           -2  &4/3
+         \end{mat}
+         \begin{mat}[r]
+           1/3 &1/3 \\
+          -2/3 &1/3
+         \end{mat}
+         =
+         \begin{mat}[r]
+           5/3 &2/3 \\
+          -4/3 &2/3
+         \end{mat}
+      \end{equation*}  
+    \end{answer}
+  \recommended \item 
+    Tunjukkan bahwa matriks-matriks berikut tidak serupa.
+    \begin{equation*}
+       \begin{mat}[r]
+          1  &0  &4  \\
+          1  &1  &3  \\
+          2  &1  &7
+       \end{mat}
+       \qquad
+       \begin{mat}[r]
+          1  &0  &1  \\
+          0  &1  &1  \\
+          3  &1  &2
+       \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Metode Gauss menunjukkan bahwa matriks pertama merepresentasikan pemetaan
+      berperingkat dua, sedangkan matriks kedua merepresentasikan pemetaan
+      berperingkat tiga.
+    \end{answer}
+  \item 
+    Jelaskan \nearbyexample{ex:OnlyZeroSimToZero} dalam kerangka pemetaan.
+    \begin{answer}
+      Satu-satunya representasi pemetaan nol adalah matriks nol, apa pun
+      pasangan basisnya, $\rep{z}{B,D}=Z$. Jadi, khususnya, bagi sebarang basis
+      tunggal $B$ kita memiliki $\rep{z}{B,B}=Z$.
+      Kasus identitas sedikit berbeda:~satu-satunya representasi pemetaan
+      identitas terhadap sebarang $B,B$ adalah identitas
+      $\rep{\identity}{B,B}=I$.
+      (\textit{Catatan:}~tentu saja, kita telah melihat contoh dengan $B\neq D$
+      dan $\rep{\identity}{B,D}\neq I$\Dash bahkan, kita telah melihat bahwa
+      sebarang matriks nonsingular merupakan representasi pemetaan identitas
+      terhadap suatu $B,D$.)
+    \end{answer}
+  \recommended \item 
+    \cite{Halmos}
+    Adakah dua matriks \( A \) dan \( B \) yang serupa, sedangkan \( A^2 \) dan
+    \( B^2 \) tidak serupa?
+    \begin{answer}
+      Tidak.
+      Jika \( A=PBP^{-1} \), maka
+      \( A^2=(PBP^{-1})(PBP^{-1})=PB^2P^{-1} \).
+    \end{answer}
+  \recommended \item
+    Buktikan bahwa jika dua matriks serupa dan salah satunya dapat diinverskan,
+    matriks lainnya juga dapat diinverskan.
+    \begin{answer}
+       Keserupaan matriks merupakan kasus khusus ekuivalensi matriks (jika dua
+       matriks serupa, keduanya ekuivalen), dan ekuivalensi matriks
+       mempertahankan nonsingularitas.
+    \end{answer}
+  \item \label{exer:SimIsEquivRel}
+    Tunjukkan bahwa keserupaan merupakan relasi ekuivalensi.
+    (Definisi yang diberikan sebelumnya sudah mencerminkan hal ini. Karena itu,
+    mulailah di sini dengan definisi bahwa $\hat{T}$ serupa dengan $T$ jika
+    $\hat{T}=PTP^{-1}$.)
+    \begin{answer}
+       Suatu matriks serupa dengan dirinya sendiri; ambil \( P \) sebagai
+       matriks identitas:~$T=ITI^{-1}=ITI$.
+
+       Jika \( \hat{T} \) serupa dengan \( T \), maka
+       \( \hat{T}=PTP^{-1} \), sehingga \( P^{-1}\hat{T}P=T \).
+       Tulis ulang sebagai \( T=(P^{-1})\hat{T}(P^{-1})^{-1} \) untuk
+       menyimpulkan bahwa $T$ serupa dengan \( \hat{T} \).
+
+       Bagi transitivitas, jika \( T \) serupa dengan \( S \) dan \( S \)
+       serupa dengan \( U \), maka \( T=PSP^{-1} \) dan \( S=QUQ^{-1} \).
+       Jadi, \( T=PQUQ^{-1}P^{-1}=(PQ)U(PQ)^{-1} \), yang menunjukkan bahwa
+       \( T \) serupa dengan \( U \).
+     \end{answer}
+  \item 
+     Tinjau suatu matriks yang merepresentasikan pencerminan terhadap sumbu
+     \( x \) dalam \( \Re^2 \), terhadap suatu $B,B$.
+     Tinjau pula suatu matriks yang merepresentasikan pencerminan terhadap sumbu
+     \( y \), terhadap suatu $D,D$.
+     Apakah keduanya harus serupa?
+     \begin{answer}
+        Misalkan $f_x$ dan $f_y$ merupakan pemetaan pencerminan.
+        Bagi sebarang basis \( B \) dan \( D \), matriks
+        \( \rep{f_x}{B,B} \) dan \( \rep{f_y}{D,D} \) serupa.
+        Pertama, perhatikan bahwa
+        \begin{equation*}
+           S=\rep{f_x}{\stdbasis_2,\stdbasis_2}=
+           \begin{mat}[r]
+              1  &0  \\
+              0  &-1
+           \end{mat}
+           \qquad
+           T=\rep{f_y}{\stdbasis_2,\stdbasis_2}=
+           \begin{mat}[r]
+             -1  &0  \\
+              0  &1
+           \end{mat}
+        \end{equation*}
+        serupa karena matriks kedua merupakan representasi $f_x$ terhadap basis
+        \( A=\sequence{\vec{e}_2,\vec{e}_1} \):
+        \begin{equation*}
+           \begin{mat}[r]
+              1  &0  \\
+              0  &-1
+           \end{mat}
+           =    
+           P
+           \begin{mat}[r]
+             -1  &0  \\
+              0  &1
+           \end{mat}
+           P^{-1}
+        \end{equation*}
+        dengan $P=\rep{\identity}{A,\stdbasis_2}$.
+        \begin{equation*}
+          \begin{CD}
+            \C^2_{\wrt{A}}                   
+               @>f_x>T>        
+               V\C^2_{\wrt{A}}       \\
+            @V\scriptstyle\identity VPV                
+               @V\scriptstyle\identity VPV \\
+            \C^2_{\wrt{\stdbasis_2}}         
+               @>f_x>S>        
+               \C^2_{\wrt{\stdbasis_2}}
+          \end{CD}
+        \end{equation*}
+        Sekarang kesimpulannya mengikuti bagian transitivitas pada
+        \nearbyexercise{exer:SimIsEquivRel}.
+        
+        Kita juga dapat menyelesaikannya tanpa bergantung pada latihan tersebut.
+        Tulis
+        $\rep{f_x}{B,B}=QSQ^{-1}
+          =Q\rep{f_x}{\stdbasis_2,\stdbasis_2}Q^{-1}$
+        dan
+        $\rep{f_y}{D,D}=RSR^{-1}=R\rep{f_y}{\stdbasis_2,\stdbasis_2}R^{-1}$.
+        Menurut persamaan pada paragraf pertama, persamaan pertama menjadi
+        $\rep{f_x}{B,B}=QP\rep{f_y}{\stdbasis_2,\stdbasis_2}P^{-1}Q^{-1}$.
+        Dengan menulis ulang persamaan kedua sebagai
+        $R^{-1}\cdot\rep{f_y}{D,D}\cdot R=\rep{f_y}{\stdbasis_2,\stdbasis_2}$
+        dan melakukan substitusi, diperoleh hubungan yang diinginkan,
+        \begin{multline*}
+          \rep{f_x}{B,B}
+          =QP\rep{f_y}{\stdbasis_2,\stdbasis_2}P^{-1}Q^{-1}  \\
+          =QPR^{-1}\cdot\rep{f_y}{D,D}\cdot RP^{-1}Q^{-1}
+          =(QPR^{-1})\cdot\rep{f_y}{D,D}\cdot (QPR^{-1})^{-1}
+        \end{multline*}
+        Jadi, matriks \( \rep{f_x}{B,B} \) dan \( \rep{f_y}{D,D} \) serupa.
+      \end{answer}
+  \item 
+     Buktikan bahwa keserupaan matriks mempertahankan peringkat dan determinan.
+     Apakah kebalikannya berlaku?
+     \begin{answer}
+       Kita harus menunjukkan bahwa jika dua matriks serupa, keduanya memiliki
+       peringkat dan determinan yang sama.
+
+       Pertama, kita telah menunjukkan bahwa peringkat suatu pemetaan sama
+       dengan peringkat sebarang matriks yang merepresentasikannya. Jadi,
+       peringkat harus sama bagi semua representasi.
+       (Dengan kata lain, peringkat merupakan sifat pemetaan karena peringkat
+       adalah dimensi daerah hasilnya.)
+
+       Bagi determinan,
+       \( \deter{PSP^{-1}}=\deter{P}\cdot\deter{S}\cdot\deter{P^{-1}}
+          =\deter{P}\cdot\deter{S}\cdot\deter{P}^{-1}=\deter{S} \).
+
+       Kebalikan pernyataan tersebut tidak berlaku.
+       Ada matriks-matriks dengan determinan sama yang tidak serupa.
+       Sebagai contoh, tinjau suatu matriks tak nol dengan determinan nol.
+       Matriks itu tidak serupa dengan matriks nol, karena matriks nol hanya
+       serupa dengan dirinya sendiri, tetapi determinan keduanya sama.
+       Peringkat yang sama juga tidak cukup:~dua matriks diagonal $\nbyn{2}$
+       dengan diagonal masing-masing $(1,0)$ dan $(2,0)$ sama-sama berperingkat
+       satu tetapi tidak serupa, karena jejaknya berbeda.
+     \end{answer}
+  \item 
+    Adakah kelas ekuivalensi matriks yang hanya memuat satu kelas keserupaan
+    matriks?
+    Adakah yang memuat tak hingga banyak kelas keserupaan?
+    \begin{answer}
+      Kelas ekuivalensi matriks yang memuat semua matriks $\nbyn{n}$
+      berperingkat nol hanya memuat satu matriks, yaitu matriks nol.
+      Karena itu, kelas tersebut hanya memuat satu kelas keserupaan.
+
+      Sebaliknya, kelas ekuivalensi matriks $\nbyn{1}$ berperingkat satu terdiri
+      atas matriks-matriks $\nbyn{1}$ \( (k) \) dengan \( k\neq 0 \).
+      Bagi sebarang basis \( B \), representasi perkalian dengan skalar \( k \)
+      adalah \( \rep{t_k}{B,B}=(k) \), sehingga setiap matriks tersebut menjadi
+      satu-satunya anggota kelas keserupaannya.
+      Jadi, dalam kasus ini satu kelas ekuivalensi matriks terpecah menjadi tak
+      hingga banyak kelas keserupaan.
+     \end{answer}
+  \item 
+    Dapatkah dua matriks diagonal yang berbeda berada dalam kelas keserupaan
+    yang sama?
+    \begin{answer}
+      Ya, matriks-matriks berikut serupa,
+      \begin{equation*}
+         \begin{mat}[r]
+           1  &0  \\
+           0  &3
+         \end{mat}
+         \qquad
+         \begin{mat}[r]
+           3  &0  \\
+           0  &1
+         \end{mat}
+      \end{equation*}
+      sebab jika matriks pertama adalah $\rep{t}{B,B}$ bagi
+      $B=\sequence{\vec{\beta}_1,\vec{\beta}_2}$, matriks kedua adalah
+      $\rep{t}{D,D}$ bagi
+      $D=\sequence{\vec{\beta}_2,\vec{\beta}_1}$.
+     \end{answer}
+  \recommended \item
+    Buktikan bahwa jika dua matriks serupa, pangkat ke-\( k \) keduanya serupa
+    ketika \( k>0 \).
+    Bagaimana jika \( k\leq 0 \)?
+    \begin{answer}
+      Pangkat ke-\( k \) keduanya serupa karena, jika setiap matriks
+      merepresentasikan pemetaan $t$, pangkat ke-\( k \) merepresentasikan
+      \( t^k \), yaitu komposisi $k$ buah $t$.
+      (Sebagai contoh, jika $T=\rep{t}{B,B}$, maka
+      $T^2=\rep{\composed{t}{t}}{B,B}$.)
+
+      Dalam bentuk komputasional, jika \( T=PSP^{-1} \), maka
+      \( T^2=(PSP^{-1})(PSP^{-1})=PS^2P^{-1} \).
+      Induksi memperluas hasil ini ke semua pangkat positif.
+
+      Untuk $k=0$, kedua pangkat bernilai matriks identitas dan karena itu
+      serupa. Untuk $k<0$, pangkat tersebut hanya terdefinisi jika matriksnya
+      dapat diinverskan. Andaikan \( S \) dapat diinverskan dan
+      \( T=PSP^{-1} \). Perhatikan bahwa \( T \) juga dapat diinverskan:
+      \( T^{-1}=(PSP^{-1})^{-1}=PS^{-1}P^{-1} \),
+      dan persamaan yang sama menunjukkan bahwa \( T^{-1} \) serupa dengan
+      \( S^{-1} \).
+      Pangkat negatif lainnya sekarang mengikuti argumen pada paragraf pertama.
+    \end{answer}
+  \recommended \item
+    Misalkan \( p(x) \) adalah polinomial \( c_nx^n+\cdots+c_1x+c_0 \).
+    Tunjukkan bahwa jika \( T \) serupa dengan \( S \), maka
+    \( p(T)=c_nT^n+\cdots+c_1T+c_0I \) serupa dengan
+    \( p(S)=c_nS^n+\cdots+c_1S+c_0I \).
+    \begin{answer}
+       Secara konseptual, keduanya merepresentasikan \( p(t) \) bagi suatu
+       transformasi \( t \).
+       Secara komputasional, kita memiliki
+       \begin{align*}
+          p(T)
+          &=c_n(PSP^{-1})^n+\dots+c_1(PSP^{-1})+c_0I   \\
+          &=c_nPS^nP^{-1}+\dots+c_1PSP^{-1}+c_0I   \\
+           &=Pc_nS^nP^{-1}+\dots+Pc_1SP^{-1}+Pc_0IP^{-1}   \\
+           &=P(c_nS^n+\dots+c_1S+c_0I)P^{-1}
+       \end{align*}  
+     \end{answer}
+  \item 
+    Daftarkan semua kelas ekuivalensi matriks bagi matriks \( \nbyn{1} \).
+    Daftarkan pula kelas keserupaannya, dan deskripsikan kelas keserupaan mana
+    yang termuat dalam setiap kelas ekuivalensi matriks.
+    \begin{answer}
+      Ada dua kelas ekuivalensi:~(i) kelas matriks berperingkat nol, yang hanya
+      memiliki satu anggota,
+      $\mathscr{C}_1=\set{(0)}$,
+      dan (ii) kelas matriks berperingkat satu, yang memiliki tak hingga banyak
+      anggota,
+      \( \mathscr{C}_2=\set{(k)\suchthat k\neq0} \).
+
+      Setiap matriks \( \nbyn{1} \) merupakan satu-satunya anggota kelas
+      keserupaannya.
+      Hal itu karena sebarang transformasi pada ruang berdimensi satu merupakan
+      perkalian dengan skalar, yaitu $\map{t_k}{V}{V}$ yang diberikan oleh
+      $\vec{v}\mapsto k\cdot\vec{v}$.
+      Jadi, bagi sebarang basis \( B=\sequence{\vec{\beta}} \), matriks yang
+      merepresentasikan transformasi \( t_k \) terhadap \( B,B \) adalah
+      \( (\rep{t_k(\vec{\beta})}{B})=(k) \). 
+      
+      Jadi, kelas ekuivalensi matriks $\mathscr{C}_1$ memuat satu kelas
+      keserupaan, yang terdiri atas matriks $(0)$.
+      Kelas ekuivalensi matriks $\mathscr{C}_2$ memuat tak hingga banyak kelas
+      keserupaan beranggota tunggal, masing-masing terdiri atas $(k)$ bagi
+      $k\neq0$.
+    \end{answer}
+  \item 
+    Apakah keserupaan mempertahankan penjumlahan?
+    \begin{answer}
+      Tidak.
+      Berikut contoh dengan dua pasangan, yang masing-masing terdiri atas dua
+      matriks serupa:
+      \begin{equation*}
+         \begin{mat}[r]
+            1  &-1  \\
+            1  &2
+         \end{mat}
+         \begin{mat}[r]
+            1  &0   \\
+            0  &3
+         \end{mat}
+         \begin{mat}[r]
+            2/3  &1/3   \\
+           -1/3  &1/3
+         \end{mat}
+         =
+         \begin{mat}[r]
+            5/3  &-2/3  \\
+           -4/3  &7/3
+         \end{mat}
+      \end{equation*}
+      dan
+      \begin{equation*}
+         \begin{mat}[r]
+            1  &-2  \\
+           -1  &1
+         \end{mat}
+         \begin{mat}[r]
+           -1  &0   \\
+            0  &-3
+         \end{mat}
+         \begin{mat}[r]
+            -1  &-2   \\
+            -1  &-1
+         \end{mat}
+         =
+         \begin{mat}[r]
+            -5  &-4   \\
+             2  &1
+         \end{mat}
+      \end{equation*}
+      (contoh ini tidak sepenuhnya sebarang karena matriks-matriks tengah pada
+      kedua ruas kiri berjumlah matriks nol).
+      Perhatikan bahwa jumlah matriks-matriks serupa ini tidak serupa,
+      \begin{equation*}
+         \begin{mat}[r]
+            1  &0   \\
+            0  &3
+         \end{mat}
+         +
+         \begin{mat}[r]
+           -1  &0   \\
+            0  &-3
+         \end{mat}
+         =
+         \begin{mat}[r]
+           0  &0  \\
+           0  &0
+         \end{mat}
+         \qquad
+         \begin{mat}[r]
+            5/3  &-2/3   \\
+            -4/3 &7/3
+         \end{mat}
+         +
+         \begin{mat}[r]
+            -5  &-4   \\
+             2  &1
+         \end{mat}
+         \neq
+         \begin{mat}[r]
+           0  &0  \\
+           0  &0
+         \end{mat}
+      \end{equation*}
+      karena matriks nol hanya serupa dengan dirinya sendiri.
+    \end{answer}
+  \item 
+    Tunjukkan bahwa jika \( T-\lambda I \) dan \( N \) merupakan matriks serupa,
+    maka \( T \) dan \( N+\lambda I \) juga serupa.
+    \begin{answer}
+    Jika \( N=P(T-\lambda I)P^{-1} \), maka
+    \( N=PTP^{-1}-P(\lambda I)P^{-1} \).
+    Matriks diagonal \( \lambda I \) komutatif dengan setiap matriks, sehingga
+    \( P(\lambda I)P^{-1}=PP^{-1}(\lambda I)=\lambda I \).
+    Jadi, \( N=PTP^{-1}-\lambda I \), dan akibatnya
+    \( N+\lambda I=PTP^{-1} \).
+    (Jadi, keduanya bukan hanya serupa; keduanya bahkan serupa melalui \( P \)
+    yang sama.)
+    \end{answer}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Keterdiagonalan}
+Subbagian sebelumnya menunjukkan bahwa walaupun matriks-matriks serupa pasti
+ekuivalen, kebalikannya tidak berlaku.
+Sebagian kelas ekuivalensi matriks terpecah menjadi dua atau lebih kelas
+keserupaan; sebagai contoh, matriks nonsingular $\nbyn{2}$ membentuk satu kelas
+ekuivalensi matriks tetapi lebih dari satu kelas keserupaan.
+
+Diagram di bawah mengilustrasikannya.
+Kurva utuh menunjukkan kelas ekuivalensi matriks, sedangkan pembatas putus-putus
+menandai kelas keserupaan.
+Setiap bintang merupakan matriks yang mewakili kelas keserupaannya.
+%  so each
+% similarity class has one. 
+Kita tidak dapat menggunakan bentuk kanonik bagi ekuivalensi matriks, yaitu
+matriks blok identitas parsial, sebagai bentuk kanonik bagi keserupaan karena
+setiap kelas ekuivalensi matriks hanya memiliki satu matriks identitas parsial.
+\begin{center}
+  \includegraphics{jc/mp/ch5.5}
+\end{center}
+Untuk mengembangkan bentuk kanonik bagi wakil kelas keserupaan, wajar jika kita
+membangun di atas hasil sebelumnya.
+Jadi, jika suatu kelas keserupaan memang memuat matriks identitas parsial,
+matriks itu harus menjadi wakil kelas tersebut.
+Selain itu, setiap wakil harus sesederhana mungkin.
+%(the partial identities are simple in that they consist mostly of zeros). 
+
+Perluasan paling sederhana dari bentuk identitas parsial adalah bentuk diagonal.
+
+\begin{definition} \label{df:Diagonalizable}
+%<*df:Diagonalizable>
+Suatu transformasi disebut \definend{dapat didiagonalkan}
+\index{dapat didiagonalkan|(}%
+\index{transformasi!dapat didiagonalkan}
+jika memiliki representasi diagonal terhadap basis yang sama bagi kodomain dan
+domain.
+Suatu \definend{matriks yang dapat didiagonalkan}
+\index{matriks!dapat didiagonalkan} adalah matriks yang serupa dengan matriks
+diagonal:~\( T \) dapat didiagonalkan jika terdapat matriks nonsingular \( P \)
+sedemikian sehingga \( PTP^{-1} \) diagonal.
+%</df:Diagonalizable>
+\end{definition}
+
+\begin{example} \label{ex:DiagTwoByTwo}
+Matriks
+\begin{equation*}
+  \begin{mat}[r] 
+     4 &-2 \\ 
+     1 &1 
+  \end{mat}
+\end{equation*} 
+dapat didiagonalkan.
+\begin{equation*}
+  \begin{mat}[r]
+     2  &0   \\
+     0  &3
+  \end{mat}
+  =
+  \begin{mat}[r]
+    -1  &2  \\
+     1  &-1
+  \end{mat}
+  \begin{mat}[r]
+     4  &-2 \\
+     1  &1
+  \end{mat}
+  \begin{mat}[r]
+    -1  &2  \\
+     1  &-1
+  \end{mat}^{-1}
+\end{equation*}
+\end{example}
+
+Di bawah ini kita akan melihat cara mencari matriks~$P$, tetapi terlebih dahulu
+perhatikan bahwa tidak setiap matriks serupa dengan matriks diagonal.
+Karena itu, bentuk diagonal tidak cukup sebagai bentuk kanonik bagi keserupaan.
+
+\begin{example}  \label{ex:MatrixNotDiagonalizable}
+%<*ex:NotDiagonalizable>
+Matriks berikut tidak dapat didiagonalkan.
+\begin{equation*}
+  N=\begin{mat}[r]
+       0  &0  \\
+       1  &0
+    \end{mat}
+\end{equation*}
+Fakta bahwa $N$ bukan matriks nol berarti bahwa $N$ tidak dapat serupa dengan
+matriks nol, karena matriks nol hanya serupa dengan dirinya sendiri.
+Jadi, jika $N$ serupa dengan suatu matriks diagonal~$D$, maka $D$ memiliki
+sedikitnya satu entri tak nol pada diagonalnya.
+
+Pokok pentingnya adalah bahwa suatu pangkat $N$ merupakan matriks nol; secara
+khusus, $N^2$ adalah matriks nol.
+Hal ini menyiratkan bahwa bagi sebarang pemetaan~$n$ yang direpresentasikan oleh
+\( N \) terhadap suatu $B,B$, komposisi \( \composed{n}{n} \) merupakan
+pemetaan nol.
+Pada gilirannya, hal ini menyiratkan bahwa kuadrat sebarang matriks yang
+merepresentasikan~$n$ terhadap suatu $\hat{B},\hat{B}$ merupakan matriks nol.
+Namun, bagi sebarang matriks diagonal tak nol~$D$, entri-entri $D^2$ adalah
+kuadrat entri-entri~$D$, sehingga $D^2$ tidak mungkin merupakan matriks nol.
+Jadi, $N$ tidak dapat didiagonalkan.
+%</ex:NotDiagonalizable>
+\end{example}
+
+Jadi, tidak setiap kelas keserupaan memuat matriks diagonal.
+Sekarang kita mencirikan kapan suatu matriks dapat didiagonalkan.
+% However, some similarity classes do contain a diagonal matrix and 
+% the canonical form that we are developing has the property that if
+% a matrix can be diagonalized then the diagonal matrix is the canonical
+% representative of its similarity class. 
+
+\begin{lemma} \label{lm:DiagIffBasisOfEigens}
+%<*lm:DiagIffBasisOfEigens>
+Suatu transformasi \( t \) dapat didiagonalkan jika dan hanya jika terdapat
+basis
+\( B=\sequence{\vec{\beta}_1,\ldots,\vec{\beta}_n } \)
+dan skalar \( \lambda_1,\ldots,\lambda_n \) sedemikian sehingga
+\( t(\vec{\beta}_i)=\lambda_i\vec{\beta}_i \)
+bagi setiap \( i \).
+%</lm:DiagIffBasisOfEigens>
+\end{lemma}
+
+\begin{proof}
+%<*pf:DiagIffBasisOfEigens>
+Tinjau suatu matriks representasi diagonal.
+\begin{equation*}
+   \rep{t}{B,B}=
+   \begin{pmat}{c@{\hspace*{1em}}c@{\hspace*{1em}}c}
+      \vdots                    &       &\vdots                     \\
+      \rep{t(\vec{\beta}_1)}{B} &\cdots &\rep{t(\vec{\beta}_n)}{B}  \\
+      \vdots                    &       &\vdots
+   \end{pmat}
+   =
+   \begin{pmat}{c@{\hspace*{1em}}c@{\hspace*{1em}}c}
+      \lambda_1   &       &0         \\
+      \vdots      &\ddots &\vdots    \\
+      0           &       &\lambda_n
+   \end{pmat}
+\end{equation*}
+Tinjau representasi suatu anggota basis ini terhadap basis tersebut,
+$\rep{\vec{\beta}_i}{B}$.
+Hasil kali matriks diagonal dan vektor representasi
+\begin{equation*}
+   \rep{t(\vec{\beta}_i)}{B}
+   =\begin{pmat}{c@{\hspace*{1em}}c@{\hspace*{1em}}c}
+      \lambda_1   &       &0         \\
+      \vdots      &\ddots &\vdots    \\
+      0           &       &\lambda_n
+   \end{pmat}  
+  \colvec{0 \\ \vdots \\ 1 \\ \vdots \\ 0}
+  =\colvec{0 \\ \vdots \\ \lambda_i \\ \vdots \\ 0}
+\end{equation*}
+memiliki tindakan yang dinyatakan.
+%</pf:DiagIffBasisOfEigens>
+\end{proof}
+
+\begin{example}     \label{ex:DiagUpperTrian}
+Untuk mendiagonalkan
+\begin{equation*}
+   T=\begin{mat}[r]
+      3  &2  \\
+      0  &1
+   \end{mat}
+\end{equation*}
+ambil $T$ sebagai representasi suatu transformasi terhadap basis standar,
+$\rep{t}{\stdbasis_2,\stdbasis_2}$, lalu cari basis
+\( B=\sequence{\vec{\beta}_1,\vec{\beta}_2} \) sedemikian sehingga
+\begin{equation*}
+  \rep{t}{B,B}
+  =
+  \begin{mat}
+    \lambda_1  &0          \\
+    0          &\lambda_2
+  \end{mat}
+\end{equation*}
+yakni sedemikian sehingga
+$t(\vec{\beta}_1)=\lambda_1\vec{\beta}_1$ dan
+$t(\vec{\beta}_2)=\lambda_2\vec{\beta}_2$.
+\begin{equation*}
+  \begin{mat}[r]
+     3  &2  \\
+     0  &1
+  \end{mat}
+  \vec{\beta}_1=\lambda_1\cdot\vec{\beta}_1
+  \qquad
+  \begin{mat}[r]
+     3  &2  \\
+     0  &1
+  \end{mat}
+  \vec{\beta}_2=\lambda_2\cdot\vec{\beta}_2
+\end{equation*} 
+Kita mencari skalar \( x \) sedemikian sehingga persamaan
+\begin{equation*}
+ \begin{mat}[r]
+    3  &2  \\
+    0  &1
+ \end{mat}
+ \colvec{b_1 \\ b_2}=x\cdot\colvec{b_1 \\ b_2}
+\end{equation*}
+memiliki solusi $b_1$ dan $b_2$ yang tidak keduanya bernilai $0$ (vektor nol
+bukan anggota sebarang basis).
+Ini merupakan sistem linear.
+\begin{equation*}
+  \begin{linsys}{2}
+     (3-x)\cdot b_1  &+  &2\cdot b_2       &=  &0  \\
+                     &   &(1-x)\cdot b_2   &=  &0 
+  \end{linsys}
+\tag*{($*$)}\end{equation*}
+Perhatikan dahulu persamaan terbawah.
+Ada dua kasus:~$b_2=0$ atau~$x=1$.
+
+Dalam kasus \( b_2=0 \), persamaan pertama memberikan $b_1=0$ atau \( x=3 \).
+Karena kemungkinan $b_2=0$ dan~$b_1=0$ sekaligus telah dilarang, tersisa entri
+diagonal pertama $\lambda_1=3$.
+Dengan nilai tersebut, persamaan pertama pada ($*$) menjadi
+$0\cdot b_1+2\cdot b_2=0$. Jadi, vektor-vektor yang terkait dengan
+$\lambda_1=3$ memiliki komponen kedua nol, sedangkan komponen pertama bebas.
+\begin{equation*}
+     \begin{mat}[r]
+        3  &2  \\
+        0  &1
+     \end{mat}
+     \colvec{b_1 \\ 0}=3\cdot\colvec{b_1 \\ 0} 
+\end{equation*}
+Untuk memperoleh vektor basis pertama, pilih sebarang $b_1$ tak nol.
+\begin{equation*}
+   \vec{\beta}_1=\colvec[r]{1 \\ 0}
+\end{equation*}
+
+Kasus lain bagi persamaan terbawah pada ($*$) adalah $\lambda_2=1$.
+Persamaan pertama pada ($*$) kemudian menjadi
+$2\cdot b_1+2\cdot b_2=0$. Jadi, vektor-vektor yang terkait dengan kasus ini
+memiliki komponen kedua yang merupakan negatif komponen pertama.
+\begin{equation*}
+     \begin{mat}[r]
+        3  &2  \\
+        0  &1
+     \end{mat}
+     \colvec{b_1 \\ -b_1}=1\cdot\colvec{b_1 \\ -b_1} 
+\end{equation*}
+Peroleh vektor basis kedua dengan memilih salah satu vektor tak nol tersebut.
+\begin{equation*}
+   \vec{\beta}_2=\colvec[r]{1 \\ -1}
+\end{equation*}
+
+Sekarang gambarkan diagram keserupaan (ingat bahwa kita bekerja dengan skalar
+kompleks, bukan real),
+\begin{equation*}
+     \begin{CD}
+            \C^2_{\wrt{\stdbasis_2}}                   
+               @>t>T>        
+               \C^2_{\wrt{\stdbasis_2}}       \\
+            @V{\scriptstyle\identity} VV                
+               @V{\scriptstyle\identity} VV \\
+            \C^2_{\wrt{B}}         
+               @>t>D>        
+               \C^2_{\wrt{B}}
+      \end{CD}
+\end{equation*}
+dan perhatikan bahwa matriks $\rep{\identity}{B,\stdbasis_2}$ mudah diperoleh,
+sehingga memberikan diagonalisasi berikut.
+\begin{equation*}
+   \begin{mat}[r]
+     3  &0  \\
+     0  &1
+   \end{mat}
+   =
+   \begin{mat}[r]
+     1  &1  \\
+     0  &-1
+   \end{mat}^{-1}
+   \begin{mat}[r]
+     3  &2  \\
+     0  &1
+   \end{mat}
+   \begin{mat}[r]
+     1  &1  \\
+     0  &-1
+   \end{mat}
+\end{equation*}
+\end{example}
+
+Sisa bagian ini mengembangkan contoh tersebut dengan meninjau lebih dekat sifat
+pada \nearbylemma{lm:DiagIffBasisOfEigens}, termasuk cara yang lebih ringkas
+untuk mencari nilai-nilai $\lambda$.
+Bagian setelahnya mengembangkan \nearbyexample{ex:MatrixNotDiagonalizable} untuk
+memahami apa yang dapat menghalangi diagonalisasi.
+Kemudian, bagian terakhir menggabungkan keduanya untuk menghasilkan bentuk
+kanonik yang, dalam suatu pengertian, sesederhana mungkin.
+
+\begin{exercises}
+  \recommended \item 
+    Ulangi \nearbyexample{ex:DiagUpperTrian} bagi matriks dari
+    \nearbyexample{ex:DiagTwoByTwo}.
+    \begin{answer}
+      Karena kita memilih vektor-vektor basis secara sebarang, banyak jawaban
+      berbeda dapat diperoleh.
+      Namun, berikut salah satu caranya.
+      Untuk mendiagonalkan
+      \begin{equation*}
+         T=\begin{mat}[r]
+            4  &-2  \\
+            1  &1
+         \end{mat}
+      \end{equation*}
+      ambil matriks itu sebagai representasi suatu transformasi terhadap basis
+      standar, $T=\rep{t}{\stdbasis_2,\stdbasis_2}$, lalu cari
+      \( B=\sequence{\vec{\beta}_1,\vec{\beta}_2} \) sedemikian sehingga
+      \begin{equation*}
+        \rep{t}{B,B}
+        =
+        \begin{mat}
+          \lambda_1  &0          \\
+          0          &\lambda_2
+        \end{mat}
+      \end{equation*}
+      yakni sedemikian sehingga
+      $t(\vec{\beta}_1)=\lambda_1\vec{\beta}_1$ dan
+      $t(\vec{\beta}_2)=\lambda_2\vec{\beta}_2$.
+      \begin{equation*}
+        \begin{mat}[r]
+           4  &-2  \\
+           1  &1
+        \end{mat}
+        \vec{\beta}_1=\lambda_1\cdot\vec{\beta}_1
+        \qquad
+        \begin{mat}[r]
+           4  &-2  \\
+           1  &1
+        \end{mat}
+        \vec{\beta}_2=\lambda_2\cdot\vec{\beta}_2
+      \end{equation*} 
+      Kita mencari skalar \( x \) sedemikian sehingga persamaan
+      \begin{equation*}
+       \begin{mat}[r]
+          4  &-2  \\
+          1  &1
+       \end{mat}
+       \colvec{b_1 \\ b_2}=x\cdot\colvec{b_1 \\ b_2}
+      \end{equation*}
+      memiliki solusi $b_1$ dan $b_2$ yang tidak keduanya nol.
+      Tulis ulang sebagai sistem linear,
+      \begin{equation*}
+        \begin{linsys}{2}
+           (4-x)\cdot b_1  &+  &-2\cdot b_2       &=  &0  \\
+           1\cdot b_1      &+   &(1-x)\cdot b_2   &=  &0 
+        \end{linsys}
+      \end{equation*}
+      Jika $x=4$, persamaan pertama memberikan $b_2=0$, lalu persamaan kedua
+      memberikan $b_1=0$.
+      Kasus ketika kedua $b$ bernilai nol telah dilarang, sehingga kita dapat
+      mengandaikan $x\neq 4$.
+      \begin{equation*}
+        \grstep{(-1/(4-x))\rho_1+\rho_2}
+        \begin{linsys}{2}
+           (4-x)\cdot b_1  &+   &-2\cdot b_2                   &=  &0  \\
+                           &    &((x^2-5x+6)/(4-x))\cdot b_2   &=  &0 
+        \end{linsys} 
+      \end{equation*}
+      Tinjau persamaan terbawah.
+      Jika \( b_2=0 \), persamaan pertama memberikan $b_1=0$ atau $x=4$.
+      Kasus $b_1=b_2=0$ tidak diizinkan.
+      Kemungkinan lain bagi persamaan terbawah adalah pembilang pecahan
+      $x^2-5x+6=(x-2)(x-3)$ bernilai nol.
+      Kasus $x=2$ memberikan persamaan pertama $2b_1-2b_2=0$. Jadi, dengan
+      $x=2$ terkait vektor-vektor yang komponen pertama dan keduanya sama:
+      \begin{equation*}
+         \vec{\beta}_1=\colvec[r]{1 \\ 1}
+         \qquad\text{(sehingga \(
+           \begin{mat}[r]
+              4  &-2  \\
+              1  &1
+           \end{mat}
+           \colvec[r]{1 \\ 1}=2\cdot\colvec[r]{1 \\ 1} \), dan $\lambda_1=2$).}
+      \end{equation*}
+      Jika \( x=3 \), persamaan pertama adalah $b_1-2b_2=0$. Jadi, vektor yang
+      terkait memiliki komponen pertama dua kali komponen keduanya:
+      \begin{equation*}
+         \vec{\beta}_2=\colvec[r]{2 \\ 1}
+         \qquad\text{(sehingga \(
+           \begin{mat}[r]
+              4  &-2  \\
+              1  &1
+           \end{mat}
+           \colvec[r]{2 \\ 1}=3\cdot\colvec[r]{2 \\ 1} \), sehingga $\lambda_2=3$).}
+      \end{equation*}
+      Diagram berikut
+        \begin{equation*}
+          \begin{CD}
+            \C^2_{\wrt{\stdbasis_2}}                   
+               @>t>T>        
+               \C^2_{\wrt{\stdbasis_2}}       \\
+            @V{\scriptstyle\identity} VV                
+               @V{\scriptstyle\identity} VV \\
+            \C^2_{\wrt{B}}         
+               @>t>D>        
+               \C^2_{\wrt{B}}
+          \end{CD}
+        \end{equation*}
+      menunjukkan cara memperoleh diagonalisasinya.
+      \begin{equation*}
+         \begin{mat}[r]
+           2  &0  \\
+           0  &3
+         \end{mat}
+         =
+         \begin{mat}[r]
+           1  &2  \\
+           1  &1
+         \end{mat}^{-1}
+         \begin{mat}[r]
+           4  &-2  \\
+           1  &1
+         \end{mat}
+         \begin{mat}[r]
+           1  &2  \\
+           1  &1
+         \end{mat}
+      \end{equation*}
+      \textit{Komentar}.
+      Dengan penggantian nama berikut, persamaan ini sesuai dengan definisi
+      $T=PSP^{-1}$.
+      \begin{equation*}
+        T=
+         \begin{mat}[r]
+           2  &0  \\
+           0  &3
+         \end{mat}
+         \quad
+         P=
+         \begin{mat}[r]
+           1  &2  \\
+           1  &1
+         \end{mat}^{-1}
+         \quad
+         P^{-1}=
+         \begin{mat}[r]
+           1  &2  \\
+           1  &1
+         \end{mat}
+         \quad
+         S=
+         \begin{mat}[r]
+           4  &-2  \\
+           1  &1
+         \end{mat}
+      \end{equation*}
+    \end{answer}
+  \recommended \item \label{exer:DiagTheseA} 
+    Diagonalkan matriks berikut dengan mengikuti langkah-langkah pada
+    \nearbyexample{ex:DiagUpperTrian}.
+    \begin{equation*}
+      \begin{mat}[r]
+      1  &1  \\
+      0  &0
+      \end{mat}
+    \end{equation*}
+    \begin{exparts}
+      \partsitem Susun persamaan matriks-vektor yang dideskripsikan dalam
+         \nearbylemma{lm:DiagIffBasisOfEigens}, lalu tulis ulang sebagai sistem
+         linear.
+      \partsitem Dengan meninjau solusi sistem tersebut, cari dua vektor untuk
+         membentuk basis.
+         (Tinjau secara terpisah kasus $x=0$ dan $x\neq 0$.
+         Ingat pula bahwa vektor nol tidak dapat menjadi anggota basis.)
+      \partsitem Gunakan basis tersebut dalam diagram keserupaan untuk
+        memperoleh matriks diagonal sebagai hasil kali tiga matriks lain.
+    \end{exparts}
+    \begin{answer}
+     \begin{exparts}
+        \partsitem Kita menginginkan basis yang vektor-vektor anggotanya memenuhi
+          \begin{equation*}
+            \begin{mat}
+              1 &1 \\
+              0 &0
+            \end{mat}
+            \colvec{b_1 \\ b_2}
+            =x\cdot \colvec{b_1 \\ b_2}
+          \end{equation*}
+          sehingga kita meninjau sistem linear yang dihasilkan.
+          \begin{equation*}
+            \begin{linsys}{2}
+              b_1 &+ &b_2 &= &x\cdot b_1 \\
+                  &  &0   &= &x\cdot b_2 \\
+            \end{linsys}
+          \end{equation*}
+        \partsitem
+          Jika $x=0$, maka $b_1+b_2=0$, sehingga $b_1=-b_2$.
+          Artinya, dengan kasus ini terkait unsur-unsur basis yang entrinya
+          memiliki tanda berlawanan.
+          (Entri tersebut harus tak nol karena vektor nol tidak dapat menjadi
+          anggota basis.)
+
+          Jika $x\neq 0$, maka $b_2=0$, dan substitusi ke persamaan teratas
+          memberikan $b_1=x\cdot b_1$.
+          Jadi, dalam kasus ini $b_1=0$ atau $x=1$.
+          Namun, karena $b_2=0$ dalam kasus ini, $b_1=0$ tidak mungkin sebab
+          vektor nol tidak termuat dalam sebarang basis.
+          Jadi, $x=1$ dan sistemnya menjadi
+          \begin{equation*}
+            \begin{linsys}{2}
+              b_1 &+ &b_2 &= &1\cdot b_1 \\
+                  &  &0   &= &1\cdot b_2 \\
+            \end{linsys}
+          \end{equation*}
+          Jadi, dengan kasus ini terkait unsur-unsur basis yang memenuhi
+          $b_2=0$, sedangkan~$b_1$ dapat berupa sebarang nilai tak nol.
+           
+          Karena itu, salah satu basis yang sesuai adalah
+          \begin{equation*}
+            B=\sequence{\colvec{1 \\ -1},
+                        \colvec{1 \\ 0}}
+          \end{equation*}
+        \partsitem
+          Dengan basis tersebut, gambarkan diagram keserupaan untuk memperoleh
+          diagonalisasi.
+          \begin{equation*}
+            \begin{CD}
+            \C^2_{\wrt{\stdbasis_2}}                   
+               @>t>T>        
+               \C^2_{\wrt{\stdbasis_2}}       \\
+            @V{\scriptstyle\identity} VV                
+               @V{\scriptstyle\identity} VV \\
+            \C^2_{\wrt{B}}         
+               @>t>D>        
+               \C^2_{\wrt{B}}
+           \end{CD}
+          \end{equation*}
+          Dalam diagram ini,
+          \begin{equation*}
+             T=
+             \begin{mat}
+               1  &1  \\
+               0  &0
+             \end{mat}
+          \end{equation*}
+          dan kita akan menghitung matriks~$D$ menggunakan basis~$B$ dengan
+          menelusuri jalur dari kiri bawah ke kiri atas, lalu ke kanan atas, dan
+          akhirnya ke kanan bawah.
+
+          Mula-mula kita bergerak dari kiri bawah ke kiri atas.
+          Karena basis pada bagian atas diagram dipilih sebagai basis standar
+          $\stdbasis_2$, matriks yang merepresentasikan pemetaan itu mudah
+          diperoleh.
+          \begin{equation*}
+            \rep{\identity}{B,\stdbasis_2}=
+            \begin{mat}
+              1 &1 \\
+             -1 &0
+            \end{mat}
+          \end{equation*}
+          Perhitungan bagi seluruh jalur memang memberikan hasil diagonal
+          (tentu saja, bagian kiri bawah ke kiri atas muncul pada sisi kanan
+          hasil kali ketiga matriks).
+          \begin{align*}
+                 D
+                 &=
+                 \begin{mat}
+                    1  &1  \\
+                    -1  &0
+                 \end{mat}^{-1}
+                 \begin{mat}
+                    1  &1  \\
+                    0  &0
+                 \end{mat}
+                 \begin{mat}
+                    1  &1  \\
+                    -1  &0
+                 \end{mat}                \\
+                 &=
+                 \begin{mat}
+                    0  &-1  \\
+                    1  &1
+                 \end{mat}
+                 \begin{mat}
+                    1  &1  \\
+                    0  &0
+                 \end{mat}
+                 \begin{mat}
+                    1  &1  \\
+                    -1  &0
+                 \end{mat}                
+                =\begin{mat}
+                    0  &0  \\
+                    0  &1
+                 \end{mat}
+          \end{align*}
+     \end{exparts}    
+    \end{answer}
+  \recommended \item \label{exer:DiagTheseB} 
+    Ikuti \nearbyexample{ex:DiagUpperTrian} untuk mendiagonalkan matriks ini.
+    \begin{equation*}
+      \begin{mat}[r]
+      0  &1  \\
+      1  &0
+      \end{mat}
+    \end{equation*}
+    \begin{exparts}
+      \partsitem Susun persamaan matriks-vektor, lalu tulis ulang sebagai sistem
+         linear.
+      \partsitem Dengan meninjau solusi sistem tersebut, cari dua vektor untuk
+         membentuk basis.
+         (Tinjau secara terpisah kasus $x=0$ dan $x\neq 0$.
+         Ingat pula bahwa vektor nol tidak dapat menjadi anggota basis.)
+      \partsitem Dengan basis tersebut, gunakan diagram keserupaan untuk
+         memperoleh diagonalisasi sebagai hasil kali tiga matriks.
+    \end{exparts}
+    \begin{answer}
+     \begin{exparts}
+        \partsitem 
+          Anggota-anggota basis memenuhi
+          \begin{equation*}
+            \begin{mat}
+              0 &1 \\
+              1 &0
+            \end{mat}
+            \colvec{b_1 \\ b_2}
+            =x\cdot \colvec{b_1 \\ b_2}
+          \end{equation*}
+          sehingga sistem linear yang dihasilkan adalah
+          \begin{equation*}
+            \begin{linsys}{2}
+                   &  &b_2 &= &x\cdot b_1 \\
+               b_1 &  &    &= &x\cdot b_2 \\
+            \end{linsys}
+            \qquad\Longrightarrow\qquad
+            \begin{linsys}{2}
+               -xb_1 &+ &b_2  &= &0 \\
+                 b_1 &- &xb_2 &= &0 \\
+            \end{linsys}
+          \end{equation*}
+        \partsitem
+          Jika $x=0$, maka $b_1=b_2=0$. Namun, vektor nol bukan anggota sebarang
+          basis, sehingga kasus ini tidak mungkin terjadi.
+
+          Kasus lainnya adalah $x\neq 0$.
+          \begin{equation*}
+            \begin{linsys}{2}
+               -xb_1 &+ &b_2  &= &0 \\
+                 b_1 &- &xb_2 &= &0 \\
+            \end{linsys}  
+            \grstep{(1/x)\rho_1+\rho_2}
+            \begin{linsys}{2}
+               -xb_1 &+ &b_2           &= &0 \\
+                     &  &(-x+(1/x))b_2 &= &0 \\
+            \end{linsys}  
+          \end{equation*}
+          Tinjau persamaan terbawah.
+          Kemungkinannya adalah $b_2=0$ atau $-x+(1/x)=0$.
+          Jika $b_2=0$, substitusi ke persamaan teratas memberikan $b_1=0$
+          karena asumsi kasus ini adalah $x\neq 0$.
+          Namun, vektor nol bukan anggota sebarang basis, sehingga hal ini tidak
+          mungkin terjadi.
+
+          Tersisa
+          \begin{equation*}
+            \frac{1}{x}-x=0
+            \qquad\Longrightarrow\qquad
+            0=\frac{1-x^2}{x}=\frac{(1-x)(1+x)}{x}
+          \end{equation*}
+          Jika $x=1$, sistemnya adalah
+          \begin{equation*}
+            \begin{linsys}{2}
+               -1\cdot b_1 &+ &b_2  &= &0 \\
+                           &  &0    &= &0 \\
+            \end{linsys}
+          \end{equation*}
+          sehingga vektor-vektor basis memenuhi $b_2=b_1$.
+          Jika $x=-1$, sistemnya adalah
+          \begin{equation*}
+            \begin{linsys}{2}
+               b_1 &+ &b_2  &= &0 \\
+                   &  &0    &= &0 \\
+            \end{linsys}
+          \end{equation*}
+          dan vektor-vektor basis memenuhi $b_2=-b_1$.
+          Karena itu, berikut salah satu contoh basis yang sesuai.
+          \begin{equation*}
+            B=\sequence{\colvec{1 \\ 1},
+                        \colvec{1 \\ -1}}
+          \end{equation*}
+        \partsitem
+          Untuk memperoleh diagonalisasi, gambarkan diagram keserupaan
+          \begin{equation*}
+            \begin{CD}
+            \C^2_{\wrt{\stdbasis_2}}                   
+               @>t>T>        
+               \C^2_{\wrt{\stdbasis_2}}       \\
+            @V{\scriptstyle\identity} VV                
+               @V{\scriptstyle\identity} VV \\
+            \C^2_{\wrt{B}}         
+               @>t>D>        
+               \C^2_{\wrt{B}}
+           \end{CD}
+          \end{equation*}
+          dengan $T$ sebagai matriks yang diberikan dalam soal.
+          \begin{equation*}
+             T=
+             \begin{mat}
+               0  &1  \\
+               1  &0
+             \end{mat}
+          \end{equation*}
+          Hitung matriks~$D$ menggunakan basis~$B$ dengan bergerak dari kiri
+          bawah ke kiri atas, lalu ke kanan atas, dan akhirnya ke kanan bawah.
+
+          Perhatikan bahwa matriks yang merepresentasikan pemetaan dari kiri
+          bawah ke kiri atas mudah diperoleh.
+          \begin{equation*}
+            \rep{\identity}{B,\stdbasis_2}=
+            \begin{mat}
+              1 &1 \\
+              1 &-1
+            \end{mat}
+          \end{equation*}
+          Dengan itu, perhitungan bagi seluruh jalur memang memberikan hasil
+          diagonal.
+          \begin{align*}
+                 D
+                 &=
+                 \begin{mat}
+                    1  &1  \\
+                    1  &-1
+                 \end{mat}^{-1}
+                 \begin{mat}
+                    0  &1  \\
+                    1  &0
+                 \end{mat}
+                 \begin{mat}
+                    1  &1  \\
+                    1  &-1
+                 \end{mat}                \\
+                 &=
+                 -\frac{1}{2}
+                 \begin{mat}
+                    -1  &-1  \\
+                    -1  &1
+                 \end{mat}
+                 \begin{mat}
+                    0  &1  \\
+                    1  &0
+                 \end{mat}
+                 \begin{mat}
+                    1  &1  \\
+                    1  &-1
+                 \end{mat}                
+                =\begin{mat}
+                    1  &0  \\
+                    0  &-1
+                 \end{mat}
+          \end{align*}
+      \end{exparts}  
+    \end{answer}
+  \item 
+    Diagonalkan matriks-matriks segitiga atas berikut.
+    \begin{exparts*}
+      \partsitem 
+        $\begin{mat}[r]
+          -2  &1  \\
+           0  &2
+        \end{mat}$
+      \partsitem 
+        $\begin{mat}[r]
+          5  &4  \\
+          0  &1
+        \end{mat}$
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem
+          Menyusun
+          \begin{equation*}
+            \begin{mat}[r]
+              -2  &1  \\
+               0  &2
+            \end{mat}
+            \colvec{b_1 \\ b_2}
+            =x\cdot\colvec{b_1 \\ b_2}
+            \qquad\Longrightarrow\qquad 
+            \begin{linsys}{2}
+               (-2-x)\cdot b_1  &+  &b_2            &=  &0  \\
+                                &   &(2-x)\cdot b_2 &= &0
+            \end{linsys}
+          \end{equation*}
+          memberikan dua kemungkinan, yaitu $b_2=0$ atau $x=2$.
+          Mengikuti kemungkinan $b_2=0$ menghasilkan persamaan pertama
+          $(-2-x)b_1=0$, dengan dua kasus $b_1=0$ atau $x=-2$.
+          Jadi, pada kemungkinan pertama ini kita memperoleh $x=-2$ dan vektor-
+          vektor terkait yang komponen keduanya nol, sedangkan komponen
+          pertamanya bebas.
+          \begin{equation*}
+            \begin{mat}[r]
+              -2  &1  \\
+               0  &2
+            \end{mat}
+            \colvec{b_1 \\ 0}
+            =-2\cdot\colvec{b_1 \\ 0}
+            \qquad
+            \vec{\beta}_1=\colvec[r]{1 \\ 0}
+          \end{equation*}
+          Mengikuti kemungkinan lainnya menghasilkan persamaan pertama
+          $-4b_1+b_2=0$. Jadi, vektor-vektor yang terkait dengan solusi ini
+          memiliki komponen kedua empat kali komponen pertamanya.
+          \begin{equation*}
+            \begin{mat}[r]
+              -2  &1  \\
+               0  &2
+            \end{mat}
+            \colvec{b_1 \\ 4b_1}
+            =2\cdot\colvec{b_1 \\ 4b_1}
+            \qquad
+            \vec{\beta}_2=\colvec{1 \\ 4}
+          \end{equation*}
+          Diagonalisasinya adalah
+          \begin{equation*}
+            \begin{mat}[r]
+              1  &1  \\
+              0  &4
+            \end{mat}^{-1}
+            \begin{mat}[r]
+              -2  &1  \\
+               0  &2
+            \end{mat}
+            \begin{mat}[r]
+              1  &1  \\
+              0  &4
+            \end{mat}
+            =
+            \begin{mat}[r]
+              -2  &0  \\
+               0  &2
+            \end{mat}
+          \end{equation*}
+      \partsitem Perhitungannya serupa dengan bagian sebelumnya.
+          \begin{equation*}
+            \begin{mat}[r]
+               5  &4  \\
+               0  &1
+            \end{mat}
+            \colvec{b_1 \\ b_2}
+            =x\cdot\colvec{b_1 \\ b_2}
+            \qquad\Longrightarrow\qquad 
+            \begin{linsys}{2}
+               (5-x)\cdot b_1  &+  &4\cdot b_2     &=  &0  \\
+                               &   &(1-x)\cdot b_2 &=  &0
+            \end{linsys}
+          \end{equation*}
+          Persamaan terbawah memberikan dua kemungkinan, yaitu $b_2=0$ atau
+          $x=1$.
+          Mengikuti kemungkinan $b_2=0$ dan menyingkirkan kasus ketika $b_2$
+          dan $b_1$ sama-sama nol memberikan $x=5$, yang terkait dengan vektor-
+          vektor yang komponen keduanya nol dan komponen pertamanya bebas.
+          \begin{equation*}
+            \vec{\beta}_1=\colvec[r]{1 \\ 0}
+          \end{equation*}
+          Kemungkinan $x=1$ memberikan persamaan pertama $4b_1+4b_2=0$.
+          Jadi, vektor-vektor terkait memiliki komponen kedua yang merupakan
+          negatif komponen pertamanya.
+          \begin{equation*}
+            \vec{\beta}_2=\colvec[r]{1 \\ -1}
+          \end{equation*}
+          Dengan demikian, diperoleh diagonalisasi berikut.
+          \begin{equation*}
+            \begin{mat}[r]
+              1  &1  \\
+              0  &-1
+            \end{mat}
+            \begin{mat}[r]
+               5  &4  \\
+               0  &1
+            \end{mat}
+            \begin{mat}[r]
+              1  &1  \\
+              0  &-1
+            \end{mat}^{-1}
+            =
+            \begin{mat}[r]
+               5  &0  \\
+               0  &1
+            \end{mat}
+          \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \item Jika kita mencoba mendiagonalkan matriks pada
+    \nearbyexample{ex:MatrixNotDiagonalizable},
+    \begin{equation*}
+       N=\begin{mat}[r]
+            0  &0  \\
+            1  &0
+         \end{mat}
+    \end{equation*}
+    menggunakan metode pada \nearbyexample{ex:DiagUpperTrian}, apa yang gagal?
+    \begin{exparts}
+      \partsitem Gambarkan diagram keserupaan dengan $N$.
+      \partsitem Susun persamaan matriks-vektor yang dideskripsikan dalam
+         \nearbylemma{lm:DiagIffBasisOfEigens}, lalu tulis ulang sebagai sistem
+         linear.
+      \partsitem Dengan meninjau solusi sistem tersebut, temukan masalahnya.
+         (Tinjau secara terpisah kasus $x=0$ dan $x\neq 0$.)
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \item Dalam diagram keserupaan berikut,
+          \begin{equation*}
+            \begin{CD}
+            \C^2_{\wrt{\stdbasis_2}}                   
+               @>n>N>        
+               \C^2_{\wrt{\stdbasis_2}}       \\
+            @V{\scriptstyle\identity} VV                
+               @V{\scriptstyle\identity} VV \\
+            \C^2_{\wrt{B}}         
+               @>n>D>        
+               \C^2_{\wrt{B}}
+           \end{CD}
+          \end{equation*}
+          kita akan mencoba menghitung matriks~$D$ dan mencari basis~$B$ yang
+          sesuai dengan menelusuri jalur dari kiri bawah ke kiri atas, lalu ke
+          kanan atas, dan akhirnya ke kanan bawah.
+        \item Diagram menunjukkan bahwa bagi
+          $B=\sequence{\vec{\beta}_1,\vec{\beta}_2}$, kita menginginkan
+          $n(\vec{\beta}_1)=\lambda_1\vec{\beta}_1$ dan
+          $n(\vec{\beta}_2)=\lambda_2\vec{\beta}_2$.
+          Untuk menentukan $\lambda_1$ dan $\lambda_2$, ketika matriks~$N$
+          merepresentasikan pemetaan terhadap basis standar, kita ingin mencari
+          solusi sistem berikut.
+          \begin{equation*}
+            \begin{mat}
+              0 &0 \\
+              1 &0
+            \end{mat}
+            \colvec{b_1 \\ b_2}
+            =
+            x\cdot\colvec{b_1 \\ b_2}           
+          \end{equation*}
+          Sistem linear ekuivalennya
+          \begin{equation*}
+            \begin{linsys}{2}
+              0b_1 &+  &0b_2 &= &xb_1 \\
+              b_1  &+  &0b_2 &= &xb_2 \\
+            \end{linsys}
+            \qquad
+            \Longrightarrow
+            \qquad
+            \begin{linsys}{2}
+              -xb_1 &   &     &= &0 \\
+              b_1   &-  &xb_2 &= &0 \\
+            \end{linsys}
+          \end{equation*}
+          Menurut baris pertama, $x=0$ atau~$b_1=0$.
+          Jika $x=0$, persamaan kedua menjadi $b_1-0=0$, sehingga $b_1=0$ dan
+          kita memperoleh himpunan solusi berikut.
+          \begin{equation*}
+            \set{\colvec{0 \\ 1}b_2 \suchthat b_2\in\C}
+          \end{equation*}
+          Kita dapat mengambil anggota pertama basis sebagai
+          $\vec{\beta}_1=\vec{e}_2$.
+
+          Jika $x\neq 0$, persamaan pertama sistem linear memberikan $b_1=0$.
+          Baris pertama sistem menjadi $0=0$, sedangkan baris kedua menjadi
+          $-xb_2=0$.
+          Karena kasus ini mengambil $x\neq 0$, kita memperoleh $b_2=0$ dan
+          himpunan solusinya trivial.
+          \begin{equation*}
+            \set{\colvec{0 \\ 0}}
+          \end{equation*}
+          Jadi, masalahnya adalah bahwa kita tidak memperoleh basis yang
+          disyaratkan oleh \nearbylemma{lm:DiagIffBasisOfEigens}.
+      \end{exparts}
+    \end{answer}
+  \recommended \item \label{exer:PowersOfDiags}
+    Apa bentuk pangkat-pangkat suatu matriks diagonal?
+    \begin{answer}
+      Bagi setiap bilangan bulat tak negatif \( p \), berlaku
+      \begin{equation*}
+        \begin{mat}
+          d_1  &0      &   \\
+          0    &\ddots &   \\
+               &       &d_n
+        \end{mat}^p=
+        \begin{mat}
+          d_1^p  &0      &   \\
+          0      &\ddots &   \\
+                 &       &d_n^p
+        \end{mat}
+     \end{equation*}
+     Rumus yang sama berlaku bagi \( p<0 \) jika dan hanya jika semua
+     $d_i\neq0$, sehingga matriks diagonal tersebut dapat diinverskan.
+    \end{answer}
+  \item 
+     Berikan dua matriks diagonal berukuran sama yang tidak serupa.
+     Apakah sebarang dua matriks diagonal berbeda harus berasal dari kelas
+     keserupaan yang berbeda?
+     \begin{answer}
+       Kedua matriks berikut tidak serupa,
+       \begin{equation*}
+          \begin{mat}[r]
+             0  &0  \\
+             0  &0
+          \end{mat}
+          \qquad
+          \begin{mat}[r]
+             1  &0  \\
+             0  &1
+          \end{mat}
+       \end{equation*}
+       karena masing-masing merupakan satu-satunya anggota kelas keserupaannya.
+
+       Untuk pertanyaan kedua, matriks-matriks berikut
+       \begin{equation*}
+          \begin{mat}[r]
+             2  &0  \\
+             0  &3
+          \end{mat}
+          \qquad
+          \begin{mat}[r]
+             3  &0  \\
+             0  &2
+          \end{mat}
+       \end{equation*}
+       serupa melalui matriks yang mengubah basis dari
+       \( \sequence{\vec{\beta}_1,\vec{\beta}_2} \) menjadi
+       \( \sequence{\vec{\beta}_2,\vec{\beta}_1} \).
+       (\textit{Pertanyaan.}
+        Apakah dua matriks diagonal serupa jika dan hanya jika entri-entri
+        diagonalnya merupakan permutasi satu sama lain?)
+    \end{answer}
+  \item 
+    Berikan suatu matriks diagonal nonsingular.
+    Dapatkah matriks diagonal bersifat singular?
+    \begin{answer}
+      Bandingkan kedua matriks berikut.
+      \begin{equation*}
+         \begin{mat}[r]
+           2  &0  \\
+           0  &1
+         \end{mat}
+         \qquad
+         \begin{mat}[r]
+           2  &0  \\
+           0  &0
+         \end{mat}
+      \end{equation*}
+      Matriks pertama nonsingular, sedangkan matriks kedua singular.
+     \end{answer}
+  \recommended \item
+    Tunjukkan bahwa invers suatu matriks diagonal adalah matriks diagonal dari
+    invers setiap entrinya, jika tidak ada entri diagonal yang nol.
+    Apa yang terjadi ketika suatu entri diagonal bernilai nol?
+    \begin{answer}  
+       Untuk memeriksa bahwa invers matriks diagonal adalah matriks diagonal
+       dari invers setiap entrinya, kalikan saja.
+       \begin{equation*}
+          \begin{mat}
+             a_{1,1}  &0                \\
+             0        &a_{2,2}          \\
+                      &       &\ddots    \\
+                      &       &      &a_{n,n}
+          \end{mat}
+           \begin{mat}
+             1/a_{1,1}  &0                \\
+              0        &1/a_{2,2}          \\
+                       &       &\ddots    \\
+                       &       &      &1/a_{n,n}
+           \end{mat}
+           =I
+      \end{equation*}
+      (Menunjukkan bahwa matriks itu merupakan invers kiri sama mudahnya.)
+
+      Jika suatu entri diagonal nol, matriks diagonal tersebut singular;
+      determinannya nol.
+    \end{answer}
+  \item 
+    Persamaan pada akhir \nearbyexample{ex:DiagUpperTrian},
+    \begin{equation*}
+       \begin{mat}[r]
+         1  &1  \\
+         0  &-1
+       \end{mat}^{-1}
+       \begin{mat}[r]
+         3  &2  \\
+         0  &1
+       \end{mat}
+       \begin{mat}[r]
+         1  &1  \\
+         0  &-1
+       \end{mat}
+       =
+       \begin{mat}[r]
+         3  &0  \\
+         0  &1
+       \end{mat}
+    \end{equation*}
+    tampak agak mengusik karena sebagai $P$ kita harus mengambil matriks
+    pertama, yang ditampilkan sebagai suatu invers, sedangkan sebagai $P^{-1}$
+    kita mengambil invers matriks pertama. Akibatnya, kedua pangkat $-1$ saling
+    meniadakan dan matriks ini ditampilkan tanpa superskrip $-1$.
+    \begin{exparts}
+      \partsitem Periksa bahwa persamaan yang tampak lebih rapi berikut berlaku.
+        \begin{equation*}
+           \begin{mat}[r]
+             3  &0  \\
+             0  &1
+           \end{mat}
+           =
+           \begin{mat}[r]
+             1  &1  \\
+             0  &-1
+           \end{mat}
+           \begin{mat}[r]
+             3  &2  \\
+             0  &1
+           \end{mat}
+           \begin{mat}[r]
+             1  &1  \\
+             0  &-1
+           \end{mat}^{-1}
+        \end{equation*}
+      \partsitem Apakah butir sebelumnya hanya kebetulan?
+        Ataukah kita selalu dapat menukar $P$ dan $P^{-1}$?
+   \end{exparts}
+   \begin{answer}
+     \begin{exparts}
+       \partsitem Pemeriksaannya mudah.
+         \begin{equation*}
+           \begin{mat}[r]
+             1  &1  \\
+             0  &-1
+           \end{mat}
+           \begin{mat}[r]
+             3  &2  \\
+             0  &1
+           \end{mat}
+           =
+           \begin{mat}[r]
+             3  &3  \\
+             0  &-1
+           \end{mat}
+           \qquad
+           \begin{mat}[r]
+             3  &3  \\
+             0  &-1
+           \end{mat}
+           \begin{mat}[r]
+             1  &1  \\
+             0  &-1
+           \end{mat}^{-1}
+           =
+           \begin{mat}[r]
+             3  &0  \\
+             0  &1
+           \end{mat}
+         \end{equation*}
+        \partsitem Hal itu merupakan kebetulan, dalam arti bahwa jika
+          $T=PSP^{-1}$, belum tentu $T=P^{-1}SP$.
+          Bahkan dalam kasus matriks diagonal~$D$, syarat $D=PTP^{-1}$ tidak
+          menyiratkan bahwa $D=P^{-1}TP$.
+          Matriks-matriks dari \nearbyexample{ex:DiagTwoByTwo} menunjukkannya.
+          \begin{equation*}
+            \begin{mat}[r]
+              1  &2  \\
+              1  &1
+            \end{mat}
+            \begin{mat}[r]
+              4  &-2  \\
+              1  &1
+            \end{mat}
+            =
+            \begin{mat}[r]
+              6  &0  \\
+              5  &-1
+            \end{mat}
+            \qquad
+            \begin{mat}[r]
+              6  &0  \\
+              5  &-1
+            \end{mat}
+            \begin{mat}[r]
+              1  &2  \\
+              1  &1
+            \end{mat}^{-1}
+            =
+            \begin{mat}[r]
+              -6  &12  \\
+              -6  &11
+            \end{mat}
+          \end{equation*}
+     \end{exparts}
+   \end{answer}
+  \item 
+    Tunjukkan bahwa $P$ yang digunakan untuk mendiagonalkan dalam
+    \nearbyexample{ex:DiagUpperTrian} tidak unik.
+    \begin{answer}
+      Kolom-kolom matriks tersebut adalah vektor-vektor yang terkait dengan
+      nilai-nilai $x$.
+      Pilihan tepatnya dan urutan pilihan tersebut bersifat sebarang.
+      Sebagai contoh, kita dapat memperoleh matriks berbeda dengan menukar kedua
+      kolomnya.
+    \end{answer}
+  \item 
+    Cari rumus bagi pangkat-pangkat matriks berikut.
+    \textit{Petunjuk}:~lihat \nearbyexercise{exer:PowersOfDiags}.
+    \begin{equation*}
+      \begin{mat}[r]
+        -3  &1  \\
+        -4  &2
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Mendiagonalkan lalu mengambil pangkat matriks diagonal menunjukkan bahwa
+      \begin{equation*}
+        \begin{mat}[r]
+          -3  &1  \\
+          -4  &2
+        \end{mat}^k
+        =
+        \frac{1}{3}
+        \begin{mat}[r]
+          -1  &1  \\
+          -4  &4
+        \end{mat}
+        +\frac{(-2)^k}{3}
+        \begin{mat}[r]
+           4  &-1 \\
+           4  &-1
+        \end{mat}.
+      \end{equation*}  
+     \end{answer}
+  \item 
+    Kita dapat bertanya bagaimana diagonalisasi berinteraksi dengan operasi
+    matriks.
+    Andaikan \( \map{t,s}{V}{V} \) masing-masing dapat didiagonalkan.
+    Apakah \( ct \) dapat didiagonalkan bagi setiap skalar \( c \)?
+    Bagaimana dengan \( t+s \)?
+    \( \composed{t}{s} \)?
+    \begin{answer}
+      Ya, \( ct \) dapat didiagonalkan menurut teorema terakhir subbagian ini.
+
+      Tidak, \( t+s \) belum tentu dapat didiagonalkan.
+      Secara intuitif, masalah muncul ketika kedua pemetaan dapat didiagonalkan
+      terhadap basis berbeda (artinya, ketika keduanya tidak
+      \definend{dapat didiagonalkan secara simultan}).
+      Secara khusus, kedua matriks berikut dapat didiagonalkan, tetapi jumlahnya
+      tidak:
+      \begin{equation*}
+         \begin{mat}[r]
+            1  &1  \\
+            0  &0
+         \end{mat}
+         \qquad
+         \begin{mat}[r]
+           -1  &0  \\
+            0  &0
+         \end{mat}
+      \end{equation*}
+      (matriks kedua sudah diagonal; bagi matriks pertama, lihat
+      \nearbyexercise{exer:DiagTheseA}).
+      Jumlahnya tidak dapat didiagonalkan karena kuadratnya merupakan matriks
+      nol.
+
+     Intuisi yang sama menunjukkan bahwa \( \composed{t}{s} \) belum tentu
+     dapat didiagonalkan.
+     Kedua matriks berikut dapat didiagonalkan, tetapi hasil kalinya tidak:
+     \begin{equation*}
+        \begin{mat}[r]
+           1  &0  \\
+           0  &0
+        \end{mat}
+        \qquad
+        \begin{mat}[r]
+           0  &1  \\
+           1  &0
+        \end{mat}
+     \end{equation*}
+     (bagi matriks kedua, lihat \nearbyexercise{exer:DiagTheseB}).
+    \end{answer}
+  \item 
+    Tunjukkan bahwa matriks-matriks berbentuk berikut tidak dapat didiagonalkan.
+    \begin{equation*}
+       \begin{mat}[r]
+          1  &c  \\
+          0  &1
+       \end{mat}
+       \qquad c\neq 0
+    \end{equation*}
+    \begin{answer}
+      Andaikan
+      \begin{equation*}
+         P
+         \begin{mat}
+            1  &c  \\
+            0  &1
+         \end{mat}
+         P^{-1}
+         =
+         \begin{mat}
+            a  &0  \\
+            0  &b
+         \end{mat}
+      \end{equation*}
+      maka
+      \begin{equation*}
+         P
+         \begin{mat}
+            1  &c  \\
+            0  &1
+         \end{mat}
+         =
+         \begin{mat}
+            a  &0  \\
+            0  &b
+         \end{mat}
+         P
+      \end{equation*}
+      sehingga
+      \begin{align*}
+         \begin{mat}
+            p  &q  \\
+            r  &s
+         \end{mat}
+         \begin{mat}
+            1  &c  \\
+            0  &1
+         \end{mat}
+         &=
+         \begin{mat}
+            a  &0  \\
+            0  &b
+         \end{mat}
+         \begin{mat}
+            p  &q  \\
+            r  &s
+         \end{mat}        \\
+         \begin{mat}
+            p  &cp+q  \\
+            r  &cr+s
+         \end{mat}
+         &=
+         \begin{mat}
+            ap  &aq  \\
+            br  &bs
+         \end{mat}
+      \end{align*}
+      Kolom pertama $P$ tidak nol karena $P$ dapat diinverskan.
+      Jika \( p\neq0 \), kesamaan entri \( 1,1 \) memberikan \( a=1 \), lalu
+      kesamaan entri \( 1,2 \) memberikan \( pc=0 \), yang bertentangan dengan
+      \( p\neq0 \) dan \( c\neq0 \).
+      Jika \( r\neq0 \), kesamaan entri \( 2,1 \) memberikan \( b=1 \), lalu
+      kesamaan entri \( 2,2 \) memberikan \( rc=0 \), yang juga bertentangan
+      dengan \( r\neq0 \) dan \( c\neq0 \).
+      Jadi, baik \( p\neq0 \) maupun \( r\neq0 \) mustahil, sehingga kolom
+      pertama $P$ nol. Ini bertentangan dengan keterbalikan $P$.
+     \end{answer}
+  \item 
+    Tunjukkan bahwa masing-masing matriks berikut dapat didiagonalkan.
+    \begin{exparts*}
+      \partsitem
+       \( \begin{mat}[r]
+             1  &2  \\
+             2  &1
+          \end{mat}  \)
+      \partsitem
+       \( \begin{mat}
+             x  &y  \\
+             y  &z
+           \end{mat}
+           \qquad \text{$x,y,z\in\Re$}  \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+      \partsitem Menggunakan rumus invers matriks $\nbyn{2}$ memberikan
+        \begin{multline*}
+           \begin{mat}
+              a  &b  \\
+              c  &d
+           \end{mat}
+           \begin{mat}[r]
+              1  &2  \\
+              2  &1
+           \end{mat}
+           \cdot\frac{1}{ad-bc}\cdot
+           \begin{mat}
+              d  &-b \\
+             -c  &a
+           \end{mat}                                  \\
+           =\frac{1}{ad-bc}
+           \begin{mat}
+              ad+2bd-2ac-bc    &-ab-2b^2+2a^2+ab \\
+              cd+2d^2-2c^2-cd  &-bc-2bd+2ac+ad
+           \end{mat}
+        \end{multline*}
+        Sekarang pilih skalar \( a,\ldots,d \) sedemikian sehingga
+        \( ad-bc\neq 0 \), \( 2d^2-2c^2=0 \), dan \( 2a^2-2b^2=0 \).
+        Sebagai contoh, pilihan berikut memenuhi.
+        \begin{equation*}
+          \begin{mat}[r]
+            1  &1  \\
+            1  &-1
+          \end{mat}
+          \begin{mat}[r]
+            1  &2  \\
+            2  &1
+          \end{mat}
+          \cdot\frac{1}{-2}\cdot
+          \begin{mat}[r]
+            -1  &-1  \\
+            -1  &1
+          \end{mat}
+          =
+          \frac{1}{-2}
+          \begin{mat}[r]
+            -6  &0   \\
+             0  &2
+          \end{mat}
+        \end{equation*}
+      \partsitem Seperti di atas,
+        \begin{multline*}
+           \begin{mat}
+              a  &b  \\
+              c  &d
+           \end{mat}
+           \begin{mat}
+              x  &y  \\
+              y  &z
+           \end{mat}
+           \cdot\frac{1}{ad-bc}\cdot
+           \begin{mat}
+              d  &-b \\
+             -c  &a
+           \end{mat}                               \\
+           =\frac{1}{ad-bc}
+           \begin{mat}
+              adx+bdy-acy-bcz    &-abx-b^2y+a^2y+abz \\
+              cdx+d^2y-c^2y-cdz  &-bcx-bdy+acy+adz
+           \end{mat}
+        \end{multline*}
+        kita mencari skalar \( a,\ldots,d \) sedemikian sehingga
+        \( ad-bc\neq 0 \) dan
+        \( -abx-b^2y+a^2y+abz=0 \)
+        dan \( cdx+d^2y-c^2y-cdz=0 \), berapa pun nilai \( x \), \( y \), dan
+        \( z \).
+
+        Mula-mula, andaikan \( y\neq 0 \); jika tidak, matriks yang diberikan
+        sudah diagonal.
+        Kita akan menggunakan asumsi tersebut karena jika secara sebarang kita
+        mengambil \( a=1 \), diperoleh
+        \begin{align*}
+           -bx-b^2y+y+bz
+           &=0              \\
+           (-y)b^2+(z-x)b+y
+           &=0
+        \end{align*}
+        dan rumus kuadrat memberikan
+        \begin{equation*}
+           b=\frac{-(z-x)\pm\sqrt{(z-x)^2-4(-y)(y)} }{-2y}
+           \qquad
+           y\neq 0
+        \end{equation*}
+        (kedua nilai \( b \) ini real karena diskriminannya positif).
+        Dengan cara yang sama, jika secara sebarang kita mengambil \( c=1 \),
+        maka
+        \begin{align*}
+           dx+d^2y-y-dz
+           &=0              \\
+           (y)d^2+(x-z)d-y
+           &=0
+        \end{align*}
+        dan diperoleh
+        \begin{equation*}
+           d=\frac{-(x-z)\pm\sqrt{(x-z)^2-4(y)(-y)} }{2y}
+           \qquad
+           y\neq 0
+        \end{equation*}
+        (seperti di atas, diskriminan ini positif, sehingga matriks simetris real
+        \( \nbyn{2} \) serupa dengan suatu matriks diagonal real).
+
+        Sebagai pemeriksaan, coba \( x=1 \), \( y=2 \), dan \( z=1 \).
+        \begin{equation*}
+           b=\frac{0\pm\sqrt{0+16} }{-4}=\mp 1
+           \qquad
+           d=\frac{0\pm\sqrt{0+16} }{4}=\pm 1
+        \end{equation*}
+        Perhatikan bahwa tidak semua dari empat pilihan
+        \( (b,d)=(+1,+1),\dots,(-1,-1) \) memenuhi \( ad-bc\neq 0 \).
+      \end{exparts} 
+    \end{answer}
+\index{dapat didiagonalkan|)}
+\end{exercises}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Nilai Eigen dan Vektor Eigen}
+Selanjutnya kita akan memusatkan perhatian pada
+sifat dalam \nearbylemma{lm:DiagIffBasisOfEigens}.
+
+\begin{definition} \label{def:Eigen}
+%<*df:Eigen>
+Suatu transformasi \( \map{t}{V}{V} \) memiliki skalar
+\definend{nilai eigen}\index{nilai eigen, vektor eigen!transformasi}%
+\index{transformasi!nilai eigen, vektor eigen}
+\( \lambda \)
+jika terdapat \definend{vektor eigen} tak nol \( \vec{\zeta}\in V \)
+sedemikian sehingga
+$
+  t(\vec{\zeta})=\lambda\cdot\vec{\zeta}
+$.
+%</df:Eigen>
+\end{definition}
+
+\noindent Dalam bahasa Jerman, ``eigen'' berarti ``ciri khas dari'' atau
+``khusus bagi.''
+Sebagian penulis menyebutnya nilai dan vektor \definend{karakteristik}%
+\index{karakteristik!vektor, nilai}.
+Tidak ada penulis yang menyebutnya vektor ``aneh.''
+
+\begin{example}
+Pemetaan proyeksi
+\begin{equation*}
+  \colvec{x \\ y \\ z}
+     \mapsunder{\pi}
+  \colvec{x \\ y \\ 0}
+   \qquad x,y,z\in\C
+\end{equation*}
+memiliki nilai eigen \( 1 \), yang terkait dengan setiap vektor eigen
+\begin{equation*}
+   \colvec{x \\ y \\ 0}
+\end{equation*}
+di mana \( x \) dan \( y \) adalah skalar yang tidak keduanya nol.
+
+Sebaliknya, salah satu bilangan yang bukan nilai eigen pemetaan ini adalah
+\( 2 \), sebab anggapan bahwa $\pi$ menggandakan suatu vektor menghasilkan
+tiga persamaan $x=2x$, $y=2y$, dan $0=2z$, sehingga tidak ada vektor
+tak-$\zero$ yang digandakan.
+\end{example}
+
+Perhatikan bahwa definisi tersebut mensyaratkan vektor eigen
+tak-$\zero$.
+Sebagian penulis memperbolehkan $\zero$ sebagai vektor eigen untuk
+$\lambda$ selama ada pula vektor tak-$\zero$ yang terkait dengan
+$\lambda$.
+Hal pokoknya ialah mengecualikan kasus trivial ketika $\lambda$ sedemikian
+sehingga $t(\vec{v})=\lambda\vec{v}$ hanya bagi satu-satunya vektor
+$\vec{v}=\zero$.
+
+Perhatikan pula bahwa nilai eigen $\lambda$ boleh saja~$0$.
+Yang menjadi persoalan ialah apakah $\vec{\zeta}$ sama dengan $\zero$.  
+
+\begin{example}  \label{ex:NoEigenOnTrivSp}
+Satu-satunya transformasi pada ruang trivial \( \set{\zero} \) adalah
+%\begin{equation*}
+$\zero\mapsto\zero$.
+%\end{equation*}
+Pemetaan ini tidak memiliki nilai eigen karena tidak ada vektor
+tak-\( \zero \) $\vec{v}$ yang dipetakan ke kelipatan skalarnya sendiri,
+$\lambda\cdot\vec{v}$.
+\end{example}        
+
+\begin{example} \label{ex:TransPolyOne}
+Perhatikan homomorfisma \( \map{t}{\polyspace_1}{\polyspace_1} \)
+yang diberikan oleh \( c_0+c_1x\mapsto(c_0+c_1)+(c_0+c_1)x \).
+Meskipun kodomain $\polyspace_1$ dari $t$ berdimensi dua, daerah hasilnya
+berdimensi satu, $\rangespace{t}=\set{c+cx\suchthat c\in\C}$.
+Penerapan \( t \) pada suatu vektor dalam daerah hasil itu hanya akan
+menskalakan ulang vektor tersebut,
+\( c+cx\mapsto (2c)+(2c)x \).
+Artinya, \( t \) memiliki nilai eigen \( 2 \) yang terkait dengan
+vektor-vektor eigen berbentuk \( c+cx \), dengan \( c\neq 0 \).
+
+Pemetaan ini juga memiliki nilai eigen \( 0 \) yang terkait dengan
+vektor-vektor eigen berbentuk \( c-cx \), dengan \( c\neq 0 \).
+\end{example}
+
+Definisi di atas berlaku untuk pemetaan.
+Kita dapat memberikan versi matriksnya.
+
+\begin{definition}  \label{df:EigenOfMatrix}
+%<*df:EigenOfMatrix>
+Matriks persegi \( T \) memiliki skalar
+\definend{nilai eigen}\index{nilai eigen, vektor eigen!matriks}
+\( \lambda \) yang terkait dengan
+\definend{vektor eigen} tak nol \( \vec{\zeta} \) jika
+\( T\vec{\zeta}=\lambda\cdot\vec{\zeta} \).
+%</df:EigenOfMatrix>
+\end{definition}
+
+Perluasan definisi dari pemetaan ke matriks ini wajar, tetapi ada satu hal
+yang harus diperhatikan.
+Nilai eigen suatu pemetaan juga merupakan nilai eigen matriks-matriks yang
+merepresentasikan pemetaan tersebut, sehingga matriks-matriks yang serupa
+memiliki nilai eigen yang sama.
+Namun, vektor eigennya dapat berbeda\Dash matriks-matriks yang serupa tidak
+harus memiliki vektor eigen yang sama.
+Contoh berikut menjelaskannya.
+
+\begin{example}
+Matriks-matriks ini serupa,
+\begin{equation*}
+  T=
+  \begin{mat}
+    2  &0  \\
+    0  &0
+  \end{mat}
+  \quad
+  \hat{T}
+  =
+  \begin{mat}[r]
+    4  &-2  \\
+    4  &-2
+  \end{mat}
+\end{equation*}
+karena $\hat{T}=PTP^{-1}$ untuk $P$ berikut.
+\begin{equation*}
+  P=
+  \begin{mat}
+    1  &1  \\
+    1  &2
+  \end{mat}
+  \quad
+  P^{-1}=
+  \begin{mat}[r]
+    2   &-1  \\
+    -1  &1
+  \end{mat}
+\end{equation*}
+Matriks $T$ memiliki dua nilai eigen, $\lambda_1=2$ dan~$\lambda_2=0$.
+Nilai yang pertama terkait dengan vektor eigen berikut.
+\begin{equation*}
+  T\vec{e}_1=
+  \begin{mat}
+    2  &0  \\
+    0  &0
+  \end{mat}
+  \colvec{1 \\ 0}
+  =\colvec{2 \\ 0}
+  =2\vec{e}_1
+\end{equation*}
+Misalkan $T$ merepresentasikan suatu transformasi
+$\map{t}{\C^2}{\C^2}$ terhadap basis standar.
+Maka aksi transformasi $t$ ini sederhana.
+\begin{equation*}
+  \colvec{x \\ y}\mapsunder{t}\colvec{2x \\ 0}
+\end{equation*}
+
+Tentu saja, $\hat{T}$ merepresentasikan transformasi yang sama, tetapi
+terhadap basis lain, yaitu~$B$.
+Kita dapat mencari basis ini.
+Dengan menelusuri diagram panah dari kiri bawah ke kiri atas,
+\begin{equation*}
+  \begin{CD}
+    V_{\wrt{\stdbasis_2}}            @>t>T>        V_{\wrt{\stdbasis_2}}       \\
+    @V{\scriptstyle\identity} VV              @V{\scriptstyle\identity} VV \\
+    V_{\wrt{B}}                   @>t>\hat{T}>        V_{\wrt{B}}       
+  \end{CD}
+\end{equation*}
+terlihat bahwa $P^{-1}=\rep{\identity}{B,\stdbasis_2}$.
+Menurut definisi representasi matriks suatu pemetaan, kolom pertamanya adalah
+$\rep{\identity(\vec{\beta}_1)}{\stdbasis_2}=\rep{\vec{\beta}_1}{\stdbasis_2}$.
+Terhadap basis standar, setiap vektor direpresentasikan oleh dirinya sendiri,
+sehingga unsur basis pertama $\vec{\beta}_1$ adalah kolom pertama $P^{-1}$.
+Hal yang sama berlaku bagi unsur yang lain.
+\begin{equation*}
+  B=\sequence{\colvec[r]{2 \\ -1},
+              \colvec[r]{-1 \\ 1}
+              }
+\end{equation*}
+Karena matriks $T$ dan~$\hat{T}$ sama-sama merepresentasikan
+transformasi~$t$, keduanya mencerminkan aksi
+$t(\vec{e}_1)=2\vec{e}_1$.
+\begin{align*}
+  &\rep{t}{\stdbasis_2,\stdbasis_2}\cdot\rep{\vec{e}_1}{\stdbasis_2}
+    =T\cdot\rep{\vec{e}_1}{\stdbasis_2}                
+    =2\cdot\rep{\vec{e}_1}{\stdbasis_2}                  \\               
+    &\rep{t}{B,B}\cdot\rep{\vec{e}_1}{B}
+    =\hat{T}\cdot\rep{\vec{e}_1}{B}                                 
+    =2\cdot\rep{\vec{e}_1}{B}  
+\end{align*}
+Walaupun nilai eigen $2$ pada kedua persamaan tersebut sama, representasi
+vektornya berbeda.
+\begin{align*}
+    T\cdot\rep{\vec{e}_1}{\stdbasis_2}
+    =T\colvec{1 \\ 0}
+    &=2\cdot\colvec{1 \\ 0}                \\
+    \hat{T}\cdot\rep{\vec{e}_1}{B}  
+    =\hat{T}\cdot\colvec{1 \\ 1}
+    &=2\cdot\colvec{1 \\ 1}
+\end{align*}
+Artinya, ketika matriks yang merepresentasikan transformasi adalah
+\( T=\rep{t}{\stdbasis_2,\stdbasis_2} \), matriks itu ``menganggap''
+vektor-vektor kolom sebagai representasi terhadap \( \stdbasis_2 \).
+Namun, \( \hat{T}=\rep{t}{B,B} \) ``menganggap'' vektor-vektor kolom
+sebagai representasi terhadap \( B \), sehingga vektor-vektor kolom yang
+digandakan pun berbeda.
+\end{example}
+
+
+% \begin{example}
+% Consider again the transformation \( \map{t}{\polyspace_1}{\polyspace_1} \) 
+% % from \nearbyexample{ex:TransPolyOne} 
+% given by
+% \( c_0+c_1x\mapsto (c_0+c_1)+(c_0+c_1)x \).
+% One of its eigenvalues is \( 2 \), associated with the eigenvectors
+% \( c+cx \) where \( c\neq 0 \).
+% If we represent \( t \) with respect to \( B=\sequence{1+1x,1-1x} \)
+% \begin{equation*}
+%    T=\rep{t}{B,B}=
+%    \begin{mat}[r]
+%       2  &0  \\
+%       0  &0
+%    \end{mat}
+% \end{equation*}
+% then \( 2 \) is an eigenvalue of the matrix \( T \), 
+% associated with these eigenvectors.
+% \begin{equation*}
+%    \set{\colvec{c_0 \\ c_1}\suchthat \begin{mat}[r]
+%                                          2  &0  \\
+%                                          0  &0
+%                                       \end{mat}\colvec{c_0 \\ c_1}
+%                                       =\colvec{2c_0 \\ 2c_1}  }
+%   =\set{\colvec{c_0 \\ 0}\suchthat c_0\in\C,\, c_0\neq 0 }
+% \end{equation*}
+% On the other hand, if we represent $t$ with respect to
+% \( D=\sequence{2+1x,1+0x} \)  
+% \begin{equation*}
+%    S=\rep{t}{D,D}=
+%    \begin{mat}[r]
+%       3  &1  \\
+%      -3  &-1
+%    \end{mat}
+% \end{equation*}
+% then the eigenvectors associated with the eigenvalue \( 2 \) are
+% these.
+% \begin{equation*}
+%    \set{\colvec{c_0 \\ c_1}\suchthat \begin{mat}[r]
+%                                          3  &1  \\
+%                                         -3  &-1
+%                                       \end{mat}\colvec{c_0 \\ c_1}
+%                                       =\colvec{2c_0 \\ 2c_1}  }
+%   =\set{\colvec{0 \\ c_1}\suchthat c_1\in\C,\, c_1\neq 0 }
+% \end{equation*}
+% \end{example}
+
+
+Berikutnya kita akan melihat alat dasar untuk mencari vektor eigen dan
+nilai eigen.
+
+\begin{example}  \label{ex:IntroCharEqn}
+Jika
+\begin{equation*}
+  T=
+  \begin{mat}[r]
+     1    &2    &1    \\
+     2    &0    &-2   \\
+    -1    &2    &3
+  \end{mat}
+\end{equation*}
+maka, untuk mencari skalar \( x \) sedemikian sehingga
+\( T\vec{\zeta}=x\vec{\zeta} \) bagi vektor eigen tak nol
+\( \vec{\zeta} \), pindahkan semua suku ke ruas kiri,
+\begin{equation*}
+  \begin{mat}[r]
+     1    &2    &1    \\
+     2    &0    &-2   \\
+    -1    &2    &3
+  \end{mat}
+  \colvec{z_1 \\ z_2 \\ z_3}
+  -x\colvec{z_1 \\ z_2 \\ z_3}
+  =\zero
+\end{equation*}
+dan faktorkan menjadi
+\( (T-x I)\vec{\zeta}=\zero \).
+(Perhatikan bahwa bentuknya adalah $T-xI$.
+Ekspresi \( T-x \) tidak bermakna karena \( T \) adalah matriks,
+sedangkan \( x \) adalah skalar.)
+Sistem linear homogen ini
+\begin{equation*}
+  \begin{mat}
+   1-x           &2            &1            \\
+     2           &0-x          &-2           \\
+    -1           &2            &3-x
+  \end{mat}
+  \colvec{z_1 \\ z_2 \\ z_3}
+  =
+  \colvec[r]{0 \\ 0 \\ 0}
+\end{equation*}
+memiliki penyelesaian tak nol $\vec{z}$ jika dan hanya jika matriksnya
+singular.
+Kita dapat menentukan kapan hal itu terjadi.
+\begin{align*}
+  0
+  &=\deter{T-x I}                                               \\
+  &=\begin{vmatrix}
+     1-x          &2            &1            \\
+     2           &0-x          &-2           \\
+    -1           &2            &3-x
+   \end{vmatrix}                                       \\
+  &=-x^3+4x^2-4x  \\
+  &=-x(x-2)^2
+\end{align*}
+Nilai eigennya adalah \( \lambda_1=0 \) dan \( \lambda_2=2 \).
+Untuk mencari vektor eigen yang terkait, substitusikan setiap nilai eigen.
+Substitusi $\lambda_1=0$ menghasilkan
+\begin{equation*}
+  \begin{mat}
+     1-0         &2            &1            \\
+     2           &0-0          &-2           \\
+    -1           &2            &3-0
+  \end{mat}
+  \colvec{z_1 \\ z_2 \\ z_3}
+  =
+  \colvec[r]{0 \\ 0 \\ 0}
+  \quad\Longrightarrow\quad
+  \colvec{z_1 \\ z_2 \\ z_3}
+  =
+  \colvec[r]{a \\ -a \\ a}
+\end{equation*}
+untuk \( a\neq 0 \)
+(\( a \) harus tak-$0$ karena vektor eigen didefinisikan sebagai
+vektor tak-\( \zero \)).
+Substitusi $\lambda_2=2$ menghasilkan
+\begin{equation*}
+  \begin{mat}
+     1-2         &2            &1            \\
+     2           &0-2          &-2           \\
+    -1           &2            &3-2
+  \end{mat}
+  \colvec{z_1 \\ z_2 \\ z_3}
+  =
+  \colvec[r]{0 \\ 0 \\ 0}
+  \quad\Longrightarrow\quad
+  \colvec{z_1 \\ z_2 \\ z_3}
+  =
+  \colvec{b \\ 0 \\ b}
+\end{equation*}
+dengan \( b\neq 0 \).
+\end{example}
+
+\begin{example} \label{ex:AnotherCharPoly}
+Jika
+\begin{equation*}
+  S=
+  \begin{mat}[r]
+    \pi      &1      \\
+    0        &3
+  \end{mat}
+\end{equation*}
+(di sini \( \pi \) bukan pemetaan proyeksi, melainkan bilangan
+\( 3.14\ldots \)), maka
+\begin{equation*}
+    \begin{vmat}
+      \pi-x &1         \\
+      0     &3-x
+    \end{vmat} 
+  =
+  (x-\pi)(x-3)
+\end{equation*}
+sehingga \( S \) memiliki nilai eigen \( \lambda_1=\pi \) dan
+\( \lambda_2=3 \).
+Untuk mencari vektor eigen yang terkait, mula-mula substitusikan
+$\lambda_1$ untuk $x$,
+\begin{equation*}
+  \begin{mat}
+    \pi-\pi     &1         \\
+    0           &3-\pi
+  \end{mat}
+  \colvec{z_1 \\ z_2}
+  =
+  \colvec[r]{0 \\ 0}
+  \qquad\Longrightarrow\qquad
+  \colvec{z_1 \\ z_2}
+  =
+  \colvec{a \\ 0}
+\end{equation*}
+untuk skalar \( a\neq 0 \).
+Kemudian substitusikan $\lambda_2$,
+\begin{equation*}
+  \begin{mat}
+    \pi-3       &1         \\
+    0           &3-3
+  \end{mat}
+  \colvec{z_1 \\ z_2}
+  =
+  \colvec[r]{0 \\ 0}
+  \qquad\Longrightarrow\qquad
+  \colvec{z_1 \\ z_2}
+  =
+  \colvec{-b/(\pi-3) \\ b}
+\end{equation*}
+di mana \( b\neq 0 \).
+\end{example}
+
+\begin{definition} \label{df:CharacteristicPoly}
+%<*df:CharacteristicPoly>
+\definend{Polinomial karakteristik matriks persegi}\index{karakteristik!polinomial}%
+\index{matriks!polinomial karakteristik}
+\( T \) adalah determinan \( \deter{T-x I} \), dengan \( x \) sebagai
+variabel.
+\definend{Persamaan karakteristik}\index{karakteristik!persamaan}%
+\index{matriks!polinomial karakteristik}
+adalah $\deter{T-xI}=0$.
+\definend{Polinomial karakteristik transformasi} \( t \) adalah
+polinomial karakteristik dari sembarang representasi matriks
+\( \rep{t}{B,B} \).\index{transformasi!polinomial karakteristik}
+%</df:CharacteristicPoly>
+\end{definition}
+
+\noindent 
+%<*df:CharacteristicPolyExer>
+Polinomial karakteristik matriks \( \nbyn{n} \), atau transformasi
+\( \map{t}{\C^n}{\C^n} \), berderajat~\( n \).
+\nearbyexercise{exer:CharPolyTransWellDefed} memeriksa bahwa polinomial
+karakteristik suatu transformasi terdefinisi dengan baik; artinya,
+polinomial karakteristiknya sama untuk basis representasi mana pun yang
+kita gunakan.
+%</df:CharacteristicPolyExer>
+
+\begin{lemma} \label{le:MapNonTrivSpHasEigen}
+%<*lm:MapNonTrivSpHasEigen>
+Transformasi linear pada ruang vektor nontrivial memiliki sedikitnya satu
+nilai eigen.
+%</lm:MapNonTrivSpHasEigen>
+\end{lemma}
+
+\begin{proof}
+%<*pf:MapNonTrivSpHasEigen>
+Setiap akar polinomial karakteristik merupakan nilai eigen.
+Di atas bilangan kompleks, setiap polinomial berderajat satu atau lebih
+memiliki akar.
+%</pf:MapNonTrivSpHasEigen>
+\end{proof}
+
+\begin{remark}
+Hasil tersebut merupakan alasan kita menggunakan skalar bilangan kompleks
+dalam bab ini.
+Seandainya kita tetap menggunakan skalar bilangan real, akan ada polinomial
+karakteristik, seperti $x^2+1$, yang tidak dapat difaktorkan.
+\end{remark}
+
+% Notice the familiar form of the sets of eigenvectors in the above examples.
+
+\begin{definition} \label{df:Eigenspace}
+%<*df:Eigenspace>
+\definend{Ruang eigen transformasi~$t$ yang terkait dengan nilai
+eigen~$\lambda$}\index{ruang eigen}\index{transformasi!ruang eigen}
+adalah
+$
+  V_{\lambda}=\set{\vec{\zeta}\suchthat t(\vec{\zeta}\,)=\lambda\vec{\zeta}\,}
+              % \union\set{\zero\,}
+$.
+Ruang eigen suatu matriks didefinisikan secara analog.
+%</df:Eigenspace>
+\end{definition}
+
+% \begin{remark}
+% In \nearbydefinition{def:Eigen} we specified that eigenvectors must be
+% non-$\zero$.
+% So, strictly speaking, the eigenspace for $\lambda$ contains the set of
+% associated eigenvectors along with $\zero$.
+% We need the zero vector for the next result. 
+% \end{remark}
+
+\begin{lemma}  \label{le:EigSpaceIsSubSp}
+%<*lm:EigSpaceIsSubSp>
+Ruang eigen adalah subruang.
+Ruang eigen merupakan subruang nontrivial.
+%</lm:EigSpaceIsSubSp>
+\end{lemma}
+
+\begin{proof}
+%<*pf:EigSpaceIsSubSp>
+Pertama, perhatikan bahwa $V_{\lambda}$ tidak kosong; ruang ini memuat
+vektor nol karena $t(\zero)=\zero$, yang sama dengan
+$\lambda\cdot \zero$.
+Untuk menunjukkan bahwa ruang eigen merupakan subruang, tinggal diperiksa
+bahwa himpunan ini tertutup terhadap kombinasi linear.
+Ambil \( \vec{\zeta}_1,\ldots,\vec{\zeta}_n\in V_{\lambda} \). Maka
+\begin{align*}
+  t(\lincombo{c}{\vec{\zeta}})
+  &=c_1t(\vec{\zeta}_1)+\dots+c_nt(\vec{\zeta}_n)               \\
+  &=c_1\lambda\vec{\zeta}_1+\dots+c_n\lambda\vec{\zeta}_n          \\
+  &=\lambda(c_1\vec{\zeta}_1+\dots+c_n\vec{\zeta}_n)
+\end{align*}
+menunjukkan bahwa kombinasi tersebut juga merupakan anggota $V_{\lambda}$.
+% (despite that the zero vector isn't an eigenvector, 
+% the second equality holds even if some \( \vec{\zeta}_i \) is \( \zero \) since
+% \( t(\zero)=\lambda\cdot\zero=\zero \)).
+
+Ruang~$V_\lambda$ memuat lebih dari sekadar vektor nol karena, menurut
+definisi, $\lambda$ merupakan nilai eigen hanya jika
+$t(\vec{\zeta}\,)=\lambda\vec{\zeta}$ memiliki penyelesaian
+$\vec{\zeta}$ selain $\zero$.
+%</pf:EigSpaceIsSubSp>
+\end{proof}
+
+\begin{example}   \label{ex:AlgMultDifferentThanGeoMult}
+Berikut adalah ruang-ruang eigen yang terkait dengan nilai eigen \( 0 \)
+dan \( 2 \) dalam \nearbyexample{ex:IntroCharEqn}.
+\begin{equation*}
+  V_0=\set{\colvec[r]{a \\ -a \\ a}\suchthat a\in\C},
+  \qquad
+  V_2=\set{\colvec{b \\ 0 \\ b}\suchthat b\in\C}.
+\end{equation*}
+\end{example}
+
+\begin{example} \label{ex:AnotherCharPolyReprise}
+Berikut adalah ruang-ruang eigen untuk nilai eigen \( \pi \) dan~\( 3 \)
+dalam \nearbyexample{ex:AnotherCharPoly}.
+\begin{equation*}
+  V_{\pi}=\set{\colvec{a \\ 0}\suchthat a\in\C}
+  \qquad
+  V_3=\set{\colvec{-b/(\pi-3) \\ b}\suchthat b\in\C}
+\end{equation*}
+\end{example}
+
+Persamaan karakteristik dalam \nearbyexample{ex:IntroCharEqn} adalah
+\( 0=x(x-2)^2 \), sehingga dalam arti tertentu \( 2 \) merupakan nilai
+eigen sebanyak dua kali.
+Namun, jumlah vektor eigennya bukan dua kali lipat: dimensi ruang eigen
+$V_2$ yang terkait adalah satu, bukan dua.
+Contoh berikut menunjukkan kasus ketika suatu bilangan merupakan akar
+ganda persamaan karakteristik dan dimensi ruang eigen yang terkait adalah
+dua.
+
+\begin{example}  \label{ex:EigenvaluesProjection}
+Terhadap basis-basis standar, matriks berikut
+\begin{equation*}
+  \begin{mat}[r]
+     1  &0  &0  \\
+     0  &1  &0  \\
+     0  &0  &0
+  \end{mat}
+\end{equation*}
+merepresentasikan proyeksi.
+\begin{equation*}
+  \colvec{x \\ y \\ z}
+     \mapsunder{\pi}
+  \colvec{x \\ y \\ 0}
+   \qquad x,y,z\in\C
+\end{equation*}
+Persamaan karakteristiknya
+\begin{align*}
+  0
+  &=\deter{T-x I}                                     \\
+  &=\begin{vmatrix}
+     1-x          &0            &0            \\
+     0           &1-x          &0           \\
+     0           &0            &0-x
+   \end{vmatrix}                                       \\
+  &=(1-x)^2(0-x)
+\end{align*}
+memiliki akar ganda~$x=1$ beserta akar tunggal~$x=0$.
+Ruang eigen yang terkait dengan nilai eigen \( 1 \) dan ruang eigen yang
+terkait dengan nilai eigen \( 0 \) mudah dicari.
+\begin{equation*}
+   V_1=\set{\colvec{c_1 \\ c_2 \\ 0}\suchthat c_1,c_2\in\C}
+   \qquad
+   V_0=\set{\colvec{0 \\ 0 \\ c_3}\suchthat c_3\in\C}
+\end{equation*}
+Perhatikan bahwa $V_1$ berdimensi dua.
+\end{example}
+
+\begin{definition}
+Jika suatu polinomial karakteristik difaktorkan menjadi
+$(x-\lambda_1)^{m_1}\cdots (x-\lambda_k)^{m_k}$, maka nilai eigen
+$\lambda_i$ memiliki \definend{multiplisitas aljabar}~$m_i$%
+\index{multiplisitas!aljabar}\index{multiplisitas aljabar}.
+\definend{Multiplisitas geometris}\index{multiplisitas!geometris}%
+\index{multiplisitas geometris}
+nilai eigen itu adalah dimensi ruang eigen~$V_{\lambda_i}$ yang terkait.  
+\end{definition}
+
+Dalam \nearbyexample{ex:EigenvaluesProjection} terdapat dua nilai eigen.
+Untuk $\lambda_1=1$, multiplisitas aljabar dan geometrisnya sama-sama~$2$.
+Untuk $\lambda_2=0$, kedua multiplisitas itu sama-sama~$1$.
+Sebaliknya, \nearbyexample{ex:AlgMultDifferentThanGeoMult} menunjukkan
+bahwa nilai eigen $\lambda=2$ memiliki multiplisitas aljabar~$2$, tetapi
+multiplisitas geometris~$1$.
+Untuk setiap transformasi, tiap nilai eigen memiliki multiplisitas
+geometris yang lebih besar daripada atau sama dengan~$1$, berdasarkan
+\nearbylemma{le:EigSpaceIsSubSp}.
+(Selain itu, multiplisitas geometris suatu nilai eigen harus lebih kecil
+daripada atau sama dengan multiplisitas aljabarnya, walaupun pembuktiannya
+berada di luar cakupan kita.)
+
+Berdasarkan \nearbylemma{le:EigSpaceIsSubSp}, jika dua vektor eigen
+$\vec{v}_1$ dan $\vec{v}_2$ terkait dengan nilai eigen yang sama, maka
+kombinasi linear keduanya juga merupakan vektor eigen yang terkait dengan
+nilai eigen tersebut.
+Sebagai ilustrasi, dengan merujuk pada contoh sebelumnya, jumlah dua
+anggota $V_1$ berikut
+\begin{equation*}
+  \colvec[r]{1 \\ 0 \\ 0}+\colvec[r]{0 \\ 1 \\ 0}
+\end{equation*}
+menghasilkan anggota lain dari $V_1$.
+
+Hasil berikut membahas keadaan ketika vektor-vektornya berasal dari
+ruang-ruang eigen yang berbeda.
+
+\begin{theorem}  \label{th:DistEValueGivesLIEvecs}
+%<*th:DistEValueGivesLIEvecs>
+Untuk sembarang himpunan nilai eigen yang berbeda-beda dari suatu pemetaan
+atau matriks, himpunan vektor eigen terkait yang memuat satu vektor untuk
+setiap nilai eigen adalah bebas linear.
+%</th:DistEValueGivesLIEvecs>
+\end{theorem}
+
+\begin{proof}
+%<*pf:DistEValueGivesLIEvecs0>
+Kita akan menggunakan induksi pada banyaknya nilai eigen.
+Pada langkah dasar, banyaknya nilai eigen adalah nol.
+Dengan demikian, himpunan vektor yang terkait kosong dan karenanya bebas
+linear.
+% If there is 
+% only one eigenvalue then the set of associated eigenvectors is
+% a singleton set with a non-$\zero$ member, 
+% and so is linearly independent.
+%</pf:DistEValueGivesLIEvecs0>
+
+%<*pf:DistEValueGivesLIEvecs1>
+Untuk langkah induksi, anggap pernyataan tersebut benar bagi setiap
+himpunan yang terdiri atas \( k\geq 0 \) nilai eigen berbeda.
+Perhatikan nilai-nilai eigen berbeda
+\( \lambda_1,\dots,\lambda_{k+1} \), dan misalkan
+\( \vec{v}_1,\dots,\vec{v}_{k+1} \) adalah vektor-vektor eigen yang
+terkait.
+Andaikan
+$\zero=c_1\vec{v}_1+\dots+c_k\vec{v}_k+c_{k+1}\vec{v}_{k+1}$. 
+Dari persamaan itu, turunkan dua persamaan. Persamaan pertama diperoleh
+dengan mengalikan kedua ruas dengan \( \lambda_{k+1} \),
+$\zero=c_1\lambda_{k+1}\vec{v}_1+\dots+c_{k+1}\lambda_{k+1}\vec{v}_{k+1}$
+dan persamaan kedua dengan menerapkan pemetaan pada kedua ruas,
+$\zero=c_1t(\vec{v}_1)+\dots+c_{k+1}t(\vec{v}_{k+1})
+  =c_1\lambda_1\vec{v}_1+\dots+c_{k+1}\lambda_{k+1}\vec{v}_{k+1}$
+(penerapan matriks memberikan hasil yang sama).
+Kurangkan persamaan kedua dari persamaan pertama.
+\begin{equation*}
+  \zero=
+  c_1(\lambda_{k+1}-\lambda_1)\vec{v}_1+\dots
+  +c_k(\lambda_{k+1}-\lambda_k)\vec{v}_k
+      +c_{k+1}(\lambda_{k+1}-\lambda_{k+1})\vec{v}_{k+1}
+\end{equation*}
+Suku $\vec{v}_{k+1}$ lenyap.
+Hipotesis induksi kemudian memberikan
+\( c_1(\lambda_{k+1}-\lambda_1)=0 \), \ldots, \( c_k(\lambda_{k+1}-\lambda_k)=0 \).
+Karena nilai-nilai eigennya berbeda, semua koefisien
+\( c_1,\,\dots,\,c_k \) adalah~\( 0 \).
+Dengan demikian, yang tersisa adalah persamaan
+\( \zero=c_{k+1}\vec{v}_{k+1} \), sehingga \( c_{k+1} \) juga~\( 0 \).
+%</pf:DistEValueGivesLIEvecs1>
+\end{proof}
+
+\begin{example}
+Nilai-nilai eigen matriks
+\begin{equation*}
+     \begin{mat}[r]
+        2   &-2   &2   \\
+        0   &1    &1   \\
+       -4   &8    &3
+     \end{mat}
+\end{equation*}
+berbeda-beda: \( \lambda_1=1 \), \( \lambda_2=2 \), dan~\( \lambda_3=3 \).
+Salah satu himpunan vektor eigen yang terkait,
+\begin{equation*}
+  \set{
+       \colvec[r]{2 \\ 1 \\ 0},
+       \colvec[r]{9 \\ 4 \\ 4},
+       \colvec[r]{2 \\ 1 \\ 2}  }
+\end{equation*}
+adalah bebas linear.
+\end{example}
+
+\begin{corollary} \label{co:DistinctEivenvaluesImpliesDiagonal}
+%<*co:DistinctEivenvaluesImpliesDiagonal>
+Matriks \( \nbyn{n} \) yang memiliki \( n \) nilai eigen berbeda dapat
+didiagonalkan.
+%</co:DistinctEivenvaluesImpliesDiagonal>
+\end{corollary}
+
+\begin{proof}
+%<*pf:DistinctEivenvaluesImpliesDiagonal>
+Bentuklah basis yang terdiri atas vektor-vektor eigen.
+Terapkan \nearbylemma{lm:DiagIffBasisOfEigens}.
+%</pf:DistinctEivenvaluesImpliesDiagonal>
+\end{proof}
+
+\begin{example} \label{ex:SummaryOfDiagonalizable}
+Dalam contoh sebelumnya, kita menunjukkan bahwa matriks
+\begin{equation*}
+     T=\begin{mat}[r]
+        2   &-2   &2   \\
+        0   &1    &1   \\
+       -4   &8    &3
+     \end{mat}
+\end{equation*}
+dapat didiagonalkan dengan nilai eigen
+$\lambda_1=1$, $\lambda_2=2$, dan~$\lambda_3=3$.
+Berikut adalah vektor-vektor eigen terkait, yang membentuk basis~$B$.
+\begin{equation*}
+       \vec{\beta}_1=\colvec[r]{2 \\ 1 \\ 0}\quad
+       \vec{\beta}_2=\colvec[r]{9 \\ 4 \\ 4}\quad
+       \vec{\beta}_3=\colvec[r]{2 \\ 1 \\ 2} 
+\end{equation*}
+Diagram panah
+\begin{equation*}
+  \begin{CD}
+    V_{\wrt{\stdbasis_3}}            @>t>T>        V_{\wrt{\stdbasis_3}}       \\
+    @V{\scriptstyle\identity} VV              @V{\scriptstyle\identity} VV \\
+    V_{\wrt{B}}                   @>t>D>        V_{\wrt{B}}       
+  \end{CD}
+\end{equation*}
+memberikan persamaan berikut, dengan
+$P=\rep{\identity}{\stdbasis_3,B}$.
+\begin{align*}
+  D &= PTP^{-1}  \\
+  \begin{mat}
+    1  &0  &0 \\
+    0  &2  &0 \\
+    0  &0  &3
+  \end{mat}
+  &=
+    \begin{mat}
+      -2  &5  &-1/2  \\
+       1  &-2  &0    \\
+      -2  &4  &1/2 
+    \end{mat}
+     \begin{mat}[r]
+        2   &-2   &2   \\
+        0   &1    &1   \\
+       -4   &8    &3
+     \end{mat}
+    \begin{mat}
+      2  &9  &2  \\
+      1  &4  &1  \\
+      0  &4  &2
+    \end{mat}
+\end{align*}
+% sage: T = matrix(QQ, [[2,-2,2], [0,1,1], [-4,8,3]])
+% sage: T
+% [ 2 -2  2]
+% [ 0  1  1]
+% [-4  8  3]
+% sage: T.eigenvectors_right()
+% [(3, [
+%   (1, 1/2, 1)
+%   ], 1), (2, [
+%   (1, 4/9, 4/9)
+%   ], 1), (1, [
+%   (1, 1/2, 0)
+%   ], 1)]
+% sage: P_inv = matrix(QQ, [[2,9,2], [1,4,1], [0,4,2]])
+% sage: P_inv.inverse()
+% [  -2    5 -1/2]
+% [   1   -2    0]
+% [  -2    4  1/2]
+Pada bagian bawah diagram berlaku
+$t(\vec{\beta}_1)=1\cdot\vec{\beta}_1$,
+$t(\vec{\beta}_2)=2\cdot\vec{\beta}_2$, dan
+$t(\vec{\beta}_3)=3\cdot\vec{\beta}_3$.
+Dengan menulis ulang, pemetaan $t-1$ mengirim $\vec{\beta}_1$
+ke~$\zero$, pemetaan $t-2$ mengirim $\vec{\beta}_2$ ke~$\zero$, dan
+$(t-3)(\vec{\beta}_3)=\zero$.
+Artinya, aksinya pada $B$ adalah sebagai berikut.
+\begin{equation*}
+  \vec{\beta}_1\mapsunder{t-1}\zero  \qquad
+  \vec{\beta}_2\mapsunder{t-2}\zero  \qquad
+  \vec{\beta}_3\mapsunder{t-3}\zero 
+\end{equation*}
+Beralih ke representasi dalam diagram panah tersebut, baris atas menyatakan
+bahwa matriks $T-(1\cdot I)$, yang merepresentasikan $t-1$ terhadap
+$\stdbasis_3,\stdbasis_3$, jika dikalikan dengan representasi
+$\vec{\beta}_1$ terhadap~$\stdbasis_3$, akan menghasilkan nol.
+\begin{equation*}
+  \begin{mat}
+    1  &-2  &2  \\
+    0  &0   &1  \\
+   -4  &8   &2  \\
+  \end{mat}
+  \colvec{2 \\ 1 \\ 0}
+  =
+  \colvec{0  \\ 0 \\ 0}
+\end{equation*}
+Serupa dengan itu, matriks $T-(2\cdot I)$, yang merepresentasikan $t-2$
+terhadap $\stdbasis_3,\stdbasis_3$, menghasilkan nol ketika dikalikan
+dengan representasi $\vec{\beta}_2$ terhadap~$\stdbasis_3$.
+\begin{equation*}
+  \begin{mat}
+    0  &-2  &2  \\
+    0  &-1   &1  \\
+   -4  &8   &1  \\
+  \end{mat}
+  \colvec{9 \\ 4 \\ 4}
+  =
+  \colvec{0  \\ 0 \\ 0}
+\end{equation*}
+Dan tentu saja, matriks $T-(3\cdot I)$ yang dikalikan dengan representasi
+$\vec{\beta}_3$ terhadap~$\stdbasis_3$ juga menghasilkan nol.
+\end{example}
+
+Singkatnya, bagian ini menunjukkan bahwa sebagian matriks serupa dengan
+matriks diagonal.
+Gagasan nilai eigen muncul sebagai entri-entri matriks diagonal tersebut,
+walaupun definisinya berlaku lebih luas, tidak hanya bagi matriks yang
+dapat didiagonalkan.
+Untuk mencari nilai eigen, kita mendefinisikan persamaan karakteristik,
+yang kemudian mengantarkan kita pada hasil terakhir: suatu kriteria agar
+matriks dapat didiagonalkan.
+(Walaupun berguna bagi teori, perhatikan bahwa dalam penerapan, mencari
+nilai eigen dengan cara ini biasanya tidak praktis; salah satu alasannya,
+matriksnya mungkin besar dan akar polinomial berderajat tinggi sulit
+dicari.)
+
+Pada bagian berikutnya, kita mempelajari matriks yang tidak dapat
+didiagonalkan.
+
+
+\begin{exercises}
+  \item Matriks ini mempunyai dua nilai eigen $\lambda_1=3$, $\lambda_2=-4$.
+    \begin{equation*}
+      \begin{mat}
+        4  &1 \\
+        -8 &-5
+      \end{mat}
+    \end{equation*}
+    Berikan dua matriks berbentuk diagonal berbeda yang serupa dengannya.
+    \begin{answer}
+      Kita dapat menukar urutan kolom dengan menukar urutan basis yang
+      digunakan untuk membuat representasi.
+      \begin{equation*}
+        \begin{mat} 
+          3 &0 \\ 
+          0 &-4
+        \end{mat}
+        \qquad
+        \begin{mat} 
+          -4 &0 \\ 
+          0 &3
+        \end{mat}
+      \end{equation*}
+    \end{answer}
+  \item 
+    Untuk setiap matriks, tentukan polinomial karakteristik dan nilai eigennya.
+    \begin{exparts*}
+      \partsitem \( \begin{mat}[r]
+                 10  &-9 \\
+                  4  &-2
+            \end{mat}  \)
+      \partsitem $\begin{mat}[r]
+                    1  &2  \\
+                    4  &3  
+                 \end{mat}$
+      \partsitem \( \begin{mat}[r]
+                  0  &3  \\
+                  7 &0
+                 \end{mat} \)
+      \partsitem \( \begin{mat}[r]  
+                  0  &0  \\
+                  0  &0
+            \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+                  1  &0  \\
+                  0  &1
+            \end{mat}  \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+         \partsitem Persamaan
+           \begin{equation*}
+             0=
+             \begin{vmatrix}
+               10-x  &-9  \\
+               4     &-2-x
+             \end{vmatrix}
+             =(10-x)(-2-x)-(-36)
+           \end{equation*}
+           menyederhana menjadi persamaan karakteristik \( x^2-8x+16=0 \). 
+           Karena persamaan itu terfaktorkan menjadi $(x-4)^2$, hanya ada
+           satu nilai eigen, yaitu \( \lambda_1=4 \).
+         \partsitem $0=(1-x)(3-x)-8=x^2-4x-5$; $\lambda_1=5$, $\lambda_2=-1$
+         \partsitem \( x^2-21=0 \); 
+           \( \lambda_1=\sqrt{21} \), $\lambda_2=-\sqrt{21}$
+         \partsitem \( x^2=0 \); \( \lambda_1=0 \)
+         \partsitem \( x^2-2x+1=0 \); \( \lambda_1=1 \)
+       \end{exparts}  
+     \end{answer}
+  \recommended \item
+    Untuk setiap matriks, tentukan persamaan karakteristik, nilai eigen,
+    dan vektor eigen yang terkait.
+    \begin{exparts*}
+      \partsitem \( \begin{mat}[r]
+                  3  &0  \\
+                  8  &-1
+            \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+                  3  &2  \\
+                 -1  &0
+            \end{mat}  \)
+    \end{exparts*}
+    \begin{answer}
+       \begin{exparts}
+         \partsitem Persamaan karakteristiknya adalah \( (3-x)(-1-x)=0 \).
+           Akar-akarnya, yaitu nilai eigennya, adalah \( \lambda_1=3 \) dan 
+           \( \lambda_2=-1 \).
+           Untuk mencari vektor eigen, kita tinjau persamaan ini.
+           \begin{equation*}
+             \begin{mat}
+               3-x  &0    \\
+               8    &-1-x
+             \end{mat}
+             \colvec{b_1  \\  b_2}
+             =\colvec[r]{0  \\  0}
+           \end{equation*}
+           Untuk vektor eigen yang terkait dengan $\lambda_1=3$,
+           kita tinjau sistem linear yang dihasilkan.
+           \begin{equation*}
+             \begin{linsys}{2}
+               0\cdot b_1  &+  &0\cdot b_2  &=  &0  \\
+               8\cdot b_1  &+  &-4\cdot b_2 &=  &0
+             \end{linsys}
+           \end{equation*}
+           Ruang eigennya adalah himpunan vektor yang komponen keduanya 
+           dua kali komponen pertama.
+           \begin{equation*}
+             \set{\colvec{b_2/2 \\ b_2}\suchthat b_2\in\C}
+             \qquad
+             \begin{mat}[r]
+               3  &0  \\
+               8  &-1
+             \end{mat}
+             \colvec{b_2/2  \\ b_2}
+             =3\cdot\colvec{b_2/2 \\ b_2}
+           \end{equation*}
+           (Di sini, parameternya adalah $b_2$ semata-mata karena itulah variabel
+           bebas dalam sistem di atas.)
+           Jadi, berikut ini adalah vektor eigen yang terkait dengan nilai eigen $3$.
+           \begin{equation*}
+             \colvec[r]{1 \\ 2}
+           \end{equation*}
+
+           Vektor eigen yang terkait dengan $\lambda_2=-1$ dicari dengan cara serupa.
+           Sistem ini
+           \begin{equation*}
+             \begin{linsys}{2}
+               4\cdot b_1  &+  &0\cdot b_2  &=  &0  \\
+               8\cdot b_1  &+  &0\cdot b_2 &=  &0
+             \end{linsys}
+           \end{equation*}
+           menghasilkan himpunan vektor yang komponen pertamanya 
+           nol.
+           \begin{equation*}
+             \set{\colvec{0 \\ b_2}\suchthat b_2\in\C}
+             \qquad
+             \begin{mat}[r]
+               3  &0  \\
+               8  &-1
+             \end{mat}
+             \colvec{0  \\ b_2}
+             =-1\cdot\colvec{0 \\ b_2}
+           \end{equation*}
+           Jadi, berikut ini adalah vektor eigen yang terkait dengan $\lambda_2$.
+           \begin{equation*}
+             \colvec[r]{0 \\ 1}
+           \end{equation*}
+         \partsitem Persamaan karakteristiknya adalah
+           \begin{equation*}
+             0=
+             \begin{vmatrix}
+               3-x  &2  \\
+               -1   &-x               
+             \end{vmatrix}
+             =x^2-3x+2=(x-2)(x-1)
+           \end{equation*}
+           sehingga nilai eigennya adalah $\lambda_1=2$ dan $\lambda_2=1$.
+           Untuk mencari vektor eigen, tinjau sistem ini.
+           \begin{equation*}
+             \begin{linsys}{2}
+               (3-x)\cdot b_1  &+  &2\cdot b_2  &=  &0  \\
+               -1\cdot b_1     &-  &x\cdot b_2  &=  &0
+             \end{linsys}
+           \end{equation*}
+           Untuk $\lambda_1=2$ kita memperoleh 
+           \begin{equation*}
+             \begin{linsys}{2}
+                1\cdot b_1  &+  &2\cdot b_2  &=  &0  \\
+               -1\cdot b_1  &-  &2\cdot b_2  &=  &0
+             \end{linsys}
+           \end{equation*}
+           yang menghasilkan ruang eigen dan vektor eigen berikut.
+           \begin{equation*}
+             \set{\colvec{-2b_2 \\ b_2}
+                   \suchthat b_2\in\C}
+             \qquad
+             \colvec[r]{-2 \\ 1}
+           \end{equation*}
+           Untuk $\lambda_2=1$, sistemnya adalah 
+           \begin{equation*}
+             \begin{linsys}{2}
+                2\cdot b_1  &+  &2\cdot b_2  &=  &0  \\
+               -1\cdot b_1  &-  &1\cdot b_2  &=  &0
+             \end{linsys}
+           \end{equation*}
+           yang menghasilkan berikut ini.
+           \begin{equation*}
+             \set{\colvec{-b_2 \\ b_2}
+                   \suchthat b_2\in\C}
+             \qquad
+             \colvec[r]{-1 \\ 1}
+           \end{equation*}
+       \end{exparts}  
+     \end{answer}
+  \item
+    Tentukan persamaan karakteristik, nilai eigen, dan vektor eigen yang
+    terkait untuk matriks ini.
+    \textit{Petunjuk.}
+      Nilai eigennya kompleks.
+    \begin{equation*}
+      \begin{mat}[r]
+         -2  &-1 \\
+          5  &2
+      \end{mat}  
+    \end{equation*}
+    \begin{answer}
+         Persamaan karakteristik 
+           \begin{equation*}
+             0=
+             \begin{vmatrix}
+               -2-x  &-1  \\
+               5     &2-x               
+             \end{vmatrix}
+             =x^2+1
+           \end{equation*}
+           mempunyai akar kompleks $\lambda_1=i$ dan $\lambda_2=-i$.
+           Tinjau sistem berikut. 
+           \begin{equation*}
+             \begin{linsys}{2}
+               (-2-x)\cdot b_1  &-  &1\cdot b_2      &=  &0  \\
+               5\cdot b_1       &   &(2-x)\cdot b_2  &=  &0
+             \end{linsys}
+           \end{equation*}
+           Untuk $\lambda_1=i$, Metode Gauss memberikan reduksi berikut.
+           \begin{equation*}
+             \begin{linsys}{2}
+                (-2-i)\cdot b_1  &-  &1\cdot b_2      &=  &0  \\
+                 5\cdot b_1       &+  &(2-i)\cdot b_2  &=  &0
+             \end{linsys}
+             \grstep{(-5/(-2-i))\rho_1+\rho_2}
+             \begin{linsys}{2}
+                (-2-i)\cdot b_1  &-  &1\cdot b_2      &=  &0  \\
+                                 &   &0               &=  &0
+             \end{linsys}
+           \end{equation*}
+           (Untuk perhitungan di kanan bawah, samakan penyebut
+           \begin{equation*}
+             \frac{5}{-2-i}+(2-i)
+             =
+             \frac{5}{-2-i}+\frac{-2-i}{-2-i}\cdot (2-i)
+             =
+             \frac{5+(-5)}{-2-i}
+           \end{equation*}
+           untuk melihat bahwa hasilnya adalah persamaan $0=0$.)
+           Berikut ruang eigen dan vektor eigen yang dihasilkan.
+           \begin{equation*}
+             \set{\colvec{(1/(-2-i))b_2 \\ b_2}
+                   \suchthat b_2\in\C}
+             \qquad
+             \colvec{1/(-2-i) \\ 1}
+           \end{equation*}
+           Untuk $\lambda_2=-i$, sistem 
+           \begin{equation*}
+             \begin{linsys}{2}
+                (-2+i)\cdot b_1  &-  &1\cdot b_2      &=  &0  \\
+                 5\cdot b_1       &+  &(2+i)\cdot b_2  &=  &0
+             \end{linsys}
+             \grstep{(-5/(-2+i))\rho_1+\rho_2}
+             \begin{linsys}{2}
+                (-2+i)\cdot b_1  &-  &1\cdot b_2      &=  &0  \\
+                                 &   &0               &=  &0
+             \end{linsys}
+           \end{equation*}
+           menghasilkan berikut ini.
+           \begin{equation*}
+             \set{\colvec{(1/(-2+i))b_2 \\ b_2}
+                   \suchthat b_2\in\C}
+             \qquad
+             \colvec{1/(-2+i) \\ 1}
+           \end{equation*}
+    \end{answer}
+  \item  
+    Tentukan polinomial karakteristik, nilai eigen, dan vektor eigen yang
+    terkait untuk matriks ini.
+    \begin{equation*}
+      \begin{mat}[r]
+        1  &1  &1  \\
+        0  &0  &1  \\
+        0  &0  &1
+      \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Persamaan karakteristiknya adalah
+      \begin{equation*}
+        0=
+        \begin{vmatrix}
+          1-x  &1   &1   \\
+          0    &-x  &1   \\
+          0    &0   &1-x
+        \end{vmatrix}
+        =(1-x)^2(-x)
+      \end{equation*}
+      sehingga nilai eigennya adalah $\lambda_1=1$ (ini merupakan akar berulang
+      dari persamaan tersebut) dan $\lambda_2=0$.
+      Selanjutnya, tinjau sistem ini.
+      \begin{equation*}
+        \begin{linsys}{3}
+          (1-x)\cdot b_1  &+  &b_2         &+  &b_3            &=  &0  \\
+                          &   &-x\cdot b_2 &+  &b_3            &=  &0  \\
+                          &   &            &   &(1-x)\cdot b_3 &= &0  
+        \end{linsys}
+      \end{equation*}
+      Ketika $x=\lambda_1=1$, himpunan penyelesaiannya adalah ruang eigen berikut.
+      \begin{equation*}
+        \set{\colvec{b_1 \\ 0 \\ 0}\suchthat b_1\in\C}
+      \end{equation*}
+      Ketika $x=\lambda_2=0$, himpunan penyelesaiannya adalah ruang eigen berikut.
+      \begin{equation*}
+        \set{\colvec{-b_2 \\ b_2 \\ 0}\suchthat b_2\in\C}
+      \end{equation*}
+      Jadi, berikut adalah vektor eigen yang terkait dengan $\lambda_1=1$ dan 
+      $\lambda_2=0$.
+      \begin{equation*}
+        \colvec[r]{1 \\ 0 \\ 0}
+        \qquad
+        \colvec[r]{-1 \\ 1 \\ 0}  
+      \end{equation*}
+    \end{answer}
+  \recommended \item
+    Untuk setiap matriks, tentukan persamaan karakteristik, nilai eigen,
+    dan vektor eigen yang terkait.
+    \begin{exparts*}
+      \partsitem \( \begin{mat}[r]
+              3  &-2 &0  \\
+             -2  &3  &0  \\
+              0  &0  &5
+            \end{mat}  \)
+      \partsitem \( \begin{mat}[r]
+              0  &1   &0  \\
+              0  &0   &1  \\
+              4  &-17 &8
+            \end{mat}  \)
+    \end{exparts*}
+    \begin{answer}
+      \begin{exparts}
+         \partsitem Persamaan karakteristiknya adalah
+           \begin{equation*}
+             0=
+             \begin{vmatrix}
+              3-x  &-2   &0  \\
+             -2    &3-x  &0  \\
+              0    &0    &5-x
+             \end{vmatrix}
+             =-x^3+11x^2-35x+25=-1\cdot(x-1)(x-5)^2
+           \end{equation*}
+           sehingga nilai eigennya adalah $\lambda_1=1$ dan nilai eigen
+           berulang $\lambda_2=5$.
+           Untuk mencari vektor eigen, tinjau sistem ini.
+           \begin{equation*}
+             \begin{linsys}{3}
+               (3-x)\cdot b_1  &-  &2\cdot b_2      &   &   &=  &0  \\
+               -2\cdot b_1     &+  &(3-x)\cdot b_2  &   &   &=  &0  \\
+                               &   &                &   &(5-x)\cdot b_3 &= &0 
+             \end{linsys}
+           \end{equation*}
+           Untuk $\lambda_1=1$ kita memperoleh 
+           \begin{equation*}
+             \begin{linsys}{3}
+                2\cdot b_1     &-  &2\cdot b_2   &   &   &=  &0  \\
+               -2\cdot b_1     &+  &2\cdot b_2   &   &   &=  &0  \\
+                               &   &             &   &4\cdot b_3 &= &0 
+             \end{linsys}
+           \end{equation*}
+           yang menghasilkan ruang eigen dan vektor eigen berikut.
+           \begin{equation*}
+             \set{\colvec{b_2 \\ b_2 \\ 0}
+                   \suchthat b_2\in\C}
+             \qquad
+             \colvec[r]{1 \\ 1 \\ 0}
+           \end{equation*}
+           Untuk $\lambda_2=5$, sistemnya adalah 
+           \begin{equation*}
+             \begin{linsys}{3}
+                -2\cdot b_1  &-  &2\cdot b_2   &   &   &=  &0  \\
+               -2\cdot b_1   &-  &2\cdot b_2   &   &   &=  &0  \\
+                             &   &             &   &0\cdot b_3 &= &0 
+             \end{linsys}
+           \end{equation*}
+           yang menghasilkan berikut ini.
+           \begin{equation*}
+             \set{\colvec{-b_2 \\ b_2 \\ 0}+\colvec{0 \\ 0 \\ b_3}
+                   \suchthat b_2,b_3\in\C}
+             \qquad
+             \colvec[r]{-1 \\ 1 \\ 0},\,\colvec[r]{0 \\ 0 \\ 1}
+           \end{equation*}
+         \partsitem Persamaan karakteristiknya adalah
+           \begin{equation*}
+             0=
+             \begin{vmatrix}
+              -x   &1    &0  \\
+              0    &-x   &1  \\
+              4    &-17  &8-x
+             \end{vmatrix}
+             =-x^3+8x^2-17x+4=-1\cdot(x-4)(x^2-4x+1)
+           \end{equation*}
+           dan nilai eigennya adalah $\lambda_1=4$ serta (dengan menggunakan
+           rumus kuadrat) $\lambda_2=2+\sqrt{3}$ dan 
+           $\lambda_3=2-\sqrt{3}$.
+           Untuk mencari vektor eigen, tinjau sistem ini.
+           \begin{equation*}
+             \begin{linsys}{3}
+               -x\cdot b_1  &+  &b_2          &   &               &=  &0  \\
+                            &   &-x\cdot b_2  &+  &b_3            &=  &0  \\
+               4\cdot b_1   &-  &17\cdot b_2  &+  &(8-x)\cdot b_3 &= &0 
+             \end{linsys}
+           \end{equation*}
+           Menyubstitusikan $x=\lambda_1=4$ menghasilkan sistem 
+           \begin{align*}
+             \begin{linsys}{3}
+               -4\cdot b_1  &+  &b_2          &   &           &= &0  \\
+                            &   &-4\cdot b_2  &+  &b_3        &= &0  \\
+               4\cdot b_1   &-  &17\cdot b_2  &+  &4\cdot b_3 &= &0 
+             \end{linsys}                                              
+             &\grstep{\rho_1+\rho_3}
+             \begin{linsys}{3}
+               -4\cdot b_1  &+  &b_2          &   &           &= &0  \\
+                            &   &-4\cdot b_2  &+  &b_3        &= &0  \\
+                            &   &-16\cdot b_2  &+ &4\cdot b_3 &= &0 
+             \end{linsys}                                                \\
+             &\grstep{-4\rho_2+\rho_3}
+             \begin{linsys}{3}
+               -4\cdot b_1  &+  &b_2          &   &           &= &0  \\
+                            &   &-4\cdot b_2  &+  &b_3        &= &0  \\
+                            &   &              &  &0          &= &0 
+             \end{linsys}
+           \end{align*}
+           yang menghasilkan ruang eigen dan vektor eigen berikut.
+           \begin{equation*}
+             V_4=\set{\colvec{(1/16)\cdot b_3 \\ (1/4)\cdot b_3 \\ b_3}
+                    \suchthat b_3\in\C}
+             \qquad
+             \colvec[r]{1 \\ 4 \\ 16}
+           \end{equation*}
+
+           Menyubstitusikan $x=\lambda_2=2+\sqrt{3}$ menghasilkan sistem 
+           \begin{multline*}
+             \begin{linsys}{3}
+               (-2-\sqrt{3})\cdot b_1  
+                      &+  &b_2          
+                          &   &           &= &0  \\
+                      &   &(-2-\sqrt{3})\cdot b_2  
+                          &+  &b_3        &= &0  \\
+               4\cdot b_1   
+                      &-  &17\cdot b_2  
+                          &+  &(6-\sqrt{3})\cdot b_3 &= &0 
+             \end{linsys}                                   \\
+             \grstep{(-4/(-2-\sqrt{3}))\rho_1+\rho_3}
+             \begin{linsys}{3}
+               (-2-\sqrt{3})\cdot b_1  
+                      &+  &b_2          
+                          &   &           &= &0  \\
+                      &   &(-2-\sqrt{3})\cdot b_2  
+                          &+  &b_3        &= &0  \\
+                      &+  &(-9-4\sqrt{3})\cdot b_2  
+                          &+  &(6-\sqrt{3})\cdot b_3 &= &0 
+             \end{linsys}
+           \end{multline*}
+           (koefisien tengah pada persamaan ketiga sama dengan
+           $(-4/(-2-\sqrt{3}))-17$; samakan penyebutnya menjadi
+           $-2-\sqrt{3}$, lalu rasionalkan penyebut dengan mengalikan
+           pembilang dan penyebut pecahan dengan $-2+\sqrt{3}$)
+           \begin{equation*}
+             \grstep{((9+4\sqrt{3})/(-2-\sqrt{3}))\rho_2+\rho_3}
+             \begin{linsys}{3}
+               (-2-\sqrt{3})\cdot b_1  
+                      &+  &b_2          
+                          &   &           &= &0  \\
+                      &   &(-2-\sqrt{3})\cdot b_2  
+                          &+  &b_3        &= &0  \\
+                      &   &                         
+                          &   &0                     &= &0 
+             \end{linsys}
+           \end{equation*}
+           yang menghasilkan ruang eigen dan vektor eigen berikut.
+           \begin{equation*}
+             V_{2+\sqrt{3}}
+             =\set{\colvec{(1/(2+\sqrt{3})^2)\cdot b_3  \\ 
+                           (1/(2+\sqrt{3}))\cdot b_3    \\ 
+                           b_3}
+                    \suchthat b_3\in\C}
+             \qquad
+             \colvec{(1/(2+\sqrt{3})^2)  \\ 
+                           (1/(2+\sqrt{3}))  \\ 
+                           1}
+           \end{equation*}
+
+           Terakhir, menyubstitusikan $x=\lambda_3=2-\sqrt{3}$ menghasilkan sistem 
+           \begin{multline*}
+             \begin{linsys}{3}
+               (-2+\sqrt{3})\cdot b_1  
+                      &+  &b_2          
+                          &   &           &= &0  \\
+                      &   &(-2+\sqrt{3})\cdot b_2  
+                          &+  &b_3        &= &0  \\
+               4\cdot b_1   
+                      &-  &17\cdot b_2  
+                          &+  &(6+\sqrt{3})\cdot b_3 &= &0 
+             \end{linsys}                                       \\
+             \begin{aligned}
+               &\grstep{(-4/(-2+\sqrt{3}))\rho_1+\rho_3}
+               \begin{linsys}{3}
+                 (-2+\sqrt{3})\cdot b_1  
+                        &+  &b_2          
+                            &   &           &= &0  \\
+                        &   &(-2+\sqrt{3})\cdot b_2  
+                            &+  &b_3        &= &0  \\
+                        &   &(-9+4\sqrt{3})\cdot b_2  
+                            &+  &(6+\sqrt{3})\cdot b_3 &= &0 
+               \end{linsys}                                       \\
+               &\grstep{((9-4\sqrt{3})/(-2+\sqrt{3}))\rho_2+\rho_3}
+               \begin{linsys}{3}
+                 (-2+\sqrt{3})\cdot b_1  
+                        &+  &b_2          
+                            &   &           &= &0  \\
+                        &   &(-2+\sqrt{3})\cdot b_2  
+                            &+  &b_3        &= &0  \\
+                        &   &                         
+                            &   &0                     &= &0 
+               \end{linsys}
+             \end{aligned}
+           \end{multline*}
+           yang memberikan ruang eigen dan vektor eigen berikut.
+           \begin{equation*}
+             V_{2-\sqrt{3}}
+             =\set{\colvec{(1/(-2+\sqrt{3})^2)\cdot b_3  \\ 
+                           (1/(2-\sqrt{3}))\cdot b_3    \\ 
+                           b_3}
+                    \suchthat b_3\in\C}
+             \qquad
+             \colvec{(1/(-2+\sqrt{3})^2)  \\ 
+                           (1/(2-\sqrt{3}))  \\ 
+                           1}
+           \end{equation*}
+      \end{exparts}
+    \end{answer}
+  \item 
+   Untuk setiap matriks, tentukan polinomial karakteristik, nilai eigen,
+   dan ruang eigen yang terkait.
+   Tentukan juga multiplisitas aljabar dan geometriknya.
+   \begin{exparts*}
+     \partsitem 
+       $\begin{mat}
+          13 &-4 \\
+          -4 &7
+        \end{mat}$
+     \partsitem
+        $\begin{mat}
+          1 &3 &-3 \\
+         -3 &7 &-3 \\
+         -6 &6 &-2
+        \end{mat}$
+    \partsitem
+        $\begin{mat}
+          2 &3 &-3 \\
+          0 &2 &-3 \\
+          0 &0 &1
+        \end{mat}$
+   \end{exparts*}
+   \begin{answer}
+     \begin{exparts}
+       \item Polinomial karakteristiknya terfaktorkan sebagai 
+         $x^2-20x+75=(x-5)(x-15)$,
+         sehingga nilai eigennya adalah $\lambda_1=5$ dan~$\lambda_2=15$.
+         Berikut ruang eigen yang terkait.
+         \begin{equation*}
+           V_5=\set{k\colvec{1 \\ 2}\suchthat k\in\C}
+           \quad
+           V_{15}=\set{k\colvec{-2 \\ 1}\suchthat k\in\C}
+         \end{equation*}
+         Untuk setiap nilai eigen, multiplisitas aljabar dan geometriknya
+         sama-sama~$1$.
+      \item Polinomial karakteristik $x^3 - 6x^2 + 32$ terfaktorkan menjadi
+         $(x+2)(x-4)^2$.
+         Nilai eigennya adalah $\lambda_1=-2$ dan $\lambda_2=4$.
+         Berikut ruang eigen yang terkait. 
+         \begin{equation*}
+           V_{-2}=\set{k\colvec{1 \\ 1 \\ 2}\suchthat k\in\C}
+           \quad
+           V_4=\set{k_1\colvec{1 \\ 1 \\ 0}
+                     +k_2\colvec{1 \\ 0 \\ -1} \suchthat k_1,k_2\in\C}
+         \end{equation*}
+         Untuk $\lambda_1=-2$, multiplisitas aljabar dan geometriknya
+         sama-sama~$1$. 
+         Untuk $\lambda_2=4$, multiplisitas aljabar dan geometriknya
+         sama-sama~$2$.
+      \item Polinomial karakteristik $x^3 - 5x^2 + 8x - 4$ terfaktorkan menjadi
+         $(x-1)(x-2)^2$.
+         Nilai eigennya adalah $\lambda_1=1$ dan $\lambda_2=2$.
+         Berikut ruang eigen yang terkait.
+         \begin{equation*}
+           V_1=\set{k\colvec{-6 \\ 3 \\ 1}\suchthat k\in \C}
+           \quad
+           V_2=\set{k\colvec{1 \\ 0 \\ 0}\suchthat k\in\C}
+         \end{equation*}
+         Untuk $\lambda_1=1$, multiplisitas aljabar dan geometriknya
+         sama-sama~$1$.
+         Untuk $\lambda_2=2$, multiplisitas aljabarnya~$2$, tetapi 
+         multiplisitas geometriknya~$1$.
+     \end{exparts}
+   \end{answer}
+   \recommended \item
+     Misalkan \( \map{t}{\polyspace_2}{\polyspace_2} \) adalah peta linear berikut.
+     \begin{equation*}
+      a_0+a_1x+a_2x^2\mapsto
+      (5a_0+6a_1+2a_2)-(a_1+8a_2)x+(a_0-2a_2)x^2
+     \end{equation*}
+    Tentukan nilai eigen dan vektor eigen yang terkait.
+    \begin{answer}
+      Terhadap basis alami $B=\sequence{1,x,x^2}$, 
+      representasi matriksnya adalah berikut ini.
+      \begin{equation*}
+        \rep{t}{B,B}
+        =
+        \begin{mat}[r]
+          5  &6  &2  \\
+          0  &-1 &-8 \\
+          1  &0  &-2 
+        \end{mat}
+      \end{equation*}
+      Dengan demikian, persamaan karakteristiknya adalah
+      \begin{equation*}
+        0
+        =
+        \begin{vmatrix}
+          5-x  &6    &2  \\
+          0    &-1-x &-8 \\
+          1    &0    &-2-x 
+        \end{vmatrix}
+        =(5-x)(-1-x)(-2-x)-48-2\cdot(-1-x)
+      \end{equation*}
+      yang juga dapat ditulis sebagai
+      $0=-x^3+2x^2+15x-36=-1\cdot (x+4)(x-3)^2$.
+      Untuk mencari vektor eigen yang terkait, tinjau sistem ini.
+      \begin{equation*}
+        \begin{linsys}{3}
+          (5-x)\cdot b_1 &+ &6b_2      &+ &2b_3      &= &0 \\
+                         &  &(-1-x)\cdot b_2 &- &8b_3      &= &0 \\
+          b_1            &  &                &+ &(-2-x)\cdot b_3 &= &0 
+        \end{linsys}
+      \end{equation*}
+      Menyubstitusikan $\lambda_1=-4$ untuk $x$ menghasilkan
+      \begin{equation*}
+        \begin{linsys}{3}
+                    9b_1 &+ &6b_2      &+ &2b_3      &= &0 \\
+                         &  &3b_2      &- &8b_3      &= &0 \\
+                     b_1 &  &          &+ &2b_3     &= &0 
+        \end{linsys}
+        \grstep{-(1/9)\rho_1+\rho_3}\quad
+        \grstep{(2/9)\rho_2+\rho_3}\quad
+        \begin{linsys}{3}
+                     9b_1 &+ &6b_2      &+ &2b_3      &= &0 \\
+                         &  &3b_2       &- &8b_3      &= &0  
+        \end{linsys}
+      \end{equation*}
+      Berikut ruang eigen dan sebuah vektor eigennya.
+           \begin{equation*}
+             V_{-4}
+             =\set{\colvec{2\cdot b_3  \\ 
+                           (8/3)\cdot b_3    \\ 
+                           b_3}
+                    \suchthat b_3\in\C}
+             \qquad
+             \colvec{2  \\ 
+                     8/3  \\ 
+                      1}
+           \end{equation*}
+
+      Serupa dengan itu, menyubstitusikan $x=\lambda_2=3$ menghasilkan
+      \begin{equation*}
+        \begin{linsys}{3}
+                    2b_1 &+ &6\cdot b_2      &+ &2\cdot b_3      &= &0 \\
+                         &  &-4\cdot b_2      &- &8\cdot b_3      &= &0 \\
+                     b_1 &  &                &- & 5\cdot b_3     &= &0 
+        \end{linsys}
+        \grstep{-(1/2)\rho_1+\rho_3}
+        \repeatedgrstep{-(3/4)\rho_2+\rho_3}
+        \begin{linsys}{3}
+                     2b_1 &+ &6\cdot b_2      &+ &2\cdot b_3      &= &0 \\
+                         &  &-4\cdot b_2       &- &8\cdot b_3      &= &0  
+        \end{linsys}
+      \end{equation*}
+      dengan ruang eigen dan vektor eigen berikut.
+           \begin{equation*}
+             V_{3}
+             =\set{\colvec{5\cdot b_3  \\ 
+                           -2\cdot b_3    \\ 
+                           b_3}
+                    \suchthat b_3\in\C}
+             \qquad
+             \colvec[r]{5  \\ 
+                     -2  \\ 
+                       1}
+           \end{equation*}
+    \end{answer}
+   \item 
+     Tentukan nilai eigen dan vektor eigen dari
+     pemetaan \( \map{t}{\matspace_2}{\matspace_2} \) berikut.
+     \begin{equation*}
+         \begin{mat}
+            a  &b  \\
+            c  &d
+         \end{mat}
+       \mapsto
+         \begin{mat}
+           2c    &a+c  \\
+           b-2c  &d
+         \end{mat}
+     \end{equation*}
+     \begin{answer}
+        $\lambda=1,
+          \begin{mat}
+                   0  &0  \\
+                   0  &1
+          \end{mat} \text{ dan }
+          \begin{mat}[r]
+                   2  &3  \\
+                   1  &0
+          \end{mat}$,           
+          $\lambda=-2,
+          \begin{mat}[r]
+                  -1  &0  \\
+                   1  &0
+          \end{mat}$,
+          $\lambda=-1,
+          \begin{mat}[r]
+                  -2  &1  \\
+                   1  &0
+          \end{mat}$  
+       \end{answer}
+   \recommended \item 
+     Tentukan nilai eigen dan vektor eigen yang terkait dari
+     operator diferensiasi
+     \( \map{d/dx}{\polyspace_3}{\polyspace_3} \).
+     \begin{answer}
+       Tetapkan basis alami $B=\sequence{1,x,x^2,x^3}$. 
+       Aksi pemetaan ini adalah $1\mapsto 0$, $x\mapsto 1$, $x^2\mapsto 2x$,
+       dan $x^3\mapsto 3x^2$, sehingga representasinya mudah dihitung.
+       \begin{equation*}
+         T=\rep{d/dx}{B,B}=
+         \begin{mat}[r]
+           0  &1  &0  &0  \\
+           0  &0  &2  &0  \\
+           0  &0  &0  &3  \\
+           0  &0  &0  &0
+         \end{mat}_{B,B}
+       \end{equation*}
+       Kita menentukan nilai eigennya dengan perhitungan berikut.
+       \begin{equation*}
+         0=\deter{T-xI}=
+         \begin{vmatrix}
+           -x &1  &0  &0  \\
+           0  &-x &2  &0  \\
+           0  &0  &-x &3  \\
+           0  &0  &0  &-x          
+         \end{vmatrix}
+         =x^4
+       \end{equation*}
+       Jadi, pemetaan ini hanya memiliki nilai eigen $\lambda=0$.
+       Untuk menentukan vektor eigen yang terkait, kita selesaikan
+       \begin{equation*}
+         \begin{mat}[r]
+           0  &1  &0  &0  \\
+           0  &0  &2  &0  \\
+           0  &0  &0  &3  \\
+           0  &0  &0  &0
+         \end{mat}_{B,B}
+         \colvec{b_1 \\ b_2 \\ b_3 \\ b_4}_B
+         =0\cdot\colvec{b_1 \\ b_2 \\ b_3 \\ b_4}_B
+         \qquad\Longrightarrow\qquad
+         \text{$b_2=0$, $b_3=0$, $b_4=0$}          
+       \end{equation*}
+       sehingga diperoleh ruang eigen berikut.
+       \begin{equation*}
+         \set{\colvec{b_1 \\ 0 \\ 0 \\ 0}_B
+               \suchthat b_1\in\C}
+         =\set{b_1+0\cdot x+0\cdot x^2+0\cdot x^3
+               \suchthat b_1\in\C}
+         =\set{b_1
+               \suchthat b_1\in\C}
+       \end{equation*}
+      \end{answer}
+   \item Buktikan bahwa 
+     nilai eigen suatu matriks segitiga (atas atau bawah)
+     adalah entri-entri pada diagonalnya.
+     \begin{answer}
+       Determinan matriks segitiga $T-xI$ adalah hasil kali 
+       entri-entri pada diagonalnya, sehingga dapat difaktorkan menjadi hasil kali 
+       suku-suku $t_{i,i}-x$.
+     \end{answer}
+  \recommended \item Matriks berikut memiliki nilai-nilai eigen yang
+    berbeda.
+    \begin{equation*}
+     \begin{mat}
+      1  &2  &1 \\
+      6  &-1 &0 \\
+      -1 &-2 &-1
+     \end{mat}
+    \end{equation*}
+    \begin{exparts}
+      \partsitem Diagonalkan matriks ini.
+      \partsitem Tentukan basis yang terhadapnya matriks ini memiliki
+        representasi diagonal tersebut.
+      \partsitem Gambarkan diagramnya.
+         Tentukan matriks $P$ dan $P^{-1}$ yang menghasilkan perubahan basis itu. 
+    \end{exparts}
+    \begin{answer}
+     \begin{exparts}
+      \partsitem 
+      Perhitungan nilai eigen memberikan $\lambda_1=3$, $\lambda_2=0$,
+      dan $\lambda_3=-4$.
+      Jadi, diagonalisasi matriks tersebut adalah sebagai berikut.
+      \begin{equation*}
+        \begin{mat}
+          3 &0 &0 \\
+          0 &0 &0 \\
+          0 &0 &-4
+        \end{mat}
+      \end{equation*}
+     \partsitem
+      Tentukan satu vektor eigen yang terkait dengan setiap nilai eigen, lalu
+      gunakan vektor-vektor itu untuk membentuk suatu basis.
+
+      Untuk $\lambda_1=3$, kita selesaikan sistem berikut.
+      \begin{equation*}
+        \begin{mat}
+          1-3  &2    &1 \\
+          6    &-1-3 &0 \\
+         -1    &-2   &-1-3
+        \end{mat}
+        \colvec{x \\ y \\ z}
+        =\colvec{0 \\ 0 \\ 0}
+      \end{equation*}
+      Metode Gauss sudah memadai.
+      % sage: M = matrix(QQ, [[-2,2,1,0], [6,-4,0,0], [-1,-2,-4,0]])
+      % sage: gauss_method(M)
+      % [-2  2  1  0]
+      % [ 6 -4  0  0]
+      % [-1 -2 -4  0]
+      % take 3 times row 1 plus row 2
+      % take -1/2 times row 1 plus row 3
+      % [  -2    2    1    0]
+      % [   0    2    3    0]
+      % [   0   -3 -9/2    0]
+      % take 3/2 times row 2 plus row 3
+      % [-2  2  1  0]
+      % [ 0  2  3  0]
+      % [ 0  0  0  0]
+      \begin{equation*}
+        \begin{amat}{3}
+          -2 &2  &1  &0  \\
+           6 &-4 &0  &0  \\
+          -1 &-2 &-4 &0
+        \end{amat}
+        \grstep[-(1/2)\rho_1+\rho_3]{3\rho_1+\rho_2}
+        \grstep{(3/2)\rho_2+\rho_3}
+        \begin{amat}{3}
+          -2 &2 &1   &0  \\
+           0 &2 &3   &0  \\
+           0 &0 &0   &0
+        \end{amat}
+      \end{equation*}
+      Parametrisasi memberikan ruang solusi berikut.
+      \begin{equation*}
+        S_1=\set{\colvec{-1 \\ -3/2 \\ 1}\cdot z \suchthat z\in\C}
+      \end{equation*}
+
+      Berikut adalah sistem untuk $\lambda_2=0$.
+      \begin{equation*}
+        \begin{mat}
+          1    &2    &1 \\
+          6    &-1 &0 \\
+         -1    &-2   &-1
+        \end{mat}
+        \colvec{x \\ y \\ z}
+        =\colvec{0 \\ 0 \\ 0}
+      \end{equation*}
+      Metode Gauss 
+      % sage: M = matrix(QQ, [[1,2,1,0], [6,-1,0,0], [-1,-2,-1,0]])
+      % sage: gauss_method(M)
+      % [ 1  2  1  0]
+      % [ 6 -1  0  0]
+      % [-1 -2 -1  0]
+      % take -6 times row 1 plus row 2
+      % take 1 times row 1 plus row 3
+      % [  1   2   1   0]
+      % [  0 -13  -6   0]
+      % [  0   0   0   0]
+      \begin{equation*}
+        \begin{amat}{3}
+           1 &2  &1  &0  \\
+           6 &-1 &0  &0  \\
+          -1 &-2 &-1 &0
+        \end{amat}
+        \grstep[\rho_1+\rho_3]{-6\rho_1+\rho_2}
+        \begin{amat}{3}
+           1 &2 &1   &0  \\
+           0 &-13 &-6   &0  \\
+           0 &0 &0   &0
+        \end{amat}
+      \end{equation*}
+      yang diikuti dengan parametrisasi memberikan ruang solusi berikut.
+      \begin{equation*}
+        S_2=\set{\colvec{-1/13 \\ -6/13 \\ 1}\cdot z \suchthat z\in\C}
+      \end{equation*}
+
+      Sistem untuk $\lambda_3=-4$ dikerjakan dengan cara yang sama.
+      \begin{equation*}
+        \begin{mat}
+          1-(-4)    &2    &1 \\
+          6    &-1-(-4) &0 \\
+         -1    &-2   &-1-(-4)
+        \end{mat}
+        \colvec{x \\ y \\ z}
+        =\colvec{0 \\ 0 \\ 0}
+      \end{equation*}
+      Metode Gauss 
+      % sage: M = matrix(QQ, [[5,2,1,0], [6,3,0,0], [-1,-2,3,0]])
+      % sage: gauss_method(M)
+      % [ 5  2  1  0]
+      % [ 6  3  0  0]
+      % [-1 -2  3  0]
+      % take -6/5 times row 1 plus row 2
+      % take 1/5 times row 1 plus row 3
+      % [   5    2    1    0]
+      % [   0  3/5 -6/5    0]
+      % [   0 -8/5 16/5    0]
+      % take 8/3 times row 2 plus row 3
+      % [   5    2    1    0]
+      % [   0  3/5 -6/5    0]
+      % [   0    0    0    0]
+      \begin{equation*}
+        \begin{amat}{3}
+           5 &2  &1  &0  \\
+           6 &3 &0  &0  \\
+          -1 &-2 &3 &0
+        \end{amat}
+        \grstep[(1/5)\rho_1+\rho_3]{-(6/5)\rho_1+\rho_2}
+        \grstep{(8/3)\rho_2+\rho_3}
+        \begin{amat}{3}
+           5 &2 &1   &0  \\
+           0 &3/5 &-6/5   &0  \\
+           0 &0 &0   &0
+        \end{amat}
+      \end{equation*}
+      dan parametrisasi memberikan hasil berikut.
+      \begin{equation*}
+        S_3=\set{\colvec{-1 \\ 2 \\ 1}\cdot z \suchthat z\in\C}
+      \end{equation*}
+
+      Jadi, matriks tersebut memiliki bentuk diagonal itu ketika merepresentasikan
+      transformasi yang sama terhadap pasangan basis $D,D$ berikut.
+      \begin{equation*}
+        D=\sequence{\colvec{-1 \\ -3/2 \\ 1},
+                    \colvec{-1/13 \\ -6/13 \\ 1},
+                    \colvec{-1 \\ 2 \\ 1}}
+      \end{equation*}
+     \partsitem
+     % sage: M = matrix(QQ, [[1,2,1], [6,-1,0], [-1,-2,-1]])
+     % sage: M.eigenvalues()
+     % [3, 0, -4]
+     % sage: P = matrix(QQ, [[-1,-1/13,-1], [-3/2,-6/13,2], [1,1,1]])
+     % sage: P.inverse()*M*P
+     % [ 3  0  0]
+     % [ 0  0  0]
+     % [ 0  0 -4]
+     % sage: P.inverse()
+     % [-16/21   -2/7  -4/21]
+     % [ 13/12      0  13/12]
+     % [ -9/28    2/7   3/28]
+       Namakan matriks tersebut~$T$.
+       Dengan mengambil ruang domain dan kodomain sebagai $\Re^3$ serta
+       $T=\rep{t}{\stdbasis_3,\stdbasis_3}$, kita memperoleh diagram berikut.
+       \begin{equation*}
+       \begin{CD}
+          \C^3_{\wrt{\stdbasis_3}}            @>t>T>      \C^3_{\wrt{\stdbasis_3}}       \\
+          @V{\scriptstyle\identity} VV           @V{\scriptstyle\identity} VV \\
+          \C^3_{\wrt{D}}             @>t>D>  \C^3_{\wrt{D}}
+        \end{CD}
+        \end{equation*}
+        Dari diagram tersebut kita memperoleh $D=P^{-1}TP$, dengan
+        $P=\rep{\identity}{D,\stdbasis_3}$.
+        Merepresentasikan setiap vektor dalam $D$ terhadap basis standar
+        mudah dilakukan karena, terhadap basis standar, setiap vektor
+        merepresentasikan dirinya sendiri.
+        \begin{multline*}
+          \rep{\colvec{-1 \\ -3/2 \\ 1}}{\stdbasis_3}=\colvec{-1 \\ -3/2 \\ 1}
+          \quad
+          \rep{\colvec{-1/13 \\ -6/13 \\ 1}}{\stdbasis_3}=\colvec{-1/13 \\ -6/13 \\ 1}
+          \\
+          \rep{\colvec{-1 \\ 2 \\ 1}}{\stdbasis_3}=\colvec{-1 \\ 2 \\ 1}
+        \end{multline*}
+        Jadi, matriks itu cukup menyandingkan ketiga vektor basis tersebut.
+        \begin{equation*}
+          P=
+          \begin{mat}
+            -1   &-1/13 &-1 \\
+            -3/2 &-6/13 &2  \\
+            1    &1     &1
+          \end{mat}
+         \quad\text{sehingga}\quad
+         P^{-1}=
+         \begin{mat}
+           -16/21 &-2/7 &-4/21 \\
+           13/12  &0    &13/12 \\
+           -9/28  &2/7  &3/28
+         \end{mat}
+        \end{equation*}
+
+
+
+
+
+     \end{exparts}
+    \end{answer}
+  \recommended \item 
+    Tentukan rumus polinomial karakteristik suatu matriks $\nbyn{2}$.
+    \begin{answer}
+      Cukup ekspansikan determinan $T-xI$.
+      \begin{equation*}
+        \begin{vmatrix}
+          a-x  &c  \\
+          b    &d-x
+        \end{vmatrix}
+        =(a-x)(d-x)-bc
+        =x^2+(-a-d)\cdot x +(ad-bc)
+      \end{equation*}
+    \end{answer}
+  \item \label{exer:CharPolyTransWellDefed}
+    Buktikan bahwa 
+    polinomial karakteristik suatu transformasi terdefinisi dengan baik.
+    \begin{answer}
+      Sebarang dua representasi transformasi tersebut saling serupa, dan
+      matriks-matriks yang serupa memiliki polinomial karakteristik yang sama.  
+    \end{answer}
+  \item Buktikan atau sangkal: jika semua nilai eigen suatu matriks adalah $0$, 
+    maka matriks itu harus merupakan matriks nol.
+    \begin{answer}
+      Pernyataan itu tidak benar.
+      Semua nilai eigen matriks berikut adalah $0$.
+      \begin{equation*}
+        \begin{mat}[r]
+          0  &1  \\
+          0  &0
+        \end{mat}
+      \end{equation*}
+    \end{answer}
+  \recommended \item 
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa sebarang vektor tak nol dalam sebarang 
+        ruang vektor tak trivial dapat menjadi vektor eigen.
+        Artinya, untuk \( \vec{v}\neq\zero \) dalam ruang tak trivial \( V \),
+        tunjukkan bahwa terdapat transformasi \( \map{t}{V}{V} \) dengan
+        nilai eigen skalar \( \lambda\in\Re \) sedemikian sehingga
+        \( \vec{v}\in V_{\lambda} \).
+      \partsitem Bagaimana jika suatu skalar \( \lambda \) juga diberikan?
+        Dapatkah sebarang anggota tak nol dari sebarang ruang vektor tak trivial
+        menjadi vektor eigen yang terkait dengan \( \lambda \)?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Gunakan \( \lambda=1 \) dan pemetaan identitas.
+        \partsitem Ya. Gunakan transformasi yang mengalikan semua 
+          vektor dengan skalar \( \lambda \).
+      \end{exparts}  
+     \end{answer}
+  \recommended \item 
+    Misalkan \( \map{t}{V}{V} \) dan \( T=\rep{t}{B,B} \).
+    Buktikan bahwa vektor-vektor eigen \( T \) yang terkait dengan \( \lambda \)
+    adalah vektor-vektor tak nol dalam kernel pemetaan yang direpresentasikan
+    (terhadap pasangan basis yang sama) oleh \( T-\lambda I \).
+    \begin{answer}
+      Jika $t(\vec{v})=\lambda\cdot\vec{v}$, maka 
+      $\vec{v}\mapsto\zero$ di bawah pemetaan $t-\lambda\cdot\identity$.
+    \end{answer}
+  \item 
+    Buktikan bahwa jika $a,\ldots,\,d$ semuanya bilangan bulat dan
+    \( a+b=c+d \), maka
+    \begin{equation*}
+      \begin{mat}
+         a  &b  \\
+         c  &d
+      \end{mat}
+    \end{equation*}
+    memiliki nilai eigen bulat, yaitu \( a+b \) dan \( a-c \).
+    \begin{answer}
+      Persamaan karakteristiknya 
+      \begin{equation*}
+        0=
+        \begin{vmatrix}
+          a-x  &b  \\
+          c    &d-x 
+        \end{vmatrix}
+        =(a-x)(d-x)-bc
+      \end{equation*}
+      menyederhana menjadi $x^2+(-a-d)\cdot x + (ad-bc)$.
+      Pemeriksaan bahwa nilai $x=a+b$ dan $x=a-c$ memenuhi persamaan tersebut 
+      (dengan syarat $a+b=c+d$) bersifat rutin. 
+    \end{answer}
+  \recommended \item
+    Buktikan bahwa jika \( T \) nonsingular dan memiliki nilai eigen
+    \( \lambda_1,\dots,\lambda_n \), maka \( T^{-1} \) memiliki nilai eigen
+    \( 1/\lambda_1,\dots,1/\lambda_n \).
+    Apakah konversnya benar?
+    \begin{answer}
+      Perhatikan ruang eigen $V_{\lambda}$.
+      Sebarang $\vec{w}\in V_{\lambda}$ merupakan bayangan
+      $\vec{w}=\lambda\cdot\vec{v}$ dari suatu $\vec{v}\in V_{\lambda}$ 
+      (yakni, $\vec{v}=(1/\lambda)\cdot\vec{w}$).
+      Jadi, pada $V_{\lambda}$ (yang merupakan subruang tak trivial), 
+      aksi $t^{-1}$ adalah 
+      $t^{-1}(\vec{w})=\vec{v}=(1/\lambda)\cdot\vec{w}$,
+      sehingga $1/\lambda$ merupakan nilai eigen $t^{-1}$.
+      Konversnya juga benar, dengan menerapkan hasil ini pada $T^{-1}$ dan
+      menggunakan $(T^{-1})^{-1}=T$.
+    \end{answer}
+  \recommended \item
+    Misalkan \( T \) berukuran \( \nbyn{n} \) dan \( c,d \) adalah skalar.
+    \begin{exparts}
+      \partsitem Buktikan bahwa jika \( T \) memiliki nilai eigen 
+        \( \lambda \) dengan vektor eigen terkait \( \vec{v} \), maka
+        \( \vec{v} \) merupakan vektor eigen dari \( cT+dI \) yang terkait
+        dengan nilai eigen \( c\lambda+d \).
+      \partsitem Buktikan bahwa jika \( T \) dapat didiagonalkan, maka
+        \( cT+dI \) juga dapat didiagonalkan.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Kita mempunyai 
+          $(cT+dI)\vec{v}=cT\vec{v}+dI\vec{v}=c\lambda\vec{v}+d\vec{v}
+               =(c\lambda+d)\cdot \vec{v}$.
+        \partsitem Misalkan $S=PTP^{-1}$ diagonal.
+          Maka $P(cT+dI)P^{-1}=P(cT)P^{-1}+P(dI)P^{-1}
+                 =cPTP^{-1}+dI=cS+dI$ juga diagonal.
+      \end{exparts}
+    \end{answer}
+  \recommended \item
+    Tunjukkan bahwa \( \lambda \) merupakan nilai eigen \( T \) jika dan hanya
+    jika pemetaan yang direpresentasikan oleh \( T-\lambda I \) bukan isomorfisme.
+    \begin{answer}
+      Skalar $\lambda$ merupakan nilai eigen jika dan hanya jika transformasi
+      $t-\lambda \identity$ singular.
+      Suatu transformasi singular jika dan hanya jika transformasi itu bukan
+      isomorfisme (yakni, suatu transformasi merupakan isomorfisme jika dan
+      hanya jika transformasi itu nonsingular).
+    \end{answer}
+  \item \cite{Strang} 
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa jika \( \lambda \) merupakan nilai eigen
+         \( A \), maka \( \lambda^k \) merupakan nilai eigen \( A^k \)
+         untuk setiap bilangan bulat positif \( k \).
+      \partsitem Apa yang salah dengan bukti generalisasi berikut?
+         ``Jika \( \lambda \) merupakan nilai eigen \( A \) dan \( \mu \)
+         merupakan nilai eigen \( B \), maka \( \lambda\mu \) merupakan
+         nilai eigen \( AB \), sebab jika \( A\vec{x}=\lambda\vec{x} \) dan
+         \( B\vec{x}=\mu\vec{x} \), maka
+         \( AB\vec{x}=A\mu\vec{x}=\mu A\vec{x}=\mu\lambda\vec{x} \).''
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Jika nilai eigen $\lambda$ terkait dengan vektor eigen
+          $\vec{x}$, maka
+          $A^k\vec{x}=A\cdots A\vec{x}=A^{k-1}\lambda\vec{x}
+            =\lambda A^{k-1}\vec{x}=\cdots=\lambda^k\vec{x}$.
+          (Rincian lengkapnya memerlukan induksi pada $k$.)
+        \partsitem Vektor eigen yang terkait dengan $\lambda$
+          belum tentu merupakan vektor eigen yang terkait dengan $\mu$.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Apakah matriks-matriks yang ekuivalen memiliki nilai eigen yang sama?
+    \begin{answer}
+      Tidak.
+      Berikut adalah dua matriks berukuran sama dan berperingkat sama,
+      tetapi memiliki nilai eigen yang berbeda.
+      \begin{equation*}
+        \begin{mat}[r]
+          1  &0  \\
+          0  &1
+        \end{mat}
+        \qquad
+        \begin{mat}[r]
+          1  &0  \\
+          0  &2
+        \end{mat}
+      \end{equation*}
+    \end{answer}
+  \item 
+    Tunjukkan bahwa matriks persegi berentri riil dengan jumlah baris ganjil
+    memiliki sekurang-kurangnya satu nilai eigen riil.
+    \begin{answer}
+      Polinomial karakteristiknya berderajat ganjil sehingga 
+      memiliki sekurang-kurangnya satu akar riil.  
+    \end{answer}
+  \item 
+    Diagonalkan.
+    \begin{equation*}
+       \begin{mat}[r]
+         -1  &2  &2  \\
+          2  &2  &2  \\
+         -3  &-6 &-6
+       \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Polinomial karakteristik $x^3+5x^2+6x$ memiliki akar-akar berbeda
+      \( \lambda_1=0 \), \( \lambda_2=-2 \), dan \( \lambda_3=-3 \).
+      Jadi, matriks tersebut dapat didiagonalkan menjadi bentuk berikut.
+      \begin{equation*}
+         \begin{mat}[r]
+            0  &0  &0  \\
+            0  &-2 &0  \\
+            0  &0  &-3
+         \end{mat}
+      \end{equation*}    
+    \end{answer}
+  \item 
+    Misalkan \( P \) merupakan matriks nonsingular berukuran \( \nbyn{n} \).
+    Tunjukkan bahwa pemetaan
+    \definend{transformasi keserupaan}\index{transformasi keserupaan}
+    \( \map{t_P}{\matspace_{\nbyn{n}}}{\matspace_{\nbyn{n}}} \)
+    yang mengirimkan \( T\mapsto PTP^{-1} \)
+    merupakan isomorfisme.
+    \begin{answer}
+      Kita harus menunjukkan bahwa pemetaan itu satu-satu dan pada, serta
+      mempertahankan operasi penjumlahan matriks dan perkalian skalar.
+
+      Untuk menunjukkan bahwa pemetaan itu satu-satu, misalkan
+      $t_P(T)=t_P(S)$, yakni $PTP^{-1}=PSP^{-1}$. Mengalikan kedua ruas
+      dari kiri dengan $P^{-1}$ dan dari kanan dengan $P$ memberikan $T=S$.
+      Untuk menunjukkan bahwa pemetaan itu pada, ambil
+      $S\in\matspace_{\nbyn{n}}$ dan perhatikan bahwa
+      $S=t_P(P^{-1}SP)$.
+
+      Pemetaan $t_P$ mempertahankan penjumlahan matriks karena
+      $t_P(T+S)=P(T+S)P^{-1}=(PT+PS)P^{-1}=PTP^{-1}+PSP^{-1}
+      =t_P(T)+t_P(S)$, berdasarkan sifat perkalian dan penjumlahan matriks
+      yang telah kita pelajari.
+      Perkalian skalar serupa:
+      $t_P(cT)=P(c\cdot T)P^{-1}=c\cdot (PTP^{-1})=c\cdot t_P(T)$.
+    \end{answer}
+  \puzzle \item 
+    \cite{MathMag67p232}
+    Tunjukkan bahwa jika \( A \) merupakan matriks persegi berordo \( n \)
+    dan jumlah entri pada setiap baris (kolom) adalah \( c \), maka \( c \)
+    merupakan akar karakteristik \( A \).
+    (``Akar karakteristik'' adalah sinonim untuk nilai eigen.)\index{karakteristik!akar}\index{akar!karakteristik}
+    \begin{answer}
+      \answerasgiven %
+      Jika variabel dalam polinomial karakteristik \( A \) ditetapkan sama
+      dengan \( c \), penjumlahan \( (n-1) \) baris (kolom) pertama ke
+      baris (kolom) ke-\( n \) menghasilkan determinan yang baris (kolom)
+      ke-\( n \)-nya nol.
+      Jadi, \( c \) merupakan akar karakteristik \( A \).  
+    \end{answer}
+\index{keserupaan|)}
+\end{exercises}

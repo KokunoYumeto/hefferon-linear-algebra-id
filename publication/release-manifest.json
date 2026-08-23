@@ -1,0 +1,143 @@
+{
+  "artifacts": [
+    {
+      "bytes": 8984459,
+      "component": "textbook",
+      "kind": "reader-pdf",
+      "pages": 580,
+      "path": "01_HEFFERON_LINEAR_ALGEBRA_ID_TEXTBOOK_2026.08.22.pdf",
+      "sha256": "0462ddc8ffcc901efbc81205f79a249ae716e838a6ec32eda033444a90b8755e"
+    },
+    {
+      "bytes": 2672266,
+      "component": "worked-answers",
+      "kind": "reader-pdf",
+      "pages": 435,
+      "path": "02_HEFFERON_LINEAR_ALGEBRA_ID_WORKED_ANSWERS_2026.08.22.pdf",
+      "sha256": "61f8a344cade529249d4f165bb62bce17579b6a4408b11634999e9f73ec9c01b"
+    },
+    {
+      "bytes": 13164259,
+      "component": "sage-lab",
+      "kind": "reader-pdf",
+      "pages": 109,
+      "path": "03_HEFFERON_LINEAR_ALGEBRA_ID_SAGE_LAB_2026.08.22.pdf",
+      "sha256": "adb78966020355a90442c7ae68c734f1fd6b44b5d935a3f75e531ea666eeee4a"
+    },
+    {
+      "bytes": 117074300,
+      "entries_sha256": "c38e2691fc3db5cd968cd779850ea940066a3cb405dd71bdea4f23cd825d8b1a",
+      "entry_count": 947,
+      "kind": "editable-source",
+      "path": "HEFFERON_LINEAR_ALGEBRA_ID_EDITABLE_SOURCE_2026.08.22.zip",
+      "sha256": "33f679be85fe1af6eb97e7d203a8389fd51beced9d41facc453e6162ad90a2c1",
+      "uncompressed_bytes": 129654109
+    },
+    {
+      "bytes": 6118023,
+      "entries_sha256": "8a8adbe97dbdb726795367ec637d4ec926c06fd13eff703c8fd2a7ed3514c328",
+      "entry_count": 21,
+      "kind": "modular-backend",
+      "path": "HEFFERON_LINEAR_ALGEBRA_ID_MODULAR_BACKEND_2026.08.22.zip",
+      "sha256": "e3d66b5d19c79bb10243ac552f16165da897d40615467696452e3a64d0b92df2",
+      "uncompressed_bytes": 53513200
+    },
+    {
+      "bytes": 17025794,
+      "entries_sha256": "c2147d9627586f96052e6efe4176ab7a0c7c5dafcd3ec1b15a5597cd26405953",
+      "entry_count": 122,
+      "kind": "provenance-qa",
+      "path": "HEFFERON_LINEAR_ALGEBRA_ID_PROVENANCE_QA_2026.08.22.zip",
+      "sha256": "b76e7eeff732661691e33e07735022aaef7b825dfee3e7c6565aa6697cfc1ada",
+      "uncompressed_bytes": 25416710
+    },
+    {
+      "bytes": 2075,
+      "kind": "release-readme",
+      "path": "README_RELEASE_2026.08.22.md",
+      "sha256": "b35010b03ce4d37ff4f8f8d6d699c49e19df32366ac26eae10c2ca23480a51fe"
+    }
+  ],
+  "authority": {
+    "author": "Jim Hefferon",
+    "homepage": "https://hefferon.net/linearalgebra",
+    "repository": "https://gitlab.com/jim.hefferon/linear-algebra",
+    "source_commit": "df2262e089a02651c127f1dd12649c4622ee1383",
+    "source_commit_url": "https://gitlab.com/jim.hefferon/linear-algebra/-/tree/df2262e089a02651c127f1dd12649c4622ee1383",
+    "source_tree": "30340725aa2641b3c617b1584c59f6df83e1fdf3",
+    "work": "Linear Algebra, Fourth Edition"
+  },
+  "backend_validation": {
+    "answer_count": 1037,
+    "artifact_count": 8,
+    "asset_count": 432,
+    "build_result": "pass",
+    "correction_count": 307,
+    "exercise_count": 1037,
+    "final_build_required": true,
+    "manifest_sha256": "4c79fad12bda1552f03d6dae7c962f4d7a51ff68b3dcef09e88c437bfe773fad",
+    "native_upstream_answer_count": 1035,
+    "record_count": 8132,
+    "relation_count": 13999,
+    "relation_types": {
+      "adapts": 3,
+      "answers": 1037,
+      "contains": 7178,
+      "corrects": 324,
+      "depends-on": 368,
+      "exercises": 2208,
+      "precedes": 2273,
+      "translates": 114,
+      "xref": 494
+    },
+    "schema_version": "0.5.2",
+    "segment_count": 3528,
+    "status": "pass",
+    "target_supplied_answer_count": 2,
+    "unanswered_exercise_count": 0,
+    "unit_count": 3541
+  },
+  "binding": {
+    "driver_sha256": "a6220a111324dc754f8bfe58a6f067cbd0539eef5f9b460b8ed3d7631c25e4a5",
+    "fingerprint": "6bb9e0f7e9952c903ab66520016067b06e0b36e1312e29239ae5fde5a7af68a0",
+    "input_inventory_sha256": "b49224ccae338ac47f31e3503b314d88a83b5fc60960851a3c96f53b0aa921f8",
+    "owner": "KokunoYumeto",
+    "plan_sha256": "7d3df79da9dd84649db3210027721c15382547bd882caba92195862a12b4e4c5",
+    "repository": "hefferon-linear-algebra-id",
+    "source_commit": "df2262e089a02651c127f1dd12649c4622ee1383",
+    "source_tree": "30340725aa2641b3c617b1584c59f6df83e1fdf3",
+    "tag": "v2026.08.22",
+    "version": "2026.08.22"
+  },
+  "build_report_sha256": "c371bf8a1527602ba57af9ad0b6ff0225a96f8882d4f2a226d336090e1370851",
+  "doi": "10.5281/zenodo.22070458",
+  "language": "id-ID",
+  "model_provenance": "OpenAI Codex gpt-5.6-sol, Ultra.",
+  "publication_date": "2026-08-22",
+  "rights": {
+    "attribution_file": "NOTICE.id-ID.md",
+    "route": "The pinned upstream LICENSE offers GNU FDL or CC BY-SA 2.5; this derivative edition selects CC BY-SA 2.5 for material covered by that notice. Embedded components retain their own notices and licenses.",
+    "selected_license_id": "cc-by-sa-2.5",
+    "selected_license_name": "Creative Commons Attribution-ShareAlike 2.5 Generic",
+    "selected_license_url": "https://creativecommons.org/licenses/by-sa/2.5/"
+  },
+  "rights_files": {
+    "LICENSE": {
+      "bytes": 317,
+      "sha256": "fe07b74ff18c59f1def6ba48373c6a93f8fcedeceafba17005ec656da811c7e5"
+    },
+    "NOTICE.id-ID.md": {
+      "bytes": 2491,
+      "sha256": "b7234be232dfd98bf1ccb6e734a2e37685d8385c3b230a8331ef67289927d034"
+    }
+  },
+  "schema_version": "hefferon-id-release-manifest-v2",
+  "self_hash": null,
+  "self_hash_status": "excluded to avoid self-referential hashing",
+  "source_tree_sha256": "c0772dff373b103192c72f639e68a1e507d40e9ebdd102af98eb6475e8692c36",
+  "tag": "v2026.08.22",
+  "title": "Aljabar Linear karya Jim Hefferon — Edisi Bahasa Indonesia",
+  "transaction_fingerprint": "6bb9e0f7e9952c903ab66520016067b06e0b36e1312e29239ae5fde5a7af68a0",
+  "translation_credit": "Codex atas permintaan pengguna",
+  "version": "2026.08.22"
+}

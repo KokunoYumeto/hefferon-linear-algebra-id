@@ -1,0 +1,1179 @@
+% Chapter 4, Section 2 _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-12
+\section{Geometri Determinan}
+Bagian sebelumnya mengembangkan determinan secara aljabar, dengan
+meninjau rumus-rumus yang memenuhi syarat-syarat tertentu.
+Bagian ini melengkapinya dengan pendekatan geometris.
+Selain daya tarik intuitifnya, pendekatan ini memiliki keunggulan: sementara
+sejauh ini kita hanya meninjau apakah suatu determinan bernilai nol atau tidak,
+di sini kita akan memberi makna pada nilai determinan tersebut.
+(Bagian sebelumnya memperlakukan determinan sebagai fungsi dari
+baris-baris, tetapi bagian ini berfokus pada kolom-kolom.)
+
+
+
+
+
+
+
+
+
+
+\subsection{Determinan sebagai Fungsi Ukuran}
+Gambar jajaran genjang ini
+sudah dikenal dari konstruksi jumlah dua vektor.
+\begin{center}
+  \includegraphics{det/mp/ch4.30}
+\end{center}
+
+\begin{definition} \label{df:Box}
+%<*df:Box>
+Di $\Re^n$,
+\definend{kotak}\index{kotak}
+(atau \definend{paralelepiped}\index{paralelepiped})
+yang dibentuk oleh
+\( \sequence{\vec{v}_1,\dots,\vec{v}_n} \) 
+adalah himpunan
+\( \set{t_1\vec{v}_1+\dots+t_n\vec{v}_n
+      \suchthat t_1,\ldots,t_n\in \closedinterval{0}{1}} \).
+%</df:Box>
+\end{definition}
+
+\noindent Jadi, jajaran genjang di atas adalah kotak yang dibentuk oleh
+$\sequence{\binom{x_1}{y_1},\binom{x_2}{y_2}}$.
+Kotak dalam ruang tiga dimensi ditampilkan dalam \nearbyexample{ex:VolParPiped}.
+
+Kita dapat mencari luas kotak di atas dengan menggambar persegi panjang yang
+melingkupinya lalu mengurangkan luas daerah-daerah yang tidak termasuk kotak.
+\begin{center}
+  \parbox{1.5in}{\hbox{}\hfil\includegraphics{det/mp/ch4.31}\hfil\hbox{}}
+  \quad
+  \parbox{3.0in}{
+    \hbox{}\hfil
+    $\begin{array}{l}
+       \text{luas jajaran genjang}                    \\
+         \hbox{}\quad \hbox{}
+            =\text{luas persegi panjang}
+                -\text{luas $A$}-\text{luas $B$} \\
+         \hbox{}\qquad \hbox{}
+            -\cdots-\text{luas $F$}                   \\
+         \hbox{}\quad \hbox{}
+            =(x_1+x_2)(y_1+y_2)-x_2y_1-x_1y_1/2        \\
+         \hbox{}\qquad \hbox{}
+            -x_2y_2/2-x_2y_2/2-x_1y_1/2-x_2y_1         \\
+         \hbox{}\quad \hbox{}
+            =x_1y_2-x_2y_1        
+    \end{array}$
+    \hfil\hbox{}}
+\end{center}
+Kesamaan antara luas tersebut dan nilai determinan
+\begin{equation*}
+  \begin{vmat}
+    x_1  &x_2  \\
+    y_1  &y_2
+  \end{vmat}
+  =x_1y_2-x_2y_1
+\end{equation*}
+bukanlah kebetulan.
+Definisi determinan memuat empat sifat yang kita ketahui
+menghasilkan fungsi unik untuk setiap dimensi~$n$.
+Kita akan menunjukkan bahwa sifat-sifat ini
+merupakan postulat yang baik bagi fungsi
+yang mengukur ukuran kotak dalam ruang-$n$.\index{ukuran}
+
+Sebagai contoh, fungsi semacam itu
+seharusnya memiliki sifat bahwa mengalikan salah satu vektor pembentuk kotak
+dengan suatu skalar akan mengalikan ukurannya dengan skalar tersebut.
+\begin{center}
+  \includegraphics{det/mp/ch4.32}
+  \qquad
+  \includegraphics{det/mp/ch4.33}
+\end{center}
+Di sini ditampilkan $k=1.4$.
+Di sebelah kanan, daerah yang diskalakan ulang digambar dengan garis utuh,
+sedangkan daerah asal diarsir sebagai pembanding.
+% The region formed by $k\vec{v}$ and~$\vec{w}$
+% is bigger by a factor of \( k \)
+% than the shaded region enclosed by $\vec{v}$ and~$\vec{w}$.
+% That is,
+% \( \size (k\vec{v},\vec{w})=k\cdot\size (\vec{v},\vec{w}) \) and
+
+Artinya, wajar jika kita mengharapkan bahwa
+$\size (\dots,k\vec{v},\dots)=k\cdot\size (\dots,\vec{v},\dots)$.
+Tentu saja, syarat ini adalah salah satu syarat dalam
+definisi determinan.
+
+Sifat determinan lain yang seharusnya berlaku bagi setiap
+fungsi yang mengukur ukuran kotak ialah bahwa
+fungsi itu tidak terpengaruh oleh kombinasi baris.
+Berikut adalah kotak sebelum dan sesudah pengombinasian
+(skalar yang ditampilkan adalah $k=-0.35$).
+\begin{center}
+  \includegraphics{det/mp/ch4.34}
+  \qquad
+  \includegraphics{det/mp/ch4.35}
+\end{center}   
+Kotak yang dibentuk oleh $\vec{v}$ dan
+$k\vec{v}+\vec{w}$ memiliki kemiringan yang berbeda
+dari kotak semula, tetapi keduanya memiliki
+alas dan tinggi yang sama, sehingga luasnya juga sama.
+% (As before, the figure on the right has the 
+% original region in shade for comparison.)
+Jadi, kita mengharapkan bahwa ukuran tidak terpengaruh oleh operasi geser
+$\size (\dots,\vec{v},\dots,\vec{w},\dots)
+=\size (\dots,\vec{v},\dots,k\vec{v}+\vec{w},\dots)$.
+Sekali lagi, ini adalah syarat determinan.
+
+Kita mengharapkan bahwa kotak yang dibentuk oleh vektor-vektor satuan berukuran satu
+\begin{center}
+  \includegraphics{det/mp/ch4.36}
+\end{center}
+dan secara alami memperluasnya ke setiap ruang-$n$ sebagai
+$\size(\vec{e}_1,\dots,\vec{e}_n)=1$.
+% Again, that is a determinant property.
+
+Syarat~(2) dalam definisi determinan
+bersifat redundan, sebagaimana dinyatakan setelah definisi itu.
+Dari bagian sebelumnya kita mengetahui bahwa
+untuk setiap~$n$, determinan ada dan unik. Karena itu kita mengetahui
+bahwa postulat-postulat untuk fungsi ukuran ini konsisten dan
+bahwa kita tidak memerlukan postulat tambahan.
+Dengan demikian, kita beralasan untuk
+menafsirkan \( \det(\vec{v}_1,\dots,\vec{v}_n) \) sebagai ukuran
+kotak yang dibentuk oleh vektor-vektor tersebut.
+% (\textit{Comment.}
+%   An even more basic approach, which also leads to the definition
+%   below, is in \cite{Weston59}.)
+
+\begin{remark}  \label{re:PropertyTwoGivesSign}
+Meskipun syarat~(2) redundan, syarat itu menyoroti satu hal penting.
+Perhatikan dua gambar berikut.
+\begin{center} \small
+  \begin{tabular}{c@{\hspace*{8em}}c}
+    \includegraphics{det/mp/ch4.37}  
+      &\includegraphics{det/mp/ch4.38}  \\[.25ex]
+    \ $\begin{vmat}[r]
+        4  &1   \\
+        2  &3
+      \end{vmat}=10$
+      &\ $\begin{vmat}[r]
+          1  &4   \\
+          3  &2
+        \end{vmat}=-10$
+  \end{tabular}
+\end{center}
+Menukar kolom-kolom mengubah tandanya.
+Di sebelah kiri, dengan mulai dari $\vec{u}$ dan mengikuti busur
+di dalam sudut menuju $\vec{v}$ (yakni bergerak berlawanan arah jarum jam),
+kita memperoleh ukuran positif.
+Di sebelah kanan, dengan mulai dari $\vec{v}$ dan bergerak menuju~$\vec{u}$,
+sehingga mengikuti busur searah jarum jam, kita memperoleh ukuran negatif.
+Tanda yang dihasilkan oleh fungsi ukuran mencerminkan
+\definend{orientasi}\index{kotak!orientasi}\index{orientasi}
+atau \definend{arah}\index{kotak!arah}\index{arah} kotak tersebut.
+(Hal yang sama terlihat jika kita membayangkan pengaruh perkalian skalar
+dengan skalar negatif.)
+% Although it is both interesting and important, we don't need the idea of
+% orientation for the development below and so we will pass it by.
+% (See \nearbyexercise{exer:BasisOrient}.)
+\end{remark}
+
+\begin{definition} \label{df:Volume}
+%<*df:Volume>
+\definend{Volume}\index{volume}\index{kotak!volume}
+sebuah kotak adalah nilai mutlak determinan dari
+matriks yang kolom-kolomnya berupa vektor-vektor tersebut.
+%</df:Volume>
+\end{definition}
+
+\begin{example} \label{ex:VolParPiped}
+Menurut rumus luas alas dikalikan tinggi,
+volume paralelepiped ini adalah $12$.
+Hasil ini sesuai dengan determinannya.
+\begin{center}
+   \parbox{2in}{\hbox{}\hfil\includegraphics{det/asy/ppiped.pdf}\hfil\hbox{}}  
+  %  \parbox{2in}{\hbox{}\hfil\includegraphics{det/mp/ch4.39}\hfil\hbox{}}  
+  \hspace{4.5em}
+  $\begin{vmat}[r]
+     2 &0 &-1\\
+     0 &3 &0 \\
+     2 &1 &1
+  \end{vmat}=12$
+\end{center}
+Mengambil vektor-vektor dalam urutan berbeda mengubah tandanya, tetapi
+tidak mengubah besar nilainya.
+\begin{equation*}
+  \begin{vmat}[r]
+     0  &2 &-1 \\
+     3  &0 &0 \\
+     1  &2 &1
+  \end{vmat}=-12  
+\end{equation*}
+\end{example}
+
+% The next result describes some of the geometry of the linear
+% functions that act on
+% \( \Re^n \). 
+
+\begin{theorem}\label{th:MatChVolByDetMat}
+\index{ukuran}\index{transformasi!perubahan ukuran}
+%<*th:MatChVolByDetMat>
+Transformasi \( \map{t}{\Re^n}{\Re^n} \) mengubah ukuran semua kotak
+dengan faktor yang sama; tepatnya, ukuran bayangan sebuah kotak
+$\deter{t(S)}$ adalah $\deter{T}$ kali ukuran kotak $\deter{S}$,
+di mana $T$ adalah matriks
+yang merepresentasikan $t$ terhadap basis standar.
+
+Dengan kata lain, determinan suatu hasil kali adalah
+hasil kali determinan-determinannya, $\deter{TS}=\deter{T}\cdot\deter{S}$.
+%</th:MatChVolByDetMat>
+\end{theorem}
+
+Kedua kalimat itu menyatakan hal yang sama, pertama dalam bahasa pemetaan lalu
+dalam bahasa matriks.
+Ini karena
+$\deter{t(S)}=\deter{TS}$, sebab keduanya memberikan ukuran kotak yang merupakan
+bayangan kotak satuan $\stdbasis_n$ di bawah komposisi $\composed{t}{s}$,
+ketika pemetaan-pemetaan tersebut direpresentasikan terhadap basis standar.
+Kita akan membuktikan kalimat kedua.
+
+\begin{proof}
+%<*pf:MatChVolByDetMat0>
+Pertama, tinjau kasus ketika $T$ singular sehingga
+tidak memiliki invers.
+Perhatikan bahwa jika \( TS \) dapat diinverskan, maka terdapat
+$M$ sedemikian sehingga \( (TS)M=I \), jadi
+\( T(SM)=I \), sehingga \( T \) dapat diinverskan.
+Kontraposisi pengamatan tersebut menyatakan bahwa
+jika \( T \) tidak dapat diinverskan, maka \( TS \) juga tidak dapat diinverskan \Dash
+jika $\deter{T}=0$, maka $\deter{TS}=0$.
+%</pf:MatChVolByDetMat0>
+
+%<*pf:MatChVolByDetMat1>
+Sekarang tinjau kasus ketika $T$ nonsingular.
+Setiap matriks nonsingular dapat difaktorkan menjadi hasil kali
+matriks-matriks elementer $T=E_1E_2\cdots E_r$.
+Untuk menyelesaikan argumen ini,
+kita akan memverifikasi bahwa
+\( \deter{ES}=\deter{E}\cdot\deter{S} \)
+untuk semua matriks~$S$ dan matriks elementer~$E$.
+Hasilnya kemudian mengikuti karena
+$\deter{TS}=\deter{E_1\cdots E_rS}=\deter{E_1}\cdots\deter{E_r}\cdot\deter{S}
+  =\deter{E_1\cdots E_r}\cdot\deter{S}=\deter{T}\cdot\deter{S}$.
+%</pf:MatChVolByDetMat1>
+
+%<*pf:MatChVolByDetMat2>
+Ada tiga jenis matriks elementer.
+Kita akan membahas kasus $M_i(k)$;
+pemeriksaan untuk $P_{i,j}$ dan $C_{i,j}(k)$ serupa.
+Matriks $M_i(k)S$ sama dengan $S$, kecuali bahwa baris~$i$ dikalikan dengan $k$.
+Syarat ketiga fungsi determinan
+kemudian memberikan $\deter{M_i(k)S}=k\cdot\deter{S}$.
+Namun, $\deter{M_i(k)}=k$, sekali lagi menurut syarat ketiga, karena
+$M_i(k)$ diperoleh dari identitas dengan mengalikan baris~$i$ dengan
+$k$.
+Jadi, \( \deter{ES}=\deter{E}\cdot\deter{S} \) berlaku untuk
+$E=M_i(k)$.
+%</pf:MatChVolByDetMat2>
+\end{proof}
+
+
+\begin{example}
+Penerapan pemetaan $t$ yang direpresentasikan terhadap basis-basis standar oleh
+\begin{equation*}
+  \begin{mat}[r]
+    1  &1  \\
+   -2  &0
+  \end{mat}
+\end{equation*}
+akan menggandakan ukuran kotak, misalnya dari ini
+\begin{center}
+    \parbox{1.5in}{\hbox{}\hfil\includegraphics{det/mp/ch4.40}\hfil\hbox{}}  
+    \quad
+    $\begin{vmat}[r]
+      2  &1  \\
+      1  &2
+    \end{vmat}=3$
+\end{center}
+menjadi berikut ini
+\begin{center}
+    \parbox{1.5in}{\hbox{}\hfil\includegraphics{det/mp/ch4.41}\hfil\hbox{}}  
+    \quad
+    $\begin{vmat}[r]
+        3  &3  \\
+       -4  &-2
+     \end{vmat}=6$
+\end{center}
+\end{example}
+
+
+% Recall that determinants are not additive homomorphisms, that
+% $\det(A+B)$ need not equal $\det(A)+\det(B)$.
+% In contrast, the above theorem says that determinants are
+% multiplicative homomorphisms:
+% $\det(AB)$ equals $\det(A)\cdot \det(B)$.
+
+\begin{corollary} \label{co:DeterminantOfInverseIsInverseOfDeterminant}
+%<*co:DeterminantOfInverseIsInverseOfDeterminant>
+Jika suatu matriks dapat diinverskan, maka determinan inversnya adalah
+invers dari determinannya, $\deter{T^{-1}}=1/\deter{T}$.
+%</co:DeterminantOfInverseIsInverseOfDeterminant>
+\end{corollary}
+
+\begin{proof}
+%<*pf:DeterminantOfInverseIsInverseOfDeterminant>
+$1=\deter{I}=\deter{TT^{-1}}=\deter{T}\cdot\deter{T^{-1}}$  
+%</pf:DeterminantOfInverseIsInverseOfDeterminant>
+\end{proof}
+
+
+\begin{exercises}
+  \item 
+    Apakah
+    \begin{equation*}
+      \colvec[r]{4 \\ 1 \\ 2}
+    \end{equation*}
+    berada di dalam kotak yang dibentuk oleh ketiga vektor berikut?
+    \begin{equation*}
+      \colvec[r]{3 \\ 3 \\ 1}
+      \quad
+      \colvec[r]{2 \\ 6 \\ 1}
+      \quad
+      \colvec[r]{1 \\ 0 \\ 5}
+    \end{equation*}
+    \begin{answer}
+      Menyelesaikan
+      \begin{equation*}
+        c_1\colvec[r]{3 \\ 3 \\ 1}
+        +c_2\colvec[r]{2 \\ 6 \\ 1}
+        +c_3\colvec[r]{1 \\ 0 \\ 5}
+        =\colvec[r]{4 \\ 1 \\ 2}
+      \end{equation*}
+      memberikan solusi tunggal
+      \( c_3=11/57 \), \( c_2=-40/57 \), dan \( c_1=99/57 \).
+      Karena \( c_1>1 \), vektor tersebut tidak berada di dalam kotak.
+    \end{answer}
+  \recommended \item 
+    Carilah volume daerah yang ditentukan oleh vektor-vektor tersebut.
+    \begin{exparts}
+      \partsitem $\sequence{\colvec[r]{1 \\ 3},\colvec[r]{-1 \\ 4}}$
+      \partsitem $\sequence{\colvec[r]{2 \\ 1 \\ 0},\colvec[r]{3 \\ -2 \\ 4},
+                              \colvec[r]{8 \\ -3 \\ 8}}$
+      \partsitem $\sequence{\colvec[r]{1 \\ 2 \\ 0 \\ 1},
+                             \colvec[r]{2 \\ 2 \\ 2 \\ 2},
+                             \colvec[r]{-1 \\ 3 \\ 0 \\ 5},
+                             \colvec[r]{0 \\ 1 \\ 0 \\ 7}}$
+    \end{exparts}
+    \begin{answer}
+      Untuk setiap bagian, carilah determinannya lalu ambil nilai mutlaknya.
+      \begin{exparts*}
+        \partsitem $7$
+        \partsitem $0$
+         % sage: A = matrix(QQ, [[2, 3, 8], [1, -2, -3], [0, 4, 8]])
+         % sage: A
+         % [ 2  3  8]
+         % [ 1 -2 -3]
+         % [ 0  4  8]
+         % sage: det(A)
+         % 0
+        \partsitem $58$
+         % sage: A = matrix(QQ, [[1,2,-1,0], [2,2,3,1], [0,2,0,0], [1,2,5,7]])
+         % sage: A
+         % [ 1  2 -1  0]
+         % [ 2  2  3  1]
+         % [ 0  2  0  0]
+         % [ 1  2  5  7]
+         % sage: det(A)
+         % -58
+      \end{exparts*}
+    \end{answer}
+  \recommended \item 
+    Pada gambar ini,
+    persegi panjang di sebelah kiri ditentukan oleh titik-titik $(3,1)$ dan
+    $(1,2)$.
+    Terapkan matriks tersebut untuk memperoleh persegi panjang di sebelah kanan,
+    yang ditentukan oleh $(7,1)$ dan $(4,2)$.
+    Mengapa hal ini tidak bertentangan dengan
+    \nearbytheorem{th:MatChVolByDetMat}?
+    \begin{center}
+      \begin{tabular}{c@{\hspace*{2em}}c@{\hspace*{2em}}c}
+        \includegraphics{det/mp/ch4.43}
+        &\raisebox{12pt}{\( \grstep{\bigl(\begin{smallmatrix}
+                                        2  &1 \\
+                                        0  &1
+                                     \end{smallmatrix}\bigr)} \)}
+        &\includegraphics{det/mp/ch4.44}                                 \\
+        luasnya $2$
+        &determinannya $2$
+        &luasnya $3$
+      \end{tabular}
+    \end{center}
+    \begin{answer}
+      Gambar itu sengaja dibuat menyesatkan.
+      Gambar di sebelah kiri bukan kotak yang dibentuk oleh dua vektor.
+      Jika kita menggesernya ke titik asal, gambar itu menjadi kotak yang
+      dibentuk oleh barisan berikut.
+      \begin{equation*}
+        \sequence{
+          \colvec[r]{0 \\ 1},
+          \colvec[r]{2 \\ 0}
+       }
+      \end{equation*}
+      Kemudian, bayangan di bawah aksi matriks tersebut adalah kotak yang
+      dibentuk oleh barisan berikut.
+      \begin{equation*}
+        \sequence{
+          \colvec[r]{1 \\ 1},
+          \colvec[r]{4 \\ 0}
+         }
+      \end{equation*}
+      yang luasnya $4$.
+     \end{answer}
+  \recommended \item 
+    Carilah volume daerah ini.
+    \begin{center}
+      \includegraphics{det/mp/ch4.42}  
+    \end{center}
+    \begin{answer}
+      Geser paralelepiped itu agar bermula di titik asal,
+      sehingga menjadi kotak yang dibentuk oleh
+      \begin{equation*}
+        \sequence{
+          \colvec[r]{3 \\ 0},
+          \colvec[r]{2 \\ 1}
+        }      
+      \end{equation*}
+      dan sekarang nilai mutlak determinan ini
+      mudah dihitung sebagai $3$.
+      \begin{equation*}
+        \begin{vmat}[r]
+          3  &2  \\
+          0  &1
+        \end{vmat}=3
+      \end{equation*}
+     \end{answer}
+  \recommended \item 
+    Misalkan \( \deter{A}=3 \).
+    Dengan faktor berapa masing-masing matriks berikut mengubah volume?
+    \begin{exparts*}
+      \partsitem \( A \)
+      \partsitem \( A^2 \)
+      \partsitem \( A^{-2} \)
+    \end{exparts*}
+    \begin{answer}
+     \begin{exparts*}
+        \partsitem \( 3 \)
+        \partsitem \( 9 \)
+        \partsitem $1/9$
+      \end{exparts*}  
+    \end{answer}
+  \recommended \item
+    Tinjau transformasi linear~$t$ pada~$\Re^3$
+    yang direpresentasikan terhadap
+    basis-basis standar oleh matriks ini.
+    \begin{equation*}
+      \begin{mat}
+        1 &0 &-1 \\
+        3 &1 &1 \\
+       -1 &0 &3
+      \end{mat}
+    \end{equation*}
+    \begin{exparts}
+      \partsitem Hitung determinan matriks tersebut.
+        Apakah transformasi itu mempertahankan atau membalik orientasi?
+      \partsitem Carilah ukuran kotak yang ditentukan oleh vektor-vektor berikut.
+        Apa orientasinya?
+        \begin{equation*}
+          \colvec{1 \\ -1 \\ 2}
+          \quad
+          \colvec{2 \\ 0 \\ -1}
+          \quad
+          \colvec{1 \\ 1 \\ 0}
+        \end{equation*}
+      \partsitem Carilah bayangan di bawah $t$ dari vektor-vektor pada bagian
+        sebelumnya, lalu carilah ukuran kotak yang dibentuknya.
+        Apa orientasinya?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem
+          Metode Gauss
+          \begin{equation*}
+          \grstep[\rho_1+\rho_3]{-3\rho_1+\rho_2}
+          \begin{mat}
+            1 &0   &-1    \\
+            0 &1   &4     \\
+            0 &0   &2
+          \end{mat}
+          \end{equation*}
+          memberikan determinan~$+2$.
+          Tandanya positif, sehingga transformasi itu mempertahankan orientasi.
+        \partsitem
+          Ukuran kotak adalah nilai determinan berikut.
+          \begin{equation*}
+            \begin{vmat}
+              1 &2  &1 \\
+             -1 &0  &1 \\
+              2 &-1 &0
+            \end{vmat}
+            =+6
+          \end{equation*}
+          Orientasinya positif.
+        \partsitem
+          Karena transformasi ini direpresentasikan oleh matriks yang diberikan
+          terhadap basis-basis standar, dan terhadap basis standar vektor-vektor
+          merepresentasikan dirinya sendiri, untuk mencari bayangan vektor-vektor
+          di bawah transformasi tersebut cukup kalikan vektor-vektor itu dari
+          kiri dengan matriks.
+          \begin{equation*}
+            \colvec{1 \\ -1 \\ 2}\mapsto\colvec{-1 \\ 4 \\ 5}
+            \qquad
+            \colvec{2 \\ 0 \\ -1}\mapsto\colvec{3 \\ 5 \\ -5}
+            \qquad
+            \colvec{1 \\ 1 \\ 0}\mapsto\colvec{1 \\ 4 \\ -1}
+          \end{equation*}
+          Kemudian hitung ukuran kotak yang dihasilkan.
+          \begin{equation*}
+            \begin{vmat}
+              -1 &3  &1 \\
+               4 &5  &4 \\
+               5 &-5 &-1
+            \end{vmat}
+            =+12
+          \end{equation*}
+          Kotak awal berorientasi positif, transformasinya mempertahankan
+          orientasi (karena determinan matriksnya positif), dan kotak akhir
+          juga berorientasi positif.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Dengan faktor berapa setiap transformasi mengubah ukuran
+    kotak?
+    \begin{exparts*}
+      \partsitem $\colvec{x \\ y}\mapsto\colvec{2x \\ 3y}$
+      \partsitem $\colvec{x \\ y}\mapsto\colvec{3x-y \\ -2x+y}$
+      \partsitem $\colvec{x \\ y \\ z}\mapsto\colvec{x-y \\ x+y+z \\ y-2z}$
+    \end{exparts*}
+    \begin{answer}
+      Nyatakan setiap transformasi terhadap basis-basis standar
+      lalu carilah determinannya.
+      \begin{exparts*}
+        \partsitem $6$
+        \partsitem $-1$
+        \partsitem $-5$
+      \end{exparts*}
+    \end{answer}
+  \item 
+    Berapakah luas bayangan persegi panjang
+    \( [2..4]\times [2..5] \) di bawah aksi
+    matriks berikut?
+    \begin{equation*}
+       \begin{mat}[r]
+         2  &3  \\
+         4  &-1
+       \end{mat}
+    \end{equation*}
+    \begin{answer}
+      Luas awal adalah \( 6 \), dan matriks tersebut mengubah ukuran dengan
+      faktor \( -14 \).
+      Jadi, luas bayangannya adalah \( 84 \).
+    \end{answer}
+  \item
+     Jika \( \map{t}{\Re^3}{\Re^3} \) mengubah volume dengan faktor \( 7 \)
+     dan \( \map{s}{\Re^3}{\Re^3} \) mengubah volume dengan faktor \( 3/2 \),
+     maka dengan faktor berapa komposisi keduanya mengubah volume?
+     \begin{answer}
+        Dengan faktor \( 21/2 \).
+     \end{answer}
+  \item 
+    Dalam hal apa definisi kotak berbeda dari
+    definisi rentang?
+    \begin{answer}
+      Untuk kotak, kita mengambil barisan vektor (sebagaimana dijelaskan
+      dalam catatan, urutan vektor penting), sedangkan untuk rentang kita
+      mengambil himpunan vektor.
+      Selain itu, untuk kotak yang merupakan himpunan bagian $\Re^n$ harus ada
+      $n$ vektor; tentu saja, suatu rentang dapat memiliki berapa pun banyaknya
+      vektor.
+      Terakhir, untuk kotak, koefisien $t_1$,~\ldots, $t_n$ berada dalam
+      interval $[0..1]$, sedangkan untuk rentang, koefisiennya bebas mengambil
+      nilai di seluruh $\Re$.
+    \end{answer}
+  \item 
+    Apakah \( \deter{TS}=\deter{ST} \)?
+    \( \deter{T(SP)}=\deter{(TS)P} \)?
+    \begin{answer}
+      Ya, untuk keduanya.
+      Sebagai contoh, persamaan pertama adalah \( \deter{TS}=\deter{T}\cdot\deter{S}=
+                     \deter{S}\cdot\deter{T}=\deter{ST} \).  
+    \end{answer}
+  \item Tunjukkan bahwa tidak ada matriks $\nbyn{2}$ $A$ dan~$B$
+   yang memenuhi persamaan berikut. % http://math.stackexchange.com/questions/827262/need-help-with-a-linear-algebra-proof
+   \begin{equation*}
+     AB=\begin{mat}[r]
+       1 &-1 \\
+       2  &0
+     \end{mat}
+     \quad
+     BA=\begin{mat}[r]
+       2 &1 \\
+       1  &1
+     \end{mat}
+   \end{equation*}
+   \begin{answer}  % due to math.stackexchange.com user dgrasines517
+     Karena $\deter{AB}=\deter{A}\cdot\deter{B}=\deter{BA}$, sedangkan kedua
+     matriks tersebut memiliki determinan yang berbeda.
+   \end{answer}
+  \item 
+   \begin{exparts}
+     \partsitem Misalkan \( \deter{A}=3 \) dan \( \deter{B}=2 \).
+        Carilah \( \deter{A^2\cdot \trans{B}\cdot B^{-2}\cdot \trans{A} } \).
+     \partsitem Andaikan \( \deter{A}=0 \).
+        Buktikan bahwa \( \deter{6A^3+5A^2+2A}=0 \).
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Jika terdefinisi, nilainya adalah
+           \( (3^2)\cdot (2)\cdot (2^{-2})\cdot (3) \).
+        \partsitem \( \deter{6A^3+5A^2+2A}=\deter{A}\cdot\deter{6A^2+5A+2I} \).
+      \end{exparts}  
+    \end{answer}
+  \recommended \item
+    Misalkan \( T \) adalah matriks yang merepresentasikan (terhadap basis-basis
+    standar) pemetaan yang memutar vektor-vektor bidang sejauh
+    \( \theta \) radian berlawanan arah jarum jam.
+    Dengan faktor berapa \( T \) mengubah ukuran?
+    \begin{answer}
+       \(\begin{vmat}
+                \cos\theta  &-\sin\theta  \\
+                \sin\theta  &\cos\theta
+              \end{vmat}=1 \)  
+    \end{answer}
+  \recommended \item
+    Apakah transformasi \( \map{t}{\Re^2}{\Re^2} \) yang mempertahankan luas
+    harus pula mempertahankan panjang?
+    \begin{answer}
+      Tidak. Sebagai contoh, determinan
+      \begin{equation*}
+        T=\begin{mat}[r]
+          2  &0  \\
+          0  &1/2
+        \end{mat}
+      \end{equation*}
+      adalah \( 1 \), sehingga matriks itu mempertahankan luas, tetapi vektor
+      \( T\vec{e}_1 \) memiliki panjang \( 2 \).
+    \end{answer}
+  \item
+    Berapakah volume paralelepiped di \( \Re^3 \) yang dibatasi oleh
+    himpunan bergantung linear?
+    \begin{answer}
+       Volumenya nol.
+    \end{answer}
+  \recommended \item
+    Carilah luas segitiga di \( \Re^3 \) yang titik-titik sudutnya
+    \( (1,2,1) \), \( (3,-1,4) \), dan \( (2,2,2) \).
+    (Yang diminta adalah luas, bukan volume.
+    Segitiga itu menentukan sebuah bidang; berapakah luas segitiga pada
+    bidang tersebut?)
+    \begin{answer}
+      Dua dari tiga sisi segitiga dibentuk oleh vektor-vektor berikut.
+      \begin{equation*}
+        \colvec[r]{2 \\ 2 \\ 2}-\colvec[r]{1 \\ 2 \\ 1}=\colvec[r]{1 \\ 0 \\ 1}
+        \qquad
+        \colvec[r]{3 \\ -1 \\ 4}-\colvec[r]{1 \\ 2 \\ 1}=\colvec[r]{2 \\ -3 \\ 3}
+      \end{equation*}
+      Salah satu cara mencari luas segitiga ini adalah mencari setengah volume
+      paralelepiped yang dibentuk oleh kedua vektor tersebut dan sebuah vektor
+      panjang satu yang ortogonal terhadap keduanya.
+      Untuk mencari keluarga vektor yang ortogonal terhadap keduanya, kita dapat
+      mulai dengan dua relasi
+      \begin{equation*}
+        \colvec[r]{1 \\ 0 \\ 1}
+        \dotprod\colvec{x \\ y \\ z}
+        =0
+        \qquad
+        \colvec[r]{2 \\ -3 \\ 3}
+        \dotprod\colvec{x \\ y \\ z}
+        =0
+      \end{equation*}
+      lalu menyelesaikan sistem
+      \begin{equation*}
+        \begin{linsys}{3}
+          x  &   &   &+  &z  &=  &0  \\
+         2x  &-  &3y &+  &3z &=  &0  
+        \end{linsys}
+        \grstep{-2\rho_1+\rho_2}
+        \begin{linsys}{3}
+          x  &   &   &+  &z  &=  &0  \\
+             &   &-3y&+  &z  &=  &0  
+        \end{linsys}
+      \end{equation*}
+      untuk memperoleh himpunan solusi berikut.
+      \begin{equation*}
+        \set{\colvec[r]{-1 \\ 1/3 \\ 1}z\suchthat z\in\Re}
+      \end{equation*}
+      Berikut adalah solusi dengan panjang satu.
+      \begin{equation*}
+        \frac{1}{\sqrt{19/9}}\cdot\colvec[r]{-1 \\ 1/3 \\ 1}
+        =\colvec[r]{-3/\sqrt{19} \\ 1/\sqrt{19} \\ 3/\sqrt{19}}
+      \end{equation*}
+      Jadi, luas segitiga adalah setengah dari nilai mutlak
+      determinan berikut.
+      \begin{equation*}
+        \begin{vmat}[r]
+             1  &2   &-3/\sqrt{19}   \\
+             0  &-3  &1/\sqrt{19}   \\
+             1  &3   &3/\sqrt{19}
+        \end{vmat}
+        =-19/\sqrt{19}
+      \end{equation*} 
+      Setengah dari nilai mutlak tersebut adalah $\sqrt{19}/2$.
+    \end{answer}
+  \item \label{exer:DetProdEqProdDetsFcn}
+    Pembuktian alternatif untuk \nearbytheorem{th:MatChVolByDetMat}
+    menggunakan definisi fungsi determinan.
+    \begin{exparts}
+      \partsitem Perhatikan bahwa vektor-vektor pembentuk
+        $S$ membentuk himpunan bergantung linear jika dan hanya jika
+        $\deter{S}=0$, lalu periksa bahwa hasil tersebut berlaku dalam kasus ini.
+      \partsitem Untuk kasus $\deter{S}\neq 0$, guna menunjukkan bahwa
+        $\deter{TS}/\deter{S}=\deter{T}$ bagi semua transformasi, tinjau fungsi
+        \( \map{d}{\matspace_{\nbyn{n}}}{\Re} \) yang diberikan oleh
+        \( T\mapsto \deter{TS}/\deter{S} \).
+        Tunjukkan bahwa $d$ memiliki sifat pertama determinan.
+      \partsitem Tunjukkan bahwa $d$ memiliki tiga sifat lainnya dari
+        fungsi determinan.
+      \partsitem Simpulkan bahwa $\deter{TS}=\deter{T}\cdot\deter{S}$.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Karena bayangan himpunan bergantung linear juga
+          bergantung linear, jika vektor-vektor pembentuk $S$ membentuk
+          himpunan bergantung linear sehingga $\deter{S}=0$, maka
+          vektor-vektor pembentuk $t(S)$ juga membentuk himpunan bergantung
+          linear sehingga $\deter{TS}=0$; dalam kasus ini persamaan tersebut berlaku.
+        \partsitem Kita harus memeriksa bahwa jika
+          $T\smash[b]{\grstep{k\rho_i+\rho_j}}\hat{T}$, maka
+          $d(T)=\deter{TS}/\deter{S}=\deter{\hat{T}S}/\deter{S}=d(\hat{T})$.
+          Kita dapat melakukannya dengan memeriksa bahwa mengombinasikan baris
+          terlebih dahulu lalu mengalikan untuk memperoleh \( \hat{T}S \)
+          memberikan hasil yang sama dengan mengalikan terlebih dahulu untuk
+          memperoleh \( TS \) lalu mengombinasikan baris (karena determinan
+          \( \deter{TS} \) tidak terpengaruh oleh pengombinasian baris, sehingga
+          kita memperoleh \( \deter{\hat{T}S}=\deter{TS} \), dan karenanya
+          \( d(\hat{T})=d(T) \)).
+          Pemeriksaannya sebagai berikut:~setelah menambahkan
+          \( k \) kali baris~\( i \) dari \( TS \) ke
+          baris~$j$ dari \( TS \), entri \( j,p \) adalah
+          \( (kt_{i,1}+t_{j,1})s_{1,p}+\dots+(kt_{i,r}+t_{j,r})s_{r,p} \),
+          yang merupakan entri \( j,p \) dari \( \hat{T}S \).
+        \partsitem Untuk sifat kedua, kita hanya perlu memeriksa bahwa melakukan
+          pertukaran
+          $T\smash[b]{\grstep{\rho_i\swap\rho_j}}\hat{T}$
+          lalu mengalikan untuk memperoleh \( \hat{T}S \) memberikan hasil yang
+          sama dengan mengalikan \( T \) dengan \( S \) terlebih dahulu lalu
+          menukar baris (karena determinan \( \deter{TS} \) berubah tanda ketika
+          baris ditukar, sehingga kita memperoleh
+          \( \deter{\hat{T}S}=-\deter{TS} \), dan jadi
+          \( d(\hat{T})=-d(T) \)).
+          Pemeriksaan ini berlangsung sama seperti untuk sifat pertama.
+
+          Untuk sifat ketiga, kita hanya perlu menunjukkan bahwa melakukan
+          $T\smash[b]{\grstep{k\rho_i}}\hat{T}$ 
+          lalu menghitung \( \hat{T}S \) memberikan hasil yang sama dengan
+          menghitung \( TS \) terlebih dahulu lalu melakukan perkalian skalar
+          (karena determinan \( \deter{TS} \) diskalakan ulang dengan \( k \),
+          kita akan memperoleh \( \deter{\hat{T}S}=k\deter{TS} \), sehingga
+          \( d(\hat{T})=k\,d(T) \)).
+          Di sini pun, argumennya berlangsung seperti di atas.
+
+          Sifat keempat, yakni jika $T$ adalah $I$ maka hasilnya $1$,
+          sudah jelas.
+        \partsitem Fungsi determinan bersifat unik, sehingga
+          \( \deter{TS}/\deter{S}=d(T)=\deter{T} \),
+          dan jadi $\deter{TS}=\deter{T}\deter{S}$.
+      \end{exparts}
+    \end{answer}
+%  \item  
+%    Use the fact that
+%    \( \deter{TS}=\deter{T}\,\deter{S} \)
+%    to prove that if \( \phi \) and \( \sigma \) are \( n \)-permutations
+%    then \( \sgn(\phi\sigma)=\sgn(\phi)\sgn(\sigma) \).
+%    \cite{HoffmanKunze}
+%    \begin{answer}
+%       Take \( T=P_\phi \) and \( S=P_\sigma \).
+%      Note that \( TS=P_{\phi\sigma} \) and so
+%      \( \deter{P_{\phi\sigma}}=\deter{P_\phi}\cdot\deter{P_\sigma} \).  
+%    \end{answer}
+  \item 
+    Berikan sebuah matriks bukan identitas dengan sifat
+    \( \trans{A}=A^{-1} \).
+    Tunjukkan bahwa jika \( \trans{A}=A^{-1} \), maka \( \deter{A}=\pm 1 \).
+    Apakah konversnya berlaku?
+    \begin{answer}
+      Setiap matriks permutasi memiliki sifat bahwa transpos matriks tersebut
+      adalah inversnya.
+
+      Untuk implikasi tersebut, kita mengetahui bahwa
+      \( \deter{\trans{A}}=\deter{A} \).
+      Maka \( 1=\deter{A\cdot A^{-1}}=\deter{A\cdot\trans{A}}
+               =\deter{A}\cdot\deter{\trans{A}}=\deter{A}^2 \).
+
+      Konversnya tidak berlaku; berikut adalah sebuah contoh.
+      \begin{equation*}
+        \begin{mat}[r]
+          3  &1  \\
+          2  &1
+        \end{mat}
+      \end{equation*}
+    \end{answer}
+  \item 
+    Sifat aljabar determinan bahwa mengeluarkan suatu skalar sebagai faktor
+    dari satu baris akan mengalikan determinan dengan skalar tersebut
+    menunjukkan bahwa jika \( H \) berukuran \( \nbyn{3} \), determinan
+    \( cH \) adalah \( c^3 \) kali determinan \( H \).
+    Jelaskan hal ini secara geometris, yakni dengan menggunakan
+    \nearbytheorem{th:MatChVolByDetMat}.
+    (Pengamatan bahwa memperbesar ukuran linear suatu benda tiga dimensi dengan
+    faktor $c$ akan memperbesar volumenya dengan faktor $c^3$, sementara luas
+    permukaannya hanya bertambah dengan faktor yang sebanding dengan $c^2$,
+    disebut \definend{hukum kuadrat--kubik}~\cite{Wikipedia}.)
+    \begin{answer}
+      Ketika sisi-sisi kotak \( c \) kali lebih panjang, volumenya memuat
+      \( c^3 \) kali lebih banyak satuan kubik.
+    \end{answer}
+  \item 
+    Kita mengatakan bahwa matriks $H$ dan $G$
+    \definend{serupa}\index{serupa}\index{matriks!serupa}
+    jika terdapat matriks nonsingular $P$ sedemikian sehingga $H=P^{-1}GP$
+    (kita akan mempelajari relasi ini dalam Bab Lima).
+    Tunjukkan bahwa matriks-matriks serupa memiliki determinan yang sama.
+    \begin{answer}
+       Jika \( H=P^{-1}GP \),
+       maka \( \deter{H}=\deter{P^{-1}}\deter{G}\deter{P}
+        =\deter{P^{-1}}\deter{P}\deter{G}=\deter{P^{-1}P}\deter{G}
+        =\deter{G} \).  
+    \end{answer}
+  \item  \label{exer:BasisOrient}
+    Biasanya kita merepresentasikan vektor-vektor di \( \Re^2 \) terhadap
+    basis standar sehingga vektor-vektor di kuadran pertama memiliki kedua
+    koordinat positif.
+    \begin{center}
+      \parbox{.75in}{\hbox{}\hfil\includegraphics{det/mp/ch4.45}\hfil\hbox{}}
+      \qquad
+      \( \rep{\vec{v}}{\stdbasis_2}=\colvec[r]{+3 \\ +2} \)
+    \end{center}
+    Dengan bergerak berlawanan arah jarum jam mengelilingi titik asal, kita
+    melewati empat daerah secara bersiklus:
+    {\scriptsize
+    \begin{equation*}
+       \cdots
+       \;\longrightarrow\colvec{+ \\ +}
+       \;\longrightarrow\colvec{- \\ +}
+       \;\longrightarrow\colvec{- \\ -}
+       \;\longrightarrow\colvec{+ \\ -}
+       \;\longrightarrow\cdots\,.
+    \end{equation*} }
+    Menggunakan basis berikut
+    \begin{center}
+      \( B=\sequence{\colvec[r]{0 \\ 1},\colvec[r]{-1 \\ 0}} \)
+      \qquad
+      \parbox{.75in}{\hbox{}\hfil\includegraphics{det/mp/ch4.46}\hfil\hbox{}}
+    \end{center}
+    menghasilkan siklus berlawanan arah jarum jam yang sama.
+    Kita mengatakan bahwa kedua basis ini memiliki \emph{orientasi} yang sama.\index{orientasi}
+    \begin{exparts}
+      \partsitem Mengapa keduanya menghasilkan siklus yang sama?
+      \partsitem Konfigurasi vektor satuan lain apa pada sumbu-sumbu yang
+        menghasilkan siklus yang sama?
+      \partsitem Carilah determinan matriks-matriks yang dibentuk dari
+        basis-basis (terurut) tersebut.
+      \partsitem Siklus lain apa yang mungkin terjadi ketika bergerak berlawanan
+        arah jarum jam, dan berapakah determinan yang terkait?
+      \partsitem Apa yang terjadi di \( \Re^1 \)?
+      \partsitem Apa yang terjadi di \( \Re^3 \)?
+    \end{exparts}
+    Pembahasan orientasi yang menarik bagi pembaca umum
+    terdapat dalam \cite{Gardner}.
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Basis baru adalah basis lama yang diputar sebesar \( \pi/2 \).
+        \partsitem 
+          $
+             \sequence{\colvec[r]{-1 \\ 0},
+                       \colvec[r]{0 \\ -1}}
+          $, $
+             \sequence{\colvec[r]{0 \\ -1},
+                       \colvec[r]{1 \\ 0}}
+          $
+        \partsitem Dalam setiap kasus, determinannya adalah \( +1 \)
+          (kita mengatakan bahwa basis-basis ini memiliki
+          \definend{orientasi positif}).
+        \partsitem Karena hanya satu tanda dapat berubah pada satu waktu,
+          satu-satunya siklus lain yang mungkin adalah
+          \begin{equation*}
+             \cdots
+             \;\longrightarrow\colvec{+ \\ +}
+             \;\longrightarrow\colvec{+ \\ -}
+             \;\longrightarrow\colvec{- \\ -}
+             \;\longrightarrow\colvec{- \\ +}
+             \;\longrightarrow\cdots\,.
+          \end{equation*}
+          Di sini setiap determinan yang terkait adalah \( -1 \)
+          (kita mengatakan bahwa basis-basis tersebut memiliki
+          \definend{orientasi negatif}).
+        \partsitem Ada satu basis berorientasi positif \( \sequence{(1)} \)
+          dan satu basis berorientasi negatif \( \sequence{(-1)} \).
+        \partsitem Ada \( 48 \) basis (terdapat \( 6 \) pilihan setengah-sumbu
+          untuk vektor satuan pertama, \( 4 \) untuk vektor kedua, dan
+          \( 2 \) untuk vektor terakhir).
+          Separuhnya berorientasi positif seperti basis standar di sebelah kiri
+          di bawah, dan separuhnya berorientasi negatif seperti basis di sebelah
+          kanan
+         \begin{center}
+           \includegraphics{det/mp/ch4.47}
+           \hspace*{4em}
+           \includegraphics{det/mp/ch4.48}
+          \end{center}
+          Di \( \Re^3 \), orientasi positif kadang-kadang disebut
+          `orientasi tangan kanan' karena jika seseorang menempatkan tangan
+          kanannya dengan jari-jari melengkung dari \( \vec{e}_1 \) menuju
+          \( \vec{e}_2 \), maka ibu jarinya akan menunjuk searah dengan
+          \( \vec{e}_3 \).
+      \end{exparts}  
+    \end{answer}
+%  \item 
+%    A region of \( \Re^n \) is \definend{convex}\index{convex region} 
+%    if for any two points
+%    connecting that region, the line segment joining them lies entirely
+%    inside the region (the inside of a sphere is convex, while the skin of a
+%    sphere or a horseshoe is not).
+%    Prove that boxes are convex.
+%    \begin{answer}
+%      Let \( \vec{p}=p_1\vec{v}_1+\dots +p_n\vec{v}_n \) and
+%      \( \vec{q}=q_1\vec{v}_1+\dots +q_n\vec{v}_n \) be two vectors from a box
+%      so that \( p_1,\dots,\,p_n,q_1,\dots,\,q_n\in [0..1] \).
+%      The line segment between them is this.
+%      \begin{equation*}
+%        \set{t\cdot\vec{p}+(1-t)\cdot\vec{q}
+%              \suchthat t\in [0..1]}
+%        =\set{(tp_1+(1-t)q_1)\cdot\vec{v}_1+\dots+(tp_n+(1-t)q_n)\cdot\vec{v}_n
+%              \suchthat t\in [0..1] }
+%      \end{equation*}
+%      Showing that each member of that set is in the box is routine.  
+%    \end{answer}
+  \item \label{exer:DetProdEqProdDetsPerms}
+    \textit{Soal ini menggunakan materi dari subbagian opsional
+      Keberadaan Fungsi Determinan.}
+    Buktikan \nearbytheorem{th:MatChVolByDetMat} dengan menggunakan
+    rumus ekspansi permutasi untuk determinan.
+    \begin{answer}
+      Kita akan membandingkan \( \det(\vec{s}_1,\dots,\vec{s}_n) \) dengan
+      \( \det(t(\vec{s}_1),\dots,t(\vec{s}_n)) \) untuk menunjukkan bahwa
+      yang kedua berbeda dari yang pertama dengan faktor $\deter{T}$.
+      Kita merepresentasikan vektor-vektor \( \vec{s}\, \) terhadap basis-basis standar
+      \begin{equation*}
+        \rep{\vec{s}_i}{\stdbasis_n}=
+           \colvec{s_{1,i} \\ s_{2,i} \\ \vdots \\ s_{n,i}}
+      \end{equation*}
+      lalu kita merepresentasikan penerapan pemetaan tersebut dengan
+      perkalian matriks-vektor
+      \begin{align*}
+        \rep{\,t(\vec{s}_i)\,}{\stdbasis_n}
+         &=\generalmatrix{t}{n}{n}
+           \colvec{s_{1,i} \\ s_{2,i} \\ \vdots \\ s_{n,i}}     \\
+         &=s_{1,i}\colvec{t_{1,1} \\ t_{2,1} \\ \vdots \\ t_{n,1}}
+          +s_{2,i}\colvec{t_{1,2} \\ t_{2,2} \\ \vdots \\ t_{n,2}}
+          +\dots
+          +s_{n,i}\colvec{t_{1,n} \\ t_{2,n} \\ \vdots \\ t_{n,n}} \\
+         &=s_{1,i}\vec{t}_1+s_{2,i}\vec{t}_2+\dots+s_{n,i}\vec{t}_n
+      \end{align*}
+      di mana \( \vec{t}_i \) adalah kolom~$i$ dari \( T \).
+      Maka $\det(t(\vec{s}_1),\,\dots,\,t(\vec{s}_n))$ sama dengan
+      $
+        \det(s_{1,1}\vec{t}_1\!+\!s_{2,1}\vec{t}_2\!
+                +\!\dots\!+\!s_{n,1}\vec{t}_n,\,
+             \dots,\,
+             s_{1,n}\vec{t}_1\!+\!s_{2,n}\vec{t}_2
+                \!+\!\dots\!+\!s_{n,n}\vec{t}_n)
+     $.
+
+     Seperti dalam penurunan rumus ekspansi permutasi, kita
+     menerapkan multilinearitas, pertama-tama dengan memecah menurut
+     penjumlahan pada argumen pertama
+     \begin{multline*}
+         \det(s_{1,1}\vec{t}_1,\,
+            \dots,\,
+            s_{1,n}\vec{t}_1+s_{2,n}\vec{t}_2+\dots+s_{n,n}\vec{t}_n)  \\ 
+        +\cdots{}                                             
+        +\det(s_{n,1}\vec{t}_n,\,
+           \ldots,\,
+            s_{1,n}\vec{t}_1+s_{2,n}\vec{t}_2+\dots+s_{n,n}\vec{t}_n)
+     \end{multline*}
+     lalu memecah masing-masing dari $n$ suku tersebut menurut penjumlahan
+     pada argumen kedua, dan seterusnya.
+     Seperti dalam penurunan ekspansi permutasi, pada akhirnya kita memperoleh
+     \( n^n \) suku determinan, masing-masing berbentuk
+     $\det(s_{i_1,1}\vec{t}_{i_1},s_{i_2,2}\vec{t}_{i_2},
+            \,\dots,\,
+            s_{i_n,n}\vec{t}_{i_n})$.
+     Keluarkan setiap $s_{i,j}$ sebagai faktor
+     $=
+       s_{i_1,1}s_{i_2,2}\dots s_{i_n,n}
+        \cdot\det(\vec{t}_{i_1},\vec{t}_{i_2},
+       \,\dots,\,
+       \vec{t}_{i_n})
+      $.
+
+      Seperti dalam penurunan ekspansi permutasi,
+      apabila dua indeks di antara $i_1$, \ldots, $i_n$ sama, determinannya
+      memiliki dua argumen yang sama dan bernilai $0$.
+      Jadi, kita hanya perlu meninjau kasus ketika $i_1$, \ldots, $i_n$
+      membentuk permutasi dari bilangan $1$, \ldots, $n$.
+      Dengan demikian, kita memperoleh
+      \begin{equation*}
+        \det(t(\vec{s}_1),\dots,t(\vec{s}_n))=
+          \sum_{\text{permutasi\ } \phi}
+            s_{\phi(1),1}\dots s_{\phi(n),n}
+            \det(\vec{t}_{\phi(1)},\dots,\vec{t}_{\phi(n)}).
+      \end{equation*}
+      Tukarkan kolom-kolom dalam
+      $\det(\vec{t}_{\phi(1)},\ldots,\vec{t}_{\phi(n)})$ untuk memperoleh
+      kembali matriks \( T \); ini mengubah tanda dengan faktor $\sgn{\phi}$.
+      Kemudian keluarkan determinan $T$ sebagai faktor.
+      \begin{equation*}
+        =\sum_\phi
+          s_{\phi(1),1}\dots s_{\phi(n),n}
+            \det(\vec{t}_1,\dots,\vec{t}_n)\cdot\sgn{\phi}
+        =\det(T)\sum_\phi
+          s_{\phi(1),1}\dots s_{\phi(n),n}\cdot\sgn{\phi}.
+      \end{equation*}
+      Seperti dalam pembuktian bahwa determinan suatu matriks sama dengan
+      determinan transposnya, kita mempertukarkan faktor-faktor $s$ agar
+      tercantum menurut nomor baris yang menaik, bukan menurut nomor kolom
+      yang menaik (dan kita mengganti $\sgn(\phi)$ dengan
+      $\sgn(\phi^{-1})$).
+      \begin{equation*}
+        =\det(T)\sum_\phi
+          s_{1,\phi^{-1}(1)}\dots s_{n,\phi^{-1}(n)}\cdot\sgn{\phi^{-1}}  
+        =\det(T)\det(\vec{s}_1,\vec{s}_2,\dots,\vec{s}_n)
+      \end{equation*}
+    \end{answer}
+%  \item 
+%    Suppose that \( \map{f}{\matspace_{\nbyn{n}}}{\Re} \) is a non-constant
+%    function with the property that \( f(GH)=f(G)f(H) \).
+%    \begin{exparts}
+%      \partsitem Show that \( f \) sends the identity to \( 1 \).
+%      \partsitem Show that \( f \) maps the elementary matrix 
+%        \( C_{i,j}(k) \) to \( 1 \)
+%        (this matrix results from performing \( k\rho_i+\rho_j \) to the
+%        identity).
+%      \partsitem Show that 
+%        \( f \) maps a row swap matrix to \( +1 \) or \( -1 \).
+%    \end{exparts}
+%    \begin{answer}
+%      \begin{exparts}
+%        \partsitem We have \( f(IH)=f(I)f(H) \) and \( f(IH)=f(H) \).
+%        \partsitem
+%        \partsitem A row swap matrix has the property that when 
+%          done twice it equals
+%          the identity.
+%          But \( f(R)f(R)=f(RR)=f(I)=1 \) implies that \( f(R)=\pm 1 \).
+%      \end{exparts} 
+%     \end{answer}
+  \recommended \item
+    \begin{exparts}
+      \partsitem Tunjukkan bahwa bentuk berikut memberikan
+        persamaan garis di \( \Re^2 \) yang melalui
+        \( (x_2,y_2) \) dan \( (x_3,y_3) \).
+        \begin{equation*}
+          \begin{vmat}
+            x    &x_2 &x_3  \\
+            y    &y_2 &y_3  \\
+            1    &1   &1
+          \end{vmat}=0
+        \end{equation*}
+      \partsitem \cite{Monthly55p249}
+        Buktikan bahwa luas segitiga dengan titik-titik sudut \( (x_1,y_1) \),
+        \( (x_2,y_2) \), dan \( (x_3,y_3) \) adalah
+        \begin{equation*}
+          \frac{1}{2}\left|
+          \begin{vmat}
+            x_1  &x_2 &x_3  \\
+            y_1  &y_2 &y_3  \\
+            1    &1   &1
+          \end{vmat}\right|.
+        \end{equation*}
+      \partsitem \cite{MathMag73p286}
+        Buktikan bahwa segitiga dengan titik-titik sudut \( (x_1,y_1) \),
+        \( (x_2,y_2) \), dan \( (x_3,y_3) \), yang semua koordinatnya berupa
+        bilangan bulat, memiliki luas \( N \) atau \( N/2 \) untuk suatu
+        bilangan bulat positif \( N \).
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Pemeriksaan aljabarnya mudah.
+        \begin{equation*}
+          0
+          =xy_2+x_2y_3+x_3y-x_3y_2-xy_3-x_2y 
+          =x\cdot (y_2-y_3)+y\cdot (x_3-x_2)+x_2y_3-x_3y_2 
+        \end{equation*}
+        dapat disederhanakan menjadi bentuk yang dikenal
+        \begin{equation*}
+          y=x\cdot (y_3-y_2)/(x_3-x_2)+(x_3y_2-x_2y_3)/(x_3-x_2)
+        \end{equation*}
+        (kasus $x_3-x_2=0$ mudah ditangani).
+
+        Untuk memperoleh wawasan geometris, gambar ini
+        menunjukkan kotak yang dibentuk oleh ketiga vektor tersebut.
+        Perhatikan bahwa ujung ketiga vektor berada pada bidang $z=1$.
+        Di bawah dua vektor di sebelah kanan terdapat garis yang melalui
+        $(x_2,y_2)$ dan $(x_3,y_3)$.
+        \begin{center}
+          \includegraphics{det/mp/ch4.49}
+        \end{center}
+        Kotak itu akan memiliki volume tak nol kecuali jika segitiga yang
+        dibentuk oleh ketiga ujung tersebut degenerat.
+        Hal itu hanya terjadi (dengan mengandaikan
+        $(x_2,y_2)\neq (x_3,y_3)$) jika $(x,y)$ terletak pada garis yang
+        melalui kedua titik lainnya.
+       \partsitem \answerasgiven %
+        Kita mencari tinggi melalui $(x_1,y_1)$ dari segitiga dengan titik-titik
+        sudut $(x_1,y_1)$, $(x_2,y_2)$, dan $(x_3,y_3)$ dengan cara biasa dari
+        bentuk normal di atas:
+        \begin{equation*}
+          \frac{1}{\sqrt{(x_2-x_3)^2+(y_2-y_3)^2}}
+          \begin{vmat}
+            x_1  &x_2  &x_3  \\
+            y_1  &y_2  &y_3  \\
+            1    &1    &1
+          \end{vmat}.
+        \end{equation*}
+        Langkah berikutnya menunjukkan bahwa luas segitiga adalah
+        \begin{equation*}
+          \frac{1}{2}\left|
+          \begin{vmat}
+            x_1  &x_2  &x_3  \\
+            y_1  &y_2  &y_3  \\
+            1    &1    &1
+          \end{vmat}\right|.
+        \end{equation*}
+        Paparan ini mengungkapkan \textit{modus operandi} dengan lebih jelas
+        daripada pembuktian biasa yang menunjukkan bahwa sekumpulan suku
+        identik dengan determinan tersebut.
+       \partsitem  \answerasgiven %
+        Misalkan
+        \begin{equation*}
+          D=
+          \begin{vmat}
+            x_1  &x_2  &x_3  \\
+            y_1  &y_2  &y_3  \\
+            1    &1    &1
+          \end{vmat}
+        \end{equation*}
+        maka luas segitiga adalah $(1/2)\deter{D}$.
+        Jika semua koordinat berupa bilangan bulat, maka $D$ adalah bilangan bulat.
+      \end{exparts}
+    \end{answer}
+\end{exercises}

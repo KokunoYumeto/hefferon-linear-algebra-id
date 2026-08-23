@@ -1,0 +1,90 @@
+\documentclass[twoside]{book}
+% \usepackage{ifpdf} 
+% %\newcommand{\pdflatex}[1]{\ifpdf #1\fi}
+% %\pdflatex{\DeclareGraphicsRule{*}{mps}{*}{}}
+% \ifpdf
+%     \usepackage[yes]{hrefout} % allow selection of hyperref from command line
+%   \else
+%     % \usepackage{dvidrv} % set the dvi driver from the command line
+%     \usepackage[no]{hrefout} % allow selection of hyperref from command line
+%   \fi
+
+\usepackage{verbatim}
+\usepackage{xr}
+\usepackage[single,write]{bookans}
+\usepackage{bookjh}
+\usepackage{makeidx}
+%  \usepackage{showidx} \typeout{REMOVE showidx on final runs!}
+
+% To make print copies, comment out symlist lines, here and below in 
+% the \include{..} area, and uncomment the titlepage lines.  You may
+% have to "rm *.aux" to get it to compile.
+\includeonly{
+cover/covernew,% 
+\ifbool{hardcopybool}{cover/titlepage}{cover/covernew,cover/symlist},
+% cover/symlist, % comment this out for printed version
+% cover/titlepage, % uncomment for printed version
+pref/pref,%
+gr/gr1,gr/gr2,gr/gr3,gr/cas,gr/leontief,gr/ppivot,gr/network,%
+vs/vs1,vs/vs2,vs/vs3,vs/fields,vs/crystal,vs/voting,vs/dimen,%
+map/map1,map/map2,map/map3,map/map4,map/map5,map/map6,%
+  map/lstsqs,map/homogeom,map/magicsqs,map/markov,map/erlang,%
+det/det1,det/det2,det/det3,det/cramer,det/detspeed,det/chio,det/projplane,det/compgraphics,%
+jc/jc1,jc/jc2,jc/jc3,jc/jc4,jc/powers,jc/pops,jc/search,jc/recur,jc/wilber,jc/innerproduct,%eigengeom,prinaxis,%
+appen/appen,%
+bib/bib%
+%test%
+}%
+\usepackage{makeidx}\makeindex
+
+% Uncomment this to show overfull boxes with a black box in the margin
+% \overfullrule=5pt  % if a draft
+
+\begin{document}
+\frontmatter
+\pagenumbering{roman}
+\ifbool{hardcopybool}{\include{cover/titlepage}}{\include{cover/covernew}\include{cover/symlist}\clearemptydoublepage}
+% \include{cover/covernew}\include{cover/symlist}\clearemptydoublepage % comment out for printed version
+% \include{cover/titlepage} % uncomment for printed version (also remember to change the color of hyperlinks in bookjhconcrete.sty)
+\pagestyle{bookfront} 
+\setcounter{page}{1}\thispagestyle{empty}\include{pref/pref} %
+\pagestyle{booktoc}\clearemptydoublepage\tableofcontents\bigskip\par\noindent${}^*\!$Subbagian bertanda bintang bersifat opsional.\clearemptydoublepage %
+\mainmatter
+\pagenumbering{arabic}
+\pagestyle{bookbody} 
+\include{gr/gr1}
+\include{gr/gr2}
+\include{gr/gr3}
+\pagestyle{booktopic}
+  \include{gr/cas} \include{gr/leontief} \include{gr/ppivot} \include{gr/network}\pagestyle{bookbody} 
+\include{vs/vs1}
+\include{vs/vs2}
+\include{vs/vs3}
+\pagestyle{booktopic}
+  \include{vs/fields} \include{vs/crystal} \include{vs/voting}  \include{vs/dimen}\pagestyle{bookbody}
+\include{map/map1}
+\include{map/map2}
+\include{map/map3}
+\include{map/map4}
+\include{map/map5}
+\include{map/map6}
+\pagestyle{booktopic}
+  \include{map/lstsqs} \include{map/homogeom} \include{map/magicsqs} \include{map/markov} \include{map/erlang}\pagestyle{bookbody}
+\include{det/det1}
+\include{det/det2}
+\include{det/det3} 
+\pagestyle{booktopic}
+  \include{det/cramer} \include{det/detspeed} \include{det/chio}  \include{det/projplane}  \include{det/compgraphics} \pagestyle{bookbody}
+\include{jc/jc1}
+\include{jc/jc2}
+\include{jc/jc3}
+\include{jc/jc4}
+\pagestyle{booktopic}
+  \include{jc/powers} \include{jc/pops} \include{jc/search} \include{jc/recur} \include{jc/wilber} \include{jc/innerproduct} \pagestyle{bookbody}
+%\include{eigengeom}
+\include{appen/appen}
+%\typeout{ BIBLIOGRAPHY COMMENTED OUT}
+{\pagestyle{empty}\include{bib/bib}}
+%\typeout{ INDEX COMMENTED OUT}
+{\printindex}
+\end{document}
