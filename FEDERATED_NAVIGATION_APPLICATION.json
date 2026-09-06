@@ -1,0 +1,25 @@
+{
+  "authoritative_original_url": "https://hefferon.net/linearalgebra/",
+  "course_id": "B40",
+  "documents": [
+    {
+      "bytes": 2855,
+      "link_counts": {
+        "en": 1,
+        "id": 1,
+        "marker": 1,
+        "original": 1
+      },
+      "path": "docs/index.html",
+      "sha256": "859abdfa5a640a228b031cbfe2aa8f8aede466e245c1f1c0d76c5750528b596c"
+    }
+  ],
+  "en_course_url": "https://kokunoyumeto.github.io/program-matematika-indonesia/en/#course-B40",
+  "html_documents": 1,
+  "id_course_url": "https://kokunoyumeto.github.io/program-matematika-indonesia/id/#course-B40",
+  "published_root": [
+    "docs"
+  ],
+  "repository": "hefferon-linear-algebra-id",
+  "status": "pass"
+}
